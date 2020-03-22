@@ -24,15 +24,17 @@ namespace FRESHMusicPlayer.Forms.WPF
     /// </summary>
     public partial class WPFUserInterface : Window
     {
-        Timer timer;
+        Timer progressTimer;
         public WPFUserInterface()
         {
             InitializeComponent();
             Player.songChanged += Player_songChanged;
             Player.songStopped += Player_songStopped;
-            timer = new Timer();
-            timer.Interval = 1000;
-            timer.Tick += DispatcherTimer_Tick;
+            progressTimer = new Timer  // System.Windows.Forms timer because dispatcher timer seems to have some threading issues?
+            {
+                Interval = 1000
+            };
+            progressTimer.Tick += ProgressTimer_Tick;
         }
         #region Controls
         public void PlayPauseMethod()
@@ -61,7 +63,7 @@ namespace FRESHMusicPlayer.Forms.WPF
         #endregion
         #region Settings
         #endregion
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        private void ProgressTimer_Tick(object sender, EventArgs e)
         {
             ProgressIndicator1.Text = NumberUtils.Format((int)Player.audioFile.CurrentTime.TotalSeconds);
             ProgressBar.Value = Player.audioFile.CurrentTime.TotalSeconds;
@@ -71,8 +73,8 @@ namespace FRESHMusicPlayer.Forms.WPF
         private void Player_songStopped(object sender, EventArgs e)
         {
             Title = "FRESHMusicPlayer WPF Test";
-            TitleLabel.Text = "Nothing Playing";
-            timer.Stop();
+            TitleLabel.Text = ArtistLabel.Text = "Nothing Playing";
+            progressTimer.Stop();
         }
 
         private void Player_songChanged(object sender, EventArgs e)
@@ -96,7 +98,7 @@ namespace FRESHMusicPlayer.Forms.WPF
             }
             
             
-            timer.Start();
+            progressTimer.Start();
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
