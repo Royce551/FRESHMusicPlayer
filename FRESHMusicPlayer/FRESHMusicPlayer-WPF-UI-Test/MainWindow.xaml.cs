@@ -64,8 +64,8 @@ namespace FRESHMusicPlayer.Forms.WPF
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             ProgressIndicator1.Text = NumberUtils.Format((int)Player.audioFile.CurrentTime.TotalSeconds);
-            ProgressIndicator2.Text = /*NumberUtils.Format((int)Player.audioFile.TotalTime.TotalSeconds);*/Player.queue.Count.ToString();
             ProgressBar.Value = Player.audioFile.CurrentTime.TotalSeconds;
+            Player.avoidnextqueue = false;
         }
 
         private void Player_songStopped(object sender, EventArgs e)
@@ -82,6 +82,7 @@ namespace FRESHMusicPlayer.Forms.WPF
             TitleLabel.Text = track.Title;
             ArtistLabel.Text = track.Artist;
             ProgressBar.Maximum = Player.audioFile.TotalTime.TotalSeconds;
+            ProgressIndicator2.Text = NumberUtils.Format((int)Player.audioFile.TotalTime.TotalSeconds);
 
             if (track.EmbeddedPictures.Count == 0)
             {
