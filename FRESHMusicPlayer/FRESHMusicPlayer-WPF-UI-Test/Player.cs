@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer
         public static string filePath = "";
         public static bool playing = false;
         public static bool paused = false;
-        static Queue<string> queue = new Queue<string>();
+        public static Queue<string> queue = new Queue<string>();
         public static DateTime lastUpdateCheck;
         public static HttpClient HttpClient = new HttpClient();
         /// <summary>

@@ -24,7 +24,6 @@ namespace FRESHMusicPlayer.Forms.WPF
     /// </summary>
     public partial class WPFUserInterface : Window
     {
-        //DispatcherTimer dispatcherTimer;
         Timer timer;
         public WPFUserInterface()
         {
@@ -34,9 +33,6 @@ namespace FRESHMusicPlayer.Forms.WPF
             timer = new Timer();
             timer.Interval = 1000;
             timer.Tick += DispatcherTimer_Tick;
-            //dispatcherTimer = new DispatcherTimer();
-            //dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
-            //dispatcherTimer.Tick += DispatcherTimer_Tick;
         }
         #region Controls
         public void PlayPauseMethod()
@@ -68,7 +64,7 @@ namespace FRESHMusicPlayer.Forms.WPF
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             ProgressIndicator1.Text = NumberUtils.Format((int)Player.audioFile.CurrentTime.TotalSeconds);
-            ProgressIndicator2.Text = NumberUtils.Format((int)Player.audioFile.TotalTime.TotalSeconds);
+            ProgressIndicator2.Text = /*NumberUtils.Format((int)Player.audioFile.TotalTime.TotalSeconds);*/Player.queue.Count.ToString();
             ProgressBar.Value = Player.audioFile.CurrentTime.TotalSeconds;
         }
 
