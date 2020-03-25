@@ -38,7 +38,7 @@
                 <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,17.533" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
                 <Rectangle Grid.Column="2" Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Margin="0,46.467,55,17.533" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="StopButton_MouseLeftButtonDown"/>
                 <Rectangle Grid.Column="2" Margin="0,38.8,95,10" Height="35.2" Width="35" HorizontalAlignment="Right" MouseLeftButtonDown="PlayPauseButton_MouseLeftButtonDown" Fill="Transparent"/>
-                
+
             </Grid>
         </Border>
         <Grid Background="#FF141517">
@@ -46,6 +46,7 @@
             <TextBox x:Name="FilePathBox" HorizontalAlignment="Left" Height="24" Margin="427,283,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
             <Button x:Name="PlayTrackButton" Content="Play" HorizontalAlignment="Left" Margin="371,337,0,0" VerticalAlignment="Top" Width="75" Click="PlayButton_Click"/>
             <Button x:Name="QueueTrackButton" Content="Add to queue" HorizontalAlignment="Left" Margin="488,337,0,0" VerticalAlignment="Top" Width="75" Click="QueueButton_Click"/>
+            <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="337,307,0,0" VerticalAlignment="Top" Width="75" Click="BrowseButton_Click"/>
         </Grid>
     </DockPanel>
 </Window>

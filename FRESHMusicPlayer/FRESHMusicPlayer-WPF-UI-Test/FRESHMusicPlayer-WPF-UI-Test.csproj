@@ -130,23 +130,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\round_more_horiz_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\round_pause_circle_outline_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\round_play_circle_outline_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\round_skip_next_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\round_stop_white_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\round_volume_up_white_18dp.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

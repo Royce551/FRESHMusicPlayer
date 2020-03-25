@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ATL;
+using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Utilities;
+using Microsoft.Win32;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
-using System.Windows.Forms;
-using FRESHMusicPlayer;
-using FRESHMusicPlayer.Utilities;
-using ATL;
+using Winforms = System.Windows.Forms;
 namespace FRESHMusicPlayer.Forms.WPF
 {
     /// <summary>
@@ -24,18 +15,21 @@ namespace FRESHMusicPlayer.Forms.WPF
     /// </summary>
     public partial class WPFUserInterface : Window
     {
-        Timer progressTimer;
+        Winforms.Timer progressTimer;
         public WPFUserInterface()
         {
             InitializeComponent();
             Player.songChanged += Player_songChanged;
             Player.songStopped += Player_songStopped;
-            progressTimer = new Timer  // System.Windows.Forms timer because dispatcher timer seems to have some threading issues?
+            Player.songException += Player_songException;
+            progressTimer = new Winforms.Timer  // System.Windows.Forms timer because dispatcher timer seems to have some threading issues?
             {
                 Interval = 1000
             };
             progressTimer.Tick += ProgressTimer_Tick;
         }
+
+        
         #region Controls
         public void PlayPauseMethod()
         {
@@ -62,6 +56,8 @@ namespace FRESHMusicPlayer.Forms.WPF
         #region Library
         #endregion
         #region Settings
+        #endregion
+        #region Events
         #endregion
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
@@ -120,7 +116,7 @@ namespace FRESHMusicPlayer.Forms.WPF
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Winforms.Application.Exit();
         }
 
 
@@ -135,5 +131,17 @@ namespace FRESHMusicPlayer.Forms.WPF
         private void QueueButton_Click(object sender, RoutedEventArgs e) => Player.AddQueue(FilePathBox.Text);
 
         private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e) => Player.RepositionMusic((int)ProgressBar.Value);
+
+        private void Player_songException(object sender, PlaybackExceptionEventArgs e) => MessageBox.Show($"A playback error has occured. \"{e.Details}\"");
+
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            if (fileDialog.ShowDialog() == true)
+            {
+                Player.AddQueue(fileDialog.FileName);
+                Player.PlayMusic();
+            }
+        }
     }
 }
