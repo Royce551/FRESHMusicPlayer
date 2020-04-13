@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="Utilities\databaseformat.cs" />
     <Compile Include="Utilities\NumberUtils.cs" />
+    <Compile Include="Utilities\UserInterfaceUtils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
