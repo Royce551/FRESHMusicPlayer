@@ -95,7 +95,7 @@ namespace FRESHMusicPlayer
         /// <param name="repeat">If true, avoids dequeuing the next track. Not to be used for anything other than the player.</param>
         public static void PlayMusic(bool repeat=false)
         {
-            if (!repeat) if (queue.Count != 0) filePath = queue.Dequeue(); // Some functions want to play the same song again
+            if (!repeat && queue.Count != 0) filePath = queue.Dequeue(); // Some functions want to play the same song again
             
             void PMusic()
             {

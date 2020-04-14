@@ -134,15 +134,17 @@ namespace FRESHMusicPlayer.Forms.WPF
         #endregion
         #region ControlsBox
         private void MoreButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MoreMethod();
-
         private void PlayPauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PlayPauseMethod();
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
         private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e) => Player.RepositionMusic((int)ProgressBar.Value);
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Player.currentvolume = (float)(VolumeBar.Value / 100);
-            Player.UpdateSettings();
+            if (Player.playing)
+            {
+                Player.currentvolume = (float)(VolumeBar.Value / 100);
+                Player.UpdateSettings(); 
+            }
         }
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
@@ -173,8 +175,6 @@ namespace FRESHMusicPlayer.Forms.WPF
         {
             Player.AddQueue(FilePathBox.Text);
             Player.PlayMusic();                         
-            Player.currentvolume = .3f;
-            Player.UpdateSettings();
         }
        
 

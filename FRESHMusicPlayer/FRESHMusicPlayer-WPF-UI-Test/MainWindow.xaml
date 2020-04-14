@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="512" Width="702" Closed="Window_Closed">
+        Title="FRESHMusicPlayer WPF Test" Height="512" Width="702" Closed="Window_Closed">
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel Height="25" DockPanel.Dock="Top" Background="#FF141517" >
@@ -95,6 +95,8 @@
                         </BeginStoryboard>
                     </EventTrigger>
                 </TextBlock.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="Settings" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="ImportTab_MouseDown" HorizontalAlignment="Right">
             </TextBlock>
             <!--<Path x:Name="VolumIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" RenderTransformOrigin="1.1,0.633"  Width="20" VerticalAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" Fill="White"/>-->
         </DockPanel>
