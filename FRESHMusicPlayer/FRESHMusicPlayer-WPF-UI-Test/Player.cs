@@ -66,7 +66,6 @@ namespace FRESHMusicPlayer
             if (queue.Count == 0) StopMusic(); // Acts the same way as the old system worked
             else
             {
-                //avoidnextqueue = true;
                 PlayMusic();
             }
         }
@@ -86,7 +85,6 @@ namespace FRESHMusicPlayer
         public static void RepositionMusic(int seconds)
         {
             audioFile.CurrentTime = TimeSpan.FromSeconds(seconds);
-            //position = (int)audioFile.CurrentTime.TotalSeconds;
         }
 
         /// <summary>
@@ -129,46 +127,30 @@ namespace FRESHMusicPlayer
             }
             catch (System.IO.FileNotFoundException)
             {
-                // TODO: This is a temporary solution. In the future, I'd like to make a more robust error handler.
-                /*MessageBox.Show("Onee-Chan~~! That's not a valid file path, you BAKA! (or it's not a supported file type!)", "Incorrect file path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DatabaseHandler.DeleteSong(filePath);
-                UserInterface.LibraryNeedsUpdating = true;*/
                 PlaybackExceptionEventArgs args = new PlaybackExceptionEventArgs();
                 args.Details = "That's not a valid file path!";
                 songException.Invoke(null, args);
             }
             catch (System.ArgumentException)
             {
-                /*MessageBox.Show("Onee-Chan~~! You BAKA! You're supposed to actually put something in the box!", "Nothing typed in file path box", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DatabaseHandler.DeleteSong(filePath);
-                UserInterface.LibraryNeedsUpdating = true;*/
                 PlaybackExceptionEventArgs args = new PlaybackExceptionEventArgs();
                 args.Details = "That's not a valid file path!";
                 songException.Invoke(null, args);
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                /*MessageBox.Show("Onee-Chan~! That's not a valid audio file!", "File Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DatabaseHandler.DeleteSong(filePath);
-                UserInterface.LibraryNeedsUpdating = true;*/
                 PlaybackExceptionEventArgs args = new PlaybackExceptionEventArgs();
                 args.Details = "This isn't a valid audio file!";
                 songException.Invoke(null, args);
             }
             catch (System.FormatException)
             {
-                /*MessageBox.Show("Onee-Chan~! This audio file must be corrupt! I can't play it!", "Format Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DatabaseHandler.DeleteSong(filePath);
-                UserInterface.LibraryNeedsUpdating = true;*/
                 PlaybackExceptionEventArgs args = new PlaybackExceptionEventArgs();
                 args.Details = "This audio file might be corrupt!";
                 songException.Invoke(null, args);
             }
             catch (System.InvalidOperationException)
             {
-                /*MessageBox.Show("Onee-Chan~! FRESHMusicPlayer doesn't support fancy VBR audio files! (or your audio file is corrupt in some way)", "VBR Files Not Supported", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DatabaseHandler.DeleteSong(filePath);
-                UserInterface.LibraryNeedsUpdating = true;*/
                 PlaybackExceptionEventArgs args = new PlaybackExceptionEventArgs();
                 args.Details = "This audio file uses VBR \nor might be corrupt!";
                 songException.Invoke(null, args);
@@ -213,7 +195,6 @@ namespace FRESHMusicPlayer
         public static void PauseMusic()
         {
             if (!paused) outputDevice?.Pause();
-            //playing = false;
             paused = true;
 
         }// Pauses the music without completely disposing it
@@ -223,7 +204,6 @@ namespace FRESHMusicPlayer
         public static void ResumeMusic()
         {
             if (paused) outputDevice?.Play();
-            //playing = true;
             paused = false;
 
         }// Resumes music that has been paused
@@ -242,9 +222,6 @@ namespace FRESHMusicPlayer
         /// <returns></returns>
         public static string getSongPosition()
         {
-            //if (playing) // Only work if music is currently playing
-            //if (!positiononly) position += 1; // Only tick up the position if it's being called from UserInterface
-            
             string Format(int secs)
             {
                 int hours = 0;
@@ -272,8 +249,6 @@ namespace FRESHMusicPlayer
 
                 return durStr;
             }
-
-            //ATL.Track theTrack = new ATL.Track(filePath);
             var length = audioFile.TotalTime;
             
             return $"{Format((int)audioFile.CurrentTime.TotalSeconds)} / {Format((int)length.TotalSeconds)}";
