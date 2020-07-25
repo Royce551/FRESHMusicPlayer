@@ -1,5 +1,6 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
 using System;
@@ -25,12 +26,13 @@ namespace FRESHMusicPlayer.Forms.WPF
     {
         Winforms.Timer progressTimer;
         public SelectedMenus SelectedMenu = SelectedMenus.Tracks;
+        Player player = new Player();
         public WPFUserInterface()
         {
             InitializeComponent();
-            Player.songChanged += Player_songChanged;
-            Player.songStopped += Player_songStopped;
-            Player.songException += Player_songException;
+            player.SongChanged += player_songChanged;
+            player.SongStopped += player_songStopped;
+            player.SongException += player_songException;
             progressTimer = new Winforms.Timer  // System.Windows.Forms timer because dispatcher timer seems to have some threading issues?
             {
                 Interval = 1000
@@ -42,19 +44,19 @@ namespace FRESHMusicPlayer.Forms.WPF
         #region Controls
         public void PlayPauseMethod()
         {
-            if (Player.paused)
+            if (player.Paused)
             {
-                Player.ResumeMusic();
+                player.ResumeMusic();
                 PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
             }
             else
             {
-                Player.PauseMusic();
+                player.PauseMusic();
                 PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
             }
         }
-        public void StopMethod() => Player.StopMusic();
-        public void NextTrackMethod() => Player.NextSong();
+        public void StopMethod() => player.StopMusic();
+        public void NextTrackMethod() => player.NextSong();
         public void MoreMethod()
         {
 
@@ -99,22 +101,22 @@ namespace FRESHMusicPlayer.Forms.WPF
         #region Settings
         #endregion
         #region Events
-        #region Player
-        private void Player_songStopped(object sender, EventArgs e)
+        #region player
+        private void player_songStopped(object sender, EventArgs e)
         {
-            Title = "FRESHMusicPlayer WPF Test";
+            Title = "FRESHMusicPlayer 8 Development";
             TitleLabel.Text = ArtistLabel.Text = "Nothing Playing";
             progressTimer.Stop();
         }
 
-        private void Player_songChanged(object sender, EventArgs e)
+        private void player_songChanged(object sender, EventArgs e)
         {
-            Track track = new Track(Player.filePath);
-            Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer WPF Test";
-            TitleLabel.Text = track.Title;
-            ArtistLabel.Text = track.Artist;
-            ProgressBar.Maximum = Player.audioFile.TotalTime.TotalSeconds;
-            ProgressIndicator2.Text = NumberUtils.Format((int)Player.audioFile.TotalTime.TotalSeconds);
+            Track track = new Track(player.FilePath);
+            Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
+            TitleLabel.Text = track.Title == "" ? "No Title" : track.Title;
+            ArtistLabel.Text = track.Artist == "" ? "No Artist" : track.Artist;
+            ProgressBar.Maximum = player.AudioFile.TotalTime.TotalSeconds;
+            ProgressIndicator2.Text = player.AudioFile.CurrentTime.ToString(@"mm\:ss");
 
             if (track.EmbeddedPictures.Count == 0)
             {
@@ -130,31 +132,31 @@ namespace FRESHMusicPlayer.Forms.WPF
 
             progressTimer.Start();
         }
-        private void Player_songException(object sender, PlaybackExceptionEventArgs e) => MessageBox.Show($"A playback error has occured. \"{e.Details}\"");
+        private void player_songException(object sender, PlaybackExceptionEventArgs e) => MessageBox.Show($"A playback error has occured. \"{e.Details}\"");
         #endregion
         #region ControlsBox
         private void MoreButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MoreMethod();
         private void PlayPauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PlayPauseMethod();
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
-        private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e) => Player.RepositionMusic((int)ProgressBar.Value);
+        private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e) => player.RepositionMusic((int)ProgressBar.Value);
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (Player.playing)
+            if (player.Playing)
             {
-                Player.currentvolume = (float)(VolumeBar.Value / 100);
-                Player.UpdateSettings(); 
+                player.CurrentVolume = (float)(VolumeBar.Value / 100);
+                player.UpdateSettings(); 
             }
         }
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
-            ProgressIndicator1.Text = NumberUtils.Format((int)Player.audioFile.CurrentTime.TotalSeconds);
-            ProgressBar.Value = Player.audioFile.CurrentTime.TotalSeconds;
-            Player.avoidnextqueue = false;
+            ProgressIndicator1.Text = player.AudioFile.TotalTime.ToString(@"mm\:ss");
+            ProgressBar.Value = player.AudioFile.CurrentTime.TotalSeconds;
+            player.AvoidNextQueue = false;
         }
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Player.audioFile.CurrentTime = TimeSpan.FromSeconds(ProgressBar.Value);
+            player.AudioFile.CurrentTime = TimeSpan.FromSeconds(ProgressBar.Value);
         }
         #endregion
         #region MenuBar
@@ -173,8 +175,8 @@ namespace FRESHMusicPlayer.Forms.WPF
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            Player.AddQueue(FilePathBox.Text);
-            Player.PlayMusic();                         
+            //player.AddQueue(FilePathBox.Text);
+            player.PlayMusic();                         
         }
        
 
@@ -186,7 +188,7 @@ namespace FRESHMusicPlayer.Forms.WPF
 
       
 
-        private void QueueButton_Click(object sender, RoutedEventArgs e) => Player.AddQueue(FilePathBox.Text);
+        //private void QueueButton_Click(object sender, RoutedEventArgs e) => player.AddQueue(FilePathBox.Text);
 
         
 
@@ -200,11 +202,28 @@ namespace FRESHMusicPlayer.Forms.WPF
             };
             if (fileDialog.ShowDialog() == true)
             {
-                foreach (string path in fileDialog.FileNames) Player.AddQueue(path);
-                Player.PlayMusic();
+                foreach (string path in fileDialog.FileNames) player.AddQueue(path);
+                player.PlayMusic();
             }
         }
 
-        
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Q:
+                    OpenFileDialog fileDialog = new OpenFileDialog
+                    {
+                        Multiselect = true
+                    };
+                    if (fileDialog.ShowDialog() == true)
+                    {
+                        foreach (string path in fileDialog.FileNames) player.AddQueue(path);
+                        player.PlayMusic();
+                    }
+                    e.Handled = true;
+                    break;
+            }
+        }
     }
 }

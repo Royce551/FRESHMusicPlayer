@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="FRESHMusicPlayer WPF Test" Height="512" Width="702" Closed="Window_Closed">
+        Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" PreviewKeyDown="Window_PreviewKeyDown">
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel Height="25" DockPanel.Dock="Top" Background="#FF141517" >
@@ -181,12 +181,7 @@
                 </Slider>
             </Grid>
         </Border>
-        <Grid Background="#FF141517">
-            <Label Content="Not what the final design will look like, lol | WPF UI Ver. 1 d.3.31.2020" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-            <TextBox x:Name="FilePathBox" HorizontalAlignment="Left" Height="24" Margin="427,283,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="PlayTrackButton" Content="Play" HorizontalAlignment="Left" Margin="371,337,0,0" VerticalAlignment="Top" Width="75" Click="PlayButton_Click"/>
-            <Button x:Name="QueueTrackButton" Content="Add to queue" HorizontalAlignment="Left" Margin="488,337,0,0" VerticalAlignment="Top" Width="75" Click="QueueButton_Click"/>
-            <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="337,307,0,0" VerticalAlignment="Top" Width="75" Click="BrowseButton_Click"/>
-        </Grid>
+        <Frame Content="Frame" Background="#FF250C27"/>
+
     </DockPanel>
 </Window>

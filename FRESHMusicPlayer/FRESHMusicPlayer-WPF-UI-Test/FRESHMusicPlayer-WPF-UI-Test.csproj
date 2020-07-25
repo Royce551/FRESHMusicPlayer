@@ -44,6 +44,10 @@
     <Reference Include="DiscordRPC, Version=1.0.150.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DiscordRichPresence.1.0.150\lib\net35\DiscordRPC.dll</HintPath>
     </Reference>
+    <Reference Include="FRESHMusicPlayer.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\FRESHMusicPlayer.Core.dll</HintPath>
+    </Reference>
     <Reference Include="NAudio, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.9.0\lib\net35\NAudio.dll</HintPath>
     </Reference>
@@ -72,19 +76,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Handlers\DatabaseHandler.cs" />
-    <Compile Include="Handlers\ErrorHandler.cs" />
-    <Compile Include="Handlers\Integrations\DiscogsIntegration.cs" />
-    <Compile Include="Handlers\Integrations\Integration.cs" />
-    <Compile Include="Player.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Player.Designer.cs">
-      <DependentUpon>Player.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Utilities\databaseformat.cs" />
-    <Compile Include="Utilities\NumberUtils.cs" />
-    <Compile Include="Utilities\UserInterfaceUtils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -126,10 +117,17 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Utilities\database.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dependencies\FRESHMusicPlayer.Core.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+    <Folder Include="Pages\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
