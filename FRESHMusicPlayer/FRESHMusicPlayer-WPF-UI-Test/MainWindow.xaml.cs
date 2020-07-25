@@ -116,7 +116,7 @@ namespace FRESHMusicPlayer.Forms.WPF
             TitleLabel.Text = track.Title == "" ? "No Title" : track.Title;
             ArtistLabel.Text = track.Artist == "" ? "No Artist" : track.Artist;
             ProgressBar.Maximum = player.AudioFile.TotalTime.TotalSeconds;
-            ProgressIndicator2.Text = player.AudioFile.CurrentTime.ToString(@"mm\:ss");
+            ProgressIndicator2.Text = player.AudioFile.TotalTime.ToString(@"mm\:ss");
 
             if (track.EmbeddedPictures.Count == 0)
             {
@@ -150,7 +150,7 @@ namespace FRESHMusicPlayer.Forms.WPF
         }
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
-            ProgressIndicator1.Text = player.AudioFile.TotalTime.ToString(@"mm\:ss");
+            ProgressIndicator1.Text = player.AudioFile.CurrentTime.ToString(@"mm\:ss");
             ProgressBar.Value = player.AudioFile.CurrentTime.TotalSeconds;
             player.AvoidNextQueue = false;
         }
