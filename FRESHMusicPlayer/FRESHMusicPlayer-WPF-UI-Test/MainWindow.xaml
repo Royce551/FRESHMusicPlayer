@@ -30,7 +30,8 @@
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
-            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="Artists" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="0,0,10,0" MouseDown="ArtistsTab_MouseDown">
+            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
+            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="Artists" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown">
                 <TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
@@ -52,7 +53,8 @@
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
-            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="Albums" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="0,0,10,0" MouseDown="AlbumsTab_MouseDown">
+            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
+            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="Albums" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown">
                 <TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
@@ -74,7 +76,8 @@
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
-            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="Import" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="0,0,10,0" MouseDown="ImportTab_MouseDown">
+            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
+            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="Import" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown">
                 <TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
@@ -181,7 +184,7 @@
                 </Slider>
             </Grid>
         </Border>
-        <Frame Content="Frame" Background="#FF250C27"/>
+        <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Visible" />
 
     </DockPanel>
 </Window>
