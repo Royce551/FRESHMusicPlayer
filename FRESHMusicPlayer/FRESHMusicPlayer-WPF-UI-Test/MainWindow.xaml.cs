@@ -60,7 +60,11 @@ namespace FRESHMusicPlayer.Forms.WPF
                 PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
             }
         }
-        public void StopMethod() => Player.StopMusic();
+        public void StopMethod()
+        {
+            Player.ClearQueue();
+            Player.StopMusic();
+        }
         public void NextTrackMethod() => Player.NextSong();
         public void MoreMethod()
         {
