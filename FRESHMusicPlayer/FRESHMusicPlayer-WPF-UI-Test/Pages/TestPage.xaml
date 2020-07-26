@@ -9,7 +9,7 @@
       Title="TestPage">
 
     <Grid>
-        <Grid Background="#FF230046" Height="456">
+        <Grid Background="#FF230046">
             <TextBlock  HorizontalAlignment="Left" Margin="86,81,0,0" FontSize="50" TextWrapping="Wrap" Text="Hello, world!" VerticalAlignment="Top" Foreground="White"/>
             <Button Content="Button" HorizontalAlignment="Left" Margin="207,196,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         </Grid>

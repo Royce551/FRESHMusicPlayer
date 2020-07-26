@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Winforms = System.Windows.Forms;
 using System.Windows.Navigation;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Forms.WPF
 {
@@ -30,6 +31,7 @@ namespace FRESHMusicPlayer.Forms.WPF
         public SelectedMenus SelectedMenu = SelectedMenus.Tracks;
         // TODO: i dunno how to pass this to the pages, if there is a way to i can avoid making this static
         public static Player Player = new Player();
+        public static bool MiniPlayerMode = false;
         public WPFUserInterface()
         {
             InitializeComponent();
@@ -66,6 +68,21 @@ namespace FRESHMusicPlayer.Forms.WPF
         }
         #endregion
         #region Logic
+        public void SetMiniPlayerMode(bool mode)
+        {
+            if (mode)
+            {
+                Width = 559;
+                Height = 148;
+                MiniPlayerMode = true;
+            }
+            else
+            {
+                Width = 702;
+                Height = 512;
+                MiniPlayerMode = false;
+            }
+        }
         #region Tabs
         private void ChangeTabs(SelectedMenus tab)
         {
@@ -224,9 +241,35 @@ namespace FRESHMusicPlayer.Forms.WPF
                     }
                     e.Handled = true;
                     break;
+                case Key.W:
+                    if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);
+                    e.Handled = true;
+                    break;
+                case Key.Left:
+                    if (ContentFrame.CanGoBack) ContentFrame.GoBack();
+                    e.Handled = true;
+                    break;
+                case Key.Right:
+                    if (ContentFrame.CanGoForward) ContentFrame.GoForward();
+                    e.Handled = true;
+                    break;
             }
            
         }
 
+        private void Window_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+        }
+
+        private async void Window_Drop(object sender, DragEventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Player.AddQueue(tracks);
+            });
+            Player.PlayMusic();
+        }
     }
 }

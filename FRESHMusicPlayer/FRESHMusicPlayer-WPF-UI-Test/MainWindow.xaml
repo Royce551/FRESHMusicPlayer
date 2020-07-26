@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" PreviewKeyDown="Window_PreviewKeyDown">
+        Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" PreviewKeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True">
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel Height="25" DockPanel.Dock="Top" Background="#FF141517" >
@@ -184,7 +184,7 @@
                 </Slider>
             </Grid>
         </Border>
-        <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Visible" />
+        <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Hidden" />
 
     </DockPanel>
 </Window>
