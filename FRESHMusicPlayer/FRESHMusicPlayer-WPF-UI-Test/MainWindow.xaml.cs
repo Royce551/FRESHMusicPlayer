@@ -13,6 +13,7 @@ using Winforms = System.Windows.Forms;
 using System.Windows.Navigation;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using FRESHMusicPlayer_WPF_UI_Test.Handlers.Notifications;
 
 namespace FRESHMusicPlayer
 {
@@ -32,6 +33,7 @@ namespace FRESHMusicPlayer
         public SelectedMenus SelectedMenu = SelectedMenus.Tracks;
         // TODO: i dunno how to pass this to the pages, if there is a way to i can avoid making this static
         public static Player Player = new Player();
+        public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
         public MainWindow()
         {
@@ -94,6 +96,7 @@ namespace FRESHMusicPlayer
         {
             RightFrame.Visibility = Visibility.Visible;
             RightFrame.Source = new Uri(Uri, UriKind.Relative);
+            RightFrame.NavigationService.RemoveBackEntry();
         }
         public void HideAuxilliaryPane()
         {
@@ -167,7 +170,11 @@ namespace FRESHMusicPlayer
 
             progressTimer.Start();
         }
-        private void player_songException(object sender, PlaybackExceptionEventArgs e) => MessageBox.Show($"A playback error has occured. \"{e.Details}\"");
+        private void player_songException(object sender, PlaybackExceptionEventArgs e)
+        {
+            NotificationHandler.AddNotification("A playback error occured", $"{e.Details}\nWe'll skip to the next track for you", true, true);
+            Player.NextSong();
+        }
         #endregion
         #region ControlsBox
         private void MoreButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MoreMethod();
@@ -247,16 +254,7 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.Q:
-                    OpenFileDialog fileDialog = new OpenFileDialog
-                    {
-                        Multiselect = true
-                    };
-                    if (fileDialog.ShowDialog() == true)
-                    {
-                        foreach (string path in fileDialog.FileNames) Player.AddQueue(path);
-                        Player.PlayMusic();
-                    }
-                    e.Handled = true;
+                    NotificationHandler.AddNotification("Hello World", "This is a test notification");
                     break;
                 case Key.W:
                     if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);
@@ -271,7 +269,7 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.E:
-                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/TestPage.xaml"); else HideAuxilliaryPane();
+                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/NotificationPage.xaml"); else HideAuxilliaryPane();
                     e.Handled = true;
                     break;
             }

@@ -112,7 +112,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="206"/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="CoverArtBox" Margin="5,10,05,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right"/>
+                <Image x:Name="CoverArtBox" Margin="5,10,05,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality"/>
                 <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="White"/>
                 <Slider x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Margin="38,56,45,0" VerticalAlignment="Top" Height="18" Foreground="#FFE84B4B" PreviewMouseUp="ProgressBar_MouseUp"/>
                 <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="#FFDADADA" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left"/>
@@ -184,7 +184,7 @@
                 </Slider>
             </Grid>
         </Border>
-        <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Background="#FFF11F1F" Visibility="Collapsed" Width="235"/>
+        <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Background="#FFF11F1F" Visibility="Collapsed" Width="235" NavigationUIVisibility="Hidden"/>
         <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Hidden"/>
         
 
