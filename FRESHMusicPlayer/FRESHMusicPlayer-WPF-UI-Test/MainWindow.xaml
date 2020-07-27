@@ -5,6 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" PreviewKeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True">
+    <Window.Resources>
+        <Storyboard x:Key="SlideIn">
+            <DoubleAnimation
+                        Storyboard.TargetName="RightFrame"
+                        Storyboard.TargetProperty="Width"
+                        From="0" To="235" Duration="0:0:.15"
+                        />
+        </Storyboard>
+        <Storyboard x:Key="SlideOut">
+            <DoubleAnimation
+                        Storyboard.TargetName="RightFrame"
+                        Storyboard.TargetProperty="Width"
+                        To="0" Duration="0:0:.15"
+                        />
+        </Storyboard>
+    </Window.Resources>
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="#FF141517" >

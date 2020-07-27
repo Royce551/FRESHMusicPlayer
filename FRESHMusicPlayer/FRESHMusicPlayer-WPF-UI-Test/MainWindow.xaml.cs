@@ -16,6 +16,9 @@ using System.Runtime.CompilerServices;
 using FRESHMusicPlayer.Handlers.Notifications;
 using System.Threading;
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
+using System.Windows.Documents;
+using System.Collections.Generic;
 
 namespace FRESHMusicPlayer
 {
@@ -36,6 +39,7 @@ namespace FRESHMusicPlayer
         // TODO: i dunno how to pass this to the pages, if there is a way to i can avoid making this static
         public static Player Player = new Player();
         public static NotificationHandler NotificationHandler = new NotificationHandler();
+        public static List<string> Library = new List<string>();
         public static bool MiniPlayerMode = false;
         public MainWindow()
         {
@@ -48,6 +52,7 @@ namespace FRESHMusicPlayer
                 Interval = 1000
             };
             progressTimer.Tick += ProgressTimer_Tick;
+            Library = DatabaseHandler.ReadSongs();
         }
 
         
@@ -97,14 +102,17 @@ namespace FRESHMusicPlayer
         public void ShowAuxilliaryPane(string Uri)
         {
             RightFrame.Visibility = Visibility.Visible;
+            if (FindResource("SlideIn") is Storyboard sb) BeginStoryboard(sb);
             RightFrame.Source = new Uri(Uri, UriKind.Relative);
             RightFrame.NavigationService.RemoveBackEntry();
         }
         public void HideAuxilliaryPane()
         {
+            if (FindResource("SlideOut") is Storyboard sb) BeginStoryboard(sb);
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
         }
+
         #region Tabs
         private void ChangeTabs(SelectedMenus tab)
         {
@@ -302,5 +310,7 @@ namespace FRESHMusicPlayer
             });
             Player.PlayMusic();
         }
+
+        
     }
 }

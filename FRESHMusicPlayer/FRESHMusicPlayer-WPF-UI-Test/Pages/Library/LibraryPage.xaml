@@ -1,0 +1,25 @@
+﻿<Page x:Class="FRESHMusicPlayer_WPF_UI_Test.Pages.Library.LibraryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Pages.Library"
+      mc:Ignorable="d" 
+      d:DesignHeight="372" d:DesignWidth="694"
+      Title="LibraryPage">
+
+    <Grid Background="#FF5D5D5D">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="23*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5" MinWidth="353"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="CategoryPanel" Margin="0,1,0,0" Background="#FF69B578" Grid.RowSpan="2"/>
+        <StackPanel Grid.Column="1" Margin="0" Grid.Row="1" Background="#FF338BC1"/>
+        <Grid Grid.Column="1" Margin="0" Background="#FFD5463F"/>
+
+    </Grid>
+</Page>

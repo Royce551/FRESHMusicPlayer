@@ -11,7 +11,7 @@
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard>
                 <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="Background"
+                    <DoubleAnimation Storyboard.TargetName="BackgroundPanel"
                                      Storyboard.TargetProperty="Opacity"
                                      From="0"
                                      To="1.0" Duration="0:0:.25"
@@ -21,7 +21,7 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Grid>
-        <Grid x:Name="Background" Background="#FF2C2F33">
+        <Grid x:Name="BackgroundPanel" Background="#FF2C2F33">
             <Grid.RowDefinitions>
                 <RowDefinition Height="27"/>
                 <RowDefinition/>
