@@ -12,8 +12,9 @@ using System.Windows.Media.Imaging;
 using Winforms = System.Windows.Forms;
 using System.Windows.Navigation;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
-namespace FRESHMusicPlayer.Forms.WPF
+namespace FRESHMusicPlayer
 {
     public enum SelectedMenus
     {
@@ -25,14 +26,14 @@ namespace FRESHMusicPlayer.Forms.WPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class WPFUserInterface : Window
+    public partial class MainWindow : Window
     {
         Winforms.Timer progressTimer;
         public SelectedMenus SelectedMenu = SelectedMenus.Tracks;
         // TODO: i dunno how to pass this to the pages, if there is a way to i can avoid making this static
         public static Player Player = new Player();
         public static bool MiniPlayerMode = false;
-        public WPFUserInterface()
+        public MainWindow()
         {
             InitializeComponent();
             Player.SongChanged += player_songChanged;
@@ -77,15 +78,27 @@ namespace FRESHMusicPlayer.Forms.WPF
             if (mode)
             {
                 Width = 559;
-                Height = 148;
+                Height = 123;
+                MainBar.Visibility = Visibility.Collapsed;
                 MiniPlayerMode = true;
             }
             else
             {
                 Width = 702;
                 Height = 512;
+                MainBar.Visibility = Visibility.Visible;
                 MiniPlayerMode = false;
             }
+        }
+        public void ShowAuxilliaryPane(string Uri)
+        {
+            RightFrame.Visibility = Visibility.Visible;
+            RightFrame.Source = new Uri(Uri, UriKind.Relative);
+        }
+        public void HideAuxilliaryPane()
+        {
+            RightFrame.Visibility = Visibility.Collapsed;
+            RightFrame.Source = null;
         }
         #region Tabs
         private void ChangeTabs(SelectedMenus tab)
@@ -255,6 +268,10 @@ namespace FRESHMusicPlayer.Forms.WPF
                     break;
                 case Key.Right:
                     if (ContentFrame.CanGoForward) ContentFrame.GoForward();
+                    e.Handled = true;
+                    break;
+                case Key.E:
+                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/TestPage.xaml"); else HideAuxilliaryPane();
                     e.Handled = true;
                     break;
             }

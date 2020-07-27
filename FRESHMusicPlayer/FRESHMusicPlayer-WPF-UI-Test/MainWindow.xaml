@@ -1,4 +1,4 @@
-﻿<Window x:Class="FRESHMusicPlayer.Forms.WPF.WPFUserInterface"
+﻿<Window x:Class="FRESHMusicPlayer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" PreviewKeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True">
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
-        <DockPanel Height="25" DockPanel.Dock="Top" Background="#FF141517" >
+        <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="#FF141517" >
             <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="Tracks" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown">
                 <TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
@@ -104,7 +104,7 @@
             <!--<Path x:Name="VolumIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" RenderTransformOrigin="1.1,0.633"  Width="20" VerticalAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" Fill="White"/>-->
         </DockPanel>
         <!--Controls Box-->
-        <Border BorderThickness="1" Height="84" BorderBrush="#FF2C2F33" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5" >
+        <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="#FF2C2F33" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5" >
             <Grid x:Name="ControlsBox" DockPanel.Dock="Bottom" Background="#FF2C2F33" Margin="0,0,0,-2">
 
                 <Grid.ColumnDefinitions>
@@ -184,7 +184,9 @@
                 </Slider>
             </Grid>
         </Border>
-        <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Hidden" />
+        <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Background="#FFF11F1F" Visibility="Collapsed" Width="235"/>
+        <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Hidden"/>
+        
 
     </DockPanel>
 </Window>

@@ -24,13 +24,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
         public TestPage()
         {
             InitializeComponent();
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WPFUserInterface.Player.AddQueue(@"C:\Users\poohw\OneDrive\Music\Splatune 2 - Splatoon 2 OST\Disc 2\2-05 Muck Warfare.flac");
-            WPFUserInterface.Player.CurrentVolume = .3f;
-            WPFUserInterface.Player.PlayMusic();
+            MainWindow.Player.AddQueue(@"C:\Users\poohw\OneDrive\Music\Splatune 2 - Splatoon 2 OST\Disc 2\2-05 Muck Warfare.flac");
+            MainWindow.Player.CurrentVolume = .3f;
+            MainWindow.Player.PlayMusic();
         }
     }
 }
