@@ -25,14 +25,17 @@ namespace FRESHMusicPlayer.Handlers.Notifications
 
         public string HeaderText;
         public string ContentText;
-        public NotificationBox(string HeaderText, string ContentText, bool IsImportant = false, bool DisplayAsToast = false)
+        public NotificationBox(NotificationInfo info)
         {
-            
             InitializeComponent();
-            HeaderLabel.Text = HeaderText;
-            ContentLabel.Text = ContentText;
-            this.IsImportant = IsImportant;
-            this.DisplayAsToast = DisplayAsToast;
+            UpdateContent(info);
+        }
+        public void UpdateContent(NotificationInfo info)
+        {
+            HeaderLabel.Text = info.HeaderText;
+            ContentLabel.Text = info.ContentText;
+            this.IsImportant = info.IsImportant;
+            this.DisplayAsToast = info.DisplayAsToast;
         }
     }
 }

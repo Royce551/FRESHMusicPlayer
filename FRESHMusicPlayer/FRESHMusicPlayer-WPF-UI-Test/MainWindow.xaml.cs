@@ -13,7 +13,9 @@ using Winforms = System.Windows.Forms;
 using System.Windows.Navigation;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
-using FRESHMusicPlayer_WPF_UI_Test.Handlers.Notifications;
+using FRESHMusicPlayer.Handlers.Notifications;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer
 {
@@ -118,6 +120,15 @@ namespace FRESHMusicPlayer
                     tab = TracksTab;
                     break;
                 case SelectedMenus.Artists:
+                    var box = new NotificationBox(new NotificationInfo("(1/2)", "La de dah", false, false));
+                    Task.Run(() =>
+                    { 
+                        Dispatcher.Invoke(() => NotificationHandler.Add(box));
+                        Thread.Sleep(5000);
+                        Dispatcher.Invoke(() => NotificationHandler.Update(box, new NotificationInfo("(2/2)", "The quick brown fox\njumps over the lazy dog\ntest", false, false)));
+                        Thread.Sleep(2000);
+                        Dispatcher.Invoke(() => NotificationHandler.Remove(box));
+                    });
                     tab = ArtistsTab;
                     break;
                 case SelectedMenus.Albums:
@@ -172,7 +183,7 @@ namespace FRESHMusicPlayer
         }
         private void player_songException(object sender, PlaybackExceptionEventArgs e)
         {
-            NotificationHandler.AddNotification("A playback error occured", $"{e.Details}\nWe'll skip to the next track for you", true, true);
+            //NotificationHandler.AddNotification("A playback error occured", $"{e.Details}\nWe'll skip to the next track for you", true, true);
             Player.NextSong();
         }
         #endregion
@@ -254,7 +265,8 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.Q:
-                    NotificationHandler.AddNotification("Hello World", "This is a test notification");
+                           
+                    e.Handled = true;
                     break;
                 case Key.W:
                     if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);

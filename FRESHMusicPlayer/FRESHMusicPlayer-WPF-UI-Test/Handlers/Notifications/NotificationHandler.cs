@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Handlers.Notifications
+namespace FRESHMusicPlayer.Handlers.Notifications
 {
     public class NotificationHandler
     {
@@ -16,15 +16,26 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Handlers.Notifications
         {
 
         }
-        public void AddNotification(string HeaderText, string ContentText, bool IsImportant = false, bool DisplayAsToast = true)
+        public void Add(NotificationBox box)
         {
-            Notifications.Add(new NotificationBox(HeaderText, ContentText, IsImportant, DisplayAsToast));
+            Notifications.Add(box);
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);
         }
-        public void ClearAllNotifications()
+        public void Update(NotificationBox box, NotificationInfo info)
+        {
+            Notifications[Notifications.IndexOf(box)].UpdateContent(info);
+            NotificationInvalidate?.Invoke(null, EventArgs.Empty);
+        }
+        public void Remove(NotificationBox box)
+        {
+            Notifications.Remove(box);
+            NotificationInvalidate?.Invoke(null, EventArgs.Empty);
+        }
+        public void ClearAll()
         {
             Notifications.Clear();
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);
         }
+        
     }
 }

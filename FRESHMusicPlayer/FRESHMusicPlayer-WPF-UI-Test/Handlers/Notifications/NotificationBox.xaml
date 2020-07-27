@@ -3,12 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Handlers.Notifications"
+             xmlns:local="clr-namespace:FRESHMusicPlayer.Handlers.Notifications"
              mc:Ignorable="d" 
              d:DesignHeight="120
              " d:DesignWidth="200" Margin="0,5">
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="Background"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0"
+                                     To="1.0" Duration="0:0:.25"
+                                     />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
-        <Grid Background="#FF2C2F33">
+        <Grid x:Name="Background" Background="#FF2C2F33">
             <Grid.RowDefinitions>
                 <RowDefinition Height="27"/>
                 <RowDefinition/>

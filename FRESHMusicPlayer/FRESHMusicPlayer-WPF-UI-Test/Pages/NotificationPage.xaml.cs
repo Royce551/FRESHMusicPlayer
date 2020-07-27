@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer;
+using System.Windows.Media.Animation;
 
 namespace FRESHMusicPlayer_WPF_UI_Test.Pages
 {
@@ -35,7 +36,11 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
         private void ShowNotifications()
         {
             StackPanel.Children.Clear();
-            foreach (NotificationBox box in MainWindow.NotificationHandler.Notifications) StackPanel.Children.Add(box);
+            foreach (NotificationBox box in MainWindow.NotificationHandler.Notifications)
+            {
+                StackPanel.Children.Add(box);
+            }
+                
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
