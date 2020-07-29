@@ -169,8 +169,8 @@ namespace FRESHMusicPlayer
             Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
             TitleLabel.Text = track.Title == "" ? "No Title" : track.Title;
             ArtistLabel.Text = track.Artist == "" ? "No Artist" : track.Artist;
-            ProgressBar.Maximum = Player.AudioFile.TotalTime.TotalSeconds;
-            ProgressIndicator2.Text = Player.AudioFile.TotalTime.ToString(@"mm\:ss");
+            ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
+            ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
 
             if (track.EmbeddedPictures.Count == 0)
             {
@@ -207,13 +207,13 @@ namespace FRESHMusicPlayer
         }
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
-            ProgressIndicator1.Text = Player.AudioFile.CurrentTime.ToString(@"mm\:ss");
-            ProgressBar.Value = Player.AudioFile.CurrentTime.TotalSeconds;
+            ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
+            ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
             Player.AvoidNextQueue = false;
         }
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Player.AudioFile.CurrentTime = TimeSpan.FromSeconds(ProgressBar.Value);
+            Player.CurrentBackend.CurrentTime = TimeSpan.FromSeconds(ProgressBar.Value);
         }
         #endregion
         #region MenuBar
