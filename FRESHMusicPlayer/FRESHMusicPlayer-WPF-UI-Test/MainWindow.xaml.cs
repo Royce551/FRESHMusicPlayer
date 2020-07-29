@@ -35,7 +35,7 @@ namespace FRESHMusicPlayer
     public partial class MainWindow : Window
     {
         Winforms.Timer progressTimer;
-        public SelectedMenus SelectedMenu = SelectedMenus.Tracks;
+        public static SelectedMenus SelectedMenu = SelectedMenus.Tracks;
         // TODO: i dunno how to pass this to the pages, if there is a way to i can avoid making this static
         public static Player Player = new Player();
         public static NotificationHandler NotificationHandler = new NotificationHandler();
@@ -125,22 +125,18 @@ namespace FRESHMusicPlayer
             switch (SelectedMenu)
             {
                 case SelectedMenus.Tracks:
+                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    RightFrame.NavigationService.RemoveBackEntry();
                     tab = TracksTab;
                     break;
                 case SelectedMenus.Artists:
-                    var box = new NotificationBox(new NotificationInfo("(1/2)", "La de dah", false, false));
-                    Task.Run(() =>
-                    { 
-                        Dispatcher.Invoke(() => NotificationHandler.Add(box));
-                        Thread.Sleep(5000);
-                        Dispatcher.Invoke(() => NotificationHandler.Update(box, new NotificationInfo("(2/2)", "The quick brown fox\njumps over the lazy dog\ntest", false, false)));
-                        Thread.Sleep(2000);
-                        Dispatcher.Invoke(() => NotificationHandler.Remove(box));
-                    });
+                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    RightFrame.NavigationService.RemoveBackEntry();
                     tab = ArtistsTab;
                     break;
                 case SelectedMenus.Albums:
-                    ContentFrame.GoBack();
+                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    RightFrame.NavigationService.RemoveBackEntry();
                     tab = AlbumsTab;
                     break;
                 case SelectedMenus.Import:
@@ -191,7 +187,7 @@ namespace FRESHMusicPlayer
         }
         private void player_songException(object sender, PlaybackExceptionEventArgs e)
         {
-            //NotificationHandler.AddNotification("A playback error occured", $"{e.Details}\nWe'll skip to the next track for you", true, true);
+            NotificationHandler.Add(new NotificationBox(new NotificationInfo("A playback error occured", $"{e.Details}\nWe'll skip to the next track for you", true, true)));
             Player.NextSong();
         }
         #endregion

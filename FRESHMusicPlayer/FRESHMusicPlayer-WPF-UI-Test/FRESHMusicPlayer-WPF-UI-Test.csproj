@@ -101,6 +101,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Library\SongEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\NotificationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +121,9 @@
   <ItemGroup>
     <Compile Include="Pages\Library\LibraryPage.xaml.cs">
       <DependentUpon>LibraryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Library\SongEntry.xaml.cs">
+      <DependentUpon>SongEntry.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\NotificationPage.xaml.cs">
       <DependentUpon>NotificationPage.xaml</DependentUpon>
