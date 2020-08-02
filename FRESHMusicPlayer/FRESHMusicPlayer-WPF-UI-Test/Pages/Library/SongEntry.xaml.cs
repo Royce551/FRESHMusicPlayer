@@ -64,5 +64,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         private void QueueButtonClick(object sender, MouseButtonEventArgs e) => MainWindow.Player.AddQueue(FilePath);
 
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => DatabaseHandler.DeleteSong(FilePath);
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                MainWindow.Player.AddQueue(FilePath);
+                MainWindow.Player.PlayMusic();
+            }
+        }
     }
 }

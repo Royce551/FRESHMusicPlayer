@@ -1,14 +1,14 @@
-﻿<Application x:Class="FRESHMusicPlayer_WPF_UI_Test.App"
+﻿<Application x:Class="FRESHMusicPlayer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test;assembly=FRESHMusicPlayer-WPF-UI-Test" xmlns:local1="clr-namespace:FRESHMusicPlayer"
+             Startup="App_Startup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="IconsDictionary" 
-
-            Source="pack://application:,,,/Resources/Icons.xaml" />
+                <ResourceDictionary x:Name="IconsDictionary" Source="pack://application:,,,/Resources/Icons.xaml" />
+                <ResourceDictionary x:Name="StylesDictionary" Source="pack://application:,,,/Resources/Styles.xaml"/>
+                <local1:SkinResourceDictionary LightSource="pack://application:,,,/Resources/LightTheme.xaml" DarkSource="pack://application:,,,/Resources/DarkTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FRESHMusicPlayer.Handlers.Notifications"
              mc:Ignorable="d" 
              d:DesignHeight="120
-             " d:DesignWidth="200" Margin="0,5">
+             " d:DesignWidth="200" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard>

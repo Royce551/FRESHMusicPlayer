@@ -23,125 +23,125 @@
     </Window.Resources>
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
-        <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="#FF141517" >
-            <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="Tracks" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown">
-                <TextBlock.Triggers>
+        <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
+            <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="Tracks" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown">
+                <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="#498438" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="TextBlock.Foreground"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="TextBlock.Foreground"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="TextBlock.Foreground"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                     <EventTrigger RoutedEvent="MouseLeave">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="TextBlock.Foreground"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="TextBlock.Foreground"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="TextBlock.Foreground"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
-                </TextBlock.Triggers>
+                </TextBlock.Triggers>-->
             </TextBlock>
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="Artists" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown">
-                <TextBlock.Triggers>
+            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="Artists" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown">
+                <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                     <EventTrigger RoutedEvent="MouseLeave">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
-                </TextBlock.Triggers>
+                </TextBlock.Triggers>-->
             </TextBlock>
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="Albums" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown">
-                <TextBlock.Triggers>
+            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="Albums" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown">
+                <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                     <EventTrigger RoutedEvent="MouseLeave">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="ImportTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
-                </TextBlock.Triggers>
+                </TextBlock.Triggers>-->
             </TextBlock>
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="Import" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown">
-                <TextBlock.Triggers>
+            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="Import" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown">
+                <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.1" To="#FFDADADA" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.1" To="{StaticResource SecondaryTextColor}" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                     <EventTrigger RoutedEvent="MouseLeave">
                         <BeginStoryboard>
                             <Storyboard>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
-                                <ColorAnimation Duration="0:0:.25" To="White" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="TracksTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="AlbumsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
+                                <ColorAnimation Duration="0:0:.25" To="{StaticResource PrimaryTextColor}" Storyboard.TargetName="ArtistsTab" Storyboard.TargetProperty="(TextBlock.Foreground).Color"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
-                </TextBlock.Triggers>
+                </TextBlock.Triggers>-->
             </TextBlock>
-            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="Settings" FontSize="16" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="ImportTab_MouseDown" HorizontalAlignment="Right">
+            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="Settings" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="ImportTab_MouseDown" HorizontalAlignment="Right">
             </TextBlock>
             <!--<Path x:Name="VolumIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" RenderTransformOrigin="1.1,0.633"  Width="20" VerticalAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" Fill="White"/>-->
         </DockPanel>
         <!--Controls Box-->
-        <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="#FF2C2F33" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5" >
-            <Grid x:Name="ControlsBox" DockPanel.Dock="Bottom" Background="#FF2C2F33" Margin="0,0,0,-2">
+        <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{StaticResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5">
+            <Grid x:Name="ControlsBox" DockPanel.Dock="Bottom" Background="{StaticResource ControlBoxColor}" Margin="0,0,0,-2">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="CoverArtArea" Width="75"/>
+                    <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="206"/>
                 </Grid.ColumnDefinitions>
                 <Image x:Name="CoverArtBox" Margin="5,10,05,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="White" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis"/>
                 <Slider x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Margin="38,56,45,0" VerticalAlignment="Top" Height="18" Foreground="#FFE84B4B" PreviewMouseUp="ProgressBar_MouseUp"/>
-                <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="#FFDADADA" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,0,10,13" TextWrapping="NoWrap" Text="10:00" Foreground="#FFDADADA" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="30"/>
-                <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="#FFDADADA" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,0,10,13" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="30"/>
+                <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
                 <Button Grid.Column="2" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top" Width="52" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"/>
 
 
-                <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,95,8.413" Height="35.2" Width="35" HorizontalAlignment="Right"/>
-                <Path x:Name="StopButton" Data="{StaticResource StopIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right"/>
-                <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
-                <Path x:Name="MoreButton" Data="{StaticResource MoreIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,150,15" Width="20" Height="20" HorizontalAlignment="Right" MouseLeftButtonDown="MoreButton_MouseLeftButtonDown"/>
-                <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,95,8.413" Height="35.2" Width="35" HorizontalAlignment="Right"/>
+                <Path x:Name="StopButton" Data="{StaticResource StopIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right"/>
+                <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
+                <Path x:Name="MoreButton" Data="{StaticResource MoreIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,150,15" Width="20" Height="20" HorizontalAlignment="Right" MouseLeftButtonDown="MoreButton_MouseLeftButtonDown"/>
+                <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right"/>
 
 
                 <!--Hitboxes for the above paths-->

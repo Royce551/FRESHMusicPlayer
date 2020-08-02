@@ -35,18 +35,23 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
         private void InvalidateNotifications(object sender, EventArgs e) => ShowNotifications();
         private void ShowNotifications()
         {
-            StackPanel.Children.Clear();
+            NotificationList.Items.Clear();
             foreach (NotificationBox box in MainWindow.NotificationHandler.Notifications)
             {
-                StackPanel.Children.Add(box);
+                NotificationList.Items.Add(box);
             }
                 
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            StackPanel.Children.Clear();
+            NotificationList.Items.Clear();
             MainWindow.NotificationHandler.NotificationInvalidate -= InvalidateNotifications;
+        }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.NotificationHandler.ClearAll();
         }
     }
 }

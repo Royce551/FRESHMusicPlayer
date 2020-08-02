@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FRESHMusicPlayer.Handlers;
-using FRESHMusicPlayer.Handlers.Notifications;
 
 namespace FRESHMusicPlayer.Handlers.Notifications
 {

@@ -1,0 +1,30 @@
+﻿<Page x:Class="FRESHMusicPlayer_WPF_UI_Test.Pages.ImportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="372" d:DesignWidth="694"
+      Title="ImportPage">
+
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock TextWrapping="Wrap" Text="Import" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="30" Margin="15,15,5,0" VerticalAlignment="Top" Height="40"/>
+        <Button x:Name="BrowseTracksButton" Content="Browse for tracks" Margin="15,5,5,5" Grid.Row="1" TextBlock.FontSize="16" Click="BrowseTracksButton_Click"/>
+        <Button x:Name="BrowsePlaylistsButton" Content="Browse for playlist files" Margin="15,5,5,5" Grid.Row="2" TextBlock.FontSize="16" Click="BrowsePlaylistsButton_Click"/>
+        <Button x:Name="BrowseFoldersButton" Content="Browse for folders" Margin="15,5,5,5" Grid.Row="3" TextBlock.FontSize="16" Click="BrowseFoldersButton_Click"/>
+        <TextBlock Text="You can also drag and drop to this page." Foreground="{StaticResource PrimaryTextColor}" TextWrapping="Wrap" Margin="15,5,5,0" Grid.Row="4" VerticalAlignment="Top" FontSize="16" Height="43"/>
+
+    </Grid>
+</Page>

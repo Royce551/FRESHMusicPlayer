@@ -37,5 +37,7 @@ namespace FRESHMusicPlayer.Handlers.Notifications
             this.IsImportant = info.IsImportant;
             this.DisplayAsToast = info.DisplayAsToast;
         }
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MainWindow.NotificationHandler.Remove(this);
     }
 }

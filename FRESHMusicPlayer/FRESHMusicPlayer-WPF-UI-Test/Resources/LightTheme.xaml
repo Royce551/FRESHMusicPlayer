@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FRESHMusicPlayer">
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="Black"/>
+    <SolidColorBrush x:Key="SecondaryTextColor" Color="#FF525252"/>
+    <SolidColorBrush x:Key="ControlBoxColor" Color="#FFDEE0E3"/>
+    <SolidColorBrush x:Key="NavBarColor" Color="#FFCBCED2"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#FFDEE0E3"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#FFBDC0C7"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#FFCBCED2"/>
+</ResourceDictionary>

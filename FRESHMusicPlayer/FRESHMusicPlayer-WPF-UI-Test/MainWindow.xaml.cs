@@ -19,6 +19,8 @@ using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using System.Windows.Documents;
 using System.Collections.Generic;
+using FRESHMusicPlayer_WPF_UI_Test;
+using FRESHMusicPlayer_WPF_UI_Test.Properties;
 
 namespace FRESHMusicPlayer
 {
@@ -140,7 +142,7 @@ namespace FRESHMusicPlayer
                     tab = AlbumsTab;
                     break;
                 case SelectedMenus.Import:
-                    ContentFrame.Source = new Uri(@"\Pages\TestPage.xaml", UriKind.Relative);
+                    ContentFrame.Source = new Uri(@"\Pages\ImportPage.xaml", UriKind.Relative);
                     tab = ImportTab;
                     break;
                 default:
@@ -199,9 +201,9 @@ namespace FRESHMusicPlayer
         private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e) => Player.RepositionMusic((int)ProgressBar.Value);
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            Player.CurrentVolume = (float)(VolumeBar.Value / 100);
             if (Player.Playing)
             {
-                Player.CurrentVolume = (float)(VolumeBar.Value / 100);
                 Player.UpdateSettings(); 
             }
         }
@@ -269,8 +271,20 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.Q:
-                           
-                    e.Handled = true;
+                    /*if (App.CurrentSkin == Skin.Light) App.CurrentSkin = Skin.Dark; else App.CurrentSkin = Skin.Light;
+                    foreach (ResourceDictionary dict in Resources.MergedDictionaries)
+                    {
+
+                        if (dict is SkinResourceDictionary skinDict)
+                            skinDict.UpdateSource();
+                        else
+                            dict.Source = dict.Source;
+                    }
+                    MainWindow newWindow = new MainWindow();
+                    Application.Current.MainWindow = newWindow;
+                    newWindow.Show();
+                    this.Close();
+                    e.Handled = true;*/
                     break;
                 case Key.W:
                     if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);

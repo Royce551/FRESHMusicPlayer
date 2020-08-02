@@ -45,7 +45,6 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         {
             NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, true));
             LeftSide.Width = new GridLength(0);
-            Splitter.Width = new GridLength(0);
             DetailsPane.Height = new GridLength(0);
             await Task.Run(() =>
             {
@@ -72,11 +71,13 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
                 foreach (string thing in MainWindow.Library)
                 {
-                    Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
                     Track track = new Track(thing);
-                    if (CategoryPanel.Items.Contains(track.Artist)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Artist));
-                    category.Add(track.Artist);
+                    if (!CategoryPanel.Items.Contains(track.Artist))
+                    {
+                        Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
+                        Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Artist));
+                        category.Add(track.Artist);
+                    }
                     progress++;
                 }
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
@@ -92,31 +93,32 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
                 foreach (string thing in MainWindow.Library)
                 {
-                    Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
                     Track track = new Track(thing);
-                    if (CategoryPanel.Items.Contains(track.Album)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Album));
-                    category.Add(track.Album);
+                    if (!CategoryPanel.Items.Contains(track.Album))
+                    {
+                        Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
+                        Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Album));
+                        category.Add(track.Album);
+                    }
                     progress++;
                 }
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
         }
-        public async void ShowTracksforArtist(string artist)
+        public async void ShowTracksforArtist()
         {
             TracksPanel.Items.Clear();
+            var selectedItem = (string)CategoryPanel.SelectedItem;
             await Task.Run(() =>
             {
-                int progress = 0;
                 foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
-                    if (track.Album != category[progress]) Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
-                    progress++;
+                    if (track.Artist == selectedItem) Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                 }
             });
         }
-        public async void ShowTracksforAlbum(string album)
+        public async void ShowTracksforAlbum()
         {
             TracksPanel.Items.Clear();
             await Task.Run(() =>
@@ -133,8 +135,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 
         private void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist(category[CategoryPanel.SelectedIndex]);
-            else ShowTracksforAlbum(category[CategoryPanel.SelectedIndex]);
+            if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist();
+            else ShowTracksforAlbum();
         }
     }
 }

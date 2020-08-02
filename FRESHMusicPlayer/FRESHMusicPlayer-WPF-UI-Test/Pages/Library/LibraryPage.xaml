@@ -15,27 +15,27 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="LeftSide"/>
-            <ColumnDefinition x:Name="Splitter" Width="5px"/>
             <ColumnDefinition x:Name="RightSide"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="TracksPanel" Grid.Row="1"  Grid.Column="2" Background="DimGray" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True">
+        <ListBox x:Name="TracksPanel" Grid.Row="1"  Grid.Column="2" Background="{StaticResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <ListBox x:Name="CategoryPanel" Margin="0,1,0,0" Background="#FF69B578" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden" Foreground="White" FontSize="14" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged"/>
-       
-        <Grid x:Name="InfoPanel" Grid.Column="2" Margin="0" Background="#FFD5463F"/>
-        <GridSplitter Grid.Column="1"
-              HorizontalAlignment="Center"
+        <GridSplitter
+              HorizontalAlignment="Right"
               VerticalAlignment="Stretch"
-              Background="White" 
+              Background="{StaticResource SecondaryColor}" 
               ShowsPreview="True"
               Width="5"
-                      Grid.RowSpan="2" Foreground="{x:Null}"
+                      Foreground="{x:Null}"
+              Grid.RowSpan="2" Margin="0,0,0,0"
               />
+        <ListBox x:Name="CategoryPanel" Margin="0,0,5,0" Background="{StaticResource SecondaryColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="White" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0"/>
+
+        <Grid x:Name="InfoPanel" Grid.Column="2" Margin="0" Background="{StaticResource BackgroundColor}"/>
 
     </Grid>
 </Page>
