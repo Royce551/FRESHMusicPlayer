@@ -28,7 +28,7 @@
             <ColumnDefinition x:Name="ButtonColumn" Width="77px"/>
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="TitleLabel" Grid.Column="0" Margin="5,0,0,13" Text="TextBlock" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
-        <TextBlock x:Name="ArtistAlbumLabel" Margin="5,24,112,2" Text="TextBlock" Foreground="{StaticResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
+        <TextBlock x:Name="ArtistAlbumLabel" Margin="5,24,0,2" Text="TextBlock" Foreground="{StaticResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
         <Path x:Name="PlayButton" Data="{StaticResource PlayIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0"/>
         <Path x:Name="QueueButton" Data="{StaticResource AddQueueIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0"/>
         <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Opacity="0"/>

@@ -1,0 +1,29 @@
+﻿<Page x:Class="FRESHMusicPlayer_WPF_UI_Test.Pages.QueueManagement"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="372" d:DesignWidth="235"
+      Title="QueueManagementPage">
+    <Grid Background="{StaticResource SecondaryColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="29"/>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="NotificationList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="True" Background="{StaticResource SecondaryColor}" Grid.Row="1" BorderBrush="{x:Null}" Grid.ColumnSpan="3"/>
+        <TextBlock TextWrapping="Wrap" Text="Queue" Foreground="White" FontWeight="Bold" FontSize="18" Margin="5,5,2,14" Grid.ColumnSpan="3"/>
+        <TextBlock Text="Remaining Time - 00:00:00" Foreground="{StaticResource PrimaryTextColor}" FontSize="12" Margin="5,29,5,0" Grid.ColumnSpan="3"/>
+        <Button Content="Add Track" Margin="2,5,2,5" Grid.Row="2" FontSize="12" Height="19" Grid.Column="0" VerticalAlignment="Top"/>
+        <Button Content="Add Playlist" Margin="2,5,2,5" Grid.Row="2" FontSize="12" Grid.Column="1" Height="19" VerticalAlignment="Top"/>
+        <Button Content="Clear Queue" Margin="2,5,2,5" Foreground="#FFD5463F" Grid.Row="2" Height="19" Grid.Column="2" VerticalAlignment="Top"/>
+    </Grid>
+
+</Page>

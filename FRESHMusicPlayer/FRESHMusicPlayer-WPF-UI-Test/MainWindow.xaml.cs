@@ -271,20 +271,8 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.Q:
-                    /*if (App.CurrentSkin == Skin.Light) App.CurrentSkin = Skin.Dark; else App.CurrentSkin = Skin.Light;
-                    foreach (ResourceDictionary dict in Resources.MergedDictionaries)
-                    {
-
-                        if (dict is SkinResourceDictionary skinDict)
-                            skinDict.UpdateSource();
-                        else
-                            dict.Source = dict.Source;
-                    }
-                    MainWindow newWindow = new MainWindow();
-                    Application.Current.MainWindow = newWindow;
-                    newWindow.Show();
-                    this.Close();
-                    e.Handled = true;*/
+                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml"); else HideAuxilliaryPane();
+                    e.Handled = true;
                     break;
                 case Key.W:
                     if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);

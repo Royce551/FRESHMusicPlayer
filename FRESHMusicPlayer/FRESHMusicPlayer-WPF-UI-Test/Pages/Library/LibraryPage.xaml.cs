@@ -24,7 +24,6 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
     /// </summary>
     public partial class LibraryPage : Page
     {
-        private List<string> category = new List<string>();
         public LibraryPage()
         {
             InitializeComponent();
@@ -76,7 +75,6 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                     {
                         Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
                         Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Artist));
-                        category.Add(track.Artist);
                     }
                     progress++;
                 }
@@ -98,7 +96,6 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                     {
                         Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
                         Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Album));
-                        category.Add(track.Album);
                     }
                     progress++;
                 }
@@ -121,14 +118,13 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         public async void ShowTracksforAlbum()
         {
             TracksPanel.Items.Clear();
+            var selectedItem = (string)CategoryPanel.SelectedItem;
             await Task.Run(() =>
             {
-                int progress = 0;
                 foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
-                    if (track.Album != category[progress]) Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
-                    progress++;
+                    if (track.Album == selectedItem) Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                 }
             });
         }
