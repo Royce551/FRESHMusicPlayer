@@ -101,16 +101,24 @@ namespace FRESHMusicPlayer
                 MiniPlayerMode = false;
             }
         }
-        public void ShowAuxilliaryPane(string Uri)
+        public void ShowAuxilliaryPane(string Uri, int width = 235, bool openleft = false)
         {
             RightFrame.Visibility = Visibility.Visible;
-            if (FindResource("SlideIn") is Storyboard sb) BeginStoryboard(sb);
+            Storyboard sb = new Storyboard();
+            DoubleAnimation doubleAnimation = new DoubleAnimation(0, width, new TimeSpan(0, 0, 0, 0, 100));
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
+            sb.Children.Add(doubleAnimation);
+            sb.Begin(RightFrame);
             RightFrame.Source = new Uri(Uri, UriKind.Relative);
             RightFrame.NavigationService.RemoveBackEntry();
         }
         public void HideAuxilliaryPane()
         {
-            if (FindResource("SlideOut") is Storyboard sb) BeginStoryboard(sb);
+            Storyboard sb = new Storyboard();
+            DoubleAnimation doubleAnimation = new DoubleAnimation(RightFrame.Width, 0, new TimeSpan(0, 0, 0, 0, 100));
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
+            sb.Children.Add(doubleAnimation);
+            sb.Begin(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
         }
@@ -271,7 +279,7 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.Q:
-                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml"); else HideAuxilliaryPane();
+                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335); else HideAuxilliaryPane();
                     e.Handled = true;
                     break;
                 case Key.W:
