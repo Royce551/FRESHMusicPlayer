@@ -42,8 +42,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 {
                     if (!File.Exists(s))
                     {
-                        MainWindow.NotificationHandler.Add(new NotificationBox(new NotificationInfo("Could not import playlist",
-                                                                                                    $"This playlist file could not be imported because one or more of the tracks could not be found.\nMissing File: {s}",
+                        MainWindow.NotificationHandler.Add(new NotificationBox(new NotificationInfo("Missing file",
+                                                                                                    $"One of the tracks in your playlist file could not be imported because one or more of the tracks could not be found.\nMissing File: {s}",
                                                                                                     true,
                                                                                                     true)));
                         continue;

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 namespace FRESHMusicPlayer
 {
     public enum Skin
@@ -28,6 +30,18 @@ namespace FRESHMusicPlayer
                 else
                     dict.Source = dict.Source;
             }
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            string logPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\FRESHMusicPlayer\\Logs";
+            string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
+            if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
+            File.WriteAllText(logPath + fileName, e.Exception.ToString());
+            MessageBox.Show($"An error has occured: {e.Exception.Message}. " +
+                            $"\nIf you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues." +
+                            $"\nThe log file they'll need is at {logPath + fileName}.");       
+            e.Handled = true;
         }
     }
 }

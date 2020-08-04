@@ -101,8 +101,14 @@ namespace FRESHMusicPlayer
                 MiniPlayerMode = false;
             }
         }
+        public void SetCoverArtVisibility(bool mode)
+        {
+            if (!mode) CoverArtArea.Width = new GridLength(5);       
+            else CoverArtArea.Width = new GridLength(75);
+        }
         public void ShowAuxilliaryPane(string Uri, int width = 235, bool openleft = false)
         {
+            if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
             Storyboard sb = new Storyboard();
             DoubleAnimation doubleAnimation = new DoubleAnimation(0, width, new TimeSpan(0, 0, 0, 0, 100));
@@ -185,12 +191,12 @@ namespace FRESHMusicPlayer
             if (track.EmbeddedPictures.Count == 0)
             {
                 CoverArtBox.Source = null;
-                CoverArtArea.Width = new GridLength(5);
+                SetCoverArtVisibility(false);
             }
             else
             {
                 CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                CoverArtArea.Width = new GridLength(75);
+                SetCoverArtVisibility(true);
             }
 
             progressTimer.Start();
@@ -252,15 +258,6 @@ namespace FRESHMusicPlayer
             Winforms.Application.Exit();
         }
 
-
-      
-
-        //private void QueueButton_Click(object sender, RoutedEventArgs e) => player.AddQueue(FilePathBox.Text);
-
-        
-
-        
-
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog
@@ -287,7 +284,9 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.Left:
-                    if (ContentFrame.CanGoBack) ContentFrame.GoBack();
+                    int i = 0;
+                    int b = 5;
+                    int c = b / i;
                     e.Handled = true;
                     break;
                 case Key.Right:
