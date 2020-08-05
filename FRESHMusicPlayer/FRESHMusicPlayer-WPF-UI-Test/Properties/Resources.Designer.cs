@@ -143,6 +143,15 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string MAINWINDOW_SETTINGS {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tracks.
         /// </summary>
         public static string MAINWINDOW_TRACKS {
@@ -175,6 +184,51 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         public static string NOTIFICATIONS_TITLE {
             get {
                 return ResourceManager.GetString("NOTIFICATIONS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Playlist.
+        /// </summary>
+        public static string QUEUEMANAGEMENT_ADDPLAYLIST {
+            get {
+                return ResourceManager.GetString("QUEUEMANAGEMENT_ADDPLAYLIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Track.
+        /// </summary>
+        public static string QUEUEMANAGEMENT_ADDTRACK {
+            get {
+                return ResourceManager.GetString("QUEUEMANAGEMENT_ADDTRACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Queue.
+        /// </summary>
+        public static string QUEUEMANAGEMENT_CLEARQUEUE {
+            get {
+                return ResourceManager.GetString("QUEUEMANAGEMENT_CLEARQUEUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queue.
+        /// </summary>
+        public static string QUEUEMANAGEMENT_QUEUEHEADER {
+            get {
+                return ResourceManager.GetString("QUEUEMANAGEMENT_QUEUEHEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining Time - .
+        /// </summary>
+        public static string QUEUEMANAGEMENT_REMAININGTIME {
+            get {
+                return ResourceManager.GetString("QUEUEMANAGEMENT_REMAININGTIME", resourceCulture);
             }
         }
         

@@ -116,7 +116,7 @@
                     </EventTrigger>
                 </TextBlock.Triggers>-->
             </TextBlock>
-            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="Settings" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="ImportTab_MouseDown" HorizontalAlignment="Right">
+            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="ImportTab_MouseDown" HorizontalAlignment="Right">
             </TextBlock>
             <!--<Path x:Name="VolumIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" RenderTransformOrigin="1.1,0.633"  Width="20" VerticalAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" Fill="White"/>-->
         </DockPanel>

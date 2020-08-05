@@ -50,7 +50,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 if (MainWindow.Player.QueuePosition < number) nextlength += track.Duration;
                 number++;
             }
-            RemainingTimeLabel.Text = $"Remaining Time - {new TimeSpan(0,0,0,nextlength):mm\\:ss}";
+            RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0,0,0,nextlength).ToString(@"hh\:mm\:ss");
         }
         
         private void Player_SongChanged(object sender, EventArgs e)
