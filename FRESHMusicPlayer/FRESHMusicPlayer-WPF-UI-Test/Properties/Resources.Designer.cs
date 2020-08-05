@@ -22,7 +22,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FRESHMusicPlayer_WPF_UI_Test.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,130 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse for folders.
+        /// </summary>
+        public static string IMPORT_BROWSE_FOLDERS {
+            get {
+                return ResourceManager.GetString("IMPORT_BROWSE_FOLDERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse for playlist files.
+        /// </summary>
+        public static string IMPORT_BROWSE_PLAYLIST {
+            get {
+                return ResourceManager.GetString("IMPORT_BROWSE_PLAYLIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse for tracks.
+        /// </summary>
+        public static string IMPORT_BROWSE_TRACKS {
+            get {
+                return ResourceManager.GetString("IMPORT_BROWSE_TRACKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can also drag and drop to this page..
+        /// </summary>
+        public static string IMPORT_DRAGDROP_PROMPT {
+            get {
+                return ResourceManager.GetString("IMPORT_DRAGDROP_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Albums.
+        /// </summary>
+        public static string MAINWINDOW_ALBUMS {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_ALBUMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artists.
+        /// </summary>
+        public static string MAINWINDOW_ARTISTS {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_ARTISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string MAINWINDOW_IMPORT {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_IMPORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Artist.
+        /// </summary>
+        public static string MAINWINDOW_NOARTIST {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_NOARTIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}
+        ///We&apos;ll skip to the next track for you.
+        /// </summary>
+        public static string MAINWINDOW_PLAYBACK_ERROR_DETAILS {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_PLAYBACK_ERROR_DETAILS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracks.
+        /// </summary>
+        public static string MAINWINDOW_TRACKS {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_TRACKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing File.
+        /// </summary>
+        public static string NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear All.
+        /// </summary>
+        public static string NOTIFICATIONS_CLEAR_ALL {
+            get {
+                return ResourceManager.GetString("NOTIFICATIONS_CLEAR_ALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string NOTIFICATIONS_TITLE {
+            get {
+                return ResourceManager.GetString("NOTIFICATIONS_TITLE", resourceCulture);
             }
         }
     }

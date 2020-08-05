@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Pages"
+      xmlns:resx = "clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="372" d:DesignWidth="235"
       Title="NotificationPage" Unloaded="Page_Unloaded">
@@ -14,8 +15,8 @@
         </Grid.RowDefinitions>
         <ListBox x:Name="NotificationList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="True" Background="{StaticResource SecondaryColor}" Grid.Row="1" BorderBrush="{x:Null}">
         </ListBox>
-        <TextBlock TextWrapping="Wrap" Text="Notifications" Foreground="White" FontWeight="Bold" FontSize="18" Margin="5,5,116,5"/>
-        <TextBlock Text="Clear all" Foreground="White" FontSize="10" Margin="191,10,6,8" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
+        <TextBlock TextWrapping="Wrap" Text="{x:Static resx:Resources.NOTIFICATIONS_TITLE}" Foreground="White" FontWeight="Bold" FontSize="18" Margin="5,5,116,5"/>
+        <TextBlock Text="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" Foreground="White" FontSize="10" Margin="0,10,6,8" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" HorizontalAlignment="Right"/>
     </Grid>
 
 </Page>

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Pages"
+      xmlns:resx = "clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="372" d:DesignWidth="694"
       Title="ImportPage">
@@ -20,11 +21,11 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock TextWrapping="Wrap" Text="Import" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="30" Margin="15,15,5,0" VerticalAlignment="Top" Height="40"/>
-        <Button x:Name="BrowseTracksButton" Content="Browse for tracks" Margin="15,5,5,5" Grid.Row="1" TextBlock.FontSize="16" Click="BrowseTracksButton_Click"/>
-        <Button x:Name="BrowsePlaylistsButton" Content="Browse for playlist files" Margin="15,5,5,5" Grid.Row="2" TextBlock.FontSize="16" Click="BrowsePlaylistsButton_Click"/>
-        <Button x:Name="BrowseFoldersButton" Content="Browse for folders" Margin="15,5,5,5" Grid.Row="3" TextBlock.FontSize="16" Click="BrowseFoldersButton_Click"/>
-        <TextBlock Text="You can also drag and drop to this page." Foreground="{StaticResource PrimaryTextColor}" TextWrapping="Wrap" Margin="15,5,5,0" Grid.Row="4" VerticalAlignment="Top" FontSize="16" Height="43"/>
+        <TextBlock TextWrapping="Wrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="30" Margin="15,15,5,0" VerticalAlignment="Top" Height="40"/>
+        <Button x:Name="BrowseTracksButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_TRACKS}" Margin="15,5,5,5" Grid.Row="1" TextBlock.FontSize="16" Click="BrowseTracksButton_Click"/>
+        <Button x:Name="BrowsePlaylistsButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_PLAYLIST}" Margin="15,5,5,5" Grid.Row="2" TextBlock.FontSize="16" Click="BrowsePlaylistsButton_Click"/>
+        <Button x:Name="BrowseFoldersButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_FOLDERS}" Margin="15,5,5,5" Grid.Row="3" TextBlock.FontSize="16" Click="BrowseFoldersButton_Click"/>
+        <TextBlock Text="{x:Static resx:Resources.IMPORT_DRAGDROP_PROMPT}" Foreground="{StaticResource PrimaryTextColor}" TextWrapping="Wrap" Margin="15,5,5,0" Grid.Row="4" VerticalAlignment="Top" FontSize="16" Height="43"/>
 
     </Grid>
 </Page>

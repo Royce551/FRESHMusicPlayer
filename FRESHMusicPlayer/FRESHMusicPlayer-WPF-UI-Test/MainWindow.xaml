@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx = "clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Properties"
         mc:Ignorable="d"
         Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" PreviewKeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True">
     <Window.Resources>
@@ -24,7 +25,7 @@
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
-            <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="Tracks" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown">
+            <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown">
                 <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
@@ -47,7 +48,7 @@
                 </TextBlock.Triggers>-->
             </TextBlock>
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="Artists" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown">
+            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown">
                 <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
@@ -70,7 +71,7 @@
                 </TextBlock.Triggers>-->
             </TextBlock>
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="Albums" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown">
+            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown">
                 <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
@@ -93,7 +94,7 @@
                 </TextBlock.Triggers>-->
             </TextBlock>
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="Import" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown">
+            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown">
                 <!--<TextBlock.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>

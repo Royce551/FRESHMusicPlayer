@@ -88,6 +88,11 @@
     <Compile Include="Pages\TrackInfoPage.xaml.cs">
       <DependentUpon>TrackInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.vi.Designer.cs">
+      <DependentUpon>Resources.vi.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\SkinResourceDictionary.cs" />
     <Page Include="Handlers\Notifications\NotificationBox.xaml">
       <SubType>Designer</SubType>
@@ -185,8 +190,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.vi.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.vi.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />

@@ -117,44 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value>Browse for folders</value>
-  </data>
-  <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value>Browse for playlist files</value>
-  </data>
-  <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value>Browse for tracks</value>
-  </data>
-  <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value>You can also drag and drop to this page.</value>
-  </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value>Albums</value>
+    <value>Đĩa</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value>Artists</value>
+    <value>Nghệ Sĩ</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value>Import</value>
+    <value>Nhập</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>No Artist</value>
+    <value>Không có nghệ sĩ {0} {2} {1}</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
     <value>{0}
-We'll skip to the next track for you</value>
+Chúng tôi sẽ nhảy tiếp cho bạn</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value>Tracks</value>
+    <value>Bài Hát</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value>Clear All</value>
+    <value>Xóa Tất Cả</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Thông Báo</value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value>Missing File</value>
+    <value>Không thể nhập hàng phát</value>
   </data>
 </root>

@@ -184,7 +184,7 @@ namespace FRESHMusicPlayer
             Track track = new Track(Player.FilePath);
             Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
             TitleLabel.Text = track.Title;
-            ArtistLabel.Text = track.Artist == "" ? "No Artist" : track.Artist;
+            ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
 
@@ -203,7 +203,7 @@ namespace FRESHMusicPlayer
         }
         private void player_songException(object sender, PlaybackExceptionEventArgs e)
         {
-            NotificationHandler.Add(new NotificationBox(new NotificationInfo("A playback error occured", $"{e.Details}\nWe'll skip to the next track for you", true, true)));
+            NotificationHandler.Add(new NotificationBox(new NotificationInfo("A playback error occured", String.Format(FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details), true, true)));
             Player.NextSong();
         }
         #endregion
