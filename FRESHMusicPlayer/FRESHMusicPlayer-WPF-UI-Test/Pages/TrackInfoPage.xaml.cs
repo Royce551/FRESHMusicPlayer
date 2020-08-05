@@ -37,14 +37,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 CoverArtRow.Height = new GridLength(0);
             }
             else CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-            AlbumLabel.Text = $"Album - {track.Album}";
-            GenreLabel.Text = $"Genre - {track.Genre}";
-            YearLabel.Text = $"Year - {track.Year}";
+            AlbumLabel.Text = Properties.Resources.TRACKINFO_ALBUM + track.Album;
+            GenreLabel.Text = Properties.Resources.TRACKINFO_GENRE + track.Genre;
+            YearLabel.Text = Properties.Resources.TRACKINFO_YEAR + track.Year;
 
-            TrackNumberLabel.Text = $"Track {track.TrackNumber}/{track.TrackTotal}";
-            DiscNumberLabel.Text = $"Disc {track.DiscNumber}/{track.DiscTotal}";
+            TrackNumberLabel.Text = Properties.Resources.TRACKINFO_TRACKNUMBER + track.TrackNumber + "/" + track.TrackTotal;
+            DiscNumberLabel.Text = Properties.Resources.TRACKINFO_DISCNUMBER + track.DiscNumber + "/" + track.DiscTotal;
 
-            BitrateLabel.Text = $"Bitrate - {track.Bitrate}kbps";
+            BitrateLabel.Text = Properties.Resources.TRACKINFO_BITRATE + track.Bitrate + "kbps";
         }
         private void Player_SongChanged(object sender, EventArgs e) => PopulateFields();
 

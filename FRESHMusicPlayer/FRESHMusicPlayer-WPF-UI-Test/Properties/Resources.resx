@@ -157,4 +157,33 @@ We'll skip to the next track for you</value>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
     <value>Missing File</value>
   </data>
+  <data name="TRACKINFO_ALBUM" xml:space="preserve">
+    <value>Album - </value>
+  </data>
+  <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
+    <value>Album Info</value>
+  </data>
+  <data name="TRACKINFO_BITRATE" xml:space="preserve">
+    <value>Bitrate - </value>
+    <comment>"kbps" is inserted after this</comment>
+  </data>
+  <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
+    <value>Disc  </value>
+  </data>
+  <data name="TRACKINFO_GENRE" xml:space="preserve">
+    <value>Genre - </value>
+  </data>
+  <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
+    <value>Technical Info</value>
+  </data>
+  <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
+    <value>Track Info</value>
+    <comment>Track Info header</comment>
+  </data>
+  <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
+    <value>Track </value>
+  </data>
+  <data name="TRACKINFO_YEAR" xml:space="preserve">
+    <value>Year - </value>
+  </data>
 </root>

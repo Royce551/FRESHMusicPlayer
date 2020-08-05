@@ -177,5 +177,86 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
                 return ResourceManager.GetString("NOTIFICATIONS_TITLE", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album - .
+        /// </summary>
+        public static string TRACKINFO_ALBUM {
+            get {
+                return ResourceManager.GetString("TRACKINFO_ALBUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Info.
+        /// </summary>
+        public static string TRACKINFO_ALBUMINFO {
+            get {
+                return ResourceManager.GetString("TRACKINFO_ALBUMINFO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bitrate - .
+        /// </summary>
+        public static string TRACKINFO_BITRATE {
+            get {
+                return ResourceManager.GetString("TRACKINFO_BITRATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc  .
+        /// </summary>
+        public static string TRACKINFO_DISCNUMBER {
+            get {
+                return ResourceManager.GetString("TRACKINFO_DISCNUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genre - .
+        /// </summary>
+        public static string TRACKINFO_GENRE {
+            get {
+                return ResourceManager.GetString("TRACKINFO_GENRE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technical Info.
+        /// </summary>
+        public static string TRACKINFO_TECHNICALINFO {
+            get {
+                return ResourceManager.GetString("TRACKINFO_TECHNICALINFO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track Info.
+        /// </summary>
+        public static string TRACKINFO_TRACKINFO {
+            get {
+                return ResourceManager.GetString("TRACKINFO_TRACKINFO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track .
+        /// </summary>
+        public static string TRACKINFO_TRACKNUMBER {
+            get {
+                return ResourceManager.GetString("TRACKINFO_TRACKNUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year - .
+        /// </summary>
+        public static string TRACKINFO_YEAR {
+            get {
+                return ResourceManager.GetString("TRACKINFO_YEAR", resourceCulture);
+            }
+        }
     }
 }
