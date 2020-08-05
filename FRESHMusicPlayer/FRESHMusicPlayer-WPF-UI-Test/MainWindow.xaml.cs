@@ -183,7 +183,7 @@ namespace FRESHMusicPlayer
         {
             Track track = new Track(Player.FilePath);
             Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
-            TitleLabel.Text = track.Title == "" ? "No Title" : track.Title;
+            TitleLabel.Text = track.Title;
             ArtistLabel.Text = track.Artist == "" ? "No Artist" : track.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
@@ -284,9 +284,16 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.Left:
-                    int i = 0;
-                    int b = 5;
-                    int c = b / i;
+                    if (RightFrame.Visibility == Visibility.Collapsed)
+                    {
+                        ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
+                        SetCoverArtVisibility(false);
+                    }
+                    else
+                    {
+                        HideAuxilliaryPane();
+                        SetCoverArtVisibility(true);
+                    }
                     e.Handled = true;
                     break;
                 case Key.Right:

@@ -1,0 +1,41 @@
+﻿<Page x:Class="FRESHMusicPlayer_WPF_UI_Test.Pages.TrackInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="372" d:DesignWidth="235"
+      Title="TrackInfoPage" Unloaded="Page_Unloaded">
+
+    <Grid Background="{StaticResource SecondaryColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition x:Name="CoverArtRow" Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="10,5,5,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="Technical Info" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" Panel.ZIndex="1"/>
+        <TextBlock x:Name="BitrateLabel" Margin="20,5,5,0" Grid.Row="2" TextTrimming="WordEllipsis" Text="Bitrate -" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
+        <TextBlock Margin="10,5,5,0" Grid.Row="3" TextTrimming="WordEllipsis" Text="Album Info" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" Panel.ZIndex="1"/>
+        <TextBlock x:Name="DiscNumberLabel" Margin="20,5,5,0" Grid.Row="4" TextTrimming="WordEllipsis" Text="Disc #" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
+        <TextBlock x:Name="TrackNumberLabel" Margin="20,5,5,0" Grid.Row="5" TextTrimming="WordEllipsis" Text="Track #" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
+        <TextBlock Margin="10,5,5,0" Grid.Row="6" TextTrimming="WordEllipsis" Text="Track Info" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" Panel.ZIndex="1"/>
+        <TextBlock x:Name="YearLabel" Margin="20,5,5,0" Grid.Row="7" TextTrimming="WordEllipsis" Text="Year -" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
+        <TextBlock x:Name="GenreLabel" Margin="20,5,5,0" Grid.Row="8" TextTrimming="WordEllipsis" Text="Genre -" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
+        <TextBlock x:Name="AlbumLabel" Margin="20,5,5,10" Grid.Row="9" TextTrimming="WordEllipsis" Text="Album -" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
+        <Image x:Name="CoverArtBox" Grid.Row="0" Grid.RowSpan="12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" >
+            <Image.Effect>
+                <BlurEffect Radius="30" KernelType="Gaussian"/>
+            </Image.Effect>
+        </Image>
+        <Rectangle Fill="{StaticResource ForegroundColor}" Grid.Row="0" Grid.RowSpan="12"  Opacity="0.55"/>
+    </Grid>
+</Page>

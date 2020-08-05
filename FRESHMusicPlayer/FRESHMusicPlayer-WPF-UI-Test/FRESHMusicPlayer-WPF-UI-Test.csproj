@@ -85,6 +85,9 @@
     <Compile Include="Pages\QueueManagement\QueueManagementPage.xaml.cs">
       <DependentUpon>QueueManagementPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\TrackInfoPage.xaml.cs">
+      <DependentUpon>TrackInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\SkinResourceDictionary.cs" />
     <Page Include="Handlers\Notifications\NotificationBox.xaml">
       <SubType>Designer</SubType>
@@ -132,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\TestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TrackInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

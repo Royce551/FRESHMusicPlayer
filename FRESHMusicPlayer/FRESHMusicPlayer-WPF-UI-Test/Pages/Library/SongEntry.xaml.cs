@@ -47,7 +47,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             Storyboard sb = new Storyboard();
-            DoubleAnimation doubleAnimation = new DoubleAnimation(1f, 0f, new TimeSpan(0, 0, 0, 0, 250));
+            DoubleAnimation doubleAnimation = new DoubleAnimation(1f, 0f, new TimeSpan(0, 0, 0, 0, 100));
             Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Opacity"));
             sb.Children.Add(doubleAnimation);
             sb.Begin(PlayButton);
