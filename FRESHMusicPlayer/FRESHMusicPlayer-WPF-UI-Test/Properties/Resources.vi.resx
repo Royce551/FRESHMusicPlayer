@@ -155,7 +155,7 @@ Chúng tôi sẽ nhảy tiếp cho bạn</value>
     <value>Sổ đĩa  </value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value>Năm </value>
+    <value>Năm - </value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
     <value>Số trên đĩa </value>
