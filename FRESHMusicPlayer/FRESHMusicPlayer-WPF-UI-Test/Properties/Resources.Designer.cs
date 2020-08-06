@@ -61,6 +61,17 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error has occured: {0}.
+        ///If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
+        ///The log file they&apos;ll need is at {1}..
+        /// </summary>
+        public static string APPLICATION_CRITICALERROR {
+            get {
+                return ResourceManager.GetString("APPLICATION_CRITICALERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse for folders.
         /// </summary>
         public static string IMPORT_BROWSE_FOLDERS {

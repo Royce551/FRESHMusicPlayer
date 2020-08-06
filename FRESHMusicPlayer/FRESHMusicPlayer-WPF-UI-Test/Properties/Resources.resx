@@ -117,6 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
+    <value>An error has occured: {0}.
+If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
+The log file they'll need is at {1}.</value>
+  </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
     <value>Browse for folders</value>
   </data>

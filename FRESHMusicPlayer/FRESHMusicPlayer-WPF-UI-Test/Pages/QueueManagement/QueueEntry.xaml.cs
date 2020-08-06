@@ -30,6 +30,11 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             TitleLabel.Text = title;
             PositionLabel.Text = position;
             Index = index;
+            if (MainWindow.Player.QueuePosition == index + 1) // actual position is index + 1, but i didn't want to convert to int
+            {
+                TitleLabel.FontWeight = FontWeights.Bold;
+                ArtistAlbumLabel.FontWeight = FontWeights.Bold;
+            }
         }
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {

@@ -15,7 +15,7 @@ namespace FRESHMusicPlayer
         void App_Startup(object sender, StartupEventArgs e )
         {
             //Force Viet for the time being
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("vi-VN");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("vi-VN");
 
             MainWindow window = new MainWindow();
             window.Show();
@@ -41,9 +41,7 @@ namespace FRESHMusicPlayer
             string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
             File.WriteAllText(logPath + fileName, e.Exception.ToString());
-            MessageBox.Show($"An error has occured: {e.Exception.Message}. " +
-                            $"\nIf you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues." +
-                            $"\nThe log file they'll need is at {logPath + fileName}.");       
+            MessageBox.Show(string.Format(FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));       
             e.Handled = true;
         }
     }

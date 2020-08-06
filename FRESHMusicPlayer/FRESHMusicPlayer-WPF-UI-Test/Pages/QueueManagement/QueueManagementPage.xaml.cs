@@ -41,12 +41,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             int number = 1;
             foreach (var song in list)
             {
-                string place;
-                if (MainWindow.Player.QueuePosition == number) place = "Playing:";
-                else if (MainWindow.Player.QueuePosition == number - 1) place = "Next:";
-                else place = (number - MainWindow.Player.QueuePosition).ToString();
                 Track track = new Track(song);
-                QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, place, number - 1));
+                QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, (number - MainWindow.Player.QueuePosition).ToString(), number - 1));
                 if (MainWindow.Player.QueuePosition < number) nextlength += track.Duration;
                 number++;
             }
