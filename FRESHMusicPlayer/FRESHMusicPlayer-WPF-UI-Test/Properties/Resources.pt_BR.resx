@@ -118,92 +118,95 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value></value>
+    <value>Um erro ocrreu: {0}
+Se você tem o tempo, por favor reporte isso aos desenvolvedores em https://github.com/royce551/freshmusicplayer/issues
+O arquivo que precisarão está em {1}.</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value></value>
+    <value>Procurar pastas</value>
   </data>
   <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Procurar arquivos de playlist</value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Procurar faixas</value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Você também pode arrastar arquivos aqui.</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value></value>
+    <value>Albuns</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value></value>
+    <value>Artistas</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value></value>
+    <value>Importar</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value></value>
+    <value>Nenhum Artista</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value></value>
+    <value>{0}
+Nós pularemos à próxima faixa para você</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value></value>
+    <value>Configurações</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Faixas</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value></value>
+    <value>Limpar tudo</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Notificações</value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Arquivo faltando</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Adicionar playlist</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value></value>
+    <value>Adicionar faixa</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value></value>
+    <value>Limpar fila</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value></value>
+    <value>Fila</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value></value>
+    <value>Tempo restante </value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>Album </value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value></value>
+    <value>Informações do album</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value></value>
+    <value>Taxa de bits </value>
     <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Disco  </value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value></value>
+    <value>Gênero </value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value></value>
+    <value>Informações técnicas</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value></value>
+    <value>Informações da faixa</value>
     <comment>Track Info header</comment>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Faixa </value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value></value>
+    <value>Ano </value>
   </data>
 </root>
