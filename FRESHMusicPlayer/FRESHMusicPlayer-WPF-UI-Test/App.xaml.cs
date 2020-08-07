@@ -15,7 +15,7 @@ namespace FRESHMusicPlayer
         void App_Startup(object sender, StartupEventArgs e )
         {
             //Force Viet for the time being
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("vi-VN");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-BR");
 
             MainWindow window = new MainWindow();
             window.Show();

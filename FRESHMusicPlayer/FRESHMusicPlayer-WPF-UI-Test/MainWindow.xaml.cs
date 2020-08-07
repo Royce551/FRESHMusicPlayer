@@ -92,6 +92,7 @@ namespace FRESHMusicPlayer
                 Height = 123;
                 MainBar.Visibility = Visibility.Collapsed;
                 MiniPlayerMode = true;
+                Topmost = true;
             }
             else
             {
@@ -99,6 +100,7 @@ namespace FRESHMusicPlayer
                 Height = 512;
                 MainBar.Visibility = Visibility.Visible;
                 MiniPlayerMode = false;
+                Topmost = false;
             }
         }
         public void SetCoverArtVisibility(bool mode)
@@ -323,6 +325,5 @@ namespace FRESHMusicPlayer
             Player.PlayMusic();
         }
 
-        
     }
 }

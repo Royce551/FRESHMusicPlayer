@@ -88,6 +88,11 @@
     <Compile Include="Pages\TrackInfoPage.xaml.cs">
       <DependentUpon>TrackInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.pt_BR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.pt_BR.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.vi.Designer.cs">
       <DependentUpon>Resources.vi.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -190,6 +195,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.pt_BR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.pt_BR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.vi.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.vi.Designer.cs</LastGenOutput>

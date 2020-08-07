@@ -1,5 +1,6 @@
 ﻿using ATL.Playlist;
 using FRESHMusicPlayer;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using Microsoft.Win32;
 using System.IO;
@@ -27,6 +28,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             if (dialog.ShowDialog() == true)
             {
                 MainWindow.Player.AddQueue(dialog.FileName);
+                DatabaseHandler.ImportSong(dialog.FileName);
                 MainWindow.Player.PlayMusic();
             }
         }
@@ -49,6 +51,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                         continue;
                     }
                     MainWindow.Player.AddQueue(s);
+                    DatabaseHandler.ImportSong(s);
                 }
                 MainWindow.Player.PlayMusic();
             }
@@ -63,7 +66,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                     string[] files = Directory.GetFiles(dialog.SelectedPath);           
                     foreach (string s in files)
                     {
-                        MainWindow.Player.AddQueue(s);                 
+                        MainWindow.Player.AddQueue(s);
+                        DatabaseHandler.ImportSong(s);
                     }
                     MainWindow.Player.PlayMusic();
                 }
