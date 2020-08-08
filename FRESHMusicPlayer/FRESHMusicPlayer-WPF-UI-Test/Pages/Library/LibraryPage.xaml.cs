@@ -27,6 +27,10 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         public LibraryPage()
         {
             InitializeComponent();
+            LoadLibrary();
+        }
+        public void LoadLibrary()
+        {
             switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
                 case SelectedMenus.Tracks:
@@ -52,7 +56,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
                 foreach (string thing in MainWindow.Library)
                 {
-                    Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
+                    Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}", true, false)));
                     Track track = new Track(thing);
                     Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                     progress++;
@@ -73,7 +77,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                     Track track = new Track(thing);
                     if (!CategoryPanel.Items.Contains(track.Artist))
                     {
-                        Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
+                        Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}", true, false)));
                         Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Artist));
                     }
                     progress++;
@@ -94,7 +98,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                     Track track = new Track(thing);
                     if (!CategoryPanel.Items.Contains(track.Album))
                     {
-                        Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}")));
+                        Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}", true, false)));
                         Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Album));
                     }
                     progress++;
@@ -134,5 +138,6 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
             if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist();
             else ShowTracksforAlbum();
         }
+
     }
 }

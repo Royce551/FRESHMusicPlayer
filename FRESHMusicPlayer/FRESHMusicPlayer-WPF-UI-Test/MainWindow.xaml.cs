@@ -1,26 +1,18 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Handlers;
-using FRESHMusicPlayer;
-using FRESHMusicPlayer.Utilities;
+using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer_WPF_UI_Test.Forms;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Winforms = System.Windows.Forms;
-using System.Windows.Navigation;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using FRESHMusicPlayer.Handlers.Notifications;
-using System.Threading;
-using System.Windows.Threading;
-using System.Windows.Media.Animation;
-using System.Windows.Documents;
-using System.Collections.Generic;
-using FRESHMusicPlayer_WPF_UI_Test;
-using FRESHMusicPlayer_WPF_UI_Test.Properties;
 
 namespace FRESHMusicPlayer
 {
@@ -43,12 +35,14 @@ namespace FRESHMusicPlayer
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static List<string> Library = new List<string>();
         public static bool MiniPlayerMode = false;
+        public static bool PreventAuxilliaryPaneHiding = false;
         public MainWindow()
         {
             InitializeComponent();
             Player.SongChanged += player_songChanged;
             Player.SongStopped += player_songStopped;
             Player.SongException += player_songException;
+            NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
             progressTimer = new Winforms.Timer  // System.Windows.Forms timer because dispatcher timer seems to have some threading issues?
             {
                 Interval = 1000
@@ -58,6 +52,8 @@ namespace FRESHMusicPlayer
         }
 
         
+
+
         #region Controls
         public void PlayPauseMethod()
         {
@@ -122,13 +118,20 @@ namespace FRESHMusicPlayer
         }
         public void HideAuxilliaryPane()
         {
-            Storyboard sb = new Storyboard();
-            DoubleAnimation doubleAnimation = new DoubleAnimation(RightFrame.Width, 0, new TimeSpan(0, 0, 0, 0, 100));
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
-            sb.Children.Add(doubleAnimation);
-            sb.Begin(RightFrame);
-            RightFrame.Visibility = Visibility.Collapsed;
-            RightFrame.Source = null;
+            if (!PreventAuxilliaryPaneHiding)
+            {
+                Storyboard sb = new Storyboard();
+                DoubleAnimation doubleAnimation = new DoubleAnimation(RightFrame.Width, 0, new TimeSpan(0, 0, 0, 0, 100));
+                Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
+                sb.Children.Add(doubleAnimation);
+                sb.Begin(RightFrame);
+                RightFrame.Visibility = Visibility.Collapsed;
+                RightFrame.Source = null;
+            }
+            else
+            {
+                NotificationHandler.Add(new NotificationBox(new NotificationInfo("Hold up!", "The pane still needs your attention. Finish what you're doing first.", false, true)));
+            }
         }
 
         #region Tabs
@@ -214,7 +217,10 @@ namespace FRESHMusicPlayer
         private void PlayPauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PlayPauseMethod();
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
-        private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e) => Player.RepositionMusic((int)ProgressBar.Value);
+        private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
+        }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Player.CurrentVolume = (float)(VolumeBar.Value / 100);
@@ -229,10 +235,6 @@ namespace FRESHMusicPlayer
             ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
             Player.AvoidNextQueue = false;
         }
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Player.CurrentBackend.CurrentTime = TimeSpan.FromSeconds(ProgressBar.Value);
-        }
         #endregion
         #region MenuBar
         private void TracksTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Tracks);
@@ -243,12 +245,16 @@ namespace FRESHMusicPlayer
 
         private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Import);
         #endregion
+        private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
+        {
+            foreach (NotificationBox box in NotificationHandler.Notifications)
+            {
+                if (box.DisplayAsToast && RightFrame.Visibility != Visibility.Visible) ShowAuxilliaryPane("Pages\\NotificationPage.xaml"); // TODO: replace this with proper toast implementation
+            }
+        }
         #endregion
 
-
-
-
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private void PlayButtonClick(object sender, RoutedEventArgs e)
         {
             //player.AddQueue(FilePathBox.Text);
             Player.PlayMusic();                         
@@ -299,11 +305,16 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.Right:
-                    if (ContentFrame.CanGoForward) ContentFrame.GoForward();
+                    TagEditor tagEditor = new TagEditor(Player.Queue);
+                    tagEditor.Show();
                     e.Handled = true;
                     break;
                 case Key.E:
                     if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/NotificationPage.xaml"); else HideAuxilliaryPane();
+                    e.Handled = true;
+                    break;
+                case Key.F5:
+                    ContentFrame.Refresh();
                     e.Handled = true;
                     break;
             }
