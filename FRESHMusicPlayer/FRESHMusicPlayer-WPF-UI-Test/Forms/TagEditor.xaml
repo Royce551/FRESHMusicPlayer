@@ -6,7 +6,7 @@
         xmlns:resx = "clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Properties"
         xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Forms"
         mc:Ignorable="d"
-        Title="TagEditor" Height="651" Width="600" Closing="Window_Closing">
+        Title="TagEditor" Height="451" Width="600" Closing="Window_Closing">
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="18px"/>
@@ -14,20 +14,20 @@
             <RowDefinition Height="50px"/>
         </Grid.RowDefinitions>
         <Menu FontSize="12" >
-            <MenuItem Header="_File">
-                <MenuItem Header="New Window" InputGestureText="Ctrl+N"/>
-                <MenuItem Header="Open" InputGestureText="Ctrl+O"/>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S"/>
+            <MenuItem Header="{x:Static resx:Resources.MENUBAR_FILE}">
+                <MenuItem x:Name="_NewWindowItem" Header="{x:Static resx:Resources.MENUBAR_NEWWINDOW}" Click="NewWindowItem_MouseDown"/>
+                <MenuItem x:Name="_OpenMenu" Header="{x:Static resx:Resources.MENUBAR_OPEN}" Click="OpenMenu_MouseDown"/>
+                <MenuItem Header="{x:Static resx:Resources.MENUBAR_SAVE}" Click="SaveMenuItem"/>
                 <Separator/>
-                <MenuItem Header="Exit Tag Editor"/>
+                <MenuItem Header="{x:Static resx:Resources.MENUBAR_EXIT}" Click="ExitMenuItem"/>
             </MenuItem>
-            <MenuItem Header="_Tag Sources">
+            <MenuItem Header="{x:Static resx:Resources.MENUBAR_TAGSOURCES}">
                 <MenuItem Header="Coming soon to a future version of FMP!"/>
             </MenuItem>
         </Menu>
         <ScrollViewer Grid.Row="1">
             <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1">
-                <TextBlock x:Name="EditingHeader" TextWrapping="Wrap" Text="Editing C:\whatever, this is just a placeholder" Foreground="{StaticResource PrimaryTextColor}" Margin="10,10,0,0" FontSize="15"/>
+                <TextBlock x:Name="EditingHeader" TextWrapping="Wrap" Text="{x:Static resx:Resources.TAGEDITOR_EDITINGHEADER}" Foreground="{StaticResource PrimaryTextColor}" Margin="10,10,0,0" FontSize="15"/>
                 <Grid Height="170" Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -42,8 +42,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_TRACKINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
-                    <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="Artist - " Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="TitleLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="Title - " Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                    <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                    <TextBlock x:Name="TitleLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_TITLE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
                     <TextBlock x:Name="YearLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
                     <TextBlock x:Name="GenreLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
                     <TextBlock x:Name="AlbumLabel" Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
@@ -67,10 +67,10 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUMINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
-                    <TextBlock x:Name="AlbumArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="Album Artist - " Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="ComposerLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="Composer - " Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="TrackNumLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="Track Number - " Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="DiscNumLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="Disc Number - " Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                    <TextBlock x:Name="AlbumArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ALBUMARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                    <TextBlock x:Name="ComposerLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_COMPOSER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                    <TextBlock x:Name="TrackNumLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_TRACKNUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                    <TextBlock x:Name="DiscNumLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_DISCNUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
 
                     <TextBox x:Name="AlbumArtistBox" Grid.Row="1" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged"/>
                     <TextBox x:Name="ComposerBox" Grid.Row="2" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged"/>
@@ -99,9 +99,9 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="BackgroundSaveIndicator" Grid.Column="1" Text="The changes will be applied when you play a new track." FontSize="16" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="5,0" TextWrapping="Wrap" TextAlignment="Right" Visibility="Collapsed"/>
-            <Button Grid.Column="2" Content="Change File..." VerticalAlignment="Center" Margin="5,0" FontSize="15" Padding="10,2,10,2" Click="Button_Click_1"/>
-            <Button Grid.Column="3" Content="Save" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="Button_Click"/>
+            <TextBlock x:Name="BackgroundSaveIndicator" Grid.Column="1" Text="{x:Static resx:Resources.TAGEDITOR_BACKGROUNDSAVE}" FontSize="16" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="5,0" TextWrapping="Wrap" TextAlignment="Right" Visibility="Collapsed"/>
+            <Button Grid.Column="2" Content="{x:Static resx:Resources.TAGEDITOR_CHANGEFILE}" VerticalAlignment="Center" Margin="5,0" FontSize="15" Padding="10,2,10,2" Click="Button_Click_1"/>
+            <Button Grid.Column="3" Content="{x:Static resx:Resources.TAGEDITOR_SAVE}" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="Button_Click"/>
         </Grid>
     </Grid>
 </Window>

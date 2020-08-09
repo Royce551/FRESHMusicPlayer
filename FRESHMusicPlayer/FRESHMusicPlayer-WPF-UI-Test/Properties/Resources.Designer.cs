@@ -172,6 +172,60 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Exit.
+        /// </summary>
+        public static string MENUBAR_EXIT {
+            get {
+                return ResourceManager.GetString("MENUBAR_EXIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _File.
+        /// </summary>
+        public static string MENUBAR_FILE {
+            get {
+                return ResourceManager.GetString("MENUBAR_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _New Window.
+        /// </summary>
+        public static string MENUBAR_NEWWINDOW {
+            get {
+                return ResourceManager.GetString("MENUBAR_NEWWINDOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Open.
+        /// </summary>
+        public static string MENUBAR_OPEN {
+            get {
+                return ResourceManager.GetString("MENUBAR_OPEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Save.
+        /// </summary>
+        public static string MENUBAR_SAVE {
+            get {
+                return ResourceManager.GetString("MENUBAR_SAVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Tag Sources.
+        /// </summary>
+        public static string MENUBAR_TAGSOURCES {
+            get {
+                return ResourceManager.GetString("MENUBAR_TAGSOURCES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Missing File.
         /// </summary>
         public static string NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST {
@@ -240,6 +294,105 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         public static string QUEUEMANAGEMENT_REMAININGTIME {
             get {
                 return ResourceManager.GetString("QUEUEMANAGEMENT_REMAININGTIME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Artist -.
+        /// </summary>
+        public static string TAGEDITOR_ALBUMARTIST {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_ALBUMARTIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist - .
+        /// </summary>
+        public static string TAGEDITOR_ARTIST {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_ARTIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The changes will be applied when you play a new track..
+        /// </summary>
+        public static string TAGEDITOR_BACKGROUNDSAVE {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_BACKGROUNDSAVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change File....
+        /// </summary>
+        public static string TAGEDITOR_CHANGEFILE {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_CHANGEFILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Composer -.
+        /// </summary>
+        public static string TAGEDITOR_COMPOSER {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_COMPOSER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc Number - .
+        /// </summary>
+        public static string TAGEDITOR_DISCNUM {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_DISCNUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing .
+        /// </summary>
+        public static string TAGEDITOR_EDITINGHEADER {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_EDITINGHEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string TAGEDITOR_SAVE {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_SAVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to save your changes to {0}?.
+        /// </summary>
+        public static string TAGEDITOR_SAVECHANGES {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_SAVECHANGES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title - .
+        /// </summary>
+        public static string TAGEDITOR_TITLE {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track Number - .
+        /// </summary>
+        public static string TAGEDITOR_TRACKNUM {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_TRACKNUM", resourceCulture);
             }
         }
         

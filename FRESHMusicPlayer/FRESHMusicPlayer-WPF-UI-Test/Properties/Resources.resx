@@ -156,6 +156,24 @@ We'll skip to the next track for you</value>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
     <value>Tracks</value>
   </data>
+  <data name="MENUBAR_EXIT" xml:space="preserve">
+    <value>_Exit</value>
+  </data>
+  <data name="MENUBAR_FILE" xml:space="preserve">
+    <value>_File</value>
+  </data>
+  <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
+    <value>_New Window</value>
+  </data>
+  <data name="MENUBAR_OPEN" xml:space="preserve">
+    <value>_Open</value>
+  </data>
+  <data name="MENUBAR_SAVE" xml:space="preserve">
+    <value>_Save</value>
+  </data>
+  <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
+    <value>_Tag Sources</value>
+  </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
     <value>Clear All</value>
   </data>
@@ -179,6 +197,39 @@ We'll skip to the next track for you</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
     <value>Remaining Time - </value>
+  </data>
+  <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
+    <value>Album Artist -</value>
+  </data>
+  <data name="TAGEDITOR_ARTIST" xml:space="preserve">
+    <value>Artist - </value>
+  </data>
+  <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
+    <value>The changes will be applied when you play a new track.</value>
+  </data>
+  <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
+    <value>Change File...</value>
+  </data>
+  <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
+    <value>Composer -</value>
+  </data>
+  <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
+    <value>Disc Number - </value>
+  </data>
+  <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
+    <value>Editing </value>
+  </data>
+  <data name="TAGEDITOR_SAVE" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
+    <value>Do you want to save your changes to {0}?</value>
+  </data>
+  <data name="TAGEDITOR_TITLE" xml:space="preserve">
+    <value>Title - </value>
+  </data>
+  <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
+    <value>Track Number - </value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
     <value>Album - </value>

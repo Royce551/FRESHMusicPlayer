@@ -46,7 +46,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         }
         public async void ShowTracks()
         {
-            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, true));
+            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
             LeftSide.Width = new GridLength(0);
             DetailsPane.Height = new GridLength(0);
             await Task.Run(() =>
@@ -66,7 +66,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         }
         public async void ShowArtists()
         {
-            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, true));
+            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
             await Task.Run(() =>
             {
                 int progress = 0;
@@ -87,7 +87,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         }
         public async void ShowAlbums()
         {
-            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, true));
+            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
             await Task.Run(() =>
             {
                 int progress = 0;

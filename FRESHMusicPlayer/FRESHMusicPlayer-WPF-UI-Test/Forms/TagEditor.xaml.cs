@@ -49,7 +49,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Forms
                 Displayfilepaths.Add(System.IO.Path.GetFileName(path));
                 iterations++;
             }
-            EditingHeader.Text = $"Editing {string.Join(", ", Displayfilepaths)}";
+            EditingHeader.Text = string.Format(Properties.Resources.TAGEDITOR_EDITINGHEADER, string.Join(", ", Displayfilepaths));
             Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
             unsavedChanges = false;
         }
@@ -89,6 +89,17 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Forms
             SaveChanges(FilePaths);
         }
 
+        public void ChangeFiles()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            if (dialog.ShowDialog() == true)
+            {
+                FilePaths = dialog.FileNames.ToList();
+                InitFields();
+            }
+        }
+
         private void Player_SongChanged(object sender, EventArgs e)
         {
             foreach (string path in filePathsToSaveInBackground)
@@ -104,7 +115,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Forms
         {
             if (unsavedChanges == true)
             {
-                MessageBoxResult result = MessageBox.Show($"Do you want to save your changes to {string.Join(", ", Displayfilepaths)}?",
+                MessageBoxResult result = MessageBox.Show(string.Format(Properties.Resources.TAGEDITOR_SAVECHANGES, string.Join(", ", Displayfilepaths)),
                                           "FRESHMusicPlayer Tag Editor",
                                           MessageBoxButton.YesNoCancel,
                                           MessageBoxImage.Question);
@@ -129,16 +140,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Forms
 
         private void Button_Click(object sender, RoutedEventArgs e) => SaveButton();
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            
-            if (dialog.ShowDialog() == true)
-            {
-                FilePaths = dialog.FileNames.ToList();
-                InitFields();
-            }         
-        }
+        private void Button_Click_1(object sender, RoutedEventArgs e) => ChangeFiles();
 
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -148,5 +150,17 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Forms
                 Title = $"*{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
             }
         }
+
+        private void NewWindowItem_MouseDown(object sender, RoutedEventArgs e)
+        {
+            TagEditor tagEditor = new TagEditor(FilePaths);
+            tagEditor.Show();
+        }
+
+        private void OpenMenu_MouseDown(object sender, RoutedEventArgs e) => ChangeFiles();
+
+        private void SaveMenuItem(object sender, RoutedEventArgs e) => SaveButton();
+
+        private void ExitMenuItem(object sender, RoutedEventArgs e) => Close();
     }
 }
