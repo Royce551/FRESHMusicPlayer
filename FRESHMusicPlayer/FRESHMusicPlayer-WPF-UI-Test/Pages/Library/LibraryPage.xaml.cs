@@ -14,8 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ATL;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using System.Threading;
+using System.ComponentModel;
 
 namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 {
@@ -28,7 +30,9 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         {
             InitializeComponent();
             LoadLibrary();
+            MainWindow.TabChanged += MainWindow_TabChanged;
         }
+
         public void LoadLibrary()
         {
             switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
@@ -138,6 +142,37 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
             if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist();
             else ShowTracksforAlbum();
         }
+        private void MainWindow_TabChanged(object sender, EventArgs e)
+        {
+            TracksPanel.Items.Clear();
+            CategoryPanel.Items.Clear();
+            LeftSide.Width = new GridLength(222);
+            DetailsPane.Height = new GridLength(75);
+            LoadLibrary();
+        }
 
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            MainWindow.TabChanged -= MainWindow_TabChanged;
+            CategoryPanel.Items.Clear();
+            TracksPanel.Items.Clear();
+        }
+
+        private void Page_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+        }
+
+        private void Page_Drop(object sender, DragEventArgs e)
+        {
+            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop); // TODO: move logic to mainwindow
+            MainWindow.Player.AddQueue(tracks);
+            DatabaseHandler.ImportSong(tracks);
+            MainWindow.Player.PlayMusic();
+
+            MainWindow.Library.Clear();
+            MainWindow.Library = DatabaseHandler.ReadSongs();
+            LoadLibrary();
+        }
     }
 }

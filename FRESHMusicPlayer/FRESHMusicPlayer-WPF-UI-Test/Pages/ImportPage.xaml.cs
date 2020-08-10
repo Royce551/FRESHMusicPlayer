@@ -5,6 +5,7 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using Microsoft.Win32;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using WinForms = System.Windows.Forms;
@@ -72,6 +73,19 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                     MainWindow.Player.PlayMusic();
                 }
             }
+        }
+
+        private void Page_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+        }
+
+        private void Page_Drop(object sender, DragEventArgs e)
+        {
+            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
+            MainWindow.Player.AddQueue(tracks);
+            DatabaseHandler.ImportSong(tracks);
+            MainWindow.Player.PlayMusic();
         }
     }
 }

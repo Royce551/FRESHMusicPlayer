@@ -30,12 +30,12 @@ namespace FRESHMusicPlayer
     {
         Winforms.Timer progressTimer;
         public static SelectedMenus SelectedMenu = SelectedMenus.Tracks;
-        // TODO: i dunno how to pass this to the pages, if there is a way to i can avoid making this static
         public static Player Player = new Player();
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static List<string> Library = new List<string>();
         public static bool MiniPlayerMode = false;
         public static bool PreventAuxilliaryPaneHiding = false;
+        public static EventHandler TabChanged;
         public MainWindow()
         {
             InitializeComponent();
@@ -147,17 +147,17 @@ namespace FRESHMusicPlayer
             {
                 case SelectedMenus.Tracks:
                     ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
-                    RightFrame.NavigationService.RemoveBackEntry();
+                    ContentFrame.NavigationService.RemoveBackEntry();
                     tab = TracksTab;
                     break;
                 case SelectedMenus.Artists:
                     ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
-                    RightFrame.NavigationService.RemoveBackEntry();
+                    ContentFrame.NavigationService.RemoveBackEntry();
                     tab = ArtistsTab;
                     break;
                 case SelectedMenus.Albums:
                     ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
-                    RightFrame.NavigationService.RemoveBackEntry();
+                    ContentFrame.NavigationService.RemoveBackEntry();
                     tab = AlbumsTab;
                     break;
                 case SelectedMenus.Import:
@@ -167,6 +167,7 @@ namespace FRESHMusicPlayer
                 default:
                     throw new InvalidOperationException("you are idoit");
             }
+            TabChanged?.Invoke(null, EventArgs.Empty);
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tab.FontWeight = FontWeights.Bold;
         }
@@ -314,6 +315,8 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F5:
+                    Library.Clear();
+                    Library = DatabaseHandler.ReadSongs();
                     ContentFrame.Refresh();
                     e.Handled = true;
                     break;
