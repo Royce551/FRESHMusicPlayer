@@ -204,4 +204,60 @@ Chúng tôi sẽ nhảy tiếp cho bạn</value>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
     <value>Duyệt cho thư mục</value>
   </data>
+  <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
+    <value>Người soạn -</value>
+  </data>
+  <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
+    <value>_Chép từ</value>
+  </data>
+  <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
+    <value>Một lỗi đã xảy ra: {0}.
+Nếu bạn có thể, xin báo cáo lỗi này tại https://github.com/royce551/freshmusicplayer/issues.
+Tệp nhật ký họ cần có thể tìm tại {1}.</value>
+  </data>
+  <data name="TAGEDITOR_TITLE" xml:space="preserve">
+    <value>Tiêu đề - </value>
+  </data>
+  <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
+    <value>Số trên đĩa - </value>
+  </data>
+  <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
+    <value>Bạn có muốn lưu thay đổi vào {0}?</value>
+  </data>
+  <data name="TAGEDITOR_SAVE" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
+    <value>Đang chính sửa </value>
+  </data>
+  <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
+    <value>Số đĩa - </value>
+  </data>
+  <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
+    <value>Đổi Tệp...</value>
+  </data>
+  <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
+    <value>Các thay đổi sẽ bị áp dụng khi bạn phát bài hát khác.</value>
+  </data>
+  <data name="TAGEDITOR_ARTIST" xml:space="preserve">
+    <value>Nghệ sĩ - </value>
+  </data>
+  <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
+    <value>Nghệ sĩ đĩa -</value>
+  </data>
+  <data name="MENUBAR_SAVE" xml:space="preserve">
+    <value>_Lưu</value>
+  </data>
+  <data name="MENUBAR_OPEN" xml:space="preserve">
+    <value>_Mở</value>
+  </data>
+  <data name="MENUBAR_EXIT" xml:space="preserve">
+    <value>T_hoát</value>
+  </data>
+  <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
+    <value>Cử_a sổ mới</value>
+  </data>
+  <data name="MENUBAR_FILE" xml:space="preserve">
+    <value>_Tệp</value>
+  </data>
 </root>
