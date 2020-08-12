@@ -199,7 +199,7 @@ We'll skip to the next track for you</value>
     <value>Remaining Time - </value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>Album Artist -</value>
+    <value>Album Artist - </value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
     <value>Artist - </value>
@@ -211,7 +211,7 @@ We'll skip to the next track for you</value>
     <value>Change File...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value>Composer -</value>
+    <value>Composer - </value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
     <value>Disc Number - </value>

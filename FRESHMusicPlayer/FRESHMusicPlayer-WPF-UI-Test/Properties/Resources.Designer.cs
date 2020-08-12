@@ -298,7 +298,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album Artist -.
+        ///   Looks up a localized string similar to Album Artist - .
         /// </summary>
         public static string TAGEDITOR_ALBUMARTIST {
             get {
@@ -334,7 +334,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Composer -.
+        ///   Looks up a localized string similar to Composer - .
         /// </summary>
         public static string TAGEDITOR_COMPOSER {
             get {
