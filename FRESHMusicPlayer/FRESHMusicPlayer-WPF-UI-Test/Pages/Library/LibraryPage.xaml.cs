@@ -18,6 +18,7 @@ using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using System.Threading;
 using System.ComponentModel;
+using System.Windows.Shell;
 
 namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 {
@@ -51,6 +52,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         public async void ShowTracks()
         {
             NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Info.ProgressState = TaskbarItemProgressState.Normal;
             LeftSide.Width = new GridLength(0);
             DetailsPane.Height = new GridLength(0);
             await Task.Run(() =>
@@ -61,12 +63,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 foreach (string thing in MainWindow.Library)
                 {
                     Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}", true, false)));
+                    Dispatcher.Invoke(() => ((MainWindow)System.Windows.Application.Current.MainWindow).Info.ProgressValue = ((double)progress / total));
                     Track track = new Track(thing);
                     Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                     progress++;
                 }
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Info.ProgressState = TaskbarItemProgressState.None;
         }
         public async void ShowArtists()
         {

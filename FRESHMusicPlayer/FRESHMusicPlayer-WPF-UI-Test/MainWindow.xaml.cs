@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shell;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -296,12 +297,10 @@ namespace FRESHMusicPlayer
                     if (RightFrame.Visibility == Visibility.Collapsed)
                     {
                         ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
-                        SetCoverArtVisibility(false);
                     }
                     else
                     {
                         HideAuxilliaryPane();
-                        SetCoverArtVisibility(true);
                     }
                     e.Handled = true;
                     break;
@@ -312,6 +311,15 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.E:
                     if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/NotificationPage.xaml"); else HideAuxilliaryPane();
+                    e.Handled = true;
+                    break;
+                case Key.R:
+                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335); else HideAuxilliaryPane();
+                    e.Handled = true;
+                    break;
+                case Key.OemTilde:
+                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", "You just pressed the debug key! You may or may not see cool stuff happening.", false, true)));
+                    ((App)System.Windows.Application.Current).ChangeSkin(Skin.Light);
                     e.Handled = true;
                     break;
                 case Key.F5:

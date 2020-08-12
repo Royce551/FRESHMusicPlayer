@@ -22,6 +22,9 @@
                         />
         </Storyboard>
     </Window.Resources>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="Info" Description="hi windows taskbar"/>
+    </Window.TaskbarItemInfo>
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
