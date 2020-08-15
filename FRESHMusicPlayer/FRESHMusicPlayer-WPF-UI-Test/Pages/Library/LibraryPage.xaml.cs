@@ -52,25 +52,24 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         public async void ShowTracks()
         {
             NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
-            ((MainWindow)System.Windows.Application.Current.MainWindow).Info.ProgressState = TaskbarItemProgressState.Normal;
             LeftSide.Width = new GridLength(0);
-            DetailsPane.Height = new GridLength(0);
+            int length = 0;
             await Task.Run(() =>
             {
                 int progress = 0;
-                int total = MainWindow.Library.Count;
+                int total = MainWindow.Library.Count;              
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
                 foreach (string thing in MainWindow.Library)
                 {
                     Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}", true, false)));
-                    Dispatcher.Invoke(() => ((MainWindow)System.Windows.Application.Current.MainWindow).Info.ProgressValue = ((double)progress / total));
                     Track track = new Track(thing);
                     Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
+                    length += track.Duration;
                     progress++;
                 }
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
-            ((MainWindow)System.Windows.Application.Current.MainWindow).Info.ProgressState = TaskbarItemProgressState.None;
+            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         public async void ShowArtists()
         {
@@ -118,27 +117,39 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         {
             TracksPanel.Items.Clear();
             var selectedItem = (string)CategoryPanel.SelectedItem;
+            int length = 0;
             await Task.Run(() =>
             {
                 foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
-                    if (track.Artist == selectedItem) Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
+                    if (track.Artist == selectedItem)
+                    {
+                        Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
+                        length += track.Duration;
+                    }
                 }
             });
+            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         public async void ShowTracksforAlbum()
         {
             TracksPanel.Items.Clear();
             var selectedItem = (string)CategoryPanel.SelectedItem;
+            int length = 0;
             await Task.Run(() =>
             {
                 foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
-                    if (track.Album == selectedItem) Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
+                    if (track.Album == selectedItem)
+                    {
+                        Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
+                        length += track.Duration;
+                    }                  
                 }
             });
+            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
 
         private void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -151,7 +162,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
             TracksPanel.Items.Clear();
             CategoryPanel.Items.Clear();
             LeftSide.Width = new GridLength(222);
-            DetailsPane.Height = new GridLength(75);
+            DetailsPane.Height = new GridLength(45);
             LoadLibrary();
         }
 
@@ -177,6 +188,23 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
             MainWindow.Library.Clear();
             MainWindow.Library = DatabaseHandler.ReadSongs();
             LoadLibrary();
+        }
+
+        private void QueueAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (SongEntry entry in TracksPanel.Items)
+            {
+                MainWindow.Player.AddQueue(entry.FilePath);
+            }
+        }
+
+        private void PlayAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (SongEntry entry in TracksPanel.Items)
+            {
+                MainWindow.Player.AddQueue(entry.FilePath);
+            }
+            MainWindow.Player.PlayMusic();
         }
     }
 }

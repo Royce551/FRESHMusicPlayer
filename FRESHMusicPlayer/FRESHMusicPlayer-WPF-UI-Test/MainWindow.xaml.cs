@@ -240,12 +240,13 @@ namespace FRESHMusicPlayer
         #endregion
         #region MenuBar
         private void TracksTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Tracks);
-
         private void ArtistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Artists);
-
         private void AlbumsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Albums);
-
         private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Import);
+        private void SettingsTab_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335); else HideAuxilliaryPane();
+        }
         #endregion
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
         {
@@ -319,6 +320,9 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.OemTilde:
                     NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", "You just pressed the debug key! You may or may not see cool stuff happening.", false, true)));
+                    int a = 5;
+                    int b = 0;
+                    int c = a / b;
                     ((App)System.Windows.Application.Current).ChangeSkin(Skin.Light);
                     e.Handled = true;
                     break;
@@ -345,7 +349,6 @@ namespace FRESHMusicPlayer
                 Player.AddQueue(tracks);
             });
             Player.PlayMusic();
-        }
-
+        }    
     }
 }

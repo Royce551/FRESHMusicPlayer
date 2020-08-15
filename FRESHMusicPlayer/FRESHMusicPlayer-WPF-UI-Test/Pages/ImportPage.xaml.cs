@@ -87,5 +87,12 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             DatabaseHandler.ImportSong(tracks);
             MainWindow.Player.PlayMusic();
         }
+
+        private void TextBoxButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Player.AddQueue(FilePathBox.Text);
+            DatabaseHandler.ImportSong(FilePathBox.Text);
+            MainWindow.Player.PlayMusic();
+        }
     }
 }
