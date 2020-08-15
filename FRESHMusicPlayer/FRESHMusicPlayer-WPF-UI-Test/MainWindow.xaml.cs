@@ -286,15 +286,15 @@ namespace FRESHMusicPlayer
         {
             switch (e.Key)
             {
-                case Key.Q:
+                case Key.F1:
                     if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335); else HideAuxilliaryPane();
                     e.Handled = true;
                     break;
-                case Key.W:
+                case Key.F2:
                     if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);
                     e.Handled = true;
                     break;
-                case Key.Left:
+                case Key.F3:
                     if (RightFrame.Visibility == Visibility.Collapsed)
                     {
                         ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
@@ -305,17 +305,13 @@ namespace FRESHMusicPlayer
                     }
                     e.Handled = true;
                     break;
-                case Key.Right:
+                case Key.F4:
                     TagEditor tagEditor = new TagEditor(Player.Queue);
                     tagEditor.Show();
                     e.Handled = true;
                     break;
-                case Key.E:
+                case Key.F6:
                     if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/NotificationPage.xaml"); else HideAuxilliaryPane();
-                    e.Handled = true;
-                    break;
-                case Key.R:
-                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335); else HideAuxilliaryPane();
                     e.Handled = true;
                     break;
                 case Key.OemTilde:

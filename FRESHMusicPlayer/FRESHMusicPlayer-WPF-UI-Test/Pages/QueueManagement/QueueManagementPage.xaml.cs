@@ -34,19 +34,28 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             MainWindow.Player.SongChanged += Player_SongChanged;
         }
         
-        public void PopulateList()
+        public async void PopulateList()
         {
             var list = MainWindow.Player.Queue;
             var nextlength = 0;
             int number = 1;
-            foreach (var song in list)
+            AddTrackButton.IsEnabled = false;
+            AddPlaylistButton.IsEnabled = false;
+            ClearQueueButton.IsEnabled = false;
+            await Task.Run(() =>
             {
-                Track track = new Track(song);
-                QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, (number - MainWindow.Player.QueuePosition).ToString(), number - 1));
-                if (MainWindow.Player.QueuePosition < number) nextlength += track.Duration;
-                number++;
-            }
+                foreach (var song in list)
+                {
+                    Track track = new Track(song);
+                    Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, (number - MainWindow.Player.QueuePosition).ToString(), number - 1)));
+                    if (MainWindow.Player.QueuePosition < number) nextlength += track.Duration;
+                    number++;
+                }
+            });           
             RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0,0,0,nextlength).ToString(@"hh\:mm\:ss");
+            AddTrackButton.IsEnabled = true;
+            AddPlaylistButton.IsEnabled = true;
+            ClearQueueButton.IsEnabled = true;
         }
         
         private void Player_SongChanged(object sender, EventArgs e)
