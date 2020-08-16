@@ -20,7 +20,7 @@ namespace FRESHMusicPlayer
             MainWindow window = new MainWindow();
             window.Show();
         }
-        public static Skin CurrentSkin { get; set; } = Skin.Dark;
+        public static Skin CurrentSkin { get; set; } = Skin.Light;
         public void ChangeSkin(Skin newSkin)
         {
             CurrentSkin = newSkin;
