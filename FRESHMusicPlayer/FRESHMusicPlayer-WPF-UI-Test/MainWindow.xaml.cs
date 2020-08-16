@@ -1,6 +1,7 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer_WPF_UI_Test.Forms;
 using Microsoft.Win32;
 using System;
@@ -14,6 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Winforms = System.Windows.Forms;
+using Windows.Media;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows.Interop;
+using Windows.Storage.Streams;
 
 namespace FRESHMusicPlayer
 {
@@ -37,6 +42,8 @@ namespace FRESHMusicPlayer
         public static bool MiniPlayerMode = false;
         public static bool PreventAuxilliaryPaneHiding = false;
         public static EventHandler TabChanged;
+
+        public SystemMediaTransportControls Smtc;
         public MainWindow()
         {
             InitializeComponent();
@@ -51,8 +58,45 @@ namespace FRESHMusicPlayer
             progressTimer.Tick += ProgressTimer_Tick;
             Library = DatabaseHandler.ReadSongs();
         }
+        private void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
+            Window window = Window.GetWindow(this);
+            var wih = new WindowInteropHelper(window);
+            IntPtr hWnd = wih.Handle;
+            Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
+            Smtc.IsPlayEnabled = true;
+            Smtc.IsPauseEnabled = true;
+            Smtc.IsNextEnabled = true;
+            Smtc.IsStopEnabled = true;
+            Smtc.IsPreviousEnabled = true;
+            Smtc.ButtonPressed += Smtc_ButtonPressed;
+        }
+        private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
+        {
+            switch (args.Button)
+            {
+                case SystemMediaTransportControlsButton.Play:
+                    Dispatcher.Invoke(() => PlayPauseMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Pause:
+                    Dispatcher.Invoke(() => PlayPauseMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Next:
+                    Dispatcher.Invoke(() => NextTrackMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Previous:
+                    Dispatcher.Invoke(() => PreviousTrackMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Stop:
+                    Dispatcher.Invoke(() => StopMethod());
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        
+
 
 
         #region Controls
@@ -62,11 +106,13 @@ namespace FRESHMusicPlayer
             {
                 Player.ResumeMusic();
                 PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
+                Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
             }
             else
             {
                 Player.PauseMusic();
                 PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
+                Smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
             }
         }
         public void StopMethod()
@@ -75,6 +121,7 @@ namespace FRESHMusicPlayer
             Player.StopMusic();
         }
         public void NextTrackMethod() => Player.NextSong();
+        public void PreviousTrackMethod() => Player.PreviousSong();
         public void MoreMethod()
         {
 
@@ -184,6 +231,7 @@ namespace FRESHMusicPlayer
             Title = "FRESHMusicPlayer 8 Development";
             TitleLabel.Text = ArtistLabel.Text = "Nothing Playing";
             progressTimer.Stop();
+            Smtc.PlaybackStatus = MediaPlaybackStatus.Stopped;
         }
 
         private void player_songChanged(object sender, EventArgs e)
@@ -194,6 +242,15 @@ namespace FRESHMusicPlayer
             ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+     
+            Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
+            var updater = Smtc.DisplayUpdater;
+            updater.Type = MediaPlaybackType.Music;
+            updater.MusicProperties.Artist = track.Artist;
+            updater.MusicProperties.AlbumArtist = track.AlbumArtist;
+            updater.MusicProperties.Title = track.Title;
+
+            updater.Update();
 
             if (track.EmbeddedPictures.Count == 0)
             {
@@ -345,6 +402,8 @@ namespace FRESHMusicPlayer
                 Player.AddQueue(tracks);
             });
             Player.PlayMusic();
-        }    
+        }
+
+        
     }
 }
