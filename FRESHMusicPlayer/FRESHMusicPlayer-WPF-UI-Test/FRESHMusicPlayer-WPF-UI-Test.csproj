@@ -17,9 +17,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\FRESHMusicPlayer.Core.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
@@ -30,5 +27,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="z440.atl.core" Version="3.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FRESHMusicPlayer-Core\FRESHMusicPlayer.Player\FRESHMusicPlayer.Player\FRESHMusicPlayer.Core.csproj" />
   </ItemGroup>
 </Project>
