@@ -19,7 +19,6 @@ using Windows.Media;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Interop;
 using Windows.Storage.Streams;
-using System.IO;
 
 namespace FRESHMusicPlayer
 {
@@ -260,7 +259,7 @@ namespace FRESHMusicPlayer
             }
             else
             {
-                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 SetCoverArtVisibility(true);
             }
 
