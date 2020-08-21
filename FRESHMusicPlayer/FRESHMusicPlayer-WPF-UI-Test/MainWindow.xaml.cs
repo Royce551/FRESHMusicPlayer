@@ -60,17 +60,20 @@ namespace FRESHMusicPlayer
         }
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
-            var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
-            Window window = Window.GetWindow(this);
-            var wih = new WindowInteropHelper(window);
-            IntPtr hWnd = wih.Handle;
-            Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
-            Smtc.IsPlayEnabled = true;
-            Smtc.IsPauseEnabled = true;
-            Smtc.IsNextEnabled = true;
-            Smtc.IsStopEnabled = true;
-            Smtc.IsPreviousEnabled = true;
-            Smtc.ButtonPressed += Smtc_ButtonPressed;
+            if (Environment.OSVersion.Version.Major >= 10)
+            {
+                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
+                Window window = Window.GetWindow(this);
+                var wih = new WindowInteropHelper(window);
+                IntPtr hWnd = wih.Handle;
+                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
+                Smtc.IsPlayEnabled = true;
+                Smtc.IsPauseEnabled = true;
+                Smtc.IsNextEnabled = true;
+                Smtc.IsStopEnabled = true;
+                Smtc.IsPreviousEnabled = true;
+                Smtc.ButtonPressed += Smtc_ButtonPressed;
+            }          
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
@@ -95,9 +98,6 @@ namespace FRESHMusicPlayer
                     break;
             }
         }
-
-
-
 
         #region Controls
         public void PlayPauseMethod()
@@ -241,17 +241,18 @@ namespace FRESHMusicPlayer
             TitleLabel.Text = track.Title;
             ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
-            ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
-     
-            Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
-            var updater = Smtc.DisplayUpdater;
-            updater.Type = MediaPlaybackType.Music;
-            updater.MusicProperties.Artist = track.Artist;
-            updater.MusicProperties.AlbumArtist = track.AlbumArtist;
-            updater.MusicProperties.Title = track.Title;
-
-            updater.Update();
-
+            if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+            else ProgressIndicator2.Text = "∞";
+            if (Environment.OSVersion.Version.Major >= 10)
+            {
+                Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
+                var updater = Smtc.DisplayUpdater;
+                updater.Type = MediaPlaybackType.Music;
+                updater.MusicProperties.Artist = track.Artist;
+                updater.MusicProperties.AlbumArtist = track.AlbumArtist;
+                updater.MusicProperties.Title = track.Title;
+                updater.Update();
+            }
             if (track.EmbeddedPictures.Count == 0)
             {
                 CoverArtBox.Source = null;

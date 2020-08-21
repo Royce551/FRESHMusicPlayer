@@ -49,7 +49,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Forms
                 Displayfilepaths.Add(System.IO.Path.GetFileName(path));
                 iterations++;
             }
-            EditingHeader.Text = string.Format(Properties.Resources.TAGEDITOR_EDITINGHEADER, string.Join(", ", Displayfilepaths));
+            if (iterations <= 5) EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths);
+            else EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths.Take(5)) + " + " + (Displayfilepaths.Count - 4);
             Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
             unsavedChanges = false;
         }
@@ -102,13 +103,16 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Forms
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            foreach (string path in filePathsToSaveInBackground)
+            if (filePathsToSaveInBackground.Count != 0)
             {
-                if (path == MainWindow.Player.FilePath) break; // still listening to files that can't be properly saved
-            }
-            SaveChanges(filePathsToSaveInBackground);
-            filePathsToSaveInBackground.Clear();
-            Close();
+                foreach (string path in filePathsToSaveInBackground)
+                {
+                    if (path == MainWindow.Player.FilePath) break; // still listening to files that can't be properly saved
+                }
+                SaveChanges(filePathsToSaveInBackground);
+                filePathsToSaveInBackground.Clear();
+                Close();
+            }            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

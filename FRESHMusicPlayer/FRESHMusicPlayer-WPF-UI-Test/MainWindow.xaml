@@ -28,18 +28,18 @@
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
-            <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown">
+            <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown" Cursor="Hand">
             </TextBlock>
-            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown">
+            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
+            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown" Cursor="Hand">
             </TextBlock>
-            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown">
+            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
+            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown" Cursor="Hand">
             </TextBlock>
-            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="#FFDADADA" DockPanel.Dock="Left"/>
-            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown">
+            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
+            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand">
             </TextBlock>
-            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="SettingsTab_MouseDown" HorizontalAlignment="Right">
+            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="SettingsTab_MouseDown" HorizontalAlignment="Right" Cursor="Hand">
             </TextBlock>
             <!--<Path x:Name="VolumIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" RenderTransformOrigin="1.1,0.633"  Width="20" VerticalAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" Fill="White"/>-->
         </DockPanel>
@@ -126,7 +126,7 @@
         </Border>
         <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Background="#FFF11F1F" Visibility="Collapsed" Width="235" NavigationUIVisibility="Hidden"/>
         <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Hidden"/>
-        
+
 
     </DockPanel>
 </Window>
