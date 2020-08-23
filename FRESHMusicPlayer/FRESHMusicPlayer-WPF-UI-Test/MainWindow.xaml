@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Properties"
         mc:Ignorable="d"
-        Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" PreviewKeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized">
+        Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized">
     <Window.Resources>
         <Storyboard x:Key="SlideIn">
             <DoubleAnimation
@@ -22,9 +22,6 @@
                         />
         </Storyboard>
     </Window.Resources>
-    <Window.TaskbarItemInfo>
-        <TaskbarItemInfo x:Name="Info" Description="hi windows taskbar"/>
-    </Window.TaskbarItemInfo>
     <DockPanel Background="#FF0C6C08">
         <!--Menu-->
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
@@ -39,9 +36,17 @@
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
             <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand">
             </TextBlock>
-            <TextBlock x:Name="SettingsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,10,0" MouseDown="SettingsTab_MouseDown" HorizontalAlignment="Right" Cursor="Hand">
-            </TextBlock>
-            <!--<Path x:Name="VolumIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" RenderTransformOrigin="1.1,0.633"  Width="20" VerticalAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" Fill="White"/>-->
+            <Border x:Name="SettingsButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="SettingsButton_Click">
+                <!---some manual corrections were applied to keep the icons visually correct-->
+                <Canvas>
+                    <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Canvas>
+            </Border>
+            <Border x:Name="SearchButton" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" MouseDown="SearchButton_Click" Height="20" VerticalAlignment="Top">
+                <Canvas>
+                    <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Canvas>
+            </Border>
         </DockPanel>
         <!--Controls Box-->
         <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{StaticResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5">

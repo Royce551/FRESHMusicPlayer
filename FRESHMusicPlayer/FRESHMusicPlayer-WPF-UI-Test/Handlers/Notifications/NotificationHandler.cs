@@ -18,7 +18,7 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         }
         public void Update(NotificationBox box, NotificationInfo info)
         {
-            Notifications[Notifications.IndexOf(box)]?.UpdateContent(info);
+            if (Notifications[Notifications.IndexOf(box)] != null) Notifications[Notifications.IndexOf(box)].UpdateContent(info);
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);
         }
         public void Remove(NotificationBox box)

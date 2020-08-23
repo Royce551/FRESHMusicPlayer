@@ -63,9 +63,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             using (var dialog = new WinForms.FolderBrowserDialog()) // why do i have to use winforms for this?!
             {
                 if (dialog.ShowDialog() == WinForms.DialogResult.OK)
-                {
-                    string[] files = Directory.GetFiles(dialog.SelectedPath);           
-                    foreach (string s in files)
+                {          
+                    foreach (string s in Directory.EnumerateFiles(dialog.SelectedPath))
                     {
                         MainWindow.Player.AddQueue(s);
                         DatabaseHandler.ImportSong(s);

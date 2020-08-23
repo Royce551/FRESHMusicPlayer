@@ -27,7 +27,8 @@ namespace FRESHMusicPlayer
         Tracks,
         Artists,
         Albums,
-        Import
+        Import,
+        Other
     }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -213,7 +214,8 @@ namespace FRESHMusicPlayer
                     tab = ImportTab;
                     break;
                 default:
-                    throw new InvalidOperationException("you are idoit");
+                    tab = null;
+                    break;
             }
             TabChanged?.Invoke(null, EventArgs.Empty);
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
@@ -301,9 +303,15 @@ namespace FRESHMusicPlayer
         private void ArtistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Artists);
         private void AlbumsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Albums);
         private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Import);
-        private void SettingsTab_MouseDown(object sender, MouseButtonEventArgs e)
+        private void SettingsButton_Click(object sender, MouseButtonEventArgs e)
         {
-            if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335); else HideAuxilliaryPane();
+            if (RightFrame.Visibility == Visibility.Visible) HideAuxilliaryPane();
+            else ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335);
+        }
+        private void SearchButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            ContentFrame.Source = new Uri("/Pages/Library/SearchPage.xaml", UriKind.Relative);
+            TabChanged?.Invoke(null, EventArgs.Empty);
         }
         #endregion
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
@@ -405,6 +413,9 @@ namespace FRESHMusicPlayer
             Player.PlayMusic();
         }
 
-        
+        private void SettingsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
