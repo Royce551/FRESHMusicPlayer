@@ -19,6 +19,7 @@ using Windows.Media;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Interop;
 using Windows.Storage.Streams;
+using FRESHMusicPlayer.Handlers.Configuration;
 
 namespace FRESHMusicPlayer
 {
@@ -58,10 +59,11 @@ namespace FRESHMusicPlayer
             };
             progressTimer.Tick += ProgressTimer_Tick;
             Library = DatabaseHandler.ReadSongs();
+            ProcessSettings();
         }
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
-            if (Environment.OSVersion.Version.Major >= 10)
+            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
                 Window window = Window.GetWindow(this);
@@ -108,12 +110,14 @@ namespace FRESHMusicPlayer
                 Player.ResumeMusic();
                 PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
                 Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
+                progressTimer.Start();
             }
             else
             {
                 Player.PauseMusic();
                 PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
                 Smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
+                progressTimer.Stop();
             }
         }
         public void StopMethod()
@@ -182,7 +186,10 @@ namespace FRESHMusicPlayer
                 NotificationHandler.Add(new NotificationBox(new NotificationInfo("Hold up!", "The pane still needs your attention. Finish what you're doing first.", false, true)));
             }
         }
-
+        public void ProcessSettings()
+        {
+            DockPanel.SetDock(ControlsBoxBorder, App.Config.ControlBoxPosition);
+        }
         #region Tabs
         private void ChangeTabs(SelectedMenus tab)
         {
@@ -245,7 +252,7 @@ namespace FRESHMusicPlayer
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
-            if (Environment.OSVersion.Version.Major >= 10)
+            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
                 var updater = Smtc.DisplayUpdater;
@@ -294,6 +301,7 @@ namespace FRESHMusicPlayer
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
             ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
+            if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer 8 Development";
             ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
             Player.AvoidNextQueue = false;
         }
@@ -392,6 +400,19 @@ namespace FRESHMusicPlayer
                     Library.Clear();
                     Library = DatabaseHandler.ReadSongs();
                     ContentFrame.Refresh();
+                    e.Handled = true;
+                    break;
+                case Key.F7:
+                    if (Player.Shuffle == true) Player.Shuffle = false; else Player.Shuffle = true;
+                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", $"Shuffle: {Player.Shuffle}", false, true)));
+                    e.Handled = true;
+                    break;
+                case Key.F8:
+                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", $"Put stuff in configuration file", false, true)));
+                    App.Config.Language = "vi";
+                    App.Config.UpdatesLastChecked = DateTime.Now;
+                    App.Config.AccentColorHex = "fdfsfdsgsgs";
+                    ConfigurationHandler.Write(App.Config);
                     e.Handled = true;
                     break;
             }

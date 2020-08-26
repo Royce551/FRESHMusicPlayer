@@ -27,11 +27,13 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
     /// </summary>
     public partial class LibraryPage : Page
     {
+        List<SongEntry> entries = new List<SongEntry>();
         public LibraryPage()
         {
             InitializeComponent();
             LoadLibrary();
             MainWindow.TabChanged += MainWindow_TabChanged;
+            TracksPanel.ItemsSource = entries;
         }
 
         public void LoadLibrary()

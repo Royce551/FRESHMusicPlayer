@@ -24,17 +24,17 @@
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="ButtonColumn" Width="Auto"/>
             <ColumnDefinition/>
-            <ColumnDefinition x:Name="ButtonColumn" Width="77px"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="TitleLabel" Grid.Column="0" Margin="5,0,0,13" Text="TextBlock" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
-        <TextBlock x:Name="ArtistAlbumLabel" Margin="5,24,0,2" Text="TextBlock" Foreground="{StaticResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
-        <Path x:Name="PlayButton" Data="{StaticResource PlayIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0"/>
-        <Path x:Name="QueueButton" Data="{StaticResource AddQueueIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0"/>
-        <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Opacity="0"/>
+        <TextBlock x:Name="TitleLabel" Grid.Column="1" Margin="5,0,0,13" Text="TextBlock" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
+        <TextBlock x:Name="ArtistAlbumLabel" Margin="5,24,0,2" Text="TextBlock" Foreground="{StaticResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis" Grid.Column="1"/>
+        <Path x:Name="PlayButton" Data="{StaticResource PlayIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="1" Visibility="Collapsed"/>
+        <Path x:Name="QueueButton" Data="{StaticResource AddQueueIcon}" Stretch="Uniform" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="1" Visibility="Collapsed"/>
+        <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Opacity="1" Visibility="Collapsed"/>
 
-        <Rectangle Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0" MouseLeftButtonDown="PlayButtonClick" Cursor="Hand"/>
-        <Rectangle Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0" MouseLeftButtonDown="QueueButtonClick" Cursor="Hand"/>
-        <Rectangle Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" MouseLeftButtonDown="DeleteButtonClick" Cursor="Hand"/>
+        <Rectangle x:Name="PlayHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0" MouseLeftButtonDown="PlayButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+        <Rectangle x:Name="QueueHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0" MouseLeftButtonDown="QueueButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+        <Rectangle x:Name="DeleteHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" MouseLeftButtonDown="DeleteButtonClick" Cursor="Hand" Visibility="Collapsed"/>
     </Grid>
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using FRESHMusicPlayer.Handlers.Configuration;
 namespace FRESHMusicPlayer
 {
     public enum Skin
@@ -12,8 +13,10 @@ namespace FRESHMusicPlayer
     /// </summary>
     public partial class App : Application
     {
+        public static ConfigurationFile Config;
         void App_Startup(object sender, StartupEventArgs e )
         {
+            Config = ConfigurationHandler.Read();
             //Force Viet for the time being
             //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("vi");
 

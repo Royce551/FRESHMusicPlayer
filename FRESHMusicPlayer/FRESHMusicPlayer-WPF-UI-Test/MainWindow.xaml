@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Properties"
         mc:Ignorable="d"
-        Title="FRESHMusicPlayer 8 Development" Height="512" Width="702" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized">
+        Title="FRESHMusicPlayer 8 Development" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized">
     <Window.Resources>
         <Storyboard x:Key="SlideIn">
             <DoubleAnimation

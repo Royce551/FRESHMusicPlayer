@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="1072" d:DesignWidth="335"
-      Title="SettingsPage">
+      Title="SettingsPage" Unloaded="Page_Unloaded">
 
     <Grid Background="{StaticResource SecondaryColor}">
         <Grid.ColumnDefinitions>
@@ -15,22 +15,24 @@
         <ScrollViewer Grid.Column="0">
             <VirtualizingStackPanel Background="{StaticResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
                 <TextBlock Text="Settings" Foreground="{StaticResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
-                <TextBlock Text="THESE CONTROLS DO NOT WORK!" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="Change the way FMP behaves" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
 
                 <TextBlock Text="General" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <Grid Background="{StaticResource ForegroundColor}" Height="30" Margin="0,0,0,5" >
+                <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="5,0" Text="Language" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4">
-                        <ComboBoxItem Content="Test"/>
-                        <ComboBoxItem Content="Test2"/>
+                        <ComboBoxItem Content="English"/>
+                        <ComboBoxItem Content="German"/>
+                        <ComboBoxItem Content="Vietnamese"/>
+                        <ComboBoxItem Content="Portugese"/>
                     </ComboBox>
                 </Grid>
-                <Grid Background="{StaticResource ForegroundColor}" Height="30" Margin="0,0,0,5" >
+                <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
@@ -41,10 +43,10 @@
                         <ComboBoxItem Content="Test2"/>
                     </ComboBox>
                 </Grid>
-                <CheckBox x:Name="General_ProgressCheck" Content="Show time instead of title in window title" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+                <CheckBox x:Name="General_ProgressCheck" Content="Show time instead of title in window title" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
                 <TextBlock Text="Integration" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
-                <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5"/>
-                <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+                <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
+                <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
 
                 <TextBlock Text="Updates" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
@@ -57,13 +59,13 @@
                 <TextBlock Text="Appearance" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <TextBlock Text="Controls" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
-                <CheckBox x:Name="ControlAppearance_ControlPosCheck" Content="Show controls at the top" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+                <CheckBox x:Name="ControlAppearance_ControlPosCheck" Content="Show controls at the top" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="ControlAppearance_ControlPosChanged" Unchecked="ControlAppearance_ControlPosChanged"/>
                 <TextBlock Text="Theme" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
                 <RadioButton GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5">Light</RadioButton>
                 <RadioButton GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True">Dark</RadioButton>
                 <RadioButton GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5">Classic</RadioButton>
                 <TextBlock Text="Accent Color" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
-                <Grid Background="{StaticResource ForegroundColor}" Height="30" Margin="0,0,0,5" >
+                <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
