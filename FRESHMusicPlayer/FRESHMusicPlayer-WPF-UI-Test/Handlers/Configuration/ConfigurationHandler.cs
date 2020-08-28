@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Handlers.Configuration
 {
@@ -32,6 +28,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         }
         public static void Write(ConfigurationFile config)
         {
+            if (!Directory.Exists(ConfigurationPath)) Directory.CreateDirectory(ConfigurationPath);
             using (StreamWriter file = File.CreateText(Path.Combine(ConfigurationPath, "config.json")))
             {
                 new JsonSerializer().Serialize(file, config);

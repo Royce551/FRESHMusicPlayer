@@ -2,6 +2,7 @@
 using FRESHMusicPlayer;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 DatabaseHandler.ImportSong(dialog.FileName);
                 MainWindow.Player.PlayMusic();
             }
+            MainWindow.Library.Clear();
+            MainWindow.Library = DatabaseHandler.ReadSongs();
         }
 
         private void BrowsePlaylistsButton_Click(object sender, RoutedEventArgs e)
@@ -56,15 +59,23 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 }
                 MainWindow.Player.PlayMusic();
             }
+            MainWindow.Library.Clear();
+            MainWindow.Library = DatabaseHandler.ReadSongs();
         }
 
         private void BrowseFoldersButton_Click(object sender, RoutedEventArgs e)
         {
             using (var dialog = new WinForms.FolderBrowserDialog()) // why do i have to use winforms for this?!
             {
+                dialog.Description = "Note: This doesn't import everything FMP actually supports. If you need to import more obscure file formats, try drag and drop.";
                 if (dialog.ShowDialog() == WinForms.DialogResult.OK)
                 {          
-                    foreach (string s in Directory.EnumerateFiles(dialog.SelectedPath))
+                    foreach (string s in Directory.EnumerateFiles(dialog.SelectedPath, "*", SearchOption.AllDirectories)
+                        .Where(name => name.EndsWith(".mp3")
+                            || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                            || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                            || name.EndsWith(".wma")
+                            || name.EndsWith(".aac")))
                     {
                         MainWindow.Player.AddQueue(s);
                         DatabaseHandler.ImportSong(s);
@@ -72,6 +83,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                     MainWindow.Player.PlayMusic();
                 }
             }
+            MainWindow.Library.Clear();
+            MainWindow.Library = DatabaseHandler.ReadSongs();
         }
 
         private void Page_DragEnter(object sender, DragEventArgs e)
@@ -84,7 +97,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
             MainWindow.Player.AddQueue(tracks);
             DatabaseHandler.ImportSong(tracks);
-            MainWindow.Player.PlayMusic();
+            MainWindow.Player.PlayMusic(); 
         }
 
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)
