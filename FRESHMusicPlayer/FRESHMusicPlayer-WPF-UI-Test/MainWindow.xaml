@@ -55,29 +55,30 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="206"/>
+                    <ColumnDefinition Width="231"/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="CoverArtBox" Margin="5,10,05,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality"/>
                 <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis"/>
-                <Slider x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Margin="37,54,45,0" VerticalAlignment="Top" Height="18" Foreground="#FFE84B4B" PreviewMouseUp="ProgressBar_MouseUp" Style="{StaticResource Progress_Slider}" Value="9.8"/>
-                <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Slider x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Margin="37,54,45,0" VerticalAlignment="Top" Height="21" Foreground="#FFE84B4B" PreviewMouseUp="ProgressBar_MouseUp" Style="{StaticResource Progress_Slider}" Value="9.8"/>
+                <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
                 <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,0,10,13" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="30"/>
                 <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
-                <Button Grid.Column="2" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top" Width="52" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"/>
+                <Button Grid.Column="2" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top" Width="52" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Height="4"/>
 
 
-                <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,95,8.413" Height="35.2" Width="35" HorizontalAlignment="Right"/>
-                <Path x:Name="StopButton" Data="{StaticResource StopIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right"/>
+                <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
+                <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right"/>
                 <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
-                <Path x:Name="MoreButton" Data="{StaticResource MoreIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,150,15" Width="20" Height="20" HorizontalAlignment="Right" MouseLeftButtonDown="MoreButton_MouseLeftButtonDown"/>
+                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatOneIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,141.503,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
+                <Path x:Name="PreviousTrackButton" Data="{StaticResource PreviousIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,47.803,181.503,15.997" Width="25.612" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown"/>
                 <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right"/>
 
-
                 <!--Hitboxes for the above paths-->
-                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,150,15" Width="20" Height="20" HorizontalAlignment="Right" MouseLeftButtonDown="MoreButton_MouseLeftButtonDown" Cursor="Hand"/>
-                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown" Cursor="Hand"/>
-                <Rectangle Grid.Column="2" Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="StopButton_MouseLeftButtonDown" Cursor="Hand"/>
-                <Rectangle Grid.Column="2" Margin="0,39,95,8.413" Height="35.2" Width="35" HorizontalAlignment="Right" MouseLeftButtonDown="PlayPauseButton_MouseLeftButtonDown" Fill="Transparent" Cursor="Hand"/>
+                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,142,13" Width="23" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown" Cursor="Hand"/>
+                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown" Cursor="Hand"/>
+                <Rectangle Grid.Column="2" Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Margin="0,46,55,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="ShuffleButton_MouseLeftButtonDown" Cursor="Hand"/>
+                <Rectangle Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right" MouseLeftButtonDown="PlayPauseButton_MouseLeftButtonDown" Fill="Transparent" Cursor="Hand"/>
+                <Rectangle Grid.Column="2" Margin="0,48,182,16" Width="22" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown" Fill="Transparent" Cursor="Hand"/>
                 <!--Sorry, this is more than a little messy LMAO-->
                 <Rectangle x:Name="VolumeBarHitbox" Grid.Column="2" Fill="Transparent" Margin="0,10,10,0" Width="142" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Rectangle.Triggers>
@@ -103,7 +104,7 @@
                         </EventTrigger>
                     </Rectangle.Triggers>
                 </Rectangle>
-                <Slider x:Name="VolumeBar" Grid.Column="2" Margin="0,14,43,0" Foreground="Red" BorderBrush="#FFAC0505" Height="18" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Opacity="0" Maximum="100" ValueChanged="VolumeBar_ValueChanged" Value="100" Style="{StaticResource Progress_Slider}">
+                <Slider x:Name="VolumeBar" Grid.Column="2" Margin="0,14,43,0" Foreground="Red" BorderBrush="#FFAC0505" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Opacity="0" Maximum="100" ValueChanged="VolumeBar_ValueChanged" Value="100" Style="{StaticResource Progress_Slider}">
                     <Slider.Triggers>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>

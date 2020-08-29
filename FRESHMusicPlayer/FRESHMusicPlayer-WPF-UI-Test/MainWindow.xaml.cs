@@ -127,9 +127,31 @@ namespace FRESHMusicPlayer
         }
         public void NextTrackMethod() => Player.NextSong();
         public void PreviousTrackMethod() => Player.PreviousSong();
-        public void MoreMethod()
+        public void ShuffleMethod()
         {
-
+            if (Player.Shuffle)
+            {
+                Player.Shuffle = false;
+                ShuffleButton.Fill = (Brush)FindResource("PrimaryTextColor");
+            }
+            else
+            {
+                Player.Shuffle = true;
+                ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(51, 139, 193), Color.FromRgb(105, 181, 120), 0);
+            }
+        }
+        public void RepeatOneMethod()
+        {
+            if (Player.RepeatOnce)
+            {
+                Player.RepeatOnce = false;
+                RepeatOneButton.Fill = (Brush)FindResource("PrimaryTextColor");
+            }
+            else
+            {
+                Player.RepeatOnce = true;
+                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(51, 139, 193), Color.FromRgb(105, 181, 120), 0);
+            }
         }
         #endregion
         #region Logic
@@ -282,7 +304,9 @@ namespace FRESHMusicPlayer
         }
         #endregion
         #region ControlsBox
-        private void MoreButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MoreMethod();
+        private void ShuffleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShuffleMethod();
+        private void RepeatOneButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => RepeatOneMethod();
+        private void PreviousButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PreviousTrackMethod();
         private void PlayPauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PlayPauseMethod();
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
