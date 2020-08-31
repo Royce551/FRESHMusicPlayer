@@ -19,6 +19,9 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using System.Threading;
 using System.ComponentModel;
 using System.Windows.Shell;
+using System.Diagnostics;
+using LiteDB;
+using FRESHMusicPlayer.Utilities;
 
 namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 {
@@ -59,14 +62,19 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 int progress = 0;
                 int total = MainWindow.Library.Count;              
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
-                foreach (string thing in MainWindow.Library)
+                /*foreach (string thing in MainWindow.Library)
                 {
                     Dispatcher.Invoke(() => MainWindow.NotificationHandler.Update(box, new NotificationInfo("Library is loading", $"{progress}/{total}", true, false)));
                     Track track = new Track(thing);
                     Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                     length += track.Duration;
                     progress++;
-                }
+                }*/
+                    foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().OrderBy("Title").ToList())
+                    {
+                        Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                        progress++;
+                    }        
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
@@ -79,7 +87,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 int progress = 0;
                 int total = MainWindow.Library.Count;
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
-                foreach (string thing in MainWindow.Library)
+                /*foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
                     if (!CategoryPanel.Items.Contains(track.Artist))
@@ -88,7 +96,13 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                         Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Artist));
                     }
                     progress++;
-                }
+                }*/
+                    foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().OrderBy("Artist").ToList())
+                    {
+                        if (CategoryPanel.Items.Contains(thing.Artist)) continue;
+                        Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
+                        progress++;
+                    }
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
         }
@@ -100,7 +114,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 int progress = 0;
                 int total = MainWindow.Library.Count;
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
-                foreach (string thing in MainWindow.Library)
+                /*foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
                     if (!CategoryPanel.Items.Contains(track.Album))
@@ -109,7 +123,13 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                         Dispatcher.Invoke(() => CategoryPanel.Items.Add(track.Album));
                     }
                     progress++;
-                }
+                }*/
+                    foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().OrderBy("Album").ToList())
+                    {
+                        if (CategoryPanel.Items.Contains(thing.Album)) continue;
+                        Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
+                        progress++;
+                    }
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
         }
@@ -120,7 +140,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (string thing in MainWindow.Library)
+                /*foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
                     if (track.Artist == selectedItem)
@@ -128,7 +148,11 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                         Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                         length += track.Duration;
                     }
-                }
+                }*/
+                    foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Artist == selectedItem).OrderBy("Title").ToList())
+                    {
+                        Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    }
             });
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
@@ -139,7 +163,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (string thing in MainWindow.Library)
+                /*foreach (string thing in MainWindow.Library)
                 {
                     Track track = new Track(thing);
                     if (track.Album == selectedItem)
@@ -147,7 +171,11 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                         Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                         length += track.Duration;
                     }                  
-                }
+                }*/
+                    foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Album == selectedItem).OrderBy("TrackNumber").ToList())
+                    {
+                        Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    }
             });
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }

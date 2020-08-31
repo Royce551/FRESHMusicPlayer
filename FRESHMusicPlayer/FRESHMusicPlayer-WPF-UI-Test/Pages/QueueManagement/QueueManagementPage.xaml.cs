@@ -46,7 +46,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             {
                 foreach (var song in list)
                 {
-                    Track track = new Track(song);
+                    ATL.Track track = new ATL.Track(song);
                     Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, (number - MainWindow.Player.QueuePosition).ToString(), number - 1)));
                     if (MainWindow.Player.QueuePosition < number) nextlength += track.Duration;
                     number++;

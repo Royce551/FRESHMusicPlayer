@@ -3,7 +3,9 @@ using FRESHMusicPlayer;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
+using LiteDB;
 using Microsoft.Win32;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,11 +94,20 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             e.Effects = DragDropEffects.Copy;
         }
 
-        private void Page_Drop(object sender, DragEventArgs e)
+        private async void Page_Drop(object sender, DragEventArgs e)
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
+            List<DatabaseTrack> stufftoinsert = new List<DatabaseTrack>();
             MainWindow.Player.AddQueue(tracks);
-            DatabaseHandler.ImportSong(tracks);
+            await Task.Run(() =>
+            {
+                foreach (var trackd in tracks)
+                {
+                    ATL.Track track = new ATL.Track(trackd);
+                    stufftoinsert.Add(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber});
+                }
+                    MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(stufftoinsert);
+            });          
             MainWindow.Player.PlayMusic(); 
         }
 

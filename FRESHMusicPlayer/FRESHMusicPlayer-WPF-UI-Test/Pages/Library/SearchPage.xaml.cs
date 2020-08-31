@@ -1,6 +1,9 @@
 ﻿using ATL;
 using FRESHMusicPlayer;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +48,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 TracksPanel.Items.Clear();
                 await Task.Run(() =>
                 {
-                    foreach (string thing in MainWindow.Library)
+                    /*foreach (string thing in MainWindow.Library)
                     {
                         Track track = new Track(thing);
                         if (track.Title.ToUpper().Contains(searchterm) || track.Artist.ToUpper().Contains(searchterm) || track.Album.ToUpper().Contains(searchterm))
@@ -53,7 +56,15 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                             Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
                             length += track.Duration;
                         }            
-                    }
+                    }*/
+                        foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks")
+                            .Query()
+                            .Where(x => x.Title.ToUpper().Contains(searchterm) || x.Artist.ToUpper().Contains(searchterm) || x.Album.ToUpper().Contains(searchterm))
+                            .OrderBy("Title")
+                            .ToList())
+                        {
+                            Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                        }
                 });
                 InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
                 taskIsRunning = false;

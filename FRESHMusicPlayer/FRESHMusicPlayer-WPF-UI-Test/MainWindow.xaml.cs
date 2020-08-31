@@ -20,6 +20,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Interop;
 using Windows.Storage.Streams;
 using FRESHMusicPlayer.Handlers.Configuration;
+using LiteDB;
 
 namespace FRESHMusicPlayer
 {
@@ -44,6 +45,7 @@ namespace FRESHMusicPlayer
         public static bool MiniPlayerMode = false;
         public static bool PreventAuxilliaryPaneHiding = false;
         public static EventHandler TabChanged;
+        public static LiteDatabase Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
 
         public SystemMediaTransportControls Smtc;
         public MainWindow()
@@ -267,7 +269,7 @@ namespace FRESHMusicPlayer
 
         private void player_songChanged(object sender, EventArgs e)
         {
-            Track track = new Track(Player.FilePath);
+            ATL.Track track = new ATL.Track(Player.FilePath);
             Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
             TitleLabel.Text = track.Title;
             ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;

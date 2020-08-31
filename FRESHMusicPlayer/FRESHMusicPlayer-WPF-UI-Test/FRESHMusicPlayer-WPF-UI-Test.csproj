@@ -240,6 +240,9 @@
     <PackageReference Include="DiscordRichPresence">
       <Version>1.0.150</Version>
     </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>5.0.9</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.19041.1</Version>
     </PackageReference>
