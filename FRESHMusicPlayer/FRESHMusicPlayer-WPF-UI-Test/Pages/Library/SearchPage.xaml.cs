@@ -43,20 +43,10 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 InfoLabel.Text = "Loading, please wait.";
                 int length = 0;
                 taskIsRunning = true;
-                int total = MainWindow.Library.Count;
                 searchterm = searchqueries.Dequeue();
                 TracksPanel.Items.Clear();
                 await Task.Run(() =>
                 {
-                    /*foreach (string thing in MainWindow.Library)
-                    {
-                        Track track = new Track(thing);
-                        if (track.Title.ToUpper().Contains(searchterm) || track.Artist.ToUpper().Contains(searchterm) || track.Album.ToUpper().Contains(searchterm))
-                        {
-                            Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing, track.Artist, track.Album, track.Title)));
-                            length += track.Duration;
-                        }            
-                    }*/
                         foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks")
                             .Query()
                             .Where(x => x.Title.ToUpper().Contains(searchterm) || x.Artist.ToUpper().Contains(searchterm) || x.Album.ToUpper().Contains(searchterm))
@@ -64,6 +54,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                             .ToList())
                         {
                             Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                            length += thing.Length;
                         }
                 });
                 InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";

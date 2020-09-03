@@ -22,6 +22,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
     /// </summary>
     public partial class SettingsPage : Page
     {
+        public bool AppRestartNeeded = false;
         public SettingsPage()
         {
             InitializeComponent();
@@ -33,8 +34,18 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             General_ProgressCheck.IsChecked = App.Config.ShowTimeInWindow;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
-            if (App.Config.ControlBoxPosition == Dock.Top) ControlAppearance_ControlPosCheck.IsChecked = true;
-            else ControlAppearance_ControlPosCheck.IsChecked = false;
+        }
+
+        public void SetAppRestartNeeded(bool value)
+        {
+            if (value)
+            {
+                AppRestartNeeded = true;
+            }
+            else
+            {
+                AppRestartNeeded = false;
+            }
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -60,11 +71,49 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             ConfigurationHandler.Write(App.Config);
         }
 
-        private void ControlAppearance_ControlPosChanged(object sender, RoutedEventArgs e)
+        private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((bool)ControlAppearance_ControlPosCheck.IsChecked) App.Config.ControlBoxPosition = Dock.Top;
-            else App.Config.ControlBoxPosition = Dock.Bottom;
+            switch (General_LanguageCombo.SelectedIndex) // i think this is bad code
+            {
+                case (int)LanguageCombo.English:
+                    App.Config.Language = "en";
+                    break;
+                case (int)LanguageCombo.German:
+                    App.Config.Language = "de";
+                    break;
+                case (int)LanguageCombo.Vietnamese:
+                    App.Config.Language = "vi";
+                    break;
+                case (int)LanguageCombo.Portuguese:
+                    App.Config.Language = "pt";
+                    break;
+            }
             ConfigurationHandler.Write(App.Config);
         }
+
+        private void Appearance_ThemeChanged(object sender, RoutedEventArgs e)
+        {
+            var radioButton = (RadioButton)sender;
+            switch (radioButton.Name)
+            {
+                case "Appearance_ThemeLightRadio":
+                    App.Config.Theme = Skin.Light;
+                    break;
+                case "Appearance_ThemeDarkRadio":
+                    App.Config.Theme = Skin.Dark;
+                    break;
+                case "Appearance_ThemeClassicRadio":
+                    App.Config.Theme = Skin.Classic;
+                    break;
+            }
+            ConfigurationHandler.Write(App.Config);
+        }
+    }
+    public enum LanguageCombo
+    {
+        English,
+        German,
+        Vietnamese,
+        Portuguese
     }
 }

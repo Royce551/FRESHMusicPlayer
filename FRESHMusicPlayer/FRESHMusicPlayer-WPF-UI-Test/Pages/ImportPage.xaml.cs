@@ -32,11 +32,9 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             if (dialog.ShowDialog() == true)
             {
                 MainWindow.Player.AddQueue(dialog.FileName);
-                DatabaseHandler.ImportSong(dialog.FileName);
+                DatabaseUtils.Import(dialog.FileName);
                 MainWindow.Player.PlayMusic();
             }
-            MainWindow.Library.Clear();
-            MainWindow.Library = DatabaseHandler.ReadSongs();
         }
 
         private void BrowsePlaylistsButton_Click(object sender, RoutedEventArgs e)
@@ -57,12 +55,10 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                         continue;
                     }
                     MainWindow.Player.AddQueue(s);
-                    DatabaseHandler.ImportSong(s);
+                    DatabaseUtils.Import(s);
                 }
                 MainWindow.Player.PlayMusic();
             }
-            MainWindow.Library.Clear();
-            MainWindow.Library = DatabaseHandler.ReadSongs();
         }
 
         private void BrowseFoldersButton_Click(object sender, RoutedEventArgs e)
@@ -80,13 +76,11 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                             || name.EndsWith(".aac")))
                     {
                         MainWindow.Player.AddQueue(s);
-                        DatabaseHandler.ImportSong(s);
+                        DatabaseUtils.Import(s);
                     }
                     MainWindow.Player.PlayMusic();
                 }
             }
-            MainWindow.Library.Clear();
-            MainWindow.Library = DatabaseHandler.ReadSongs();
         }
 
         private void Page_DragEnter(object sender, DragEventArgs e)
@@ -97,16 +91,10 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
         private async void Page_Drop(object sender, DragEventArgs e)
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-            List<DatabaseTrack> stufftoinsert = new List<DatabaseTrack>();
             MainWindow.Player.AddQueue(tracks);
             await Task.Run(() =>
             {
-                foreach (var trackd in tracks)
-                {
-                    ATL.Track track = new ATL.Track(trackd);
-                    stufftoinsert.Add(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber});
-                }
-                    MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(stufftoinsert);
+                DatabaseUtils.Import(tracks);
             });          
             MainWindow.Player.PlayMusic(); 
         }
@@ -114,7 +102,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Player.AddQueue(FilePathBox.Text);
-            DatabaseHandler.ImportSong(FilePathBox.Text);
+            DatabaseUtils.Import(FilePathBox.Text);
             MainWindow.Player.PlayMusic();
         }
     }

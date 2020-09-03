@@ -18,16 +18,9 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         Stable,
         PreRelease
     }
-    public enum ControlPosition
-    {
-        Bottom,
-        Top,
-        Left,
-        Right
-    }
     public class ConfigurationFile
     {
-        public string Language { get; set; }
+        public string Language { get; set; } = "en";
         public int OutputDevice { get; set; }
         public bool ShowTimeInWindow { get; set; } = false;
         public bool IntegrateDiscordRPC { get; set; } = false;
@@ -35,7 +28,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public UpdateMode UpdateMode { get; set; } = UpdateMode.Prompt;
         public ReleaseStream ReleaseStream { get; set; } = ReleaseStream.Stable;
         public DateTime UpdatesLastChecked { get; set; }
-        public Dock ControlBoxPosition { get; set; } = Dock.Bottom;
         public Skin Theme { get; set; } = Skin.Dark;
         public string AccentColorHex { get; set; }
     }

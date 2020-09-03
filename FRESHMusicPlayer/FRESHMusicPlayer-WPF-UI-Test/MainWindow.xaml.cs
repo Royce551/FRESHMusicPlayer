@@ -41,7 +41,6 @@ namespace FRESHMusicPlayer
         public static SelectedMenus SelectedMenu = SelectedMenus.Tracks;
         public static Player Player = new Player();
         public static NotificationHandler NotificationHandler = new NotificationHandler();
-        public static List<string> Library = new List<string>();
         public static bool MiniPlayerMode = false;
         public static bool PreventAuxilliaryPaneHiding = false;
         public static EventHandler TabChanged;
@@ -60,7 +59,6 @@ namespace FRESHMusicPlayer
                 Interval = 1000
             };
             progressTimer.Tick += ProgressTimer_Tick;
-            Library = DatabaseHandler.ReadSongs();
             ProcessSettings();
         }
         private void Window_SourceInitialized(object sender, EventArgs e)
@@ -212,7 +210,6 @@ namespace FRESHMusicPlayer
         }
         public void ProcessSettings()
         {
-            DockPanel.SetDock(ControlsBoxBorder, App.Config.ControlBoxPosition);
         }
         #region Tabs
         private void ChangeTabs(SelectedMenus tab)
@@ -423,8 +420,6 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F5:
-                    Library.Clear();
-                    Library = DatabaseHandler.ReadSongs();
                     ContentFrame.Refresh();
                     e.Handled = true;
                     break;
@@ -434,11 +429,7 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F8:
-                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", $"Put stuff in configuration file", false, true)));
-                    App.Config.Language = "vi";
-                    App.Config.UpdatesLastChecked = DateTime.Now;
-                    App.Config.AccentColorHex = "fdfsfdsgsgs";
-                    ConfigurationHandler.Write(App.Config);
+                    DatabaseUtils.Convertv1Tov2();
                     e.Handled = true;
                     break;
             }

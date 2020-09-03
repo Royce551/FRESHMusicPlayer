@@ -18,8 +18,8 @@ namespace FRESHMusicPlayer
         {
             Config = ConfigurationHandler.Read();
             //Force Viet for the time being
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("vi");
-
+            if (Config.Language != "en") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
+            ChangeSkin(Config.Theme);
             MainWindow window = new MainWindow();
             window.Show();
         }

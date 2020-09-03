@@ -25,11 +25,11 @@
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="5,0" Text="Language" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
-                    <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4">
+                    <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="General_LanguageCombo_SelectionChanged">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="German"/>
                         <ComboBoxItem Content="Vietnamese"/>
-                        <ComboBoxItem Content="Portugese"/>
+                        <ComboBoxItem Content="Portuguese"/>
                     </ComboBox>
                 </Grid>
                 <Grid Height="30" Margin="0,0,0,5" >
@@ -58,12 +58,10 @@
 
                 <TextBlock Text="Appearance" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <TextBlock Text="Controls" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
-                <CheckBox x:Name="ControlAppearance_ControlPosCheck" Content="Show controls at the top" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="ControlAppearance_ControlPosChanged" Unchecked="ControlAppearance_ControlPosChanged"/>
                 <TextBlock Text="Theme" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
-                <RadioButton GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5">Light</RadioButton>
-                <RadioButton GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True">Dark</RadioButton>
-                <RadioButton GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5">Classic</RadioButton>
+                <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Light</RadioButton>
+                <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Dark</RadioButton>
+                <RadioButton x:Name="Appearance_ThemeClassicRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Classic</RadioButton>
                 <TextBlock Text="Accent Color" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
                 <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
