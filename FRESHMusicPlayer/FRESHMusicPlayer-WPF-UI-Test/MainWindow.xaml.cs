@@ -42,7 +42,7 @@ namespace FRESHMusicPlayer
         public static Player Player = new Player();
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
-        public static bool PreventAuxilliaryPaneHiding = false;
+        public static bool AuxilliaryPaneIsOpen = false;
         public static EventHandler TabChanged;
         public static LiteDatabase Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
 
@@ -54,7 +54,7 @@ namespace FRESHMusicPlayer
             Player.SongStopped += player_songStopped;
             Player.SongException += player_songException;
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
-            progressTimer = new Winforms.Timer  // System.Windows.Forms timer because dispatcher timer seems to have some threading issues?
+            progressTimer = new Winforms.Timer
             {
                 Interval = 1000
             };
@@ -137,7 +137,7 @@ namespace FRESHMusicPlayer
             else
             {
                 Player.Shuffle = true;
-                ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(51, 139, 193), Color.FromRgb(105, 181, 120), 0);
+                ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             }
         }
         public void RepeatOneMethod()
@@ -150,7 +150,7 @@ namespace FRESHMusicPlayer
             else
             {
                 Player.RepeatOnce = true;
-                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(51, 139, 193), Color.FromRgb(105, 181, 120), 0);
+                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             }
         }
         #endregion
@@ -181,6 +181,7 @@ namespace FRESHMusicPlayer
         }
         public void ShowAuxilliaryPane(string Uri, int width = 235, bool openleft = false)
         {
+            if (AuxilliaryPaneIsOpen) HideAuxilliaryPane();
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
             Storyboard sb = new Storyboard();
@@ -190,23 +191,18 @@ namespace FRESHMusicPlayer
             sb.Begin(RightFrame);
             RightFrame.Source = new Uri(Uri, UriKind.Relative);
             RightFrame.NavigationService.RemoveBackEntry();
+            AuxilliaryPaneIsOpen = true;
         }
         public void HideAuxilliaryPane()
         {
-            if (!PreventAuxilliaryPaneHiding)
-            {
-                Storyboard sb = new Storyboard();
-                DoubleAnimation doubleAnimation = new DoubleAnimation(RightFrame.Width, 0, new TimeSpan(0, 0, 0, 0, 100));
-                Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
-                sb.Children.Add(doubleAnimation);
-                sb.Begin(RightFrame);
-                RightFrame.Visibility = Visibility.Collapsed;
-                RightFrame.Source = null;
-            }
-            else
-            {
-                NotificationHandler.Add(new NotificationBox(new NotificationInfo("Hold up!", "The pane still needs your attention. Finish what you're doing first.", false, true)));
-            }
+            Storyboard sb = new Storyboard();
+            DoubleAnimation doubleAnimation = new DoubleAnimation(RightFrame.Width, 0, new TimeSpan(0, 0, 0, 0, 100));
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
+            sb.Children.Add(doubleAnimation);
+            sb.Begin(RightFrame);
+            RightFrame.Visibility = Visibility.Collapsed;
+            RightFrame.Source = null;
+            AuxilliaryPaneIsOpen = false;
         }
         public void ProcessSettings()
         {
@@ -336,8 +332,7 @@ namespace FRESHMusicPlayer
         private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Import);
         private void SettingsButton_Click(object sender, MouseButtonEventArgs e)
         {
-            if (RightFrame.Visibility == Visibility.Visible) HideAuxilliaryPane();
-            else ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335);
+            ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335);
         }
         private void SearchButton_Click(object sender, MouseButtonEventArgs e)
         {
@@ -349,7 +344,7 @@ namespace FRESHMusicPlayer
         {
             foreach (NotificationBox box in NotificationHandler.Notifications)
             {
-                if (box.DisplayAsToast && RightFrame.Visibility != Visibility.Visible) ShowAuxilliaryPane("Pages\\NotificationPage.xaml"); // TODO: replace this with proper toast implementation
+                if (box.DisplayAsToast) ShowAuxilliaryPane("Pages\\NotificationPage.xaml"); // TODO: replace this with proper toast implementation
             }
         }
         #endregion
@@ -384,7 +379,7 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.F1:
-                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335); else HideAuxilliaryPane();
+                    ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335);
                     e.Handled = true;
                     break;
                 case Key.F2:
@@ -392,14 +387,7 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F3:
-                    if (RightFrame.Visibility == Visibility.Collapsed)
-                    {
-                        ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
-                    }
-                    else
-                    {
-                        HideAuxilliaryPane();
-                    }
+                    ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
                     e.Handled = true;
                     break;
                 case Key.F4:
@@ -408,7 +396,7 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F6:
-                    if (RightFrame.Visibility == Visibility.Collapsed) ShowAuxilliaryPane("/Pages/NotificationPage.xaml"); else HideAuxilliaryPane();
+                    ShowAuxilliaryPane("/Pages/NotificationPage.xaml");
                     e.Handled = true;
                     break;
                 case Key.OemTilde:

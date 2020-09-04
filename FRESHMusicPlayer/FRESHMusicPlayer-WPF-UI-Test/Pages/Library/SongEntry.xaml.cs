@@ -27,25 +27,11 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            /*Storyboard sb = new Storyboard();
-            DoubleAnimation doubleAnimation = new DoubleAnimation(0f, 1f, new TimeSpan(0, 0, 0, 0, 250));
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Opacity"));
-            sb.Children.Add(doubleAnimation);
-            sb.Begin(PlayButton);
-            sb.Begin(QueueButton);
-            sb.Begin(DeleteButton);*/ // TODO: replace this with column width animation
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Visible;
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            /*Storyboard sb = new Storyboard();
-            DoubleAnimation doubleAnimation = new DoubleAnimation(1f, 0f, new TimeSpan(0, 0, 0, 0, 100));
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Opacity"));
-            sb.Children.Add(doubleAnimation);
-            sb.Begin(PlayButton);
-            sb.Begin(QueueButton);
-            sb.Begin(DeleteButton);*/
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Collapsed;
         }
 
@@ -64,7 +50,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e)
         {
-            DatabaseHandler.DeleteSong(FilePath);
+            DatabaseUtils.Remove(FilePath);
             ((ListBox)Parent).Items.Remove(this);
         }
 

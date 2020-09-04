@@ -134,6 +134,15 @@ The log file they'll need is at {1}.</value>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
     <value>You can also drag and drop to this page.</value>
   </data>
+  <data name="IMPORT_MANUALENTRY" xml:space="preserve">
+    <value>Manual file path/URL entry</value>
+  </data>
+  <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
+    <value>Enqueue All</value>
+  </data>
+  <data name="LIBRARY_PLAYALL" xml:space="preserve">
+    <value>Play All</value>
+  </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>Albums</value>
   </data>
@@ -146,9 +155,15 @@ The log file they'll need is at {1}.</value>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
     <value>No Artist</value>
   </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value>Nothing Playing</value>
+  </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
     <value>{0}
 We'll skip to the next track for you</value>
+  </data>
+  <data name="MAINWINDOW_SEARCH" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
     <value>Settings</value>
@@ -242,7 +257,7 @@ We'll skip to the next track for you</value>
     <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value>Disc  </value>
+    <value>Disc </value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
     <value>Genre - </value>

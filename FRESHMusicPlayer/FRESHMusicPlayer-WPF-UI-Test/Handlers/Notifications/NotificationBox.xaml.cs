@@ -34,8 +34,8 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         {
             HeaderLabel.Text = info.HeaderText;
             ContentLabel.Text = info.ContentText;
-            this.IsImportant = info.IsImportant;
-            this.DisplayAsToast = info.DisplayAsToast;
+            IsImportant = info.IsImportant;
+            DisplayAsToast = info.DisplayAsToast;
         }
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MainWindow.NotificationHandler.Remove(this);

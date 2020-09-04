@@ -108,6 +108,33 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manual file path/URL entry.
+        /// </summary>
+        public static string IMPORT_MANUALENTRY {
+            get {
+                return ResourceManager.GetString("IMPORT_MANUALENTRY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enqueue All.
+        /// </summary>
+        public static string LIBRARY_ENQUEUEALL {
+            get {
+                return ResourceManager.GetString("LIBRARY_ENQUEUEALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play All.
+        /// </summary>
+        public static string LIBRARY_PLAYALL {
+            get {
+                return ResourceManager.GetString("LIBRARY_PLAYALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Albums.
         /// </summary>
         public static string MAINWINDOW_ALBUMS {
@@ -144,12 +171,30 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nothing Playing.
+        /// </summary>
+        public static string MAINWINDOW_NOTHINGPLAYING {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_NOTHINGPLAYING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}
         ///We&apos;ll skip to the next track for you.
         /// </summary>
         public static string MAINWINDOW_PLAYBACK_ERROR_DETAILS {
             get {
                 return ResourceManager.GetString("MAINWINDOW_PLAYBACK_ERROR_DETAILS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string MAINWINDOW_SEARCH {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_SEARCH", resourceCulture);
             }
         }
         
@@ -424,7 +469,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disc  .
+        ///   Looks up a localized string similar to Disc .
         /// </summary>
         public static string TRACKINFO_DISCNUMBER {
             get {

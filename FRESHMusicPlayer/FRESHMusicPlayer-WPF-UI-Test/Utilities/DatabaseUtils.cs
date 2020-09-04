@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer.Utilities
         }
         public static List<DatabaseTrack> ReadTracksForAlbum(string album)
         {
-            return MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Artist == album).OrderBy("TrackNumber").ToList();
+            return MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Album == album).OrderBy("TrackNumber").ToList();
         }
         public static void Import(string[] tracks)
         {
@@ -48,6 +48,14 @@ namespace FRESHMusicPlayer.Utilities
             Track track = new Track(path);
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks")
                                 .Insert(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber, Length = track.Duration });
+        }
+        public static void Remove(string path)
+        {
+            MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").DeleteMany(x => x.Path == path);
+        }
+        public static void Nuke()
+        {
+            MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").DeleteAll();
         }
         public async static void Convertv1Tov2()
         {
