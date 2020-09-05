@@ -43,6 +43,7 @@ namespace FRESHMusicPlayer
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
         public static bool AuxilliaryPaneIsOpen = false;
+        public static string AuxilliaryPaneUri = "";
         public static EventHandler TabChanged;
         public static LiteDatabase Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
 
@@ -181,7 +182,13 @@ namespace FRESHMusicPlayer
         }
         public void ShowAuxilliaryPane(string Uri, int width = 235, bool openleft = false)
         {
+            if (AuxilliaryPaneUri == Uri)
+            {
+                HideAuxilliaryPane();
+                return;
+            }
             if (AuxilliaryPaneIsOpen) HideAuxilliaryPane();
+
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
             Storyboard sb = new Storyboard();
@@ -190,6 +197,7 @@ namespace FRESHMusicPlayer
             sb.Children.Add(doubleAnimation);
             sb.Begin(RightFrame);
             RightFrame.Source = new Uri(Uri, UriKind.Relative);
+            AuxilliaryPaneUri = Uri;
             RightFrame.NavigationService.RemoveBackEntry();
             AuxilliaryPaneIsOpen = true;
         }
@@ -202,6 +210,7 @@ namespace FRESHMusicPlayer
             sb.Begin(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
+            AuxilliaryPaneUri = null;
             AuxilliaryPaneIsOpen = false;
         }
         public void ProcessSettings()
@@ -337,6 +346,7 @@ namespace FRESHMusicPlayer
         private void SearchButton_Click(object sender, MouseButtonEventArgs e)
         {
             ContentFrame.Source = new Uri("/Pages/Library/SearchPage.xaml", UriKind.Relative);
+            ContentFrame.NavigationService.RemoveBackEntry();
             TabChanged?.Invoke(null, EventArgs.Empty);
         }
         #endregion
@@ -412,8 +422,7 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F7:
-                    if (Player.Shuffle == true) Player.Shuffle = false; else Player.Shuffle = true;
-                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", $"Shuffle: {Player.Shuffle}", false, true)));
+                    ContentFrame.NavigationService.GoBack();
                     e.Handled = true;
                     break;
                 case Key.F8:

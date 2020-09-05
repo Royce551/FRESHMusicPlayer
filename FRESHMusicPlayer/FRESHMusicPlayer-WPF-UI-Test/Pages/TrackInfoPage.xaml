@@ -37,6 +37,6 @@
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>
         </Image>
-        <Rectangle Fill="{StaticResource ForegroundColor}" Grid.Row="0" Grid.RowSpan="12"  Opacity="0.55"/>
+        <Rectangle Fill="{StaticResource ForegroundColor}" Grid.Row="0" Grid.RowSpan="12"  Opacity="0.55" MouseRightButtonDown="Rectangle_MouseRightButtonDown"/>
     </Grid>
 </Page>
