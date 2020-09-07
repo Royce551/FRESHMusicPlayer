@@ -54,6 +54,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                             .OrderBy("Title")
                             .ToList())
                         {
+                            if (searchqueries.Count > 1) break; // optimization for typing quickly
                             Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
                             length += thing.Length;
                         }

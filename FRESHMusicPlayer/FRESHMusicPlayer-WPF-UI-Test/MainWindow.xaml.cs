@@ -45,7 +45,7 @@ namespace FRESHMusicPlayer
         public static bool AuxilliaryPaneIsOpen = false;
         public static string AuxilliaryPaneUri = "";
         public static EventHandler TabChanged;
-        public static LiteDatabase Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+        public static LiteDatabase Libraryv2;
 
         public SystemMediaTransportControls Smtc;
         public MainWindow()
@@ -60,25 +60,17 @@ namespace FRESHMusicPlayer
                 Interval = 1000
             };
             progressTimer.Tick += ProgressTimer_Tick;
+            try
+            {
+                Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+            }
+            catch
+            {
+                NotificationHandler.Add(new NotificationBox(new NotificationInfo("Library failed to load", "Make sure that you don't have another instance of FMP running!")));
+            }
             ProcessSettings();
         }
-        private void Window_SourceInitialized(object sender, EventArgs e)
-        {
-            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
-            {
-                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
-                Window window = Window.GetWindow(this);
-                var wih = new WindowInteropHelper(window);
-                IntPtr hWnd = wih.Handle;
-                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
-                Smtc.IsPlayEnabled = true;
-                Smtc.IsPauseEnabled = true;
-                Smtc.IsNextEnabled = true;
-                Smtc.IsStopEnabled = true;
-                Smtc.IsPreviousEnabled = true;
-                Smtc.ButtonPressed += Smtc_ButtonPressed;
-            }          
-        }
+        private void Window_SourceInitialized(object sender, EventArgs e) => UpdateIntegrations();
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
             switch (args.Button)
@@ -117,7 +109,7 @@ namespace FRESHMusicPlayer
             {
                 Player.PauseMusic();
                 PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
-                Smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
+                SetIntegrations(MediaPlaybackStatus.Paused);
                 progressTimer.Stop();
             }
         }
@@ -157,7 +149,7 @@ namespace FRESHMusicPlayer
         #endregion
         #region Logic
         public void SetMiniPlayerMode(bool mode)
-        {
+        { // set is for things that use binding
             if (mode)
             {
                 Width = 559;
@@ -266,7 +258,7 @@ namespace FRESHMusicPlayer
             Title = "FRESHMusicPlayer 8 Development";
             TitleLabel.Text = ArtistLabel.Text = "Nothing Playing";
             progressTimer.Stop();
-            Smtc.PlaybackStatus = MediaPlaybackStatus.Stopped;
+            SetIntegrations(MediaPlaybackStatus.Stopped);
         }
 
         private void player_songChanged(object sender, EventArgs e)
@@ -278,16 +270,7 @@ namespace FRESHMusicPlayer
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
-            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
-            {
-                Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
-                var updater = Smtc.DisplayUpdater;
-                updater.Type = MediaPlaybackType.Music;
-                updater.MusicProperties.Artist = track.Artist;
-                updater.MusicProperties.AlbumArtist = track.AlbumArtist;
-                updater.MusicProperties.Title = track.Title;
-                updater.Update();
-            }
+            SetIntegrations(MediaPlaybackStatus.Playing, track.Artist, track.AlbumArtist, track.Title);
             if (track.EmbeddedPictures.Count == 0)
             {
                 CoverArtBox.Source = null;
@@ -332,6 +315,28 @@ namespace FRESHMusicPlayer
             if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer 8 Development";
             ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
             Player.AvoidNextQueue = false;
+        }
+        private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
+        }
+        private void TrackTitle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var cm = this.FindResource("MiscContext") as ContextMenu;
+            cm.PlacementTarget = sender as Button;
+            cm.IsOpen = true;
+        }
+        private void TrackContextTagEditor_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> tracks = new List<string>();
+            if (Player.Playing) tracks.Add(Player.FilePath); // if playing, edit the file the user is playing
+            else tracks = Player.Queue;
+            TagEditor tagEditor = new TagEditor(tracks);
+            tagEditor.Show();
+        }
+        private void TrackContextMiniplayer_Click(object sender, RoutedEventArgs e)
+        {
+            if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);
         }
         #endregion
         #region MenuBar
@@ -448,9 +453,55 @@ namespace FRESHMusicPlayer
             Player.PlayMusic();
         }
 
-        private void SettingsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void UpdateIntegrations()
         {
-
+            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
+            {
+                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
+                Window window = GetWindow(this);
+                var wih = new WindowInteropHelper(window);
+                IntPtr hWnd = wih.Handle;
+                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
+                Smtc.IsPlayEnabled = true;
+                Smtc.IsPauseEnabled = true;
+                Smtc.IsNextEnabled = true;
+                Smtc.IsStopEnabled = true;
+                Smtc.IsPreviousEnabled = true;
+                Smtc.ButtonPressed += Smtc_ButtonPressed;
+            }
+            else Smtc = null;
+            if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
+            else Player.DisposeRPC();
+        }
+        public void SetIntegrations(MediaPlaybackStatus status, string Artist = "Nothing Playing", string AlbumArtist = "Nothing Playing", string Title = "Nothing Playing")
+        {
+            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
+            {
+                Smtc.PlaybackStatus = status;
+                var updater = Smtc.DisplayUpdater;
+                updater.Type = MediaPlaybackType.Music;
+                updater.MusicProperties.Artist = Artist;
+                updater.MusicProperties.AlbumArtist = AlbumArtist;
+                updater.MusicProperties.Title = Title;
+                updater.Update();
+            }
+            if (App.Config.IntegrateDiscordRPC)
+            {
+                string activity = "";
+                switch (status)
+                {
+                    case MediaPlaybackStatus.Playing:
+                        activity = "play";
+                        break;
+                    case MediaPlaybackStatus.Paused:
+                        activity = "pause";
+                        break;
+                    case MediaPlaybackStatus.Stopped:
+                        activity = "idle";
+                        break;
+                }
+                Player.UpdateRPC(activity, Artist, Title);
+            }
         }
     }
 }

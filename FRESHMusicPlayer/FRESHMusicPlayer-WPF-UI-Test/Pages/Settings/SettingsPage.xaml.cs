@@ -63,12 +63,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
         {
             App.Config.IntegrateDiscordRPC = (bool)Integration_DiscordRPCCheck.IsChecked;
             ConfigurationHandler.Write(App.Config);
+            (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
         }
 
         private void Integration_SMTCChanged(object sender, RoutedEventArgs e)
         {
             App.Config.IntegrateSMTC = (bool)Integration_SMTCCheck.IsChecked;
             ConfigurationHandler.Write(App.Config);
+            (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
         }
 
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

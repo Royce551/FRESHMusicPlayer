@@ -97,10 +97,9 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
                 Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
         }
-        public async void ShowTracksforArtist()
+        public async void ShowTracksforArtist(string selectedItem)
         {
             TracksPanel.Items.Clear();
-            var selectedItem = (string)CategoryPanel.SelectedItem;
             int length = 0;
             await Task.Run(() =>
             {
@@ -112,10 +111,9 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
             });
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-        public async void ShowTracksforAlbum()
+        public async void ShowTracksforAlbum(string selectedItem)
         {
             TracksPanel.Items.Clear();
-            var selectedItem = (string)CategoryPanel.SelectedItem;
             int length = 0;
             await Task.Run(() =>
             {
@@ -130,8 +128,10 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 
         private void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist();
-            else ShowTracksforAlbum();
+            var selectedItem = (string)CategoryPanel.SelectedItem;
+            if (selectedItem == null) return;
+            if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist(selectedItem);
+            else ShowTracksforAlbum(selectedItem);
         }
         private void MainWindow_TabChanged(object sender, EventArgs e)
         {
