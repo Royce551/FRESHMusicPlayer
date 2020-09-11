@@ -152,7 +152,7 @@ Chúng tôi sẽ nhảy tiếp cho bạn</value>
     <value>Thể loại - </value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value>Sổ đĩa  </value>
+    <value>Sổ đĩa </value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
     <value>Năm - </value>
@@ -205,7 +205,7 @@ Chúng tôi sẽ nhảy tiếp cho bạn</value>
     <value>Duyệt cho thư mục</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value>Người soạn -</value>
+    <value>Người soạn - </value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
     <value>_Chép từ</value>
@@ -243,7 +243,7 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
     <value>Nghệ sĩ - </value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>Nghệ sĩ đĩa -</value>
+    <value>Nghệ sĩ đĩa - </value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
     <value>_Lưu</value>
@@ -259,5 +259,20 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
     <value>_Tệp</value>
+  </data>
+  <data name="MAINWINDOW_SEARCH" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value>Không có gì đang phát</value>
+  </data>
+  <data name="LIBRARY_PLAYALL" xml:space="preserve">
+    <value>Phát tất cả</value>
+  </data>
+  <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
+    <value>Đ. tất cả h. p.</value>
+  </data>
+  <data name="IMPORT_MANUALENTRY" xml:space="preserve">
+    <value>Điền đường dẫn/URL thủ công</value>
   </data>
 </root>
