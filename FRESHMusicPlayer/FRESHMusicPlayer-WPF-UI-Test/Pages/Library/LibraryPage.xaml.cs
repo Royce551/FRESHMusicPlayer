@@ -54,47 +54,38 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         }
         public async void ShowTracks()
         {
-            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
             LeftSide.Width = new GridLength(0);
             int length = 0;
             await Task.Run(() =>
             {          
-                Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
                 foreach (var thing in DatabaseUtils.Read())
                 {
                     Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
                     length += thing.Length;
                 }        
-                Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         public async void ShowArtists()
         {
-            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
             await Task.Run(() =>
             {
-                Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
                 foreach (var thing in DatabaseUtils.Read("Artist"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Artist)) continue;
                     Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
                 }
-                Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
         }
         public async void ShowAlbums()
         {
-            NotificationBox box = new NotificationBox(new NotificationInfo("Library is loading", "Please wait", true, false));
             await Task.Run(() =>
             {
-                Dispatcher.Invoke(() => MainWindow.NotificationHandler.Add(box));
                     foreach (var thing in DatabaseUtils.Read("Album"))
                     {
                         if (CategoryPanel.Items.Contains(thing.Album)) continue;
                         Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
                     }
-                Dispatcher.Invoke(() => MainWindow.NotificationHandler.Remove(box));
             });
         }
         public async void ShowTracksforArtist(string selectedItem)

@@ -23,7 +23,7 @@
         </Storyboard>
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="Tag Editor" Click="TrackContextTagEditor_Click"/>
-            <MenuItem x:Name="MiniPlayerContext" Header="MiniPlayer Mode" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
+            <MenuItem x:Name="MiniPlayerContext" Header="Player that is mini" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
         </ContextMenu>
     </Window.Resources>
     <DockPanel Background="#FF0C6C08">
@@ -40,10 +40,24 @@
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
             <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand">
             </TextBlock>
+
             <Border x:Name="SettingsButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="SettingsButton_Click">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Canvas>
+            </Border>
+            <Border x:Name="QueueManagementButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="QueueManagementButton_Click">
+                <!---some manual corrections were applied to keep the icons visually correct-->
+                <Canvas>
+                    <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Canvas>
+            </Border>
+            <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
+            <Border x:Name="NotificationButton" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" MouseDown="NotificationButton_Click" Visibility="Collapsed">
+                <!---some manual corrections were applied to keep the icons visually correct-->
+                <Canvas>
+                    <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Border>
             <Border x:Name="SearchButton" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" MouseDown="SearchButton_Click" Height="20" VerticalAlignment="Top">
@@ -51,6 +65,7 @@
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Border>
+
         </DockPanel>
         <!--Controls Box-->
         <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{StaticResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5">

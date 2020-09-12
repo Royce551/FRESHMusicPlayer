@@ -39,6 +39,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             foreach (NotificationBox box in MainWindow.NotificationHandler.Notifications)
             {
                 NotificationList.Items.Add(box);
+                box.Read = true;
             }
                 
         }

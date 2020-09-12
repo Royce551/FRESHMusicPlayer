@@ -22,6 +22,7 @@ namespace FRESHMusicPlayer.Handlers.Notifications
     {
         public bool IsImportant = false;
         public bool DisplayAsToast = false;
+        public bool Read = false;
 
         public string HeaderText;
         public string ContentText;
@@ -39,5 +40,6 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         }
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MainWindow.NotificationHandler.Remove(this);
+
     }
 }

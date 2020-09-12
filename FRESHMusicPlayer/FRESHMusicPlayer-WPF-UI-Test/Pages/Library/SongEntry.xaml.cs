@@ -37,11 +37,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
 
         private void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
-            if (MainWindow.Player.Playing)
-            {
-                MainWindow.Player.ClearQueue();
-                MainWindow.Player.QueuePosition = 0; // temporary fix until FMP Core update
-            }
+            if (MainWindow.Player.Playing) MainWindow.Player.ClearQueue();
             MainWindow.Player.AddQueue(FilePath);
             MainWindow.Player.PlayMusic();
         }
@@ -58,6 +54,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
         {
             if (e.ClickCount == 2)
             {
+                if (MainWindow.Player.Playing) MainWindow.Player.ClearQueue();
                 MainWindow.Player.AddQueue(FilePath);
                 MainWindow.Player.PlayMusic();
             }

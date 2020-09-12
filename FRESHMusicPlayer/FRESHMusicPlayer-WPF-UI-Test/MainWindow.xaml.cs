@@ -98,20 +98,20 @@ namespace FRESHMusicPlayer
         #region Controls
         public void PlayPauseMethod()
         {
+            if (!Player.Playing) return;
             if (Player.Paused)
             {
                 Player.ResumeMusic();
-                PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
-                Smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
+                SetIntegrations(MediaPlaybackStatus.Playing);
                 progressTimer.Start();
             }
             else
             {
                 Player.PauseMusic();
-                PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
                 SetIntegrations(MediaPlaybackStatus.Paused);
                 progressTimer.Stop();
             }
+            UpdatePlayButtonState();
         }
         public void StopMethod()
         {
@@ -145,6 +145,11 @@ namespace FRESHMusicPlayer
                 Player.RepeatOnce = true;
                 RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             }
+        }
+        public void UpdatePlayButtonState()
+        {
+            if (!Player.Paused) PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
+            else PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
         }
         #endregion
         #region Logic
@@ -202,7 +207,7 @@ namespace FRESHMusicPlayer
             sb.Begin(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
-            AuxilliaryPaneUri = null;
+            AuxilliaryPaneUri = "";
             AuxilliaryPaneIsOpen = false;
         }
         public void ProcessSettings()
@@ -271,6 +276,7 @@ namespace FRESHMusicPlayer
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
             SetIntegrations(MediaPlaybackStatus.Playing, track.Artist, track.AlbumArtist, track.Title);
+            UpdatePlayButtonState();
             if (track.EmbeddedPictures.Count == 0)
             {
                 CoverArtBox.Source = null;
@@ -354,13 +360,27 @@ namespace FRESHMusicPlayer
             ContentFrame.NavigationService.RemoveBackEntry();
             TabChanged?.Invoke(null, EventArgs.Empty);
         }
+        private void QueueManagementButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335);
+        private void NotificationButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane("/Pages/NotificationPage.xaml");
         #endregion
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
         {
+            NotificationCounterLabel.Text = NotificationHandler.Notifications.Count.ToString();
+            if (NotificationHandler.Notifications.Count != 0)
+            {
+                NotificationButton.Visibility = Visibility.Visible;
+                NotificationCounterLabel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NotificationButton.Visibility = Visibility.Collapsed;
+                NotificationCounterLabel.Visibility = Visibility.Collapsed;
+            }
             foreach (NotificationBox box in NotificationHandler.Notifications)
             {
-                if (box.DisplayAsToast) ShowAuxilliaryPane("Pages\\NotificationPage.xaml"); // TODO: replace this with proper toast implementation
+                if (!box.DisplayAsToast && box.Read) return;
             }
+            ShowAuxilliaryPane("Pages\\NotificationPage.xaml");
         }
         #endregion
 
@@ -416,10 +436,6 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.OemTilde:
                     NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", "You just pressed the debug key! You may or may not see cool stuff happening.", false, true)));
-                    int a = 5;
-                    int b = 0;
-                    int c = a / b;
-                    ((App)System.Windows.Application.Current).ChangeSkin(Skin.Light);
                     e.Handled = true;
                     break;
                 case Key.F5:
@@ -427,7 +443,7 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F7:
-                    ContentFrame.NavigationService.GoBack();
+                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", "You just pressed the debug key! You may or may not see cool stuff happening.", false, false)));
                     e.Handled = true;
                     break;
                 case Key.F8:
