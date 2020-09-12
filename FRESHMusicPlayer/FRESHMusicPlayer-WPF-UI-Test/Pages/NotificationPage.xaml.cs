@@ -36,12 +36,12 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
         private void ShowNotifications()
         {
             NotificationList.Items.Clear();
-            foreach (NotificationBox box in MainWindow.NotificationHandler.Notifications)
+            foreach (Notification box in MainWindow.NotificationHandler.Notifications)
             {
-                NotificationList.Items.Add(box);
                 box.Read = true;
+                NotificationList.Items.Add(new NotificationBox(box));
             }
-                
+            if (NotificationList.Items.Count == 0) (Application.Current.MainWindow as MainWindow)?.HideAuxilliaryPane();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

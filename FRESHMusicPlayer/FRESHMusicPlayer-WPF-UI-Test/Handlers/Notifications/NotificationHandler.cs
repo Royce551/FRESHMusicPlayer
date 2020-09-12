@@ -5,23 +5,27 @@ namespace FRESHMusicPlayer.Handlers.Notifications
 {
     public class NotificationHandler
     {
-        public List<NotificationBox> Notifications = new List<NotificationBox>();
+        public List<Notification> Notifications = new List<Notification>();
         public event EventHandler NotificationInvalidate;
-        public NotificationHandler()
-        {
 
-        }
-        public void Add(NotificationBox box)
+        public void Add(Notification box)
         {
             Notifications.Add(box);
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);
         }
-        public void Update(NotificationBox box, NotificationInfo info)
+        public void Update(Notification box)
         {
-            if (Notifications[Notifications.IndexOf(box)] != null) Notifications[Notifications.IndexOf(box)].UpdateContent(info);
+            int notificationindex = Notifications.IndexOf(box);
+            if (Notifications[notificationindex] != null)
+            {
+                Notifications[notificationindex].IsImportant = box.IsImportant;
+                Notifications[notificationindex].DisplayAsToast = box.DisplayAsToast;
+                Notifications[notificationindex].HeaderText = box.HeaderText;
+                Notifications[notificationindex].ContentText = box.ContentText;
+            }
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);
         }
-        public void Remove(NotificationBox box)
+        public void Remove(Notification box)
         {
             Notifications.Remove(box);
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);

@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FRESHMusicPlayer.Handlers.Notifications
 {
@@ -20,26 +9,29 @@ namespace FRESHMusicPlayer.Handlers.Notifications
     /// </summary>
     public partial class NotificationBox : UserControl
     {
-        public bool IsImportant = false;
-        public bool DisplayAsToast = false;
-        public bool Read = false;
-
-        public string HeaderText;
-        public string ContentText;
-        public NotificationBox(NotificationInfo info)
+        public Notification Notification;
+        public NotificationBox(Notification info)
         {
             InitializeComponent();
             UpdateContent(info);
         }
-        public void UpdateContent(NotificationInfo info)
+        public void UpdateContent(Notification info)
         {
-            HeaderLabel.Text = info.HeaderText;
-            ContentLabel.Text = info.ContentText;
-            IsImportant = info.IsImportant;
-            DisplayAsToast = info.DisplayAsToast;
+            Notification = info;
+            switch (Notification.Type)
+            {
+                case NotificationType.Success:
+                    Border.BorderBrush = new SolidColorBrush(Color.FromRgb(105, 181, 120));
+                    break;
+                case NotificationType.Failure:
+                    Border.BorderBrush = new SolidColorBrush(Color.FromRgb(213, 70, 53));
+                    break;
+            }
+            HeaderLabel.Text = Notification.HeaderText;
+            ContentLabel.Text = Notification.ContentText;
         }
 
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MainWindow.NotificationHandler.Remove(this);
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MainWindow.NotificationHandler.Remove(Notification);
 
     }
 }

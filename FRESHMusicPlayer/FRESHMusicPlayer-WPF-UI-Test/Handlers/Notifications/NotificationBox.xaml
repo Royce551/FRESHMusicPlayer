@@ -20,15 +20,17 @@
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid>
-        <Grid x:Name="BackgroundPanel" Background="#FF2C2F33">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="27"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <TextBlock x:Name="HeaderLabel" Margin="2" TextWrapping="Wrap" Text="Notification" Foreground="White" FontWeight="Bold" FontSize="16"/>
-            <TextBlock x:Name="ContentLabel" Margin="2,2,2,2" Grid.Row="1" Foreground="#FFDADADA" FontSize="10" Text="Testing" TextWrapping="Wrap"/>
-        </Grid>
+    <Border x:Name="Border" CornerRadius="2" BorderBrush="{StaticResource ForegroundColor}" BorderThickness="1">
+        <Grid>
+            <Grid x:Name="BackgroundPanel" Background="{StaticResource ForegroundColor}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="27"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="HeaderLabel" Margin="2" TextWrapping="Wrap" Text="Notification" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="16"/>
+                <TextBlock x:Name="ContentLabel" Margin="2,2,2,2" Grid.Row="1" Foreground="{StaticResource SecondaryTextColor}" FontSize="10" Text="Testing" TextWrapping="Wrap"/>
+            </Grid>
 
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

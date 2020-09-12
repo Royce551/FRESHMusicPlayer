@@ -93,10 +93,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 {
                     if (!File.Exists(s))
                     {
-                        MainWindow.NotificationHandler.Add(new NotificationBox(new NotificationInfo("Missing file",
-                                                                                                    $"One of the tracks in the playlist was not added because it could not be found.\nMissing File: {s}",
-                                                                                                    true,
-                                                                                                    true)));
+                        MainWindow.NotificationHandler.Add(new Notification
+                        {
+                            HeaderText = "Missing file",
+                            ContentText = $"One of the tracks in the playlist was not added because it could not be found.\nMissing File: {s}",
+                            IsImportant =  true,
+                            DisplayAsToast = true,
+                            Type = NotificationType.Failure
+                        });
                         continue;
                     }
                     MainWindow.Player.AddQueue(s);

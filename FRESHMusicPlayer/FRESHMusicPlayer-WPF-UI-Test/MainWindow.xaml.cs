@@ -21,6 +21,7 @@ using System.Windows.Interop;
 using Windows.Storage.Streams;
 using FRESHMusicPlayer.Handlers.Configuration;
 using LiteDB;
+using System.Threading;
 
 namespace FRESHMusicPlayer
 {
@@ -66,7 +67,10 @@ namespace FRESHMusicPlayer
             }
             catch
             {
-                NotificationHandler.Add(new NotificationBox(new NotificationInfo("Library failed to load", "Make sure that you don't have another instance of FMP running!")));
+                NotificationHandler.Add(new Notification { 
+                                        HeaderText = "Library failed to load", 
+                                        ContentText = "Make sure that you don't have another instance of FMP running!",
+                                        Type = NotificationType.Failure});
             }
             ProcessSettings();
         }
@@ -268,7 +272,7 @@ namespace FRESHMusicPlayer
 
         private void player_songChanged(object sender, EventArgs e)
         {
-            ATL.Track track = new ATL.Track(Player.FilePath);
+            Track track = new Track(Player.FilePath);
             Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
             TitleLabel.Text = track.Title;
             ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;
@@ -292,7 +296,14 @@ namespace FRESHMusicPlayer
         }
         private void player_songException(object sender, PlaybackExceptionEventArgs e)
         {
-            NotificationHandler.Add(new NotificationBox(new NotificationInfo("A playback error occured", String.Format(FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details), true, true)));
+            NotificationHandler.Add(new Notification
+            {
+                HeaderText = "A playback error occured",
+                ContentText = String.Format(FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS),
+                IsImportant = true,
+                DisplayAsToast = true,
+                Type = NotificationType.Failure
+            });
             Player.NextSong();
         }
         #endregion
@@ -376,11 +387,14 @@ namespace FRESHMusicPlayer
                 NotificationButton.Visibility = Visibility.Collapsed;
                 NotificationCounterLabel.Visibility = Visibility.Collapsed;
             }
-            foreach (NotificationBox box in NotificationHandler.Notifications)
+            foreach (Notification box in NotificationHandler.Notifications)
             {
-                if (!box.DisplayAsToast && box.Read) return;
+                if (box.DisplayAsToast && !box.Read)
+                {
+                    if (AuxilliaryPaneUri != "Pages\\NotificationPage.xaml") ShowAuxilliaryPane("Pages\\NotificationPage.xaml");
+                }
             }
-            ShowAuxilliaryPane("Pages\\NotificationPage.xaml");
+            
         }
         #endregion
 
@@ -435,7 +449,14 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.OemTilde:
-                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", "You just pressed the debug key! You may or may not see cool stuff happening.", false, true)));
+                    NotificationHandler.Add(new Notification
+                    {
+                        HeaderText = "Toast test",
+                        ContentText = "ok",
+                        IsImportant = true,
+                        DisplayAsToast = true,
+                        Type = NotificationType.Success
+                    });
                     e.Handled = true;
                     break;
                 case Key.F5:
@@ -443,7 +464,14 @@ namespace FRESHMusicPlayer
                     e.Handled = true;
                     break;
                 case Key.F7:
-                    NotificationHandler.Add(new NotificationBox(new NotificationInfo("Debug key", "You just pressed the debug key! You may or may not see cool stuff happening.", false, false)));
+                    NotificationHandler.Add(new Notification
+                    {
+                        HeaderText = "No toast test",
+                        ContentText = "ok",
+                        IsImportant = true,
+                        DisplayAsToast = false,
+                        Type = NotificationType.Generic
+                    });
                     e.Handled = true;
                     break;
                 case Key.F8:

@@ -59,7 +59,14 @@ namespace FRESHMusicPlayer.Utilities
         }
         public async static void Convertv1Tov2()
         {
-            MainWindow.NotificationHandler.Add(new NotificationBox(new NotificationInfo("Migration", "Beginning migration to libraryv2", true, true)));
+            Notification notification = new Notification
+            {
+                HeaderText = "Migration",
+                ContentText = "Beginning migration to libraryv2",
+                IsImportant = true,
+                DisplayAsToast = true
+            };
+            MainWindow.NotificationHandler.Add(notification);
             await Task.Run(() =>
             {
                 var oldlibrary = DatabaseHandler.ReadSongs();
@@ -71,7 +78,10 @@ namespace FRESHMusicPlayer.Utilities
                 }
                 MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(newlibrary);        
             });
-            MainWindow.NotificationHandler.Add(new NotificationBox(new NotificationInfo("Migration successful", "Successfully converted your v1 library to the new format", true, true)));
+            notification.HeaderText = "Migration successful";
+            notification.ContentText = "Successfully converted your v1 library!";
+            notification.Type = NotificationType.Success;
+            MainWindow.NotificationHandler.Update(notification);
         }
     }
 }

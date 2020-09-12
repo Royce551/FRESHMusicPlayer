@@ -48,10 +48,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 {
                     if (!File.Exists(s))
                     {
-                        MainWindow.NotificationHandler.Add(new NotificationBox(new NotificationInfo(Properties.Resources.NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST,
-                                                                                                    $"This playlist file could not be imported because one or more of the tracks could not be found.\nMissing File: {s}",
-                                                                                                    true,
-                                                                                                    true)));
+                        MainWindow.NotificationHandler.Add(new Notification
+                        {
+                            HeaderText = Properties.Resources.NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST,
+                            ContentText = $"This playlist file could not be imported because one or more of the tracks could not be found.\nMissing File: {s}",
+                            IsImportant = true,
+                            DisplayAsToast = true,
+                            Type = NotificationType.Failure
+                        });
                         continue;
                     }
                     MainWindow.Player.AddQueue(s);

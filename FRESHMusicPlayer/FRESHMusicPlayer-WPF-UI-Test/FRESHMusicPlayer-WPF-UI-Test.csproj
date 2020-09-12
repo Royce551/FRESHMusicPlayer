@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Handlers\Configuration\ConfigurationHandler.cs" />
     <Compile Include="Handlers\Configuration\ConfigurationFile.cs" />
+    <Compile Include="Handlers\Notifications\Notification.cs" />
     <Compile Include="Pages\ImportPage.xaml.cs">
       <DependentUpon>ImportPage.xaml</DependentUpon>
     </Compile>
