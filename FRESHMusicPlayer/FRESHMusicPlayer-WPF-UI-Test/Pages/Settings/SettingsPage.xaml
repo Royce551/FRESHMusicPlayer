@@ -76,6 +76,12 @@
                 </Grid>
                 <Button x:Name="AccentColor_SetCustomButton" Content="Choose custom color..." TextBlock.FontSize="16" Margin="0,0,0,5"/>
                 <Button x:Name="AccentColor_ResetButton" Content="Reset to default" TextBlock.FontSize="16" Margin="0,20,0,5"/>
+
+                <TextBlock Text="Maintanence" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+
+                <Button x:Name="Maintanence_ImportButton" Content="Import library from old FMP" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
+                <Button x:Name="Maintanence_ResetButton" Content="Reset configuration to defaults" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
+                <Button x:Name="Maintanence_NukeButton" Content="Nuke library" TextBlock.FontSize="16" Margin="0,5,0,5" Foreground="Red" Click="Maintanence_NukeButton_Click"/>
             </VirtualizingStackPanel>
         </ScrollViewer>
     </Grid>

@@ -40,7 +40,7 @@ namespace FRESHMusicPlayer
     {
         Winforms.Timer progressTimer;
         public static SelectedMenus SelectedMenu = SelectedMenus.Tracks;
-        public static Player Player = new Player();
+        public static Player Player = new Player { CurrentVolume = App.Config.Volume};
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
         public static bool AuxilliaryPaneIsOpen = false;
@@ -71,10 +71,13 @@ namespace FRESHMusicPlayer
                                         HeaderText = "Library failed to load", 
                                         ContentText = "Make sure that you don't have another instance of FMP running!",
                                         Type = NotificationType.Failure});
-            }
+            }       
+        }
+        private void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            UpdateIntegrations();
             ProcessSettings();
         }
-        private void Window_SourceInitialized(object sender, EventArgs e) => UpdateIntegrations();
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
             switch (args.Button)
@@ -216,6 +219,7 @@ namespace FRESHMusicPlayer
         }
         public void ProcessSettings()
         {
+            VolumeBar.Value = App.Config.Volume;
         }
         #region Tabs
         private void ChangeTabs(SelectedMenus tab)
@@ -407,6 +411,8 @@ namespace FRESHMusicPlayer
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            App.Config.Volume = (int)VolumeBar.Value;
+            ConfigurationHandler.Write(App.Config);
             Winforms.Application.Exit();
         }
 

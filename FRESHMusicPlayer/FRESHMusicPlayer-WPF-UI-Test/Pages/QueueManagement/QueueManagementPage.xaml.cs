@@ -46,10 +46,14 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             {
                 foreach (var song in list)
                 {
-                    ATL.Track track = new ATL.Track(song);
+                    Track track = new Track(song);
                     Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, (number - MainWindow.Player.QueuePosition).ToString(), number - 1)));
                     if (MainWindow.Player.QueuePosition < number) nextlength += track.Duration;
                     number++;
+                }
+                foreach (QueueEntry thing in QueueList.Items)
+                {
+                    if (thing.Index + 1 == MainWindow.Player.QueuePosition) Dispatcher.Invoke(() => thing.BringIntoView());
                 }
             });           
             RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0,0,0,nextlength).ToString(@"hh\:mm\:ss");

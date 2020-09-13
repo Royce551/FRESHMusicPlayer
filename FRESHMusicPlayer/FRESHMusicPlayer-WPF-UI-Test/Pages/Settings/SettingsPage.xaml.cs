@@ -1,5 +1,6 @@
 ﻿using FRESHMusicPlayer;
 using FRESHMusicPlayer.Handlers.Configuration;
+using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,33 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             General_ProgressCheck.IsChecked = App.Config.ShowTimeInWindow;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
+            switch (App.Config.Language) // i think this is bad code
+            {
+                case "en":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.English;
+                    break;
+                case "de":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.German;
+                    break;
+                case "vi":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Vietnamese;
+                    break;
+                case "pt":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Portuguese;
+                    break;
+            }
+            switch (App.Config.Theme)
+            {
+                case Skin.Light:
+                    Appearance_ThemeLightRadio.IsChecked = true;
+                    break;
+                case Skin.Dark:
+                    Appearance_ThemeDarkRadio.IsChecked = true;
+                    break;
+                case Skin.Classic:
+                    Appearance_ThemeClassicRadio.IsChecked = true;
+                    break;
+            }
         }
 
         public void SetAppRestartNeeded(bool value)
@@ -109,6 +137,22 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                     break;
             }
             ConfigurationHandler.Write(App.Config);
+        }
+
+        private void Maintanence_ImportButton_Click(object sender, RoutedEventArgs e) => DatabaseUtils.Convertv1Tov2();
+
+        private void Maintanence_ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHandler.Write(new ConfigurationFile());
+            InitFields();
+        }
+        private void Maintanence_NukeButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("You are about irreversibly clear your library. Are you sure?",
+                                          "FRESHMusicPlayer",
+                                          MessageBoxButton.YesNo,
+                                          MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes) DatabaseUtils.Nuke();
         }
     }
     public enum LanguageCombo

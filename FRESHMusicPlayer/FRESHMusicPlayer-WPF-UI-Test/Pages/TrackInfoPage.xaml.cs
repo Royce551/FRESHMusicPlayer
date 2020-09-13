@@ -64,6 +64,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                 System.Drawing.Image x = System.Drawing.Image.FromStream(new MemoryStream(pic.PictureData));
                 x.Save(System.IO.Path.GetTempPath() + "FMPalbumart.png", Imaging.ImageFormat.Png);
                 System.Diagnostics.Process.Start(System.IO.Path.GetTempPath() + "FMPalbumart.png");
+                x.Dispose();
             }
         }
     }

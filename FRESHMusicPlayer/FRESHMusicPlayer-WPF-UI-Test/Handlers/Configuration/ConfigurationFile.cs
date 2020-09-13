@@ -30,5 +30,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public DateTime UpdatesLastChecked { get; set; }
         public Skin Theme { get; set; } = Skin.Dark;
         public string AccentColorHex { get; set; }
+        public int Volume { get; set; } = 100;
     }
 }

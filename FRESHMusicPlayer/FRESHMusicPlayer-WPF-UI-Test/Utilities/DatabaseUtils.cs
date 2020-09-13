@@ -56,6 +56,12 @@ namespace FRESHMusicPlayer.Utilities
         public static void Nuke()
         {
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").DeleteAll();
+            MainWindow.NotificationHandler.Add(new Notification
+            {
+                HeaderText = "Nuke successful",
+                ContentText = "Successfully cleared your library",
+                Type = NotificationType.Success
+            });
         }
         public async static void Convertv1Tov2()
         {
