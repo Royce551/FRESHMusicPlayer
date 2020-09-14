@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages
+namespace FRESHMusicPlayer.Pages
 {
     /// <summary>
     /// Interaction logic for QueueEntry.xaml

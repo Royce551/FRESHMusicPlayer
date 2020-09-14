@@ -2,7 +2,7 @@
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
-using FRESHMusicPlayer_WPF_UI_Test.Forms;
+using FRESHMusicPlayer.Forms;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -279,7 +279,7 @@ namespace FRESHMusicPlayer
             Track track = new Track(Player.FilePath);
             Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
             TitleLabel.Text = track.Title;
-            ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;
+            ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
@@ -303,7 +303,7 @@ namespace FRESHMusicPlayer
             NotificationHandler.Add(new Notification
             {
                 HeaderText = "A playback error occured",
-                ContentText = String.Format(FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS),
+                ContentText = String.Format(FRESHMusicPlayer.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS),
                 IsImportant = true,
                 DisplayAsToast = true,
                 Type = NotificationType.Failure

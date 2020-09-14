@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
+namespace FRESHMusicPlayer.Pages.Library
 {
     /// <summary>
     /// Interaction logic for SongEntry.xaml

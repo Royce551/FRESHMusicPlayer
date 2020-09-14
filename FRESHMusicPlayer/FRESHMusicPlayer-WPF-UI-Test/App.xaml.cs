@@ -44,7 +44,7 @@ namespace FRESHMusicPlayer
             string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
             File.WriteAllText(logPath + fileName, e.Exception.ToString());
-            MessageBox.Show(string.Format(FRESHMusicPlayer_WPF_UI_Test.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));       
+            MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));       
             e.Handled = true;
         }
     }

@@ -20,7 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
+namespace FRESHMusicPlayer.Pages.Library
 {
     /// <summary>
     /// Interaction logic for SearchPage.xaml

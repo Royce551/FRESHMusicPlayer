@@ -23,7 +23,7 @@ using System.Diagnostics;
 using LiteDB;
 using FRESHMusicPlayer.Utilities;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages.Library
+namespace FRESHMusicPlayer.Pages.Library
 {
     /// <summary>
     /// Interaction logic for LibraryPage.xaml

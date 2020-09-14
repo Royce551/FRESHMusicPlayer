@@ -17,7 +17,7 @@ using System.Windows.Navigation;
 using Imaging = System.Drawing.Imaging;
 using System.Windows.Shapes;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages
+namespace FRESHMusicPlayer.Pages
 {
     /// <summary>
     /// Interaction logic for TrackInfoPage.xaml

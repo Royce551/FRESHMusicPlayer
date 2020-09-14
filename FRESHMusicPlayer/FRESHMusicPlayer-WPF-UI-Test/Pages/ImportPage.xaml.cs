@@ -14,7 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WinForms = System.Windows.Forms;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages
+namespace FRESHMusicPlayer.Pages
 {
     /// <summary>
     /// Interaction logic for ImportPage.xaml

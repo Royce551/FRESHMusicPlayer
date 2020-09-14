@@ -20,7 +20,7 @@ using ATL.Playlist;
 using FRESHMusicPlayer.Handlers.Notifications;
 using System.IO;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages
+namespace FRESHMusicPlayer.Pages
 {
     /// <summary>
     /// Interaction logic for QueueManagementPage.xaml

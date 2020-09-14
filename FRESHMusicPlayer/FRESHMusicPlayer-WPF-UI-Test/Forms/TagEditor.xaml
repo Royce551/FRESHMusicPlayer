@@ -1,10 +1,10 @@
-﻿<Window x:Class="FRESHMusicPlayer_WPF_UI_Test.Forms.TagEditor"
+﻿<Window x:Class="FRESHMusicPlayer.Forms.TagEditor"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:resx = "clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Properties"
-        xmlns:local="clr-namespace:FRESHMusicPlayer_WPF_UI_Test.Forms"
+        xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
+        xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
         mc:Ignorable="d"
         Title="TagEditor" Height="451" Width="600" Closing="Window_Closing">
     <Grid Background="{StaticResource BackgroundColor}">

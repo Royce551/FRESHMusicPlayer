@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using Winforms = System.Windows.Forms;
 using System.Windows.Shapes;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Forms
+namespace FRESHMusicPlayer.Forms
 {
     /// <summary>
     /// Interaction logic for TagEditor.xaml

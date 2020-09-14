@@ -17,7 +17,7 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer;
 using System.Windows.Media.Animation;
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Pages
+namespace FRESHMusicPlayer.Pages
 {
     /// <summary>
     /// Interaction logic for NotificationPage.xaml

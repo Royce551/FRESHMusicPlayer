@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
+namespace FRESHMusicPlayer.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FRESHMusicPlayer_WPF_UI_Test.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FRESHMusicPlayer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
