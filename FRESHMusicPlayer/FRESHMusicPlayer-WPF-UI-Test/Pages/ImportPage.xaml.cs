@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer_WPF_UI_Test.Pages
@@ -32,8 +33,8 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             if (dialog.ShowDialog() == true)
             {
                 MainWindow.Player.AddQueue(dialog.FileName);
-                DatabaseUtils.Import(dialog.FileName);
-                MainWindow.Player.PlayMusic();
+                if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(dialog.FileName);
+                if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic();
             }
         }
 
@@ -59,9 +60,9 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                         continue;
                     }
                     MainWindow.Player.AddQueue(s);
-                    DatabaseUtils.Import(s);
+                    if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(s);
                 }
-                MainWindow.Player.PlayMusic();
+                if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic();
             }
         }
 
@@ -80,9 +81,9 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
                             || name.EndsWith(".aac")))
                     {
                         MainWindow.Player.AddQueue(s);
-                        DatabaseUtils.Import(s);
+                        if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(s);
                     }
-                    MainWindow.Player.PlayMusic();
+                    if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic();
                 }
             }
         }
@@ -98,9 +99,9 @@ namespace FRESHMusicPlayer_WPF_UI_Test.Pages
             MainWindow.Player.AddQueue(tracks);
             await Task.Run(() =>
             {
-                DatabaseUtils.Import(tracks);
+                if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(tracks);
             });          
-            MainWindow.Player.PlayMusic(); 
+            if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic(); 
         }
 
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)

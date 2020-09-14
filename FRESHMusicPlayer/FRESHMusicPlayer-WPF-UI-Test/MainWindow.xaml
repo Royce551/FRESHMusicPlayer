@@ -23,7 +23,7 @@
         </Storyboard>
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="Tag Editor" Click="TrackContextTagEditor_Click"/>
-            <MenuItem x:Name="MiniPlayerContext" Header="Player that is mini" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
+            <MenuItem x:Name="MiniPlayerContext" Header="Mini Player" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
         </ContextMenu>
     </Window.Resources>
     <DockPanel Background="#FF0C6C08">

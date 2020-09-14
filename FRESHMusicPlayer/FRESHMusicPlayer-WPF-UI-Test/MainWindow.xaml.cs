@@ -431,29 +431,34 @@ namespace FRESHMusicPlayer
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                switch (e.Key)
+                {
+                    case Key.Q:
+                        ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335);
+                        break;
+                    case Key.A:
+                        ChangeTabs(SelectedMenus.Tracks);
+                        break;
+                    case Key.S:
+                        ChangeTabs(SelectedMenus.Artists);
+                        break;
+                    case Key.D:
+                        ChangeTabs(SelectedMenus.Albums);
+                        break;
+                    case Key.F:
+                        ContentFrame.Source = new Uri("/Pages/Library/SearchPage.xaml", UriKind.Relative);
+                        ContentFrame.NavigationService.RemoveBackEntry();
+                        TabChanged?.Invoke(null, EventArgs.Empty);
+                        break;
+                    case Key.G:
+                        ChangeTabs(SelectedMenus.Import);
+                        break;
+                }
+            }
             switch (e.Key)
             {
-                case Key.F1:
-                    ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335);
-                    e.Handled = true;
-                    break;
-                case Key.F2:
-                    if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);
-                    e.Handled = true;
-                    break;
-                case Key.F3:
-                    ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
-                    e.Handled = true;
-                    break;
-                case Key.F4:
-                    TagEditor tagEditor = new TagEditor(Player.Queue);
-                    tagEditor.Show();
-                    e.Handled = true;
-                    break;
-                case Key.F6:
-                    ShowAuxilliaryPane("/Pages/NotificationPage.xaml");
-                    e.Handled = true;
-                    break;
                 case Key.OemTilde:
                     NotificationHandler.Add(new Notification
                     {
@@ -463,11 +468,9 @@ namespace FRESHMusicPlayer
                         DisplayAsToast = true,
                         Type = NotificationType.Success
                     });
-                    e.Handled = true;
                     break;
                 case Key.F5:
                     ContentFrame.Refresh();
-                    e.Handled = true;
                     break;
                 case Key.F7:
                     NotificationHandler.Add(new Notification
@@ -478,14 +481,11 @@ namespace FRESHMusicPlayer
                         DisplayAsToast = false,
                         Type = NotificationType.Generic
                     });
-                    e.Handled = true;
                     break;
                 case Key.F8:
                     DatabaseUtils.Convertv1Tov2();
-                    e.Handled = true;
                     break;
             }
-           
         }
 
         private void Window_DragOver(object sender, DragEventArgs e)
