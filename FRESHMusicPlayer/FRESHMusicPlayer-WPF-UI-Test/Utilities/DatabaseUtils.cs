@@ -26,11 +26,13 @@ namespace FRESHMusicPlayer.Utilities
         public static void Import(string[] tracks)
         {
             var stufftoinsert = new List<DatabaseTrack>();
+            int count = 0;
             foreach (string y in tracks)
             {
                 Track track = new Track(y);
                 stufftoinsert.Add(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber, Length = track.Duration});
-            }
+                count++;
+            }            
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(stufftoinsert);
         }
         public static void Import(List<string> tracks)

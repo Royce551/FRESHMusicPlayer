@@ -89,5 +89,7 @@ namespace FRESHMusicPlayer.Pages.Library
             }
             MainWindow.Player.PlayMusic();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e) => Dispatcher.Invoke(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
     }
 }

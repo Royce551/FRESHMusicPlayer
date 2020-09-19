@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d"
-        Title="FRESHMusicPlayer 8 Development" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized">
+        Title="FRESHMusicPlayer 8 Development" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
     <Window.Resources>
         <Storyboard x:Key="SlideIn">
             <DoubleAnimation
@@ -41,26 +41,26 @@
             <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand">
             </TextBlock>
 
-            <Border x:Name="SettingsButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="SettingsButton_Click">
+            <Border x:Name="SettingsButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="SettingsButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Border>
-            <Border x:Name="QueueManagementButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="QueueManagementButton_Click">
+            <Border x:Name="QueueManagementButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="QueueManagementButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Border>
             <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
-            <Border x:Name="NotificationButton" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" MouseDown="NotificationButton_Click" Visibility="Collapsed">
+            <Border x:Name="NotificationButton" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" MouseDown="NotificationButton_Click" Visibility="Collapsed" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Border>
-            <Border x:Name="SearchButton" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" MouseDown="SearchButton_Click" Height="20" VerticalAlignment="Top">
+            <Border x:Name="SearchButton" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" MouseDown="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
                 <Canvas>
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>

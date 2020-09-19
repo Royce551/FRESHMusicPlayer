@@ -22,6 +22,7 @@ using Windows.Storage.Streams;
 using FRESHMusicPlayer.Handlers.Configuration;
 using LiteDB;
 using System.Threading;
+using System.Text;
 
 namespace FRESHMusicPlayer
 {
@@ -47,6 +48,7 @@ namespace FRESHMusicPlayer
         public static string AuxilliaryPaneUri = "";
         public static EventHandler TabChanged;
         public static LiteDatabase Libraryv2;
+        public static Track CurrentTrack;
 
         public SystemMediaTransportControls Smtc;
         public MainWindow()
@@ -73,6 +75,7 @@ namespace FRESHMusicPlayer
                                         Type = NotificationType.Failure});
             }       
         }
+
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
             UpdateIntegrations();
@@ -109,7 +112,7 @@ namespace FRESHMusicPlayer
             if (Player.Paused)
             {
                 Player.ResumeMusic();
-                SetIntegrations(MediaPlaybackStatus.Playing);
+                SetIntegrations(MediaPlaybackStatus.Playing, CurrentTrack.Artist, CurrentTrack.AlbumArtist, CurrentTrack.Title);
                 progressTimer.Start();
             }
             else
@@ -269,30 +272,30 @@ namespace FRESHMusicPlayer
         private void player_songStopped(object sender, EventArgs e)
         {
             Title = "FRESHMusicPlayer 8 Development";
-            TitleLabel.Text = ArtistLabel.Text = "Nothing Playing";
+            TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             progressTimer.Stop();
             SetIntegrations(MediaPlaybackStatus.Stopped);
         }
 
         private void player_songChanged(object sender, EventArgs e)
         {
-            Track track = new Track(Player.FilePath);
-            Title = $"{track.Artist} - {track.Title} | FRESHMusicPlayer 8 Development";
-            TitleLabel.Text = track.Title;
-            ArtistLabel.Text = track.Artist == "" ? FRESHMusicPlayer.Properties.Resources.MAINWINDOW_NOARTIST : track.Artist;
+            CurrentTrack = new Track(Player.FilePath);
+            Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer 8 Development";
+            TitleLabel.Text = CurrentTrack.Title;
+            ArtistLabel.Text = CurrentTrack.Artist == "" ? FRESHMusicPlayer.Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
-            SetIntegrations(MediaPlaybackStatus.Playing, track.Artist, track.AlbumArtist, track.Title);
+            SetIntegrations(MediaPlaybackStatus.Playing, CurrentTrack.Artist, CurrentTrack.AlbumArtist, CurrentTrack.Title);
             UpdatePlayButtonState();
-            if (track.EmbeddedPictures.Count == 0)
+            if (CurrentTrack.EmbeddedPictures.Count == 0)
             {
                 CoverArtBox.Source = null;
                 SetCoverArtVisibility(false);
             }
             else
             {
-                CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 SetCoverArtVisibility(true);
             }
 
@@ -303,7 +306,7 @@ namespace FRESHMusicPlayer
             NotificationHandler.Add(new Notification
             {
                 HeaderText = "A playback error occured",
-                ContentText = String.Format(FRESHMusicPlayer.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS),
+                ContentText = String.Format(FRESHMusicPlayer.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
                 IsImportant = true,
                 DisplayAsToast = true,
                 Type = NotificationType.Failure
@@ -343,7 +346,7 @@ namespace FRESHMusicPlayer
         }
         private void TrackTitle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var cm = this.FindResource("MiscContext") as ContextMenu;
+            var cm = FindResource("MiscContext") as ContextMenu;
             cm.PlacementTarget = sender as Button;
             cm.IsOpen = true;
         }
@@ -369,12 +372,7 @@ namespace FRESHMusicPlayer
         {
             ShowAuxilliaryPane("/Pages/Settings/SettingsPage.xaml", 335);
         }
-        private void SearchButton_Click(object sender, MouseButtonEventArgs e)
-        {
-            ContentFrame.Source = new Uri("/Pages/Library/SearchPage.xaml", UriKind.Relative);
-            ContentFrame.NavigationService.RemoveBackEntry();
-            TabChanged?.Invoke(null, EventArgs.Empty);
-        }
+        private void SearchButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane("/Pages/Library/SearchPage.xaml", 335);
         private void QueueManagementButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335);
         private void NotificationButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane("/Pages/NotificationPage.xaml");
         #endregion
@@ -448,12 +446,16 @@ namespace FRESHMusicPlayer
                         ChangeTabs(SelectedMenus.Albums);
                         break;
                     case Key.F:
-                        ContentFrame.Source = new Uri("/Pages/Library/SearchPage.xaml", UriKind.Relative);
-                        ContentFrame.NavigationService.RemoveBackEntry();
-                        TabChanged?.Invoke(null, EventArgs.Empty);
-                        break;
-                    case Key.G:
                         ChangeTabs(SelectedMenus.Import);
+                        break;
+                    case Key.E:
+                        ShowAuxilliaryPane("/Pages/Library/SearchPage.xaml", 335);
+                        break;
+                    case Key.W:
+                        ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335);
+                        break;
+                    case Key.Space:
+                        PlayPauseMethod();
                         break;
                 }
             }
@@ -550,8 +552,15 @@ namespace FRESHMusicPlayer
                         activity = "idle";
                         break;
                 }
-                Player.UpdateRPC(activity, Artist, Title);
+                Player.UpdateRPC(activity, Utils.TruncateBytes(Artist, 120), Utils.TruncateBytes(Title, 120));
             }
+        }
+
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+                Player.CurrentVolume += e.Delta / 100 * 3;
+                VolumeBar.Value += e.Delta / 100 * 3;
+                if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();       
         }
     }
 }

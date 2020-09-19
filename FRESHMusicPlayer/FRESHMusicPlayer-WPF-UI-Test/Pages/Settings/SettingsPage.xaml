@@ -13,7 +13,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0">
-            <VirtualizingStackPanel Background="{StaticResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
+            <StackPanel Background="{StaticResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
                 <TextBlock Text="Settings" Foreground="{StaticResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
                 <TextBlock Text="Change the way FMP behaves" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
 
@@ -82,7 +82,14 @@
                 <Button x:Name="Maintanence_ImportButton" Content="Import library from old FMP" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
                 <Button x:Name="Maintanence_ResetButton" Content="Reset configuration to defaults" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
                 <Button x:Name="Maintanence_NukeButton" Content="Nuke library" TextBlock.FontSize="16" Margin="0,5,0,5" Foreground="Red" Click="Maintanence_NukeButton_Click"/>
-            </VirtualizingStackPanel>
+
+                <TextBlock Text="About" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+
+                <TextBlock Text="Logo banner placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock Text="FMP version placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock Text="FMP Core version placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock Text="By Squid Grill (and open source contributors) &#10;Licensed under GPL v3&#10;Thank you for using FRESHMusicPlayer! ♥" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </Page>

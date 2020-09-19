@@ -6,9 +6,9 @@
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages.Library"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SearchPage">
+      Title="SearchPage" Loaded="Page_Loaded">
 
-    <Grid Background="{StaticResource BackgroundColor}">
+    <Grid Background="{StaticResource SecondaryColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -17,7 +17,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="RightSide"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="SearchBox" Grid.Row="0" TextWrapping="Wrap" FontSize="14" Margin="10,5" BorderBrush="{StaticResource SecondaryTextColor}" Foreground="{StaticResource PrimaryTextColor}" TextChanged="SearchBox_TextChanged">
+        <TextBox x:Name="SearchBox" Grid.Row="0" TextWrapping="Wrap" FontSize="14" Margin="10,5" BorderBrush="{StaticResource SecondaryTextColor}" Foreground="{StaticResource PrimaryTextColor}" TextChanged="SearchBox_TextChanged" TabIndex="0">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -41,14 +41,14 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <ListBox x:Name="TracksPanel"  Grid.Row="1" Background="{StaticResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}">
+        <ListBox x:Name="TracksPanel"  Grid.Row="1" Background="{StaticResource SecondaryColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource SecondaryColor}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Background="{StaticResource BackgroundColor}">
+        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Background="{StaticResource SecondaryColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>

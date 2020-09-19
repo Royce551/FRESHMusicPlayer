@@ -24,6 +24,7 @@ namespace FRESHMusicPlayer.Pages
     public partial class SettingsPage : Page
     {
         public bool AppRestartNeeded = false;
+        private bool pageInitialized = false;
         public SettingsPage()
         {
             InitializeComponent();
@@ -62,6 +63,7 @@ namespace FRESHMusicPlayer.Pages
                     Appearance_ThemeClassicRadio.IsChecked = true;
                     break;
             }
+            pageInitialized = true;
         }
 
         public void SetAppRestartNeeded(bool value)
@@ -89,16 +91,22 @@ namespace FRESHMusicPlayer.Pages
 
         private void General_DiscordRPCChanged(object sender, RoutedEventArgs e)
         {
-            App.Config.IntegrateDiscordRPC = (bool)Integration_DiscordRPCCheck.IsChecked;
-            ConfigurationHandler.Write(App.Config);
-            (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
+            if (pageInitialized)
+            {
+                App.Config.IntegrateDiscordRPC = (bool)Integration_DiscordRPCCheck.IsChecked;
+                ConfigurationHandler.Write(App.Config);
+                (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
+            }        
         }
 
         private void Integration_SMTCChanged(object sender, RoutedEventArgs e)
         {
-            App.Config.IntegrateSMTC = (bool)Integration_SMTCCheck.IsChecked;
-            ConfigurationHandler.Write(App.Config);
-            (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
+            if (pageInitialized)
+            {
+                App.Config.IntegrateSMTC = (bool)Integration_SMTCCheck.IsChecked;
+                ConfigurationHandler.Write(App.Config);
+                (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
+            }  
         }
 
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -154,6 +162,7 @@ namespace FRESHMusicPlayer.Pages
                                           MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes) DatabaseUtils.Nuke();
         }
+
     }
     public enum LanguageCombo
     {

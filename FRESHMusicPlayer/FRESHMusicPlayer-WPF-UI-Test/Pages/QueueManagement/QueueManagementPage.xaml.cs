@@ -19,6 +19,7 @@ using Microsoft.Win32;
 using ATL.Playlist;
 using FRESHMusicPlayer.Handlers.Notifications;
 using System.IO;
+using System.Threading;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -27,14 +28,15 @@ namespace FRESHMusicPlayer.Pages
     /// </summary>
     public partial class QueueManagement : Page
     {
+        CancellationTokenSource source = new CancellationTokenSource();
         public QueueManagement()
         {
             InitializeComponent();
-            PopulateList();
+            PopulateList(source.Token);
             MainWindow.Player.SongChanged += Player_SongChanged;
         }
         
-        public async void PopulateList()
+        public async void PopulateList(CancellationToken token)
         {
             var list = MainWindow.Player.Queue;
             var nextlength = 0;
@@ -46,13 +48,23 @@ namespace FRESHMusicPlayer.Pages
             {
                 foreach (var song in list)
                 {
-                    Track track = new Track(song);
-                    Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, (number - MainWindow.Player.QueuePosition).ToString(), number - 1)));
-                    if (MainWindow.Player.QueuePosition < number) nextlength += track.Duration;
+                    if (token.IsCancellationRequested)
+                    {
+                        source.Dispose();
+                        break;
+                    }
+                    DatabaseTrack track = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path); // why
+                    Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), (number - 1))));
+                    if (MainWindow.Player.QueuePosition < number) nextlength += track.Length;
                     number++;
                 }
                 foreach (QueueEntry thing in QueueList.Items)
                 {
+                    if (token.IsCancellationRequested)
+                    {
+                        source.Dispose();
+                        break;
+                    }
                     if (thing.Index + 1 == MainWindow.Player.QueuePosition) Dispatcher.Invoke(() => thing.BringIntoView());
                 }
             });           
@@ -65,7 +77,9 @@ namespace FRESHMusicPlayer.Pages
         private void Player_SongChanged(object sender, EventArgs e)
         {
             QueueList.Items.Clear();
-            PopulateList();
+            source.Cancel();
+            source = new CancellationTokenSource();
+            PopulateList(source.Token);
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -82,7 +96,9 @@ namespace FRESHMusicPlayer.Pages
             {
                 MainWindow.Player.AddQueue(dialog.FileName);
                 QueueList.Items.Clear();
-                PopulateList();
+                source.Cancel();
+                source = new CancellationTokenSource();
+                PopulateList(source.Token);
             }
         }
 
@@ -109,7 +125,9 @@ namespace FRESHMusicPlayer.Pages
                     }
                     MainWindow.Player.AddQueue(s);
                     QueueList.Items.Clear();
-                    PopulateList();
+                    source.Cancel();
+                    source = new CancellationTokenSource();
+                    PopulateList(source.Token);
                 }
             }
         }
@@ -118,7 +136,9 @@ namespace FRESHMusicPlayer.Pages
         {
             MainWindow.Player.ClearQueue();
             QueueList.Items.Clear();
-            PopulateList();
+            source.Cancel();
+            source = new CancellationTokenSource();
+            PopulateList(source.Token);
         }
     }
 }

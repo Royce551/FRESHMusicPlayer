@@ -33,8 +33,8 @@ namespace FRESHMusicPlayer.Pages
             if (dialog.ShowDialog() == true)
             {
                 MainWindow.Player.AddQueue(dialog.FileName);
-                if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(dialog.FileName);
-                if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic();
+                DatabaseUtils.Import(dialog.FileName);
+                MainWindow.Player.PlayMusic();
             }
         }
 
@@ -60,9 +60,9 @@ namespace FRESHMusicPlayer.Pages
                         continue;
                     }
                     MainWindow.Player.AddQueue(s);
-                    if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(s);
+                    DatabaseUtils.Import(s);
                 }
-                if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic();
+                MainWindow.Player.PlayMusic();
             }
         }
 
@@ -81,9 +81,9 @@ namespace FRESHMusicPlayer.Pages
                             || name.EndsWith(".aac")))
                     {
                         MainWindow.Player.AddQueue(s);
-                        if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(s);
+                        DatabaseUtils.Import(s);
                     }
-                    if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic();
+                    MainWindow.Player.PlayMusic();
                 }
             }
         }
@@ -99,9 +99,9 @@ namespace FRESHMusicPlayer.Pages
             MainWindow.Player.AddQueue(tracks);
             await Task.Run(() =>
             {
-                if (!Keyboard.IsKeyDown(Key.LeftCtrl)) DatabaseUtils.Import(tracks);
+                DatabaseUtils.Import(tracks);
             });          
-            if (!Keyboard.IsKeyDown(Key.LeftShift)) MainWindow.Player.PlayMusic(); 
+            MainWindow.Player.PlayMusic(); 
         }
 
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)
