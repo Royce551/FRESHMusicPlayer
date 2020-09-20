@@ -552,7 +552,7 @@ namespace FRESHMusicPlayer
                         activity = "idle";
                         break;
                 }
-                Player.UpdateRPC(activity, Utils.TruncateBytes(Artist, 120), Utils.TruncateBytes(Title, 120));
+                Player.UpdateRPC(activity, Artist, Title);
             }
         }
 

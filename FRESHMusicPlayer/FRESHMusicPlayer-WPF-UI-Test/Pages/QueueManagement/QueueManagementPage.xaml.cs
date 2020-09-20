@@ -20,6 +20,7 @@ using ATL.Playlist;
 using FRESHMusicPlayer.Handlers.Notifications;
 using System.IO;
 using System.Threading;
+using Windows.System.Preview;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -28,63 +29,65 @@ namespace FRESHMusicPlayer.Pages
     /// </summary>
     public partial class QueueManagement : Page
     {
-        CancellationTokenSource source = new CancellationTokenSource();
+        private bool taskisrunning;
+        private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
         public QueueManagement()
         {
             InitializeComponent();
-            PopulateList(source.Token);
-            MainWindow.Player.SongChanged += Player_SongChanged;
+            PopulateList();
+            MainWindow.Player.QueueChanged += Player_QueueChanged;
         }
-        
-        public async void PopulateList(CancellationToken token)
+
+        public void PopulateList() // God have mercy on future me/others.
         {
-            var list = MainWindow.Player.Queue;
-            var nextlength = 0;
-            int number = 1;
-            AddTrackButton.IsEnabled = false;
-            AddPlaylistButton.IsEnabled = false;
-            ClearQueueButton.IsEnabled = false;
-            await Task.Run(() =>
+            displayqueue.Enqueue(MainWindow.Player.Queue);
+            async void GetResults()
             {
-                foreach (var song in list)
+                var list = displayqueue.Dequeue();
+                var nextlength = 0;
+                int number = 1;        
+                AddTrackButton.IsEnabled = false;
+                AddPlaylistButton.IsEnabled = false;
+                ClearQueueButton.IsEnabled = false;
+                QueueList.Visibility = Visibility.Hidden;
+                QueueList.Items.Clear();
+                await Task.Run(() =>
                 {
-                    if (token.IsCancellationRequested)
+                    foreach (var song in list)
                     {
-                        source.Dispose();
-                        break;
+                        if (displayqueue.Count > 1) break;
+                        DatabaseTrack track = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path);
+                        var entry = Dispatcher.Invoke(() => new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), number - 1));
+                        if (entry.Index + 1 == MainWindow.Player.QueuePosition) Dispatcher.Invoke(() => entry.BringIntoView());
+                        Dispatcher.Invoke(() => QueueList.Items.Add(entry));
+                        if (MainWindow.Player.QueuePosition < number) nextlength += track.Length;
+                        number++;
                     }
-                    DatabaseTrack track = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path); // why
-                    Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), (number - 1))));
-                    if (MainWindow.Player.QueuePosition < number) nextlength += track.Length;
-                    number++;
-                }
-                foreach (QueueEntry thing in QueueList.Items)
-                {
-                    if (token.IsCancellationRequested)
-                    {
-                        source.Dispose();
-                        break;
-                    }
-                    if (thing.Index + 1 == MainWindow.Player.QueuePosition) Dispatcher.Invoke(() => thing.BringIntoView());
-                }
-            });           
-            RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0,0,0,nextlength).ToString(@"hh\:mm\:ss");
-            AddTrackButton.IsEnabled = true;
-            AddPlaylistButton.IsEnabled = true;
-            ClearQueueButton.IsEnabled = true;
+                });
+                RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0, 0, 0, nextlength).ToString(@"hh\:mm\:ss");
+                AddTrackButton.IsEnabled = true;
+                AddPlaylistButton.IsEnabled = true;
+                ClearQueueButton.IsEnabled = true;
+                QueueList.Visibility = Visibility.Visible;
+                taskisrunning = false;
+                if (displayqueue.Count != 0) GetResults();
+                else return;
+            }
+            if (!taskisrunning)
+            {
+                taskisrunning = true;
+                GetResults();
+            }
         }
-        
-        private void Player_SongChanged(object sender, EventArgs e)
+        private void Player_QueueChanged(object sender, EventArgs e)
         {
-            QueueList.Items.Clear();
-            source.Cancel();
-            source = new CancellationTokenSource();
-            PopulateList(source.Token);
+
+            PopulateList();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.Player.SongChanged -= Player_SongChanged;
+            MainWindow.Player.QueueChanged -= Player_QueueChanged;
             QueueList.Items.Clear();
         }
 
@@ -95,10 +98,6 @@ namespace FRESHMusicPlayer.Pages
             if (dialog.ShowDialog() == true)
             {
                 MainWindow.Player.AddQueue(dialog.FileName);
-                QueueList.Items.Clear();
-                source.Cancel();
-                source = new CancellationTokenSource();
-                PopulateList(source.Token);
             }
         }
 
@@ -124,10 +123,6 @@ namespace FRESHMusicPlayer.Pages
                         continue;
                     }
                     MainWindow.Player.AddQueue(s);
-                    QueueList.Items.Clear();
-                    source.Cancel();
-                    source = new CancellationTokenSource();
-                    PopulateList(source.Token);
                 }
             }
         }
@@ -135,10 +130,6 @@ namespace FRESHMusicPlayer.Pages
         private void ClearQueue_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Player.ClearQueue();
-            QueueList.Items.Clear();
-            source.Cancel();
-            source = new CancellationTokenSource();
-            PopulateList(source.Token);
         }
     }
 }
