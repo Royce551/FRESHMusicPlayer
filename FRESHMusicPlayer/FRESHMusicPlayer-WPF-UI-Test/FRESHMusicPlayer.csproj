@@ -81,6 +81,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Forms\PlaylistManagement.xaml.cs">
+      <DependentUpon>PlaylistManagement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TagEditor.xaml.cs">
       <DependentUpon>TagEditor.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
     <Compile Include="Utilities\DatabaseUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\WindowsInteropUtils.cs" />
+    <Page Include="Forms\PlaylistManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\TagEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

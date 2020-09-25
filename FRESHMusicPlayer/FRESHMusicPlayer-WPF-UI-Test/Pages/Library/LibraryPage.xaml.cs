@@ -50,6 +50,9 @@ namespace FRESHMusicPlayer.Pages.Library
                 case SelectedMenus.Albums:
                     ShowAlbums();
                     break;
+                case SelectedMenus.Playlists:
+                    ShowPlaylists();
+                    break;
             }
         }
         public async void ShowTracks()
@@ -88,6 +91,19 @@ namespace FRESHMusicPlayer.Pages.Library
                     }
             });
         }
+        public async void ShowPlaylists()
+        {
+            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            await Task.Run(() =>
+            {
+                if (x.Count == 0) DatabaseUtils.CreatePlaylist("Liked");
+                foreach (var thing in x)
+                {
+                    if (CategoryPanel.Items.Contains(thing.Name)) continue;
+                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Name));
+                }
+            });
+        }
         public async void ShowTracksforArtist(string selectedItem)
         {
             TracksPanel.Items.Clear();
@@ -116,12 +132,27 @@ namespace FRESHMusicPlayer.Pages.Library
             });
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-
+        public async void ShowTracksforPlaylist(string selectedItem)
+        {
+            TracksPanel.Items.Clear();
+            MainWindow.NotificationHandler.Add(new Notification { ContentText = selectedItem });
+            int length = 0;
+            await Task.Run(() =>
+            {
+                foreach (var thing in DatabaseUtils.ReadTracksForPlaylist(selectedItem))
+                {
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    length += thing.Length;
+                }
+            });
+            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
+        }
         private void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
             if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist(selectedItem);
+            else if (MainWindow.SelectedMenu == SelectedMenus.Playlists) ShowTracksforPlaylist(selectedItem);
             else ShowTracksforAlbum(selectedItem);
         }
         private void MainWindow_TabChanged(object sender, EventArgs e)

@@ -38,6 +38,9 @@
             <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown" Cursor="Hand">
             </TextBlock>
             <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
+            <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="PlaylistsTab_MouseDown" Cursor="Hand">
+            </TextBlock>
+            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
             <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand">
             </TextBlock>
 

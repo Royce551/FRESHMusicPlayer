@@ -127,6 +127,7 @@ namespace FRESHMusicPlayer.Pages
                     break;
             }
             ConfigurationHandler.Write(App.Config);
+            SetAppRestartNeeded(true);
         }
 
         private void Appearance_ThemeChanged(object sender, RoutedEventArgs e)
@@ -145,6 +146,7 @@ namespace FRESHMusicPlayer.Pages
                     break;
             }
             ConfigurationHandler.Write(App.Config);
+            SetAppRestartNeeded(true);
         }
 
         private void Maintanence_ImportButton_Click(object sender, RoutedEventArgs e) => DatabaseUtils.Convertv1Tov2();

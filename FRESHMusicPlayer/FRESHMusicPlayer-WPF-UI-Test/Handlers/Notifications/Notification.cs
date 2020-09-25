@@ -11,8 +11,8 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         public bool IsImportant { get; set; } = false;
         public bool DisplayAsToast { get; set; } = false;
         public bool Read { get; set; } = false;
-        public string HeaderText { get; set; }
-        public string ContentText { get; set; }
+        public string HeaderText { get; set; } = "No Header";
+        public string ContentText { get; set; } = "No Content";
         public NotificationType Type { get; set; } = NotificationType.Generic;
     }
     public enum NotificationType

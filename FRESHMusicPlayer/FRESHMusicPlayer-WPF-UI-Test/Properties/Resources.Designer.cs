@@ -190,6 +190,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Playlists.
+        /// </summary>
+        public static string MAINWINDOW_PLAYLISTS {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_PLAYLISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string MAINWINDOW_SEARCH {

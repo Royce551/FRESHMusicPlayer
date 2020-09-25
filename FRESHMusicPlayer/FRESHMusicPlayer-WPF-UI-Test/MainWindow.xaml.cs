@@ -31,6 +31,7 @@ namespace FRESHMusicPlayer
         Tracks,
         Artists,
         Albums,
+        Playlists,
         Import,
         Other
     }
@@ -141,6 +142,7 @@ namespace FRESHMusicPlayer
             {
                 Player.Shuffle = true;
                 ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                Player.ShuffleQueue();
             }
         }
         public void RepeatOneMethod()
@@ -250,6 +252,11 @@ namespace FRESHMusicPlayer
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tab = AlbumsTab;
                     break;
+                case SelectedMenus.Playlists:
+                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.NavigationService.RemoveBackEntry();
+                    tab = PlaylistsTab;
+                    break;
                 case SelectedMenus.Import:
                     ContentFrame.Source = new Uri(@"\Pages\ImportPage.xaml", UriKind.Relative);
                     tab = ImportTab;
@@ -259,7 +266,7 @@ namespace FRESHMusicPlayer
                     break;
             }
             TabChanged?.Invoke(null, EventArgs.Empty);
-            TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
+            TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tab.FontWeight = FontWeights.Bold;
         }
         #endregion
@@ -367,6 +374,7 @@ namespace FRESHMusicPlayer
         private void TracksTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Tracks);
         private void ArtistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Artists);
         private void AlbumsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Albums);
+        private void PlaylistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Playlists);
         private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenus.Import);
         private void SettingsButton_Click(object sender, MouseButtonEventArgs e)
         {
@@ -451,6 +459,9 @@ namespace FRESHMusicPlayer
                     case Key.E:
                         ShowAuxilliaryPane("/Pages/Library/SearchPage.xaml", 335);
                         break;
+                    case Key.R:
+                        ShowAuxilliaryPane("/Pages/TrackInfoPage.xaml", 235, true);
+                        break;
                     case Key.W:
                         ShowAuxilliaryPane("/Pages/QueueManagement/QueueManagementPage.xaml", 335);
                         break;
@@ -464,8 +475,8 @@ namespace FRESHMusicPlayer
                 case Key.OemTilde:
                     NotificationHandler.Add(new Notification
                     {
-                        HeaderText = "Toast test",
-                        ContentText = "ok",
+                        HeaderText = "Debug Key",
+                        ContentText = "Deadlock",
                         IsImportant = true,
                         DisplayAsToast = true,
                         Type = NotificationType.Success

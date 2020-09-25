@@ -1,4 +1,5 @@
 ﻿using FRESHMusicPlayer;
+using FRESHMusicPlayer.Forms;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Utilities;
 using System;
@@ -58,6 +59,12 @@ namespace FRESHMusicPlayer.Pages.Library
                 MainWindow.Player.AddQueue(FilePath);
                 MainWindow.Player.PlayMusic();
             }
+        }
+
+        private void ContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            PlaylistManagement management = new PlaylistManagement(FilePath);
+            management.Show();
         }
     }
 }
