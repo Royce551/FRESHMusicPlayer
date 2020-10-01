@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="1072" d:DesignWidth="335"
@@ -14,17 +15,17 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0">
             <StackPanel Background="{StaticResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
-                <TextBlock Text="Settings" Foreground="{StaticResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
-                <TextBlock Text="Change the way FMP behaves" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_SUBHEADER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
 
-                <TextBlock Text="General" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_GENERAL}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="5,0" Text="Language" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Column="0" Margin="5,0" Text="{x:Static resx:Resources.SETTINGS_LANGUAGE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="General_LanguageCombo_SelectionChanged">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="German"/>
@@ -37,13 +38,13 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="5,0" Text="Output Device" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Column="0" Margin="5,0" Text="{x:Static resx:Resources.SETTINGS_OUTPUTDEVICE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_OutDeviceCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4">
                         <ComboBoxItem Content="Test"/>
                         <ComboBoxItem Content="Test2"/>
                     </ComboBox>
                 </Grid>
-                <CheckBox x:Name="General_ProgressCheck" Content="Show time instead of title in window title" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
+                <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
                 <TextBlock Text="Integration" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
@@ -79,16 +80,16 @@
 
                 <TextBlock Text="Maintanence" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <Button x:Name="Maintanence_ImportButton" Content="Import library from old FMP" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
-                <Button x:Name="Maintanence_ResetButton" Content="Reset configuration to defaults" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
-                <Button x:Name="Maintanence_NukeButton" Content="Nuke library" TextBlock.FontSize="16" Margin="0,5,0,5" Foreground="Red" Click="Maintanence_NukeButton_Click"/>
+                <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
+                <Button x:Name="Maintanence_ResetButton" Content="{x:Static resx:Resources.SETTINGS_RESET}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
+                <Button x:Name="Maintanence_NukeButton" Content="{x:Static resx:Resources.SETTINGS_NUKELIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Foreground="Red" Click="Maintanence_NukeButton_Click"/>
 
                 <TextBlock Text="About" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <TextBlock Text="Logo banner placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="FMP version placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="FMP Core version placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <TextBlock Text="By Squid Grill (and open source contributors) &#10;Licensed under GPL v3&#10;Thank you for using FRESHMusicPlayer! ♥" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

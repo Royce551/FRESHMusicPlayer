@@ -24,8 +24,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="2" Content="Create" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15" Padding="10,2,10,2" Click="CreatePlaylistButton_Click"/>
-                    <Button Grid.Column="1" Content="Import" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="ImportButton_Click"/>
+                    <Button Grid.Column="2" Content="{x:Static resx:Resources.PLAYLISTMANAGEMENT_CREATE}" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15" Padding="10,2,10,2" Click="CreatePlaylistButton_Click"/>
+                    <Button Grid.Column="1" Content="{x:Static resx:Resources.MAINWINDOW_IMPORT}" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="ImportButton_Click"/>
                 </Grid>
             </StackPanel>
         </ScrollViewer>
