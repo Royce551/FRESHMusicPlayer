@@ -275,4 +275,43 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>Điền đường dẫn/URL thủ công</value>
   </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value>Bởi Squid Grill (và các</value>
+  </data>
+  <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
+    <value>Hiện thời gian thay về tiểu đề trong tiểu đề của sổ</value>
+  </data>
+  <data name="SETTINGS_SUBHEADER" xml:space="preserve">
+    <value>Thay đổi cách hoạt động của FMP</value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value>Đặt lại cấu hình</value>
+  </data>
+  <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
+    <value>Thiết bị đầu ra</value>
+  </data>
+  <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
+    <value>Đặt lại thư viện</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="SETTINGS_IMPORTOLDFMP" xml:space="preserve">
+    <value>Nhập thư viện từ FMP cú</value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value>Chung</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
+    <value>Đổi tên</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
+    <value>Xuất</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
+    <value>Tạo</value>
+  </data>
+  <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
+    <value>Danh sách phát</value>
+  </data>
 </root>
