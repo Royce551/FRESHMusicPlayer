@@ -228,7 +228,7 @@ We'll skip to the next track for you</value>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
     <value>By Squid Grill (and open source contributors)
 Licensed under GPL v3
-Thank you for using FRESHMsucPlayer! ♥</value>
+Thank you for using FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
     <value>General</value>

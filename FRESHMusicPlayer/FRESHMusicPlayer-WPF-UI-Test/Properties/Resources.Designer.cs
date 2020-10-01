@@ -381,7 +381,7 @@ namespace FRESHMusicPlayer.Properties {
         /// <summary>
         ///   Looks up a localized string similar to By Squid Grill (and open source contributors)
         ///Licensed under GPL v3
-        ///Thank you for using FRESHMsucPlayer! ♥.
+        ///Thank you for using FRESHMusicPlayer! ♥.
         /// </summary>
         public static string SETTINGS_CREDITS {
             get {
