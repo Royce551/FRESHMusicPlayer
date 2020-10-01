@@ -62,9 +62,6 @@ namespace FRESHMusicPlayer.Pages
             MainWindow.Player.PlayMusic();
         }
 
-        private void DeleteButtonClick(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("sorry, specific track removing hasn't been implemented yet");
-        }
+        private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => MainWindow.Player.RemoveQueue(Index);
     }
 }

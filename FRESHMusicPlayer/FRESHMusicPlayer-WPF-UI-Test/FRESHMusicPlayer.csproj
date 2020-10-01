@@ -81,11 +81,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Forms\PlaylistManagement.xaml.cs">
+    <Compile Include="Forms\Playlists\PlaylistEntry.xaml.cs">
+      <DependentUpon>PlaylistEntry.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Playlists\PlaylistManagement.xaml.cs">
       <DependentUpon>PlaylistManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\TagEditor.xaml.cs">
       <DependentUpon>TagEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TextEntryBox.xaml.cs">
+      <DependentUpon>TextEntryBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Handlers\Configuration\ConfigurationHandler.cs" />
     <Compile Include="Handlers\Configuration\ConfigurationFile.cs" />
@@ -123,13 +129,21 @@
     <Compile Include="Utilities\DatabaseUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\WindowsInteropUtils.cs" />
-    <Page Include="Forms\PlaylistManagement.xaml">
+    <Page Include="Forms\Playlists\PlaylistEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Playlists\PlaylistManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\TagEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\TextEntryBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Handlers\Notifications\NotificationBox.xaml">
       <SubType>Designer</SubType>

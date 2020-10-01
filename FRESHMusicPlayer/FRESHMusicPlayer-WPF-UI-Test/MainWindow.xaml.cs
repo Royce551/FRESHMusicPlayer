@@ -23,6 +23,7 @@ using FRESHMusicPlayer.Handlers.Configuration;
 using LiteDB;
 using System.Threading;
 using System.Text;
+using FRESHMusicPlayer.Forms.Playlists;
 
 namespace FRESHMusicPlayer
 {
@@ -277,7 +278,7 @@ namespace FRESHMusicPlayer
         #region Events
         #region player
         private void player_songStopped(object sender, EventArgs e)
-        {
+        {   
             Title = "FRESHMusicPlayer 8 Development";
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             progressTimer.Stop();
@@ -289,7 +290,7 @@ namespace FRESHMusicPlayer
             CurrentTrack = new Track(Player.FilePath);
             Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer 8 Development";
             TitleLabel.Text = CurrentTrack.Title;
-            ArtistLabel.Text = CurrentTrack.Artist == "" ? FRESHMusicPlayer.Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
+            ArtistLabel.Text = CurrentTrack.Artist == "" ? Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
@@ -313,7 +314,7 @@ namespace FRESHMusicPlayer
             NotificationHandler.Add(new Notification
             {
                 HeaderText = "A playback error occured",
-                ContentText = String.Format(FRESHMusicPlayer.Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
+                ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
                 IsImportant = true,
                 DisplayAsToast = true,
                 Type = NotificationType.Failure
@@ -365,9 +366,21 @@ namespace FRESHMusicPlayer
             TagEditor tagEditor = new TagEditor(tracks);
             tagEditor.Show();
         }
+        private void TrackContentPlaylistManagement_Click(object sender, RoutedEventArgs e)
+        {
+            string track;
+            if (Player.Playing) track = Player.FilePath;
+            else track = Player.Queue[0];
+            var playlistManagement = new PlaylistManagement(track);
+            playlistManagement.Show();
+        }
         private void TrackContextMiniplayer_Click(object sender, RoutedEventArgs e)
         {
             if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);
+        }
+        private void TrackContext_PauseAuto_Click(object sender, RoutedEventArgs e)
+        {
+            if (Player.StopAfterCurrentTrack) Player.StopAfterCurrentTrack = false; else Player.StopAfterCurrentTrack = true;
         }
         #endregion
         #region MenuBar

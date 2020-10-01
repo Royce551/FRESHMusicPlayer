@@ -1,0 +1,40 @@
+﻿<Window x:Class="FRESHMusicPlayer.Forms.Playlists.PlaylistManagement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
+        xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.Playlists"
+        mc:Ignorable="d"
+        Title="Playlist Management" SizeToContent="Height" Width="600">
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50px"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0">
+            <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1">
+                <TextBlock x:Name="EditingHeader" Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="Which playlist do you want to add this track to?" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"/>
+                <ListBox x:Name="PlaylistBox" Background="{StaticResource SecondaryColor}" Margin="15,10,0,0" MinHeight="250" HorizontalContentAlignment="Stretch">
+                    
+                </ListBox>
+                <Grid Height="30" Margin="15,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="2" Content="Create" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15" Padding="10,2,10,2" Click="CreatePlaylistButton_Click"/>
+                    <Button Grid.Column="1" Content="Import" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="ImportButton_Click"/>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="3" Content="OK" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="OKButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -35,6 +35,7 @@ namespace FRESHMusicPlayer.Pages.Library
             InitializeComponent();
             LoadLibrary();
             MainWindow.TabChanged += MainWindow_TabChanged;
+            CategoryPanel.Focus();
         }
 
         public void LoadLibrary()
@@ -135,7 +136,6 @@ namespace FRESHMusicPlayer.Pages.Library
         public async void ShowTracksforPlaylist(string selectedItem)
         {
             TracksPanel.Items.Clear();
-            MainWindow.NotificationHandler.Add(new Notification { ContentText = selectedItem });
             int length = 0;
             await Task.Run(() =>
             {

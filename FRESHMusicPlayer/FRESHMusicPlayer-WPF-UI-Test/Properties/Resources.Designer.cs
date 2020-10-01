@@ -307,6 +307,33 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string PLAYLISTMANAGEMENT_CREATE {
+            get {
+                return ResourceManager.GetString("PLAYLISTMANAGEMENT_CREATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string PLAYLISTMANAGEMENT_EXPORT {
+            get {
+                return ResourceManager.GetString("PLAYLISTMANAGEMENT_EXPORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string PLAYLISTMANAGEMENT_RENAME {
+            get {
+                return ResourceManager.GetString("PLAYLISTMANAGEMENT_RENAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Playlist.
         /// </summary>
         public static string QUEUEMANAGEMENT_ADDPLAYLIST {
@@ -348,6 +375,89 @@ namespace FRESHMusicPlayer.Properties {
         public static string QUEUEMANAGEMENT_REMAININGTIME {
             get {
                 return ResourceManager.GetString("QUEUEMANAGEMENT_REMAININGTIME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By Squid Grill (and open source contributors)
+        ///Licensed under GPL v3
+        ///Thank you for using FRESHMsucPlayer! ♥.
+        /// </summary>
+        public static string SETTINGS_CREDITS {
+            get {
+                return ResourceManager.GetString("SETTINGS_CREDITS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SETTINGS_GENERAL {
+            get {
+                return ResourceManager.GetString("SETTINGS_GENERAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import library from old FMP.
+        /// </summary>
+        public static string SETTINGS_IMPORTOLDFMP {
+            get {
+                return ResourceManager.GetString("SETTINGS_IMPORTOLDFMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SETTINGS_LANGUAGE {
+            get {
+                return ResourceManager.GetString("SETTINGS_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nuke library.
+        /// </summary>
+        public static string SETTINGS_NUKELIBRARY {
+            get {
+                return ResourceManager.GetString("SETTINGS_NUKELIBRARY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output Device.
+        /// </summary>
+        public static string SETTINGS_OUTPUTDEVICE {
+            get {
+                return ResourceManager.GetString("SETTINGS_OUTPUTDEVICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset configuration to defaults.
+        /// </summary>
+        public static string SETTINGS_RESET {
+            get {
+                return ResourceManager.GetString("SETTINGS_RESET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the way FMP behaves.
+        /// </summary>
+        public static string SETTINGS_SUBHEADER {
+            get {
+                return ResourceManager.GetString("SETTINGS_SUBHEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show time instead of title in window title.
+        /// </summary>
+        public static string SETTINGS_TIMEWINDOWTITLE {
+            get {
+                return ResourceManager.GetString("SETTINGS_TIMEWINDOWTITLE", resourceCulture);
             }
         }
         

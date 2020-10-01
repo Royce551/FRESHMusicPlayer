@@ -1,14 +1,10 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
-using LiteDB;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Windows;
-using Windows.Globalization.DateTimeFormatting;
 
 namespace FRESHMusicPlayer.Utilities
 {
@@ -18,45 +14,49 @@ namespace FRESHMusicPlayer.Utilities
     }
     class DatabaseUtils // While you'd expect this to be in FMP Core, this uses ATL; I eventually want to remove FMP Core's dependence on ATL.
     {
-        public static List<DatabaseTrack> Read(string filter = "Title")
-        {
-            return MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().OrderBy(filter).ToList();
-        }
-        public static List<DatabaseTrack> ReadTracksForArtist(string artist)
-        {
-            return MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Artist == artist).OrderBy("Title").ToList();
-        }
+        public static List<DatabaseTrack> Read(string filter = "Title") => MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().OrderBy(filter).ToList();
+        public static List<DatabaseTrack> ReadTracksForArtist(string artist) => MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Artist == artist).OrderBy("Title").ToList();
         public static List<DatabaseTrack> ReadTracksForAlbum(string album) => MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Album == album).OrderBy("TrackNumber").ToList();
         public static List<DatabaseTrack> ReadTracksForPlaylist(string playlist)
         {
-            DatabasePlaylist x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
-            if (x is null) MainWindow.NotificationHandler.Add(new Notification { ContentText = "debug" });
-            List<DatabaseTrack> z = new List<DatabaseTrack>();
-            foreach (string path in x.Tracks)
-            {
-                z = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(y => y.Path == path).ToList();
-                if (z is null) MessageBox.Show("debug");
-            }
+            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
+            var z = new List<DatabaseTrack>();
+            foreach (string path in x.Tracks) z.Add(MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(y => y.Path == path));
             return z;
         }
         public static void AddTrackToPlaylist(string playlist, string path)
         {
-            MainWindow.NotificationHandler.Add(new Notification { ContentText = playlist });
-            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().Where(y => y.Name == playlist).ToList();
-            //if (x is null)
-            //{
-                //MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Insert(new DatabasePlaylist { Name = playlist, Tracks = new List<string>() });
-                //x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
-                if (x is null) MainWindow.NotificationHandler.Add(new Notification { ContentText = "debug" });
-            //}
-            x[0].Tracks.Add(path);
-            MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").DeleteMany(y => y.Name == playlist); // roundabout method because Update() doesn't work
-            MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Insert(x[0]);
+            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);    
+            if (MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist) is null)
+            {
+                x = CreatePlaylist(playlist, path);
+                x.Tracks.Add(path);
+            }
+            else
+            {
+                x.Tracks.Add(path);
+                MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Update(x);
+            }
         }
-        public static void CreatePlaylist(string playlist)
+        public static void RemoveTrackFromPlaylist(string playlist, string path)
         {
-            //MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Insert(new DatabasePlaylist { Name = playlist });
+            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
+            x.Tracks.Remove(path);
+            MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Update(x);
         }
+        public static DatabasePlaylist CreatePlaylist(string playlist, string path = null)
+        {
+            var newplaylist = new DatabasePlaylist
+            {
+                Name = playlist,
+                Tracks = new List<string>(),
+                DatabasePlaylistID = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().ToList().Last().DatabasePlaylistID + 1
+            };
+            if (path != null) newplaylist.Tracks.Add(path);      
+            MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Insert(newplaylist);
+            return newplaylist;
+        }
+        public static void DeletePlaylist(string playlist) => MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").DeleteMany(x => x.Name == playlist);
         public static void Import(string[] tracks)
         {
             var stufftoinsert = new List<DatabaseTrack>();

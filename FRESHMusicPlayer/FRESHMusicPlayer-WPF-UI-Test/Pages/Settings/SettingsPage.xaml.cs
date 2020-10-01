@@ -161,7 +161,7 @@ namespace FRESHMusicPlayer.Pages
             MessageBoxResult result = MessageBox.Show("You are about irreversibly clear your library. Are you sure?",
                                           "FRESHMusicPlayer",
                                           MessageBoxButton.YesNo,
-                                          MessageBoxImage.Question);
+                                          MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes) DatabaseUtils.Nuke();
         }
 

@@ -201,6 +201,15 @@ We'll skip to the next track for you</value>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
     <value>Missing File</value>
   </data>
+  <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
+    <value>Rename</value>
+  </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
     <value>Add Playlist</value>
   </data>
@@ -215,6 +224,35 @@ We'll skip to the next track for you</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
     <value>Remaining Time - </value>
+  </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value>By Squid Grill (and open source contributors)
+Licensed under GPL v3
+Thank you for using FRESHMsucPlayer! ♥</value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SETTINGS_IMPORTOLDFMP" xml:space="preserve">
+    <value>Import library from old FMP</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
+    <value>Nuke library</value>
+  </data>
+  <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
+    <value>Output Device</value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value>Reset configuration to defaults</value>
+  </data>
+  <data name="SETTINGS_SUBHEADER" xml:space="preserve">
+    <value>Change the way FMP behaves</value>
+  </data>
+  <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
+    <value>Show time instead of title in window title</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
     <value>Album Artist - </value>

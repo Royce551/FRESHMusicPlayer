@@ -1,5 +1,5 @@
 ﻿using FRESHMusicPlayer;
-using FRESHMusicPlayer.Forms;
+using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Utilities;
 using System;
@@ -64,7 +64,7 @@ namespace FRESHMusicPlayer.Pages.Library
         private void ContextMenu_Click(object sender, RoutedEventArgs e)
         {
             PlaylistManagement management = new PlaylistManagement(FilePath);
-            management.Show();
+            management.ShowDialog();
         }
     }
 }

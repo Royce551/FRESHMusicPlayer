@@ -1,5 +1,4 @@
-﻿using FRESHMusicPlayer.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,20 +15,22 @@ using System.Windows.Shapes;
 namespace FRESHMusicPlayer.Forms
 {
     /// <summary>
-    /// Interaction logic for PlaylistManagement.xaml
+    /// Interaction logic for TextEntryBox.xaml
     /// </summary>
-    public partial class PlaylistManagement : Window
+    public partial class FMPTextEntryBox : Window
     {
-        private readonly string track;
-        public PlaylistManagement(string track)
+        public bool OK = false;
+        public string Response = "";
+        public FMPTextEntryBox(string prompt, string boxstarttext = "")
         {
             InitializeComponent();
-            this.track = track;
+            Label.Text = prompt;
+            Box.Text = boxstarttext;
         }
-
-        private void Okboomer_Click(object sender, RoutedEventArgs e)
+        private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseUtils.AddTrackToPlaylist(Box.Text, track);
+            OK = true;
+            Response = Box.Text;
             Close();
         }
     }
