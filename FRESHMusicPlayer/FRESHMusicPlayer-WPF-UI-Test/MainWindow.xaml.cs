@@ -330,9 +330,21 @@ namespace FRESHMusicPlayer
         private void PlayPauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PlayPauseMethod();
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
-        private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e)
+        private bool isDragging = false;
+        private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e) => isDragging = true;
+        private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
+            isDragging = false;
+        }
+
+        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (isDragging) if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
+        }
+        private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            //if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
         }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -346,7 +358,7 @@ namespace FRESHMusicPlayer
         {
             ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
             if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer 8 Development";
-            ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
+            if (!isDragging) ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
             Player.AvoidNextQueue = false;
         }
         private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

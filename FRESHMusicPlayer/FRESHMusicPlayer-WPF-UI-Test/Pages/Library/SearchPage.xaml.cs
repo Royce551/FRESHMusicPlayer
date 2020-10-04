@@ -29,7 +29,7 @@ namespace FRESHMusicPlayer.Pages.Library
     {
         private bool taskIsRunning = false;
         private Queue<string> searchqueries = new Queue<string>();
-        private string searchterm = "";
+        private string searchterm = string.Empty;
         public SearchPage()
         {
             InitializeComponent();

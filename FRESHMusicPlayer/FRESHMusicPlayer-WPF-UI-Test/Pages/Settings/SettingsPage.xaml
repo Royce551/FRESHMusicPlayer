@@ -19,7 +19,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="RestartNeededHeader" Grid.Row="0" Foreground="{StaticResource PrimaryTextColor}" Text="For your changes to apply, FMP needs to restart." Margin="5" FontSize="14" TextAlignment="Center" Visibility="Collapsed"/>
+            <TextBlock x:Name="RestartNeededHeader" Grid.Row="0" Foreground="{StaticResource PrimaryTextColor}" Text="For the changes to be applied, FMP needs to restart." TextWrapping="Wrap" Margin="5" FontSize="14" TextAlignment="Center" Visibility="Collapsed"/>
             <Button x:Name="RestartNowButton" Grid.Row="1" Margin="0,0,0,5" HorizontalAlignment="Center" Padding="10,5,10,5" Visibility="Collapsed" Click="RestartNowButton_Click">Restart now</Button>
         </Grid>
         <ScrollViewer Grid.Row="0">
@@ -71,21 +71,6 @@
                 <TextBlock Text="Theme" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
                 <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Light</RadioButton>
                 <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Dark</RadioButton>
-                <RadioButton x:Name="Appearance_ThemeClassicRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Classic</RadioButton>
-                <TextBlock Text="Accent Color" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
-                <Grid Height="30" Margin="0,0,0,5" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="150"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="5,0" Text="Preset accent color" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
-                    <ComboBox x:Name="AccentColor_PresetCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4">
-                        <ComboBoxItem Content="Test"/>
-                        <ComboBoxItem Content="Test2"/>
-                    </ComboBox>
-                </Grid>
-                <Button x:Name="AccentColor_SetCustomButton" Content="Choose custom color..." TextBlock.FontSize="16" Margin="0,0,0,5"/>
-                <Button x:Name="AccentColor_ResetButton" Content="Reset to default" TextBlock.FontSize="16" Margin="0,20,0,5"/>
 
                 <TextBlock Text="Maintanence" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 

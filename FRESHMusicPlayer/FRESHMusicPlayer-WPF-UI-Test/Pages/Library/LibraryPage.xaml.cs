@@ -68,7 +68,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     length += thing.Length;
                 }        
             });
-            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
+            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):dd\\:hh\\:mm\\:ss}";
         }
         public async void ShowArtists()
         {
@@ -85,11 +85,11 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                    foreach (var thing in DatabaseUtils.Read("Album"))
-                    {
-                        if (CategoryPanel.Items.Contains(thing.Album)) continue;
-                        Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
-                    }
+                foreach (var thing in DatabaseUtils.Read("Album"))
+                {
+                    if (CategoryPanel.Items.Contains(thing.Album)) continue;
+                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
+                }
             });
         }
         public async void ShowPlaylists()

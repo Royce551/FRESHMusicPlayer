@@ -50,9 +50,6 @@ namespace FRESHMusicPlayer.Pages
                 case Skin.Dark:
                     Appearance_ThemeDarkRadio.IsChecked = true;
                     break;
-                case Skin.Classic:
-                    Appearance_ThemeClassicRadio.IsChecked = true;
-                    break;
             }
             pageInitialized = true;
         }
@@ -140,9 +137,6 @@ namespace FRESHMusicPlayer.Pages
                         break;
                     case "Appearance_ThemeDarkRadio":
                         workingConfig.Theme = Skin.Dark;
-                        break;
-                    case "Appearance_ThemeClassicRadio":
-                        workingConfig.Theme = Skin.Classic;
                         break;
                 }
                 SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);
