@@ -17,7 +17,6 @@ namespace FRESHMusicPlayer
         void App_Startup(object sender, StartupEventArgs e )
         {
             Config = ConfigurationHandler.Read();
-            //Force Viet for the time being
             if (Config.Language != "en") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
             MainWindow window = new MainWindow();

@@ -24,6 +24,7 @@ using LiteDB;
 using System.Threading;
 using System.Text;
 using FRESHMusicPlayer.Forms.Playlists;
+using Windows.Foundation.Diagnostics;
 
 namespace FRESHMusicPlayer
 {
@@ -370,7 +371,7 @@ namespace FRESHMusicPlayer
         {
             string track;
             if (Player.Playing) track = Player.FilePath;
-            else track = Player.Queue[0];
+            else track = null;
             var playlistManagement = new PlaylistManagement(track);
             playlistManagement.Show();
         }

@@ -1,20 +1,8 @@
-﻿using FRESHMusicPlayer;
-using FRESHMusicPlayer.Handlers.Configuration;
+﻿using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -24,7 +12,10 @@ namespace FRESHMusicPlayer.Pages
     public partial class SettingsPage : Page
     {
         public bool AppRestartNeeded = false;
+
         private bool pageInitialized = false;
+        private readonly ConfigurationFile workingConfig = new ConfigurationFile(); // Instance of config that's compared to the actual config file to set AppRestartNeeded.
+
         public SettingsPage()
         {
             InitializeComponent();
@@ -71,10 +62,14 @@ namespace FRESHMusicPlayer.Pages
             if (value)
             {
                 AppRestartNeeded = true;
+                RestartNeededHeader.Visibility = Visibility.Visible;
+                RestartNowButton.Visibility = Visibility.Visible;
             }
             else
             {
                 AppRestartNeeded = false;
+                RestartNeededHeader.Visibility = Visibility.Collapsed;
+                RestartNowButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -111,42 +106,48 @@ namespace FRESHMusicPlayer.Pages
 
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (General_LanguageCombo.SelectedIndex) // i think this is bad code
+            if (pageInitialized)
             {
-                case (int)LanguageCombo.English:
-                    App.Config.Language = "en";
-                    break;
-                case (int)LanguageCombo.German:
-                    App.Config.Language = "de";
-                    break;
-                case (int)LanguageCombo.Vietnamese:
-                    App.Config.Language = "vi";
-                    break;
-                case (int)LanguageCombo.Portuguese:
-                    App.Config.Language = "pt";
-                    break;
+                switch (General_LanguageCombo.SelectedIndex) // i think this is bad code
+                {
+                    case (int)LanguageCombo.English:
+                        workingConfig.Language = "en";
+                        break;
+                    case (int)LanguageCombo.German:
+                        workingConfig.Language = "de";
+                        break;
+                    case (int)LanguageCombo.Vietnamese:
+                        workingConfig.Language = "vi";
+                        break;
+                    case (int)LanguageCombo.Portuguese:
+                        workingConfig.Language = "pt";
+                        break;
+                }
+                SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
+                ConfigurationHandler.Write(App.Config);
             }
-            ConfigurationHandler.Write(App.Config);
-            SetAppRestartNeeded(true);
         }
 
         private void Appearance_ThemeChanged(object sender, RoutedEventArgs e)
         {
-            var radioButton = (RadioButton)sender;
-            switch (radioButton.Name)
+            if (pageInitialized)
             {
-                case "Appearance_ThemeLightRadio":
-                    App.Config.Theme = Skin.Light;
-                    break;
-                case "Appearance_ThemeDarkRadio":
-                    App.Config.Theme = Skin.Dark;
-                    break;
-                case "Appearance_ThemeClassicRadio":
-                    App.Config.Theme = Skin.Classic;
-                    break;
+                var radioButton = (RadioButton)sender;
+                switch (radioButton.Name)
+                {
+                    case "Appearance_ThemeLightRadio":
+                        workingConfig.Theme = Skin.Light;
+                        break;
+                    case "Appearance_ThemeDarkRadio":
+                        workingConfig.Theme = Skin.Dark;
+                        break;
+                    case "Appearance_ThemeClassicRadio":
+                        workingConfig.Theme = Skin.Classic;
+                        break;
+                }
+                SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);
+                ConfigurationHandler.Write(App.Config);
             }
-            ConfigurationHandler.Write(App.Config);
-            SetAppRestartNeeded(true);
         }
 
         private void Maintanence_ImportButton_Click(object sender, RoutedEventArgs e) => DatabaseUtils.Convertv1Tov2();
@@ -165,6 +166,11 @@ namespace FRESHMusicPlayer.Pages
             if (result == MessageBoxResult.Yes) DatabaseUtils.Nuke();
         }
 
+        private void RestartNowButton_Click(object sender, RoutedEventArgs e)
+        {
+            WinForms.Application.Restart();
+            Application.Current.Shutdown();
+        }
     }
     public enum LanguageCombo
     {

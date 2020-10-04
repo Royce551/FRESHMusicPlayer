@@ -25,11 +25,13 @@ namespace FRESHMusicPlayer.Forms.Playlists
     public partial class PlaylistEntry : UserControl
     {
         private bool playlistExists = false;
-        private string playlist;
-        private string path;
+        private bool trackExists = true;
+        private readonly string playlist;
+        private readonly string path;
         public PlaylistEntry(string playlist, string path)
         {
             InitializeComponent();
+            if (path is null) trackExists = false;
             TitleLabel.Text = playlist;
             this.playlist = playlist;
             this.path = path;
@@ -51,7 +53,8 @@ namespace FRESHMusicPlayer.Forms.Playlists
         }
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            AddRemoveButton.Visibility = RenameButton.Visibility = DeleteButton.Visibility = ExportButton.Visibility = Visibility.Visible;
+            RenameButton.Visibility = DeleteButton.Visibility = ExportButton.Visibility = Visibility.Visible;
+            if (trackExists) AddRemoveButton.Visibility = Visibility.Visible;
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)

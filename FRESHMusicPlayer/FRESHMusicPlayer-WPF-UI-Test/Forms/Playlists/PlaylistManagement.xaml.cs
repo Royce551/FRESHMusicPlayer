@@ -15,11 +15,18 @@ namespace FRESHMusicPlayer.Forms.Playlists
     public partial class PlaylistManagement : Window
     {
         private readonly string track;
-        public PlaylistManagement(string track)
+        public PlaylistManagement(string track = null)
         {
             InitializeComponent();
+            if (track != null)
+            {
+                EditingHeader.Text = $"Which playlist do you want to add \"{Path.GetFileName(track)}\" to?";
+            }
+            else
+            {
+                EditingHeader.Visibility = Visibility.Collapsed;
+            }
             this.track = track;
-            EditingHeader.Text = $"Which playlist do you want to add \"{Path.GetFileName(track)}\" to?";
             InitFields();
         }
         public async void InitFields()
