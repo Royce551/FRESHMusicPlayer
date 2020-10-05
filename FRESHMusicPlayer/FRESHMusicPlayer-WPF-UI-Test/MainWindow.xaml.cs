@@ -1,30 +1,25 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Forms;
+using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
-using FRESHMusicPlayer.Forms;
+using LiteDB;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Shell;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using Winforms = System.Windows.Forms;
 using Windows.Media;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Windows.Interop;
-using Windows.Storage.Streams;
-using FRESHMusicPlayer.Handlers.Configuration;
-using LiteDB;
-using System.Threading;
-using System.Text;
-using FRESHMusicPlayer.Forms.Playlists;
-using Windows.Foundation.Diagnostics;
+using Winforms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer
 {
@@ -331,20 +326,25 @@ namespace FRESHMusicPlayer
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
         private bool isDragging = false;
-        private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e) => isDragging = true;
+        private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            isDragging = true;
+            progressTimer.Stop(); // Prevents timer from getting desynced w/ FMP Core
+        }
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
+            progressTimer.Start();
             isDragging = false;
         }
 
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (isDragging) if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
-        }
-        private void ProgressBar_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            //if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
+            if (isDragging && Player.Playing)
+            {
+                Player.RepositionMusic((int)ProgressBar.Value);
+                ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
+            }
         }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -412,7 +412,6 @@ namespace FRESHMusicPlayer
         #endregion
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
         {
-            NotificationCounterLabel.Text = NotificationHandler.Notifications.Count.ToString();
             if (NotificationHandler.Notifications.Count != 0)
             {
                 NotificationButton.Visibility = Visibility.Visible;
@@ -423,14 +422,16 @@ namespace FRESHMusicPlayer
                 NotificationButton.Visibility = Visibility.Collapsed;
                 NotificationCounterLabel.Visibility = Visibility.Collapsed;
             }
+            int unreadNotificationCount = 0;
             foreach (Notification box in NotificationHandler.Notifications)
             {
+                if (box.Read) unreadNotificationCount++;
                 if (box.DisplayAsToast && !box.Read)
                 {
                     if (AuxilliaryPaneUri != "Pages\\NotificationPage.xaml") ShowAuxilliaryPane("Pages\\NotificationPage.xaml");
                 }
             }
-            
+            NotificationCounterLabel.Text = unreadNotificationCount.ToString();
         }
         #endregion
 
@@ -595,9 +596,9 @@ namespace FRESHMusicPlayer
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-                Player.CurrentVolume += e.Delta / 100 * 3;
-                VolumeBar.Value += e.Delta / 100 * 3;
-                if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();       
+            Player.CurrentVolume += e.Delta / 100 * 3;
+            VolumeBar.Value += e.Delta / 100 * 3;
+            if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();       
         }
     }
 }

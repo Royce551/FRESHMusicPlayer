@@ -25,13 +25,13 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBlock TextWrapping="Wrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="30" Margin="15,15,5,0" VerticalAlignment="Top" Height="40"/>
-        <Button x:Name="BrowseTracksButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_TRACKS}" Margin="15,5,5,5" Grid.Row="1" TextBlock.FontSize="16" Click="BrowseTracksButton_Click"/>
-        <Button x:Name="BrowsePlaylistsButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_PLAYLIST}" Margin="15,5,5,5" Grid.Row="2" TextBlock.FontSize="16" Click="BrowsePlaylistsButton_Click"/>
-        <Button x:Name="BrowseFoldersButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_FOLDERS}" Margin="15,5,5,5" Grid.Row="3" TextBlock.FontSize="16" Click="BrowseFoldersButton_Click"/>
-        <TextBlock Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Text="{x:Static resx:Resources.IMPORT_MANUALENTRY}" Grid.Row="4" Margin="15,5,0,0"/>
-        <TextBox x:Name="FilePathBox" Grid.Row="5" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="15,2,5,2" VerticalAlignment="Stretch" FontSize="16"/>
-        <Button x:Name="TextBoxButton" Grid.Row="5" Grid.Column="1" Content="Import" Margin="5" Padding="5,0,5,0" Click="TextBoxButton_Click"/>
-        <TextBlock Text="{x:Static resx:Resources.IMPORT_DRAGDROP_PROMPT}" Foreground="{StaticResource PrimaryTextColor}" TextWrapping="Wrap" Margin="15,5,5,0" Grid.Row="6" VerticalAlignment="Top" FontSize="16" Height="43"/>
+        <Button x:Name="BrowseTracksButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_TRACKS}" Margin="15,5,5,5" Grid.Row="1" Grid.ColumnSpan="2" TextBlock.FontSize="16" Click="BrowseTracksButton_Click"/>
+        <Button x:Name="BrowsePlaylistsButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_PLAYLIST}" Margin="15,5,5,5" Grid.Row="2" Grid.ColumnSpan="2" TextBlock.FontSize="16" Click="BrowsePlaylistsButton_Click"/>
+        <Button x:Name="BrowseFoldersButton" Content="{x:Static resx:Resources.IMPORT_BROWSE_FOLDERS}" Margin="15,5,5,5" Grid.Row="3" Grid.ColumnSpan="2" TextBlock.FontSize="16" Click="BrowseFoldersButton_Click"/>
+        <TextBlock Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Text="{x:Static resx:Resources.IMPORT_MANUALENTRY}" Grid.Row="4" Grid.ColumnSpan="2" Margin="15,5,0,0"/>
+        <TextBox x:Name="FilePathBox" Grid.Row="5" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="15,2,5,2" VerticalAlignment="Stretch" FontSize="16" MinWidth="200"/>
+        <Button x:Name="TextBoxButton" Grid.Row="5" Grid.Column="1" Content="Import" Margin="5" Padding="5,0" Click="TextBoxButton_Click"/>
+        <TextBlock Text="{x:Static resx:Resources.IMPORT_DRAGDROP_PROMPT}" Foreground="{StaticResource PrimaryTextColor}" TextWrapping="Wrap" Margin="15,5,5,0" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Top" FontSize="16" Height="43"/>
 
     </Grid>
 </Page>

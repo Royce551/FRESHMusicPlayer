@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0">
             <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1">
-                <TextBlock x:Name="EditingHeader" Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="Which playlist do you want to add this track to?" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"/>
+                <TextBlock x:Name="EditingHeader" Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="Which playlist do you want to add this track to?" TextWrapping="Wrap" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"/>
                 <ListBox x:Name="PlaylistBox" Background="{StaticResource SecondaryColor}" Margin="15,10,0,0" MinHeight="250" HorizontalContentAlignment="Stretch">
                     
                 </ListBox>
