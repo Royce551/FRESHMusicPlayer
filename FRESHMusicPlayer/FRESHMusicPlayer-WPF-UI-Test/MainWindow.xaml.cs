@@ -67,10 +67,12 @@ namespace FRESHMusicPlayer
             }
             catch
             {
-                NotificationHandler.Add(new Notification { 
-                                        HeaderText = "Library failed to load", 
-                                        ContentText = "Make sure that you don't have another instance of FMP running!",
-                                        Type = NotificationType.Failure});
+                NotificationHandler.Add(new Notification
+                {
+                    HeaderText = "Library failed to load",
+                    ContentText = "Make sure that you don't have another instance of FMP running!",
+                    Type = NotificationType.Failure
+                });
             }       
         }
 
@@ -275,7 +277,7 @@ namespace FRESHMusicPlayer
         #region player
         private void player_songStopped(object sender, EventArgs e)
         {   
-            Title = "FRESHMusicPlayer 8 Development";
+            Title = "FRESHMusicPlayer";
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             progressTimer.Stop();
             SetIntegrations(MediaPlaybackStatus.Stopped);
@@ -284,7 +286,7 @@ namespace FRESHMusicPlayer
         private void player_songChanged(object sender, EventArgs e)
         {
             CurrentTrack = new Track(Player.FilePath);
-            Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer 8 Development";
+            Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
             TitleLabel.Text = CurrentTrack.Title;
             ArtistLabel.Text = CurrentTrack.Artist == "" ? Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
@@ -326,15 +328,10 @@ namespace FRESHMusicPlayer
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
         private bool isDragging = false;
-        private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-        {
-            isDragging = true;
-            progressTimer.Stop(); // Prevents timer from getting desynced w/ FMP Core
-        }
+        private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e) => isDragging = true;
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
-            progressTimer.Start();
             isDragging = false;
         }
 
@@ -343,23 +340,20 @@ namespace FRESHMusicPlayer
             if (isDragging && Player.Playing)
             {
                 Player.RepositionMusic((int)ProgressBar.Value);
-                ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
+                ProgressTick();
             }
         }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Player.CurrentVolume = (float)(VolumeBar.Value / 100);
-            if (Player.Playing)
-            {
-                Player.UpdateSettings(); 
-            }
+            if (Player.Playing) Player.UpdateSettings();
         }
-        private void ProgressTimer_Tick(object sender, EventArgs e)
+        private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
+        private void ProgressTick()
         {
             ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
-            if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer 8 Development";
+            if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
             if (!isDragging) ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
-            Player.AvoidNextQueue = false;
         }
         private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -412,6 +406,7 @@ namespace FRESHMusicPlayer
         #endregion
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
         {
+            NotificationCounterLabel.Text = NotificationHandler.Notifications.Count.ToString();
             if (NotificationHandler.Notifications.Count != 0)
             {
                 NotificationButton.Visibility = Visibility.Visible;
@@ -422,16 +417,13 @@ namespace FRESHMusicPlayer
                 NotificationButton.Visibility = Visibility.Collapsed;
                 NotificationCounterLabel.Visibility = Visibility.Collapsed;
             }
-            int unreadNotificationCount = 0;
             foreach (Notification box in NotificationHandler.Notifications)
             {
-                if (box.Read) unreadNotificationCount++;
                 if (box.DisplayAsToast && !box.Read)
                 {
                     if (AuxilliaryPaneUri != "Pages\\NotificationPage.xaml") ShowAuxilliaryPane("Pages\\NotificationPage.xaml");
                 }
             }
-            NotificationCounterLabel.Text = unreadNotificationCount.ToString();
         }
         #endregion
 
@@ -440,26 +432,12 @@ namespace FRESHMusicPlayer
             //player.AddQueue(FilePathBox.Text);
             Player.PlayMusic();                         
         }
-       
 
         private void Window_Closed(object sender, EventArgs e)
         {
             App.Config.Volume = (int)VolumeBar.Value;
             ConfigurationHandler.Write(App.Config);
             Winforms.Application.Exit();
-        }
-
-        private void BrowseButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Multiselect = true
-            };
-            if (fileDialog.ShowDialog() == true)
-            {
-                foreach (string path in fileDialog.FileNames) Player.AddQueue(path);
-                Player.PlayMusic();
-            }
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -481,6 +459,9 @@ namespace FRESHMusicPlayer
                         ChangeTabs(SelectedMenus.Albums);
                         break;
                     case Key.F:
+                        ChangeTabs(SelectedMenus.Playlists);
+                        break;
+                    case Key.G:
                         ChangeTabs(SelectedMenus.Import);
                         break;
                     case Key.E:

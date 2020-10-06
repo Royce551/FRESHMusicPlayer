@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d"
-        Title="FRESHMusicPlayer 8 Development" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
+        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" Drop="Window_Drop" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
     <Window.Resources>
         <Storyboard x:Key="SlideIn">
             <DoubleAnimation

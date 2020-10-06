@@ -72,7 +72,7 @@
                 <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Light</RadioButton>
                 <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Dark</RadioButton>
 
-                <TextBlock Text="Maintanence" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="Maintenance" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
                 <Button x:Name="Maintanence_ResetButton" Content="{x:Static resx:Resources.SETTINGS_RESET}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
