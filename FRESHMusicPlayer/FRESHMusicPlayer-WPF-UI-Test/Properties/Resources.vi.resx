@@ -276,7 +276,9 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
     <value>Điền đường dẫn/URL thủ công</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value>Bởi Squid Grill (và các</value>
+    <value>Bởi Squid Grill (và các người đóng góp nguồn mở)
+Được cấp phép theo GPL v3
+Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
     <value>Hiện thời gian thay về tiểu đề trong tiểu đề của sổ</value>
