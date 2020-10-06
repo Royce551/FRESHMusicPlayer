@@ -354,6 +354,7 @@ namespace FRESHMusicPlayer
             ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
             if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
             if (!isDragging) ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
+            Player.AvoidNextQueue = false;
         }
         private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

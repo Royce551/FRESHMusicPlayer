@@ -21,7 +21,24 @@ namespace FRESHMusicPlayer.Utilities
         {
             var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
             var z = new List<DatabaseTrack>();
-            foreach (string path in x.Tracks) z.Add(MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(y => y.Path == path));
+            foreach (string path in x.Tracks)
+            {
+                var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(y => y.Path == path);
+                if (dbTrack != null) z.Add(dbTrack); // If track is in db, pull metadata from it (much faster than having to use ATL)
+                else
+                {
+                    var track = new Track(path);
+                    z.Add(new DatabaseTrack
+                    {
+                        Artist = track.Artist,
+                        Title = track.Title,
+                        Album = track.Album,
+                        Length = track.Duration,
+                        Path = path,
+                        TrackNumber = track.TrackNumber
+                    });
+                }
+            }
             return z;
         }
         public static void AddTrackToPlaylist(string playlist, string path)
@@ -49,9 +66,10 @@ namespace FRESHMusicPlayer.Utilities
             var newplaylist = new DatabasePlaylist
             {
                 Name = playlist,
-                Tracks = new List<string>(),
-                DatabasePlaylistID = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().ToList().Last().DatabasePlaylistID + 1
+                Tracks = new List<string>()
             };
+            if (MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Count() == 0) newplaylist.DatabasePlaylistID = 0;
+            else newplaylist.DatabasePlaylistID = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().ToList().Last().DatabasePlaylistID + 1;
             if (path != null) newplaylist.Tracks.Add(path);      
             MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Insert(newplaylist);
             return newplaylist;
