@@ -214,7 +214,7 @@ Wir werden für dich zum nächsten Track springen</value>
     <value>Komponist - </value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value />
+    <value>CD Nummer - </value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
     <value>Bearbeitet </value>
@@ -242,7 +242,7 @@ Wir werden für dich zum nächsten Track springen</value>
     <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value />
+    <value>CD </value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
     <value>Genre - </value>
@@ -259,5 +259,61 @@ Wir werden für dich zum nächsten Track springen</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
     <value>Jahr - </value>
+  </data>
+  <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
+    <value>Alle einreihen</value>
+  </data>
+  <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
+    <value>Zeige Zeit statt Titel in der Fensterleiste</value>
+  </data>
+  <data name="SETTINGS_SUBHEADER" xml:space="preserve">
+    <value>Ändere wie sich FMP verhält</value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value>Setze Konfiguration auf Standardwerte zurück</value>
+  </data>
+  <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
+    <value>Ausgabegerät</value>
+  </data>
+  <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
+    <value>Vernichte Bibliothek</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="SETTINGS_IMPORTOLDFMP" xml:space="preserve">
+    <value>Importiere Bibliothek von altem FMP</value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value>Von Squid Grill (und open-source Beitragende)
+Lizensiert unter GPL v3
+Danke, dass du FRESHMusicPlayer verwendest! ♥</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
+    <value>Exportieren</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="MAINWINDOW_SEARCH" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
+    <value>Playlisten</value>
+  </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value>Nichts spielt</value>
+  </data>
+  <data name="LIBRARY_PLAYALL" xml:space="preserve">
+    <value>Alle abspielen</value>
+  </data>
+  <data name="IMPORT_MANUALENTRY" xml:space="preserve">
+    <value>Manuelle Dateipfad-/URL-Eingabe</value>
   </data>
 </root>
