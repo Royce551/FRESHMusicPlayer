@@ -27,6 +27,7 @@ namespace FRESHMusicPlayer.Pages
             General_ProgressCheck.IsChecked = App.Config.ShowTimeInWindow;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
+            FMPCoreVersionLabel.Text = MainWindow.Player.VersionString();
             switch (App.Config.Language) // i think this is bad code
             {
                 case "en":

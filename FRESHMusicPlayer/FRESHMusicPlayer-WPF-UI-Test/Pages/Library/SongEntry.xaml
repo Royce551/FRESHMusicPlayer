@@ -19,7 +19,7 @@
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid x:Name="MainPanel" Background="{StaticResource ForegroundColor}">
+    <Grid x:Name="MainPanel" Background="{StaticResource ForegroundColor}" ContextMenuOpening="MainPanel_ContextMenuOpening">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
@@ -29,7 +29,9 @@
         </Grid.ColumnDefinitions>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem x:Name="MiscContext" Header="Manage playlists" Click="ContextMenu_Click"/>
+                <MenuItem x:Name="MiscContext" Header="Add to playlist..." Click="ContextMenu_Click">
+                </MenuItem>
+                <MenuItem Header="Open in File Explorer" Click="OpenInFileExplorer_Click"/>
             </ContextMenu>
         </Grid.ContextMenu>
         <TextBlock x:Name="TitleLabel" Grid.Column="0" Margin="5,0,0,13" Text="TextBlock" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>

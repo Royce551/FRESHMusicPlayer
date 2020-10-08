@@ -1,23 +1,10 @@
-﻿using ATL;
-using FRESHMusicPlayer;
-using FRESHMusicPlayer.Handlers;
-using FRESHMusicPlayer.Handlers.Notifications;
-using FRESHMusicPlayer.Utilities;
-using LiteDB;
+﻿using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Pages.Library
@@ -48,6 +35,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 TracksPanel.Items.Clear();
                 await Task.Run(() =>
                 {
+                    int i = 0;
                     foreach (var thing in MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks")
                         .Query()
                         .Where(x => x.Title.ToUpper().Contains(searchterm) || x.Artist.ToUpper().Contains(searchterm) || x.Album.ToUpper().Contains(searchterm))
@@ -57,6 +45,8 @@ namespace FRESHMusicPlayer.Pages.Library
                         if (searchqueries.Count > 1) break; // optimization for typing quickly
                         Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
                         length += thing.Length;
+                        if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
+                        i++;
                     }
                 });
                 InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";

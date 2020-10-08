@@ -49,6 +49,7 @@ namespace FRESHMusicPlayer
         public static Track CurrentTrack;
 
         public SystemMediaTransportControls Smtc;
+        public bool PauseAfterCurrentTrack = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -285,6 +286,11 @@ namespace FRESHMusicPlayer
 
         private void player_songChanged(object sender, EventArgs e)
         {
+            if (PauseAfterCurrentTrack && !Player.Paused)
+            {
+                PlayPauseMethod();
+                PauseAfterCurrentTrack = false;
+            }
             CurrentTrack = new Track(Player.FilePath);
             Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
             TitleLabel.Text = CurrentTrack.Title;
@@ -388,7 +394,12 @@ namespace FRESHMusicPlayer
         }
         private void TrackContext_PauseAuto_Click(object sender, RoutedEventArgs e)
         {
-            if (Player.StopAfterCurrentTrack) Player.StopAfterCurrentTrack = false; else Player.StopAfterCurrentTrack = true;
+            if (PauseAfterCurrentTrack) PauseAfterCurrentTrack = false;
+            else
+            {
+                PauseAfterCurrentTrack = true;
+                NotificationHandler.Add(new Notification { HeaderText = "Pausing after current track..." });
+            }
         }
         #endregion
         #region MenuBar
@@ -443,7 +454,7 @@ namespace FRESHMusicPlayer
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
                 switch (e.Key)
                 {

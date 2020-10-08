@@ -22,8 +22,8 @@
                         />
         </Storyboard>
         <ContextMenu x:Key="MiscContext">
-            <MenuItem x:Name="MiniPlayerContext" Header="Mini Player" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
-            <MenuItem Header="Stop after current track" IsCheckable="True" Click="TrackContext_PauseAuto_Click"/>
+            <MenuItem Header="Mini Player" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
+            <MenuItem Header="Pause after current track" Click="TrackContext_PauseAuto_Click"/>
             <MenuItem Header="Tag Editor" Click="TrackContextTagEditor_Click"/>
             <MenuItem Header="Playlist Management" Click="TrackContentPlaylistManagement_Click"/>
         </ContextMenu>

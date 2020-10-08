@@ -40,6 +40,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         public void LoadLibrary()
         {
+            InfoLabel.Text = "Loading, please wait.";
             switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
                 case SelectedMenus.Tracks:
@@ -61,14 +62,18 @@ namespace FRESHMusicPlayer.Pages.Library
             LeftSide.Width = new GridLength(0);
             int length = 0;
             await Task.Run(() =>
-            {          
+            {
+                int i = 0;
                 foreach (var thing in DatabaseUtils.Read())
                 {
                     Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
                     length += thing.Length;
+                    if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
+                    i++;
                 }        
             });
-            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):dd\\:hh\\:mm\\:ss}";
+            var lengthTimeSpan = new TimeSpan(0, 0, 0, length);
+            InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {Math.Round(lengthTimeSpan.TotalHours)}:{lengthTimeSpan:mm}:{lengthTimeSpan:ss}";
         }
         public async void ShowArtists()
         {
