@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,15 +11,12 @@ namespace FRESHMusicPlayer.Utilities
 {
     public class Utils
     {
-        public static string TruncateBytes(string str, int bytes) // TODO: move this validation to FMP Core instead of frontend
+        public static IEnumerable<CultureInfo> GetAvailableCultures()
         {
-            if (Encoding.UTF8.GetByteCount(str) <= bytes) return str;
-            int i = 0;
-            while (true)
-            {
-                if (Encoding.UTF8.GetByteCount(str.Substring(0, i)) > bytes) return str.Substring(0, i);
-                i++;
-            }
+            CultureInfo[] culture = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            string exeLocation = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
+
+            return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
         }
     }
 }

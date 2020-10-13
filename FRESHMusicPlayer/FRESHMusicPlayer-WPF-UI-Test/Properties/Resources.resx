@@ -207,6 +207,9 @@ We'll skip to the next track for you</value>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
+    <value>What do you want to do with "{0}"?</value>
+  </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
     <value>Rename</value>
   </data>
@@ -225,6 +228,15 @@ We'll skip to the next track for you</value>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
     <value>Remaining Time - </value>
   </data>
+  <data name="SETTINGS_ABOUT" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SETTINGS_APPEARANCE" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
+    <value>Auto Update Mode</value>
+  </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
     <value>By Squid Grill (and open source contributors)
 Licensed under GPL v3
@@ -236,8 +248,14 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_IMPORTOLDFMP" xml:space="preserve">
     <value>Import library from old FMP</value>
   </data>
+  <data name="SETTINGS_INTEGRATION" xml:space="preserve">
+    <value>Integration</value>
+  </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
+    <value>Maintenance</value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
     <value>Nuke library</value>
@@ -245,14 +263,44 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
     <value>Output Device</value>
   </data>
+  <data name="SETTINGS_PRERELEASE" xml:space="preserve">
+    <value>Get pre-release versions of FMP</value>
+  </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
     <value>Reset configuration to defaults</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
     <value>Change the way FMP behaves</value>
   </data>
+  <data name="SETTINGS_THEME" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="SETTINGS_THEME_DARK" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
+    <value>Light</value>
+  </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
     <value>Show time instead of title in window title</value>
+  </data>
+  <data name="SETTINGS_UPDATES" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
+    <value>Check for updates now</value>
+  </data>
+  <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
+    <value>Last checked {0}</value>
+  </data>
+  <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
+    <value>Prompt before updating</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
     <value>Album Artist - </value>

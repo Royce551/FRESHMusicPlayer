@@ -1,6 +1,9 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows;
+using System.Runtime.Remoting;
+using Windows.Media.ClosedCaptioning;
 
 namespace FRESHMusicPlayer.Handlers.Notifications
 {
@@ -29,9 +32,18 @@ namespace FRESHMusicPlayer.Handlers.Notifications
             }
             HeaderLabel.Text = Notification.HeaderText;
             ContentLabel.Text = Notification.ContentText;
+            if (!string.IsNullOrEmpty(Notification.ButtonText) && Notification.OnButtonClicked != null)
+            {
+                Button.Content = Notification.ButtonText;
+                Button.Visibility = Visibility.Visible;
+            }
         }
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MainWindow.NotificationHandler.Remove(Notification);
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Notification.OnButtonClicked?.Invoke() ?? true) MainWindow.NotificationHandler.Remove(Notification);
+        }
     }
 }

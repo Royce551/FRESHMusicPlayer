@@ -325,6 +325,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to What do you want to do with &quot;{0}&quot;?.
+        /// </summary>
+        public static string PLAYLISTMANAGEMENT_HEADER {
+            get {
+                return ResourceManager.GetString("PLAYLISTMANAGEMENT_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string PLAYLISTMANAGEMENT_RENAME {
@@ -379,6 +388,33 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string SETTINGS_ABOUT {
+            get {
+                return ResourceManager.GetString("SETTINGS_ABOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string SETTINGS_APPEARANCE {
+            get {
+                return ResourceManager.GetString("SETTINGS_APPEARANCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Update Mode.
+        /// </summary>
+        public static string SETTINGS_AUTOUPDATEMODE {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOUPDATEMODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By Squid Grill (and open source contributors)
         ///Licensed under GPL v3
         ///Thank you for using FRESHMusicPlayer! ♥.
@@ -408,11 +444,29 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Integration.
+        /// </summary>
+        public static string SETTINGS_INTEGRATION {
+            get {
+                return ResourceManager.GetString("SETTINGS_INTEGRATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string SETTINGS_LANGUAGE {
             get {
                 return ResourceManager.GetString("SETTINGS_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maintenance.
+        /// </summary>
+        public static string SETTINGS_MAINTENANCE {
+            get {
+                return ResourceManager.GetString("SETTINGS_MAINTENANCE", resourceCulture);
             }
         }
         
@@ -435,6 +489,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get pre-release versions of FMP.
+        /// </summary>
+        public static string SETTINGS_PRERELEASE {
+            get {
+                return ResourceManager.GetString("SETTINGS_PRERELEASE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset configuration to defaults.
         /// </summary>
         public static string SETTINGS_RESET {
@@ -453,11 +516,92 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string SETTINGS_THEME {
+            get {
+                return ResourceManager.GetString("SETTINGS_THEME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string SETTINGS_THEME_DARK {
+            get {
+                return ResourceManager.GetString("SETTINGS_THEME_DARK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string SETTINGS_THEME_LIGHT {
+            get {
+                return ResourceManager.GetString("SETTINGS_THEME_LIGHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show time instead of title in window title.
         /// </summary>
         public static string SETTINGS_TIMEWINDOWTITLE {
             get {
                 return ResourceManager.GetString("SETTINGS_TIMEWINDOWTITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates.
+        /// </summary>
+        public static string SETTINGS_UPDATES {
+            get {
+                return ResourceManager.GetString("SETTINGS_UPDATES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic.
+        /// </summary>
+        public static string SETTINGS_UPDATES_AUTO {
+            get {
+                return ResourceManager.GetString("SETTINGS_UPDATES_AUTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string SETTINGS_UPDATES_MANUAL {
+            get {
+                return ResourceManager.GetString("SETTINGS_UPDATES_MANUAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prompt before updating.
+        /// </summary>
+        public static string SETTINGS_UPDATES_PROMPT {
+            get {
+                return ResourceManager.GetString("SETTINGS_UPDATES_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates now.
+        /// </summary>
+        public static string SETTINGS_UPDATESCHECKNOW {
+            get {
+                return ResourceManager.GetString("SETTINGS_UPDATESCHECKNOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last checked {0}.
+        /// </summary>
+        public static string SETTINGS_UPDATESLASTCHECKED {
+            get {
+                return ResourceManager.GetString("SETTINGS_UPDATESLASTCHECKED", resourceCulture);
             }
         }
         

@@ -47,8 +47,8 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="5,0" Text="{x:Static resx:Resources.SETTINGS_OUTPUTDEVICE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
-                    <ComboBox x:Name="General_OutDeviceCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4">
+                    <TextBlock Grid.Column="0" Margin="5,0" Text="{x:Static resx:Resources.SETTINGS_OUTPUTDEVICE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14" IsEnabled="False"/>
+                    <ComboBox x:Name="General_OutDeviceCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" IsEnabled="False">
                         <ComboBoxItem Content="Test"/>
                         <ComboBoxItem Content="Test2"/>
                     </ComboBox>
@@ -60,10 +60,20 @@
 
                 <TextBlock Text="Updates" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <CheckBox x:Name="Updates_AutoUpdatesCheck" Content="Check for updates automatically" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5"/>
+                <Grid Height="30" Margin="0,0,0,5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,0" Text="Auto Update Mode" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14" IsEnabled="False"/>
+                    <ComboBox x:Name="General_UpdateModeCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" IsEnabled="False">
+                        <ComboBoxItem Content="Prompt before updating"/>
+                        <ComboBoxItem Content="Manual"/>
+                        <ComboBoxItem Content="Automatic"/>
+                    </ComboBox>
+                </Grid>
                 <CheckBox x:Name="Updates_BlueprintCheck" Content="Get pre-release versions of FMP" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5"/>
                 <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <TextBlock x:Name="Updates_VersionLabel" Text="Current version - " Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <Button x:Name="Updates_CheckUpdatesButton" Content="Check for updates now" TextBlock.FontSize="16" Margin="0,0,0,5"/>
 
                 <TextBlock Text="Appearance" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>

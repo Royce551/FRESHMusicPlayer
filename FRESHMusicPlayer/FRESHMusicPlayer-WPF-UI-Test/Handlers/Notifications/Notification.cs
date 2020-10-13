@@ -13,7 +13,9 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         public bool Read { get; set; } = false;
         public string HeaderText { get; set; } = string.Empty;
         public string ContentText { get; set; } = string.Empty;
+        public string ButtonText { get; set; } = string.Empty;
         public NotificationType Type { get; set; } = NotificationType.Generic;
+        public Func<bool> OnButtonClicked { get; set; } = null;
     }
     public enum NotificationType
     {

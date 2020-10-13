@@ -18,14 +18,8 @@ namespace FRESHMusicPlayer.Forms.Playlists
         public PlaylistManagement(string track = null)
         {
             InitializeComponent();
-            if (track != null)
-            {
-                EditingHeader.Text = $"Which playlist do you want to add \"{Path.GetFileName(track)}\" to?";
-            }
-            else
-            {
-                EditingHeader.Visibility = Visibility.Collapsed;
-            }
+            if (track != null) EditingHeader.Text = $"What do you want to do with \"{Path.GetFileName(track)}\"?";
+            else EditingHeader.Visibility = Visibility.Collapsed;
             this.track = track;
             InitFields();
         }
@@ -42,11 +36,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
             });
         }
 
-        private void OKButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-            InitFields();
-        }
+        private void OKButton_Click(object sender, RoutedEventArgs e) => Close();
 
         private void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
         {

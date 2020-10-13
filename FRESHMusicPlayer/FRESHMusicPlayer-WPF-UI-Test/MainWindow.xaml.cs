@@ -72,11 +72,23 @@ namespace FRESHMusicPlayer
                 {
                     HeaderText = "Library failed to load",
                     ContentText = "Make sure that you don't have another instance of FMP running!",
+                    ButtonText = "Retry",
+                    OnButtonClicked = () =>
+                    {
+                        try
+                        {
+                            Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+                            return true;
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    },
                     Type = NotificationType.Failure
                 });
             }       
         }
-
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
             UpdateIntegrations();
@@ -286,11 +298,6 @@ namespace FRESHMusicPlayer
 
         private void player_songChanged(object sender, EventArgs e)
         {
-            if (PauseAfterCurrentTrack && !Player.Paused)
-            {
-                PlayPauseMethod();
-                PauseAfterCurrentTrack = false;
-            }
             CurrentTrack = new Track(Player.FilePath);
             Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
             TitleLabel.Text = CurrentTrack.Title;
@@ -310,8 +317,12 @@ namespace FRESHMusicPlayer
                 CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 SetCoverArtVisibility(true);
             }
-
             progressTimer.Start();
+            if (PauseAfterCurrentTrack && !Player.Paused)
+            {
+                PlayPauseMethod();
+                PauseAfterCurrentTrack = false;
+            }
         }
         private void player_songException(object sender, PlaybackExceptionEventArgs e)
         {
@@ -497,9 +508,19 @@ namespace FRESHMusicPlayer
                     {
                         HeaderText = "Debug Key",
                         ContentText = "Deadlock",
+                        ButtonText = "Click me!",
                         IsImportant = true,
                         DisplayAsToast = true,
-                        Type = NotificationType.Success
+                        Type = NotificationType.Success,
+                        OnButtonClicked = () =>
+                        {
+                            NotificationHandler.Add(new Notification
+                            {
+                                HeaderText = "Hello world!Loremloremloremlorem"
+                            });
+                            Player.NextSong();
+                            return false;
+                        }
                     });
                     break;
                 case Key.F5:

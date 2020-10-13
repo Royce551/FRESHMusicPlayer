@@ -26,7 +26,7 @@
             </MenuItem>
         </Menu>
         <ScrollViewer Grid.Row="1">
-            <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1">
+            <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1" Grid.IsSharedSizeScope="True">
                 <TextBlock x:Name="EditingHeader" TextWrapping="Wrap" Text="{x:Static resx:Resources.TAGEDITOR_EDITINGHEADER}" Foreground="{StaticResource PrimaryTextColor}" Margin="10,10,0,0" FontSize="15"/>
                 <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
@@ -38,7 +38,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="139"/>
+                        <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto" MinWidth="139"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_TRACKINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
@@ -63,7 +63,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="139"/>
+                        <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto" MinWidth="139"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUMINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
