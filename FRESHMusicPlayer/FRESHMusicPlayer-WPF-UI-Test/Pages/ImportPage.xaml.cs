@@ -106,6 +106,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(FilePathBox.Text)) return;
             MainWindow.Player.AddQueue(FilePathBox.Text);
             DatabaseUtils.Import(FilePathBox.Text);
             MainWindow.Player.PlayMusic();

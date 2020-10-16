@@ -161,7 +161,6 @@
       <DependentUpon>NotificationBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Handlers\Notifications\NotificationHandler.cs" />
-    <Compile Include="Handlers\Notifications\NotificationInfo.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

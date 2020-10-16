@@ -18,7 +18,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
         public PlaylistManagement(string track = null)
         {
             InitializeComponent();
-            if (track != null) EditingHeader.Text = $"What do you want to do with \"{Path.GetFileName(track)}\"?";
+            if (track != null) EditingHeader.Text = string.Format(Properties.Resources.PLAYLISTMANAGEMENT_HEADER, Path.GetFileName(track));
             else EditingHeader.Visibility = Visibility.Collapsed;
             this.track = track;
             InitFields();

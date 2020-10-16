@@ -54,46 +54,46 @@
                     </ComboBox>
                 </Grid>
                 <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
-                <TextBlock Text="Integration" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
 
-                <TextBlock Text="Updates" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="5,0" Text="Auto Update Mode" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14" IsEnabled="False"/>
-                    <ComboBox x:Name="General_UpdateModeCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" IsEnabled="False">
-                        <ComboBoxItem Content="Prompt before updating"/>
-                        <ComboBoxItem Content="Manual"/>
-                        <ComboBoxItem Content="Automatic"/>
+                    <TextBlock Grid.Column="0" Margin="5,0" Text="{x:Static resx:Resources.SETTINGS_AUTOUPDATEMODE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
+                    <ComboBox x:Name="General_UpdateModeCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4">
+                        <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_PROMPT}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_MANUAL}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_AUTO}"/>
                     </ComboBox>
                 </Grid>
-                <CheckBox x:Name="Updates_BlueprintCheck" Content="Get pre-release versions of FMP" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5"/>
+                <CheckBox x:Name="Updates_BlueprintCheck" Content="{x:Static resx:Resources.SETTINGS_PRERELEASE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5"/>
                 <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <Button x:Name="Updates_CheckUpdatesButton" Content="Check for updates now" TextBlock.FontSize="16" Margin="0,0,0,5"/>
+                <Button x:Name="Updates_CheckUpdatesButton" Content="{x:Static resx:Resources.SETTINGS_UPDATESCHECKNOW}" TextBlock.FontSize="16" Margin="0,0,0,5"/>
 
-                <TextBlock Text="Appearance" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_APPEARANCE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <TextBlock Text="Theme" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
-                <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Light</RadioButton>
-                <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged">Dark</RadioButton>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}"/>
+                <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"/>
 
-                <TextBlock Text="Maintenance" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_MAINTENANCE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
                 <Button x:Name="Maintanence_ResetButton" Content="{x:Static resx:Resources.SETTINGS_RESET}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
                 <Button x:Name="Maintanence_NukeButton" Content="{x:Static resx:Resources.SETTINGS_NUKELIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Foreground="Red" Click="Maintanence_NukeButton_Click"/>
 
-                <TextBlock Text="About" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <TextBlock Text="Logo banner placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="FRESHMusicPlayer Ver. 8" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock x:Name="FMPCoreVersionLabel" Text="FMP Core version placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

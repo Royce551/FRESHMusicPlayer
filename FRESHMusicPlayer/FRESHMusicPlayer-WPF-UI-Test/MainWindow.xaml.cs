@@ -250,27 +250,27 @@ namespace FRESHMusicPlayer
             switch (SelectedMenu)
             {
                 case SelectedMenus.Tracks:
-                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tab = TracksTab;
                     break;
                 case SelectedMenus.Artists:
-                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tab = ArtistsTab;
                     break;
                 case SelectedMenus.Albums:
-                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tab = AlbumsTab;
                     break;
                 case SelectedMenus.Playlists:
-                    ContentFrame.Source = new Uri(@"\Pages\Library\LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tab = PlaylistsTab;
                     break;
                 case SelectedMenus.Import:
-                    ContentFrame.Source = new Uri(@"\Pages\ImportPage.xaml", UriKind.Relative);
+                    ContentFrame.Source = new Uri("/Pages/ImportPage.xaml", UriKind.Relative);
                     tab = ImportTab;
                     break;
                 default:
@@ -444,7 +444,11 @@ namespace FRESHMusicPlayer
             {
                 if (box.DisplayAsToast && !box.Read)
                 {
-                    if (AuxilliaryPaneUri != "Pages\\NotificationPage.xaml") ShowAuxilliaryPane("Pages\\NotificationPage.xaml");
+                    if (AuxilliaryPaneUri != "/Pages/NotificationPage.xaml")
+                    {
+                        ShowAuxilliaryPane("/Pages/NotificationPage.xaml");
+                        break;
+                    }
                 }
             }
         }

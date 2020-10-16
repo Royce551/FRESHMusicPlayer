@@ -45,7 +45,7 @@ namespace FRESHMusicPlayer.Pages
             {
                 var list = displayqueue.Dequeue();
                 var nextlength = 0;
-                int number = 1;        
+                int number = 1;
                 AddTrackButton.IsEnabled = false;
                 AddPlaylistButton.IsEnabled = false;
                 ClearQueueButton.IsEnabled = false;
@@ -53,21 +53,29 @@ namespace FRESHMusicPlayer.Pages
                 QueueList.Items.Clear();
                 await Task.Run(() =>
                 {
-                    foreach (var song in list)
+                    try
                     {
-                        if (displayqueue.Count > 1) break;
-                        QueueEntry entry;
-                        var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path);
-                        if (dbTrack != null) entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1));
-                        else
+                        foreach (var song in list)
                         {
-                            Track track = new Track(song);
-                            entry = Dispatcher.Invoke(() => new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), number - 1));
+                            if (displayqueue.Count > 1) break;
+                            QueueEntry entry;
+                            var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path);
+                            if (dbTrack != null) entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1));
+                            else
+                            {
+                                Track track = new Track(song);
+                                entry = Dispatcher.Invoke(() => new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), number - 1));
+                            }
+                            if (entry.Index + 1 == MainWindow.Player.QueuePosition) Dispatcher.Invoke(() => entry.BringIntoView());
+                            Dispatcher.Invoke(() => QueueList.Items.Add(entry));
+                            if (MainWindow.Player.QueuePosition < number) nextlength += dbTrack.Length;
+                            number++;
                         }
-                        if (entry.Index + 1 == MainWindow.Player.QueuePosition) Dispatcher.Invoke(() => entry.BringIntoView());
-                        Dispatcher.Invoke(() => QueueList.Items.Add(entry));
-                        if (MainWindow.Player.QueuePosition < number) nextlength += dbTrack.Length;
-                        number++;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        GetResults();
+                        // TODO: This occurs when too many tracks are enqueued at once. Don't really know how to permanently fix this so this'll work for now...
                     }
                 });
                 RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0, 0, 0, nextlength).ToString(@"hh\:mm\:ss");
