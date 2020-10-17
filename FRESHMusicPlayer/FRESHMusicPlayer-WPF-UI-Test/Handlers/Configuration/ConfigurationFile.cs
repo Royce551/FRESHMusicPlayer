@@ -31,5 +31,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public Skin Theme { get; set; } = Skin.Dark;
         public string AccentColorHex { get; set; }
         public int Volume { get; set; } = 100;
+        public SelectedMenus CurrentMenu { get; set; } = SelectedMenus.Import;
     }
 }

@@ -237,6 +237,7 @@ namespace FRESHMusicPlayer
         public void ProcessSettings()
         {
             VolumeBar.Value = App.Config.Volume;
+            ChangeTabs(App.Config.CurrentMenu);
         }
         #region Tabs
         private void ChangeTabs(SelectedMenus tab)
@@ -463,6 +464,7 @@ namespace FRESHMusicPlayer
         private void Window_Closed(object sender, EventArgs e)
         {
             App.Config.Volume = (int)VolumeBar.Value;
+            App.Config.CurrentMenu = SelectedMenu;
             ConfigurationHandler.Write(App.Config);
             Winforms.Application.Exit();
         }

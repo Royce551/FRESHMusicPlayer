@@ -40,7 +40,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         public void LoadLibrary()
         {
-            InfoLabel.Text = "Loading, please wait.";
+            InfoLabel.Visibility = Visibility.Hidden;
             switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
                 case SelectedMenus.Tracks:
@@ -73,6 +73,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 }        
             });
             var lengthTimeSpan = new TimeSpan(0, 0, 0, length);
+            InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {Math.Round(lengthTimeSpan.TotalHours)}:{lengthTimeSpan:mm}:{lengthTimeSpan:ss}";
         }
         public async void ShowArtists()
@@ -122,6 +123,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     length += thing.Length;
                 }
             });
+            InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         public async void ShowTracksforAlbum(string selectedItem)
@@ -136,6 +138,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     length += thing.Length;
                 }
             });
+            InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         public async void ShowTracksforPlaylist(string selectedItem)
@@ -150,6 +153,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     length += thing.Length;
                 }
             });
+            InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         private void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)

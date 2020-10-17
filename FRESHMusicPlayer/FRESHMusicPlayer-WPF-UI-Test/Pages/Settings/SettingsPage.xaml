@@ -22,7 +22,7 @@
             <TextBlock x:Name="RestartNeededHeader" Grid.Row="0" Foreground="{StaticResource PrimaryTextColor}" Text="For the changes to be applied, FMP needs to restart." TextWrapping="Wrap" Margin="5" FontSize="14" TextAlignment="Center" Visibility="Collapsed"/>
             <Button x:Name="RestartNowButton" Grid.Row="1" Margin="0,0,0,5" HorizontalAlignment="Center" Padding="10,5,10,5" Visibility="Collapsed" Click="RestartNowButton_Click">Restart now</Button>
         </Grid>
-        <ScrollViewer Grid.Row="0">
+        <ScrollViewer Grid.Row="0" PanningMode="Both">
             <StackPanel Background="{StaticResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
                 <TextBlock Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_SUBHEADER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>

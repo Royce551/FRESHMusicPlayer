@@ -17,7 +17,7 @@
             <ColumnDefinition x:Name="LeftSide" Width="222"/>
             <ColumnDefinition x:Name="RightSide"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="TracksPanel"  Grid.Column="1" Background="{StaticResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}">
+        <ListBox x:Name="TracksPanel"  Grid.Column="1" Background="{StaticResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}" ScrollViewer.PanningMode="Both">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>
@@ -33,7 +33,7 @@
                       Foreground="{x:Null}"
               Grid.RowSpan="2" Margin="0,0,0,0"
               />
-        <ListBox x:Name="CategoryPanel" Margin="0,0,5,0" Background="{StaticResource SecondaryColor}" Foreground="{StaticResource PrimaryTextColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0"/>
+        <ListBox x:Name="CategoryPanel" Margin="0,0,5,0" Background="{StaticResource SecondaryColor}" Foreground="{StaticResource PrimaryTextColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0" ScrollViewer.PanningMode="Both"/>
 
         <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Background="{StaticResource BackgroundColor}">
             <Grid.ColumnDefinitions>
