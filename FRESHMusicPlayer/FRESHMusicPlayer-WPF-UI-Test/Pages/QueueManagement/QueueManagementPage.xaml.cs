@@ -1,26 +1,14 @@
 ﻿using ATL;
-using FRESHMusicPlayer;
+using ATL.Playlist;
+using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FRESHMusicPlayer.Utilities;
-using Microsoft.Win32;
-using ATL.Playlist;
-using FRESHMusicPlayer.Handlers.Notifications;
-using System.IO;
-using System.Threading;
-using Windows.System.Preview;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -31,6 +19,7 @@ namespace FRESHMusicPlayer.Pages
     {
         private bool taskisrunning;
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
+        private int currentIndex = 0;
         public QueueManagement()
         {
             InitializeComponent();
@@ -46,42 +35,31 @@ namespace FRESHMusicPlayer.Pages
                 var list = displayqueue.Dequeue();
                 var nextlength = 0;
                 int number = 1;
-                AddTrackButton.IsEnabled = false;
-                AddPlaylistButton.IsEnabled = false;
-                ClearQueueButton.IsEnabled = false;
+                SetControlEnabled(false);
                 QueueList.Visibility = Visibility.Hidden;
                 QueueList.Items.Clear();
                 await Task.Run(() =>
                 {
-                    try
+                    foreach (var song in list)
                     {
-                        foreach (var song in list)
+                        if (displayqueue.Count > 1) break;
+                        QueueEntry entry;
+                        var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path);
+                        if (dbTrack != null) entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1));
+                        else
                         {
-                            if (displayqueue.Count > 1) break;
-                            QueueEntry entry;
-                            var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path);
-                            if (dbTrack != null) entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1));
-                            else
-                            {
-                                Track track = new Track(song);
-                                entry = Dispatcher.Invoke(() => new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), number - 1));
-                            }
-                            if (entry.Index + 1 == MainWindow.Player.QueuePosition) Dispatcher.Invoke(() => entry.BringIntoView());
-                            Dispatcher.Invoke(() => QueueList.Items.Add(entry));
-                            if (MainWindow.Player.QueuePosition < number) nextlength += dbTrack.Length;
-                            number++;
+                            Track track = new Track(song);
+                            entry = Dispatcher.Invoke(() => new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), number - 1));
                         }
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        GetResults();
-                        // TODO: This occurs when too many tracks are enqueued at once. Don't really know how to permanently fix this so this'll work for now...
+                        Dispatcher.Invoke(() => QueueList.Items.Add(entry));
+                        if (entry.Index + 1 == MainWindow.Player.QueuePosition) currentIndex = entry.Index;
+                        if (MainWindow.Player.QueuePosition < number) nextlength += dbTrack.Length;
+                        number++;
                     }
                 });
+                if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView();
                 RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0, 0, 0, nextlength).ToString(@"hh\:mm\:ss");
-                AddTrackButton.IsEnabled = true;
-                AddPlaylistButton.IsEnabled = true;
-                ClearQueueButton.IsEnabled = true;
+                SetControlEnabled(true);
                 QueueList.Visibility = Visibility.Visible;
                 taskisrunning = false;
                 if (displayqueue.Count != 0) GetResults();
@@ -92,6 +70,12 @@ namespace FRESHMusicPlayer.Pages
                 taskisrunning = true;
                 GetResults();
             }
+        }
+        private void SetControlEnabled(bool enabled)
+        {
+            AddTrackButton.IsEnabled = enabled;
+            AddPlaylistButton.IsEnabled = enabled;
+            ClearQueueButton.IsEnabled = enabled;
         }
         private void Player_QueueChanged(object sender, EventArgs e)
         {

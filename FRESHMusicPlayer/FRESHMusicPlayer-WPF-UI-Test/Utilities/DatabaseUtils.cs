@@ -110,6 +110,7 @@ namespace FRESHMusicPlayer.Utilities
         public static void Nuke()
         {
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").DeleteAll();
+            MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").DeleteAll();
             MainWindow.NotificationHandler.Add(new Notification
             {
                 HeaderText = "Nuke successful",

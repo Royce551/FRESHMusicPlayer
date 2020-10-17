@@ -1,27 +1,10 @@
-﻿using FRESHMusicPlayer;
+﻿using FRESHMusicPlayer.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ATL;
-using FRESHMusicPlayer.Handlers;
-using FRESHMusicPlayer.Handlers.Notifications;
-using System.Threading;
-using System.ComponentModel;
-using System.Windows.Shell;
-using System.Diagnostics;
-using LiteDB;
-using FRESHMusicPlayer.Utilities;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -199,18 +182,15 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (SongEntry entry in TracksPanel.Items)
-            {
-                MainWindow.Player.AddQueue(entry.FilePath);
-            }
+            string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
+            MainWindow.Player.AddQueue(tracks);
         }
 
         private void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (SongEntry entry in TracksPanel.Items)
-            {
-                MainWindow.Player.AddQueue(entry.FilePath);
-            }
+            MainWindow.Player.ClearQueue();
+            string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
+            MainWindow.Player.AddQueue(tracks);
             MainWindow.Player.PlayMusic();
         }
     }

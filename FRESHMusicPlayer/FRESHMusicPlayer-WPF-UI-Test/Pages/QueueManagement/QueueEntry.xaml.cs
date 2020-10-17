@@ -53,5 +53,14 @@ namespace FRESHMusicPlayer.Pages
         }
 
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => MainWindow.Player.RemoveQueue(Index);
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                MainWindow.Player.QueuePosition = Index;
+                MainWindow.Player.PlayMusic();
+            }
+        }
     }
 }
