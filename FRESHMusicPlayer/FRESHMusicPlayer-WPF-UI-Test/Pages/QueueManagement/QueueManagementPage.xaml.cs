@@ -44,13 +44,8 @@ namespace FRESHMusicPlayer.Pages
                     {
                         if (displayqueue.Count > 1) break;
                         QueueEntry entry;
-                        var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => song == x.Path);
-                        if (dbTrack != null) entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1));
-                        else
-                        {
-                            Track track = new Track(song);
-                            entry = Dispatcher.Invoke(() => new QueueEntry(track.Artist, track.Album, track.Title, number.ToString(), number - 1));
-                        }
+                        var dbTrack = DatabaseUtils.GetFallbackTrack(song);
+                        entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1));
                         Dispatcher.Invoke(() => QueueList.Items.Add(entry));
                         if (entry.Index + 1 == MainWindow.Player.QueuePosition) currentIndex = entry.Index;
                         if (MainWindow.Player.QueuePosition < number) nextlength += dbTrack.Length;
@@ -112,7 +107,6 @@ namespace FRESHMusicPlayer.Pages
                     {
                         MainWindow.NotificationHandler.Add(new Notification
                         {
-                            HeaderText = "Missing file",
                             ContentText = $"One of the tracks in the playlist was not added because it could not be found.\nMissing File: {s}",
                             IsImportant =  true,
                             DisplayAsToast = true,

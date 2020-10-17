@@ -51,7 +51,6 @@ namespace FRESHMusicPlayer.Pages
                     {
                         MainWindow.NotificationHandler.Add(new Notification
                         {
-                            HeaderText = Properties.Resources.NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST,
                             ContentText = $"This playlist file could not be imported because one or more of the tracks could not be found.\nMissing File: {s}",
                             IsImportant = true,
                             DisplayAsToast = true,

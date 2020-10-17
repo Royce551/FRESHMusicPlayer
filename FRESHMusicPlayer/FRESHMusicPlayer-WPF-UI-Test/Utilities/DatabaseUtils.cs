@@ -8,11 +8,7 @@ using System.Windows;
 
 namespace FRESHMusicPlayer.Utilities
 {
-    public class PlaylistSong
-    {
-        public string Path { get; set; }
-    }
-    class DatabaseUtils // While you'd expect this to be in FMP Core, this uses ATL; I eventually want to remove FMP Core's dependence on ATL.
+    class DatabaseUtils // TODO: move this to FMP Core
     {
         public static List<DatabaseTrack> Read(string filter = "Title") => MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().OrderBy(filter).ToList();
         public static List<DatabaseTrack> ReadTracksForArtist(string artist) => MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").Query().Where(x => x.Artist == artist).OrderBy("Title").ToList();
@@ -113,8 +109,7 @@ namespace FRESHMusicPlayer.Utilities
             MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").DeleteAll();
             MainWindow.NotificationHandler.Add(new Notification
             {
-                HeaderText = "Nuke successful",
-                ContentText = "Successfully cleared your library",
+                ContentText = "Successfully cleared your library!",
                 Type = NotificationType.Success
             });
         }
@@ -122,7 +117,6 @@ namespace FRESHMusicPlayer.Utilities
         {
             Notification notification = new Notification
             {
-                HeaderText = "Migration",
                 ContentText = "Beginning migration to libraryv2",
                 IsImportant = true,
                 DisplayAsToast = true
@@ -139,10 +133,19 @@ namespace FRESHMusicPlayer.Utilities
                 }
                 MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(newlibrary);        
             });
-            notification.HeaderText = "Migration successful";
-            notification.ContentText = "Successfully converted your v1 library!";
+            notification.ContentText = "Successfully imported your v1 library!";
             notification.Type = NotificationType.Success;
             MainWindow.NotificationHandler.Update(notification);
+        }
+        public static DatabaseTrack GetFallbackTrack(string path)
+        {
+            var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(x => path == x.Path);
+            if (dbTrack != null) return dbTrack;
+            else
+            {
+                Track track = new Track(path);
+                return new DatabaseTrack { Artist = track.Artist, Title = track.Title, Album = track.Album, Length = track.Duration, Path = path, TrackNumber = track.TrackNumber };
+            }
         }
     }
 }

@@ -18,10 +18,7 @@ namespace FRESHMusicPlayer.Handlers.Notifications
             int notificationindex = Notifications.IndexOf(box);
             if (Notifications[notificationindex] != null)
             {
-                Notifications[notificationindex].IsImportant = box.IsImportant;
-                Notifications[notificationindex].DisplayAsToast = box.DisplayAsToast;
-                Notifications[notificationindex].HeaderText = box.HeaderText;
-                Notifications[notificationindex].ContentText = box.ContentText;
+                Notifications[notificationindex] = box;
             }
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);
         }

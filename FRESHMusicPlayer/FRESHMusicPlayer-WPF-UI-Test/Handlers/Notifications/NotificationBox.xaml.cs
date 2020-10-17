@@ -30,7 +30,6 @@ namespace FRESHMusicPlayer.Handlers.Notifications
                     Border.BorderBrush = new SolidColorBrush(Color.FromRgb(213, 70, 53));
                     break;
             }
-            HeaderLabel.Text = Notification.HeaderText;
             ContentLabel.Text = Notification.ContentText;
             if (!string.IsNullOrEmpty(Notification.ButtonText) && Notification.OnButtonClicked != null)
             {

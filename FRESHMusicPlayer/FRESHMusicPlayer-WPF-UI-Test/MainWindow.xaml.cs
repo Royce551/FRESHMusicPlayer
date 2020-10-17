@@ -70,8 +70,7 @@ namespace FRESHMusicPlayer
             {
                 NotificationHandler.Add(new Notification
                 {
-                    HeaderText = "Library failed to load",
-                    ContentText = "Make sure that you don't have another instance of FMP running!",
+                    ContentText = "Library failed to load. Make sure that you don't have another instance of FMP running!",
                     ButtonText = "Retry",
                     OnButtonClicked = () =>
                     {
@@ -329,7 +328,6 @@ namespace FRESHMusicPlayer
         {
             NotificationHandler.Add(new Notification
             {
-                HeaderText = "A playback error occured",
                 ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
                 IsImportant = true,
                 DisplayAsToast = true,
@@ -410,7 +408,7 @@ namespace FRESHMusicPlayer
             else
             {
                 PauseAfterCurrentTrack = true;
-                NotificationHandler.Add(new Notification { HeaderText = "Pausing after current track..." });
+                NotificationHandler.Add(new Notification { ContentText = "Pausing after current track..." });
             }
         }
         #endregion
@@ -512,8 +510,7 @@ namespace FRESHMusicPlayer
                 case Key.OemTilde:
                     NotificationHandler.Add(new Notification
                     {
-                        HeaderText = "Debug Key",
-                        ContentText = "Deadlock",
+                        ContentText = "This is a FMP notification! Hello!",
                         ButtonText = "Click me!",
                         IsImportant = true,
                         DisplayAsToast = true,
@@ -522,7 +519,7 @@ namespace FRESHMusicPlayer
                         {
                             NotificationHandler.Add(new Notification
                             {
-                                HeaderText = "Hello world!Loremloremloremlorem"
+                                ContentText = "Hello world!Loremloremloremlorem"
                             });
                             Player.NextSong();
                             return false;
@@ -535,7 +532,6 @@ namespace FRESHMusicPlayer
                 case Key.F7:
                     NotificationHandler.Add(new Notification
                     {
-                        HeaderText = "No toast test",
                         ContentText = "ok",
                         IsImportant = true,
                         DisplayAsToast = false,
