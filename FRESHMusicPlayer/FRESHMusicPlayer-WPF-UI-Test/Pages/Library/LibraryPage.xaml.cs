@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Utilities;
+﻿using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using System;
 using System.Linq;
 using System.Threading;
@@ -23,6 +24,8 @@ namespace FRESHMusicPlayer.Pages.Library
 
         public void LoadLibrary()
         {
+            TracksPanel.Items.Clear();
+            CategoryPanel.Items.Clear();
             InfoLabel.Visibility = Visibility.Hidden;
             switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
@@ -149,8 +152,6 @@ namespace FRESHMusicPlayer.Pages.Library
         }
         private void MainWindow_TabChanged(object sender, EventArgs e)
         {
-            TracksPanel.Items.Clear();
-            CategoryPanel.Items.Clear();
             LeftSide.Width = new GridLength(222);
             DetailsPane.Height = new GridLength(45);
             LoadLibrary();
@@ -171,12 +172,10 @@ namespace FRESHMusicPlayer.Pages.Library
         private async void Page_Drop(object sender, DragEventArgs e)
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-            MainWindow.Player.AddQueue(tracks);
             await Task.Run(() =>
             {
                 DatabaseUtils.Import(tracks);
             });
-            MainWindow.Player.PlayMusic();
             LoadLibrary();
         }
 

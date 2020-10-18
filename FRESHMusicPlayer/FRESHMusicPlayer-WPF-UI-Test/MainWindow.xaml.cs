@@ -53,9 +53,9 @@ namespace FRESHMusicPlayer
         public MainWindow()
         {
             InitializeComponent();
-            Player.SongChanged += player_songChanged;
-            Player.SongStopped += player_songStopped;
-            Player.SongException += player_songException;
+            Player.SongChanged += Player_SongChanged;
+            Player.SongStopped += Player_SongStopped;
+            Player.SongException += Player_SongException;
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
             progressTimer = new Winforms.Timer
             {
@@ -288,7 +288,7 @@ namespace FRESHMusicPlayer
 
         #region Events
         #region player
-        private void player_songStopped(object sender, EventArgs e)
+        private void Player_SongStopped(object sender, EventArgs e)
         {   
             Title = "FRESHMusicPlayer";
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
@@ -296,7 +296,7 @@ namespace FRESHMusicPlayer
             SetIntegrations(MediaPlaybackStatus.Stopped);
         }
 
-        private void player_songChanged(object sender, EventArgs e)
+        private void Player_SongChanged(object sender, EventArgs e)
         {
             CurrentTrack = new Track(Player.FilePath);
             Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
@@ -324,7 +324,7 @@ namespace FRESHMusicPlayer
                 PauseAfterCurrentTrack = false;
             }
         }
-        private void player_songException(object sender, PlaybackExceptionEventArgs e)
+        private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
             NotificationHandler.Add(new Notification
             {
@@ -549,13 +549,10 @@ namespace FRESHMusicPlayer
             e.Effects = DragDropEffects.Copy;
         }
 
-        private async void Window_Drop(object sender, DragEventArgs e)
+        private void Window_Drop(object sender, DragEventArgs e)
         {
-            await Task.Run(() =>
-            {
-                string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-                Player.AddQueue(tracks);
-            });
+            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
+            Player.AddQueue(tracks);
             Player.PlayMusic();
         }
 
