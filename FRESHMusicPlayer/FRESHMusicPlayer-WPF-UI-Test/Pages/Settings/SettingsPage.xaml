@@ -36,7 +36,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="5,0" Text="{x:Static resx:Resources.SETTINGS_LANGUAGE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="General_LanguageCombo_SelectionChanged">
-                        <ComboBoxItem Content="English"/>
+                        <ComboBoxItem Content="System Default"/>
                         <ComboBoxItem Content="German"/>
                         <ComboBoxItem Content="Vietnamese"/>
                         <ComboBoxItem Content="Portuguese"/>
@@ -90,7 +90,6 @@
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <TextBlock Text="Logo banner placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="FRESHMusicPlayer Ver. 8" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock x:Name="FMPCoreVersionLabel" Text="FMP Core version placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>

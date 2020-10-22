@@ -36,7 +36,7 @@ namespace FRESHMusicPlayer.Pages
                 var nextlength = 0;
                 int number = 1;
                 SetControlEnabled(false);
-                QueueList.Visibility = Visibility.Hidden;
+                //QueueList.Visibility = Visibility.Hidden;
                 QueueList.Items.Clear();
                 await Task.Run(() =>
                 {
@@ -55,7 +55,7 @@ namespace FRESHMusicPlayer.Pages
                 if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView();
                 RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0, 0, 0, nextlength).ToString(@"hh\:mm\:ss");
                 SetControlEnabled(true);
-                QueueList.Visibility = Visibility.Visible;
+                //QueueList.Visibility = Visibility.Visible;
                 taskisrunning = false;
                 if (displayqueue.Count != 0) GetResults();
                 else return;

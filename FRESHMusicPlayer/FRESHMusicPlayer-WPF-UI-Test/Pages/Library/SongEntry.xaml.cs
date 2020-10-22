@@ -40,9 +40,27 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
-            if (MainWindow.Player.Playing) MainWindow.Player.ClearQueue();
-            MainWindow.Player.AddQueue(FilePath);
-            MainWindow.Player.PlayMusic();
+            if (!FilePath.StartsWith("http") && File.Exists(FilePath))
+            {
+                if (MainWindow.Player.Playing) MainWindow.Player.ClearQueue();
+                MainWindow.Player.AddQueue(FilePath);
+                MainWindow.Player.PlayMusic();
+            }
+            else
+            {
+                MainWindow.NotificationHandler.Add(new Handlers.Notifications.Notification
+                {
+                    ContentText = $"The file you tried to play, \"{FilePath}\", doesn't seem to exist.",
+                    ButtonText = "Remove from library",
+                    OnButtonClicked = () =>
+                    {
+                        DatabaseUtils.Remove(FilePath);
+                        ((ListBox)Parent).Items.Remove(this);
+                        return true;
+                    }
+
+                });
+            }
         }
 
         private void QueueButtonClick(object sender, MouseButtonEventArgs e) => MainWindow.Player.AddQueue(FilePath);

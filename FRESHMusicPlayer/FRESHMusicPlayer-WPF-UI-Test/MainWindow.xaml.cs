@@ -519,7 +519,7 @@ namespace FRESHMusicPlayer
                         {
                             NotificationHandler.Add(new Notification
                             {
-                                ContentText = "Hello world!Loremloremloremlorem"
+                                ContentText = "Hello world!"
                             });
                             Player.NextSong();
                             return false;

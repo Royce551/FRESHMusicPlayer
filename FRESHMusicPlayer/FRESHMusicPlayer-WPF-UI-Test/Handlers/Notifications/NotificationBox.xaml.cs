@@ -44,5 +44,9 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         {
             if (Notification.OnButtonClicked?.Invoke() ?? true) MainWindow.NotificationHandler.Remove(Notification);
         }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e) => CloseButton.Visibility = Visibility.Visible;
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e) => CloseButton.Visibility = Visibility.Collapsed;
     }
 }

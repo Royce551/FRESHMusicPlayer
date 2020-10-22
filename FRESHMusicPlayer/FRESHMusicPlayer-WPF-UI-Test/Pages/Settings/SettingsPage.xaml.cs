@@ -52,10 +52,6 @@ namespace FRESHMusicPlayer.Pages
                     Appearance_ThemeDarkRadio.IsChecked = true;
                     break;
             }
-            foreach (var culture in Utils.GetAvailableCultures())
-            {
-                General_LanguageCombo.Items.Add(culture.NativeName);
-            }
             pageInitialized = true;
         }
 

@@ -81,7 +81,6 @@ namespace FRESHMusicPlayer.Utilities
                 stufftoinsert.Add(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber, Length = track.Duration});
                 count++;
             }
-            MainWindow.NotificationHandler.Add(new Notification { ContentText = $"DatabaseHandler - Just imported {count} tracks!" });
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(stufftoinsert);
         }
         public static void Import(List<string> tracks)
