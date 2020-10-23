@@ -88,10 +88,11 @@ namespace FRESHMusicPlayer
                 });
             }       
         }
-        private void Window_SourceInitialized(object sender, EventArgs e)
+        private async void Window_SourceInitialized(object sender, EventArgs e)
         {
             UpdateIntegrations();
             ProcessSettings();
+            await UpdateHandler.RealUpdateIfAvailable();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
