@@ -3,7 +3,9 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using Squirrel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,9 +18,11 @@ namespace FRESHMusicPlayer.Handlers
         public static async Task RealUpdateIfAvailable(bool useDeltaPatching = true)
         {
             if (App.Config.UpdateMode == UpdateMode.Manual) return;
+            // Updater not present, probably standalone
+            if (!File.Exists(Path.Combine(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"../")), "Update.exe"))) return;
             App.Config.UpdatesLastChecked = DateTime.Now;
-            var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Royce551/FRESHMusicPlayer");
             var notification = new Notification();
+            UpdateManager mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Royce551/FRESHMusicPlayer");
             try
             {
                 UpdateInfo updateInfo = await mgr.CheckForUpdate(!useDeltaPatching);
@@ -50,6 +54,7 @@ namespace FRESHMusicPlayer.Handlers
                 if (useDeltaPatching)
                 {
                     await RealUpdateIfAvailable(false);
+                    return;
                 }
                 notification.ContentText = $"An error occured when updating: {e.Message}";
                 notification.Type = NotificationType.Failure;
@@ -57,7 +62,7 @@ namespace FRESHMusicPlayer.Handlers
             }
             finally
             {
-                mgr.Dispose();
+                mgr?.Dispose();
             }
         }
         private static void RestartApp()
