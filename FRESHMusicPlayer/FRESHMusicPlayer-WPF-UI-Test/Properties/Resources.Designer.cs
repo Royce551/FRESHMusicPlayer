@@ -581,6 +581,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to irreversibly clear your library. Are you sure?.
+        /// </summary>
+        public static string SETTINGS_NUKE_LIBRARY_WARNING {
+            get {
+                return ResourceManager.GetString("SETTINGS_NUKE_LIBRARY_WARNING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nuke library.
         /// </summary>
         public static string SETTINGS_NUKELIBRARY {

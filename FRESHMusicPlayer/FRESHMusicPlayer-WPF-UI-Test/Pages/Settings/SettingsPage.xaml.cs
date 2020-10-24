@@ -131,7 +131,6 @@ namespace FRESHMusicPlayer.Pages
                         break;
                 }
                 SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
-                App.Config.Language = workingConfig.Language;
             }
         }
         private void General_UpdateModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -167,7 +166,6 @@ namespace FRESHMusicPlayer.Pages
                         break;
                 }
                 SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);
-                App.Config.Theme = workingConfig.Theme;
             }
         }
 

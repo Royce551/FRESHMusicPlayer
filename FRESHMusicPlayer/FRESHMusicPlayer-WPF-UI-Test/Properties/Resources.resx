@@ -298,6 +298,9 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
     <value>Nuke library</value>
   </data>
+  <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
+    <value>You are about to irreversibly clear your library. Are you sure?</value>
+  </data>
   <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
     <value>Output Device</value>
   </data>
