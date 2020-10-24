@@ -159,7 +159,8 @@ The log file they'll need is at {1}.</value>
     <value>Nothing Playing</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value>{0}
+    <value>A playback error occured:
+{0}
 We'll skip to the next track for you</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
@@ -198,8 +199,30 @@ We'll skip to the next track for you</value>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
     <value>Notifications</value>
   </data>
+  <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
+    <value>Successfully cleared your library!</value>
+  </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value>Missing File</value>
+    <value>This playlist file could not be imported because one or more of the tracks could not be found.
+Missing File: {0}</value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
+    <value>The file you tried to play, "{0}", doesn't seem to exist.</value>
+  </data>
+  <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
+    <value>Installing update...</value>
+  </data>
+  <data name="NOTIFICATION_LIBRARYFAILED" xml:space="preserve">
+    <value>The library failed to load. Make sure that you don't have another instance of FMP running!</value>
+  </data>
+  <data name="NOTIFICATION_PAUSING" xml:space="preserve">
+    <value>Pausing after current track...</value>
+  </data>
+  <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
+    <value>An error occured when updating: {0}</value>
+  </data>
+  <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
+    <value>The update is ready to install!</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
     <value>Create</value>

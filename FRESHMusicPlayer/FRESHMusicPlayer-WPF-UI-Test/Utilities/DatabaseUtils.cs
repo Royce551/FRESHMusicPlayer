@@ -109,7 +109,7 @@ namespace FRESHMusicPlayer.Utilities
             MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").DeleteAll();
             MainWindow.NotificationHandler.Add(new Notification
             {
-                ContentText = "Successfully cleared your library!",
+                ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
                 Type = NotificationType.Success
             });
         }

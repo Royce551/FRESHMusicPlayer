@@ -29,14 +29,14 @@ namespace FRESHMusicPlayer.Handlers
                 if (updateInfo.CurrentlyInstalledVersion == null) return; // Standalone version of FMP, don't bother
                 if (updateInfo.ReleasesToApply.Count == 0) return; // No updates to apply, don't bother
 
-                notification.ContentText = $"Installing update...";
+                notification.ContentText = Properties.Resources.NOTIFICATION_INSTALLINGUPDATE;
                 MainWindow.NotificationHandler.Add(notification);
 
                 await mgr.DownloadReleases(updateInfo.ReleasesToApply);
                 await mgr.ApplyReleases(updateInfo);
                 if (App.Config.UpdateMode == UpdateMode.Prompt)
                 {
-                    notification.ContentText = $"The update is ready to install!";
+                    notification.ContentText = Properties.Resources.NOTIFICATION_UPDATEREADY;
                     notification.ButtonText = "Restart now";
                     notification.Type = NotificationType.Success;
                     notification.OnButtonClicked = () =>
@@ -56,7 +56,7 @@ namespace FRESHMusicPlayer.Handlers
                     await RealUpdateIfAvailable(false);
                     return;
                 }
-                notification.ContentText = $"An error occured when updating: {e.Message}";
+                notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_UPDATEERROR, e.Message);
                 notification.Type = NotificationType.Failure;
                 MainWindow.NotificationHandler.Update(notification);
             }

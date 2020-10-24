@@ -70,7 +70,7 @@ namespace FRESHMusicPlayer
             {
                 NotificationHandler.Add(new Notification
                 {
-                    ContentText = "Library failed to load. Make sure that you don't have another instance of FMP running!",
+                    ContentText = Properties.Resources.NOTIFICATION_LIBRARYFAILED,
                     ButtonText = "Retry",
                     OnButtonClicked = () =>
                     {
@@ -409,7 +409,7 @@ namespace FRESHMusicPlayer
             else
             {
                 PauseAfterCurrentTrack = true;
-                NotificationHandler.Add(new Notification { ContentText = "Pausing after current track..." });
+                NotificationHandler.Add(new Notification { ContentText = Properties.Resources.NOTIFICATION_PAUSING });
             }
         }
         #endregion

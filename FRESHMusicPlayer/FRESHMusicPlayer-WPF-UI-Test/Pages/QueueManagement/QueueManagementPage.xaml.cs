@@ -105,7 +105,7 @@ namespace FRESHMusicPlayer.Pages
                     {
                         MainWindow.NotificationHandler.Add(new Notification
                         {
-                            ContentText = $"One of the tracks in the playlist was not added because it could not be found.\nMissing File: {s}",
+                            ContentText = string.Format(Properties.Resources.NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST, s),
                             IsImportant =  true,
                             DisplayAsToast = true,
                             Type = NotificationType.Failure

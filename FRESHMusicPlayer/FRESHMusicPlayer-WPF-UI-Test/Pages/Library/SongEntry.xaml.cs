@@ -50,7 +50,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 MainWindow.NotificationHandler.Add(new Handlers.Notifications.Notification
                 {
-                    ContentText = $"The file you tried to play, \"{FilePath}\", doesn't seem to exist.",
+                    ContentText = string.Format(Properties.Resources.NOTIFICATION_FILEGONE, FilePath),
                     ButtonText = "Remove from library",
                     OnButtonClicked = () =>
                     {

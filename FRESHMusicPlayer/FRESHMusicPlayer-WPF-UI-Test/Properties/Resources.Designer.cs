@@ -180,7 +180,8 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}
+        ///   Looks up a localized string similar to A playback error occured:
+        ///{0}
         ///We&apos;ll skip to the next track for you.
         /// </summary>
         public static string MAINWINDOW_PLAYBACK_ERROR_DETAILS {
@@ -280,11 +281,75 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Missing File.
+        ///   Looks up a localized string similar to Successfully cleared your library!.
+        /// </summary>
+        public static string NOTIFICATION_CLEARSUCCESS {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_CLEARSUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This playlist file could not be imported because one or more of the tracks could not be found.
+        ///Missing File: {0}.
         /// </summary>
         public static string NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST {
             get {
                 return ResourceManager.GetString("NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file you tried to play, &quot;{0}&quot;, doesn&apos;t seem to exist..
+        /// </summary>
+        public static string NOTIFICATION_FILEGONE {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_FILEGONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing update....
+        /// </summary>
+        public static string NOTIFICATION_INSTALLINGUPDATE {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_INSTALLINGUPDATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The library failed to load. Make sure that you don&apos;t have another instance of FMP running!.
+        /// </summary>
+        public static string NOTIFICATION_LIBRARYFAILED {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_LIBRARYFAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pausing after current track....
+        /// </summary>
+        public static string NOTIFICATION_PAUSING {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_PAUSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured when updating: {0}.
+        /// </summary>
+        public static string NOTIFICATION_UPDATEERROR {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_UPDATEERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The update is ready to install!.
+        /// </summary>
+        public static string NOTIFICATION_UPDATEREADY {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_UPDATEREADY", resourceCulture);
             }
         }
         

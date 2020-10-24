@@ -55,13 +55,13 @@ namespace FRESHMusicPlayer.Pages
             switch (App.Config.UpdateMode)
             {
                 case UpdateMode.Automatic:
-                    General_UpdateModeCombo.SelectedIndex = (int)UpdateMode.Automatic;
+                    General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Automatic;
                     break;
                 case UpdateMode.Manual:
-                    General_UpdateModeCombo.SelectedIndex = (int)UpdateMode.Manual;
+                    General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Manual;
                     break;
                 case UpdateMode.Prompt:
-                    General_UpdateModeCombo.SelectedIndex = (int)UpdateMode.Prompt;
+                    General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Prompt;
                     break;
             }
             pageInitialized = true;
