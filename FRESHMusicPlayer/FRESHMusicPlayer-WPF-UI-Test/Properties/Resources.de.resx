@@ -316,4 +316,52 @@ Danke, dass du FRESHMusicPlayer verwendest! ♥</value>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>Manuelle Dateipfad-/URL-Eingabe</value>
   </data>
+  <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
+    <value>Frage vorm Updaten</value>
+  </data>
+  <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
+    <value>Manuell</value>
+  </data>
+  <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
+    <value>Automatisch</value>
+  </data>
+  <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
+    <value>Letztes Mal überprüft {0}</value>
+  </data>
+  <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
+    <value>Überprüfe nach Updates</value>
+  </data>
+  <data name="SETTINGS_UPDATES" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
+    <value>Hell</value>
+  </data>
+  <data name="SETTINGS_THEME_DARK" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
+  <data name="SETTINGS_THEME" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="SETTINGS_PRERELEASE" xml:space="preserve">
+    <value>Bekomme pre-release Versionen von FMP</value>
+  </data>
+  <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
+    <value>Wartung</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION" xml:space="preserve">
+    <value>Integration</value>
+  </data>
+  <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
+    <value>Auto-Update Modus</value>
+  </data>
+  <data name="SETTINGS_APPEARANCE" xml:space="preserve">
+    <value>Aussehen</value>
+  </data>
+  <data name="SETTINGS_ABOUT" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
+    <value>Was willst du mit "{0}" machen?</value>
+  </data>
 </root>
