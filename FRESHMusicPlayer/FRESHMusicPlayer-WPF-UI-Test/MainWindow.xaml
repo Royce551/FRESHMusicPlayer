@@ -22,10 +22,10 @@
                         />
         </Storyboard>
         <ContextMenu x:Key="MiscContext">
-            <MenuItem Header="Mini Player" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
-            <MenuItem Header="Pause after current track" Click="TrackContext_PauseAuto_Click"/>
-            <MenuItem Header="Tag Editor" Click="TrackContextTagEditor_Click"/>
-            <MenuItem Header="Playlist Management" Click="TrackContentPlaylistManagement_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.CONTROLS_MINIPLAYER}" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.CONTROLS_PAUSE_AFTTER_CURRENT_TRACK}" Click="TrackContext_PauseAuto_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Click="TrackContentPlaylistManagement_Click"/>
         </ContextMenu>
     </Window.Resources>
     <DockPanel Background="#FF0C6C08">

@@ -121,7 +121,7 @@ namespace FRESHMusicPlayer.Pages.Library
             }
             MiscContext.Items.Add(new Separator());
             var otheritem = new MenuItem();
-            otheritem.Header = "Playlist Management";
+            otheritem.Header = Properties.Resources.PLAYLISTMANAGEMENT;
             otheritem.Click += (object send, RoutedEventArgs eee) =>
             {
                 PlaylistManagement management = new PlaylistManagement(FilePath);

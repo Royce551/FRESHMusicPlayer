@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
         mc:Ignorable="d"
-        Title="enter texttt" SizeToContent="Height" Width="350">
+        Title="" SizeToContent="Height" Width="350">
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

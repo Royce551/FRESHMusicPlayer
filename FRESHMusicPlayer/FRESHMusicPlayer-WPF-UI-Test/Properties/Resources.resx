@@ -122,6 +122,12 @@
 If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
 The log file they'll need is at {1}.</value>
   </data>
+  <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
+    <value>Mini Player</value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
+    <value>Pause after current track</value>
+  </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
     <value>Browse for folders</value>
   </data>
@@ -137,8 +143,14 @@ The log file they'll need is at {1}.</value>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>Manual file path/URL entry</value>
   </data>
+  <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
+    <value>Add to playlist...</value>
+  </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
     <value>Enqueue All</value>
+  </data>
+  <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
+    <value>Open in File Explorer</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
     <value>Play All</value>
@@ -223,6 +235,9 @@ Missing File: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
     <value>The update is ready to install!</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
+    <value>Playlist Management</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
     <value>Create</value>
@@ -324,6 +339,9 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
     <value>Prompt before updating</value>
+  </data>
+  <data name="TAGEDITOR" xml:space="preserve">
+    <value>Tag Editor</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
     <value>Album Artist - </value>

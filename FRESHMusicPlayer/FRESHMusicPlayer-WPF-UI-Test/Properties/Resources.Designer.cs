@@ -72,6 +72,24 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mini Player.
+        /// </summary>
+        public static string CONTROLS_MINIPLAYER {
+            get {
+                return ResourceManager.GetString("CONTROLS_MINIPLAYER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause after current track.
+        /// </summary>
+        public static string CONTROLS_PAUSE_AFTTER_CURRENT_TRACK {
+            get {
+                return ResourceManager.GetString("CONTROLS_PAUSE_AFTTER_CURRENT_TRACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse for folders.
         /// </summary>
         public static string IMPORT_BROWSE_FOLDERS {
@@ -117,11 +135,29 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to playlist....
+        /// </summary>
+        public static string LIBRARY_ADD_TO_PLAYLIST {
+            get {
+                return ResourceManager.GetString("LIBRARY_ADD_TO_PLAYLIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enqueue All.
         /// </summary>
         public static string LIBRARY_ENQUEUEALL {
             get {
                 return ResourceManager.GetString("LIBRARY_ENQUEUEALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in File Explorer.
+        /// </summary>
+        public static string LIBRARY_OPEN_FILEEXPLORER {
+            get {
+                return ResourceManager.GetString("LIBRARY_OPEN_FILEEXPLORER", resourceCulture);
             }
         }
         
@@ -368,6 +404,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string NOTIFICATIONS_TITLE {
             get {
                 return ResourceManager.GetString("NOTIFICATIONS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlist Management.
+        /// </summary>
+        public static string PLAYLISTMANAGEMENT {
+            get {
+                return ResourceManager.GetString("PLAYLISTMANAGEMENT", resourceCulture);
             }
         }
         
@@ -667,6 +712,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string SETTINGS_UPDATESLASTCHECKED {
             get {
                 return ResourceManager.GetString("SETTINGS_UPDATESLASTCHECKED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag Editor.
+        /// </summary>
+        public static string TAGEDITOR {
+            get {
+                return ResourceManager.GetString("TAGEDITOR", resourceCulture);
             }
         }
         
