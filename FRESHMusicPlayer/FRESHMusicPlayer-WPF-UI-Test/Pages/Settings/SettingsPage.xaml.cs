@@ -28,7 +28,7 @@ namespace FRESHMusicPlayer.Pages
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
             FMPCoreVersionLabel.Text = MainWindow.Player.VersionString();
-            switch (App.Config.Language) // i think this is bad code
+            switch (App.Config.Language) // TODO: investigate making this less ugly
             {
                 case "en":
                     General_LanguageCombo.SelectedIndex = (int)LanguageCombo.English;
@@ -50,6 +50,18 @@ namespace FRESHMusicPlayer.Pages
                     break;
                 case Skin.Dark:
                     Appearance_ThemeDarkRadio.IsChecked = true;
+                    break;
+            }
+            switch (App.Config.UpdateMode)
+            {
+                case UpdateMode.Automatic:
+                    General_UpdateModeCombo.SelectedIndex = (int)UpdateMode.Automatic;
+                    break;
+                case UpdateMode.Manual:
+                    General_UpdateModeCombo.SelectedIndex = (int)UpdateMode.Manual;
+                    break;
+                case UpdateMode.Prompt:
+                    General_UpdateModeCombo.SelectedIndex = (int)UpdateMode.Prompt;
                     break;
             }
             pageInitialized = true;
@@ -79,7 +91,6 @@ namespace FRESHMusicPlayer.Pages
         private void General_ProgressChanged(object sender, RoutedEventArgs e)
         {
             App.Config.ShowTimeInWindow = (bool)General_ProgressCheck.IsChecked;
-            ConfigurationHandler.Write(App.Config);
         }
 
         private void General_DiscordRPCChanged(object sender, RoutedEventArgs e)
@@ -87,7 +98,6 @@ namespace FRESHMusicPlayer.Pages
             if (pageInitialized)
             {
                 App.Config.IntegrateDiscordRPC = (bool)Integration_DiscordRPCCheck.IsChecked;
-                ConfigurationHandler.Write(App.Config);
                 (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
             }        
         }
@@ -97,7 +107,6 @@ namespace FRESHMusicPlayer.Pages
             if (pageInitialized)
             {
                 App.Config.IntegrateSMTC = (bool)Integration_SMTCCheck.IsChecked;
-                ConfigurationHandler.Write(App.Config);
                 (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
             }  
         }
@@ -106,7 +115,7 @@ namespace FRESHMusicPlayer.Pages
         {
             if (pageInitialized)
             {
-                switch (General_LanguageCombo.SelectedIndex) // i think this is bad code
+                switch (General_LanguageCombo.SelectedIndex)
                 {
                     case (int)LanguageCombo.English:
                         workingConfig.Language = "en";
@@ -123,10 +132,26 @@ namespace FRESHMusicPlayer.Pages
                 }
                 SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
                 App.Config.Language = workingConfig.Language;
-                ConfigurationHandler.Write(App.Config);
             }
         }
-
+        private void General_UpdateModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                switch (General_UpdateModeCombo.SelectedIndex)
+                {
+                    case (int)UpdateCombo.Prompt:
+                        App.Config.UpdateMode = UpdateMode.Prompt;
+                        break;
+                    case (int)UpdateCombo.Manual:
+                        App.Config.UpdateMode = UpdateMode.Manual;
+                        break;
+                    case (int)UpdateCombo.Automatic:
+                        App.Config.UpdateMode = UpdateMode.Automatic;
+                        break;
+                }
+            }
+        }
         private void Appearance_ThemeChanged(object sender, RoutedEventArgs e)
         {
             if (pageInitialized)
@@ -143,7 +168,6 @@ namespace FRESHMusicPlayer.Pages
                 }
                 SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);
                 App.Config.Theme = workingConfig.Theme;
-                ConfigurationHandler.Write(App.Config);
             }
         }
 
@@ -168,6 +192,7 @@ namespace FRESHMusicPlayer.Pages
             WinForms.Application.Restart();
             Application.Current.Shutdown();
         }
+
     }
     public enum LanguageCombo
     {
@@ -175,5 +200,11 @@ namespace FRESHMusicPlayer.Pages
         German,
         Vietnamese,
         Portuguese
+    }
+    public enum UpdateCombo
+    {
+        Prompt,
+        Manual,
+        Automatic
     }
 }
