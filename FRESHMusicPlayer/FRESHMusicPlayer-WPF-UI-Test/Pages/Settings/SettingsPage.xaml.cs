@@ -118,16 +118,16 @@ namespace FRESHMusicPlayer.Pages
                 switch (General_LanguageCombo.SelectedIndex)
                 {
                     case (int)LanguageCombo.English:
-                        workingConfig.Language = "en";
+                        App.Config.Language = "en";
                         break;
                     case (int)LanguageCombo.German:
-                        workingConfig.Language = "de";
+                        App.Config.Language = "de";
                         break;
                     case (int)LanguageCombo.Vietnamese:
-                        workingConfig.Language = "vi";
+                        App.Config.Language = "vi";
                         break;
                     case (int)LanguageCombo.Portuguese:
-                        workingConfig.Language = "pt";
+                        App.Config.Language = "pt";
                         break;
                 }
                 SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
@@ -160,10 +160,10 @@ namespace FRESHMusicPlayer.Pages
                 switch (radioButton.Name)
                 {
                     case "Appearance_ThemeLightRadio":
-                        workingConfig.Theme = Skin.Light;
+                        App.Config.Theme = Skin.Light;
                         break;
                     case "Appearance_ThemeDarkRadio":
-                        workingConfig.Theme = Skin.Dark;
+                        App.Config.Theme = Skin.Dark;
                         break;
                 }
                 SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);

@@ -92,7 +92,7 @@ namespace FRESHMusicPlayer
         {
             UpdateIntegrations();
             ProcessSettings();
-            await UpdateHandler.RealUpdateIfAvailable();
+            await UpdateHandler.UpdateApp();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {

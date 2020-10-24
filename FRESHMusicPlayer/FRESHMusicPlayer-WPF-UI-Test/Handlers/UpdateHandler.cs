@@ -15,7 +15,7 @@ namespace FRESHMusicPlayer.Handlers
 {
     public class UpdateHandler
     {
-        public static async Task RealUpdateIfAvailable(bool useDeltaPatching = true)
+        public static async Task UpdateApp(bool useDeltaPatching = true)
         {
             if (App.Config.UpdateMode == UpdateMode.Manual) return;
             // Updater not present, probably standalone
@@ -37,7 +37,7 @@ namespace FRESHMusicPlayer.Handlers
                 if (App.Config.UpdateMode == UpdateMode.Prompt)
                 {
                     notification.ContentText = Properties.Resources.NOTIFICATION_UPDATEREADY;
-                    notification.ButtonText = "Restart now";
+                    notification.ButtonText = Properties.Resources.SETTINGS_RESTART_NOW;
                     notification.Type = NotificationType.Success;
                     notification.OnButtonClicked = () =>
                     {
@@ -53,7 +53,7 @@ namespace FRESHMusicPlayer.Handlers
             {
                 if (useDeltaPatching)
                 {
-                    await RealUpdateIfAvailable(false);
+                    await UpdateApp(false);
                     return;
                 }
                 notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_UPDATEERROR, e.Message);

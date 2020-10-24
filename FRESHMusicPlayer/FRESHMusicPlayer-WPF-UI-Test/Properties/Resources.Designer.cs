@@ -617,6 +617,24 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For the changes to be applied, FMP needs to restart..
+        /// </summary>
+        public static string SETTINGS_RESTART_NEEDED_PROMPT {
+            get {
+                return ResourceManager.GetString("SETTINGS_RESTART_NEEDED_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart now.
+        /// </summary>
+        public static string SETTINGS_RESTART_NOW {
+            get {
+                return ResourceManager.GetString("SETTINGS_RESTART_NOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change the way FMP behaves.
         /// </summary>
         public static string SETTINGS_SUBHEADER {

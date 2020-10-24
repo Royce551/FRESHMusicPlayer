@@ -307,6 +307,12 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_RESET" xml:space="preserve">
     <value>Reset configuration to defaults</value>
   </data>
+  <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
+    <value>For the changes to be applied, FMP needs to restart.</value>
+  </data>
+  <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
+    <value>Restart now</value>
+  </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
     <value>Change the way FMP behaves</value>
   </data>
