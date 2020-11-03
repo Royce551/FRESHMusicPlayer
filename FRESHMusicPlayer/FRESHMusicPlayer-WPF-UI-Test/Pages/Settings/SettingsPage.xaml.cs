@@ -178,7 +178,7 @@ namespace FRESHMusicPlayer.Pages
         }
         private void Maintanence_NukeButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("You are about irreversibly clear your library. Are you sure?",
+            MessageBoxResult result = MessageBox.Show(Properties.Resources.SETTINGS_NUKE_LIBRARY_WARNING,
                                           "FRESHMusicPlayer",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Warning);
