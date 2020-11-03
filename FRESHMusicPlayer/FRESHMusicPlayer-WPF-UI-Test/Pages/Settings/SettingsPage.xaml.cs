@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Handlers.Configuration;
+﻿using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Utilities;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +29,7 @@ namespace FRESHMusicPlayer.Pages
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
             FMPCoreVersionLabel.Text = MainWindow.Player.VersionString();
+            Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             switch (App.Config.Language) // TODO: investigate making this less ugly
             {
                 case "en":
@@ -191,6 +193,7 @@ namespace FRESHMusicPlayer.Pages
             Application.Current.Shutdown();
         }
 
+        private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e) => await UpdateHandler.UpdateApp();
     }
     public enum LanguageCombo
     {

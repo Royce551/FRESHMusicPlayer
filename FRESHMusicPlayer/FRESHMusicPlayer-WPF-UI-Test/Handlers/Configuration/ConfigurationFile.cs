@@ -26,7 +26,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public bool IntegrateDiscordRPC { get; set; } = false;
         public bool IntegrateSMTC { get; set; } = true;
         public UpdateMode UpdateMode { get; set; } = UpdateMode.Prompt;
-        public ReleaseStream ReleaseStream { get; set; } = ReleaseStream.Stable;
         public DateTime UpdatesLastChecked { get; set; }
         public Skin Theme { get; set; } = Skin.Dark;
         public string AccentColorHex { get; set; }
