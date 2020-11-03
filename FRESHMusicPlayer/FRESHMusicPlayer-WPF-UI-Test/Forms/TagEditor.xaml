@@ -6,7 +6,7 @@
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
         mc:Ignorable="d"
-        Title="TagEditor" Height="451" Width="600" Closing="Window_Closing">
+        Title="TagEditor" Height="451" Width="600" Closing="Window_Closing" DragEnter="Window_DragEnter" Drop="Window_Drop">
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="18px"/>

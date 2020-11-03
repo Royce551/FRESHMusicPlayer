@@ -95,12 +95,10 @@ namespace FRESHMusicPlayer.Pages
         private async void Page_Drop(object sender, DragEventArgs e)
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-            MainWindow.Player.AddQueue(tracks);
             await Task.Run(() =>
             {
                 DatabaseUtils.Import(tracks);
             });          
-            MainWindow.Player.PlayMusic(); 
         }
 
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)

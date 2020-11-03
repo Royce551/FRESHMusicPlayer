@@ -166,5 +166,14 @@ namespace FRESHMusicPlayer.Forms
         private void SaveMenuItem(object sender, RoutedEventArgs e) => SaveButton();
 
         private void ExitMenuItem(object sender, RoutedEventArgs e) => Close();
+
+        private void Window_DragEnter(object sender, DragEventArgs e) => e.Effects = DragDropEffects.Copy;
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
+            FilePaths = tracks.ToList();
+            InitFields();
+        }
     }
 }
