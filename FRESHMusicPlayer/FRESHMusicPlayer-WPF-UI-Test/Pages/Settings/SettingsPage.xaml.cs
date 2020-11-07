@@ -175,7 +175,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void Maintanence_ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            ConfigurationHandler.Write(new ConfigurationFile());
+            App.Config = new ConfigurationFile();
             InitFields();
         }
         private void Maintanence_NukeButton_Click(object sender, RoutedEventArgs e)
