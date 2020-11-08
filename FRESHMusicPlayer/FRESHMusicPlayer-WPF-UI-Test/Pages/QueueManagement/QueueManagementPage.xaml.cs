@@ -1,11 +1,11 @@
-﻿using ATL;
-using ATL.Playlist;
+﻿using ATL.Playlist;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,11 +25,12 @@ namespace FRESHMusicPlayer.Pages
             InitializeComponent();
             PopulateList();
             MainWindow.Player.QueueChanged += Player_QueueChanged;
+            MainWindow.Player.SongStopped += Player_SongStopped;
         }
 
-        public void PopulateList() // God have mercy on future me/others.
+        public void PopulateList()
         {
-            displayqueue.Enqueue(MainWindow.Player.Queue);
+            displayqueue.Enqueue(MainWindow.Player.Queue); // Queue of pending queue management updates
             async void GetResults()
             {
                 var list = displayqueue.Dequeue();
@@ -37,7 +38,7 @@ namespace FRESHMusicPlayer.Pages
                 int number = 1;
                 SetControlEnabled(false);
                 QueueList.Items.Clear();
-                await Task.Run(() =>
+                await Task.Run(() => // Display controls
                 {
                     foreach (var song in list)
                     {
@@ -48,10 +49,11 @@ namespace FRESHMusicPlayer.Pages
                         Dispatcher.Invoke(() => QueueList.Items.Add(entry));
                         if (entry.Index + 1 == MainWindow.Player.QueuePosition) currentIndex = entry.Index;
                         if (MainWindow.Player.QueuePosition < number) nextlength += dbTrack.Length;
+                        if (number % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                         number++;
                     }
                 });
-                if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView();
+                if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
                 RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0, 0, 0, nextlength).ToString(@"hh\:mm\:ss");
                 SetControlEnabled(true);
                 taskisrunning = false;
@@ -70,15 +72,12 @@ namespace FRESHMusicPlayer.Pages
             AddPlaylistButton.IsEnabled = enabled;
             ClearQueueButton.IsEnabled = enabled;
         }
-        private void Player_QueueChanged(object sender, EventArgs e)
-        {
-
-            PopulateList();
-        }
-
+        private void Player_QueueChanged(object sender, EventArgs e) => PopulateList();
+        private void Player_SongStopped(object sender, EventArgs e) => PopulateList();
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             MainWindow.Player.QueueChanged -= Player_QueueChanged;
+            MainWindow.Player.SongStopped -= Player_SongStopped;
             QueueList.Items.Clear();
         }
 

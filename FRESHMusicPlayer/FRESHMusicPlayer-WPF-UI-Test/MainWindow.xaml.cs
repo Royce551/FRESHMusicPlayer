@@ -6,11 +6,9 @@ using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using LiteDB;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -345,10 +343,18 @@ namespace FRESHMusicPlayer
         private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
         private bool isDragging = false;
-        private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e) => isDragging = true;
+        private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            isDragging = true;
+            progressTimer.Stop();
+        }
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            if (Player.Playing) Player.RepositionMusic((int)ProgressBar.Value);
+            if (Player.Playing)
+            {
+                Player.RepositionMusic((int)ProgressBar.Value);
+                progressTimer.Start();
+            }
             isDragging = false;
         }
 
@@ -359,6 +365,11 @@ namespace FRESHMusicPlayer
                 Player.RepositionMusic((int)ProgressBar.Value);
                 ProgressTick();
             }
+        }
+        private void ProgressBar_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Player.Playing && !isDragging) Player.RepositionMusic((int)ProgressBar.Value);
+            ProgressTick();
         }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -614,5 +625,7 @@ namespace FRESHMusicPlayer
             VolumeBar.Value += e.Delta / 100 * 3;
             if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();       
         }
+
+        
     }
 }
