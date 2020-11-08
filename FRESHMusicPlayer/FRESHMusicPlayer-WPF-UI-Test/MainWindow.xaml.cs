@@ -572,17 +572,24 @@ namespace FRESHMusicPlayer
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
-                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
-                Window window = GetWindow(this);
-                var wih = new WindowInteropHelper(window);
-                IntPtr hWnd = wih.Handle;
-                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
-                Smtc.IsPlayEnabled = true;
-                Smtc.IsPauseEnabled = true;
-                Smtc.IsNextEnabled = true;
-                Smtc.IsStopEnabled = true;
-                Smtc.IsPreviousEnabled = true;
-                Smtc.ButtonPressed += Smtc_ButtonPressed;
+                try
+                {
+                    var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
+                    Window window = GetWindow(this);
+                    var wih = new WindowInteropHelper(window);
+                    IntPtr hWnd = wih.Handle;
+                    Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
+                    Smtc.IsPlayEnabled = true;
+                    Smtc.IsPauseEnabled = true;
+                    Smtc.IsNextEnabled = true;
+                    Smtc.IsStopEnabled = true;
+                    Smtc.IsPreviousEnabled = true;
+                    Smtc.ButtonPressed += Smtc_ButtonPressed;
+                }
+                catch
+                {
+                    // TODO: HACK - ignored; the way i'm detecting windows 10 currently does not work
+                }
             }
             else Smtc = null;
             if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
@@ -592,13 +599,20 @@ namespace FRESHMusicPlayer
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
-                Smtc.PlaybackStatus = status;
-                var updater = Smtc.DisplayUpdater;
-                updater.Type = MediaPlaybackType.Music;
-                updater.MusicProperties.Artist = Artist;
-                updater.MusicProperties.AlbumArtist = AlbumArtist;
-                updater.MusicProperties.Title = Title;
-                updater.Update();
+                try
+                {
+                    Smtc.PlaybackStatus = status;
+                    var updater = Smtc.DisplayUpdater;
+                    updater.Type = MediaPlaybackType.Music;
+                    updater.MusicProperties.Artist = Artist;
+                    updater.MusicProperties.AlbumArtist = AlbumArtist;
+                    updater.MusicProperties.Title = Title;
+                    updater.Update();
+                }
+                catch
+                {
+                    // TODO: HACK - ignored; the way i'm detecting windows 10 currently does not work
+                }
             }
             if (App.Config.IntegrateDiscordRPC)
             {

@@ -1,21 +1,12 @@
 ﻿using ATL;
-using FRESHMusicPlayer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.IO;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using Imaging = System.Drawing.Imaging;
-using System.Windows.Shapes;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -24,6 +15,7 @@ namespace FRESHMusicPlayer.Pages
     /// </summary>
     public partial class TrackInfoPage : Page
     {
+        private readonly string tempPath = Path.Combine(Path.GetTempPath() + "FMPalbumart.png");
         public TrackInfoPage()
         {
             InitializeComponent();
@@ -70,6 +62,7 @@ namespace FRESHMusicPlayer.Pages
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             MainWindow.Player.SongChanged -= Player_SongChanged;
+            if (File.Exists(tempPath)) File.Delete(tempPath);
         }
 
         private void Rectangle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -79,8 +72,8 @@ namespace FRESHMusicPlayer.Pages
             foreach (PictureInfo pic in embeddedPictures)
             {
                 System.Drawing.Image x = System.Drawing.Image.FromStream(new MemoryStream(pic.PictureData));
-                x.Save(System.IO.Path.GetTempPath() + "FMPalbumart.png", Imaging.ImageFormat.Png);
-                System.Diagnostics.Process.Start(System.IO.Path.GetTempPath() + "FMPalbumart.png");
+                x.Save(tempPath, Imaging.ImageFormat.Png);
+                System.Diagnostics.Process.Start(tempPath);
                 x.Dispose();
             }
         }

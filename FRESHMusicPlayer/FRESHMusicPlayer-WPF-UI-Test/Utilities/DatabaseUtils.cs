@@ -17,24 +17,7 @@ namespace FRESHMusicPlayer.Utilities
         {
             var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
             var z = new List<DatabaseTrack>();
-            foreach (string path in x.Tracks)
-            {
-                var dbTrack = MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").FindOne(y => y.Path == path);
-                if (dbTrack != null) z.Add(dbTrack); // If track is in db, pull metadata from it (much faster than having to use ATL)
-                else
-                {
-                    var track = new Track(path);
-                    z.Add(new DatabaseTrack
-                    {
-                        Artist = track.Artist,
-                        Title = track.Title,
-                        Album = track.Album,
-                        Length = track.Duration,
-                        Path = path,
-                        TrackNumber = track.TrackNumber
-                    });
-                }
-            }
+            foreach (string path in x.Tracks) z.Add(GetFallbackTrack(path));
             return z;
         }
         public static void AddTrackToPlaylist(string playlist, string path)
