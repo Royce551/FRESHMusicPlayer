@@ -15,7 +15,7 @@ namespace FRESHMusicPlayer.Pages
         public bool AppRestartNeeded = false;
 
         private bool pageInitialized = false;
-        private readonly ConfigurationFile workingConfig = new ConfigurationFile(); // Instance of config that's compared to the actual config file to set AppRestartNeeded.
+        private readonly ConfigurationFile workingConfig = new ConfigurationFile { Language = App.Config.Language, Theme = App.Config.Theme }; // Copy of config that's compared to the actual config file to set AppRestartNeeded.
 
         public SettingsPage()
         {
@@ -189,8 +189,8 @@ namespace FRESHMusicPlayer.Pages
 
         private void RestartNowButton_Click(object sender, RoutedEventArgs e)
         {
-            WinForms.Application.Restart();
             Application.Current.Shutdown();
+            WinForms.Application.Restart();
         }
 
         private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e) => await UpdateHandler.UpdateApp();

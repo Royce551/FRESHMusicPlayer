@@ -67,8 +67,8 @@ namespace FRESHMusicPlayer.Handlers
         }
         private static void RestartApp()
         {
-            WinForms.Application.Restart();
             Application.Current.Shutdown();
+            WinForms.Application.Restart();
         }
     }
 }
