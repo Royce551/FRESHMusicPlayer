@@ -1,5 +1,5 @@
 ﻿using ATL;
-using FRESHMusicPlayer.Forms;
+using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;

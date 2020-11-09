@@ -28,7 +28,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public UpdateMode UpdateMode { get; set; } = UpdateMode.Prompt;
         public DateTime UpdatesLastChecked { get; set; }
         public Skin Theme { get; set; } = Skin.Dark;
-        public string AccentColorHex { get; set; }
         public int Volume { get; set; } = 100;
         public SelectedMenus CurrentMenu { get; set; } = SelectedMenus.Import;
     }

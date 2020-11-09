@@ -1,0 +1,71 @@
+﻿<Window x:Class="FRESHMusicPlayer.Forms.TagEditor.Integrations.ReleaseIntegrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
+      xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor.Integrations"
+      mc:Ignorable="d" 
+      Height="450" Width="600" SizeToContent="WidthAndHeight"
+      Title="ReleaseIntegrationPage">
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50px"/>
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}" Grid.Row="0" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="YearLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="GenreLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="AlbumLabel" Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="ArtistBox" Grid.Row="1" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+                <TextBlock x:Name="YearBox" Grid.Row="3" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+                <TextBlock x:Name="GenreBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+                <TextBlock x:Name="AlbumBox" Grid.Row="5" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+            </Grid>
+            <TextBlock x:Name="EditingHeader" Grid.Row="1" Grid.ColumnSpan="2" TextTrimming="WordEllipsis" Text="Line up the file with the track, then press OK." Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Padding="10,5"/>
+            <ListBox x:Name="IntegrationItemBox" Grid.Row="2" Background="{StaticResource SecondaryColor}" Margin="10,0,10,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+            <ListBox x:Name="FileItemBox" Grid.Row="2" Grid.Column="1" Background="{StaticResource SecondaryColor}" Margin="0,0,10,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+            <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="{StaticResource BackgroundColor}" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Link" Grid.Column="0" Text="Test" Foreground="#3399FF" FontSize="14" VerticalAlignment="Center" Margin="10,0" MouseLeftButtonDown="Link_MouseLeftButtonDown" Cursor="Hand" TextTrimming="CharacterEllipsis"/>
+                <Button x:Name="DownButton" Grid.Column="1" Content="▼" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="DownButton_Click"/>
+                <Button x:Name="UpButton" Grid.Column="2" Content="▲" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="UpButton_Click"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="3" Content="OK" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="OKButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

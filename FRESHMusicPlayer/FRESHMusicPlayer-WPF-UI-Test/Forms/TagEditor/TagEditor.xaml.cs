@@ -9,8 +9,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Winforms = System.Windows.Forms;
 using System.Windows.Shapes;
+using FRESHMusicPlayer.Forms.TagEditor.Integrations;
 
-namespace FRESHMusicPlayer.Forms
+namespace FRESHMusicPlayer.Forms.TagEditor
 {
     /// <summary>
     /// Interaction logic for TagEditor.xaml
@@ -174,6 +175,34 @@ namespace FRESHMusicPlayer.Forms
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
             FilePaths = tracks.ToList();
             InitFields();
+        }
+
+        private void DiscogsSourceMenuItem_Click(object sender, RoutedEventArgs e) => OpenAlbumIntegration(new DiscogsIntegration());
+        private void OpenAlbumIntegration(IReleaseIntegration integration)
+        {
+            var dialog = new FMPTextEntryBox("Album", AlbumBox.Text);
+            dialog.ShowDialog();
+            if (!dialog.OK) return;
+
+            string query = dialog.Response;
+            var results = integration.Search(query);
+            
+            var index = 0;
+            while (true)
+            {
+                try
+                {
+                    var filePath = FilePaths[0];
+                    var release = integration.Fetch(results[index].Id);
+                    var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
+                    editor.Show();
+                    return;
+                }
+                catch
+                {
+                    index++;
+                }
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿<Window x:Class="FRESHMusicPlayer.Forms.TagEditor"
+﻿<Window x:Class="FRESHMusicPlayer.Forms.TagEditor.TagEditor"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
-        xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
+        xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor"
         mc:Ignorable="d"
         Title="TagEditor" Height="451" Width="600" Closing="Window_Closing" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True">
     <Grid Background="{StaticResource BackgroundColor}">
@@ -22,7 +22,7 @@
                 <MenuItem Header="{x:Static resx:Resources.MENUBAR_EXIT}" Click="ExitMenuItem"/>
             </MenuItem>
             <MenuItem Header="{x:Static resx:Resources.MENUBAR_TAGSOURCES}">
-                <MenuItem Header="Coming soon to a future version of FMP!"/>
+                <MenuItem x:Name="DiscogsSourceMenuItem" Header="Discogs" Click="DiscogsSourceMenuItem_Click"/>
             </MenuItem>
         </Menu>
         <ScrollViewer Grid.Row="1">

@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+
+namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
+{
+    class DiscogsIntegration : IReleaseIntegration
+    {
+        private readonly HttpClient httpClient;
+        private readonly string Key = "rYhrWVjHmbqOhVijxBtk";
+        private readonly string Secret = "TaUMdjJnmmcjGttJbegdmRyOHyqQxljK";
+
+        public bool NeedsInternetConnection => true;
+        public DiscogsIntegration()
+        {
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/8.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
+        }
+
+        public TagEditorRelease Fetch(string id)
+        {
+            var json = JObject.Parse(httpClient.GetStringAsync($"https://api.discogs.com/releases/{id}").Result);
+            var release = new TagEditorRelease // Format for releases: https://www.discogs.com/developers#page:database,header:database-release
+            {
+                Id = json?.SelectToken("id").ToString(),
+                Artist = json?.SelectToken("artists[0].name").ToString(),
+                Name = json?.SelectToken("title").ToString(),
+                Year = int.Parse(json?.SelectToken("year").ToString()),
+                Genre = json?.SelectToken("genres[0]").ToString(),
+                URL = json?.SelectToken("uri").ToString(),
+                Tracks = new List<TagEditorTrack>()
+            };
+            foreach (var x in json.SelectToken("tracklist"))
+            {
+                release.Tracks.Add(new TagEditorTrack
+                {
+                    TrackNumber = int.Parse(x.SelectToken("position").ToString()),
+                    Title = x.SelectToken("title").ToString()
+                });
+            }
+            return release;
+        }
+
+        public List<(string Name, string Id)> Search(string query)
+        {
+            var releases = new List<(string Name, string Id)>();
+            var json = JObject.Parse(httpClient.GetStringAsync($"https://api.discogs.com/database/search?q={{{query}}}&{{track}}&per_page=1&key={Key}&secret={Secret}").Result);
+            var z = json.SelectToken("results"); // Format for searching: https://www.discogs.com/developers#page:database,header:database-search
+            foreach (var x in z)
+            {
+                releases.Add((x.SelectToken("title").ToString(), x.SelectToken("id").ToString()));
+            }
+            return releases;
+        }
+    }
+}
