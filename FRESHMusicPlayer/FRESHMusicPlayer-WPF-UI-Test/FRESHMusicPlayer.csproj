@@ -98,7 +98,11 @@
       <DependentUpon>PlaylistManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\TagEditor\Integrations\DiscogsIntegration.cs" />
+    <Compile Include="Forms\TagEditor\Integrations\IntegrationDisambiguation.xaml.cs">
+      <DependentUpon>IntegrationDisambiguation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TagEditor\Integrations\IReleaseIntegration.cs" />
+    <Compile Include="Forms\TagEditor\Integrations\MusicBrainzIntegration.cs" />
     <Compile Include="Forms\TagEditor\Integrations\ReleaseIntegrationPage.xaml.cs">
       <DependentUpon>ReleaseIntegrationPage.xaml</DependentUpon>
     </Compile>
@@ -150,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Playlists\PlaylistManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\TagEditor\Integrations\IntegrationDisambiguation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

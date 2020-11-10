@@ -178,6 +178,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         }
 
         private void DiscogsSourceMenuItem_Click(object sender, RoutedEventArgs e) => OpenAlbumIntegration(new DiscogsIntegration());
+        private void MusicBrainzSourceMenuItem_Click(object sender, RoutedEventArgs e) => OpenAlbumIntegration(new MusicBrainzIntegration());
         private void OpenAlbumIntegration(IReleaseIntegration integration)
         {
             var dialog = new FMPTextEntryBox("Album", AlbumBox.Text);
@@ -186,23 +187,30 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
             string query = dialog.Response;
             var results = integration.Search(query);
-            
+
             var index = 0;
-            while (true)
+            if (results.Count > 1)
             {
-                try
-                {
-                    var filePath = FilePaths[0];
-                    var release = integration.Fetch(results[index].Id);
-                    var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
-                    editor.Show();
-                    return;
-                }
-                catch
-                {
-                    index++;
-                }
+                var disambiguation = new IntegrationDisambiguation(results);
+                disambiguation.ShowDialog();
+                if (disambiguation.OK) index = disambiguation.SelectedIndex;
+                else return;
+            }
+            
+            var filePath = FilePaths[0];
+            var release = integration.Fetch(results[index].Id);
+            var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
+            editor.ShowDialog();
+            if (editor.OK)
+            {
+                ArtistBox.Text = editor.TrackToSave.Artist;
+                TitleBox.Text = editor.TrackToSave.Title;
+                AlbumBox.Text = editor.TrackToSave.Album;
+                GenreBox.Text = editor.TrackToSave.Genre;
+                YearBox.Text = editor.TrackToSave.Year.ToString();
+                TrackNumBox.Text = editor.TrackToSave.TrackNumber.ToString();
             }
         }
+
     }
 }

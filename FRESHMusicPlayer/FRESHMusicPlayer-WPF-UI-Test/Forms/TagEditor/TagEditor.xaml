@@ -23,6 +23,7 @@
             </MenuItem>
             <MenuItem Header="{x:Static resx:Resources.MENUBAR_TAGSOURCES}">
                 <MenuItem x:Name="DiscogsSourceMenuItem" Header="Discogs" Click="DiscogsSourceMenuItem_Click"/>
+                <MenuItem x:Name="MusicBrainzSourceMenuItem" Header="MusicBrainz" Click="MusicBrainzSourceMenuItem_Click"/>
             </MenuItem>
         </Menu>
         <ScrollViewer Grid.Row="1">

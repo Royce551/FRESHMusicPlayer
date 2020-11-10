@@ -10,6 +10,9 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
     /// </summary>
     public partial class ReleaseIntegrationPage : Window
     {
+        public Track TrackToSave { get; set; }
+        public bool OK { get; set; } = false;
+
         private readonly TagEditorRelease release;
         private readonly Track track;
         private readonly string filePath;
@@ -22,6 +25,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             this.filePath = filePath;
             currentFilePosition = track.TrackNumber;
             InitializeComponent();
+            if (currentFilePosition >= release.Tracks.Count) currentFilePosition = 0;
             InitFields();
             ValidatePosition();
         }
@@ -66,7 +70,20 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
                 DownButton.IsEnabled = true;
             }
         }
-        private void OKButton_Click(object sender, RoutedEventArgs e) => Close();
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            TrackToSave = new Track
+            {
+                Artist = release.Artist,
+                Album = release.Name,
+                Year = release.Year,
+                Genre = release.Genre,
+                Title = release.Tracks[currentFilePosition - 1].Title,
+                TrackNumber = release.Tracks[currentFilePosition - 1].TrackNumber
+            };
+            OK = true;
+            Close();
+        }
 
         private void UpButton_Click(object sender, RoutedEventArgs e)
         {
