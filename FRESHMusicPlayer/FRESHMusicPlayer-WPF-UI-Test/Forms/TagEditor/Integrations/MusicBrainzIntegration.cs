@@ -28,8 +28,6 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
                 Id = id,
                 Artist = json.SelectToken("artist-credit[0].name").ToString(),
                 Name = json.SelectToken("title").ToString(),
-                Year = 0,
-                Genre = string.Empty,
                 URL = $"https://musicbrainz.org/release/{id}",
                 Tracks = new List<TagEditorTrack>()
             };

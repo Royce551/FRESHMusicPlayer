@@ -22,10 +22,8 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
         public bool OK { get; set; } = false;
         public int SelectedIndex { get; set; } = 0;
 
-        private readonly List<(string Name, string Id)> releases;
         public IntegrationDisambiguation(List<(string Name, string Id)> releases)
         {
-            this.releases = releases;
             InitializeComponent();
             foreach (var release in releases)
             {

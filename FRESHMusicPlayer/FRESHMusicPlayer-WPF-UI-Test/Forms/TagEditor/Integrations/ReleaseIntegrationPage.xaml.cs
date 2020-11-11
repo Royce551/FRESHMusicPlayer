@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
 {
@@ -31,11 +32,12 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
         }
         public void InitFields()
         {
-            ArtistBox.Text = release.Artist;
-            AlbumBox.Text = Title = release.Name;
-            GenreBox.Text = release.Genre;
-            YearBox.Text = release.Year.ToString();
+            SetField(ArtistBox, ArtistLabel, release.Artist);
+            SetField(AlbumBox, AlbumLabel, release.Name);
+            SetField(GenreBox, GenreLabel, release.Genre);
+            SetField(YearBox, YearLabel, release.Year.ToString() == "0" ? null : release.Year.ToString());
             Link.Text = release.URL;
+            Title = release.Name;
 
             PopulateLists();
         }
@@ -68,6 +70,15 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             {
                 UpButton.IsEnabled = true;
                 DownButton.IsEnabled = true;
+            }
+        }
+        private void SetField(TextBlock box, TextBlock label, string value)
+        {
+            if (value != null) box.Text = value;
+            else
+            {
+                box.Visibility = Visibility.Collapsed;
+                label.Visibility = Visibility.Collapsed;
             }
         }
         private void OKButton_Click(object sender, RoutedEventArgs e)

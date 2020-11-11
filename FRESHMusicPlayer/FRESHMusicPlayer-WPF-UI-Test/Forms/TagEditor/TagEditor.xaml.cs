@@ -189,6 +189,11 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             var results = integration.Search(query);
 
             var index = 0;
+            if (results.Count == 0)
+            {
+                MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             if (results.Count > 1)
             {
                 var disambiguation = new IntegrationDisambiguation(results);

@@ -37,7 +37,7 @@
                     <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right"/>
                 <TextBlock x:Name="YearLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
                 <TextBlock x:Name="GenreLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
                 <TextBlock x:Name="AlbumLabel" Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />

@@ -6,7 +6,7 @@
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor.Integrations"
         mc:Ignorable="d"
-        Title="IntegrationDisambiguation" Width="600" SizeToContent="Height" >
+        Title="IntegrationDisambiguation" Width="600" Height="400" >
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <StackPanel Background="{StaticResource BackgroundColor}">
             <TextBlock Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="There are multiple search results for this album. Which one do you want?" TextWrapping="Wrap" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"/>
-            <ListBox x:Name="ReleaseBox" Background="{StaticResource SecondaryColor}" Margin="15,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+            <ListBox x:Name="ReleaseBox" Background="{StaticResource SecondaryColor}" Margin="15,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="265"/>
         </StackPanel>
         <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
             <Grid.ColumnDefinitions>

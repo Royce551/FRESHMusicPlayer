@@ -293,6 +293,7 @@ namespace FRESHMusicPlayer
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             progressTimer.Stop();
             SetIntegrations(MediaPlaybackStatus.Stopped);
+            SetCoverArtVisibility(false);
         }
 
         private void Player_SongChanged(object sender, EventArgs e)

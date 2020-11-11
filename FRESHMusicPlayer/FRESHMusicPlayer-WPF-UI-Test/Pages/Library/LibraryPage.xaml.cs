@@ -120,7 +120,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in DatabaseUtils.ReadTracksForAlbum(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}")));
                     length += thing.Length;
                 }
             });
