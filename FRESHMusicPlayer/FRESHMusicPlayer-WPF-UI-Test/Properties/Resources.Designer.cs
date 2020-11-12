@@ -752,7 +752,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album Artist - .
+        ///   Looks up a localized string similar to Album Artist.
         /// </summary>
         public static string TAGEDITOR_ALBUMARTIST {
             get {
@@ -761,7 +761,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Artist - .
+        ///   Looks up a localized string similar to Artist.
         /// </summary>
         public static string TAGEDITOR_ARTIST {
             get {
@@ -788,7 +788,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Composer - .
+        ///   Looks up a localized string similar to Composer.
         /// </summary>
         public static string TAGEDITOR_COMPOSER {
             get {
@@ -797,7 +797,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disc Number - .
+        ///   Looks up a localized string similar to Disc Number.
         /// </summary>
         public static string TAGEDITOR_DISCNUM {
             get {
@@ -833,7 +833,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title - .
+        ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string TAGEDITOR_TITLE {
             get {
@@ -842,7 +842,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track Number - .
+        ///   Looks up a localized string similar to Track Number.
         /// </summary>
         public static string TAGEDITOR_TRACKNUM {
             get {
@@ -851,7 +851,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album - .
+        ///   Looks up a localized string similar to Album.
         /// </summary>
         public static string TRACKINFO_ALBUM {
             get {
@@ -869,7 +869,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitrate - .
+        ///   Looks up a localized string similar to Bitrate.
         /// </summary>
         public static string TRACKINFO_BITRATE {
             get {
@@ -878,7 +878,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disc .
+        ///   Looks up a localized string similar to Disc.
         /// </summary>
         public static string TRACKINFO_DISCNUMBER {
             get {
@@ -887,7 +887,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Genre - .
+        ///   Looks up a localized string similar to Genre.
         /// </summary>
         public static string TRACKINFO_GENRE {
             get {
@@ -914,7 +914,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track .
+        ///   Looks up a localized string similar to Track.
         /// </summary>
         public static string TRACKINFO_TRACKNUMBER {
             get {
@@ -923,7 +923,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Year - .
+        ///   Looks up a localized string similar to Year.
         /// </summary>
         public static string TRACKINFO_YEAR {
             get {

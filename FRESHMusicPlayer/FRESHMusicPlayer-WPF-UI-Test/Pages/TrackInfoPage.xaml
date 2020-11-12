@@ -10,6 +10,10 @@
       Title="TrackInfoPage" Unloaded="Page_Unloaded">
 
     <Grid Background="{StaticResource SecondaryColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
@@ -23,20 +27,24 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition x:Name="CoverArtRow" Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Margin="10,5,5,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_TECHNICALINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" Panel.ZIndex="1"/>
-        <TextBlock x:Name="BitrateLabel" Margin="20,5,5,0" Grid.Row="2" TextWrapping="Wrap" Text="{x:Static resx:Resources.TRACKINFO_BITRATE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
-        <TextBlock Margin="10,5,5,0" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUMINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" Panel.ZIndex="1"/>
-        <TextBlock x:Name="DiscNumberLabel" Margin="20,5,5,0" Grid.Row="4" TextWrapping="Wrap" Text="{x:Static resx:Resources.TRACKINFO_DISCNUMBER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
-        <TextBlock x:Name="TrackNumberLabel" Margin="20,5,5,0" Grid.Row="5" TextWrapping="Wrap" Text="{x:Static resx:Resources.TRACKINFO_TRACKNUMBER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
-        <TextBlock Margin="10,5,5,0" Grid.Row="6" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_TRACKINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" Panel.ZIndex="1"/>
-        <TextBlock x:Name="YearLabel" Margin="20,5,5,0" Grid.Row="7" TextWrapping="Wrap" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
-        <TextBlock x:Name="GenreLabel" Margin="20,5,5,0" Grid.Row="8" TextWrapping="Wrap" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
-        <TextBlock x:Name="AlbumLabel" Margin="20,5,5,10" Grid.Row="9" TextWrapping="Wrap" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1"/>
-        <Image x:Name="CoverArtBox" Grid.Row="0" Grid.RowSpan="12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" >
+        <TextBlock x:Name="BitrateLabel" Margin="10,2,5,5" Grid.Row="1" TextWrapping="Wrap" TextAlignment="Right" Text="{x:Static resx:Resources.TRACKINFO_BITRATE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1" VerticalAlignment="Center"/>
+        <TextBlock x:Name="DiscNumberLabel" Margin="10,2,5,2" Grid.Row="2" TextWrapping="Wrap" TextAlignment="Right" Text="{x:Static resx:Resources.TRACKINFO_DISCNUMBER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1" VerticalAlignment="Center"/>
+        <TextBlock x:Name="TrackNumberLabel" Margin="10,2,5,5" Grid.Row="3" TextWrapping="Wrap" TextAlignment="Right" Text="{x:Static resx:Resources.TRACKINFO_TRACKNUMBER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1" VerticalAlignment="Center"/>
+        <TextBlock x:Name="YearLabel" Margin="10,2,5,2" Grid.Row="4" TextWrapping="Wrap" TextAlignment="Right" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1" VerticalAlignment="Center"/>
+        <TextBlock x:Name="GenreLabel" Margin="10,2,5,2" Grid.Row="5" TextWrapping="Wrap" TextAlignment="Right" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1" VerticalAlignment="Center"/>
+        <TextBlock x:Name="AlbumLabel" Margin="10,2,5,10" Grid.Row="6" TextWrapping="Wrap" TextAlignment="Right" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Panel.ZIndex="1" VerticalAlignment="Center"/>
+
+        <TextBlock x:Name="BitrateBox" Grid.Row="1" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,5" VerticalAlignment="Stretch" FontSize="14" TextWrapping="Wrap" Panel.ZIndex="1"/>
+        <TextBlock x:Name="DiscBox" Grid.Row="2" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="14" TextWrapping="Wrap" Panel.ZIndex="1"/>
+        <TextBlock x:Name="TrackBox" Grid.Row="3" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,5" VerticalAlignment="Stretch" FontSize="14" TextWrapping="Wrap" Panel.ZIndex="1"/>
+        <TextBlock x:Name="YearBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="14" TextWrapping="Wrap" Panel.ZIndex="1"/>
+        <TextBlock x:Name="GenreBox" Grid.Row="5" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="14" TextWrapping="Wrap" Panel.ZIndex="1"/>
+        <TextBlock x:Name="AlbumBox" Grid.Row="6" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,10" VerticalAlignment="Stretch" FontSize="14" TextWrapping="Wrap" Panel.ZIndex="1"/>
+        <Image x:Name="CoverArtBox" Grid.Row="0" Grid.RowSpan="12" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="0" >
             <Image.Effect>
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>
         </Image>
-        <Rectangle Fill="{StaticResource ForegroundColor}" Grid.Row="0" Grid.RowSpan="12"  Opacity="0.55" MouseRightButtonDown="Rectangle_MouseRightButtonDown"/>
+        <Rectangle  Fill="{StaticResource ForegroundColor}" Grid.Row="0" Grid.RowSpan="12" Grid.ColumnSpan="2" Opacity="0.55" MouseRightButtonDown="Rectangle_MouseRightButtonDown"/>
     </Grid>
 </Page>

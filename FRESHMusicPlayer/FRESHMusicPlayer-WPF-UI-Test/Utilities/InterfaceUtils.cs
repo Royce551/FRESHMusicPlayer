@@ -4,13 +4,22 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace FRESHMusicPlayer.Utilities
 {
-    public class Utils
+    public class InterfaceUtils
     {
+        public static void SetField(TextBlock box, TextBlock label, string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                box.Visibility = Visibility.Collapsed;
+                label.Visibility = Visibility.Collapsed;
+            }
+            else box.Text = value;
+        }
         public static IEnumerable<CultureInfo> GetAvailableCultures()
         {
             CultureInfo[] culture = CultureInfo.GetCultures(CultureTypes.AllCultures);

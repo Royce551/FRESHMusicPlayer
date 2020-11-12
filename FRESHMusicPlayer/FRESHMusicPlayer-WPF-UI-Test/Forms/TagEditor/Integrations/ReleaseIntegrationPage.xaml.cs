@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using FRESHMusicPlayer.Utilities;
 using System.Windows.Controls;
 
 namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
@@ -26,16 +27,16 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             this.filePath = filePath;
             currentFilePosition = track.TrackNumber;
             InitializeComponent();
-            if (currentFilePosition >= release.Tracks.Count) currentFilePosition = 0;
+            if (currentFilePosition >= release.Tracks.Count) currentFilePosition = 1;
             InitFields();
             ValidatePosition();
         }
         public void InitFields()
         {
-            SetField(ArtistBox, ArtistLabel, release.Artist);
-            SetField(AlbumBox, AlbumLabel, release.Name);
-            SetField(GenreBox, GenreLabel, release.Genre);
-            SetField(YearBox, YearLabel, release.Year.ToString() == "0" ? null : release.Year.ToString());
+            InterfaceUtils.SetField(ArtistBox, ArtistLabel, release.Artist);
+            InterfaceUtils.SetField(AlbumBox, AlbumLabel, release.Name);
+            InterfaceUtils.SetField(GenreBox, GenreLabel, release.Genre);
+            InterfaceUtils.SetField(YearBox, YearLabel, release.Year.ToString() == "0" ? null : release.Year.ToString());
             Link.Text = release.URL;
             Title = release.Name;
 
@@ -70,15 +71,6 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             {
                 UpButton.IsEnabled = true;
                 DownButton.IsEnabled = true;
-            }
-        }
-        private void SetField(TextBlock box, TextBlock label, string value)
-        {
-            if (value != null) box.Text = value;
-            else
-            {
-                box.Visibility = Visibility.Collapsed;
-                label.Visibility = Visibility.Collapsed;
             }
         }
         private void OKButton_Click(object sender, RoutedEventArgs e)

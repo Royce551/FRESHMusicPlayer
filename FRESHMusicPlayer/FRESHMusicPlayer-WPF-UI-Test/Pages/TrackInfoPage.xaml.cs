@@ -1,10 +1,14 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Imaging = System.Drawing.Imaging;
 
@@ -32,30 +36,15 @@ namespace FRESHMusicPlayer.Pages
                 CoverArtRow.Height = new GridLength(0);
             }
             else CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-            if (!string.IsNullOrEmpty(track.Album))
-            {
-                AlbumLabel.Visibility = Visibility.Visible;
-                AlbumLabel.Text = Properties.Resources.TRACKINFO_ALBUM + track.Album;
-            }
-            else AlbumLabel.Visibility = Visibility.Collapsed;
-            if (!string.IsNullOrEmpty(track.Genre))
-            {
-                GenreLabel.Visibility = Visibility.Visible;
-                GenreLabel.Text = Properties.Resources.TRACKINFO_GENRE + track.Genre;
-            }
-            else GenreLabel.Visibility = Visibility.Collapsed;
-            if (track.Year != 0) 
-            {
-                YearLabel.Visibility = Visibility.Visible;
-                YearLabel.Text = Properties.Resources.TRACKINFO_YEAR + track.Year;
-            }
-            else YearLabel.Visibility = Visibility.Collapsed;
+            InterfaceUtils.SetField(AlbumBox, AlbumLabel, track.Album);
+            InterfaceUtils.SetField(GenreBox, GenreLabel, track.Genre);
+            InterfaceUtils.SetField(YearBox, YearLabel, track.Year.ToString() == "0" ? null : track.Year.ToString());
 
-            TrackNumberLabel.Text = Properties.Resources.TRACKINFO_TRACKNUMBER + track.TrackNumber;
-            if (track.TrackTotal > 0) TrackNumberLabel.Text += "/" + track.TrackTotal;
-            DiscNumberLabel.Text = Properties.Resources.TRACKINFO_DISCNUMBER + track.DiscNumber;
-            if (track.DiscTotal > 0) DiscNumberLabel.Text += "/" + track.DiscTotal;
-            BitrateLabel.Text = Properties.Resources.TRACKINFO_BITRATE + track.Bitrate + "kbps";
+            TrackBox.Text = track.TrackNumber.ToString();
+            if (track.TrackTotal > 0) TrackBox.Text += "/" + track.TrackTotal;
+            DiscBox.Text = track.DiscNumber.ToString();
+            if (track.DiscTotal > 0) DiscBox.Text += "/" + track.DiscTotal;
+            BitrateBox.Text = track.Bitrate + "kbps";
         }
         private void Player_SongChanged(object sender, EventArgs e) => PopulateFields();
 
@@ -77,5 +66,6 @@ namespace FRESHMusicPlayer.Pages
                 x.Dispose();
             }
         }
+
     }
 }
