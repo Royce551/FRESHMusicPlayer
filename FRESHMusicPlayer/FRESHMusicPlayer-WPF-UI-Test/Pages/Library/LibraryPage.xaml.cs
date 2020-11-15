@@ -60,7 +60,7 @@ namespace FRESHMusicPlayer.Pages.Library
             });
             var lengthTimeSpan = new TimeSpan(0, 0, 0, length);
             InfoLabel.Visibility = Visibility.Visible;
-            InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {Math.Round(lengthTimeSpan.TotalHours)}:{lengthTimeSpan:mm}:{lengthTimeSpan:ss}";
+            InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {Math.Floor(lengthTimeSpan.TotalHours)}:{lengthTimeSpan:mm}:{lengthTimeSpan:ss}";
         }
         public async void ShowArtists()
         {

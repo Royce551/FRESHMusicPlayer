@@ -15,9 +15,9 @@ namespace FRESHMusicPlayer.Handlers
 {
     public class UpdateHandler
     {
-        public static async Task UpdateApp(bool useDeltaPatching = true)
+        public static async Task UpdateApp(bool useDeltaPatching = true, bool forceUpdate = false)
         {
-            if (App.Config.UpdateMode == UpdateMode.Manual) return;
+            if (App.Config.UpdateMode == UpdateMode.Manual && forceUpdate) return;
             // Updater not present, probably standalone
             if (!File.Exists(Path.Combine(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"../")), "Update.exe"))) return;
             App.Config.UpdatesLastChecked = DateTime.Now;

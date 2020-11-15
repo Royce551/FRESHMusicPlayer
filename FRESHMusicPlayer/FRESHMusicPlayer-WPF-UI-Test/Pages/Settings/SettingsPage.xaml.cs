@@ -193,7 +193,11 @@ namespace FRESHMusicPlayer.Pages
             WinForms.Application.Restart();
         }
 
-        private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e) => await UpdateHandler.UpdateApp();
+        private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateHandler.UpdateApp(forceUpdate:true);
+            InitFields();
+        }
     }
     public enum LanguageCombo
     {
