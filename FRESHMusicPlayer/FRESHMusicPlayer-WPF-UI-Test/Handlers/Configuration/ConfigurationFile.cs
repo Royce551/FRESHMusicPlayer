@@ -13,18 +13,13 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         Prompt,
         Manual
     }
-    public enum ReleaseStream
-    {
-        Stable,
-        PreRelease
-    }
     public class ConfigurationFile
     {
         public string Language { get; set; } = "en";
-        public int OutputDevice { get; set; }
         public bool ShowTimeInWindow { get; set; } = false;
         public bool IntegrateDiscordRPC { get; set; } = false;
         public bool IntegrateSMTC { get; set; } = true;
+        public bool ShowRemainingProgress { get; set; } = false;
         public UpdateMode UpdateMode { get; set; } = UpdateMode.Prompt;
         public DateTime UpdatesLastChecked { get; set; }
         public Skin Theme { get; set; } = Skin.Dark;

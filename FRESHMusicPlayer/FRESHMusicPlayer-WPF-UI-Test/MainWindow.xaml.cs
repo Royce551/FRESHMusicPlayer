@@ -18,6 +18,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Windows.Media;
 using Winforms = System.Windows.Forms;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace FRESHMusicPlayer
 {
@@ -48,7 +50,7 @@ namespace FRESHMusicPlayer
 
         public SystemMediaTransportControls Smtc;
         public bool PauseAfterCurrentTrack = false;
-        public MainWindow()
+        public MainWindow(string initialFile = null)
         {
             InitializeComponent();
             Player.SongChanged += Player_SongChanged;
@@ -84,7 +86,12 @@ namespace FRESHMusicPlayer
                     },
                     Type = NotificationType.Failure
                 });
-            }       
+            }    
+            if (initialFile != null)
+            {
+                Player.AddQueue(initialFile);
+                Player.PlayMusic();
+            }
         }
         private async void Window_SourceInitialized(object sender, EventArgs e)
         {
@@ -206,7 +213,7 @@ namespace FRESHMusicPlayer
                 HideAuxilliaryPane();
                 return;
             }
-            if (AuxilliaryPaneIsOpen) HideAuxilliaryPane();
+            if (AuxilliaryPaneIsOpen) HideAuxilliaryPane(false);
 
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
@@ -220,13 +227,14 @@ namespace FRESHMusicPlayer
             RightFrame.NavigationService.RemoveBackEntry();
             AuxilliaryPaneIsOpen = true;
         }
-        public void HideAuxilliaryPane()
+        public async void HideAuxilliaryPane(bool animate = true)
         {
             Storyboard sb = new Storyboard();
             DoubleAnimation doubleAnimation = new DoubleAnimation(RightFrame.Width, 0, new TimeSpan(0, 0, 0, 0, 100));
             Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
             sb.Children.Add(doubleAnimation);
-            sb.Begin(RightFrame);
+            if (animate) await sb.BeginStoryboardAsync(RightFrame);
+            else sb.Begin(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
             AuxilliaryPaneUri = "";
@@ -381,6 +389,8 @@ namespace FRESHMusicPlayer
         private void ProgressTick()
         {
             ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
+            if (App.Config.ShowRemainingProgress) ProgressIndicator2.Text 
+                    = $"-{TimeSpan.FromSeconds(Player.CurrentBackend.TotalTime.TotalSeconds - Player.CurrentBackend.CurrentTime.TotalSeconds):mm\\:ss}";
             if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
             if (!isDragging) ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
             Player.AvoidNextQueue = false;
@@ -641,6 +651,10 @@ namespace FRESHMusicPlayer
             if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();       
         }
 
-        
+        private void ProgressIndicator2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (App.Config.ShowRemainingProgress) App.Config.ShowRemainingProgress = false;
+            else App.Config.ShowRemainingProgress = true;
+        }
     }
 }

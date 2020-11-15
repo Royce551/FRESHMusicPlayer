@@ -145,7 +145,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\SkinResourceDictionary.cs" />
-    <Compile Include="Utilities\CodeBehindAnimationUtils.cs" />
     <Compile Include="Utilities\DatabaseUtils.cs" />
     <Compile Include="Utilities\InterfaceUtils.cs" />
     <Compile Include="Utilities\WindowsInteropUtils.cs" />

@@ -19,7 +19,9 @@ namespace FRESHMusicPlayer
             Config = ConfigurationHandler.Read();
             if (Config.Language != "en") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
-            MainWindow window = new MainWindow();
+            MainWindow window;
+            if (e.Args.Length > 0) window = new MainWindow(e.Args[0]);
+            else window = new MainWindow();
             window.Show();
         }
         public static Skin CurrentSkin { get; set; } = Skin.Dark;
