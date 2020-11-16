@@ -9,6 +9,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
     interface IReleaseIntegration
     {
         bool NeedsInternetConnection { get; }
+        bool Worked { get; set; }
         List<(string Name, string Id)> Search(string query);
         TagEditorRelease Fetch(string id);
     }

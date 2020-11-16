@@ -583,24 +583,17 @@ namespace FRESHMusicPlayer
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
-                try
-                {
-                    var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
-                    Window window = GetWindow(this);
-                    var wih = new WindowInteropHelper(window);
-                    IntPtr hWnd = wih.Handle;
-                    Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
-                    Smtc.IsPlayEnabled = true;
-                    Smtc.IsPauseEnabled = true;
-                    Smtc.IsNextEnabled = true;
-                    Smtc.IsStopEnabled = true;
-                    Smtc.IsPreviousEnabled = true;
-                    Smtc.ButtonPressed += Smtc_ButtonPressed;
-                }
-                catch
-                {
-                    // TODO: HACK - ignored; the way i'm detecting windows 10 currently does not work
-                }
+                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
+                Window window = GetWindow(this);
+                var wih = new WindowInteropHelper(window);
+                IntPtr hWnd = wih.Handle;
+                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
+                Smtc.IsPlayEnabled = true;
+                Smtc.IsPauseEnabled = true;
+                Smtc.IsNextEnabled = true;
+                Smtc.IsStopEnabled = true;
+                Smtc.IsPreviousEnabled = true;
+                Smtc.ButtonPressed += Smtc_ButtonPressed;
             }
             else Smtc = null;
             if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Net.Http;
 using Winforms = System.Windows.Forms;
 using System.Windows.Shapes;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
@@ -22,9 +23,11 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         private List<string> filePathsToSaveInBackground = new List<string>();
         List<string> Displayfilepaths = new List<string>();
         private bool unsavedChanges = false;
+        private HttpClient httpClient = new HttpClient();
         public TagEditor(List<string> filePaths)
         {
             InitializeComponent();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/8.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
             FilePaths = filePaths;
             MainWindow.Player.SongChanged += Player_SongChanged;
             InitFields();
@@ -177,50 +180,49 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             InitFields();
         }
 
-        private void DiscogsSourceMenuItem_Click(object sender, RoutedEventArgs e) => OpenAlbumIntegration(new DiscogsIntegration());
-        private void MusicBrainzSourceMenuItem_Click(object sender, RoutedEventArgs e) => OpenAlbumIntegration(new MusicBrainzIntegration());
+        private void DiscogsSourceMenuItem_Click(object sender, RoutedEventArgs e) => OpenAlbumIntegration(new DiscogsIntegration(httpClient));
+        private void MusicBrainzSourceMenuItem_Click(object sender, RoutedEventArgs e) => OpenAlbumIntegration(new MusicBrainzIntegration(httpClient));
         private void OpenAlbumIntegration(IReleaseIntegration integration)
         {
-            var dialog = new FMPTextEntryBox("Album", AlbumBox.Text);
+
+            var dialog = new FMPTextEntryBox(Properties.Resources.TRACKINFO_ALBUM, AlbumBox.Text);
             dialog.ShowDialog();
             if (!dialog.OK) return;
 
-            try
+            string query = dialog.Response;
+            var results = integration.Search(query);
+
+            var index = 0;
+            if (!integration.Worked && integration.NeedsInternetConnection)
             {
-                string query = dialog.Response;
-                var results = integration.Search(query);
-
-                var index = 0;
-                if (results.Count == 0)
-                {
-                    MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                if (results.Count > 1)
-                {
-                    var disambiguation = new IntegrationDisambiguation(results);
-                    disambiguation.ShowDialog();
-                    if (disambiguation.OK) index = disambiguation.SelectedIndex;
-                    else return;
-                }
-
-                var filePath = FilePaths[0];
-                var release = integration.Fetch(results[index].Id);
-                var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
-                editor.ShowDialog();
-                if (editor.OK)
-                {
-                    ArtistBox.Text = editor.TrackToSave.Artist;
-                    TitleBox.Text = editor.TrackToSave.Title;
-                    AlbumBox.Text = editor.TrackToSave.Album;
-                    GenreBox.Text = editor.TrackToSave.Genre;
-                    YearBox.Text = editor.TrackToSave.Year.ToString();
-                    TrackNumBox.Text = editor.TrackToSave.TrackNumber.ToString();
-                }
+                MessageBox.Show("Looks like you aren't connected to the internet", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            catch (System.Net.Http.HttpRequestException)
+            if (results.Count == 0)
             {
+                MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (results.Count > 1)
+            {
+                var disambiguation = new IntegrationDisambiguation(results);
+                disambiguation.ShowDialog();
+                if (disambiguation.OK) index = disambiguation.SelectedIndex;
+                else return;
+            }
 
+            var filePath = FilePaths[0];
+            var release = integration.Fetch(results[index].Id);
+            var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
+            editor.ShowDialog();
+            if (editor.OK)
+            {
+                ArtistBox.Text = editor.TrackToSave.Artist;
+                TitleBox.Text = editor.TrackToSave.Title;
+                AlbumBox.Text = editor.TrackToSave.Album;
+                GenreBox.Text = editor.TrackToSave.Genre;
+                YearBox.Text = editor.TrackToSave.Year.ToString();
+                TrackNumBox.Text = editor.TrackToSave.TrackNumber.ToString();
             }
         }
 

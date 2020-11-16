@@ -15,10 +15,10 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
         private readonly string Secret = "TaUMdjJnmmcjGttJbegdmRyOHyqQxljK";
 
         public bool NeedsInternetConnection => true;
-        public DiscogsIntegration()
+        public bool Worked { get; set; } = true;
+        public DiscogsIntegration(HttpClient httpClient)
         {
-            httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/8.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
+            this.httpClient = httpClient;
         }
 
         public TagEditorRelease Fetch(string id)
@@ -49,7 +49,14 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
         public List<(string Name, string Id)> Search(string query)
         {
             var releases = new List<(string Name, string Id)>();
-            var json = JObject.Parse(httpClient.GetStringAsync($"https://api.discogs.com/database/search?q={{{query}}}&{{track}}&per_page=1&key={Key}&secret={Secret}").Result);
+            string jsonString;
+            try { jsonString = httpClient.GetStringAsync($"https://api.discogs.com/database/search?q={{{query}}}&{{track}}&per_page=1&key={Key}&secret={Secret}").Result; }
+            catch (HttpRequestException) 
+            {
+                Worked = false;
+                return releases;
+            }
+            var json = JObject.Parse(jsonString);
             var z = json.SelectToken("results"); // Format for searching: https://www.discogs.com/developers#page:database,header:database-search
             foreach (var x in z)
             {

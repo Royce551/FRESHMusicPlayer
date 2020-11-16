@@ -13,11 +13,11 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
     {
         private readonly HttpClient httpClient;
         public bool NeedsInternetConnection => true;
+        public bool Worked { get; set; } = true;
 
-        public MusicBrainzIntegration()
+        public MusicBrainzIntegration(HttpClient httpClient)
         {
-            httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/8.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
+            this.httpClient = httpClient;
         }
 
         public TagEditorRelease Fetch(string id)
@@ -45,7 +45,14 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
         public List<(string Name, string Id)> Search(string query)
         {
             var releases = new List<(string Name, string Id)>();
-            var json = JObject.Parse(httpClient.GetStringAsync($"https://musicbrainz.org/ws/2/release/?query={query}&fmt=json").Result);
+            string jsonString;
+            try { jsonString = httpClient.GetStringAsync($"https://musicbrainz.org/ws/2/release/?query={query}&fmt=json").Result; }
+            catch (HttpRequestException)
+            {
+                Worked = false;
+                return releases;
+            }
+            var json = JObject.Parse(jsonString);
             var z = json.SelectToken("releases");
             foreach (var x in z)
             {
