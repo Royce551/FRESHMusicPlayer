@@ -185,35 +185,42 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             dialog.ShowDialog();
             if (!dialog.OK) return;
 
-            string query = dialog.Response;
-            var results = integration.Search(query);
+            try
+            {
+                string query = dialog.Response;
+                var results = integration.Search(query);
 
-            var index = 0;
-            if (results.Count == 0)
-            {
-                MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                var index = 0;
+                if (results.Count == 0)
+                {
+                    MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                if (results.Count > 1)
+                {
+                    var disambiguation = new IntegrationDisambiguation(results);
+                    disambiguation.ShowDialog();
+                    if (disambiguation.OK) index = disambiguation.SelectedIndex;
+                    else return;
+                }
+
+                var filePath = FilePaths[0];
+                var release = integration.Fetch(results[index].Id);
+                var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
+                editor.ShowDialog();
+                if (editor.OK)
+                {
+                    ArtistBox.Text = editor.TrackToSave.Artist;
+                    TitleBox.Text = editor.TrackToSave.Title;
+                    AlbumBox.Text = editor.TrackToSave.Album;
+                    GenreBox.Text = editor.TrackToSave.Genre;
+                    YearBox.Text = editor.TrackToSave.Year.ToString();
+                    TrackNumBox.Text = editor.TrackToSave.TrackNumber.ToString();
+                }
             }
-            if (results.Count > 1)
+            catch (System.Net.Http.HttpRequestException)
             {
-                var disambiguation = new IntegrationDisambiguation(results);
-                disambiguation.ShowDialog();
-                if (disambiguation.OK) index = disambiguation.SelectedIndex;
-                else return;
-            }
-            
-            var filePath = FilePaths[0];
-            var release = integration.Fetch(results[index].Id);
-            var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
-            editor.ShowDialog();
-            if (editor.OK)
-            {
-                ArtistBox.Text = editor.TrackToSave.Artist;
-                TitleBox.Text = editor.TrackToSave.Title;
-                AlbumBox.Text = editor.TrackToSave.Album;
-                GenreBox.Text = editor.TrackToSave.Genre;
-                YearBox.Text = editor.TrackToSave.Year.ToString();
-                TrackNumBox.Text = editor.TrackToSave.TrackNumber.ToString();
+
             }
         }
 

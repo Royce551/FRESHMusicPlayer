@@ -68,7 +68,7 @@ namespace FRESHMusicPlayer.Pages
 
         private async void BrowseFoldersButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new WinForms.FolderBrowserDialog()) // why do i have to use winforms for this?!
+            using (var dialog = new WinForms.FolderBrowserDialog()) 
             {
                 dialog.Description = "Note: This doesn't import everything FMP actually supports. If you need to import more obscure file formats, try drag and drop.";
                 if (dialog.ShowDialog() == WinForms.DialogResult.OK)

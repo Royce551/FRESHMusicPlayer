@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FRESHMusicPlayer.Handlers.Notifications;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using FRESHMusicPlayer.Handlers;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FRESHMusicPlayer.Handlers.Notifications;
-using FRESHMusicPlayer;
-using System.Windows.Media.Animation;
 
 namespace FRESHMusicPlayer.Pages
 {

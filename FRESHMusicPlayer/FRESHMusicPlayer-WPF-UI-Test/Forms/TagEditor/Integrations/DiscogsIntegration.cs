@@ -36,11 +36,12 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             };
             foreach (var x in json.SelectToken("tracklist"))
             {
-                release.Tracks.Add(new TagEditorTrack
-                {
-                    TrackNumber = int.Parse(x.SelectToken("position").ToString()),
-                    Title = x.SelectToken("title").ToString()
-                });
+                var track = new TagEditorTrack();
+
+                if (int.TryParse(x.SelectToken("position").ToString(), out int trackNumber)) track.TrackNumber = trackNumber;
+                else track.TrackNumber = 0;
+                track.Title = x.SelectToken("title").ToString();
+                release.Tracks.Add(track);
             }
             return release;
         }

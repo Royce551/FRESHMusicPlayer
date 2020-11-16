@@ -40,7 +40,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
-            if (!FilePath.StartsWith("http") && File.Exists(FilePath))
+            if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
                 if (MainWindow.Player.Playing) MainWindow.Player.ClearQueue();
                 MainWindow.Player.AddQueue(FilePath);
