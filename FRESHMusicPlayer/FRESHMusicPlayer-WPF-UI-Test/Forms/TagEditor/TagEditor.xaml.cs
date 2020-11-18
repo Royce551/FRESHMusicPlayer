@@ -195,21 +195,21 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             var index = 0;
             if (!integration.Worked && integration.NeedsInternetConnection)
             {
-                MessageBox.Show("Looks like you aren't connected to the internet", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("You aren't connected to the internet :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (results.Count == 0)
+            if (results.Count == 0 | !integration.Worked)
             {
                 MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (results.Count > 1)
-            {
+            //if (results.Count > 1)
+            //{
                 var disambiguation = new IntegrationDisambiguation(results);
                 disambiguation.ShowDialog();
                 if (disambiguation.OK) index = disambiguation.SelectedIndex;
                 else return;
-            }
+           // }
 
             var filePath = FilePaths[0];
             var release = integration.Fetch(results[index].Id);

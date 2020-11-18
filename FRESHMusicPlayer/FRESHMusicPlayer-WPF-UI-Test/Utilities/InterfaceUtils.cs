@@ -29,6 +29,14 @@ namespace FRESHMusicPlayer.Utilities
 
             return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
         }
+        public static Storyboard GetDoubleAnimation(double from, double to, TimeSpan duration, PropertyPath path)
+        {
+            Storyboard sb = new Storyboard();
+            DoubleAnimation doubleAnimation = new DoubleAnimation(from, to, duration);
+            Storyboard.SetTargetProperty(doubleAnimation, path);
+            sb.Children.Add(doubleAnimation);
+            return sb;
+        }
         public static Task BeginStoryboardAsync(this Storyboard storyboard, FrameworkElement containingObject)
         {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();

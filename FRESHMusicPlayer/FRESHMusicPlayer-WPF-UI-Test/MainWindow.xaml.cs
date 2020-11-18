@@ -1,6 +1,6 @@
 ﻿using ATL;
-using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Forms.Playlists;
+using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
@@ -14,12 +14,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Windows.Media;
 using Winforms = System.Windows.Forms;
-using System.Windows.Threading;
-using System.Threading;
 
 namespace FRESHMusicPlayer
 {
@@ -77,6 +75,8 @@ namespace FRESHMusicPlayer
                         try
                         {
                             Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+                            TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Visible;
+                            SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Visible;
                             return true;
                         }
                         catch
@@ -84,8 +84,12 @@ namespace FRESHMusicPlayer
                             return false;
                         }
                     },
+                    DisplayAsToast = true,
                     Type = NotificationType.Failure
                 });
+                App.Config.CurrentMenu = SelectedMenus.Import;
+                TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Collapsed;
+                SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Collapsed;
             }    
             if (initialFile != null)
             {
@@ -182,20 +186,24 @@ namespace FRESHMusicPlayer
         }
         #endregion
         #region Logic
-        public void SetMiniPlayerMode(bool mode)
+        public async void SetMiniPlayerMode(bool mode)
         { // set is for things that use binding
             if (mode)
             {
-                Width = 559;
-                Height = 123;
+                var sb = InterfaceUtils.GetDoubleAnimation(Width, 559, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
+                await sb.BeginStoryboardAsync(this);
+                var sb2 = InterfaceUtils.GetDoubleAnimation(Height, 123, TimeSpan.FromMilliseconds(100), new PropertyPath("Height"));
+                await sb2.BeginStoryboardAsync(this);
                 MainBar.Visibility = Visibility.Collapsed;
                 MiniPlayerMode = true;
                 Topmost = true;
             }
             else
             {
-                Width = 702;
-                Height = 512;
+                var sb = InterfaceUtils.GetDoubleAnimation(Width, 800, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
+                await sb.BeginStoryboardAsync(this);
+                var sb2 = InterfaceUtils.GetDoubleAnimation(Height, 540, TimeSpan.FromMilliseconds(100), new PropertyPath("Height"));
+                await sb2.BeginStoryboardAsync(this);
                 MainBar.Visibility = Visibility.Visible;
                 MiniPlayerMode = false;
                 Topmost = false;
@@ -217,10 +225,7 @@ namespace FRESHMusicPlayer
 
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
-            Storyboard sb = new Storyboard();
-            DoubleAnimation doubleAnimation = new DoubleAnimation(0, width, new TimeSpan(0, 0, 0, 0, 100));
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
-            sb.Children.Add(doubleAnimation);
+            var sb = InterfaceUtils.GetDoubleAnimation(0, width, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
             sb.Begin(RightFrame);
             RightFrame.Source = new Uri(Uri, UriKind.Relative);
             AuxilliaryPaneUri = Uri;
@@ -229,10 +234,7 @@ namespace FRESHMusicPlayer
         }
         public async void HideAuxilliaryPane(bool animate = true)
         {
-            Storyboard sb = new Storyboard();
-            DoubleAnimation doubleAnimation = new DoubleAnimation(RightFrame.Width, 0, new TimeSpan(0, 0, 0, 0, 100));
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
-            sb.Children.Add(doubleAnimation);
+            var sb = InterfaceUtils.GetDoubleAnimation(RightFrame.Width, 0, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
             if (animate) await sb.BeginStoryboardAsync(RightFrame);
             else sb.Begin(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
@@ -355,6 +357,7 @@ namespace FRESHMusicPlayer
         private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             isDragging = true;
+            progressTimer.Interval = 1;
             progressTimer.Stop();
         }
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -362,6 +365,7 @@ namespace FRESHMusicPlayer
             if (Player.Playing)
             {
                 Player.RepositionMusic((int)ProgressBar.Value);
+                progressTimer.Interval = 1000;
                 progressTimer.Start();
             }
             isDragging = false;
@@ -390,7 +394,7 @@ namespace FRESHMusicPlayer
         {
             ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
             if (App.Config.ShowRemainingProgress) ProgressIndicator2.Text 
-                    = $"-{TimeSpan.FromSeconds(Player.CurrentBackend.TotalTime.TotalSeconds - Player.CurrentBackend.CurrentTime.TotalSeconds):mm\\:ss}";
+                    = $"-{TimeSpan.FromSeconds(Player.CurrentBackend.TotalTime.TotalSeconds - Math.Floor(Player.CurrentBackend.CurrentTime.TotalSeconds)):mm\\:ss}";
             if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
             if (!isDragging) ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
             Player.AvoidNextQueue = false;
@@ -531,38 +535,15 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.OemTilde:
-                    NotificationHandler.Add(new Notification
-                    {
-                        ContentText = "This is a FMP notification! Hello!",
-                        ButtonText = "Click me!",
-                        IsImportant = true,
-                        DisplayAsToast = true,
-                        Type = NotificationType.Success,
-                        OnButtonClicked = () =>
-                        {
-                            NotificationHandler.Add(new Notification
-                            {
-                                ContentText = "Hello world!"
-                            });
-                            Player.NextSong();
-                            return false;
-                        }
-                    });
+                    var box = new Forms.FMPTextEntryBox(string.Empty);
+                    box.ShowDialog();
+                    if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.Absolute);
+                    break;
+                case Key.F1:
+                    GC.Collect(2);
                     break;
                 case Key.F5:
                     ContentFrame.Refresh();
-                    break;
-                case Key.F7:
-                    NotificationHandler.Add(new Notification
-                    {
-                        ContentText = "ok",
-                        IsImportant = true,
-                        DisplayAsToast = false,
-                        Type = NotificationType.Generic
-                    });
-                    break;
-                case Key.F8:
-                    DatabaseUtils.Convertv1Tov2();
                     break;
             }
         }
@@ -646,8 +627,16 @@ namespace FRESHMusicPlayer
 
         private void ProgressIndicator2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (App.Config.ShowRemainingProgress) App.Config.ShowRemainingProgress = false;
-            else App.Config.ShowRemainingProgress = true;
+            if (Player.Playing)
+            {
+                if (App.Config.ShowRemainingProgress)
+                {
+                    App.Config.ShowRemainingProgress = false;
+                    if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+                    else ProgressIndicator2.Text = "∞";
+                }
+                else App.Config.ShowRemainingProgress = true;
+            }
         }
     }
 }

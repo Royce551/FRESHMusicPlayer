@@ -51,7 +51,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             var releases = new List<(string Name, string Id)>();
             string jsonString;
             try { jsonString = httpClient.GetStringAsync($"https://api.discogs.com/database/search?q={{{query}}}&{{track}}&per_page=1&key={Key}&secret={Secret}").Result; }
-            catch (HttpRequestException) 
+            catch (AggregateException) 
             {
                 Worked = false;
                 return releases;
@@ -60,7 +60,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             var z = json.SelectToken("results"); // Format for searching: https://www.discogs.com/developers#page:database,header:database-search
             foreach (var x in z)
             {
-                releases.Add((x.SelectToken("title").ToString(), x.SelectToken("id").ToString()));
+                releases.Add(($"{x.SelectToken("title")}; {x.SelectToken("year")}; {string.Join(", ", x.SelectToken("format"))}; {x.SelectToken("country")}", x.SelectToken("id").ToString()));
             }
             return releases;
         }

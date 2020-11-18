@@ -46,9 +46,7 @@
                 <TextBlock x:Name="GenreBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
                 <TextBlock x:Name="AlbumBox" Grid.Row="5" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
             </Grid>
-            <TextBlock x:Name="EditingHeader" Grid.Row="1" Grid.ColumnSpan="2" TextTrimming="WordEllipsis" Text="Line up the file with the track, then press OK." Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Padding="10,5"/>
-            <ListBox x:Name="IntegrationItemBox" Grid.Row="2" Background="{StaticResource SecondaryColor}" Margin="10,0,10,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
-            <ListBox x:Name="FileItemBox" Grid.Row="2" Grid.Column="1" Background="{StaticResource SecondaryColor}" Margin="0,0,10,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+            <ListBox x:Name="IntegrationItemBox" Grid.Row="2" Grid.ColumnSpan="2" Background="{StaticResource SecondaryColor}" Margin="10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
             <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="{StaticResource BackgroundColor}" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -56,8 +54,6 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="Link" Grid.Column="0" Text="Test" Foreground="#3399FF" FontSize="14" VerticalAlignment="Center" Margin="10,0" MouseLeftButtonDown="Link_MouseLeftButtonDown" Cursor="Hand" TextTrimming="CharacterEllipsis"/>
-                <Button x:Name="DownButton" Grid.Column="1" Content="▼" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="DownButton_Click"/>
-                <Button x:Name="UpButton" Grid.Column="2" Content="▲" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="UpButton_Click"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">

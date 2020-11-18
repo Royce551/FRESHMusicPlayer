@@ -47,7 +47,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             var releases = new List<(string Name, string Id)>();
             string jsonString;
             try { jsonString = httpClient.GetStringAsync($"https://musicbrainz.org/ws/2/release/?query={query}&fmt=json").Result; }
-            catch (HttpRequestException)
+            catch (AggregateException)
             {
                 Worked = false;
                 return releases;
