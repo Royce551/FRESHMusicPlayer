@@ -537,7 +537,7 @@ namespace FRESHMusicPlayer
                 case Key.OemTilde:
                     var box = new Forms.FMPTextEntryBox(string.Empty);
                     box.ShowDialog();
-                    if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.Absolute);
+                    if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.RelativeOrAbsolute);
                     break;
                 case Key.F1:
                     GC.Collect(2);

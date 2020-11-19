@@ -3,6 +3,7 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using Squirrel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,11 +16,16 @@ namespace FRESHMusicPlayer.Handlers
 {
     public class UpdateHandler
     {
+        private static readonly string rootPath;
+        static UpdateHandler()
+        {
+            rootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"../");
+        }
         public static async Task UpdateApp(bool useDeltaPatching = true, bool forceUpdate = false)
         {
             if (App.Config.UpdateMode == UpdateMode.Manual && !forceUpdate) return;
             // Updater not present, probably standalone
-            if (!File.Exists(Path.Combine(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"../")), "Update.exe"))) return;
+            if (!File.Exists(Path.Combine(rootPath, "Update.exe"))) return;
             App.Config.UpdatesLastChecked = DateTime.Now;
             var notification = new Notification();
             UpdateManager mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Royce551/FRESHMusicPlayer");
@@ -46,7 +52,6 @@ namespace FRESHMusicPlayer.Handlers
                     };
                     MainWindow.NotificationHandler.Update(notification);
                 }
-            
                 else RestartApp();
             }
             catch (Exception e)
@@ -68,7 +73,7 @@ namespace FRESHMusicPlayer.Handlers
         private static void RestartApp()
         {
             Application.Current.Shutdown();
-            WinForms.Application.Restart();
+            Process.Start(Path.Combine(rootPath, "FRESHMusicPlayer.exe"));
         }
     }
 }

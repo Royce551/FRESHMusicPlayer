@@ -11,6 +11,7 @@ using System.Net.Http;
 using Winforms = System.Windows.Forms;
 using System.Windows.Shapes;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
+using System.Windows.Media.Imaging;
 
 namespace FRESHMusicPlayer.Forms.TagEditor
 {
@@ -20,10 +21,11 @@ namespace FRESHMusicPlayer.Forms.TagEditor
     public partial class TagEditor : Window
     {
         public List<string> FilePaths = new List<string>();     
-        private List<string> filePathsToSaveInBackground = new List<string>();
-        List<string> Displayfilepaths = new List<string>();
+        private readonly List<string> filePathsToSaveInBackground = new List<string>();
+        private readonly List<string> Displayfilepaths = new List<string>();
+        private readonly List<PictureInfo> CoverArts = new List<PictureInfo>();
         private bool unsavedChanges = false;
-        private HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient = new HttpClient();
         public TagEditor(List<string> filePaths)
         {
             InitializeComponent();
@@ -35,7 +37,8 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         public void InitFields()
         {
-            unsavedChanges = true; // hack in order to make the TextChanged handler not go off          
+            unsavedChanges = true; // hack in order to make the TextChanged handler not go off   
+            CoverArtSelector.Items.Clear();
             int iterations = 1;           
             foreach (string path in FilePaths)
             {
@@ -51,7 +54,24 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 TrackNumBox.Text = track.TrackNumber.ToString();
                 DiscNumBox.Text = track.DiscNumber.ToString();
                 Displayfilepaths.Add(System.IO.Path.GetFileName(path));
+                CoverArts.AddRange(track.EmbeddedPictures);
+                
+                int i = 1;
+                if (track.EmbeddedPictures.Count != 0)
+                {
+                    foreach (var cover in track.EmbeddedPictures)
+                    {
+                        CoverArtSelector.Items.Add(i.ToString());
+                        i++;
+                    }
+                }
+                
                 iterations++;
+            }
+            if (CoverArts.Count != 0)
+            {
+                CoverArtSelector.SelectedIndex = 0;
+                ChangeCoverArt();
             }
             if (iterations <= 5) EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths);
             else EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths.Take(5)) + " + " + (Displayfilepaths.Count - 4);
@@ -105,6 +125,18 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             }
         }
 
+        public void ChangeCoverArt()
+        {
+            int selectedIndex = CoverArtSelector.SelectedIndex;
+            if (selectedIndex == -1) selectedIndex = 0;
+            var currentCover = CoverArts[selectedIndex];
+            var currentCoverImage = System.Drawing.Image.FromStream(new MemoryStream(currentCover.PictureData));
+            CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(currentCover.PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+            CoverArtLabel.Text =
+                $"{currentCoverImage.Width}x{currentCoverImage.Height}\n" +
+                $"{new System.Drawing.ImageFormatConverter().ConvertToString(currentCoverImage.RawFormat).ToUpper()} Image\n" +
+                $"{currentCover.PicType}";
+        }
         private void Player_SongChanged(object sender, EventArgs e)
         {
             if (filePathsToSaveInBackground.Count != 0)
@@ -203,13 +235,13 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            //if (results.Count > 1)
-            //{
+            if (results.Count > 1)
+            {
                 var disambiguation = new IntegrationDisambiguation(results);
                 disambiguation.ShowDialog();
                 if (disambiguation.OK) index = disambiguation.SelectedIndex;
                 else return;
-           // }
+            }
 
             var filePath = FilePaths[0];
             var release = integration.Fetch(results[index].Id);
@@ -226,5 +258,6 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             }
         }
 
+        private void CoverArtSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) => ChangeCoverArt();
     }
 }
