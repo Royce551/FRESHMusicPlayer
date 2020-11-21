@@ -8,7 +8,10 @@ using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -553,10 +556,29 @@ namespace FRESHMusicPlayer
             e.Effects = DragDropEffects.Copy;
         }
 
-        private void Window_Drop(object sender, DragEventArgs e)
+        private void ControlsBox_Drop(object sender, DragEventArgs e)
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-            Player.AddQueue(tracks);
+            Player.ClearQueue();
+            if (tracks.Any(x => Directory.Exists(x)))
+            {
+                foreach (var track in tracks)
+                {
+                    if (Directory.Exists(track))
+                    {
+                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories)
+                        .Where(name => name.EndsWith(".mp3")
+                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                        || name.EndsWith(".wma")
+                        || name.EndsWith(".aac")).ToArray();
+                        Player.AddQueue(paths);
+                    }
+                    else Player.AddQueue(track);
+                }
+
+            }
+            else Player.AddQueue(tracks);
             Player.PlayMusic();
         }
 

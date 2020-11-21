@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Windows;
+using System.Collections.Concurrent;
 
 namespace FRESHMusicPlayer.Utilities
 {
@@ -68,10 +69,10 @@ namespace FRESHMusicPlayer.Utilities
         }
         public static void Import(List<string> tracks)
         {
-            var stufftoinsert = new List<DatabaseTrack>();
+             var stufftoinsert = new List<DatabaseTrack>();
             foreach (string y in tracks)
             {
-                Track track = new Track(y);
+                var track = new Track(y);
                 stufftoinsert.Add(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber, Length = track.Duration });
             }
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(stufftoinsert);

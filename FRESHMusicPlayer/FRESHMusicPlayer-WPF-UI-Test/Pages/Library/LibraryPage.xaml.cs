@@ -1,6 +1,7 @@
 ﻿using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -57,7 +58,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     length += thing.Length;
                     if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                     i++;
-                }        
+                }   
             });
             var lengthTimeSpan = new TimeSpan(0, 0, 0, length);
             InfoLabel.Visibility = Visibility.Visible;
@@ -173,31 +174,36 @@ namespace FRESHMusicPlayer.Pages.Library
         private async void Page_Drop(object sender, DragEventArgs e)
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
+            MainWindow.Player.ClearQueue();
             if (tracks.Any(x => Directory.Exists(x)))
             {
                 foreach (var track in tracks)
                 {
                     if (Directory.Exists(track))
                     {
-                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories)
+                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories) // TODO: increase code reuse
                         .Where(name => name.EndsWith(".mp3")
                         || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
                         || name.EndsWith(".flac") || name.EndsWith(".aiff")
                         || name.EndsWith(".wma")
                         || name.EndsWith(".aac")).ToArray();
+                        MainWindow.Player.AddQueue(paths);
                         await Task.Run(() => DatabaseUtils.Import(paths));
                     }
-                    else await Task.Run(() => DatabaseUtils.Import(track));
+                    else
+                    {
+                        MainWindow.Player.AddQueue(track);
+                        await Task.Run(() => DatabaseUtils.Import(track));
+                    }
                 }
                 
             }
             else
             {
-                await Task.Run(() =>
-                {
-                    DatabaseUtils.Import(tracks);
-                });
+                MainWindow.Player.AddQueue(tracks);
+                await Task.Run(() => DatabaseUtils.Import(tracks));
             }
+            MainWindow.Player.PlayMusic();
             LoadLibrary();
         }
 
