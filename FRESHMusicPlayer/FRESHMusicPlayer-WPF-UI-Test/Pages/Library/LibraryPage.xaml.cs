@@ -1,6 +1,7 @@
 ﻿using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -172,10 +173,31 @@ namespace FRESHMusicPlayer.Pages.Library
         private async void Page_Drop(object sender, DragEventArgs e)
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-            await Task.Run(() =>
+            if (tracks.Any(x => Directory.Exists(x)))
             {
-                DatabaseUtils.Import(tracks);
-            });
+                foreach (var track in tracks)
+                {
+                    if (Directory.Exists(track))
+                    {
+                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories)
+                        .Where(name => name.EndsWith(".mp3")
+                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                        || name.EndsWith(".wma")
+                        || name.EndsWith(".aac")).ToArray();
+                        await Task.Run(() => DatabaseUtils.Import(paths));
+                    }
+                    else await Task.Run(() => DatabaseUtils.Import(track));
+                }
+                
+            }
+            else
+            {
+                await Task.Run(() =>
+                {
+                    DatabaseUtils.Import(tracks);
+                });
+            }
             LoadLibrary();
         }
 

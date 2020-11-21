@@ -324,7 +324,7 @@ namespace FRESHMusicPlayer
             }
             else
             {
-                CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
                 SetCoverArtVisibility(true);
             }
             progressTimer.Start();
