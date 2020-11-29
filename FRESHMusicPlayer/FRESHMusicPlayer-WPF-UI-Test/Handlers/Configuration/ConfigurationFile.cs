@@ -24,6 +24,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public DateTime UpdatesLastChecked { get; set; }
         public Skin Theme { get; set; } = Skin.Dark;
         public int Volume { get; set; } = 100;
-        public SelectedMenus CurrentMenu { get; set; } = SelectedMenus.Import;
+        public SelectedMenu CurrentMenu { get; set; } = SelectedMenu.Import;
     }
 }

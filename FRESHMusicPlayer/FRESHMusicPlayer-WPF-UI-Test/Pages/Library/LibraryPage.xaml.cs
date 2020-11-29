@@ -31,16 +31,16 @@ namespace FRESHMusicPlayer.Pages.Library
             InfoLabel.Visibility = Visibility.Hidden;
             switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
-                case SelectedMenus.Tracks:
+                case SelectedMenu.Tracks:
                     ShowTracks();
                     break;
-                case SelectedMenus.Artists:
+                case SelectedMenu.Artists:
                     ShowArtists();
                     break;
-                case SelectedMenus.Albums:
+                case SelectedMenu.Albums:
                     ShowAlbums();
                     break;
-                case SelectedMenus.Playlists:
+                case SelectedMenu.Playlists:
                     ShowPlaylists();
                     break;
             }
@@ -148,8 +148,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (MainWindow.SelectedMenu == SelectedMenus.Artists) ShowTracksforArtist(selectedItem);
-            else if (MainWindow.SelectedMenu == SelectedMenus.Playlists) ShowTracksforPlaylist(selectedItem);
+            if (MainWindow.SelectedMenu == SelectedMenu.Artists) ShowTracksforArtist(selectedItem);
+            else if (MainWindow.SelectedMenu == SelectedMenu.Playlists) ShowTracksforPlaylist(selectedItem);
             else ShowTracksforAlbum(selectedItem);
         }
         private void MainWindow_TabChanged(object sender, EventArgs e)
