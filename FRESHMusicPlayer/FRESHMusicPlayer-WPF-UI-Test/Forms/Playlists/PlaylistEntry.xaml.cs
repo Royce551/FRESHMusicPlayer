@@ -43,23 +43,28 @@ namespace FRESHMusicPlayer.Forms.Playlists
             {
                 if (thing.Path == path)
                 {
-                    AddRemoveButton.Content = "-";
+                    AddButton.IsEnabled = false;
+                    RemoveButton.IsEnabled = true;
                     playlistExists = true;
                     return;
                 }
             }
-            AddRemoveButton.Content = "+";
+            AddButton.IsEnabled = true;
+            RemoveButton.IsEnabled = false;
             playlistExists = false;
         }
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
             RenameButton.Visibility = DeleteButton.Visibility = ExportButton.Visibility = Visibility.Visible;
-            if (trackExists) AddRemoveButton.Visibility = Visibility.Visible;
+            if (trackExists)
+            {
+                AddButton.Visibility = RemoveButton.Visibility = Visibility.Visible;
+            }
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            AddRemoveButton.Visibility = RenameButton.Visibility = DeleteButton.Visibility = ExportButton.Visibility = Visibility.Collapsed;
+            AddButton.Visibility = RemoveButton.Visibility = RenameButton.Visibility = DeleteButton.Visibility = ExportButton.Visibility = Visibility.Collapsed;
         }
 
         private void RenameButton_Click(object sender, RoutedEventArgs e)
@@ -75,10 +80,15 @@ namespace FRESHMusicPlayer.Forms.Playlists
             }
         }
 
-        private void AddRemoveButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (playlistExists) DatabaseUtils.RemoveTrackFromPlaylist(playlist, path);
-            else DatabaseUtils.AddTrackToPlaylist(playlist, path);
+            DatabaseUtils.RemoveTrackFromPlaylist(playlist, path);
+            CheckIfPlaylistExists();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseUtils.AddTrackToPlaylist(playlist, path);
             CheckIfPlaylistExists();
         }
 
@@ -100,5 +110,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
                 pls.FilePaths = pathsToWrite;
             }
         }
+
+        
     }
 }

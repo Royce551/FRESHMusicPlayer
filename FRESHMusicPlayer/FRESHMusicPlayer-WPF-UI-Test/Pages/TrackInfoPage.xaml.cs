@@ -33,16 +33,20 @@ namespace FRESHMusicPlayer.Pages
             if (track.EmbeddedPictures.Count == 0)
             {
                 CoverArtBox.Source = null;
-                CoverArtRow.Height = new GridLength(0);
+                CoverArtOverlay.Visibility = Visibility.Hidden;
             }
-            else CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+            else
+            {
+                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                CoverArtOverlay.Visibility = Visibility.Visible;
+            }
             InterfaceUtils.SetField(AlbumBox, AlbumLabel, track.Album);
             InterfaceUtils.SetField(GenreBox, GenreLabel, track.Genre);
             InterfaceUtils.SetField(YearBox, YearLabel, track.Year.ToString() == "0" ? null : track.Year.ToString());
 
-            TrackBox.Text = track.TrackNumber.ToString();
+            InterfaceUtils.SetField(TrackBox, TrackNumberLabel, track.TrackNumber.ToString() == "0" ? null : track.TrackNumber.ToString());
             if (track.TrackTotal > 0) TrackBox.Text += "/" + track.TrackTotal;
-            DiscBox.Text = track.DiscNumber.ToString();
+            InterfaceUtils.SetField(DiscBox, DiscNumberLabel, track.DiscNumber.ToString() == "0" ? null : track.TrackNumber.ToString());
             if (track.DiscTotal > 0) DiscBox.Text += "/" + track.DiscTotal;
             BitrateBox.Text = track.Bitrate + "kbps";
         }

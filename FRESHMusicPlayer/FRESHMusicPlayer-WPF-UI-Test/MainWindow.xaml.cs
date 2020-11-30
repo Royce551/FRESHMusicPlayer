@@ -53,7 +53,6 @@ namespace FRESHMusicPlayer
         public static Player Player = new Player { CurrentVolume = App.Config.Volume};
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
-        public static bool AuxilliaryPaneIsOpen = false;
         public static EventHandler TabChanged;
         public static LiteDatabase Libraryv2;
         public static Track CurrentTrack;
@@ -202,20 +201,16 @@ namespace FRESHMusicPlayer
         { // set is for things that use binding
             if (mode)
             {
-                var sb = InterfaceUtils.GetDoubleAnimation(Width, 559, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
-                await sb.BeginStoryboardAsync(this);
-                var sb2 = InterfaceUtils.GetDoubleAnimation(Height, 123, TimeSpan.FromMilliseconds(100), new PropertyPath("Height"));
-                await sb2.BeginStoryboardAsync(this);
+                await InterfaceUtils.GetDoubleAnimation(Width, 559, TimeSpan.FromMilliseconds(100), new PropertyPath("Width")).BeginStoryboardAsync(this);
+                await InterfaceUtils.GetDoubleAnimation(Height, 123, TimeSpan.FromMilliseconds(100), new PropertyPath("Height")).BeginStoryboardAsync(this);
                 MainBar.Visibility = Visibility.Collapsed;
                 MiniPlayerMode = true;
                 Topmost = true;
             }
             else
             {
-                var sb = InterfaceUtils.GetDoubleAnimation(Width, 800, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
-                await sb.BeginStoryboardAsync(this);
-                var sb2 = InterfaceUtils.GetDoubleAnimation(Height, 540, TimeSpan.FromMilliseconds(100), new PropertyPath("Height"));
-                await sb2.BeginStoryboardAsync(this);
+                await InterfaceUtils.GetDoubleAnimation(Width, 800, TimeSpan.FromMilliseconds(100), new PropertyPath("Width")).BeginStoryboardAsync(this);
+                await InterfaceUtils.GetDoubleAnimation(Height, 540, TimeSpan.FromMilliseconds(100), new PropertyPath("Height")).BeginStoryboardAsync(this);
                 MainBar.Visibility = Visibility.Visible;
                 MiniPlayerMode = false;
                 Topmost = false;
@@ -233,7 +228,7 @@ namespace FRESHMusicPlayer
                 HideAuxilliaryPane();
                 return;
             }
-            if (AuxilliaryPaneIsOpen) HideAuxilliaryPane(false);
+            if (SelectedAuxiliaryPane != SelectedAuxiliaryPane.None) HideAuxilliaryPane(false);
             string uri;
             switch (pane)
             {
@@ -262,7 +257,6 @@ namespace FRESHMusicPlayer
             RightFrame.Source = new Uri(uri, UriKind.Relative);
             SelectedAuxiliaryPane = pane;
             RightFrame.NavigationService.RemoveBackEntry();
-            AuxilliaryPaneIsOpen = true;
         }
         public async void HideAuxilliaryPane(bool animate = true)
         {
@@ -272,7 +266,6 @@ namespace FRESHMusicPlayer
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
             SelectedAuxiliaryPane = SelectedAuxiliaryPane.None;
-            AuxilliaryPaneIsOpen = false;
         }
         public void ProcessSettings()
         {
@@ -567,6 +560,9 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.F1:
                     GC.Collect(2);
+                    break;
+                case Key.F2:
+                    NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
                     break;
                 case Key.F5:
                     ContentFrame.Refresh();
