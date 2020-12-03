@@ -151,30 +151,30 @@ Tệp không thể tìm: {0}</value>
     <value>Thông tin kỹ thuật</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value>Thể loại - </value>
+    <value>Thể loại</value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value>Sổ đĩa </value>
+    <value>Sổ đĩa</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value>Năm - </value>
+    <value>Năm</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value>Số trên đĩa </value>
+    <value>Số trên đĩa</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
     <value>Thông tin bài hát</value>
     <comment>Track Info header</comment>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value>Tốc độ bit - </value>
+    <value>Tốc độ bit</value>
     <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
     <value>Thông tin về đĩa nhạc</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value>Đĩa - </value>
+    <value>Đĩa</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
     <value>Thời gian còn lại - </value>
@@ -207,7 +207,7 @@ Tệp không thể tìm: {0}</value>
     <value>Duyệt cho thư mục</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value>Người soạn - </value>
+    <value>Người soạn</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
     <value>_Chép từ</value>
@@ -218,10 +218,10 @@ Nếu bạn có thể, xin báo cáo lỗi này tại https://github.com/royce55
 Tệp nhật ký họ cần có thể tìm tại {1}.</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value>Tiêu đề - </value>
+    <value>Tiêu đề</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value>Số trên đĩa - </value>
+    <value>Số trên đĩa</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
     <value>Bạn có muốn lưu thay đổi vào {0}?</value>
@@ -233,7 +233,7 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
     <value>Đang chính sửa </value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value>Số đĩa - </value>
+    <value>Số đĩa</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
     <value>Đổi Tệp...</value>
@@ -242,10 +242,10 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
     <value>Các thay đổi sẽ bị áp dụng khi bạn phát bài hát khác.</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value>Nghệ sĩ - </value>
+    <value>Nghệ sĩ</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>Nghệ sĩ đĩa - </value>
+    <value>Nghệ sĩ đĩa</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
     <value>_Lưu</value>
@@ -413,5 +413,17 @@ Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
     <value>Bộ phát nhỏ</value>
+  </data>
+  <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
+    <value>Không có kết quả cho album này :(</value>
+  </data>
+  <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
+    <value>Bạn không có kết nối với Internet :(</value>
+  </data>
+  <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
+    <value>Có nhiều kết quả cho album này. Bạn muốn sử dụng cái nào?</value>
+  </data>
+  <data name="TAGEDITOR_COVERART" xml:space="preserve">
+    <value>Ảnh bìa</value>
   </data>
 </root>
