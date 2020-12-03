@@ -4,6 +4,8 @@ using FRESHMusicPlayer.Utilities;
 using System.Windows;
 using System.Windows.Controls;
 using WinForms = System.Windows.Forms;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -197,6 +199,16 @@ namespace FRESHMusicPlayer.Pages
         {
             await UpdateHandler.UpdateApp(forceUpdate:true);
             InitFields();
+        }
+
+        private async void Maintenence_UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                var tracks = DatabaseUtils.Read().Select(x => x.Path).Distinct();
+                Dispatcher.Invoke(() => DatabaseUtils.Nuke(false));
+                DatabaseUtils.Import(tracks.ToArray());
+            });
         }
     }
     public enum LanguageCombo

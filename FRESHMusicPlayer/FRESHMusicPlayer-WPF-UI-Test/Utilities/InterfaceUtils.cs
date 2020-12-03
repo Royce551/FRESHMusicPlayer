@@ -20,7 +20,12 @@ namespace FRESHMusicPlayer.Utilities
                 box.Visibility = Visibility.Collapsed;
                 label.Visibility = Visibility.Collapsed;
             }
-            else box.Text = value;
+            else
+            {
+                box.Text = value;
+                box.Visibility = Visibility.Visible;
+                label.Visibility = Visibility.Visible;
+            }
         }
         public static IEnumerable<CultureInfo> GetAvailableCultures()
         {

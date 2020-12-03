@@ -797,6 +797,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cover Art.
+        /// </summary>
+        public static string TAGEDITOR_COVERART {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_COVERART", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disc Number.
         /// </summary>
         public static string TAGEDITOR_DISCNUM {
@@ -811,6 +820,33 @@ namespace FRESHMusicPlayer.Properties {
         public static string TAGEDITOR_EDITINGHEADER {
             get {
                 return ResourceManager.GetString("TAGEDITOR_EDITINGHEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are multiple search results for this album. Which one do you want?.
+        /// </summary>
+        public static string TAGEDITOR_INTEGRATIONDISAMBIGUATION {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_INTEGRATIONDISAMBIGUATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You aren&apos;t connected to the internet :(.
+        /// </summary>
+        public static string TAGEDITOR_NOINTERNET {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_NOINTERNET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No results were found for this album :(.
+        /// </summary>
+        public static string TAGEDITOR_NORESULTS {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_NORESULTS", resourceCulture);
             }
         }
         

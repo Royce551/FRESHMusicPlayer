@@ -87,10 +87,10 @@ namespace FRESHMusicPlayer.Utilities
         {
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").DeleteMany(x => x.Path == path);
         }
-        public static void Nuke()
+        public static void Nuke(bool nukePlaylists = true)
         {
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").DeleteAll();
-            MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").DeleteAll();
+            if (nukePlaylists) MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").DeleteAll();
             MainWindow.NotificationHandler.Add(new Notification
             {
                 ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,

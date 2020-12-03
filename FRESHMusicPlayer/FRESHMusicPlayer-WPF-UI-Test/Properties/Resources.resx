@@ -367,11 +367,23 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
     <value>Composer</value>
   </data>
+  <data name="TAGEDITOR_COVERART" xml:space="preserve">
+    <value>Cover Art</value>
+  </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
     <value>Disc Number</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
     <value>Editing </value>
+  </data>
+  <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
+    <value>There are multiple search results for this album. Which one do you want?</value>
+  </data>
+  <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
+    <value>You aren't connected to the internet :(</value>
+  </data>
+  <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
+    <value>No results were found for this album :(</value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
     <value>Save</value>
