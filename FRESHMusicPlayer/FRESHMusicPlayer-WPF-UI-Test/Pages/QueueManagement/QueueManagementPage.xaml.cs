@@ -123,7 +123,7 @@ namespace FRESHMusicPlayer.Pages
         }
 
         private void Page_Drop(object sender, DragEventArgs e)
-        {  // TODO: Have to rework drag n drop a bit in order to add this
+        {  
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
             if (tracks.Any(x => Directory.Exists(x)))
             {

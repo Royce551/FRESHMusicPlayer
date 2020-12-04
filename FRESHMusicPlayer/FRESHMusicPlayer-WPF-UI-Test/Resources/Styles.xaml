@@ -5,6 +5,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Padding" Value="20,1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -13,7 +14,7 @@
                         <Border x:Name="border" 
                                 CornerRadius="2" 
                                 BorderBrush="{TemplateBinding Background}" 
-                                TextElement.Foreground="{StaticResource PrimaryTextColor}" 
+                                TextElement.Foreground="{TemplateBinding Foreground}" 
                                 BorderThickness="1" 
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center"

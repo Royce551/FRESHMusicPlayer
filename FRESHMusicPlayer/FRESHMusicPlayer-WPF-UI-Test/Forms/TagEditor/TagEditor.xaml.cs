@@ -227,12 +227,12 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             var index = 0;
             if (!integration.Worked && integration.NeedsInternetConnection)
             {
-                MessageBox.Show("You aren't connected to the internet :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.TAGEDITOR_NOINTERNET, "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if (results.Count == 0 | !integration.Worked)
             {
-                MessageBox.Show("No results were found for this album :(", "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.TAGEDITOR_NORESULTS, "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if (results.Count > 1)
