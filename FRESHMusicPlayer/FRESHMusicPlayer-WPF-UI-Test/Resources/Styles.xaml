@@ -20,7 +20,7 @@
                             <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Regular"
-                                              >
+                                           Margin="4,0"   >
                             </ContentPresenter>
                         </Border>
 

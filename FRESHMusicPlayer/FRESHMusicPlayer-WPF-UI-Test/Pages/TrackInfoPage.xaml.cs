@@ -48,7 +48,7 @@ namespace FRESHMusicPlayer.Pages
             if (track.TrackTotal > 0) TrackBox.Text += "/" + track.TrackTotal;
             InterfaceUtils.SetField(DiscBox, DiscNumberLabel, track.DiscNumber.ToString() == "0" ? null : track.TrackNumber.ToString());
             if (track.DiscTotal > 0) DiscBox.Text += "/" + track.DiscTotal;
-            BitrateBox.Text = track.Bitrate + "kbps";
+            BitrateBox.Text = track.Bitrate + "kbps " + (track.SampleRate / 1000) + "kHz";
         }
         private void Player_SongChanged(object sender, EventArgs e) => PopulateFields();
 
