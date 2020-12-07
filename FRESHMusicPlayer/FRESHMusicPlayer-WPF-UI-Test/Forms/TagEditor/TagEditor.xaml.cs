@@ -20,7 +20,8 @@ namespace FRESHMusicPlayer.Forms.TagEditor
     /// </summary>
     public partial class TagEditor : Window
     {
-        public List<string> FilePaths = new List<string>();     
+        public List<string> FilePaths = new List<string>();
+
         private readonly List<string> filePathsToSaveInBackground = new List<string>();
         private readonly List<string> Displayfilepaths = new List<string>();
         private readonly List<PictureInfo> CoverArts = new List<PictureInfo>();
@@ -83,7 +84,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         {
             foreach (string path in filePaths)
             {
-                Track track = new Track(path);
+                var track = new Track(path);
                 track.Artist = ArtistBox.Text;
                 track.Title = TitleBox.Text;
                 track.Album = AlbumBox.Text;
@@ -93,6 +94,8 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 track.Composer = ComposerBox.Text;
                 track.TrackNumber = Convert.ToInt32(TrackNumBox.Text);
                 track.DiscNumber = Convert.ToInt32(DiscNumBox.Text);
+                track.EmbeddedPictures.Clear();
+                track.EmbeddedPictures.ToList().InsertRange(0, CoverArts);
                 track.Save();
             }
         }
@@ -127,9 +130,19 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         public void ChangeCoverArt()
         {
+            ImportCoverButton.IsEnabled = true;
+            RemoveCoverButton.IsEnabled = true;
             int selectedIndex = CoverArtSelector.SelectedIndex;
             if (selectedIndex == -1) selectedIndex = 0;
             var currentCover = CoverArts[selectedIndex];
+            if (currentCover.PictureData is null)
+            {
+                CoverArtLabel.Text = "No cover art present";
+                CoverArtBox.Source = null;
+                ImportCoverButton.IsEnabled = false;
+                RemoveCoverButton.IsEnabled = false;
+                return;
+            }
             var currentCoverImage = System.Drawing.Image.FromStream(new MemoryStream(currentCover.PictureData));
             CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(currentCover.PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
             CoverArtLabel.Text =
@@ -137,6 +150,50 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 $"{new System.Drawing.ImageFormatConverter().ConvertToString(currentCoverImage.RawFormat).ToUpper()} Image\n" +
                 $"{currentCover.PicType}";
         }
+
+        private void CoverArtSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) => ChangeCoverArt();
+
+        private void AddCoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            CoverArts.Add(new PictureInfo(PictureInfo.PIC_TYPE.Front));
+            UpdateCoverArtSelector();
+            ChangeCoverArt();
+            SetUnsavedChanges(true);
+        }
+        private void RemoveCoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            CoverArts.RemoveAt(CoverArtSelector.SelectedIndex);
+            UpdateCoverArtSelector();
+            ChangeCoverArt();
+            SetUnsavedChanges(true);
+        }
+        private void ImportCoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            var image = CoverArts[CoverArtSelector.SelectedIndex];
+            dialog.Filter = "Image Files|*.png;*.jpg|Other|*";
+            if (dialog.ShowDialog() == true)
+            {
+                CoverArts[CoverArtSelector.SelectedIndex] = PictureInfo.fromBinaryData(
+                    File.ReadAllBytes(dialog.FileName),
+                    image.PicType);
+            }
+            ChangeCoverArt();
+            SetUnsavedChanges(true);
+        }
+        private void UpdateCoverArtSelector()
+        {
+            var selectedIndex = CoverArtSelector.SelectedIndex;
+            CoverArtSelector.Items.Clear();
+            int i = 1;
+            foreach (var cover in CoverArts)
+            {
+                CoverArtSelector.Items.Add(i.ToString());
+                i++;
+            }
+            if (CoverArtSelector.Items.Count <= selectedIndex) CoverArtSelector.SelectedIndex = selectedIndex;
+        }
+
         private void Player_SongChanged(object sender, EventArgs e)
         {
             if (filePathsToSaveInBackground.Count != 0)
@@ -182,9 +239,12 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void Button_Click_1(object sender, RoutedEventArgs e) => ChangeFiles();
 
-        private void TextChanged(object sender, TextChangedEventArgs e)
+        private void TextChanged(object sender, TextChangedEventArgs e) => SetUnsavedChanges(true);
+
+        private void SetUnsavedChanges(bool state)
         {
-            if (!unsavedChanges)
+            if (state) unsavedChanges = false;
+            else
             {
                 unsavedChanges = true;
                 Title = $"*{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
@@ -257,7 +317,5 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 TrackNumBox.Text = editor.TrackToSave.TrackNumber.ToString();
             }
         }
-
-        private void CoverArtSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) => ChangeCoverArt();
     }
 }

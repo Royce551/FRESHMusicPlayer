@@ -87,14 +87,27 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_COVERART}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                     <Image x:Name="CoverArtBox" Margin="10" Width="200" Height="200" RenderOptions.BitmapScalingMode="HighQuality" Grid.Row="1" Grid.RowSpan="2"/>
-                    <TextBlock x:Name="CoverArtLabel" Margin="0,10,0,0" Grid.Row="1" Grid.ColumnSpan="2" TextTrimming="WordEllipsis" Text="No cover art present" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Left" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <TextBlock Text="Image" Grid.Row="2" Grid.Column="1" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Bottom"/>
-                    <ComboBox x:Name="CoverArtSelector" Grid.Row="2" Grid.Column="2" Width="100" HorizontalAlignment="Left" Margin="0,0,10,0" VerticalAlignment="Bottom" SelectionChanged="CoverArtSelector_SelectionChanged"/>
+                    <TextBlock x:Name="CoverArtLabel" Margin="0,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="No cover art present" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Left" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="AddCoverButton" Grid.Column="5" Content="+" Margin="10,0,0,0" FontWeight="Bold" Click="AddCoverButton_Click" />
+                        <Button x:Name="RemoveCoverButton" Grid.Column="4" Content="-" Margin="10,0,0,0" FontWeight="Bold" Click="RemoveCoverButton_Click"/>
+                        <ComboBox x:Name="CoverArtSelector" Grid.Column="3" Width="100" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" SelectionChanged="CoverArtSelector_SelectionChanged"/>
+                        <Button x:Name="ImportCoverButton" Grid.Column="0" Content="{x:Static resx:Resources.MAINWINDOW_IMPORT}" Margin="0,0,10,0" Click="ImportCoverButton_Click"/>
+                    </Grid>
+                        
+                    
                 </Grid>
             </StackPanel>
         </ScrollViewer>

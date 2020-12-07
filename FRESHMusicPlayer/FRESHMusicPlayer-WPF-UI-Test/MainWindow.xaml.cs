@@ -389,7 +389,6 @@ namespace FRESHMusicPlayer
         {
             if (Player.Playing)
             {
-                Player.RepositionMusic((int)ProgressBar.Value);
                 progressTimer.Interval = 1000;
                 progressTimer.Start();
             }
