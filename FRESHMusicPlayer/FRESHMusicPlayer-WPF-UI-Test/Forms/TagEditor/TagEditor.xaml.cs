@@ -12,6 +12,7 @@ using Winforms = System.Windows.Forms;
 using System.Windows.Shapes;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
 using System.Windows.Media.Imaging;
+using FRESHMusicPlayer.Utilities;
 
 namespace FRESHMusicPlayer.Forms.TagEditor
 {
@@ -66,7 +67,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                         i++;
                     }
                 }
-                
+                else ImportCoverButton.IsEnabled = false;
                 iterations++;
             }
             if (CoverArts.Count != 0)
@@ -95,8 +96,10 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 track.TrackNumber = Convert.ToInt32(TrackNumBox.Text);
                 track.DiscNumber = Convert.ToInt32(DiscNumBox.Text);
                 track.EmbeddedPictures.Clear();
-                track.EmbeddedPictures.ToList().InsertRange(0, CoverArts);
+                foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
                 track.Save();
+                DatabaseUtils.Remove(path);
+                DatabaseUtils.Import(path);
             }
         }
 
@@ -130,8 +133,8 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         public void ChangeCoverArt()
         {
-            ImportCoverButton.IsEnabled = true;
             RemoveCoverButton.IsEnabled = true;
+            ImportCoverButton.IsEnabled = true;
             int selectedIndex = CoverArtSelector.SelectedIndex;
             if (selectedIndex == -1) selectedIndex = 0;
             var currentCover = CoverArts[selectedIndex];
@@ -139,7 +142,6 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             {
                 CoverArtLabel.Text = "No cover art present";
                 CoverArtBox.Source = null;
-                ImportCoverButton.IsEnabled = false;
                 RemoveCoverButton.IsEnabled = false;
                 return;
             }
@@ -243,12 +245,12 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void SetUnsavedChanges(bool state)
         {
-            if (state) unsavedChanges = false;
-            else
+            if (state)
             {
                 unsavedChanges = true;
                 Title = $"*{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
             }
+            else unsavedChanges = false;
         }
 
         private void NewWindowItem_MouseDown(object sender, RoutedEventArgs e)
