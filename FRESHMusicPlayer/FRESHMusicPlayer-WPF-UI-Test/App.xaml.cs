@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Linq;
 using FRESHMusicPlayer.Handlers.Configuration;
+using FRESHMusicPlayer.Forms.TagEditor;
+
 namespace FRESHMusicPlayer
 {
     public enum Skin
@@ -20,7 +23,17 @@ namespace FRESHMusicPlayer
             if (Config.Language != "en") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
             MainWindow window;
-            if (e.Args.Length > 0) window = new MainWindow(e.Args[0]);
+            if (e.Args.Length > 0)
+            {
+                if (e.Args.Contains("--tageditor"))
+                {
+                    var paths = e.Args.Except(new string[]{"--tageditor"});
+                    var tagEditor = new TagEditor(paths.ToList());
+                    tagEditor.Show();
+                    return;
+                }
+                window = new MainWindow(e.Args);
+            }
             else window = new MainWindow();
             window.Show();
         }

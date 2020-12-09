@@ -88,11 +88,11 @@
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_MAINTENANCE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
                 <Button x:Name="Maintanence_ResetButton" Content="{x:Static resx:Resources.SETTINGS_RESET}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
-                <Button x:Name="Maintanence_NukeButton" Content="{x:Static resx:Resources.SETTINGS_NUKELIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Foreground="Red" Click="Maintanence_NukeButton_Click"/>
+                <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
                 <Button x:Name="Maintenence_UpdateButton" Content="Clean and update library" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintenence_UpdateButton_Click"/>
-
+                <Button x:Name="Maintanence_NukeButton" Content="{x:Static resx:Resources.SETTINGS_NUKELIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_NukeButton_Click" Foreground="#FFD5463F"/>
+                
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
                 <TextBlock Text="FRESHMusicPlayer Ver. 8.2" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>

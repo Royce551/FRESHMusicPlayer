@@ -58,8 +58,9 @@ namespace FRESHMusicPlayer
         public static Track CurrentTrack;
 
         public SystemMediaTransportControls Smtc;
+        public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
-        public MainWindow(string initialFile = null)
+        public MainWindow(string[] initialFile = null)
         {
             InitializeComponent();
             Player.SongChanged += Player_SongChanged;
@@ -271,6 +272,7 @@ namespace FRESHMusicPlayer
         {
             VolumeBar.Value = App.Config.Volume;
             ChangeTabs(App.Config.CurrentMenu);
+            TrackingHandler = new PlaytimeTrackingHandler(Player);
         }
         #region Tabs
         private void ChangeTabs(SelectedMenu tab)
@@ -509,7 +511,7 @@ namespace FRESHMusicPlayer
             App.Config.Volume = (int)VolumeBar.Value;
             App.Config.CurrentMenu = SelectedMenu;
             ConfigurationHandler.Write(App.Config);
-            Winforms.Application.Exit();
+            Application.Current.Shutdown();
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)

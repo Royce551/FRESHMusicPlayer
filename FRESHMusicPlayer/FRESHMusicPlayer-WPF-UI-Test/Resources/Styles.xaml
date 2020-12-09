@@ -31,6 +31,7 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" TargetName="border" Value="#FF338BC1"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF338BC1"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
