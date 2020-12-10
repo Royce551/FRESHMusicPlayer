@@ -112,7 +112,7 @@ namespace FRESHMusicPlayer
         private async void Window_SourceInitialized(object sender, EventArgs e)
         {
             UpdateIntegrations();
-            ProcessSettings();
+            ProcessSettings(true);
             await UpdateHandler.UpdateApp();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
@@ -268,11 +268,19 @@ namespace FRESHMusicPlayer
             RightFrame.Source = null;
             SelectedAuxiliaryPane = SelectedAuxiliaryPane.None;
         }
-        public void ProcessSettings()
+        public void ProcessSettings(bool initialize = false)
         {
-            VolumeBar.Value = App.Config.Volume;
-            ChangeTabs(App.Config.CurrentMenu);
-            TrackingHandler = new PlaytimeTrackingHandler(Player);
+            if (initialize)
+            {
+                VolumeBar.Value = App.Config.Volume;
+                ChangeTabs(App.Config.CurrentMenu);
+            }
+            if (App.Config.PlaybackTracking) TrackingHandler = new PlaytimeTrackingHandler(Player);
+            else if (TrackingHandler != null)
+            {
+                TrackingHandler?.Close();
+                TrackingHandler = null;
+            }
         }
         #region Tabs
         private void ChangeTabs(SelectedMenu tab)
@@ -510,6 +518,7 @@ namespace FRESHMusicPlayer
         {
             App.Config.Volume = (int)VolumeBar.Value;
             App.Config.CurrentMenu = SelectedMenu;
+            TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Application.Current.Shutdown();
         }

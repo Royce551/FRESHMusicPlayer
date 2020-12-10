@@ -47,7 +47,7 @@
                         <ComboBoxItem Content="Portuguese"/>
                     </ComboBox>
                 </Grid>
-                <Grid Height="30" Margin="0,0,0,5" >
+                <!--<Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
@@ -57,8 +57,9 @@
                         <ComboBoxItem Content="Test"/>
                         <ComboBoxItem Content="Test2"/>
                     </ComboBox>
-                </Grid>
+                </Grid>-->
                 <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
+                <CheckBox x:Name="General_TrackingCheck" Content="Playback Tracking" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>

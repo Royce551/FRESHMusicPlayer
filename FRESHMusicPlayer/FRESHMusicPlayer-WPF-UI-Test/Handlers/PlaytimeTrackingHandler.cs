@@ -24,17 +24,30 @@ namespace FRESHMusicPlayer.Handlers
 
             player.SongChanged += Player_SongChanged;
         }
+        public void Close()
+        {
+            player.SongChanged -= Player_SongChanged;
+            Write(TrackingFile);
+        }
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
             try
             {
-                TrackingFile.Entries.Add(new TrackingEntry
+                var trackingEntry = new TrackingEntry
                 {
                     DatePlayed = DateTime.Now,
-                    Track = DatabaseUtils.Read().Find(x => x.Path == player.FilePath)
-                });
-                Write(TrackingFile);
+                    Track = new DatabaseTrack
+                    {
+                        Path = player.FilePath,
+                        Artist = MainWindow.CurrentTrack.Artist,
+                        Title = MainWindow.CurrentTrack.Title,
+                        Album = MainWindow.CurrentTrack.Album,
+                        TrackNumber = MainWindow.CurrentTrack.TrackNumber,
+                        Length = MainWindow.CurrentTrack.Duration
+                    }
+                };
+                TrackingFile.Entries.Add(trackingEntry);
             }
             catch
             {

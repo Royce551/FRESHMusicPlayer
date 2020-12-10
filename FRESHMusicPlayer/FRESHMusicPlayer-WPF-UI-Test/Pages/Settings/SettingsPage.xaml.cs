@@ -28,6 +28,7 @@ namespace FRESHMusicPlayer.Pages
         private void InitFields()
         {
             General_ProgressCheck.IsChecked = App.Config.ShowTimeInWindow;
+            General_TrackingCheck.IsChecked = App.Config.PlaybackTracking;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
             FMPCoreVersionLabel.Text = MainWindow.Player.VersionString();
@@ -114,7 +115,14 @@ namespace FRESHMusicPlayer.Pages
                 (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
             }  
         }
-
+        private void General_TrackingChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.PlaybackTracking = (bool)General_TrackingCheck.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.ProcessSettings();
+            }
+        }
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pageInitialized)
@@ -210,6 +218,8 @@ namespace FRESHMusicPlayer.Pages
                 DatabaseUtils.Import(tracks.ToArray());
             });
         }
+
+        
     }
     public enum LanguageCombo
     {
