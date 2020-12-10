@@ -115,6 +115,15 @@ namespace FRESHMusicPlayer
             ProcessSettings(true);
             await UpdateHandler.UpdateApp();
         }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            App.Config.Volume = (int)VolumeBar.Value;
+            App.Config.CurrentMenu = SelectedMenu;
+            TrackingHandler?.Close();
+            ConfigurationHandler.Write(App.Config);
+            Libraryv2.Dispose();
+            Application.Current.Shutdown();
+        }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
             switch (args.Button)
@@ -426,11 +435,12 @@ namespace FRESHMusicPlayer
         private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
         private void ProgressTick()
         {
-            ProgressIndicator1.Text = Player.CurrentBackend.CurrentTime.ToString(@"mm\:ss");
+            var time = TimeSpan.FromSeconds(Math.Floor(Player.CurrentBackend.CurrentTime.TotalSeconds));
+            ProgressIndicator1.Text = time.ToString(@"mm\:ss");
             if (App.Config.ShowRemainingProgress) ProgressIndicator2.Text 
-                    = $"-{TimeSpan.FromSeconds(Player.CurrentBackend.TotalTime.TotalSeconds - Math.Floor(Player.CurrentBackend.CurrentTime.TotalSeconds)):mm\\:ss}";
-            if (App.Config.ShowTimeInWindow) Title = $"{Player.CurrentBackend.CurrentTime:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
-            if (!isDragging) ProgressBar.Value = Player.CurrentBackend.CurrentTime.TotalSeconds;
+                    = $"-{TimeSpan.FromSeconds(time.TotalSeconds - Math.Floor(Player.CurrentBackend.TotalTime.TotalSeconds)):mm\\:ss}";
+            if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
+            if (!isDragging) ProgressBar.Value = time.TotalSeconds;
             Player.AvoidNextQueue = false;
         }
         private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.TrackInfo, 235, true);
@@ -512,15 +522,6 @@ namespace FRESHMusicPlayer
         {
             //player.AddQueue(FilePathBox.Text);
             Player.PlayMusic();                         
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            App.Config.Volume = (int)VolumeBar.Value;
-            App.Config.CurrentMenu = SelectedMenu;
-            TrackingHandler?.Close();
-            ConfigurationHandler.Write(App.Config);
-            Application.Current.Shutdown();
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
