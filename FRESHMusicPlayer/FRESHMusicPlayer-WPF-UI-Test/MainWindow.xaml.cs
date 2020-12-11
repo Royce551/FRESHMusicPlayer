@@ -53,7 +53,7 @@ namespace FRESHMusicPlayer
         public static Player Player = new Player { CurrentVolume = App.Config.Volume};
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
-        public static EventHandler TabChanged;
+        public static EventHandler<TabChangedEventArgs> TabChanged;
         public static LiteDatabase Libraryv2;
         public static Track CurrentTrack;
 
@@ -292,47 +292,43 @@ namespace FRESHMusicPlayer
             }
         }
         #region Tabs
-        private void ChangeTabs(SelectedMenu tab)
+        private void ChangeTabs(SelectedMenu tab, string search = null)
         {
             SelectedMenu = tab;
-            UpdateLibrary();
-        }
-        private void UpdateLibrary()
-        {
-            TextBlock tab;
+            TextBlock tabLabel;
             switch (SelectedMenu)
             {
                 case SelectedMenu.Tracks:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
-                    tab = TracksTab;
+                    tabLabel = TracksTab;
                     break;
                 case SelectedMenu.Artists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
-                    tab = ArtistsTab;
+                    tabLabel = ArtistsTab;
                     break;
                 case SelectedMenu.Albums:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
-                    tab = AlbumsTab;
+                    tabLabel = AlbumsTab;
                     break;
                 case SelectedMenu.Playlists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
-                    tab = PlaylistsTab;
+                    tabLabel = PlaylistsTab;
                     break;
                 case SelectedMenu.Import:
                     ContentFrame.Source = new Uri("/Pages/ImportPage.xaml", UriKind.Relative);
-                    tab = ImportTab;
+                    tabLabel = ImportTab;
                     break;
                 default:
-                    tab = null;
+                    tabLabel = null;
                     break;
             }
-            TabChanged?.Invoke(null, EventArgs.Empty);
+            TabChanged?.Invoke(null, new TabChangedEventArgs(search));
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
-            tab.FontWeight = FontWeights.Bold;
+            tabLabel.FontWeight = FontWeights.Bold;
         }
         #endregion
 
@@ -690,5 +686,14 @@ namespace FRESHMusicPlayer
                 else App.Config.ShowRemainingProgress = true;
             }
         }
+
+        private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Artists, CurrentTrack.Artist);
+
+        private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Albums, CurrentTrack.Album);
+    }
+    public class TabChangedEventArgs : EventArgs
+    {
+        public string Search { get; private set; } = null;
+        public TabChangedEventArgs(string search) => Search = search;
     }
 }

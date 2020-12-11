@@ -152,11 +152,16 @@ namespace FRESHMusicPlayer.Pages.Library
             else if (MainWindow.SelectedMenu == SelectedMenu.Playlists) ShowTracksforPlaylist(selectedItem);
             else ShowTracksforAlbum(selectedItem);
         }
-        private void MainWindow_TabChanged(object sender, EventArgs e)
+        private void MainWindow_TabChanged(object sender, TabChangedEventArgs e)
         {
             LeftSide.Width = new GridLength(222);
             DetailsPane.Height = new GridLength(45);
             LoadLibrary();
+            if (e.Search != null)
+            {
+                Thread.Sleep(10);
+                CategoryPanel.SelectedItem = e.Search;
+            }
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
