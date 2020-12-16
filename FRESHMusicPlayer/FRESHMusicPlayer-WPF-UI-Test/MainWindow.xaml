@@ -24,8 +24,10 @@
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
             <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Click="TrackContentPlaylistManagement_Click"/>
-            <MenuItem Header="Go to artist" Click="TrackContextArtist_Click"/>
-            <MenuItem Header="Go to album" Click="TrackContextAlbum_Click"/>
+            <MenuItem Header="Go to">
+                <MenuItem Header="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Click="TrackContextArtist_Click"/>
+                <MenuItem Header="{x:Static resx:Resources.TRACKINFO_ALBUM}" Click="TrackContextAlbum_Click"/>
+            </MenuItem>
             <Separator/>
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_MINIPLAYER}" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_PAUSE_AFTTER_CURRENT_TRACK}" Click="TrackContext_PauseAuto_Click"/>

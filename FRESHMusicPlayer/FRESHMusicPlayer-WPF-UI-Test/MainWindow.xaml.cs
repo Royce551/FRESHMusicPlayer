@@ -342,6 +342,7 @@ namespace FRESHMusicPlayer
             Title = "FRESHMusicPlayer";
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             progressTimer.Stop();
+            CoverArtBox.Source = null;
             SetIntegrations(MediaPlaybackStatus.Stopped);
             SetCoverArtVisibility(false);
         }
@@ -364,7 +365,7 @@ namespace FRESHMusicPlayer
             }
             else
             {
-                CoverArtBox.Source = BitmapFrame.Create(new System.IO.MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
+                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
                 SetCoverArtVisibility(true);
             }
             progressTimer.Start();
