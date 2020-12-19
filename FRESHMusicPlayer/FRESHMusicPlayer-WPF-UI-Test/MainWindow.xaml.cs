@@ -40,7 +40,8 @@ namespace FRESHMusicPlayer
         QueueManagement,
         Search,
         Notifications, 
-        TrackInfo
+        TrackInfo,
+        Lyrics
     }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -256,6 +257,9 @@ namespace FRESHMusicPlayer
                     break;
                 case SelectedAuxiliaryPane.TrackInfo:
                     uri = "/Pages/TrackInfoPage.xaml";
+                    break;
+                case SelectedAuxiliaryPane.Lyrics:
+                    uri = "/Pages/Lyrics/LyricsPage.xaml";
                     break;
                 default:
                     return;
@@ -691,6 +695,8 @@ namespace FRESHMusicPlayer
         private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Artists, CurrentTrack.Artist);
 
         private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Albums, CurrentTrack.Album);
+
+        private void TrackContextLyrics_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.Lyrics, openleft: true);
     }
     public class TabChangedEventArgs : EventArgs
     {
