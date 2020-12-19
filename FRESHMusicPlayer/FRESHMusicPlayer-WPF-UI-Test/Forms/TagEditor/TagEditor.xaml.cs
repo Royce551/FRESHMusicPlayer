@@ -22,7 +22,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
     public partial class TagEditor : Window
     {
         public List<string> FilePaths = new List<string>();
-
+        
         private readonly List<string> filePathsToSaveInBackground = new List<string>();
         private readonly List<string> Displayfilepaths = new List<string>();
         private readonly List<PictureInfo> CoverArts = new List<PictureInfo>();

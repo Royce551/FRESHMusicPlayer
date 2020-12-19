@@ -126,6 +126,8 @@
     <Compile Include="Pages\Library\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Lyrics\ITimedLyricsProvider.cs" />
+    <Compile Include="Pages\Lyrics\LRCTimedLyricsProvider.cs" />
     <Compile Include="Pages\Lyrics\LyricsPage.xaml.cs">
       <DependentUpon>LyricsPage.xaml</DependentUpon>
     </Compile>
