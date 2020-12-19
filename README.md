@@ -1,6 +1,4 @@
-banner logo goes here eventually
-# FRESHMusicPlayer
-.NET Music Player
+<img src="banner size.svg" width="100%"/>    
 
 [**Support/Discussion Discord Server**](https://discord.gg/mFGFT8K)
 
