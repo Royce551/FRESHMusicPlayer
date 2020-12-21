@@ -28,6 +28,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            if (!MainWindow.Player.Playing) return;
             if (MainWindow.Player.CurrentBackend.CurrentTime < TimedLyrics.Lines.Keys.First()) return;
             var closest = TimedLyrics.Lines.Where(x => x.Key < MainWindow.Player.CurrentBackend.CurrentTime).ToList().Last();
             LyricsBox.Inlines.Clear();

@@ -6,8 +6,7 @@
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor"
         mc:Ignorable="d" 
-        Title="TagEditor" Height="1000" Width="600" Closing="Window_Closing" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True">
-    <!--Height is 451-->
+        Title="TagEditor" Height="451" Width="600" Closing="Window_Closing" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True">
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="18px"/>
@@ -79,7 +78,7 @@
                     <TextBox x:Name="TrackNumBox" Grid.Row="3" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
                     <TextBox x:Name="DiscNumBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
                 </Grid>
-                <Grid Height="Auto" Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
+                <Grid Height="Auto" Margin="0,5" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>

@@ -67,7 +67,11 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                         i++;
                     }
                 }
-                else ImportCoverButton.IsEnabled = false;
+                else
+                {
+                    ImportCoverButton.IsEnabled = false;
+                    RemoveCoverButton.IsEnabled = false;
+                }
                 iterations++;
             }
             if (CoverArts.Count != 0)
@@ -142,14 +146,13 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             {
                 CoverArtLabel.Text = "No cover art present";
                 CoverArtBox.Source = null;
-                RemoveCoverButton.IsEnabled = false;
                 return;
             }
             var currentCoverImage = System.Drawing.Image.FromStream(new MemoryStream(currentCover.PictureData));
             CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(currentCover.PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
             CoverArtLabel.Text =
                 $"{currentCoverImage.Width}x{currentCoverImage.Height}\n" +
-                $"{new System.Drawing.ImageFormatConverter().ConvertToString(currentCoverImage.RawFormat).ToUpper()} Image\n" +
+                $"{new System.Drawing.ImageFormatConverter().ConvertToString(currentCoverImage.RawFormat).ToUpper()}\n" +
                 $"{currentCover.PicType}";
         }
 
@@ -193,7 +196,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 CoverArtSelector.Items.Add(i.ToString());
                 i++;
             }
-            if (CoverArtSelector.Items.Count <= selectedIndex) CoverArtSelector.SelectedIndex = selectedIndex;
+            if (selectedIndex <= CoverArtSelector.Items.Count) CoverArtSelector.SelectedIndex = selectedIndex;
         }
 
         private void Player_SongChanged(object sender, EventArgs e)

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Pages.Lyrics
 {
@@ -15,7 +12,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         {
             var filetoRead = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + ".lrc");
             var lines = File.ReadAllLines(filetoRead);
-            foreach (var line in lines)
+            foreach (var line in lines) // This will only parse simple LRC files correctly. ID tags, etc. will make this explode.
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
                 var minutes = int.Parse(line.Substring(1, 2));
@@ -23,16 +20,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
                 var hundredths = double.Parse(line.Substring(7, 2));
                 var timeStamp = new TimeSpan(0, 0, minutes, seconds, (int)Math.Round(hundredths / 10));
                 var lyrics = line.Substring(10);
-                //if (Lines.ContainsKey(timeStamp)) Lines.Add(TimeSpan.FromMilliseconds(timeStamp.Milliseconds + 100), lyrics);
-                //else
-                try
-                {
-                    Lines.Add(timeStamp, lyrics);
-                }
-                catch
-                {
-
-                }
+                if (!Lines.ContainsKey(timeStamp)) Lines.Add(timeStamp, lyrics);
             }
         }
     }
