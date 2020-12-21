@@ -118,305 +118,330 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value></value>
+    <value>Bir hata oluştu: {0}.
+Zamanınız varsa, lütfen bunu https://github.com/royce551/freshmusicplayer/issues adresindeki geliştiricilere bildirin.
+İhtiyaç duyacakları günlük dosyası {1} adresinde.</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value></value>
+    <value>Mini Oynatıcı</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
-    <value></value>
+    <value>Geçerli şarkıdan sonra duraklat</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value></value>
+    <value>Klasörlere göz atın</value>
   </data>
   <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Çalma listesi dosyalarına göz atın</value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Şarkılara göz atın</value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Ayrıca bu sayfaya sürükleyip bırakabilirsiniz.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value></value>
+    <value>Manuel dosya yolu/URL girişi</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Oynatma listesine ekle</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value></value>
+    <value>Tümünü Sırala</value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
-    <value></value>
+    <value>Dosya Gezgini'nde aç</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value></value>
+    <value>Hepsini Oynat</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value></value>
+    <value>Albümler</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value></value>
+    <value>Sanatçılar</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value></value>
+    <value>İthalat</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value></value>
+    <value>Sanatçı Yok</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value></value>
+    <value>Oynayan Hiçbir Şey</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value></value>
+    <value>Bir oynatma hatası oluştu:
+{0}
+Senin için bir sonraki şarkıya geçeceğiz</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
-    <value></value>
+    <value>Oynatma listeleri</value>
   </data>
   <data name="MAINWINDOW_SEARCH" xml:space="preserve">
-    <value></value>
+    <value>Arama</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value></value>
+    <value>Ayarlar</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Şarkılar</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
-    <value></value>
+    <value>_Vazgeç</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
-    <value></value>
+    <value>_Dosya</value>
   </data>
   <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
-    <value></value>
+    <value>_Yeni Pencere</value>
   </data>
   <data name="MENUBAR_OPEN" xml:space="preserve">
-    <value></value>
+    <value>_Aç</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>_Kaydet</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
-    <value></value>
+    <value>_Tag Kaynakları</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value></value>
+    <value>Hepsini Temizle</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Bildirimler</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
-    <value></value>
+    <value>Kitaplığınız başarıyla temizlendi!</value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Şarkılardan biri veya daha fazlası bulunamadığı için bu çalma listesi dosyası içe aktarılamadı.
+Eksik Dosya: {0}</value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value></value>
+    <value>Oynatmaya çalıştığınız "{0}" dosyası mevcut görünmüyor.</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
-    <value></value>
+    <value>İndirme güncellemesi...</value>
   </data>
   <data name="NOTIFICATION_LIBRARYFAILED" xml:space="preserve">
-    <value></value>
+    <value>Kitaplık yüklenemedi. Çalışan başka bir FMP örneğiniz olmadığından emin olun!</value>
   </data>
   <data name="NOTIFICATION_PAUSING" xml:space="preserve">
-    <value></value>
+    <value>Mevcut parçadan sonra duraklatılıyor ...</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
-    <value></value>
+    <value>Güncellenirken bir hata oluştu: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value></value>
+    <value>Bir güncelleme yüklenmeye hazır! Güncellemeyi uygulamak için FMP'yi yeniden başlatın.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value></value>
+    <value>Oynatma Listesi Yönetimi</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
-    <value></value>
+    <value>Oluşturmak</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
-    <value></value>
+    <value>İhracat</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
-    <value></value>
+    <value>"{0}" ile ne yapmak istiyorsunuz?</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
-    <value></value>
+    <value>Adı değiştir</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Oynatma Listesi Ekle</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value></value>
+    <value>Şarkı Ekle</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value></value>
+    <value>Kuyruğu Temizle</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value></value>
+    <value>Kuyruk</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value></value>
+    <value>Kalan süre - </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
-    <value></value>
+    <value>Hakkında</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
-    <value></value>
+    <value>Görünüm</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value></value>
+    <value>Otomatik Güncelleme Modu</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value></value>
+    <value>Squid Grill (ve açık kaynak katılımcıları) tarafından
+GPL v3 altında lisanslanmıştır
+FRESHMusicPlayer'ı kullandığınız için teşekkür ederiz! ♥</value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
-    <value></value>
+    <value>Genel</value>
   </data>
   <data name="SETTINGS_IMPORTOLDFMP" xml:space="preserve">
-    <value></value>
+    <value>Kitaplığı eski FMP'den içe aktarın</value>
   </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
-    <value></value>
+    <value>Entegrasyon</value>
   </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
-    <value></value>
+    <value>Dil</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
-    <value></value>
+    <value>Bakım</value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
-    <value></value>
+    <value>Kitaplığınızdaki her şeyden kurtulun</value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
-    <value></value>
+    <value>Kitaplığınızı geri alınamaz bir şekilde temizlemek üzeresiniz. Emin misiniz?</value>
   </data>
   <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="SETTINGS_PRERELEASE" xml:space="preserve">
-    <value></value>
+    <value>FMP'nin yayın öncesi sürümlerini edinin</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value></value>
+    <value>Yapılandırmayı varsayılanlara sıfırlayın</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Değişikliklerin uygulanması için FMP'nin yeniden başlatılması gerekiyor.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
-    <value></value>
+    <value>Şimdi yeniden başlat</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value></value>
+    <value>FMP'nin davranış şeklini değiştirin</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value></value>
+    <value>Tema</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value></value>
+    <value>Karanlık</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value></value>
+    <value>Aydınlık</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
-    <value></value>
+    <value>Pencere başlığında başlık yerine zamanı göster</value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value></value>
+    <value>Güncellemeler</value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value></value>
+    <value>Şimdi güncellemeleri kontrol edin</value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
-    <value></value>
+    <value>Son kontrol etdi {0}</value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value></value>
+    <value>Otomatik</value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
-    <value></value>
+    <value>Manuel</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Güncellemeden önce sor</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value></value>
+    <value>Etiket Düzenleyici</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value></value>
+    <value>Albüm sanatçısı</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value></value>
+    <value>Sanatçı</value>
   </data>
   <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
-    <value></value>
+    <value>Yeni bir parça çaldığınızda değişiklikler uygulanacaktır.</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value></value>
+    <value>Dosyayı Değiştir...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value></value>
+    <value>Besteci</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value></value>
+    <value>Kapak resmi</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value></value>
+    <value>Disk Numarası</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
-    <value></value>
+    <value>Düzenleme </value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
-    <value></value>
+    <value>Bu albüm için birden çok arama sonucu var. Hangisini istersin?</value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value></value>
+    <value>İnternete bağlı değilsiniz :(</value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
-    <value></value>
+    <value>Bu albüm için sonuç bulunamadı :(</value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>Kaydet</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value></value>
+    <value>Değişikliklerinizi {0} olarak kaydetmek istiyor musunuz?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Başlık</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value></value>
+    <value>Parça Numarası</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>Albüm</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value></value>
+    <value>Albüm Bilgileri</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value></value>
+    <value>Bit hızı kbps</value>
     <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Disk</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value></value>
+    <value>Tür</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value></value>
+    <value>Teknik bilgi</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value></value>
+    <value>Şarkı Bilgisi</value>
     <comment>Track Info header</comment>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Şarkı</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value></value>
+    <value>Yıl</value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value>Kapak resmi yok</value>
+  </data>
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value>Oynatma Takibi</value>
+  </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value>Kitaplığı temizleyin ve güncelleyin</value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value>Şarkı sözleri yok</value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value>Şarkı sözleri</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Git</value>
   </data>
 </root>
