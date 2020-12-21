@@ -122,6 +122,9 @@
 If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
 The log file they'll need is at {1}.</value>
   </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Go to</value>
+  </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
     <value>Mini Player</value>
   </data>
@@ -144,7 +147,7 @@ The log file they'll need is at {1}.</value>
     <value>Manual file path/URL entry</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value>Add to playlist...</value>
+    <value>Add to playlist</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
     <value>Enqueue All</value>
@@ -154,6 +157,12 @@ The log file they'll need is at {1}.</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
     <value>Play All</value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value>Lyrics</value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value>No lyrics</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>Albums</value>
@@ -234,7 +243,7 @@ Missing File: {0}</value>
     <value>An error occured when updating: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value>The update is ready to install!</value>
+    <value>An update is ready to install! Restart FMP to apply the update.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
     <value>Playlist Management</value>
@@ -275,6 +284,9 @@ Missing File: {0}</value>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
     <value>Auto Update Mode</value>
   </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value>Clean and update library</value>
+  </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
     <value>By Squid Grill (and open source contributors)
 Licensed under GPL v3
@@ -301,8 +313,8 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
     <value>You are about to irreversibly clear your library. Are you sure?</value>
   </data>
-  <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
-    <value>Output Device</value>
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value>Playback Tracking</value>
   </data>
   <data name="SETTINGS_PRERELEASE" xml:space="preserve">
     <value>Get pre-release versions of FMP</value>
@@ -378,6 +390,9 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
     <value>There are multiple search results for this album. Which one do you want?</value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value>No cover art present</value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
     <value>You aren't connected to the internet :(</value>

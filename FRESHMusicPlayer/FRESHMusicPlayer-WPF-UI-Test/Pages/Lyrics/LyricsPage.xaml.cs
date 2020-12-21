@@ -68,7 +68,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
             }
             else // No lyrics
             {
-                LyricsBox.Text = "No lyrics";
+                LyricsBox.Text = Properties.Resources.LYRICS_NOLYRICS;
                 Timer.Stop();
             }
         }

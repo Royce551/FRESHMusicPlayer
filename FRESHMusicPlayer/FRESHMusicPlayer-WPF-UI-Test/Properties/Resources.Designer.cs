@@ -72,6 +72,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go to.
+        /// </summary>
+        public static string CONTROLS_GOTO {
+            get {
+                return ResourceManager.GetString("CONTROLS_GOTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mini Player.
         /// </summary>
         public static string CONTROLS_MINIPLAYER {
@@ -135,7 +144,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to playlist....
+        ///   Looks up a localized string similar to Add to playlist.
         /// </summary>
         public static string LIBRARY_ADD_TO_PLAYLIST {
             get {
@@ -167,6 +176,24 @@ namespace FRESHMusicPlayer.Properties {
         public static string LIBRARY_PLAYALL {
             get {
                 return ResourceManager.GetString("LIBRARY_PLAYALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lyrics.
+        /// </summary>
+        public static string LYRICS {
+            get {
+                return ResourceManager.GetString("LYRICS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No lyrics.
+        /// </summary>
+        public static string LYRICS_NOLYRICS {
+            get {
+                return ResourceManager.GetString("LYRICS_NOLYRICS", resourceCulture);
             }
         }
         
@@ -381,7 +408,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The update is ready to install!.
+        ///   Looks up a localized string similar to An update is ready to install! Restart FMP to apply the update..
         /// </summary>
         public static string NOTIFICATION_UPDATEREADY {
             get {
@@ -525,6 +552,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clean and update library.
+        /// </summary>
+        public static string SETTINGS_CLEANLIBRARY {
+            get {
+                return ResourceManager.GetString("SETTINGS_CLEANLIBRARY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By Squid Grill (and open source contributors)
         ///Licensed under GPL v3
         ///Thank you for using FRESHMusicPlayer! ♥.
@@ -599,11 +635,11 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output Device.
+        ///   Looks up a localized string similar to Playback Tracking.
         /// </summary>
-        public static string SETTINGS_OUTPUTDEVICE {
+        public static string SETTINGS_PLAYBACKTRACKING {
             get {
-                return ResourceManager.GetString("SETTINGS_OUTPUTDEVICE", resourceCulture);
+                return ResourceManager.GetString("SETTINGS_PLAYBACKTRACKING", resourceCulture);
             }
         }
         
@@ -829,6 +865,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string TAGEDITOR_INTEGRATIONDISAMBIGUATION {
             get {
                 return ResourceManager.GetString("TAGEDITOR_INTEGRATIONDISAMBIGUATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No cover art present.
+        /// </summary>
+        public static string TAGEDITOR_NOCOVERART {
+            get {
+                return ResourceManager.GetString("TAGEDITOR_NOCOVERART", resourceCulture);
             }
         }
         

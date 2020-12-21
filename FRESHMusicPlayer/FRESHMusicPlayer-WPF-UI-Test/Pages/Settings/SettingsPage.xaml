@@ -47,19 +47,8 @@
                         <ComboBoxItem Content="Portuguese"/>
                     </ComboBox>
                 </Grid>
-                <!--<Grid Height="30" Margin="0,0,0,5" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="150"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_OUTPUTDEVICE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14" IsEnabled="False"/>
-                    <ComboBox x:Name="General_OutDeviceCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" IsEnabled="False">
-                        <ComboBoxItem Content="Test"/>
-                        <ComboBoxItem Content="Test2"/>
-                    </ComboBox>
-                </Grid>-->
                 <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged" Margin="0,0,0,5"/>
-                <CheckBox x:Name="General_TrackingCheck" Content="Playback Tracking" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
+                <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
@@ -91,12 +80,12 @@
 
                 <Button x:Name="Maintanence_ResetButton" Content="{x:Static resx:Resources.SETTINGS_RESET}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
                 <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
-                <Button x:Name="Maintenence_UpdateButton" Content="Clean and update library" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintenence_UpdateButton_Click"/>
+                <Button x:Name="Maintenence_UpdateButton" Content="{x:Static resx:Resources.SETTINGS_CLEANLIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintenence_UpdateButton_Click"/>
                 <Button x:Name="Maintanence_NukeButton" Content="{x:Static resx:Resources.SETTINGS_NUKELIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_NukeButton_Click" Foreground="#FFD5463F"/>
                 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
 
-                <TextBlock Text="FRESHMusicPlayer Ver. 8.2" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock Text="FRESHMusicPlayer Ver. 9" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock x:Name="FMPCoreVersionLabel" Text="FMP Core version placeholder" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>
             </StackPanel>
