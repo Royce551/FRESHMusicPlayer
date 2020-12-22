@@ -1,18 +1,15 @@
 ﻿using ATL;
-using FRESHMusicPlayer;
+using FRESHMusicPlayer.Forms.TagEditor.Integrations;
+using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
-using System.Net.Http;
-using Winforms = System.Windows.Forms;
-using System.Windows.Shapes;
-using FRESHMusicPlayer.Forms.TagEditor.Integrations;
 using System.Windows.Media.Imaging;
-using FRESHMusicPlayer.Utilities;
 
 namespace FRESHMusicPlayer.Forms.TagEditor
 {
@@ -44,7 +41,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             int iterations = 1;           
             foreach (string path in FilePaths)
             {
-                Track track = new Track(path);
+                var track = new Track(path);
                 ArtistBox.Text = track.Artist;
                 TitleBox.Text = track.Title;
                 AlbumBox.Text = track.Album;
@@ -89,16 +86,18 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         {
             foreach (string path in filePaths)
             {
-                var track = new Track(path);
-                track.Artist = ArtistBox.Text;
-                track.Title = TitleBox.Text;
-                track.Album = AlbumBox.Text;
-                track.Genre = GenreBox.Text;
-                track.Year = Convert.ToInt32(YearBox.Text);
-                track.AlbumArtist = AlbumArtistBox.Text;
-                track.Composer = ComposerBox.Text;
-                track.TrackNumber = Convert.ToInt32(TrackNumBox.Text);
-                track.DiscNumber = Convert.ToInt32(DiscNumBox.Text);
+                var track = new Track(path)
+                {
+                    Artist = ArtistBox.Text,
+                    Title = TitleBox.Text,
+                    Album = AlbumBox.Text,
+                    Genre = GenreBox.Text,
+                    Year = Convert.ToInt32(YearBox.Text),
+                    AlbumArtist = AlbumArtistBox.Text,
+                    Composer = ComposerBox.Text,
+                    TrackNumber = Convert.ToInt32(TrackNumBox.Text),
+                    DiscNumber = Convert.ToInt32(DiscNumBox.Text)
+                };
                 track.EmbeddedPictures.Clear();
                 foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
                 track.Save();
@@ -126,8 +125,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         public void ChangeFiles()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-
+            var dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == true)
             {
                 FilePaths = dialog.FileNames.ToList();
@@ -144,7 +142,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             var currentCover = CoverArts[selectedIndex];
             if (currentCover.PictureData is null)
             {
-                CoverArtLabel.Text = "No cover art present";
+                CoverArtLabel.Text = Properties.Resources.TAGEDITOR_NOCOVERART;
                 CoverArtBox.Source = null;
                 return;
             }
@@ -258,7 +256,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void NewWindowItem_MouseDown(object sender, RoutedEventArgs e)
         {
-            TagEditor tagEditor = new TagEditor(FilePaths);
+            var tagEditor = new TagEditor(FilePaths);
             tagEditor.Show();
         }
 
@@ -310,7 +308,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
             var filePath = FilePaths[0];
             var release = integration.Fetch(results[index].Id);
-            var editor = new ReleaseIntegrationPage(release, new Track(filePath), filePath);
+            var editor = new ReleaseIntegrationPage(release, new Track(filePath));
             editor.ShowDialog();
             if (editor.OK)
             {

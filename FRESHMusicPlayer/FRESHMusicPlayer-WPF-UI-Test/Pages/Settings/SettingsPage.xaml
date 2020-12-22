@@ -45,6 +45,7 @@
                         <ComboBoxItem Content="German"/>
                         <ComboBoxItem Content="Vietnamese"/>
                         <ComboBoxItem Content="Portuguese"/>
+                        <ComboBoxItem Content="Turkish"/>
                     </ComboBox>
                 </Grid>
                 <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged" Margin="0,0,0,5"/>

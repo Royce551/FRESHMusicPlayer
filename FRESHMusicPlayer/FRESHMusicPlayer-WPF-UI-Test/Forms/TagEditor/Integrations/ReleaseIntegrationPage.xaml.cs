@@ -1,9 +1,7 @@
 ﻿using ATL;
-using System.Diagnostics;
-using System.IO;
-using System.Windows;
 using FRESHMusicPlayer.Utilities;
-using System.Windows.Controls;
+using System.Diagnostics;
+using System.Windows;
 
 namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
 {
@@ -17,12 +15,10 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
 
         private readonly TagEditorRelease release;
         private readonly Track track;
-        private readonly string filePath;
-        public ReleaseIntegrationPage(TagEditorRelease release, Track track, string filePath)
+        public ReleaseIntegrationPage(TagEditorRelease release, Track track)
         {
             this.release = release;
             this.track = track;
-            this.filePath = filePath;
             InitializeComponent();
             InitFields();
         }

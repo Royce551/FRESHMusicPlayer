@@ -2,10 +2,8 @@
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using System.Windows;
-using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Utilities
 {
@@ -61,7 +59,7 @@ namespace FRESHMusicPlayer.Utilities
             int count = 0;
             foreach (string y in tracks)
             {
-                Track track = new Track(y);
+                var track = new Track(y);
                 stufftoinsert.Add(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber, Length = track.Duration});
                 count++;
             }
@@ -79,7 +77,7 @@ namespace FRESHMusicPlayer.Utilities
         }
         public static void Import(string path)
         {
-            Track track = new Track(path);
+            var track = new Track(path);
             MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks")
                                 .Insert(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber, Length = track.Duration });
         }
@@ -99,7 +97,7 @@ namespace FRESHMusicPlayer.Utilities
         }
         public async static void Convertv1Tov2()
         {
-            Notification notification = new Notification
+            var notification = new Notification
             {
                 ContentText = "Beginning migration to libraryv2",
                 IsImportant = true,
@@ -112,7 +110,7 @@ namespace FRESHMusicPlayer.Utilities
                 var newlibrary = new List<DatabaseTrack>();
                 foreach (string x in oldlibrary)
                 {
-                    Track track = new Track(x);
+                    var track = new Track(x);
                     newlibrary.Add(new DatabaseTrack { Title = track.Title, Artist = track.Artist, Album = track.Album, Path = track.Path, TrackNumber = track.TrackNumber, Length = track.Duration });
                 }
                 MainWindow.Libraryv2.GetCollection<DatabaseTrack>("tracks").InsertBulk(newlibrary);        
@@ -127,7 +125,7 @@ namespace FRESHMusicPlayer.Utilities
             if (dbTrack != null) return dbTrack;
             else
             {
-                Track track = new Track(path);
+                var track = new Track(path);
                 return new DatabaseTrack { Artist = track.Artist, Title = track.Title, Album = track.Album, Length = track.Duration, Path = path, TrackNumber = track.TrackNumber };
             }
         }

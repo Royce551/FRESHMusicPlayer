@@ -1,21 +1,10 @@
 ﻿using ATL.Playlist;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
 
 namespace FRESHMusicPlayer.Forms.Playlists
 {
@@ -24,8 +13,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
     /// </summary>
     public partial class PlaylistEntry : UserControl
     {
-        private bool playlistExists = false;
-        private bool trackExists = true;
+        private readonly bool trackExists = true;
         private readonly string playlist;
         private readonly string path;
         public PlaylistEntry(string playlist, string path)
@@ -45,13 +33,11 @@ namespace FRESHMusicPlayer.Forms.Playlists
                 {
                     AddButton.IsEnabled = false;
                     RemoveButton.IsEnabled = true;
-                    playlistExists = true;
                     return;
                 }
             }
             AddButton.IsEnabled = true;
             RemoveButton.IsEnabled = false;
-            playlistExists = false;
         }
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {

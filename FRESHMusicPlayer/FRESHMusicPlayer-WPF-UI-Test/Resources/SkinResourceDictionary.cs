@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace FRESHMusicPlayer
 {
-    
+
     public class SkinResourceDictionary : ResourceDictionary
     {
 

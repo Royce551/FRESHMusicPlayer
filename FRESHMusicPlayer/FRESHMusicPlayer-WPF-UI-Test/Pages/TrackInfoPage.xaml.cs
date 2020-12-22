@@ -6,9 +6,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Imaging = System.Drawing.Imaging;
 
@@ -60,11 +57,11 @@ namespace FRESHMusicPlayer.Pages
 
         private void Rectangle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Track track = new Track(MainWindow.Player.FilePath);
+            var track = new Track(MainWindow.Player.FilePath);
             IList<PictureInfo> embeddedPictures = track.EmbeddedPictures;
             foreach (PictureInfo pic in embeddedPictures)
             {
-                System.Drawing.Image x = System.Drawing.Image.FromStream(new MemoryStream(pic.PictureData));
+                var x = System.Drawing.Image.FromStream(new MemoryStream(pic.PictureData));
                 x.Save(tempPath, Imaging.ImageFormat.Png);
                 System.Diagnostics.Process.Start(tempPath);
                 x.Dispose();

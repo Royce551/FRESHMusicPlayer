@@ -1,14 +1,10 @@
-﻿using FRESHMusicPlayer;
-using FRESHMusicPlayer.Forms.Playlists;
-using FRESHMusicPlayer.Handlers;
+﻿using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Utilities;
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -123,7 +119,7 @@ namespace FRESHMusicPlayer.Pages.Library
             otheritem.Header = Properties.Resources.PLAYLISTMANAGEMENT;
             otheritem.Click += (object send, RoutedEventArgs eee) =>
             {
-                PlaylistManagement management = new PlaylistManagement(FilePath);
+                var management = new PlaylistManagement(FilePath);
                 management.ShowDialog();
             };
             MiscContext.Items.Add(otheritem);

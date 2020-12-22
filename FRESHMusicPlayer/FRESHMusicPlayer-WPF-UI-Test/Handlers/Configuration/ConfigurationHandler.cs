@@ -22,7 +22,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
             }
             using (StreamReader file = File.OpenText(Path.Combine(ConfigurationPath, "config.json")))
             {
-                JsonSerializer jsonSerializer = new JsonSerializer();
+                var jsonSerializer = new JsonSerializer();
                 return (ConfigurationFile)jsonSerializer.Deserialize(file, typeof(ConfigurationFile));
             }
         }

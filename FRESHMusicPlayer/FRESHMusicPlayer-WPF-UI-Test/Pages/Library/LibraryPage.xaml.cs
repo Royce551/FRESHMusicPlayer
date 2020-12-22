@@ -1,7 +1,5 @@
-﻿using FRESHMusicPlayer.Handlers.Notifications;
-using FRESHMusicPlayer.Utilities;
+﻿using FRESHMusicPlayer.Utilities;
 using System;
-using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Threading;

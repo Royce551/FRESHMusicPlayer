@@ -1,11 +1,11 @@
 ﻿using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Utilities;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using WinForms = System.Windows.Forms;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -141,6 +141,9 @@ namespace FRESHMusicPlayer.Pages
                     case (int)LanguageCombo.Portuguese:
                         App.Config.Language = "pt";
                         break;
+                    case (int)LanguageCombo.Turkish:
+                        App.Config.Language = "tr";
+                        break;
                 }
                 SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
             }
@@ -226,7 +229,8 @@ namespace FRESHMusicPlayer.Pages
         English,
         German,
         Vietnamese,
-        Portuguese
+        Portuguese,
+        Turkish
     }
     public enum UpdateCombo
     {

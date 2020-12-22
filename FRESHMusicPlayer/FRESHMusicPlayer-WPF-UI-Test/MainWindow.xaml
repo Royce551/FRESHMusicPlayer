@@ -159,7 +159,7 @@
             </Grid>
         </Border>
         <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Background="#FFF11F1F" Visibility="Collapsed" Width="235" NavigationUIVisibility="Hidden"/>
-        <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="ContentFrame" Content="Frame" Background="#FF250C27" NavigationUIVisibility="Hidden" RenderTransformOrigin="0.5,0.5"/>
 
 
     </DockPanel>

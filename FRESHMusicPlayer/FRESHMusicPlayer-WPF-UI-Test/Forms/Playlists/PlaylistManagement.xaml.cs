@@ -2,7 +2,6 @@
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -48,7 +47,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog();
             dialog.Filter = "Playlist Files|*.xspf;*.asx;*.wax;*.wvx;*.b4s;*.m3u;*.m3u8;*.pls;*.smil;*.smi;*.zpl;";
             if (dialog.ShowDialog() == true)
             {

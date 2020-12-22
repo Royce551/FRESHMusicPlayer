@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Windows;
-using System.Linq;
+﻿using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers.Configuration;
-using FRESHMusicPlayer.Forms.TagEditor;
+using System;
+using System.IO;
+using System.Linq;
+using System.Windows;
 
 namespace FRESHMusicPlayer
 {
