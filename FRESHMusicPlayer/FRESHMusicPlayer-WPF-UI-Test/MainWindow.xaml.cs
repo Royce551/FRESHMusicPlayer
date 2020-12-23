@@ -691,9 +691,9 @@ namespace FRESHMusicPlayer
             }
         }
 
-        private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Artists, CurrentTrack.Artist);
+        private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Artists, CurrentTrack?.Artist);
 
-        private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Albums, CurrentTrack.Album);
+        private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Albums, CurrentTrack?.Album);
 
         private void TrackContextLyrics_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.Lyrics, openleft: true);
     }
