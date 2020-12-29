@@ -14,6 +14,7 @@ namespace FRESHMusicPlayer.Pages.Library
     /// </summary>
     public partial class LibraryPage : Page
     {
+        private SelectedMenu previousPage;
         public LibraryPage()
         {
             InitializeComponent();
@@ -152,14 +153,14 @@ namespace FRESHMusicPlayer.Pages.Library
         }
         private void MainWindow_TabChanged(object sender, TabChangedEventArgs e)
         {
-            LeftSide.Width = new GridLength(222);
-            DetailsPane.Height = new GridLength(45);
+            if (previousPage == SelectedMenu.Tracks) LeftSide.Width = new GridLength(222);
             LoadLibrary();
             if (e.Search != null)
             {
                 Thread.Sleep(10);
                 CategoryPanel.SelectedItem = e.Search;
             }
+            previousPage = MainWindow.SelectedMenu;
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

@@ -11,7 +11,7 @@
     <Grid Background="#FF5D5D5D">
         <Grid.RowDefinitions>
             <RowDefinition Height="23*"/>
-            <RowDefinition x:Name="DetailsPane" Height="42px"/>
+            <RowDefinition x:Name="DetailsPane" Height="45px"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="LeftSide" Width="222"/>

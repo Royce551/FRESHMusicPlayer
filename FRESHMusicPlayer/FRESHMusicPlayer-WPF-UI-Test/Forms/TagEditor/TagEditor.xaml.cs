@@ -298,7 +298,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 MessageBox.Show(Properties.Resources.TAGEDITOR_NORESULTS, "FRESHMusicPlayer Tag Editor", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (results.Count > 1)
+            if (results.Count > 1 && (results.Where(x => x.Name == AlbumBox.Text).Count() != 1))
             {
                 var disambiguation = new IntegrationDisambiguation(results);
                 disambiguation.ShowDialog();
