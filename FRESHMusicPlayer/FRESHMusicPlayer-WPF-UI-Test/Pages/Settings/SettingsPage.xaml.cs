@@ -31,7 +31,6 @@ namespace FRESHMusicPlayer.Pages
             General_TrackingCheck.IsChecked = App.Config.PlaybackTracking;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
-            FMPCoreVersionLabel.Text = MainWindow.Player.VersionString();
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             switch (App.Config.Language) // TODO: investigate making this less ugly
             {

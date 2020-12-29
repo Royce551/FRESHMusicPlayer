@@ -653,20 +653,24 @@ namespace FRESHMusicPlayer
             }
             if (App.Config.IntegrateDiscordRPC)
             {
-                string activity = "";
+                string activity = string.Empty;
+                string state = string.Empty;
                 switch (status)
                 {
                     case MediaPlaybackStatus.Playing:
                         activity = "play";
+                        state = $"by {Artist}";
                         break;
                     case MediaPlaybackStatus.Paused:
                         activity = "pause";
+                        state = "Paused";
                         break;
                     case MediaPlaybackStatus.Stopped:
                         activity = "idle";
+                        state = "Idle";
                         break;
                 }
-                Player.UpdateRPC(activity, Artist, Title);
+                Player.UpdateRPC(activity, state, CurrentTrack.Title);
             }
         }
 

@@ -30,9 +30,12 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         {
             if (!MainWindow.Player.Playing) return;
             if (MainWindow.Player.CurrentBackend.CurrentTime < TimedLyrics.Lines.Keys.First()) return;
-            var closest = TimedLyrics.Lines.Where(x => x.Key < MainWindow.Player.CurrentBackend.CurrentTime).ToList().Last();
-            LyricsBox.Inlines.Clear();
-            LyricsBox.Text = closest.Value;
+            var currentLines = TimedLyrics.Lines.Where(x => x.Key < MainWindow.Player.CurrentBackend.CurrentTime).ToList();
+            if (currentLines.Count != 0)
+            {
+                var closest = currentLines.Last();
+                LyricsBox.Text = closest.Value;
+            }   
         }
 
         public void ShowCoverArt()
