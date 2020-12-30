@@ -121,7 +121,7 @@ namespace FRESHMusicPlayer
             App.Config.CurrentMenu = SelectedMenu;
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
-            Libraryv2.Dispose();
+            Libraryv2?.Dispose();
             Application.Current.Shutdown();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
