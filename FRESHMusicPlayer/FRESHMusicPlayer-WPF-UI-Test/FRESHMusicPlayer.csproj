@@ -143,6 +143,9 @@
     <Compile Include="Pages\TrackInfoPage.xaml.cs">
       <DependentUpon>TrackInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Plugins\TestPlugin.cs" />
     <Compile Include="Properties\Resources.pt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

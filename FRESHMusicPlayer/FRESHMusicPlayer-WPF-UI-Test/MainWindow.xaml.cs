@@ -4,6 +4,7 @@ using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Plugins;
 using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;
@@ -57,6 +58,7 @@ namespace FRESHMusicPlayer
         public static LiteDatabase Libraryv2;
         public static Track CurrentTrack;
 
+        public PluginManager PluginManager;
         public SystemMediaTransportControls Smtc;
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -186,6 +188,7 @@ namespace FRESHMusicPlayer
                 ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
                 Player.ShuffleQueue();
             }
+            PluginManager = new PluginManager(this, Player);
         }
         public void RepeatOneMethod()
         {
