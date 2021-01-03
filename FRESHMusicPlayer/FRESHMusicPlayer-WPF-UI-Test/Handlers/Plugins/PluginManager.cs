@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FRESHMusicPlayer.Plugins
+namespace FRESHMusicPlayer.Handlers.Plugins
 {
     public class PluginManager
     {

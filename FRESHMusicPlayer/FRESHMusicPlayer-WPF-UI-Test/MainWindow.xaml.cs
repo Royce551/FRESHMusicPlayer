@@ -4,7 +4,7 @@ using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
-using FRESHMusicPlayer.Plugins;
+using FRESHMusicPlayer.Handlers.Plugins;
 using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;

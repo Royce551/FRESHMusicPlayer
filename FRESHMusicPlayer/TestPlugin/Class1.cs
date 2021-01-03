@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Composition;
-using FRESHMusicPlayer.Plugins;
+using FRESHMusicPlayer.Handlers.Plugins;
 using FRESHMusicPlayer;
 using System.Windows.Forms;
 using System.Media;

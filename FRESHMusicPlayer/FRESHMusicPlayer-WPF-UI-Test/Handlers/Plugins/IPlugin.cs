@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FRESHMusicPlayer.Plugins
+namespace FRESHMusicPlayer.Handlers.Plugins
 {
     public interface IPlugin
     {
