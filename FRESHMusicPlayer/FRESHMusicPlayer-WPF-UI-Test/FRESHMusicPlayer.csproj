@@ -94,6 +94,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Forms\ContainerWindow.xaml.cs">
+      <DependentUpon>ContainerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Playlists\PlaylistEntry.xaml.cs">
       <DependentUpon>PlaylistEntry.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,10 @@
     <Compile Include="Utilities\DatabaseUtils.cs" />
     <Compile Include="Utilities\InterfaceUtils.cs" />
     <Compile Include="Utilities\WindowsInteropUtils.cs" />
+    <Page Include="Forms\ContainerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\Playlists\PlaylistEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

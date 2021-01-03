@@ -269,6 +269,10 @@ namespace FRESHMusicPlayer
                 default:
                     return;
             }
+
+            ShowAuxilliaryWindow(pane, uri);
+            return;
+
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
             var sb = InterfaceUtils.GetDoubleAnimation(0, width, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
@@ -285,6 +289,36 @@ namespace FRESHMusicPlayer
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
             SelectedAuxiliaryPane = SelectedAuxiliaryPane.None;
+        }
+        public void ShowAuxilliaryWindow(SelectedAuxiliaryPane pane, string uri)
+        {
+            string title;
+            switch (pane)
+            {
+                case SelectedAuxiliaryPane.Settings:
+                    title = Properties.Resources.MAINWINDOW_SETTINGS;
+                    break;
+                case SelectedAuxiliaryPane.QueueManagement:
+                    title = Properties.Resources.QUEUEMANAGEMENT_QUEUEHEADER;
+                    break;
+                case SelectedAuxiliaryPane.Search:
+                    title = Properties.Resources.MAINWINDOW_SEARCH;
+                    break;
+                case SelectedAuxiliaryPane.Notifications:
+                    title = Properties.Resources.NOTIFICATIONS_TITLE;
+                    break;
+                case SelectedAuxiliaryPane.TrackInfo:
+                    title = Properties.Resources.TRACKINFO_TRACKINFO;
+                    break;
+                case SelectedAuxiliaryPane.Lyrics:
+                    title = Properties.Resources.LYRICS;
+                    break;
+                default:
+                    return;
+            }
+            var window = new Forms.ContainerWindow(new Uri(uri, UriKind.Relative), title);
+            window.Owner = this;
+            window.Show();
         }
         public void ProcessSettings(bool initialize = false)
         {

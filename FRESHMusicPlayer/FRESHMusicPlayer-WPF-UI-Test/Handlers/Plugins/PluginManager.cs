@@ -51,15 +51,22 @@ namespace FRESHMusicPlayer.Handlers.Plugins
         {
             foreach (var file in paths)
             {
-                Assembly assembly;
-
-                assembly = Assembly.LoadFrom(file);
+                var assembly = Assembly.LoadFrom(file);
 
                 // Get types now, so that if it throws
                 // an exception, it will happen here and get caught,
                 // rather than in GetExports where it can't be.
-                assembly.GetTypes();
 
+                try { assembly.GetTypes(); }
+                catch (Exception e)
+                {
+                    MainWindow.NotificationHandler.Add(new Notifications.Notification
+                    {
+                        ContentText = $"A plugin with the assembly name {assembly.GetName()} failed to load. Check if the plugin's creator has an updated version.\n" +
+                        $"{e}"
+                    });
+                    continue;
+                }
                 yield return assembly;
             }
         }
