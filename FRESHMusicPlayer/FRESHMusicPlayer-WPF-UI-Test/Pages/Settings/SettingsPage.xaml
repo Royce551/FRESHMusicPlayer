@@ -59,7 +59,6 @@
                         <ComboBoxItem Content="Turkish"/>
                     </ComboBox>
                 </Grid>
-                <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged" Margin="0,0,0,5"/>
                 <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
@@ -89,6 +88,8 @@
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_APPEARANCE}" Style="{StaticResource Header}"/>
 
+                <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
+                <CheckBox x:Name="Appearance_ShowPanesAsWindow" Content="Show auxiliary panes as separate windows" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Appearance_ShowPanesAsWindowChanged" Unchecked="Appearance_ShowPanesAsWindowChanged"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" Style="{StaticResource Subheader}"/>
                 <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}"/>
                 <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"/>

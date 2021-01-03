@@ -270,8 +270,11 @@ namespace FRESHMusicPlayer
                     return;
             }
 
-            ShowAuxilliaryWindow(pane, uri);
-            return;
+            if (App.Config.ShowPanesAsWindow)
+            {
+                ShowAuxilliaryWindow(pane, uri);
+                return;
+            }
 
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;

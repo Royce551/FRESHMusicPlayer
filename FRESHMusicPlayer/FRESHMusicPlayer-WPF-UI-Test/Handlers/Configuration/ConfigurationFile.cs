@@ -11,6 +11,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
     {
         public string Language { get; set; } = "en";
         public bool ShowTimeInWindow { get; set; } = false;
+        public bool ShowPanesAsWindow { get; set; } = false;
         public bool IntegrateDiscordRPC { get; set; } = false;
         public bool IntegrateSMTC { get; set; } = true;
         public bool ShowRemainingProgress { get; set; } = false;

@@ -34,6 +34,7 @@ namespace FRESHMusicPlayer.Pages
             General_TrackingCheck.IsChecked = App.Config.PlaybackTracking;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
+            Appearance_ShowPanesAsWindow.IsChecked = App.Config.ShowPanesAsWindow;
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             switch (App.Config.Language) // TODO: investigate making this less ugly
             {
@@ -127,6 +128,13 @@ namespace FRESHMusicPlayer.Pages
             {
                 App.Config.PlaybackTracking = (bool)General_TrackingCheck.IsChecked;
                 (Application.Current.MainWindow as MainWindow)?.ProcessSettings();
+            }
+        }
+        private void Appearance_ShowPanesAsWindowChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.ShowPanesAsWindow = (bool)Appearance_ShowPanesAsWindow.IsChecked;
             }
         }
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -230,6 +238,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void Plugins_OpenFolder_Click(object sender, RoutedEventArgs e) => Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "FRESHMusicPlayer", "Plugins", "FMP-WPF"));
+
     }
     public enum LanguageCombo
     {
