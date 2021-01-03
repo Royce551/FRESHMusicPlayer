@@ -13,8 +13,19 @@
             <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
             <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
         </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="Subheader">
+            <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="0,5,0,5"/>
+            <Setter Property="Margin" Value="-10,0,0,0"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style BasedOn="{StaticResource Subheader}" TargetType="{x:Type TextBlock}" x:Key="Header">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
     </Page.Resources>
-    <Grid Background="{StaticResource SecondaryColor}">
+    <Grid Background="{StaticResource SecondaryColor}"> 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
@@ -32,7 +43,7 @@
                 <TextBlock Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_SUBHEADER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
 
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_GENERAL}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_GENERAL}" Style="{StaticResource Header}"/>
 
                 <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
@@ -50,11 +61,11 @@
                 </Grid>
                 <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged" Margin="0,0,0,5"/>
                 <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
 
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,0,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 
                 <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
@@ -71,20 +82,25 @@
                 <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <Button x:Name="Updates_CheckUpdatesButton" Content="{x:Static resx:Resources.SETTINGS_UPDATESCHECKNOW}" TextBlock.FontSize="16" Margin="0,0,0,5" Click="Updates_CheckUpdatesButton_Click"/>
 
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_APPEARANCE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="Plugins" Style="{StaticResource Subheader}"/>
+                <TextBlock Text="Currently loaded plugins" Foreground="{StaticResource PrimaryTextColor}" FontSize="12" Padding="0,0,0,1"/>
+                <ListBox x:Name="Plugins_LoadedPluginsListBox" Background="{StaticResource ForegroundColor}" Foreground="{StaticResource PrimaryTextColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" MinHeight="50" BorderBrush="{x:Null}" Margin="0,0,0,5"/>
+                <Button x:Name="Plugins_OpenFolder" Content="Open plugins folder" TextBlock.FontSize="16" Margin="0,0,0,5" Click="Plugins_OpenFolder_Click"/>
 
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" FontWeight="Bold" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_APPEARANCE}" Style="{StaticResource Header}"/>
+
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" Style="{StaticResource Subheader}"/>
                 <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}"/>
                 <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"/>
 
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_MAINTENANCE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_MAINTENANCE}" Style="{StaticResource Header}"/>
 
                 <Button x:Name="Maintanence_ResetButton" Content="{x:Static resx:Resources.SETTINGS_RESET}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
                 <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
                 <Button x:Name="Maintenence_UpdateButton" Content="{x:Static resx:Resources.SETTINGS_CLEANLIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintenence_UpdateButton_Click"/>
                 <Button x:Name="Maintanence_NukeButton" Content="{x:Static resx:Resources.SETTINGS_NUKELIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_NukeButton_Click" Foreground="#FFD5463F"/>
                 
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Foreground="{StaticResource PrimaryTextColor}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Padding="0,5,0,5" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Style="{StaticResource Header}"/>
 
                 <TextBlock Text="FRESHMusicPlayer Ver. 9.1" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="FRESHMusicPlayer Core Ver. 2.9.0" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>

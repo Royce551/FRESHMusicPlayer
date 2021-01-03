@@ -10,6 +10,7 @@ namespace FRESHMusicPlayer.Plugins
     {
         string Name { get; set; }
         string Description { get; set; }
+        string Author { get; set; }
         MainWindow Window { get; set; }
         Player Player { get; set; }
         void Load();

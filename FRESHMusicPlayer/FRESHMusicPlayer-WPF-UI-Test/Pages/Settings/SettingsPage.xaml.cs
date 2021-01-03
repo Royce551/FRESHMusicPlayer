@@ -1,6 +1,9 @@
 ﻿using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Utilities;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -67,6 +70,10 @@ namespace FRESHMusicPlayer.Pages
                 case UpdateMode.Prompt:
                     General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Prompt;
                     break;
+            }
+            foreach (var plugin in (Application.Current.MainWindow as MainWindow)?.PluginManager.Plugins)
+            {
+                Plugins_LoadedPluginsListBox.Items.Add(new TextBlock { Text = $"{plugin.Name} - {plugin.Description}\nby {plugin.Author}", TextWrapping = TextWrapping.Wrap});
             }
             pageInitialized = true;
         }
@@ -221,7 +228,8 @@ namespace FRESHMusicPlayer.Pages
             });
         }
 
-        
+        private void Plugins_OpenFolder_Click(object sender, RoutedEventArgs e) => Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        "FRESHMusicPlayer", "Plugins", "FMP-WPF"));
     }
     public enum LanguageCombo
     {
