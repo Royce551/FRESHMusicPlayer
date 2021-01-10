@@ -62,9 +62,10 @@ namespace FRESHMusicPlayer
         public SystemMediaTransportControls Smtc;
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
-
+        // TODO: should probably come up with a cleaner solution for this
         public Border ControlsBoxBorderProperty { get => ControlsBoxBorder; set => ControlsBoxBorder = value; }
-        public Grid ControlsBoxProperty { get => ControlsBox; set => ControlsBox= value; }
+        public Grid ControlsBoxProperty { get => ControlsBox; set => ControlsBox = value; }
+        public DockPanel MainBarProperty { get => MainBar; set => MainBar = value; }
         public MainWindow(string[] initialFile = null)
         {
             InitializeComponent();
