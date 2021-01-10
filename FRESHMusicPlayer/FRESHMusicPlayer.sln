@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRESHMusicPlayer", "FRESHMu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{9631C4B6-5309-4494-8248-0853E8FE4D41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUIPlugin", "TestUIPlugin\TestUIPlugin.csproj", "{FDA01207-104C-4629-B42E-B7B461D090C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,12 @@ Global
 		{9631C4B6-5309-4494-8248-0853E8FE4D41}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9631C4B6-5309-4494-8248-0853E8FE4D41}.ReleasePackageUpdater|Any CPU.ActiveCfg = Release|Any CPU
 		{9631C4B6-5309-4494-8248-0853E8FE4D41}.ReleasePackageUpdater|Any CPU.Build.0 = Release|Any CPU
+		{FDA01207-104C-4629-B42E-B7B461D090C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA01207-104C-4629-B42E-B7B461D090C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA01207-104C-4629-B42E-B7B461D090C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA01207-104C-4629-B42E-B7B461D090C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA01207-104C-4629-B42E-B7B461D090C6}.ReleasePackageUpdater|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA01207-104C-4629-B42E-B7B461D090C6}.ReleasePackageUpdater|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

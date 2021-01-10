@@ -12,9 +12,20 @@ namespace FRESHMusicPlayer.Handlers.Plugins
     public class PluginManager
     {
         public List<IPlugin> Plugins { get; private set; } = new List<IPlugin>();
+        public List<IGraphicalPlugin> GraphicalPlugins { 
+            get
+            {
+                var graphicalPlugins = new List<IGraphicalPlugin>();
+                foreach (var plugin in Plugins)
+                {
+                    var graphicalPlugin = plugin as IGraphicalPlugin;
+                    if (graphicalPlugin != null) graphicalPlugins.Add(graphicalPlugin);
+                }
+                return GraphicalPlugins;
+            } }
 
-        private MainWindow window;
-        private Player player;
+        private readonly MainWindow window;
+        private readonly Player player;
         public PluginManager(MainWindow window, Player player)
         {
             this.window = window;
@@ -23,7 +34,6 @@ namespace FRESHMusicPlayer.Handlers.Plugins
         }
         public void LoadPlugins()
         {
-            var assemblies = new[] { typeof(App).GetTypeInfo().Assembly };
             var configuration = new ContainerConfiguration().WithAssembly(typeof(App).GetTypeInfo().Assembly);
             configuration
                 .WithAssemblies(

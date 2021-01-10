@@ -120,6 +120,7 @@ namespace FRESHMusicPlayer
             UpdateIntegrations();
             ProcessSettings(true);
             await UpdateHandler.UpdateApp();
+            PluginManager = new PluginManager(this, Player);
         }
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -192,7 +193,6 @@ namespace FRESHMusicPlayer
                 ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
                 Player.ShuffleQueue();
             }
-            PluginManager = new PluginManager(this, Player);
         }
         public void RepeatOneMethod()
         {

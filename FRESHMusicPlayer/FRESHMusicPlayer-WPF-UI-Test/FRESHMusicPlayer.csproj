@@ -122,6 +122,7 @@
     <Compile Include="Handlers\Configuration\ConfigurationFile.cs" />
     <Compile Include="Handlers\Notifications\Notification.cs" />
     <Compile Include="Handlers\PlaytimeTrackingHandler.cs" />
+    <Compile Include="Handlers\Plugins\IGraphicalPlugin.cs" />
     <Compile Include="Handlers\UpdateHandler.cs" />
     <Compile Include="Pages\ImportPage.xaml.cs">
       <DependentUpon>ImportPage.xaml</DependentUpon>
