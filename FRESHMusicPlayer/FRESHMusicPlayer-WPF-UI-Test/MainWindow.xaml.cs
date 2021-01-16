@@ -294,6 +294,30 @@ namespace FRESHMusicPlayer
                 TrackingHandler = null;
             }
         }
+        public MemoryStream GetCoverArtFromDirectory()
+        {
+            bool FileIsImage(string path)
+            {
+                if (Path.GetExtension(path) == ".png" || Path.GetExtension(path) == ".jpg" || Path.GetExtension(path) == ".jpeg") return true;
+                else return false;
+            }
+            var currentDirectory = Path.GetDirectoryName(Player.FilePath);
+            foreach (var file in Directory.EnumerateFiles(currentDirectory))
+            {
+                if (Path.GetFileNameWithoutExtension(file).ToUpper() == "COVER" ||
+                    Path.GetFileNameWithoutExtension(file).ToUpper() == "ARTWORK" ||
+                    Path.GetFileNameWithoutExtension(file).ToUpper() == "FRONT" ||
+                    Path.GetFileNameWithoutExtension(file).ToUpper() == "BACK" ||
+                    Path.GetFileNameWithoutExtension(file).ToUpper() == Player.FilePath)
+                {
+                    if (FileIsImage(file))
+                    {
+                        return new MemoryStream(File.ReadAllBytes(file));
+                    }
+                }
+            }
+            return null;
+        }
         #region Tabs
         private void ChangeTabs(SelectedMenu tab, string search = null)
         {
@@ -363,8 +387,17 @@ namespace FRESHMusicPlayer
             UpdatePlayButtonState();
             if (CurrentTrack.EmbeddedPictures.Count == 0)
             {
-                CoverArtBox.Source = null;
-                SetCoverArtVisibility(false);
+                var file = GetCoverArtFromDirectory();
+                if (file != null)
+                {
+                    CoverArtBox.Source = BitmapFrame.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
+                    SetCoverArtVisibility(true);
+                }
+                else
+                {
+                    CoverArtBox.Source = null;
+                    SetCoverArtVisibility(false);
+                }
             }
             else
             {

@@ -72,10 +72,6 @@ namespace FRESHMusicPlayer.Pages
                     General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Prompt;
                     break;
             }
-            foreach (var plugin in (Application.Current.MainWindow as MainWindow)?.PluginManager.Plugins)
-            {
-                Plugins_LoadedPluginsListBox.Items.Add(new TextBlock { Text = $"{plugin.Name} - {plugin.Description}\nby {plugin.Author}", TextWrapping = TextWrapping.Wrap});
-            }
             pageInitialized = true;
         }
 
