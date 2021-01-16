@@ -94,9 +94,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Forms\ContainerWindow.xaml.cs">
-      <DependentUpon>ContainerWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Playlists\PlaylistEntry.xaml.cs">
       <DependentUpon>PlaylistEntry.xaml</DependentUpon>
     </Compile>
@@ -122,7 +119,6 @@
     <Compile Include="Handlers\Configuration\ConfigurationFile.cs" />
     <Compile Include="Handlers\Notifications\Notification.cs" />
     <Compile Include="Handlers\PlaytimeTrackingHandler.cs" />
-    <Compile Include="Handlers\Plugins\IGraphicalPlugin.cs" />
     <Compile Include="Handlers\UpdateHandler.cs" />
     <Compile Include="Pages\ImportPage.xaml.cs">
       <DependentUpon>ImportPage.xaml</DependentUpon>
@@ -147,8 +143,6 @@
     <Compile Include="Pages\TrackInfoPage.xaml.cs">
       <DependentUpon>TrackInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\Plugins\IPlugin.cs" />
-    <Compile Include="Handlers\Plugins\PluginManager.cs" />
     <Compile Include="Properties\Resources.pt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -163,10 +157,6 @@
     <Compile Include="Utilities\DatabaseUtils.cs" />
     <Compile Include="Utilities\InterfaceUtils.cs" />
     <Compile Include="Utilities\WindowsInteropUtils.cs" />
-    <Page Include="Forms\ContainerWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Forms\Playlists\PlaylistEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
