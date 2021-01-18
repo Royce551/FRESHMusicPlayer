@@ -19,11 +19,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Windows.Media;
-using Winforms = System.Windows.Forms;
+using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer
 {
-    public enum SelectedMenu
+    public enum Menu
     {
         Tracks,
         Artists,
@@ -32,7 +32,7 @@ namespace FRESHMusicPlayer
         Import,
         Other
     }
-    public enum SelectedAuxiliaryPane
+    public enum AuxiliaryPane
     {
         None,
         Settings,
@@ -47,9 +47,9 @@ namespace FRESHMusicPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
-        Winforms.Timer progressTimer;
-        public static SelectedMenu SelectedMenu = SelectedMenu.Tracks;
-        public static SelectedAuxiliaryPane SelectedAuxiliaryPane = SelectedAuxiliaryPane.None;
+        WinForms.Timer progressTimer;
+        public static Menu SelectedMenu = Menu.Tracks;
+        public static AuxiliaryPane SelectedAuxiliaryPane = AuxiliaryPane.None;
         public static Player Player = new Player { CurrentVolume = App.Config.Volume};
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
@@ -67,7 +67,7 @@ namespace FRESHMusicPlayer
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
-            progressTimer = new Winforms.Timer
+            progressTimer = new WinForms.Timer
             {
                 Interval = 1000
             };
@@ -99,7 +99,7 @@ namespace FRESHMusicPlayer
                     DisplayAsToast = true,
                     Type = NotificationType.Failure
                 });
-                App.Config.CurrentMenu = SelectedMenu.Import;
+                App.Config.CurrentMenu = Menu.Import;
                 TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Collapsed;
                 SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Collapsed;
             }    
@@ -113,6 +113,9 @@ namespace FRESHMusicPlayer
         {
             UpdateIntegrations();
             ProcessSettings(true);
+            var storyboard = InterfaceUtils.GetDoubleAnimation(0f, 1f, TimeSpan.FromMilliseconds(1000), new PropertyPath("Opacity"));
+            storyboard.Begin(ContentFrame);
+            storyboard.Begin(MainBar);
             await UpdateHandler.UpdateApp();
         }
         private void Window_Closed(object sender, EventArgs e)
@@ -231,33 +234,33 @@ namespace FRESHMusicPlayer
             if (!mode) CoverArtArea.Width = new GridLength(5);       
             else CoverArtArea.Width = new GridLength(75);
         }
-        public void ShowAuxilliaryPane(SelectedAuxiliaryPane pane, int width = 235, bool openleft = false)
+        public void ShowAuxilliaryPane(AuxiliaryPane pane, int width = 235, bool openleft = false)
         {
             if (SelectedAuxiliaryPane == pane)
             {
                 HideAuxilliaryPane();
                 return;
             }
-            if (SelectedAuxiliaryPane != SelectedAuxiliaryPane.None) HideAuxilliaryPane(false);
+            if (SelectedAuxiliaryPane != AuxiliaryPane.None) HideAuxilliaryPane(false);
             string uri;
             switch (pane)
             {
-                case SelectedAuxiliaryPane.Settings:
+                case AuxiliaryPane.Settings:
                     uri = "/Pages/Settings/SettingsPage.xaml";
                     break;
-                case SelectedAuxiliaryPane.QueueManagement:
+                case AuxiliaryPane.QueueManagement:
                     uri = "/Pages/QueueManagement/QueueManagementPage.xaml";
                     break;
-                case SelectedAuxiliaryPane.Search:
+                case AuxiliaryPane.Search:
                     uri = "/Pages/Library/SearchPage.xaml";
                     break;
-                case SelectedAuxiliaryPane.Notifications:
+                case AuxiliaryPane.Notifications:
                     uri = "/Pages/NotificationPage.xaml";
                     break;
-                case SelectedAuxiliaryPane.TrackInfo:
+                case AuxiliaryPane.TrackInfo:
                     uri = "/Pages/TrackInfoPage.xaml";
                     break;
-                case SelectedAuxiliaryPane.Lyrics:
+                case AuxiliaryPane.Lyrics:
                     uri = "/Pages/Lyrics/LyricsPage.xaml";
                     break;
                 default:
@@ -278,7 +281,7 @@ namespace FRESHMusicPlayer
             else sb.Begin(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
-            SelectedAuxiliaryPane = SelectedAuxiliaryPane.None;
+            SelectedAuxiliaryPane = AuxiliaryPane.None;
         }
         public void ProcessSettings(bool initialize = false)
         {
@@ -319,33 +322,33 @@ namespace FRESHMusicPlayer
             return null;
         }
         #region Tabs
-        private void ChangeTabs(SelectedMenu tab, string search = null)
+        private void ChangeTabs(Menu tab, string search = null)
         {
             SelectedMenu = tab;
             TextBlock tabLabel;
             switch (SelectedMenu)
             {
-                case SelectedMenu.Tracks:
+                case Menu.Tracks:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = TracksTab;
                     break;
-                case SelectedMenu.Artists:
+                case Menu.Artists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = ArtistsTab;
                     break;
-                case SelectedMenu.Albums:
+                case Menu.Albums:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = AlbumsTab;
                     break;
-                case SelectedMenu.Playlists:
+                case Menu.Playlists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
                     ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = PlaylistsTab;
                     break;
-                case SelectedMenu.Import:
+                case Menu.Import:
                     ContentFrame.Source = new Uri("/Pages/ImportPage.xaml", UriKind.Relative);
                     tabLabel = ImportTab;
                     break;
@@ -476,7 +479,7 @@ namespace FRESHMusicPlayer
             if (!isDragging) ProgressBar.Value = time.TotalSeconds;
             Player.AvoidNextQueue = false;
         }
-        private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.TrackInfo, 235, true);
+        private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
         private void TrackTitle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             var cm = FindResource("MiscContext") as ContextMenu;
@@ -514,15 +517,15 @@ namespace FRESHMusicPlayer
         }
         #endregion
         #region MenuBar
-        private void TracksTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenu.Tracks);
-        private void ArtistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenu.Artists);
-        private void AlbumsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenu.Albums);
-        private void PlaylistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenu.Playlists);
-        private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(SelectedMenu.Import);
-        private void SettingsButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.Settings, 335);
-        private void SearchButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.Search, 335);
-        private void QueueManagementButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.QueueManagement, 335);
-        private void NotificationButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.Notifications);
+        private void TracksTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Tracks);
+        private void ArtistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Artists);
+        private void AlbumsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Albums);
+        private void PlaylistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Playlists);
+        private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Import);
+        private void SettingsButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Settings, 335);
+        private void SearchButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Search, 335);
+        private void QueueManagementButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.QueueManagement, 335);
+        private void NotificationButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Notifications);
         #endregion
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
         {
@@ -541,9 +544,9 @@ namespace FRESHMusicPlayer
             {
                 if (box.DisplayAsToast && !box.Read)
                 {
-                    if (SelectedAuxiliaryPane != SelectedAuxiliaryPane.Notifications)
+                    if (SelectedAuxiliaryPane != AuxiliaryPane.Notifications)
                     {
-                        ShowAuxilliaryPane(SelectedAuxiliaryPane.Notifications);
+                        ShowAuxilliaryPane(AuxiliaryPane.Notifications);
                         break;
                     }
                 }
@@ -564,31 +567,31 @@ namespace FRESHMusicPlayer
                 switch (e.Key)
                 {
                     case Key.Q:
-                        ShowAuxilliaryPane(SelectedAuxiliaryPane.Settings, 335);
+                        ShowAuxilliaryPane(AuxiliaryPane.Settings, 335);
                         break;
                     case Key.A:
-                        ChangeTabs(SelectedMenu.Tracks);
+                        ChangeTabs(Menu.Tracks);
                         break;
                     case Key.S:
-                        ChangeTabs(SelectedMenu.Artists);
+                        ChangeTabs(Menu.Artists);
                         break;
                     case Key.D:
-                        ChangeTabs(SelectedMenu.Albums);
+                        ChangeTabs(Menu.Albums);
                         break;
                     case Key.F:
-                        ChangeTabs(SelectedMenu.Playlists);
+                        ChangeTabs(Menu.Playlists);
                         break;
                     case Key.G:
-                        ChangeTabs(SelectedMenu.Import);
+                        ChangeTabs(Menu.Import);
                         break;
                     case Key.E:
-                        ShowAuxilliaryPane(SelectedAuxiliaryPane.Search, 335);
+                        ShowAuxilliaryPane(AuxiliaryPane.Search, 335);
                         break;
                     case Key.R:
-                        ShowAuxilliaryPane(SelectedAuxiliaryPane.TrackInfo, 235, true);
+                        ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
                         break;
                     case Key.W:
-                        ShowAuxilliaryPane(SelectedAuxiliaryPane.QueueManagement, 335);
+                        ShowAuxilliaryPane(AuxiliaryPane.QueueManagement, 335);
                         break;
                     case Key.Space:
                         PlayPauseMethod();
@@ -623,25 +626,7 @@ namespace FRESHMusicPlayer
         {
             string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
             Player.ClearQueue();
-            if (tracks.Any(x => Directory.Exists(x)))
-            {
-                foreach (var track in tracks)
-                {
-                    if (Directory.Exists(track))
-                    {
-                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories)
-                        .Where(name => name.EndsWith(".mp3")
-                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                        || name.EndsWith(".wma")
-                        || name.EndsWith(".aac")).ToArray();
-                        Player.AddQueue(paths);
-                    }
-                    else Player.AddQueue(track);
-                }
-
-            }
-            else Player.AddQueue(tracks);
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), import: false);
             Player.PlayMusic();
         }
 
@@ -728,11 +713,11 @@ namespace FRESHMusicPlayer
             }
         }
 
-        private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Artists, CurrentTrack?.Artist);
+        private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(Menu.Artists, CurrentTrack?.Artist);
 
-        private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(SelectedMenu.Albums, CurrentTrack?.Album);
+        private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(Menu.Albums, CurrentTrack?.Album);
 
-        private void TrackContextLyrics_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(SelectedAuxiliaryPane.Lyrics, openleft: true);
+        private void TrackContextLyrics_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Lyrics, openleft: true);
     }
     public class TabChangedEventArgs : EventArgs
     {

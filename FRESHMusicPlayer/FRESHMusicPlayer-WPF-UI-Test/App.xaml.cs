@@ -32,7 +32,7 @@ namespace FRESHMusicPlayer
                     tagEditor.Show();
                     return;
                 }
-                window = new MainWindow(e.Args);
+                window = new MainWindow(e.Args.Where(x => File.Exists(x)).ToArray());
             }
             else window = new MainWindow();
             window.Show();

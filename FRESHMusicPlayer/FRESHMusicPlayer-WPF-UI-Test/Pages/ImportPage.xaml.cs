@@ -88,13 +88,9 @@ namespace FRESHMusicPlayer.Pages
             e.Effects = DragDropEffects.Copy;
         }
 
-        private async void Page_Drop(object sender, DragEventArgs e)
+        private void Page_Drop(object sender, DragEventArgs e)
         {
-            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-            await Task.Run(() =>
-            {
-                DatabaseUtils.Import(tracks);
-            });          
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), enqueue: false);        
         }
 
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)

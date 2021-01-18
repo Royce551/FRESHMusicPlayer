@@ -14,7 +14,7 @@ namespace FRESHMusicPlayer.Pages.Library
     /// </summary>
     public partial class LibraryPage : Page
     {
-        private SelectedMenu previousPage;
+        private Menu previousPage;
         public LibraryPage()
         {
             InitializeComponent();
@@ -30,16 +30,16 @@ namespace FRESHMusicPlayer.Pages.Library
             InfoLabel.Visibility = Visibility.Hidden;
             switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
-                case SelectedMenu.Tracks:
+                case Menu.Tracks:
                     ShowTracks();
                     break;
-                case SelectedMenu.Artists:
+                case Menu.Artists:
                     ShowArtists();
                     break;
-                case SelectedMenu.Albums:
+                case Menu.Albums:
                     ShowAlbums();
                     break;
-                case SelectedMenu.Playlists:
+                case Menu.Playlists:
                     ShowPlaylists();
                     break;
             }
@@ -147,13 +147,13 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (MainWindow.SelectedMenu == SelectedMenu.Artists) ShowTracksforArtist(selectedItem);
-            else if (MainWindow.SelectedMenu == SelectedMenu.Playlists) ShowTracksforPlaylist(selectedItem);
+            if (MainWindow.SelectedMenu == Menu.Artists) ShowTracksforArtist(selectedItem);
+            else if (MainWindow.SelectedMenu == Menu.Playlists) ShowTracksforPlaylist(selectedItem);
             else ShowTracksforAlbum(selectedItem);
         }
         private void MainWindow_TabChanged(object sender, TabChangedEventArgs e)
         {
-            if (previousPage == SelectedMenu.Tracks) LeftSide.Width = new GridLength(222);
+            if (previousPage == Menu.Tracks) LeftSide.Width = new GridLength(222);
             LoadLibrary();
             if (e.Search != null)
             {
@@ -175,38 +175,10 @@ namespace FRESHMusicPlayer.Pages.Library
             e.Effects = DragDropEffects.Copy;
         }
 
-        private async void Page_Drop(object sender, DragEventArgs e)
+        private void Page_Drop(object sender, DragEventArgs e)
         {
-            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
             MainWindow.Player.ClearQueue();
-            if (tracks.Any(x => Directory.Exists(x)))
-            {
-                foreach (var track in tracks)
-                {
-                    if (Directory.Exists(track))
-                    {
-                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories) // TODO: increase code reuse
-                        .Where(name => name.EndsWith(".mp3")
-                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                        || name.EndsWith(".wma")
-                        || name.EndsWith(".aac")).ToArray();
-                        MainWindow.Player.AddQueue(paths);
-                        await Task.Run(() => DatabaseUtils.Import(paths));
-                    }
-                    else
-                    {
-                        MainWindow.Player.AddQueue(track);
-                        await Task.Run(() => DatabaseUtils.Import(track));
-                    }
-                }
-                
-            }
-            else
-            {
-                MainWindow.Player.AddQueue(tracks);
-                await Task.Run(() => DatabaseUtils.Import(tracks));
-            }
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop));
             MainWindow.Player.PlayMusic();
             LoadLibrary();
         }

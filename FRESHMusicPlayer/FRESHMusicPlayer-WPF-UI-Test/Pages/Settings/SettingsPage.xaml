@@ -81,11 +81,6 @@
                 <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <Button x:Name="Updates_CheckUpdatesButton" Content="{x:Static resx:Resources.SETTINGS_UPDATESCHECKNOW}" TextBlock.FontSize="16" Margin="0,0,0,5" Click="Updates_CheckUpdatesButton_Click"/>
 
-                <TextBlock Text="Plugins" Style="{StaticResource Subheader}"/>
-                <TextBlock Text="Currently loaded plugins" Foreground="{StaticResource PrimaryTextColor}" FontSize="12" Padding="0,0,0,1"/>
-                <ListBox x:Name="Plugins_LoadedPluginsListBox" Background="{StaticResource ForegroundColor}" Foreground="{StaticResource PrimaryTextColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" MinHeight="50" BorderBrush="{x:Null}" Margin="0,0,0,5"/>
-                <Button x:Name="Plugins_OpenFolder" Content="Open plugins folder" TextBlock.FontSize="16" Margin="0,0,0,5" Click="Plugins_OpenFolder_Click"/>
-
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_APPEARANCE}" Style="{StaticResource Header}"/>
 
                 <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>

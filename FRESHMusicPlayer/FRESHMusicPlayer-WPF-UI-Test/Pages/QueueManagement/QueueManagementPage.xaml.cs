@@ -124,26 +124,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void Page_Drop(object sender, DragEventArgs e)
         {  
-            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (tracks.Any(x => Directory.Exists(x)))
-            {
-                foreach (var track in tracks)
-                {
-                    if (Directory.Exists(track))
-                    {
-                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories)
-                        .Where(name => name.EndsWith(".mp3")
-                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                        || name.EndsWith(".wma")
-                        || name.EndsWith(".aac")).ToArray();
-                        MainWindow.Player.AddQueue(paths);
-                    }
-                    else MainWindow.Player.AddQueue(track);
-                }
-
-            }
-            else MainWindow.Player.AddQueue(tracks);
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), import: false);
         }
     }
 }

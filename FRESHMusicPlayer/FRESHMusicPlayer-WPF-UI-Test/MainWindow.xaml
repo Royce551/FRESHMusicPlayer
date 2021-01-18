@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d"
-        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="White" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
+        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
     <Window.Resources>
         <Storyboard x:Key="SlideIn">
             <DoubleAnimation
@@ -34,7 +34,7 @@
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_PAUSE_AFTTER_CURRENT_TRACK}" Click="TrackContext_PauseAuto_Click"/>
         </ContextMenu>
     </Window.Resources>
-    <DockPanel Background="#FF0C6C08">
+    <DockPanel>
         <!--Menu-->
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
             <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown" Cursor="Hand">
@@ -158,8 +158,8 @@
                 </Slider>
             </Grid>
         </Border>
-        <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Background="#FFF11F1F" Visibility="Collapsed" Width="235" NavigationUIVisibility="Hidden"/>
-        <Frame x:Name="ContentFrame" Background="#FF250C27" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" Width="235" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="ContentFrame"  NavigationUIVisibility="Hidden"/>
 
 
     </DockPanel>

@@ -34,6 +34,38 @@ namespace FRESHMusicPlayer.Utilities
 
             return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
         }
+        public static async void DoDragDrop(string[] tracks, bool enqueue = true, bool import = true)
+        {
+            MainWindow.Player.ClearQueue();
+            if (tracks.Any(x => Directory.Exists(x)))
+            {
+                foreach (var track in tracks)
+                {
+                    if (Directory.Exists(track))
+                    {
+                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories) // TODO: increase code reuse
+                        .Where(name => name.EndsWith(".mp3")
+                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                        || name.EndsWith(".wma")
+                        || name.EndsWith(".aac")).ToArray();
+                        if (enqueue) MainWindow.Player.AddQueue(paths);
+                        if (import) await Task.Run(() => DatabaseUtils.Import(paths));
+                    }
+                    else
+                    {
+                        if (enqueue) MainWindow.Player.AddQueue(track);
+                        if (import) await Task.Run(() => DatabaseUtils.Import(track));
+                    }
+                }
+
+            }
+            else
+            {
+                if (enqueue) MainWindow.Player.AddQueue(tracks);
+                if (import) await Task.Run(() => DatabaseUtils.Import(tracks));
+            }
+        }
         public static Storyboard GetDoubleAnimation(double from, double to, TimeSpan duration, PropertyPath path)
         {
             var sb = new Storyboard();
