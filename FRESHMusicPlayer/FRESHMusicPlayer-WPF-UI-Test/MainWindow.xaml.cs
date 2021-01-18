@@ -299,23 +299,21 @@ namespace FRESHMusicPlayer
         }
         public MemoryStream GetCoverArtFromDirectory()
         {
-            bool FileIsImage(string path)
+            if (File.Exists(Player.FilePath))
             {
-                if (Path.GetExtension(path) == ".png" || Path.GetExtension(path) == ".jpg" || Path.GetExtension(path) == ".jpeg") return true;
-                else return false;
-            }
-            var currentDirectory = Path.GetDirectoryName(Player.FilePath);
-            foreach (var file in Directory.EnumerateFiles(currentDirectory))
-            {
-                if (Path.GetFileNameWithoutExtension(file).ToUpper() == "COVER" ||
-                    Path.GetFileNameWithoutExtension(file).ToUpper() == "ARTWORK" ||
-                    Path.GetFileNameWithoutExtension(file).ToUpper() == "FRONT" ||
-                    Path.GetFileNameWithoutExtension(file).ToUpper() == "BACK" ||
-                    Path.GetFileNameWithoutExtension(file).ToUpper() == Player.FilePath)
+                var currentDirectory = Path.GetDirectoryName(Player.FilePath);
+                foreach (var file in Directory.EnumerateFiles(currentDirectory))
                 {
-                    if (FileIsImage(file))
+                    if (Path.GetFileNameWithoutExtension(file).ToUpper() == "COVER" ||
+                        Path.GetFileNameWithoutExtension(file).ToUpper() == "ARTWORK" ||
+                        Path.GetFileNameWithoutExtension(file).ToUpper() == "FRONT" ||
+                        Path.GetFileNameWithoutExtension(file).ToUpper() == "BACK" ||
+                        Path.GetFileNameWithoutExtension(file).ToUpper() == Player.FilePath)
                     {
-                        return new MemoryStream(File.ReadAllBytes(file));
+                        if (Path.GetExtension(file) == ".png" || Path.GetExtension(file) == ".jpg" || Path.GetExtension(file) == ".jpeg")
+                        {
+                            return new MemoryStream(File.ReadAllBytes(file));
+                        }
                     }
                 }
             }
