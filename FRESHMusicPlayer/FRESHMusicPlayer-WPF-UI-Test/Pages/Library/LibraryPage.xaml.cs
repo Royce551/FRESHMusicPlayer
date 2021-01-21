@@ -151,14 +151,14 @@ namespace FRESHMusicPlayer.Pages.Library
             else if (MainWindow.SelectedMenu == Menu.Playlists) ShowTracksforPlaylist(selectedItem);
             else ShowTracksforAlbum(selectedItem);
         }
-        private void MainWindow_TabChanged(object sender, TabChangedEventArgs e)
+        private void MainWindow_TabChanged(object sender, string e)
         {
             if (previousPage == Menu.Tracks) LeftSide.Width = new GridLength(222);
             LoadLibrary();
-            if (e.Search != null)
+            if (e != null)
             {
                 Thread.Sleep(10);
-                CategoryPanel.SelectedItem = e.Search;
+                CategoryPanel.SelectedItem = e;
             }
             previousPage = MainWindow.SelectedMenu;
         }

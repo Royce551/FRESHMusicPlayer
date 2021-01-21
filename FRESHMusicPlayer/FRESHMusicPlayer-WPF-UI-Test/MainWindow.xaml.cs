@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Windows.Media;
@@ -53,7 +54,7 @@ namespace FRESHMusicPlayer
         public static Player Player = new Player { CurrentVolume = App.Config.Volume};
         public static NotificationHandler NotificationHandler = new NotificationHandler();
         public static bool MiniPlayerMode = false;
-        public static EventHandler<TabChangedEventArgs> TabChanged;
+        public static EventHandler<string> TabChanged;
         public static LiteDatabase Libraryv2;
         public static Track CurrentTrack;
 
@@ -113,9 +114,13 @@ namespace FRESHMusicPlayer
         {
             UpdateIntegrations();
             ProcessSettings(true);
-            var storyboard = InterfaceUtils.GetDoubleAnimation(0f, 1f, TimeSpan.FromMilliseconds(1000), new PropertyPath("Opacity"));
-            storyboard.Begin(ContentFrame);
-            storyboard.Begin(MainBar);
+            var sb = new Storyboard();
+            var doubleAnimation = new DoubleAnimation(0f, 1f, TimeSpan.FromSeconds(1));
+            doubleAnimation.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut };
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Opacity"));
+            sb.Children.Add(doubleAnimation);
+            sb.Begin(ContentFrame);
+            sb.Begin(MainBar);
             await UpdateHandler.UpdateApp();
         }
         private void Window_Closed(object sender, EventArgs e)
@@ -354,7 +359,7 @@ namespace FRESHMusicPlayer
                     tabLabel = null;
                     break;
             }
-            TabChanged?.Invoke(null, new TabChangedEventArgs(search));
+            TabChanged?.Invoke(null, search);
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
         }
@@ -511,6 +516,22 @@ namespace FRESHMusicPlayer
             {
                 PauseAfterCurrentTrack = true;
                 NotificationHandler.Add(new Notification { ContentText = Properties.Resources.NOTIFICATION_PAUSING });
+            }
+        }
+        private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(Menu.Artists, CurrentTrack?.Artist);
+
+        private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(Menu.Albums, CurrentTrack?.Album);
+
+        private void TrackContextLyrics_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Lyrics, openleft: true);
+
+        private void TrackContextOpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Forms.FMPTextEntryBox("Enter the URL to a file or network stream, and FRESHMusicPlayer will open it for you.");
+            dialog.ShowDialog();
+            if (dialog.OK)
+            {
+                Player.AddQueue(dialog.Response);
+                Player.PlayMusic();
             }
         }
         #endregion
@@ -710,16 +731,5 @@ namespace FRESHMusicPlayer
                 else App.Config.ShowRemainingProgress = true;
             }
         }
-
-        private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(Menu.Artists, CurrentTrack?.Artist);
-
-        private void TrackContextAlbum_Click(object sender, RoutedEventArgs e) => ChangeTabs(Menu.Albums, CurrentTrack?.Album);
-
-        private void TrackContextLyrics_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Lyrics, openleft: true);
-    }
-    public class TabChangedEventArgs : EventArgs
-    {
-        public string Search { get; private set; } = null;
-        public TabChangedEventArgs(string search) => Search = search;
     }
 }
