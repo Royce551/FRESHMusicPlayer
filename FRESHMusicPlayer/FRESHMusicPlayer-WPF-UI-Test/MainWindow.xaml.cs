@@ -163,7 +163,7 @@ namespace FRESHMusicPlayer
             if (Player.Paused)
             {
                 Player.ResumeMusic();
-                SetIntegrations(MediaPlaybackStatus.Playing, CurrentTrack.Artist, CurrentTrack.AlbumArtist, CurrentTrack.Title);
+                SetIntegrations(MediaPlaybackStatus.Playing);
                 progressTimer.Start();
             }
             else
@@ -389,7 +389,7 @@ namespace FRESHMusicPlayer
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
-            SetIntegrations(MediaPlaybackStatus.Playing, CurrentTrack.Artist, CurrentTrack.AlbumArtist, CurrentTrack.Title);
+            SetIntegrations(MediaPlaybackStatus.Playing);
             UpdatePlayButtonState();
             if (CurrentTrack.EmbeddedPictures.Count == 0)
             {
@@ -581,8 +581,10 @@ namespace FRESHMusicPlayer
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
+            //MessageBox.Show(e.OriginalSource.GetType().Name);
+            //if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            //{
+            if (!(e.OriginalSource is TextBox || e.OriginalSource is ListBoxItem))
                 switch (e.Key)
                 {
                     case Key.Q:
@@ -616,7 +618,7 @@ namespace FRESHMusicPlayer
                         PlayPauseMethod();
                         break;
                 }
-            }
+            //}
             switch (e.Key)
             {
                 case Key.OemTilde:
@@ -643,7 +645,6 @@ namespace FRESHMusicPlayer
 
         private void ControlsBox_Drop(object sender, DragEventArgs e)
         {
-            string[] tracks = (string[])e.Data.GetData(DataFormats.FileDrop);
             Player.ClearQueue();
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), import: false);
             Player.PlayMusic();
@@ -669,7 +670,7 @@ namespace FRESHMusicPlayer
             if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
             else Player.DisposeRPC();
         }
-        public void SetIntegrations(MediaPlaybackStatus status, string Artist = "Nothing Playing", string AlbumArtist = "Nothing Playing", string Title = "Nothing Playing")
+        public void SetIntegrations(MediaPlaybackStatus status)
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
@@ -678,9 +679,9 @@ namespace FRESHMusicPlayer
                     Smtc.PlaybackStatus = status;
                     var updater = Smtc.DisplayUpdater;
                     updater.Type = MediaPlaybackType.Music;
-                    updater.MusicProperties.Artist = Artist;
-                    updater.MusicProperties.AlbumArtist = AlbumArtist;
-                    updater.MusicProperties.Title = Title;
+                    updater.MusicProperties.Artist = CurrentTrack.Artist;
+                    updater.MusicProperties.AlbumArtist = CurrentTrack.AlbumArtist;
+                    updater.MusicProperties.Title = CurrentTrack.Title;
                     updater.Update();
                 }
                 catch
@@ -696,7 +697,7 @@ namespace FRESHMusicPlayer
                 {
                     case MediaPlaybackStatus.Playing:
                         activity = "play";
-                        state = $"by {Artist}";
+                        state = $"by {CurrentTrack.Artist}";
                         break;
                     case MediaPlaybackStatus.Paused:
                         activity = "pause";
@@ -713,7 +714,6 @@ namespace FRESHMusicPlayer
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Player.CurrentVolume += e.Delta / 100 * 3;
             VolumeBar.Value += e.Delta / 100 * 3;
             if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();       
         }
