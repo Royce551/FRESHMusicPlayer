@@ -34,16 +34,16 @@ namespace FRESHMusicPlayer.Utilities
 
             return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
         }
-        public static async void DoDragDrop(string[] tracks, bool enqueue = true, bool import = true)
+        public static async void DoDragDrop(string[] tracks, bool enqueue = true, bool import = true, bool clearqueue = true)
         {
-            MainWindow.Player.ClearQueue();
+            if (clearqueue) MainWindow.Player.ClearQueue();
             if (tracks.Any(x => Directory.Exists(x)))
             {
                 foreach (var track in tracks)
                 {
                     if (Directory.Exists(track))
                     {
-                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories) // TODO: increase code reuse
+                        string[] paths = Directory.EnumerateFiles(tracks[0], "*", SearchOption.AllDirectories)
                         .Where(name => name.EndsWith(".mp3")
                         || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
                         || name.EndsWith(".flac") || name.EndsWith(".aiff")

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>An error has occured: {0}.
+    <value>An error has occured: {0}
 If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
 The log file they'll need is at {1}.</value>
   </data>
@@ -243,7 +243,7 @@ Missing File: {0}</value>
     <value>An error occured when updating: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value>An update is ready to install! Restart FMP to apply the update.</value>
+    <value>An update is ready! Restart FMP to apply the update.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
     <value>Playlist Management</value>
@@ -323,7 +323,7 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>Reset configuration to defaults</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value>For the changes to be applied, FMP needs to restart.</value>
+    <value>To apply your changes, FMP needs to restart.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
     <value>Restart now</value>
@@ -404,7 +404,7 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>Save</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value>Do you want to save your changes to {0}?</value>
+    <value>Save changes to {0}?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
     <value>Title</value>

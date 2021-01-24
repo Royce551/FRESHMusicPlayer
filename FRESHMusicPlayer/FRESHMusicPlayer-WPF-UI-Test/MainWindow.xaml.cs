@@ -369,7 +369,7 @@ namespace FRESHMusicPlayer
         #endregion
 
         #region Events
-        #region player
+        #region Player
         private void Player_SongStopped(object sender, EventArgs e)
         {   
             Title = "FRESHMusicPlayer";
@@ -434,7 +434,6 @@ namespace FRESHMusicPlayer
         private void RepeatOneButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => RepeatOneMethod();
         private void PreviousButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PreviousTrackMethod();
         private void PlayPauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PlayPauseMethod();
-        private void StopButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => StopMethod();
         private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
         private bool isDragging = false;
         private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
@@ -572,12 +571,6 @@ namespace FRESHMusicPlayer
             }
         }
         #endregion
-
-        private void PlayButtonClick(object sender, RoutedEventArgs e)
-        {
-            //player.AddQueue(FilePathBox.Text);
-            Player.PlayMusic();                         
-        }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {

@@ -124,7 +124,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void Page_Drop(object sender, DragEventArgs e)
         {  
-            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), import: false);
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), import: false, clearqueue: false);
         }
     }
 }

@@ -97,8 +97,8 @@
                 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Style="{StaticResource Header}"/>
 
-                <TextBlock Text="FRESHMusicPlayer Ver. 9.1" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <TextBlock Text="FRESHMusicPlayer Core Ver. 2.9.0" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock x:Name="FMPVersionLabel" Text="FRESHMusicPlayer Ver. 9.2" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock x:Name="FMPCoreVersionLabel" Text="FRESHMusicPlayer Core Ver. 2.9.0" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>
             </StackPanel>
         </ScrollViewer>

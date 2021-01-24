@@ -61,7 +61,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error has occured: {0}.
+        ///   Looks up a localized string similar to An error has occured: {0}
         ///If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
         ///The log file they&apos;ll need is at {1}..
         /// </summary>
@@ -408,7 +408,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An update is ready to install! Restart FMP to apply the update..
+        ///   Looks up a localized string similar to An update is ready! Restart FMP to apply the update..
         /// </summary>
         public static string NOTIFICATION_UPDATEREADY {
             get {
@@ -662,7 +662,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For the changes to be applied, FMP needs to restart..
+        ///   Looks up a localized string similar to To apply your changes, FMP needs to restart..
         /// </summary>
         public static string SETTINGS_RESTART_NEEDED_PROMPT {
             get {
@@ -905,7 +905,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to save your changes to {0}?.
+        ///   Looks up a localized string similar to Save changes to {0}?.
         /// </summary>
         public static string TAGEDITOR_SAVECHANGES {
             get {
