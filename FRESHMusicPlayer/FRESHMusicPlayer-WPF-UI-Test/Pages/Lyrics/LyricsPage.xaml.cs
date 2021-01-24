@@ -63,16 +63,19 @@ namespace FRESHMusicPlayer.Pages.Lyrics
             {
                 TimedLyrics = new LRCTimedLyricsProvider();
                 Timer.Start();
+                ScrollViewer.SetVerticalScrollBarVisibility(LyricsScrollViewer, ScrollBarVisibility.Hidden);
             }
             else if (!string.IsNullOrWhiteSpace(track.Lyrics.UnsynchronizedLyrics)) // Embedded untimed lyrics
             {
                 LyricsBox.Text = track.Lyrics.UnsynchronizedLyrics;
                 Timer.Stop();
+                ScrollViewer.SetVerticalScrollBarVisibility(LyricsScrollViewer, ScrollBarVisibility.Auto);
             }
             else // No lyrics
             {
                 LyricsBox.Text = Properties.Resources.LYRICS_NOLYRICS;
                 Timer.Stop();
+                ScrollViewer.SetVerticalScrollBarVisibility(LyricsScrollViewer, ScrollBarVisibility.Hidden);
             }
         }
         private void Player_SongChanged(object sender, EventArgs e)

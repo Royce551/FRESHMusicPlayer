@@ -525,7 +525,7 @@ namespace FRESHMusicPlayer
 
         private void TrackContextOpenFile_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Forms.FMPTextEntryBox("Enter the URL to a file or network stream, and FRESHMusicPlayer will open it for you.");
+            var dialog = new Forms.FMPTextEntryBox(Properties.Resources.IMPORT_MANUALENTRY);
             dialog.ShowDialog();
             if (dialog.OK)
             {

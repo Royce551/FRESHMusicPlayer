@@ -11,7 +11,7 @@
 
     <Grid Background="{StaticResource SecondaryColor}">
 
-        <ScrollViewer PanningMode="Both" Panel.ZIndex="1" VerticalAlignment="Center" Foreground="{x:Null}">
+        <ScrollViewer x:Name="LyricsScrollViewer" PanningMode="Both" Panel.ZIndex="1" VerticalAlignment="Center" Foreground="{x:Null}">
             <TextBlock x:Name="LyricsBox" Foreground="{StaticResource PrimaryTextColor}" Text="Testing 1 2 3" TextAlignment="Center" TextWrapping="Wrap"/>
         </ScrollViewer>
         
