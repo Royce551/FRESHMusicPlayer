@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Linq;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -81,36 +82,24 @@ namespace FRESHMusicPlayer.Pages.Library
             
         }
 
-        private void MainPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e) // TODO: refactor this
+        private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e) // TODO: refactor this
         {
             MiscContext.Items.Clear();
             var playlists = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             foreach (var playlist in playlists)
             {
+                var tracks = DatabaseUtils.ReadTracksForPlaylist(playlist.Name);
+                var trackIsInPlaylist = tracks.Where(x => x.Path == FilePath).Count() != 0;
                 var item = new MenuItem
                 {
                     Header = playlist.Name,
                     IsCheckable = true
                 };
-                foreach (var track in DatabaseUtils.ReadTracksForPlaylist(playlist.Name))
-                {
-                    if (track.Path == FilePath)
-                    {
-                        item.IsChecked = true;
-                        break;
-                    }
-                }
+                item.IsChecked = trackIsInPlaylist;
                 item.Click += (object sende, RoutedEventArgs ee) =>
                 {
-                    foreach (var track in DatabaseUtils.ReadTracksForPlaylist(playlist.Name))
-                    {
-                        if (track.Path == FilePath)
-                        {
-                            DatabaseUtils.RemoveTrackFromPlaylist((string)item.Header, FilePath);
-                            return;
-                        }
-                    }
-                    DatabaseUtils.AddTrackToPlaylist((string)item.Header, FilePath);
+                    if (trackIsInPlaylist) DatabaseUtils.RemoveTrackFromPlaylist((string)item.Header, FilePath);
+                    else DatabaseUtils.AddTrackToPlaylist((string)item.Header, FilePath);
                 };
                 MiscContext.Items.Add(item);
             }

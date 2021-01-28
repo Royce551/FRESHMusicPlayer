@@ -20,7 +20,7 @@
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid x:Name="MainPanel" Background="{StaticResource ForegroundColor}" ContextMenuOpening="MainPanel_ContextMenuOpening">
+    <Grid x:Name="MainPanel" Background="{StaticResource ForegroundColor}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
@@ -30,7 +30,8 @@
         </Grid.ColumnDefinitions>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem x:Name="MiscContext" Header="{x:Static resx:Resources.LIBRARY_ADD_TO_PLAYLIST}" Click="ContextMenu_Click">
+                <MenuItem x:Name="MiscContext" Header="{x:Static resx:Resources.LIBRARY_ADD_TO_PLAYLIST}" Click="ContextMenu_Click" SubmenuOpened="MainPanel_ContextMenuOpening">
+                    <MenuItem/> <!--will be replaced with generated context menu by code behind-->
                 </MenuItem>
                 <MenuItem Header="{x:Static resx:Resources.LIBRARY_OPEN_FILEEXPLORER}" Click="OpenInFileExplorer_Click"/>
             </ContextMenu>

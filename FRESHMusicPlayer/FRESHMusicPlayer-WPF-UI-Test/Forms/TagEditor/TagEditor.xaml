@@ -7,6 +7,24 @@
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor"
         mc:Ignorable="d" 
         Title="TagEditor" Height="451" Width="600" Closing="Window_Closing" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True">
+    <Window.Resources>
+        <Style x:Key="Label" TargetType="TextBlock">
+            <Setter Property="Margin" Value="20,2,5,2"/>
+            <Setter Property="TextTrimming" Value="WordEllipsis"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="Box" TargetType="TextBox">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource PrimaryTextColor}"/>
+            <Setter Property="Margin" Value="2,2,10,2"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Window.Resources>
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="18px"/>
@@ -43,16 +61,16 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_TRACKINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
-                    <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="TitleLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_TITLE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="YearLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="GenreLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="AlbumLabel" Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBox x:Name="ArtistBox" Grid.Row="1" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
-                    <TextBox x:Name="TitleBox" Grid.Row="2" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
-                    <TextBox x:Name="YearBox" Grid.Row="3" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
-                    <TextBox x:Name="GenreBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
-                    <TextBox x:Name="AlbumBox" Grid.Row="5" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="ArtistLabel" Grid.Row="1" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}"/>
+                    <TextBlock x:Name="TitleLabel" Grid.Row="2" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TAGEDITOR_TITLE}"/>
+                    <TextBlock x:Name="YearLabel" Grid.Row="3" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TRACKINFO_YEAR}"/>
+                    <TextBlock x:Name="GenreLabel" Grid.Row="4" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TRACKINFO_GENRE}"/>
+                    <TextBlock x:Name="AlbumLabel"  Grid.Row="5" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}"/>
+                    <TextBox x:Name="ArtistBox" Grid.Row="1" Grid.Column="2" Style="{StaticResource Box}" TextChanged="TextChanged"/>
+                    <TextBox x:Name="TitleBox" Grid.Row="2" Grid.Column="2" Style="{StaticResource Box}" TextChanged="TextChanged"/>
+                    <TextBox x:Name="YearBox" Grid.Row="3" Grid.Column="2" Style="{StaticResource Box}" TextChanged="TextChanged"/>
+                    <TextBox x:Name="GenreBox" Grid.Row="4" Grid.Column="2" Style="{StaticResource Box}" TextChanged="TextChanged"/>
+                    <TextBox x:Name="AlbumBox" Grid.Row="5" Grid.Column="2" Style="{StaticResource Box}" TextChanged="TextChanged"/>
                 </Grid>
                 <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
@@ -105,8 +123,22 @@
                         <ComboBox x:Name="CoverArtSelector" Grid.Column="3" Width="100" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" SelectionChanged="CoverArtSelector_SelectionChanged"/>
                         <Button x:Name="ImportCoverButton" Grid.Column="0" Content="{x:Static resx:Resources.MAINWINDOW_IMPORT}" Margin="0,0,10,0" Click="ImportCoverButton_Click"/>
                     </Grid>
-                        
-                    
+                </Grid>
+                
+                <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.LYRICS}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                 </Grid>
             </StackPanel>
         </ScrollViewer>
@@ -121,5 +153,6 @@
             <Button Grid.Column="2" Content="{x:Static resx:Resources.TAGEDITOR_CHANGEFILE}" VerticalAlignment="Center" Margin="5,0" FontSize="15" Padding="10,2,10,2" Click="Button_Click_1"/>
             <Button Grid.Column="3" Content="{x:Static resx:Resources.TAGEDITOR_SAVE}" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="15" Padding="10,2,10,2" Click="Button_Click"/>
         </Grid>
+       
     </Grid>
 </Window>
