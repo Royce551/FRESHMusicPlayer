@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,29 @@ namespace FRESHMusicPlayer.Forms
     /// </summary>
     public partial class CriticalErrorBox : Window
     {
-        public CriticalErrorBox(DispatcherUnhandledExceptionEventArgs e)
+        private readonly string logPath;
+        private readonly string fileName;
+
+        private int timesSadFaceClicked = 1;
+        public CriticalErrorBox(DispatcherUnhandledExceptionEventArgs e, string logPath, string fileName)
         {
             InitializeComponent();
-            string logPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\FRESHMusicPlayer\\Logs";
-            string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
+            this.logPath = logPath;
+            this.fileName = fileName;
             ContentTextBlock.Text = string.Format(Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName);
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e) => Close();
+        private void OpenDebugLogButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(logPath);
+            Process.Start(logPath + fileName);
+        }
+
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            timesSadFaceClicked++;
+            if (timesSadFaceClicked > 5) Process.Start(@"https://www.youtube.com/watch?v=PJph1bc1HNo");
         }
     }
 }
