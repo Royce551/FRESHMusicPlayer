@@ -1,0 +1,22 @@
+﻿<Window x:Class="FRESHMusicPlayer.Forms.CriticalErrorBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
+        mc:Ignorable="d"
+        Title=":(" SizeToContent="Height" Width="500">
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text=":(" FontSize="32" FontWeight="Bold" Margin="5" Foreground="{StaticResource PrimaryTextColor}"/>
+        <TextBlock x:Name="ContentTextBlock" Grid.Row="1" Margin="5" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" TextWrapping="Wrap"/>
+        <DockPanel Grid.Row="2" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+            <Button DockPanel.Dock="Right" TextBlock.FontSize="14" Content="OK" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <Button DockPanel.Dock="Right" TextBlock.FontSize="14" Content="Open debug log" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        </DockPanel>
+    </Grid>
+</Window>

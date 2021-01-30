@@ -82,7 +82,7 @@ namespace FRESHMusicPlayer.Pages.Library
             
         }
 
-        private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e) // TODO: refactor this
+        private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             MiscContext.Items.Clear();
             var playlists = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();

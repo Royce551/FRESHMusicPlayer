@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Forms.TagEditor;
+﻿using FRESHMusicPlayer.Forms;
+using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers.Configuration;
 using System;
 using System.IO;
@@ -54,11 +55,14 @@ namespace FRESHMusicPlayer
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+            var x = new CriticalErrorBox(e);
+            x.Show();
+            /*
             string logPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\FRESHMusicPlayer\\Logs";
             string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
             File.WriteAllText(logPath + fileName, e.Exception.ToString());
-            MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));       
+            MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));       */
             e.Handled = true;
         }
     }

@@ -574,10 +574,7 @@ namespace FRESHMusicPlayer
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            //MessageBox.Show(e.OriginalSource.GetType().Name);
-            //if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            //{
-            if (!(e.OriginalSource is TextBox || e.OriginalSource is ListBoxItem))
+            if (!(e.OriginalSource is TextBox || e.OriginalSource is ListBoxItem) || Keyboard.IsKeyDown(Key.LeftCtrl))
                 switch (e.Key)
                 {
                     case Key.Q:
@@ -624,6 +621,7 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.F2:
                     NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
+                    throw new Exception("oopsies");
                     break;
                 case Key.F5:
                     ContentFrame.Refresh();
