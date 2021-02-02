@@ -45,6 +45,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
         }
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            if (IntegrationItemBox.SelectedIndex == -1) return;
             TrackToSave = new Track
             {
                 Artist = release.Artist,

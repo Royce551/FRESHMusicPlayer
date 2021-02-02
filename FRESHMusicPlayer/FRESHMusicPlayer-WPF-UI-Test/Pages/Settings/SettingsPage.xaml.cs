@@ -198,7 +198,7 @@ namespace FRESHMusicPlayer.Pages
             MessageBoxResult result = MessageBox.Show(Properties.Resources.SETTINGS_NUKE_LIBRARY_WARNING,
                                           "FRESHMusicPlayer",
                                           MessageBoxButton.YesNo,
-                                          MessageBoxImage.Warning);
+                                          MessageBoxImage.Warning, MessageBoxResult.No);
             if (result == MessageBoxResult.Yes) DatabaseUtils.Nuke();
         }
 

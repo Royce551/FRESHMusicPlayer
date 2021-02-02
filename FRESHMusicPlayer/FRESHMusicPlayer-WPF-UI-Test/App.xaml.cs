@@ -4,6 +4,7 @@ using FRESHMusicPlayer.Handlers.Configuration;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace FRESHMusicPlayer
@@ -58,7 +59,11 @@ namespace FRESHMusicPlayer
             string logPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\FRESHMusicPlayer\\Logs";
             string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-            File.WriteAllText(logPath + fileName, e.Exception.ToString());
+            File.WriteAllText(logPath + fileName, 
+                $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}\n" +
+                $"{System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}\n" +
+                $"{Environment.OSVersion.VersionString}\n" +
+                $"{e.Exception}");
             try
             {
                 var box = new CriticalErrorBox(e, logPath, fileName);

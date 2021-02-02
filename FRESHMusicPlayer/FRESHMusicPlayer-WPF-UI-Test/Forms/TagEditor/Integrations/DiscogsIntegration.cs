@@ -57,7 +57,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
             var z = json.SelectToken("results"); // Format for searching: https://www.discogs.com/developers#page:database,header:database-search
             foreach (var x in z)
             {
-                releases.Add(($"{x.SelectToken("title")}; {x.SelectToken("year")}; {string.Join(", ", x.SelectToken("format"))}; {x.SelectToken("country")}", x.SelectToken("id").ToString()));
+                releases.Add(($"{x.SelectToken("title")}; {x.SelectToken("year") ?? "no year"}; {string.Join(", ", x.SelectToken("format") ?? "no format") }; {x.SelectToken("country") ?? "no country"}", x.SelectToken("id").ToString()));
             }
             return releases;
         }
