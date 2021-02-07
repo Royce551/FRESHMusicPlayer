@@ -87,7 +87,7 @@ namespace FRESHMusicPlayer
                     {
                         try
                         {
-                            Libraryv2 = new LiteDatabase(System.IO.Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+                            Libraryv2 = new LiteDatabase(Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
                             TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Visible;
                             SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Visible;
                             return true;

@@ -49,6 +49,9 @@ namespace FRESHMusicPlayer.Pages
                 case "pt":
                     General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Portuguese;
                     break;
+                case "tr":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Turkish;
+                    break;
             }
             switch (App.Config.Theme)
             {

@@ -56,13 +56,13 @@
                                 Height="Auto"
                                 Fill="Transparent" />
                         <Border x:Name="CornerScrollBarRectangle"
-                            CornerRadius="5"
+                            CornerRadius="2"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             Width="Auto"
                             Height="Auto"
                             Margin="0,1,0,1"
-                            Background="LightGray"/>
+                            Background="{StaticResource ForegroundColor}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Tag"
@@ -83,7 +83,7 @@
         <Setter Property="Stylus.IsFlicksEnabled"
             Value="false" />
         <Setter Property="Foreground"
-            Value="#ADABAB" />
+            Value="{StaticResource ForegroundColor}" />
         <Setter Property="Background"
             Value="Transparent" />
         <Setter Property="Width"
@@ -407,7 +407,6 @@
         </Style.Triggers>
     </Style>
 
-    <!-- SimpleStyles: ComboBoxItem -->
     <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
@@ -427,6 +426,27 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="#888888"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border x:Name="TextBorder" CornerRadius="2" Background="{x:Null}" BorderBrush="{StaticResource SecondaryTextColor}" BorderThickness="1">
+                        <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="{StaticResource PrimaryTextColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="#FF338BC1"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
