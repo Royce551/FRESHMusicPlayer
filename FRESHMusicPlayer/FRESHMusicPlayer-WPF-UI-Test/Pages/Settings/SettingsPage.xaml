@@ -52,7 +52,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_LANGUAGE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="General_LanguageCombo_SelectionChanged">
-                        <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_AUTO}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_AUTO}"/> 
                         <ComboBoxItem Content="German"/>
                         <ComboBoxItem Content="Vietnamese"/>
                         <ComboBoxItem Content="Portuguese"/>
@@ -63,7 +63,7 @@
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
-
+ 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 
                 <Grid Height="30" Margin="0,0,0,5" >

@@ -52,7 +52,9 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 ComposerBox.Text = track.Composer;
                 TrackNumBox.Text = track.TrackNumber.ToString();
                 DiscNumBox.Text = track.DiscNumber.ToString();
-                Displayfilepaths.Add(System.IO.Path.GetFileName(path));
+
+                UntimedLyricsBox.Text = track.Lyrics.UnsynchronizedLyrics;
+                Displayfilepaths.Add(Path.GetFileName(path));
                 CoverArts.AddRange(track.EmbeddedPictures);
                 
                 int i = 1;
@@ -96,8 +98,13 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                     AlbumArtist = AlbumArtistBox.Text,
                     Composer = ComposerBox.Text,
                     TrackNumber = Convert.ToInt32(TrackNumBox.Text),
-                    DiscNumber = Convert.ToInt32(DiscNumBox.Text)
+                    DiscNumber = Convert.ToInt32(DiscNumBox.Text),
+                    Lyrics = new LyricsInfo()
                 };
+                track.Lyrics.LanguageCode = "eng";
+                track.Lyrics.Description = "song";
+                track.Lyrics.ContentType = LyricsInfo.LyricsType.LYRICS;
+                track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
                 track.EmbeddedPictures.Clear();
                 foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
                 track.Save();

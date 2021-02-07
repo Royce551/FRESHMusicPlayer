@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
+        xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties" 
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor"
         mc:Ignorable="d" 
         Title="TagEditor" Height="451" Width="600" Closing="Window_Closing" DragEnter="Window_DragEnter" Drop="Window_Drop" AllowDrop="True">
     <Window.Resources>
         <Style x:Key="Label" TargetType="TextBlock">
             <Setter Property="Margin" Value="20,2,5,2"/>
-            <Setter Property="TextTrimming" Value="WordEllipsis"/>
+            <Setter Property="TextTrimming" Value="WordEllipsis"/> 
             <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="TextAlignment" Value="Right"/>
@@ -139,6 +139,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.LYRICS}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
+                    <TextBlock x:Name="UntimedLyricsLabel" Grid.Row="1" Style="{StaticResource Label}" Text="Untimed Lyrics"/>
+                    <TextBox x:Name="UntimedLyricsBox" Grid.Row="1" Grid.Column="2" Style="{StaticResource Box}" AcceptsReturn="True" TextChanged="TextChanged"/>
                 </Grid>
             </StackPanel>
         </ScrollViewer>

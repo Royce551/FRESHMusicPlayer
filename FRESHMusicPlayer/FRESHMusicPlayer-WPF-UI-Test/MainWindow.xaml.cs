@@ -216,7 +216,7 @@ namespace FRESHMusicPlayer
         #endregion
         #region Logic
         public async void SetMiniPlayerMode(bool mode)
-        { // set is for things that use binding
+        { 
             if (mode)
             {
                 await InterfaceUtils.GetDoubleAnimation(Width, 559, TimeSpan.FromMilliseconds(100), new PropertyPath("Width")).BeginStoryboardAsync(this);
@@ -575,40 +575,39 @@ namespace FRESHMusicPlayer
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (!(e.OriginalSource is TextBox || e.OriginalSource is ListBoxItem) || Keyboard.IsKeyDown(Key.LeftCtrl))
-                switch (e.Key)
-                {
-                    case Key.Q:
-                        ShowAuxilliaryPane(AuxiliaryPane.Settings, 335);
-                        break;
-                    case Key.A:
-                        ChangeTabs(Menu.Tracks);
-                        break;
-                    case Key.S:
-                        ChangeTabs(Menu.Artists);
-                        break;
-                    case Key.D:
-                        ChangeTabs(Menu.Albums);
-                        break;
-                    case Key.F:
-                        ChangeTabs(Menu.Playlists);
-                        break;
-                    case Key.G:
-                        ChangeTabs(Menu.Import);
-                        break;
-                    case Key.E:
-                        ShowAuxilliaryPane(AuxiliaryPane.Search, 335);
-                        break;
-                    case Key.R:
-                        ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
-                        break;
-                    case Key.W:
-                        ShowAuxilliaryPane(AuxiliaryPane.QueueManagement, 335);
-                        break;
-                    case Key.Space:
-                        PlayPauseMethod();
-                        break;
-                }
-            //}
+            switch (e.Key)
+            {
+                case Key.Q:
+                    ShowAuxilliaryPane(AuxiliaryPane.Settings, 335);
+                    break;
+                case Key.A:
+                    ChangeTabs(Menu.Tracks);
+                    break;
+                case Key.S:
+                    ChangeTabs(Menu.Artists);
+                    break;
+                case Key.D:
+                    ChangeTabs(Menu.Albums);
+                    break;
+                case Key.F:
+                    ChangeTabs(Menu.Playlists);
+                    break;
+                case Key.G:
+                    ChangeTabs(Menu.Import);
+                    break;
+                case Key.E:
+                    ShowAuxilliaryPane(AuxiliaryPane.Search, 335);
+                    break;
+                case Key.R:
+                    ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
+                    break;
+                case Key.W:
+                    ShowAuxilliaryPane(AuxiliaryPane.QueueManagement, 335);
+                    break;
+                case Key.Space:
+                    PlayPauseMethod();
+                    break;
+            }
             switch (e.Key)
             {
                 case Key.OemTilde:
@@ -621,7 +620,6 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.F2:
                     NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
-                    throw new Exception("oopsies");
                     break;
                 case Key.F5:
                     ContentFrame.Refresh();
