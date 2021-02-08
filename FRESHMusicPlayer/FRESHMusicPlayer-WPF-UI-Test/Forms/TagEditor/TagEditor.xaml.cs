@@ -1,5 +1,6 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
+using FRESHMusicPlayer.Forms.TagEditor.TimedLyrics;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
 using System;
@@ -326,6 +327,11 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 YearBox.Text = editor.TrackToSave.Year.ToString();
                 TrackNumBox.Text = editor.TrackToSave.TrackNumber.ToString();
             }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            new TimedLyricsEditor(MainWindow.Player).Show();
         }
     }
 }

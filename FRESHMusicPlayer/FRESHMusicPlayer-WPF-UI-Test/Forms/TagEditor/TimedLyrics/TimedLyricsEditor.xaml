@@ -1,0 +1,48 @@
+﻿<Window x:Class="FRESHMusicPlayer.Forms.TagEditor.TimedLyrics.TimedLyricsEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties" 
+        xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor.TimedLyrics"
+        mc:Ignorable="d"
+        Title="Timed Lyrics Editor" Height="450" Width="800">
+    <Grid>
+        <Grid Background="{StaticResource BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="18px"/>
+                <RowDefinition/>
+                <RowDefinition Height="25px"/>
+                <RowDefinition Height="50px"/>
+            </Grid.RowDefinitions> 
+            <Menu FontSize="12" >
+            </Menu>
+            <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1" Grid.IsSharedSizeScope="True">
+
+            </StackPanel>
+            <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="ProgressIndicator1" Text="00:00:00" Grid.Column="0" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <Slider x:Name="ProgressSlider" Style="{StaticResource Progress_Slider}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                <TextBlock x:Name="ProgressIndicator2" Text="00:00:00" DockPanel.Dock="Left" Grid.Column="2" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="10,0,10,0"/>
+
+                <Border x:Name="PlayPauseButton" Background="Transparent" Width="20" DockPanel.Dock="Right" Grid.Column="4" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="PlayPauseButton_MouseLeftButtonDown">
+                    <Canvas>
+                        <Path x:Name="PlayPauseButtonData" Data="{StaticResource PlayIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                    </Canvas>
+                </Border>
+            </Grid>
+            <DockPanel Grid.Row="3" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+                <Button x:Name="OKButton" DockPanel.Dock="Right" TextBlock.FontSize="14" Content="Save" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <Button x:Name="AddLineButton" DockPanel.Dock="Right" TextBlock.FontSize="14" Content="Add line" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <Button x:Name="AddLineAtPositionButton" DockPanel.Dock="Right" TextBlock.FontSize="14" Content="Add line at current position" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            </DockPanel>
+
+        </Grid>
+    </Grid>
+</Window>
