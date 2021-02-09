@@ -234,7 +234,7 @@ Eksik Dosya: {0}</value>
     <value>Güncellenirken bir hata oluştu: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value>Bir güncelleme yüklenmeye hazır! Güncellemeyi uygulamak için FMP'yi yeniden başlatın.</value>
+    <value>Bir güncelleme hazır! Güncellemeyi uygulamak için FMP'yi yeniden başlatın.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
     <value>Oynatma Listesi Yönetimi</value>
@@ -311,7 +311,7 @@ FRESHMusicPlayer'ı kullandığınız için teşekkür ederiz! ♥</value>
     <value>Yapılandırmayı varsayılanlara sıfırlayın</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value>Değişikliklerin uygulanması için FMP'nin yeniden başlatılması gerekiyor.</value>
+    <value>Değişikliklerinizi uygulamak için FMP'nin yeniden başlatılması gerekir.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
     <value>Şimdi yeniden başlat</value>
@@ -389,7 +389,7 @@ FRESHMusicPlayer'ı kullandığınız için teşekkür ederiz! ♥</value>
     <value>Kaydet</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value>Değişikliklerinizi {0} olarak kaydetmek istiyor musunuz?</value>
+    <value>Değişiklikleri {0} olarak kaydet?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
     <value>Başlık</value>
