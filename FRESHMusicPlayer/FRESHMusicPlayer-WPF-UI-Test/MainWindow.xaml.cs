@@ -333,22 +333,18 @@ namespace FRESHMusicPlayer
             {
                 case Menu.Tracks:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = TracksTab;
                     break;
                 case Menu.Artists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = ArtistsTab;
                     break;
                 case Menu.Albums:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = AlbumsTab;
                     break;
                 case Menu.Playlists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = PlaylistsTab;
                     break;
                 case Menu.Import:
@@ -359,6 +355,7 @@ namespace FRESHMusicPlayer
                     tabLabel = null;
                     break;
             }
+            ContentFrame.NavigationService.RemoveBackEntry();
             TabChanged?.Invoke(null, search);
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
