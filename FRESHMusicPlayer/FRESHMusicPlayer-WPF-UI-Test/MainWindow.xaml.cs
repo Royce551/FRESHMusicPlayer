@@ -416,6 +416,7 @@ namespace FRESHMusicPlayer
         }
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
+            MessageBox.Show(Environment.CurrentDirectory);
             NotificationHandler.Add(new Notification
             {
                 ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
@@ -617,7 +618,7 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.F2:
                     NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
-                    break;
+                    throw new Exception("Exception for debugging");
                 case Key.F5:
                     ContentFrame.Refresh();
                     break;
