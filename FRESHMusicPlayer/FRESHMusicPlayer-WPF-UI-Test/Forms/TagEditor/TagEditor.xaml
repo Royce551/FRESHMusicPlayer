@@ -47,6 +47,8 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1" Grid.IsSharedSizeScope="True">
                 <TextBlock x:Name="EditingHeader" TextWrapping="Wrap" Text="{x:Static resx:Resources.TAGEDITOR_EDITINGHEADER}" Foreground="{StaticResource PrimaryTextColor}" Margin="10,10,0,0" FontSize="15"/>
+
+                <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_TRACKINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                 <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -60,7 +62,6 @@
                         <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_TRACKINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                     <TextBlock x:Name="ArtistLabel" Grid.Row="1" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}"/>
                     <TextBlock x:Name="TitleLabel" Grid.Row="2" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TAGEDITOR_TITLE}"/>
                     <TextBlock x:Name="YearLabel" Grid.Row="3" Style="{StaticResource Label}" Text="{x:Static resx:Resources.TRACKINFO_YEAR}"/>
@@ -72,6 +73,7 @@
                     <TextBox x:Name="GenreBox" Grid.Row="4" Grid.Column="2" Style="{StaticResource Box}" TextChanged="TextChanged"/>
                     <TextBox x:Name="AlbumBox" Grid.Row="5" Grid.Column="2" Style="{StaticResource Box}" TextChanged="TextChanged"/>
                 </Grid>
+                <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUMINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                 <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -85,7 +87,6 @@
                         <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUMINFO}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                     <TextBlock x:Name="AlbumArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ALBUMARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
                     <TextBlock x:Name="ComposerLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_COMPOSER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
                     <TextBlock x:Name="TrackNumLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_TRACKNUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
@@ -96,6 +97,7 @@
                     <TextBox x:Name="TrackNumBox" Grid.Row="3" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
                     <TextBox x:Name="DiscNumBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
                 </Grid>
+                <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_COVERART}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                 <Grid Height="Auto" Margin="0,5" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -106,7 +108,6 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_COVERART}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                     <Image x:Name="CoverArtBox" Margin="10" Width="200" Height="200" RenderOptions.BitmapScalingMode="HighQuality" Grid.Row="1" Grid.RowSpan="2"/>
                     <TextBlock x:Name="CoverArtLabel" Margin="0,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="No cover art present" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Left" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
@@ -124,7 +125,8 @@
                         <Button x:Name="ImportCoverButton" Grid.Column="0" Content="{x:Static resx:Resources.MAINWINDOW_IMPORT}" Margin="0,0,10,0" Click="ImportCoverButton_Click"/>
                     </Grid>
                 </Grid>
-                
+
+                <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.LYRICS}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                 <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -138,7 +140,6 @@
                         <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="10,5,5,0" Grid.Row="0" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.LYRICS}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="17" />
                     <TextBlock x:Name="UntimedLyricsLabel" Grid.Row="1" Style="{StaticResource Label}" Text="Untimed Lyrics"/>
                     <TextBox x:Name="UntimedLyricsBox" Grid.Row="1" Grid.Column="2" Style="{StaticResource Box}" AcceptsReturn="True" TextChanged="TextChanged"/>
                 </Grid>

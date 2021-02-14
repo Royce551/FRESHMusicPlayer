@@ -109,6 +109,18 @@ namespace FRESHMusicPlayer
                 Player.AddQueue(initialFile);
                 Player.PlayMusic();
             }
+            else
+            {
+                if (File.Exists("persistence"))
+                {
+                    var fields = File.ReadAllText("persistence").Split(';');
+                    Player.AddQueue(fields[0]);
+                    Player.PlayMusic();
+                    Player.RepositionMusic(int.Parse(fields[1]));
+                    PlayPauseMethod();
+                    ProgressTick();
+                }
+            }
         }
         private async void Window_SourceInitialized(object sender, EventArgs e)
         {
@@ -130,6 +142,7 @@ namespace FRESHMusicPlayer
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Libraryv2?.Dispose();
+            if (Player.Playing) File.WriteAllText("persistence", $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds}");
             Application.Current.Shutdown();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
@@ -437,14 +450,12 @@ namespace FRESHMusicPlayer
         private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             isDragging = true;
-            progressTimer.Interval = 1;
             progressTimer.Stop();
         }
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             if (Player.Playing)
             {
-                progressTimer.Interval = 1000;
                 progressTimer.Start();
             }
             isDragging = false;
