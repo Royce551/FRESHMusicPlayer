@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" WindowStartupLocation="Manual"
         Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
     <Window.Resources>
         <Storyboard x:Key="SlideIn">

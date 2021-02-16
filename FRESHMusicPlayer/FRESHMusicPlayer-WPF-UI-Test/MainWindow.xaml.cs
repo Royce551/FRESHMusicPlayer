@@ -132,6 +132,7 @@ namespace FRESHMusicPlayer
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Libraryv2?.Dispose();
+            WritePersistence();
             Application.Current.Shutdown();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
@@ -310,10 +311,40 @@ namespace FRESHMusicPlayer
             if (File.Exists(persistenceFilePath))
             {
                 var fields = File.ReadAllText(persistenceFilePath).Split(';');
-                Player.AddQueue(fields[0]);
-                Player.PlayMusic();
-                Player.RepositionMusic(int.Parse(fields[1]));
-                File.Delete(persistenceFilePath);
+                if (fields[0] != string.Empty)
+                {
+                    Player.AddQueue(fields[0]);
+                    Player.PlayMusic();
+                    Player.RepositionMusic(int.Parse(fields[1]));
+                    PlayPauseMethod();
+                    ProgressTick();
+                }
+                
+                var top = double.Parse(fields[2]);
+                var left = double.Parse(fields[3]);
+                var height = double.Parse(fields[4]);
+                var width = double.Parse(fields[5]);
+                var rect = new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height);
+                if (WinForms.Screen.AllScreens.Any(y => y.WorkingArea.IntersectsWith(rect)))
+                {
+                    Top = top;
+                    Left = left;
+                    Height = height;
+                    Width = width;
+                }
+            }
+        }
+        public void WritePersistence()
+        {
+            if (Player.Playing) // TODO: make this less shitty
+            {
+                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"),
+                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width}");
+            }
+            else
+            {
+                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"),
+                    $";;{Top};{Left};{Height};{Width}");
             }
         }
         public MemoryStream GetCoverArtFromDirectory()
