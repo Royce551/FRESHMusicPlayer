@@ -213,6 +213,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void RestartNowButton_Click(object sender, RoutedEventArgs e)
         {
+            if (MainWindow.Player.Playing) File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"), $"{MainWindow.Player.FilePath};{(int)MainWindow.Player.CurrentBackend.CurrentTime.TotalSeconds}");
             Application.Current.Shutdown();
             WinForms.Application.Restart();
         }

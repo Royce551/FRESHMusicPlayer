@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -103,23 +104,11 @@ namespace FRESHMusicPlayer
                 App.Config.CurrentMenu = Menu.Import;
                 TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Collapsed;
                 SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Collapsed;
-            }    
+            }
             if (initialFile != null)
             {
                 Player.AddQueue(initialFile);
                 Player.PlayMusic();
-            }
-            else
-            {
-                if (File.Exists("persistence"))
-                {
-                    var fields = File.ReadAllText("persistence").Split(';');
-                    Player.AddQueue(fields[0]);
-                    Player.PlayMusic();
-                    Player.RepositionMusic(int.Parse(fields[1]));
-                    PlayPauseMethod();
-                    ProgressTick();
-                }
             }
         }
         private async void Window_SourceInitialized(object sender, EventArgs e)
@@ -134,6 +123,7 @@ namespace FRESHMusicPlayer
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
             await UpdateHandler.UpdateApp();
+            if (!Player.Playing) HandlePersistence();
         }
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -142,7 +132,6 @@ namespace FRESHMusicPlayer
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Libraryv2?.Dispose();
-            if (Player.Playing) File.WriteAllText("persistence", $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds}");
             Application.Current.Shutdown();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
@@ -313,6 +302,18 @@ namespace FRESHMusicPlayer
             {
                 TrackingHandler?.Close();
                 TrackingHandler = null;
+            }
+        }
+        public void HandlePersistence()
+        {
+            var persistenceFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence");
+            if (File.Exists(persistenceFilePath))
+            {
+                var fields = File.ReadAllText(persistenceFilePath).Split(';');
+                Player.AddQueue(fields[0]);
+                Player.PlayMusic();
+                Player.RepositionMusic(int.Parse(fields[1]));
+                File.Delete(persistenceFilePath);
             }
         }
         public MemoryStream GetCoverArtFromDirectory()
