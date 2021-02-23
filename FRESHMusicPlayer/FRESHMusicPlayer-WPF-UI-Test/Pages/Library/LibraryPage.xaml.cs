@@ -180,7 +180,10 @@ namespace FRESHMusicPlayer.Pages.Library
             MainWindow.Player.ClearQueue();
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop));
             MainWindow.Player.PlayMusic();
+            var selectedItem = CategoryPanel.SelectedItem;
             LoadLibrary();
+            Thread.Sleep(10);
+            CategoryPanel.SelectedItem = selectedItem;
         }
 
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)

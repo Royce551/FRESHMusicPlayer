@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -103,7 +104,7 @@ namespace FRESHMusicPlayer
                 App.Config.CurrentMenu = Menu.Import;
                 TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Collapsed;
                 SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Collapsed;
-            }    
+            }
             if (initialFile != null)
             {
                 Player.AddQueue(initialFile);
@@ -122,6 +123,7 @@ namespace FRESHMusicPlayer
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
             await UpdateHandler.UpdateApp();
+            if (!Player.Playing) HandlePersistence();
         }
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -130,6 +132,7 @@ namespace FRESHMusicPlayer
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Libraryv2?.Dispose();
+            WritePersistence();
             Application.Current.Shutdown();
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
@@ -302,6 +305,48 @@ namespace FRESHMusicPlayer
                 TrackingHandler = null;
             }
         }
+        public void HandlePersistence()
+        {
+            var persistenceFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence");
+            if (File.Exists(persistenceFilePath))
+            {
+                var fields = File.ReadAllText(persistenceFilePath).Split(';');
+                if (fields[0] != string.Empty)
+                {
+                    Player.AddQueue(fields[0]);
+                    Player.PlayMusic();
+                    Player.RepositionMusic(int.Parse(fields[1]));
+                    PlayPauseMethod();
+                    ProgressTick();
+                }
+                
+                var top = double.Parse(fields[2]);
+                var left = double.Parse(fields[3]);
+                var height = double.Parse(fields[4]);
+                var width = double.Parse(fields[5]);
+                var rect = new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height);
+                if (WinForms.Screen.AllScreens.Any(y => y.WorkingArea.IntersectsWith(rect)))
+                {
+                    Top = top;
+                    Left = left;
+                    Height = height;
+                    Width = width;
+                }
+            }
+        }
+        public void WritePersistence()
+        {
+            if (Player.Playing) // TODO: make this less shitty
+            {
+                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"),
+                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width}");
+            }
+            else
+            {
+                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"),
+                    $";;{Top};{Left};{Height};{Width}");
+            }
+        }
         public MemoryStream GetCoverArtFromDirectory()
         {
             if (File.Exists(Player.FilePath))
@@ -333,22 +378,18 @@ namespace FRESHMusicPlayer
             {
                 case Menu.Tracks:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = TracksTab;
                     break;
                 case Menu.Artists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = ArtistsTab;
                     break;
                 case Menu.Albums:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = AlbumsTab;
                     break;
                 case Menu.Playlists:
                     ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
-                    ContentFrame.NavigationService.RemoveBackEntry();
                     tabLabel = PlaylistsTab;
                     break;
                 case Menu.Import:
@@ -359,6 +400,7 @@ namespace FRESHMusicPlayer
                     tabLabel = null;
                     break;
             }
+            ContentFrame.NavigationService.RemoveBackEntry();
             TabChanged?.Invoke(null, search);
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
@@ -419,6 +461,7 @@ namespace FRESHMusicPlayer
         }
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
+            MessageBox.Show(Environment.CurrentDirectory);
             NotificationHandler.Add(new Notification
             {
                 ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
@@ -439,14 +482,12 @@ namespace FRESHMusicPlayer
         private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             isDragging = true;
-            progressTimer.Interval = 1;
             progressTimer.Stop();
         }
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             if (Player.Playing)
             {
-                progressTimer.Interval = 1000;
                 progressTimer.Start();
             }
             isDragging = false;
@@ -620,7 +661,7 @@ namespace FRESHMusicPlayer
                     break;
                 case Key.F2:
                     NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
-                    break;
+                    throw new Exception("Exception for debugging");
                 case Key.F5:
                     ContentFrame.Refresh();
                     break;

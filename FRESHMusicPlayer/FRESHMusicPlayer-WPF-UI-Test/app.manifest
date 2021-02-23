@@ -20,7 +20,12 @@
       </requestedPrivileges>
     </security>
   </trustInfo>
-
+	<file name="CDLib.dll">
+		<activatableClass
+		  name="CDLib.AudioCDPlayer"
+		  threadingModel="sta"
+		  xmlns="urn:schemas-microsoft-com:winrt.v1" />
+	</file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
     <application>
       <!-- A list of the Windows versions that this application has been tested on

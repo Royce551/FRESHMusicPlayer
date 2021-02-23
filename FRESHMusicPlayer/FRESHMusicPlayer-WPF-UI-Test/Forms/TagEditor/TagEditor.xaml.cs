@@ -102,9 +102,6 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                     DiscNumber = Convert.ToInt32(DiscNumBox.Text),
                     Lyrics = new LyricsInfo()
                 };
-                track.Lyrics.LanguageCode = "eng";
-                track.Lyrics.Description = "song";
-                track.Lyrics.ContentType = LyricsInfo.LyricsType.LYRICS;
                 track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
                 track.EmbeddedPictures.Clear();
                 foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);

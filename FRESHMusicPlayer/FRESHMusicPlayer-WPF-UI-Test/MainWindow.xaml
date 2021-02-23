@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="Manual"
         Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
     <Window.Resources>
         <Storyboard x:Key="SlideIn">
@@ -89,11 +89,11 @@
                     <ColumnDefinition Width="223"/>
                 </Grid.ColumnDefinitions>
                 <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" MouseRightButtonDown="TrackTitle_MouseRightButtonDown" Cursor="Hand"/>
-                <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,40,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" MouseRightButtonDown="TrackTitle_MouseRightButtonDown" Cursor="Hand" Grid.ColumnSpan="2" Panel.ZIndex="0"/>
+                <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,40,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" MouseRightButtonDown="TrackTitle_MouseRightButtonDown" Cursor="Hand" Grid.ColumnSpan="2" Panel.ZIndex="0"/>
                 <Slider x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Margin="37,54,45,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="9.8" Thumb.DragStarted="ProgressBar_DragStarted" Thumb.DragCompleted="ProgressBar_DragCompleted" ValueChanged="ProgressBar_ValueChanged" IsMoveToPointEnabled="True" MouseLeftButtonUp="ProgressBar_MouseLeftButtonUp"/>
                 <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
                 <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,0,0,13" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="40" MouseLeftButtonDown="ProgressIndicator2_MouseLeftButtonDown"/>
-                <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="Nothing Playing" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
 
                 <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
                 <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right"/>

@@ -118,330 +118,327 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>Bir hata oluştu: {0}.
-Zamanınız varsa, lütfen bunu https://github.com/royce551/freshmusicplayer/issues adresindeki geliştiricilere bildirin.
-İhtiyaç duyacakları günlük dosyası {1} adresinde.</value>
+    <value>Er is een fout opgetreden: {0}
+Als je tijd hebt, rapporteer dit dan aan de ontwikkelaars op https://github.com/royce551/freshmusicplayer/issues.
+Het logbestand dat ze nodig hebben is in {1}.</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Ga naar</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value>Mini Oynatıcı</value>
+    <value>Minispeler</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
-    <value>Geçerli şarkıdan sonra duraklat</value>
+    <value>Pauzeren na huidig nummer</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value>Klasörlere göz atın</value>
+    <value>Bladeren naar mappen</value>
   </data>
   <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value>Çalma listesi dosyalarına göz atın</value>
+    <value>Bladeren naar afspeellijstbestanden</value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value>Şarkılara göz atın</value>
+    <value>Bladeren naar nummers</value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value>Ayrıca bu sayfaya sürükleyip bırakabilirsiniz.</value>
+    <value>Je kunt ook bestanden naar deze pagina slepen.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value>Manuel dosya yolu/URL girişi</value>
+    <value>Handmatig bestandspad/URL invoeren</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value>Oynatma listesine ekle</value>
+    <value>Toevoegen aan afspeellijst</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value>Tümünü Sırala</value>
+    <value>Alles in wachtrij zetten</value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
-    <value>Dosya Gezgini'nde aç</value>
+    <value>Openen in Verkenner</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value>Hepsini Oynat</value>
+    <value>Alles Spelen</value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value>Geen teksten</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value>Albümler</value>
+    <value>Albums</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value>Sanatçılar</value>
+    <value>Artiesten</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value>İthalat</value>
+    <value>Importeren</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>Sanatçı Yok</value>
+    <value>Geen Artiest</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value>Oynayan Hiçbir Şey</value>
+    <value>Niets aan het spelen</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value>Bir oynatma hatası oluştu:
+    <value>Er is een afspeelfout opgetreden:
 {0}
-Senin için bir sonraki şarkıya geçeceğiz</value>
+We spoelen door naar het volgende nummer voor je</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
-    <value>Oynatma listeleri</value>
+    <value>Afspeellijsten</value>
   </data>
   <data name="MAINWINDOW_SEARCH" xml:space="preserve">
-    <value>Arama</value>
+    <value>Zoeken</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value>Ayarlar</value>
+    <value>Instellingen</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value>Şarkılar</value>
+    <value>Nummers</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
-    <value>_Vazgeç</value>
+    <value>_Afsluiten</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
-    <value>_Dosya</value>
+    <value>_Bestand</value>
   </data>
   <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
-    <value>_Yeni Pencere</value>
+    <value>_Nieuw Venster</value>
   </data>
   <data name="MENUBAR_OPEN" xml:space="preserve">
-    <value>_Aç</value>
+    <value>_Openen</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
-    <value>_Kaydet</value>
+    <value>O_pslaan</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
-    <value>_Tag Kaynakları</value>
+    <value>_Tag-bronnen</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value>Hepsini Temizle</value>
+    <value>Alles Wissen</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value>Bildirimler</value>
+    <value>Meldingen</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
-    <value>Kitaplığınız başarıyla temizlendi!</value>
+    <value>Bibliotheek wissen gelukt!</value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value>Şarkılardan biri veya daha fazlası bulunamadığı için bu çalma listesi dosyası içe aktarılamadı.
-Eksik Dosya: {0}</value>
+    <value>Het afspeellijstbestand kon niet worden geïmporteerd omdat er een of meer nummers niet konden worden gevonden.
+Ontbrekend Bestand: {0}</value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value>Oynatmaya çalıştığınız "{0}" dosyası mevcut görünmüyor.</value>
+    <value>Het bestand dat je wilde afspelen, "{0}", bestaat niet.</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
-    <value>İndirme güncellemesi...</value>
+    <value>Update aan het installeren...</value>
   </data>
   <data name="NOTIFICATION_LIBRARYFAILED" xml:space="preserve">
-    <value>Kitaplık yüklenemedi. Çalışan başka bir FMP örneğiniz olmadığından emin olun!</value>
+    <value>Kon de bibliotheek niet laden. Zorg ervoor dat je FMP niet nog een keer hebt geopend!</value>
   </data>
   <data name="NOTIFICATION_PAUSING" xml:space="preserve">
-    <value>Mevcut parçadan sonra duraklatılıyor ...</value>
+    <value>Pauzeren na huidig nummer...</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
-    <value>Güncellenirken bir hata oluştu: {0}</value>
+    <value>Er is een fout opgetreden bij het updaten: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value>Bir güncelleme hazır! Güncellemeyi uygulamak için FMP'yi yeniden başlatın.</value>
+    <value>Er staat een update klaar! Herstart FMP om te update toe te passen.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value>Oynatma Listesi Yönetimi</value>
+    <value>Afspeellijstbeheer</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
-    <value>Oluşturmak</value>
+    <value>Maken</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
-    <value>İhracat</value>
+    <value>Exporteren</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
-    <value>"{0}" ile ne yapmak istiyorsunuz?</value>
+    <value>Wat wil je doen met "{0}"?</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
-    <value>Adı değiştir</value>
+    <value>Hernoemen</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value>Oynatma Listesi Ekle</value>
+    <value>Afspeellijst Toevoegen</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value>Şarkı Ekle</value>
+    <value>Nummer Toevoegen</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value>Kuyruğu Temizle</value>
+    <value>Wachtrij Wissen</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value>Kuyruk</value>
+    <value>Wachtrij</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Kalan süre - </value>
+    <value>Tijd te Gaan - </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
-    <value>Hakkında</value>
+    <value>Over</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
-    <value>Görünüm</value>
+    <value>Uiterlijk</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value>Otomatik Güncelleme Modu</value>
+    <value>Auto-Updatemodus</value>
+  </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value>Bibliotheek opschonen en updaten</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value>Squid Grill (ve açık kaynak katılımcıları) tarafından
-GPL v3 altında lisanslanmıştır
-FRESHMusicPlayer'ı kullandığınız için teşekkür ederiz! ♥</value>
+    <value>Door Squid Grill (en open-source bijdragers)
+Gelicenseerd onder GPL v3
+Bedankt voor het gebruiken van FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
-    <value>Genel</value>
+    <value>Algemeen</value>
   </data>
   <data name="SETTINGS_IMPORTOLDFMP" xml:space="preserve">
-    <value>Kitaplığı eski FMP'den içe aktarın</value>
+    <value>Bibliotheek uit oude FMP importeren</value>
   </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
-    <value>Entegrasyon</value>
+    <value>Integratie</value>
   </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
-    <value>Dil</value>
+    <value>Taal</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
-    <value>Bakım</value>
+    <value>Onderhoud</value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
-    <value>Kitaplığınızdaki her şeyden kurtulun</value>
+    <value>Bibliotheek opblazen</value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
-    <value>Kitaplığınızı geri alınamaz bir şekilde temizlemek üzeresiniz. Emin misiniz?</value>
+    <value>Je staat op het punt om je bilbiotheek onomkeerbaar te wissen. Weet je het zeker?</value>
   </data>
-  <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
-    <value />
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value>Afspelen Traceren</value>
   </data>
   <data name="SETTINGS_PRERELEASE" xml:space="preserve">
-    <value>FMP'nin yayın öncesi sürümlerini edinin</value>
+    <value>Pre-releaseversies van FMP krijgen</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value>Yapılandırmayı varsayılanlara sıfırlayın</value>
+    <value>Configuratie naar standaarden herstellen</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value>Değişikliklerinizi uygulamak için FMP'nin yeniden başlatılması gerekir.</value>
+    <value>Om je wijzigingen toe te passen moet FMP worden herstart.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
-    <value>Şimdi yeniden başlat</value>
+    <value>Nu Herstarten</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value>FMP'nin davranış şeklini değiştirin</value>
+    <value>De manier waarom FMP zich gedraagt aanpassen</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value>Tema</value>
+    <value>Thema</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value>Karanlık</value>
+    <value>Donker</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value>Aydınlık</value>
+    <value>Licht</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
-    <value>Pencere başlığında başlık yerine zamanı göster</value>
+    <value>De tijd in plaats van titel weergeven in venstertitel</value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value>Güncellemeler</value>
+    <value>Updates</value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value>Şimdi güncellemeleri kontrol edin</value>
+    <value>Nu naar updates zoeken</value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
-    <value>Son kontrol etdi {0}</value>
+    <value>Laatst gecontroleerd op {0}</value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value>Otomatik</value>
+    <value>Automatisch</value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
-    <value>Manuel</value>
+    <value>Handmatig</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
-    <value>Güncellemeden önce sor</value>
+    <value>Vragen voor updaten</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value>Etiket Düzenleyici</value>
+    <value>Tag-editor</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>Albüm sanatçısı</value>
+    <value>Albumartiest</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value>Sanatçı</value>
+    <value>Artiest</value>
   </data>
   <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
-    <value>Yeni bir parça çaldığınızda değişiklikler uygulanacaktır.</value>
+    <value>De wijzigingen worden toegepast wanneer je een nieuw nummer speelt.</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value>Dosyayı Değiştir...</value>
+    <value>Bestand Wijzigen...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value>Besteci</value>
+    <value>Componist</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value>Kapak resmi</value>
+    <value>Cover</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value>Disk Numarası</value>
+    <value>Schijfnummer</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
-    <value>Düzenleme </value>
+    <value>Aan het bewerken </value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
-    <value>Bu albüm için birden çok arama sonucu var. Hangisini istersin?</value>
+    <value>Er zijn meerdere zoekresultaten voor dit album. Welke zoek je?</value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value>Geen cover</value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value>İnternete bağlı değilsiniz :(</value>
+    <value>Je bent niet verbonden met het internet :(</value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
-    <value>Bu albüm için sonuç bulunamadı :(</value>
+    <value>Geen resultaten gevonden voor dit album :(</value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
-    <value>Kaydet</value>
+    <value>Opslaan</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value>Değişiklikleri {0} olarak kaydet?</value>
+    <value>Wijzigingen opslaan naar {0}?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value>Başlık</value>
+    <value>Titel</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value>Parça Numarası</value>
+    <value>Nummer</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value>Albüm</value>
+    <value>Album</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value>Albüm Bilgileri</value>
+    <value>Albuminformatie</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value>Bit hızı kbps</value>
+    <value>Bitsnelheid</value>
     <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value>Disk</value>
+    <value>Schijf</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value>Tür</value>
+    <value>Genre</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value>Teknik bilgi</value>
+    <value>Technische Informatie</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value>Şarkı Bilgisi</value>
+    <value>Nummer-informatie</value>
     <comment>Track Info header</comment>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value>Şarkı</value>
+    <value>Nummer</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value>Yıl</value>
-  </data>
-  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
-    <value>Kapak resmi yok</value>
-  </data>
-  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value>Oynatma Takibi</value>
-  </data>
-  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
-    <value>Kitaplığı temizleyin ve güncelleyin</value>
-  </data>
-  <data name="LYRICS_NOLYRICS" xml:space="preserve">
-    <value>Şarkı sözleri yok</value>
-  </data>
-  <data name="LYRICS" xml:space="preserve">
-    <value>Şarkı sözleri</value>
-  </data>
-  <data name="CONTROLS_GOTO" xml:space="preserve">
-    <value>Git</value>
+    <value>Jaar</value>
   </data>
 </root>

@@ -68,7 +68,7 @@ namespace FRESHMusicPlayer
             {
                 var box = new CriticalErrorBox(e, logPath, fileName);
                 box.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                box.Show();
+                box.ShowDialog();
             }
             catch
             {
