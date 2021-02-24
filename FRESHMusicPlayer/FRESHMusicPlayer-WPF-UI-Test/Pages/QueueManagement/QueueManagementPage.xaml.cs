@@ -1,4 +1,5 @@
 ﻿using ATL.Playlist;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
@@ -21,17 +22,24 @@ namespace FRESHMusicPlayer.Pages
         private bool taskisrunning;
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
         private int currentIndex = 0;
-        public QueueManagement()
+
+        private readonly Player player;
+        private readonly DatabaseHandlerX library;
+        private readonly NotificationHandler notificationHandler;
+        public QueueManagement(Player player, DatabaseHandlerX library, NotificationHandler notificationHandler)
         {
+            this.player = player;
+            this.library = library;
+            this.notificationHandler = notificationHandler;
             InitializeComponent();
             PopulateList();
-            MainWindow.Player.QueueChanged += Player_QueueChanged;
-            MainWindow.Player.SongStopped += Player_SongStopped;
+            player.QueueChanged += Player_QueueChanged;
+            player.SongStopped += Player_SongStopped;
         }
 
         public void PopulateList()
         {
-            displayqueue.Enqueue(MainWindow.Player.Queue); // Queue of pending queue management updates
+            displayqueue.Enqueue(player.Queue); // Queue of pending queue management updates
             async void GetResults()
             {
                 var list = displayqueue.Dequeue();
@@ -45,11 +53,11 @@ namespace FRESHMusicPlayer.Pages
                     {
                         if (displayqueue.Count > 1) break;
                         QueueEntry entry;
-                        var dbTrack = DatabaseUtils.GetFallbackTrack(song);
-                        entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1));
+                        var dbTrack = library.GetFallbackTrack(song);
+                        entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1, player));
                         Dispatcher.Invoke(() => QueueList.Items.Add(entry));
-                        if (entry.Index + 1 == MainWindow.Player.QueuePosition) currentIndex = entry.Index;
-                        if (MainWindow.Player.QueuePosition < number) nextlength += dbTrack.Length;
+                        if (entry.Index + 1 == player.QueuePosition) currentIndex = entry.Index;
+                        if (player.QueuePosition < number) nextlength += dbTrack.Length;
                         if (number % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                         number++;
                     }
@@ -77,8 +85,8 @@ namespace FRESHMusicPlayer.Pages
         private void Player_SongStopped(object sender, EventArgs e) => PopulateList();
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.Player.QueueChanged -= Player_QueueChanged;
-            MainWindow.Player.SongStopped -= Player_SongStopped;
+            player.QueueChanged -= Player_QueueChanged;
+            player.SongStopped -= Player_SongStopped;
             QueueList.Items.Clear();
         }
 
@@ -88,7 +96,7 @@ namespace FRESHMusicPlayer.Pages
             dialog.Filter = "Audio Files|*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac|Other|*";
             if (dialog.ShowDialog() == true)
             {
-                MainWindow.Player.AddQueue(dialog.FileName);
+                player.AddQueue(dialog.FileName);
             }
         }
 
@@ -103,7 +111,7 @@ namespace FRESHMusicPlayer.Pages
                 {
                     if (!File.Exists(s))
                     {
-                        MainWindow.NotificationHandler.Add(new Notification
+                        notificationHandler.Add(new Notification
                         {
                             ContentText = string.Format(Properties.Resources.NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST, s),
                             IsImportant =  true,
@@ -112,19 +120,19 @@ namespace FRESHMusicPlayer.Pages
                         });
                         continue;
                     }
-                    MainWindow.Player.AddQueue(s);
+                    player.AddQueue(s);
                 }
             }
         }
 
         private void ClearQueue_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Player.ClearQueue();
+            player.ClearQueue();
         }
 
         private void Page_Drop(object sender, DragEventArgs e)
         {  
-            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), import: false, clearqueue: false);
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), player, library, import: false, clearqueue: false);
         }
     }
 }

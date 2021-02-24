@@ -1,4 +1,6 @@
-﻿using FRESHMusicPlayer.Utilities;
+﻿using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using System;
 using System.IO;
 using System.Linq;
@@ -15,11 +17,19 @@ namespace FRESHMusicPlayer.Pages.Library
     public partial class LibraryPage : Page
     {
         private Menu previousPage;
-        public LibraryPage()
+
+        private readonly Player player;
+        private readonly Menu selectedMenu;
+        private readonly DatabaseHandlerX library;
+        private readonly NotificationHandler notificationHandler;
+        public LibraryPage(Player player, Menu selectedMenu, DatabaseHandlerX library, NotificationHandler notificationHandler)
         {
+            this.player = player;
+            this.selectedMenu = selectedMenu;
+            this.library = library;
+            this.notificationHandler = notificationHandler;
             InitializeComponent();
             LoadLibrary();
-            MainWindow.TabChanged += MainWindow_TabChanged;
             CategoryPanel.Focus();
         }
 
@@ -28,7 +38,7 @@ namespace FRESHMusicPlayer.Pages.Library
             TracksPanel.Items.Clear();
             CategoryPanel.Items.Clear();
             InfoLabel.Visibility = Visibility.Hidden;
-            switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
+            switch (selectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
                 case Menu.Tracks:
                     ShowTracks();
@@ -51,9 +61,9 @@ namespace FRESHMusicPlayer.Pages.Library
             await Task.Run(() =>
             {
                 int i = 0;
-                foreach (var thing in DatabaseUtils.Read())
+                foreach (var thing in library.Read())
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, player, notificationHandler, library)));
                     length += thing.Length;
                     if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                     i++;
@@ -67,7 +77,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.Read("Artist"))
+                foreach (var thing in library.Read("Artist"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Artist)) continue;
                     Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
@@ -78,7 +88,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.Read("Album"))
+                foreach (var thing in library.Read("Album"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Album)) continue;
                     Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
@@ -87,10 +97,10 @@ namespace FRESHMusicPlayer.Pages.Library
         }
         public async void ShowPlaylists()
         {
-            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var x = library.Library.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             await Task.Run(() =>
             {
-                if (x.Count == 0) DatabaseUtils.CreatePlaylist("Liked");
+                if (x.Count == 0) library.CreatePlaylist("Liked");
                 foreach (var thing in x)
                 {
                     if (CategoryPanel.Items.Contains(thing.Name)) continue;
@@ -104,9 +114,9 @@ namespace FRESHMusicPlayer.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.ReadTracksForArtist(selectedItem))
+                foreach (var thing in library.ReadTracksForArtist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, player, notificationHandler, library)));
                     length += thing.Length;
                 }
             });
@@ -119,9 +129,9 @@ namespace FRESHMusicPlayer.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.ReadTracksForAlbum(selectedItem))
+                foreach (var thing in library.ReadTracksForAlbum(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}")));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", player, notificationHandler, library)));
                     length += thing.Length;
                 }
             });
@@ -134,9 +144,9 @@ namespace FRESHMusicPlayer.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.ReadTracksForPlaylist(selectedItem))
+                foreach (var thing in library.ReadTracksForPlaylist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, player, notificationHandler, library)));
                     length += thing.Length;
                 }
             });
@@ -147,8 +157,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (MainWindow.SelectedMenu == Menu.Artists) ShowTracksforArtist(selectedItem);
-            else if (MainWindow.SelectedMenu == Menu.Playlists) ShowTracksforPlaylist(selectedItem);
+            if (selectedMenu == Menu.Artists) ShowTracksforArtist(selectedItem);
+            else if (selectedMenu == Menu.Playlists) ShowTracksforPlaylist(selectedItem);
             else ShowTracksforAlbum(selectedItem);
         }
         private void MainWindow_TabChanged(object sender, string e)
@@ -160,12 +170,11 @@ namespace FRESHMusicPlayer.Pages.Library
                 Thread.Sleep(10);
                 CategoryPanel.SelectedItem = e;
             }
-            previousPage = MainWindow.SelectedMenu;
+            previousPage = selectedMenu;
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.TabChanged -= MainWindow_TabChanged;
             CategoryPanel.Items.Clear();
             TracksPanel.Items.Clear();
         }
@@ -177,9 +186,9 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void Page_Drop(object sender, DragEventArgs e)
         {
-            MainWindow.Player.ClearQueue();
-            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop));
-            MainWindow.Player.PlayMusic();
+            player.ClearQueue();
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), player, library);
+            player.PlayMusic();
             var selectedItem = CategoryPanel.SelectedItem;
             LoadLibrary();
             Thread.Sleep(10);
@@ -189,15 +198,15 @@ namespace FRESHMusicPlayer.Pages.Library
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)
         {
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            MainWindow.Player.AddQueue(tracks);
+            player.AddQueue(tracks);
         }
 
         private void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Player.ClearQueue();
+            player.ClearQueue();
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            MainWindow.Player.AddQueue(tracks);
-            MainWindow.Player.PlayMusic();
+            player.AddQueue(tracks);
+            player.PlayMusic();
         }
     }
 }

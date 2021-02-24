@@ -26,12 +26,15 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         private readonly List<PictureInfo> CoverArts = new List<PictureInfo>();
         private bool unsavedChanges = false;
         private readonly HttpClient httpClient = new HttpClient();
-        public TagEditor(List<string> filePaths)
+
+        private readonly Player player;
+        public TagEditor(List<string> filePaths, Player player = null)
         {
+            this.player = player ?? new Player();
             InitializeComponent();
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/8.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
             FilePaths = filePaths;
-            MainWindow.Player.SongChanged += Player_SongChanged;
+            player.SongChanged += Player_SongChanged;
             InitFields();
         }
 
@@ -105,9 +108,9 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
                 track.EmbeddedPictures.Clear();
                 foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
-                track.Save();
-                DatabaseUtils.Remove(path);
-                DatabaseUtils.Import(path);
+                track.Save(); // TODO: do something about these
+                //DatabaseUtils.Remove(path);
+                //DatabaseUtils.Import(path);
             }
         }
 
@@ -117,7 +120,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
             foreach (string path in FilePaths)
             {
-                if (path != MainWindow.Player.FilePath) continue; // We're good
+                if (path != player.FilePath) continue; // We're good
                 else
                 {
                     filePathsToSaveInBackground.AddRange(FilePaths); // SongChanged event handler will handle this
@@ -208,7 +211,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             {
                 foreach (string path in filePathsToSaveInBackground)
                 {
-                    if (path == MainWindow.Player.FilePath) break; // still listening to files that can't be properly saved
+                    if (path == player.FilePath) break; // still listening to files that can't be properly saved
                 }
                 SaveChanges(filePathsToSaveInBackground);
                 filePathsToSaveInBackground.Clear();
@@ -239,7 +242,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             }
             else
             {
-                MainWindow.Player.SongChanged -= Player_SongChanged;
+                player.SongChanged -= Player_SongChanged;
             }
         }
 
@@ -328,7 +331,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            new TimedLyricsEditor(MainWindow.Player).Show();
+            new TimedLyricsEditor(player).Show();
         }
     }
 }

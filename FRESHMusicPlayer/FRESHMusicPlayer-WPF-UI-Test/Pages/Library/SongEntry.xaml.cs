@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
+using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Handlers;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -16,8 +18,15 @@ namespace FRESHMusicPlayer.Pages.Library
     {
         public string FilePath;
         public string Title;
-        public SongEntry(string filePath, string artist, string album, string title)
+
+        private Player player;
+        private NotificationHandler notificationHandler;
+        private DatabaseHandlerX library;
+        public SongEntry(string filePath, string artist, string album, string title, Player player, NotificationHandler notificationHandler, DatabaseHandlerX library)
         {
+            this.player = player;
+            this.notificationHandler = notificationHandler;
+            this.library = library;
             InitializeComponent();
             FilePath = filePath;
             ArtistAlbumLabel.Text = $"{artist} ・ {album}";
@@ -39,19 +48,19 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
-                if (MainWindow.Player.Playing) MainWindow.Player.ClearQueue();
-                MainWindow.Player.AddQueue(FilePath);
-                MainWindow.Player.PlayMusic();
+                if (player.Playing) player.ClearQueue();
+                player.AddQueue(FilePath);
+                player.PlayMusic();
             }
             else
             {
-                MainWindow.NotificationHandler.Add(new Handlers.Notifications.Notification
+                notificationHandler.Add(new Handlers.Notifications.Notification
                 {
                     ContentText = string.Format(Properties.Resources.NOTIFICATION_FILEGONE, FilePath),
                     ButtonText = "Remove from library",
                     OnButtonClicked = () =>
                     {
-                        DatabaseUtils.Remove(FilePath);
+                        library.Remove(FilePath);
                         ((ListBox)Parent).Items.Remove(this);
                         return true;
                     }
@@ -59,11 +68,11 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        private void QueueButtonClick(object sender, MouseButtonEventArgs e) => MainWindow.Player.AddQueue(FilePath);
+        private void QueueButtonClick(object sender, MouseButtonEventArgs e) => player.AddQueue(FilePath);
 
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e)
         {
-            DatabaseUtils.Remove(FilePath);
+            library.Remove(FilePath);
             ((ListBox)Parent).Items.Remove(this);
         }
 
@@ -71,9 +80,9 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             if (e.ClickCount == 2)
             {
-                if (MainWindow.Player.Playing) MainWindow.Player.ClearQueue();
-                MainWindow.Player.AddQueue(FilePath);
-                MainWindow.Player.PlayMusic();
+                if (player.Playing) player.ClearQueue();
+                player.AddQueue(FilePath);
+                player.PlayMusic();
             }
         }
 
@@ -85,10 +94,10 @@ namespace FRESHMusicPlayer.Pages.Library
         private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             MiscContext.Items.Clear();
-            var playlists = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var playlists = library.Library.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             foreach (var playlist in playlists)
             {
-                var tracks = DatabaseUtils.ReadTracksForPlaylist(playlist.Name);
+                var tracks = library.ReadTracksForPlaylist(playlist.Name);
                 var trackIsInPlaylist = tracks.Where(x => x.Path == FilePath).Count() != 0;
                 var item = new MenuItem
                 {
@@ -98,8 +107,8 @@ namespace FRESHMusicPlayer.Pages.Library
                 item.IsChecked = trackIsInPlaylist;
                 item.Click += (object sende, RoutedEventArgs ee) =>
                 {
-                    if (trackIsInPlaylist) DatabaseUtils.RemoveTrackFromPlaylist((string)item.Header, FilePath);
-                    else DatabaseUtils.AddTrackToPlaylist((string)item.Header, FilePath);
+                    if (trackIsInPlaylist) library.RemoveTrackFromPlaylist((string)item.Header, FilePath);
+                    else library.AddTrackToPlaylist((string)item.Header, FilePath);
                 };
                 MiscContext.Items.Add(item);
             }
@@ -108,7 +117,7 @@ namespace FRESHMusicPlayer.Pages.Library
             otheritem.Header = Properties.Resources.PLAYLISTMANAGEMENT;
             otheritem.Click += (object send, RoutedEventArgs eee) =>
             {
-                var management = new PlaylistManagement(FilePath);
+                var management = new PlaylistManagement(library, notificationHandler, FilePath);
                 management.ShowDialog();
             };
             MiscContext.Items.Add(otheritem);

@@ -1,5 +1,6 @@
 ﻿using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
+using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using System;
 using System.Diagnostics;
@@ -22,8 +23,12 @@ namespace FRESHMusicPlayer.Pages
         private bool pageInitialized = false;
         private readonly ConfigurationFile workingConfig = new ConfigurationFile { Language = App.Config.Language, Theme = App.Config.Theme }; // Copy of config that's compared to the actual config file to set AppRestartNeeded.
 
-        public SettingsPage()
+        private readonly DatabaseHandlerX library;
+        private readonly NotificationHandler notificationHandler;
+        public SettingsPage(DatabaseHandlerX library, NotificationHandler notificationHandler)
         {
+            this.library = library;
+            this.notificationHandler = notificationHandler;
             InitializeComponent();
             InitFields();
         }
@@ -195,7 +200,7 @@ namespace FRESHMusicPlayer.Pages
             }
         }
 
-        private void Maintanence_ImportButton_Click(object sender, RoutedEventArgs e) => DatabaseUtils.Convertv1Tov2();
+        private void Maintanence_ImportButton_Click(object sender, RoutedEventArgs e) => library.Convertv1Tov2();
 
         private void Maintanence_ResetButton_Click(object sender, RoutedEventArgs e)
         {
@@ -208,7 +213,7 @@ namespace FRESHMusicPlayer.Pages
                                           "FRESHMusicPlayer",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Warning, MessageBoxResult.No);
-            if (result == MessageBoxResult.Yes) DatabaseUtils.Nuke();
+            if (result == MessageBoxResult.Yes) library.Nuke();
         }
 
         private void RestartNowButton_Click(object sender, RoutedEventArgs e)
@@ -219,7 +224,7 @@ namespace FRESHMusicPlayer.Pages
 
         private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
         {
-            await UpdateHandler.UpdateApp(forceUpdate:true);
+            await new UpdateHandler(notificationHandler).UpdateApp(forceUpdate:true);
             InitFields();
         }
 
@@ -227,9 +232,9 @@ namespace FRESHMusicPlayer.Pages
         {
             await Task.Run(() =>
             {
-                var tracks = DatabaseUtils.Read().Select(x => x.Path).Distinct();
-                Dispatcher.Invoke(() => DatabaseUtils.Nuke(false));
-                DatabaseUtils.Import(tracks.ToArray());
+                var tracks = library.Read().Select(x => x.Path).Distinct();
+                Dispatcher.Invoke(() => library.Nuke(false));
+                library.Import(tracks.ToArray());
             });
         }
 

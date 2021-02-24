@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Handlers\Configuration\ConfigurationHandler.cs" />
     <Compile Include="Handlers\Configuration\ConfigurationFile.cs" />
+    <Compile Include="Handlers\DatabaseHandlerX.cs" />
     <Compile Include="Handlers\Notifications\Notification.cs" />
     <Compile Include="Handlers\PlaytimeTrackingHandler.cs" />
     <Compile Include="Handlers\UpdateHandler.cs" />

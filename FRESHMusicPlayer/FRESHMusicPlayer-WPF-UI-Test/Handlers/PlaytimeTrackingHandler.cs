@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Utilities;
+﻿using ATL;
+using FRESHMusicPlayer.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace FRESHMusicPlayer.Handlers
         public string FilePath;
 
         private readonly Player player;
-        public PlaytimeTrackingHandler(Player player)
+        private readonly Track currentTrack;
+        public PlaytimeTrackingHandler(Player player, Track currentTrack)
         {
             FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Tracking");
             TrackingFile = Read();
             this.player = player;
+            this.currentTrack = currentTrack;
 
             player.SongChanged += Player_SongChanged;
         }
@@ -36,11 +39,11 @@ namespace FRESHMusicPlayer.Handlers
                     Track = new DatabaseTrack
                     {
                         Path = player.FilePath,
-                        Artist = MainWindow.CurrentTrack.Artist,
-                        Title = MainWindow.CurrentTrack.Title,
-                        Album = MainWindow.CurrentTrack.Album,
-                        TrackNumber = MainWindow.CurrentTrack.TrackNumber,
-                        Length = MainWindow.CurrentTrack.Duration
+                        Artist = currentTrack.Artist,
+                        Title = currentTrack.Title,
+                        Album = currentTrack.Album,
+                        TrackNumber = currentTrack.TrackNumber,
+                        Length = currentTrack.Duration
                     }
                 };
                 TrackingFile.Entries.Add(trackingEntry);

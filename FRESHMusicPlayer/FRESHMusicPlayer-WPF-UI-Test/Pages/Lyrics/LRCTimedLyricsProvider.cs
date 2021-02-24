@@ -7,7 +7,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
     public class LRCTimedLyricsProvider : ITimedLyricsProvider
     {
         public Dictionary<TimeSpan, string> Lines { get; set; } = new Dictionary<TimeSpan, string>();
-        public LRCTimedLyricsProvider() => Parse(MainWindow.Player.FilePath);
+        public LRCTimedLyricsProvider(string filePath) => Parse(filePath);
         private void Parse(string path)
         {
             var filetoRead = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + ".lrc");

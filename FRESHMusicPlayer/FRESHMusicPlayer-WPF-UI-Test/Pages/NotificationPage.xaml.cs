@@ -11,9 +11,11 @@ namespace FRESHMusicPlayer.Pages
     /// </summary>
     public partial class NotificationPage : Page
     {
-        public NotificationPage()
+        private readonly NotificationHandler notificationHandler;
+        public NotificationPage(NotificationHandler notificationHandler)
         {
-            MainWindow.NotificationHandler.NotificationInvalidate += InvalidateNotifications;
+            this.notificationHandler = notificationHandler;
+            notificationHandler.NotificationInvalidate += InvalidateNotifications;
             InitializeComponent();
             ShowNotifications();
             KeepAlive = false;
@@ -23,10 +25,10 @@ namespace FRESHMusicPlayer.Pages
         private void ShowNotifications()
         {
             NotificationList.Items.Clear();
-            foreach (Notification box in MainWindow.NotificationHandler.Notifications)
+            foreach (Notification box in notificationHandler.Notifications)
             {
                 box.Read = true;
-                NotificationList.Items.Add(new NotificationBox(box));
+                NotificationList.Items.Add(new NotificationBox(box, notificationHandler));
             }
             if (NotificationList.Items.Count == 0) (Application.Current.MainWindow as MainWindow)?.HideAuxilliaryPane();
         }
@@ -34,12 +36,12 @@ namespace FRESHMusicPlayer.Pages
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             NotificationList.Items.Clear();
-            MainWindow.NotificationHandler.NotificationInvalidate -= InvalidateNotifications;
+            notificationHandler.NotificationInvalidate -= InvalidateNotifications;
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.NotificationHandler.ClearAll();
+            notificationHandler.ClearAll();
         }
     }
 }

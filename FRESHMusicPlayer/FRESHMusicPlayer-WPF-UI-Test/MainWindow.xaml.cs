@@ -4,6 +4,9 @@ using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Pages;
+using FRESHMusicPlayer.Pages.Library;
+using FRESHMusicPlayer.Pages.Lyrics;
 using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;
@@ -50,14 +53,14 @@ namespace FRESHMusicPlayer
     public partial class MainWindow : Window
     {
         WinForms.Timer progressTimer;
-        public static Menu SelectedMenu = Menu.Tracks;
-        public static AuxiliaryPane SelectedAuxiliaryPane = AuxiliaryPane.None;
-        public static Player Player = new Player { CurrentVolume = App.Config.Volume};
-        public static NotificationHandler NotificationHandler = new NotificationHandler();
-        public static bool MiniPlayerMode = false;
-        public static EventHandler<string> TabChanged;
-        public static LiteDatabase Libraryv2;
-        public static Track CurrentTrack;
+        public Menu SelectedMenu = Menu.Tracks;
+        public AuxiliaryPane SelectedAuxiliaryPane = AuxiliaryPane.None;
+        public Player Player = new Player { CurrentVolume = App.Config.Volume};
+        public NotificationHandler NotificationHandler = new NotificationHandler();
+        public bool MiniPlayerMode = false;
+        public EventHandler<string> TabChanged;
+        public DatabaseHandlerX Library;
+        public Track CurrentTrack;
 
         public SystemMediaTransportControls Smtc;
         public PlaytimeTrackingHandler TrackingHandler;
@@ -74,9 +77,11 @@ namespace FRESHMusicPlayer
                 Interval = 1000
             };
             progressTimer.Tick += ProgressTimer_Tick;
+            LiteDatabase library;
             try
             {
-                Libraryv2 = new LiteDatabase(Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+                library = new LiteDatabase(Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+                Library = new DatabaseHandlerX(library, NotificationHandler);
             }
             catch
             {
@@ -88,7 +93,8 @@ namespace FRESHMusicPlayer
                     {
                         try
                         {
-                            Libraryv2 = new LiteDatabase(Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+                            library = new LiteDatabase(Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
+                            Library = new DatabaseHandlerX(library, NotificationHandler);
                             TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Visible;
                             SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Visible;
                             return true;
@@ -105,6 +111,7 @@ namespace FRESHMusicPlayer
                 TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Collapsed;
                 SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Collapsed;
             }
+            
             if (initialFile != null)
             {
                 Player.AddQueue(initialFile);
@@ -122,7 +129,7 @@ namespace FRESHMusicPlayer
             sb.Children.Add(doubleAnimation);
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
-            await UpdateHandler.UpdateApp();
+            await new UpdateHandler(NotificationHandler).UpdateApp();
             if (!Player.Playing) HandlePersistence();
         }
         private void Window_Closed(object sender, EventArgs e)
@@ -131,7 +138,7 @@ namespace FRESHMusicPlayer
             App.Config.CurrentMenu = SelectedMenu;
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
-            Libraryv2?.Dispose();
+            Library.Library?.Dispose();
             WritePersistence();
             Application.Current.Shutdown();
         }
@@ -250,26 +257,25 @@ namespace FRESHMusicPlayer
                 return;
             }
             if (SelectedAuxiliaryPane != AuxiliaryPane.None) HideAuxilliaryPane(false);
-            string uri;
             switch (pane)
             {
                 case AuxiliaryPane.Settings:
-                    uri = "/Pages/Settings/SettingsPage.xaml";
+                    RightFrame.Navigate(new SettingsPage(Library, NotificationHandler));
                     break;
                 case AuxiliaryPane.QueueManagement:
-                    uri = "/Pages/QueueManagement/QueueManagementPage.xaml";
+                    RightFrame.Navigate(new QueueManagement(Player, Library, NotificationHandler));
                     break;
                 case AuxiliaryPane.Search:
-                    uri = "/Pages/Library/SearchPage.xaml";
+                    RightFrame.Navigate(new SearchPage(Player, Library, NotificationHandler));
                     break;
                 case AuxiliaryPane.Notifications:
-                    uri = "/Pages/NotificationPage.xaml";
+                    RightFrame.Navigate(new NotificationPage(NotificationHandler));
                     break;
                 case AuxiliaryPane.TrackInfo:
-                    uri = "/Pages/TrackInfoPage.xaml";
+                    RightFrame.Navigate(new TrackInfoPage(Player, CurrentTrack));
                     break;
                 case AuxiliaryPane.Lyrics:
-                    uri = "/Pages/Lyrics/LyricsPage.xaml";
+                    RightFrame.Navigate(new LyricsPage(Player, CurrentTrack));
                     break;
                 default:
                     return;
@@ -278,7 +284,6 @@ namespace FRESHMusicPlayer
             RightFrame.Visibility = Visibility.Visible;
             var sb = InterfaceUtils.GetDoubleAnimation(0, width, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
             sb.Begin(RightFrame);
-            RightFrame.Source = new Uri(uri, UriKind.Relative);
             SelectedAuxiliaryPane = pane;
             RightFrame.NavigationService.RemoveBackEntry();
         }
@@ -298,7 +303,7 @@ namespace FRESHMusicPlayer
                 VolumeBar.Value = App.Config.Volume;
                 ChangeTabs(App.Config.CurrentMenu);
             }
-            if (App.Config.PlaybackTracking) TrackingHandler = new PlaytimeTrackingHandler(Player);
+            if (App.Config.PlaybackTracking) TrackingHandler = new PlaytimeTrackingHandler(Player, CurrentTrack);
             else if (TrackingHandler != null)
             {
                 TrackingHandler?.Close();
@@ -377,23 +382,23 @@ namespace FRESHMusicPlayer
             switch (SelectedMenu)
             {
                 case Menu.Tracks:
-                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
                     tabLabel = TracksTab;
                     break;
                 case Menu.Artists:
-                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
                     tabLabel = ArtistsTab;
                     break;
                 case Menu.Albums:
-                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
                     tabLabel = AlbumsTab;
                     break;
                 case Menu.Playlists:
-                    ContentFrame.Source = new Uri("/Pages/Library/LibraryPage.xaml", UriKind.Relative);
+                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
                     tabLabel = PlaylistsTab;
                     break;
                 case Menu.Import:
-                    ContentFrame.Source = new Uri("/Pages/ImportPage.xaml", UriKind.Relative);
+                    ContentFrame.Navigate(new ImportPage(Player, Library, NotificationHandler));
                     tabLabel = ImportTab;
                     break;
                 default:
@@ -534,7 +539,7 @@ namespace FRESHMusicPlayer
             var tracks = new List<string>();
             if (Player.Playing) tracks.Add(Player.FilePath); // if playing, edit the file the user is playing
             else tracks = Player.Queue;
-            var tagEditor = new TagEditor(tracks);
+            var tagEditor = new TagEditor(tracks, Player);
             tagEditor.Show();
         }
         private void TrackContentPlaylistManagement_Click(object sender, RoutedEventArgs e)
@@ -542,7 +547,7 @@ namespace FRESHMusicPlayer
             string track;
             if (Player.Playing) track = Player.FilePath;
             else track = null;
-            var playlistManagement = new PlaylistManagement(track);
+            var playlistManagement = new PlaylistManagement(Library, NotificationHandler, track);
             playlistManagement.Show();
         }
         private void TrackContextMiniplayer_Click(object sender, RoutedEventArgs e)
@@ -676,7 +681,7 @@ namespace FRESHMusicPlayer
         private void ControlsBox_Drop(object sender, DragEventArgs e)
         {
             Player.ClearQueue();
-            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), import: false);
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), Player, Library, import: false);
             Player.PlayMusic();
         }
 
