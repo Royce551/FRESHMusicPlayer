@@ -55,7 +55,7 @@ namespace FRESHMusicPlayer
         WinForms.Timer progressTimer;
         public Menu SelectedMenu = Menu.Tracks;
         public AuxiliaryPane SelectedAuxiliaryPane = AuxiliaryPane.None;
-        public Player Player = new Player { CurrentVolume = App.Config.Volume};
+        public Player Player;
         public NotificationHandler NotificationHandler = new NotificationHandler();
         public bool MiniPlayerMode = false;
         //public EventHandler<string> TabChanged;
@@ -65,8 +65,9 @@ namespace FRESHMusicPlayer
         public SystemMediaTransportControls Smtc;
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
-        public MainWindow(string[] initialFile = null)
+        public MainWindow(Player player, string[] initialFile = null)
         {
+            Player = player;
             InitializeComponent();
             Player.SongChanged += Player_SongChanged;
             Player.SongStopped += Player_SongStopped;

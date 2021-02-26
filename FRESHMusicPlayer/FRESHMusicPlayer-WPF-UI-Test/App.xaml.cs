@@ -19,25 +19,23 @@ namespace FRESHMusicPlayer
     public partial class App : Application
     {
         public static ConfigurationFile Config;
+        private Window currentWindow;
+        private Player player;
         void App_Startup(object sender, StartupEventArgs e )
         {
             Config = ConfigurationHandler.Read();
+            player = new Player { CurrentVolume = Config.Volume };
             if (Config.Language != "en") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
-            MainWindow window;
+
             if (e.Args.Length > 0)
             {
-                if (e.Args.Contains("--tageditor"))
-                {
-                    var paths = e.Args.Except(new string[]{"--tageditor"});
-                    var tagEditor = new TagEditor(paths.ToList());
-                    tagEditor.Show();
-                    return;
-                }
-                window = new MainWindow(e.Args.Where(x => File.Exists(x)).ToArray());
+                var args = e.Args.Where(x => x.Contains('.'));
+                if (e.Args.Contains("--tageditor")) currentWindow = new TagEditor(args.ToList(), player);
+                else currentWindow = new MainWindow(player, args.ToArray());
             }
-            else window = new MainWindow();
-            window.Show();
+            else currentWindow = new MainWindow(player);
+            currentWindow.Show();
         }
         public static Skin CurrentSkin { get; set; } = Skin.Dark;
         public void ChangeSkin(Skin newSkin)
