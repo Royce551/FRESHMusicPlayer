@@ -25,7 +25,7 @@ namespace FRESHMusicPlayer
         {
             Config = ConfigurationHandler.Read();
             player = new Player { CurrentVolume = Config.Volume };
-            if (Config.Language != "en") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
+            if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
 
             if (e.Args.Length > 0)

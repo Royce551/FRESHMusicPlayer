@@ -9,7 +9,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
     }
     public class ConfigurationFile
     {
-        public string Language { get; set; } = "en";
+        public string Language { get; set; } = "automatic";
         public bool ShowTimeInWindow { get; set; } = false;
         public bool ShowPanesAsWindow { get; set; } = false;
         public bool IntegrateDiscordRPC { get; set; } = false;

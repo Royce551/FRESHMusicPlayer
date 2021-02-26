@@ -52,7 +52,8 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_LANGUAGE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="General_LanguageCombo_SelectionChanged">
-                        <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_AUTO}"/> 
+                        <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_AUTO}"/>
+                        <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="German"/>
                         <ComboBoxItem Content="Vietnamese"/>
                         <ComboBoxItem Content="Portuguese"/>

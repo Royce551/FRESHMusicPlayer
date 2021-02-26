@@ -40,6 +40,9 @@ namespace FRESHMusicPlayer.Pages
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             switch (App.Config.Language) // TODO: investigate making this less ugly
             {
+                case "automatic":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Automatic;
+                    break;
                 case "en":
                     General_LanguageCombo.SelectedIndex = (int)LanguageCombo.English;
                     break;
@@ -140,6 +143,9 @@ namespace FRESHMusicPlayer.Pages
             {
                 switch (General_LanguageCombo.SelectedIndex)
                 {
+                    case (int)LanguageCombo.Automatic:
+                        App.Config.Language = "automatic";
+                        break;
                     case (int)LanguageCombo.English:
                         App.Config.Language = "en";
                         break;
@@ -242,6 +248,7 @@ namespace FRESHMusicPlayer.Pages
     }
     public enum LanguageCombo
     {
+        Automatic,
         English,
         German,
         Vietnamese,
