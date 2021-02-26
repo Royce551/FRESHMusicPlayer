@@ -17,16 +17,14 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         public ITimedLyricsProvider TimedLyrics;
         public WinForms.Timer Timer;
 
-        private readonly Player player;
-        private readonly Track currentTrack;
-        public LyricsPage(Player player, Track currentTrack)
+        private readonly MainWindow window;
+        public LyricsPage(MainWindow window)
         {
-            this.player = player;
-            this.currentTrack = currentTrack;
+            this.window = window;
             Timer = new WinForms.Timer { Interval = 100 };
             Timer.Tick += Timer_Tick;
-            player.SongChanged += Player_SongChanged;
-            player.SongStopped += Player_SongStopped;
+            window.Player.SongChanged += Player_SongChanged;
+            window.Player.SongStopped += Player_SongStopped;
             InitializeComponent();
             ShowCoverArt();
             HandleLyrics();
@@ -34,9 +32,9 @@ namespace FRESHMusicPlayer.Pages.Lyrics
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (!player.Playing) return;
-            if (player.CurrentBackend.CurrentTime < TimedLyrics.Lines.Keys.First()) return;
-            var currentLines = TimedLyrics.Lines.Where(x => x.Key < player.CurrentBackend.CurrentTime).ToList();
+            if (!window.Player.Playing) return;
+            if (window.Player.CurrentBackend.CurrentTime < TimedLyrics.Lines.Keys.First()) return;
+            var currentLines = TimedLyrics.Lines.Where(x => x.Key < window.Player.CurrentBackend.CurrentTime).ToList();
             if (currentLines.Count != 0)
             {
                 var closest = currentLines.Last();
@@ -46,7 +44,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
 
         public void ShowCoverArt()
         {
-            var track = currentTrack;
+            var track = window.CurrentTrack;
             if (track is null) return;
             if (track.EmbeddedPictures.Count == 0)
             {
@@ -62,12 +60,12 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         public void HandleLyrics()
         {
             LyricsBox.Text = string.Empty;
-            var track = currentTrack;
+            var track = window.CurrentTrack;
             if (track is null) return;
             // LRC file present
-            if (File.Exists(Path.Combine(Path.GetDirectoryName(player.FilePath), Path.GetFileNameWithoutExtension(player.FilePath) + ".lrc")))
+            if (File.Exists(Path.Combine(Path.GetDirectoryName(window.Player.FilePath), Path.GetFileNameWithoutExtension(window.Player.FilePath) + ".lrc")))
             {
-                TimedLyrics = new LRCTimedLyricsProvider(player.FilePath);
+                TimedLyrics = new LRCTimedLyricsProvider(window.Player.FilePath);
                 Timer.Start();
                 ScrollViewer.SetVerticalScrollBarVisibility(LyricsScrollViewer, ScrollBarVisibility.Hidden);
             }
@@ -96,8 +94,8 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            player.SongChanged -= Player_SongChanged;
-            player.SongStopped -= Player_SongStopped;
+            window.Player.SongChanged -= Player_SongChanged;
+            window.Player.SongStopped -= Player_SongStopped;
         }
     }
 }

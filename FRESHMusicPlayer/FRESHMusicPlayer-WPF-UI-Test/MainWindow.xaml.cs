@@ -58,7 +58,7 @@ namespace FRESHMusicPlayer
         public Player Player = new Player { CurrentVolume = App.Config.Volume};
         public NotificationHandler NotificationHandler = new NotificationHandler();
         public bool MiniPlayerMode = false;
-        public EventHandler<string> TabChanged;
+        //public EventHandler<string> TabChanged;
         public DatabaseHandlerX Library;
         public Track CurrentTrack;
 
@@ -129,8 +129,8 @@ namespace FRESHMusicPlayer
             sb.Children.Add(doubleAnimation);
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
-            await new UpdateHandler(NotificationHandler).UpdateApp();
             if (!Player.Playing) HandlePersistence();
+            await new UpdateHandler(NotificationHandler).UpdateApp();
         }
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -260,22 +260,22 @@ namespace FRESHMusicPlayer
             switch (pane)
             {
                 case AuxiliaryPane.Settings:
-                    RightFrame.Navigate(new SettingsPage(Library, NotificationHandler));
+                    RightFrame.Navigate(new SettingsPage(this));
                     break;
                 case AuxiliaryPane.QueueManagement:
-                    RightFrame.Navigate(new QueueManagement(Player, Library, NotificationHandler));
+                    RightFrame.Navigate(new QueueManagement(this));
                     break;
                 case AuxiliaryPane.Search:
-                    RightFrame.Navigate(new SearchPage(Player, Library, NotificationHandler));
+                    RightFrame.Navigate(new SearchPage(this));
                     break;
                 case AuxiliaryPane.Notifications:
-                    RightFrame.Navigate(new NotificationPage(NotificationHandler));
+                    RightFrame.Navigate(new NotificationPage(this));
                     break;
                 case AuxiliaryPane.TrackInfo:
-                    RightFrame.Navigate(new TrackInfoPage(Player, CurrentTrack));
+                    RightFrame.Navigate(new TrackInfoPage(this));
                     break;
                 case AuxiliaryPane.Lyrics:
-                    RightFrame.Navigate(new LyricsPage(Player, CurrentTrack));
+                    RightFrame.Navigate(new LyricsPage(this));
                     break;
                 default:
                     return;
@@ -382,23 +382,23 @@ namespace FRESHMusicPlayer
             switch (SelectedMenu)
             {
                 case Menu.Tracks:
-                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
+                    ContentFrame.Navigate(new LibraryPage(this, search));
                     tabLabel = TracksTab;
                     break;
                 case Menu.Artists:
-                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
+                    ContentFrame.Navigate(new LibraryPage(this, search));
                     tabLabel = ArtistsTab;
                     break;
                 case Menu.Albums:
-                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
+                    ContentFrame.Navigate(new LibraryPage(this, search));
                     tabLabel = AlbumsTab;
                     break;
                 case Menu.Playlists:
-                    ContentFrame.Navigate(new LibraryPage(Player, SelectedMenu, Library, NotificationHandler));
+                    ContentFrame.Navigate(new LibraryPage(this, search));
                     tabLabel = PlaylistsTab;
                     break;
                 case Menu.Import:
-                    ContentFrame.Navigate(new ImportPage(Player, Library, NotificationHandler));
+                    ContentFrame.Navigate(new ImportPage(this));
                     tabLabel = ImportTab;
                     break;
                 default:
@@ -406,7 +406,7 @@ namespace FRESHMusicPlayer
                     break;
             }
             ContentFrame.NavigationService.RemoveBackEntry();
-            TabChanged?.Invoke(null, search);
+            //TabChanged?.Invoke(null, search);
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
         }
