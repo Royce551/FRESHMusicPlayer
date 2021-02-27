@@ -184,7 +184,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border  Background="Gray" Height="3"/>
+                    <Border  Background="{StaticResource SecondaryColor}" Height="3"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

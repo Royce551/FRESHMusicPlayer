@@ -13,6 +13,10 @@ namespace FRESHMusicPlayer
     {
         Light, Dark, Classic
     }
+    public enum PrimaryWindowType
+    {
+        Player, Miniplayer, TagEditor
+    }
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -51,6 +55,25 @@ namespace FRESHMusicPlayer
                     dict.Source = dict.Source;
             }
         }
+        public void ChangePrimaryWindow(PrimaryWindowType windowType)
+        {
+            Window newWindow;
+            switch (windowType)
+            {
+                case PrimaryWindowType.Player:
+                    newWindow = new MainWindow(player);
+                    break;
+                case PrimaryWindowType.TagEditor:
+                    newWindow = new TagEditor(new System.Collections.Generic.List<string>(), player);
+                    break;
+                default:
+                    throw new Exception("fsdfs");
+            }
+            newWindow.Show();
+            currentWindow.Close();
+
+            currentWindow = newWindow;
+        }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
@@ -65,7 +88,8 @@ namespace FRESHMusicPlayer
             try
             {
                 var box = new CriticalErrorBox(e, logPath, fileName);
-                box.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                box.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                box.Owner = currentWindow;
                 box.ShowDialog();
             }
             catch

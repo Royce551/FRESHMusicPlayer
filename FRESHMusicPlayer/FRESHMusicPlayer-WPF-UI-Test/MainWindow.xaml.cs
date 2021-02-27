@@ -141,7 +141,10 @@ namespace FRESHMusicPlayer
             ConfigurationHandler.Write(App.Config);
             Library.Library?.Dispose();
             WritePersistence();
-            Application.Current.Shutdown();
+
+            Player.SongChanged -= Player_SongChanged;
+            Player.SongStopped -= Player_SongStopped;
+            Player.SongException -= Player_SongException;
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
@@ -663,7 +666,8 @@ namespace FRESHMusicPlayer
                     if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.RelativeOrAbsolute);
                     break;
                 case Key.F1:
-                    GC.Collect(2);
+                    ((App)Application.Current).ChangePrimaryWindow(PrimaryWindowType.TagEditor);
+                    //GC.Collect(2);
                     break;
                 case Key.F2:
                     NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
