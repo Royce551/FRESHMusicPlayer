@@ -12,20 +12,18 @@ namespace FRESHMusicPlayer.Handlers
         public TrackingFile TrackingFile;
         public string FilePath;
 
-        private readonly Player player;
-        private readonly Track currentTrack;
-        public PlaytimeTrackingHandler(Player player, Track currentTrack)
+        private readonly MainWindow window;
+        public PlaytimeTrackingHandler(MainWindow window)
         {
             FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Tracking");
             TrackingFile = Read();
-            this.player = player;
-            this.currentTrack = currentTrack;
+            this.window = window;
 
-            player.SongChanged += Player_SongChanged;
+            window.Player.SongChanged += Player_SongChanged;
         }
         public void Close()
         {
-            player.SongChanged -= Player_SongChanged;
+            window.Player.SongChanged -= Player_SongChanged;
             Write(TrackingFile);
         }
 
@@ -38,12 +36,12 @@ namespace FRESHMusicPlayer.Handlers
                     DatePlayed = DateTime.Now,
                     Track = new DatabaseTrack
                     {
-                        Path = player.FilePath,
-                        Artist = currentTrack.Artist,
-                        Title = currentTrack.Title,
-                        Album = currentTrack.Album,
-                        TrackNumber = currentTrack.TrackNumber,
-                        Length = currentTrack.Duration
+                        Path = window.Player.FilePath,
+                        Artist = window.CurrentTrack.Artist,
+                        Title = window.CurrentTrack.Title,
+                        Album = window.CurrentTrack.Album,
+                        TrackNumber = window.CurrentTrack.TrackNumber,
+                        Length = window.CurrentTrack.Duration
                     }
                 };
                 TrackingFile.Entries.Add(trackingEntry);

@@ -1,4 +1,5 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Forms;
 using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
@@ -140,11 +141,8 @@ namespace FRESHMusicPlayer
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Library.Library?.Dispose();
+            progressTimer.Dispose();
             WritePersistence();
-
-            Player.SongChanged -= Player_SongChanged;
-            Player.SongStopped -= Player_SongStopped;
-            Player.SongException -= Player_SongException;
         }
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
@@ -307,7 +305,7 @@ namespace FRESHMusicPlayer
                 VolumeBar.Value = App.Config.Volume;
                 ChangeTabs(App.Config.CurrentMenu);
             }
-            if (App.Config.PlaybackTracking) TrackingHandler = new PlaytimeTrackingHandler(Player, CurrentTrack);
+            if (App.Config.PlaybackTracking) TrackingHandler = new PlaytimeTrackingHandler(this);
             else if (TrackingHandler != null)
             {
                 TrackingHandler?.Close();
@@ -470,7 +468,6 @@ namespace FRESHMusicPlayer
         }
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
-            MessageBox.Show(Environment.CurrentDirectory);
             NotificationHandler.Add(new Notification
             {
                 ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
@@ -666,7 +663,15 @@ namespace FRESHMusicPlayer
                     if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.RelativeOrAbsolute);
                     break;
                 case Key.F1:
-                    ((App)Application.Current).ChangePrimaryWindow(PrimaryWindowType.TagEditor);
+                    Hide();
+                    progressTimer.Stop();
+                    var miniPlayer = new MiniPlayer(this);
+                    miniPlayer.Owner = this;
+                    miniPlayer.ShowDialog();
+                    Top = miniPlayer.Top;
+                    Left = miniPlayer.Left;
+                    Show();
+                    if (Player.Playing) progressTimer.Start();
                     //GC.Collect(2);
                     break;
                 case Key.F2:

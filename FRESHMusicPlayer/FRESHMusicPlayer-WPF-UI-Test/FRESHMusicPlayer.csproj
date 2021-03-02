@@ -99,6 +99,9 @@
     <Compile Include="Forms\CriticalErrorBox.xaml.cs">
       <DependentUpon>CriticalErrorBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MiniPlayer.xaml.cs">
+      <DependentUpon>MiniPlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Playlists\PlaylistEntry.xaml.cs">
       <DependentUpon>PlaylistEntry.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
     <Compile Include="Utilities\InterfaceUtils.cs" />
     <Compile Include="Utilities\WindowsInteropUtils.cs" />
     <Page Include="Forms\CriticalErrorBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\MiniPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

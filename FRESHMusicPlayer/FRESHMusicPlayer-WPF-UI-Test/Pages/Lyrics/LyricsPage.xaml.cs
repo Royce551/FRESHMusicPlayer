@@ -96,6 +96,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         {
             window.Player.SongChanged -= Player_SongChanged;
             window.Player.SongStopped -= Player_SongStopped;
+            Timer.Dispose();
         }
     }
 }

@@ -7,20 +7,6 @@
         mc:Ignorable="d" WindowStartupLocation="Manual"
         Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
     <Window.Resources>
-        <Storyboard x:Key="SlideIn">
-            <DoubleAnimation
-                        Storyboard.TargetName="RightFrame"
-                        Storyboard.TargetProperty="Width"
-                        From="0" To="235" Duration="0:0:.15"
-                        />
-        </Storyboard>
-        <Storyboard x:Key="SlideOut">
-            <DoubleAnimation
-                        Storyboard.TargetName="RightFrame"
-                        Storyboard.TargetProperty="Width"
-                        To="0" Duration="0:0:.15"
-                        />
-        </Storyboard>
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
             <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Click="TrackContentPlaylistManagement_Click"/>
