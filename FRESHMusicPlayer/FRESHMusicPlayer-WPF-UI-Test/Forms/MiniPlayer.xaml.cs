@@ -23,16 +23,16 @@ namespace FRESHMusicPlayer.Forms
     {
         private WinForms.Timer progressTimer = new WinForms.Timer { Interval = 1000 };
         private readonly MainWindow window;
-        public MiniPlayer(MainWindow window)
+        public MiniPlayer(MainWindow window) // TODO: there's a lot of code copied from the main window here, maybe more stuff could be shared?
         {
             this.window = window;
             InitializeComponent();
             window.Player.SongChanged += Player_SongChanged;
             window.Player.SongStopped += Player_SongStopped;
-            window.Player.SongException += Player_SongException;
             progressTimer.Tick += ProgressTimer_Tick;
             Player_SongChanged(null, EventArgs.Empty); // call our own song changed because a song is probably already playing at this point
             UpdateControlsState();
+            VolumeSlider.Value = window.VolumeBar.Value;
         }
 
         private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
@@ -48,11 +48,7 @@ namespace FRESHMusicPlayer.Forms
             if (!isDragging) ProgressSlider.Value = time.TotalSeconds;
             window.Player.AvoidNextQueue = false;
         }
-        private void Player_SongException(object sender, Handlers.PlaybackExceptionEventArgs e)
-        {
-            
-        }
-
+ 
         private void Player_SongStopped(object sender, EventArgs e)
         {
             ArtistTextBlock.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
@@ -76,7 +72,6 @@ namespace FRESHMusicPlayer.Forms
         {
             window.Player.SongChanged -= Player_SongChanged;
             window.Player.SongStopped -= Player_SongStopped;
-            window.Player.SongException -= Player_SongException;
             progressTimer.Dispose();
             Close();
         }
@@ -85,7 +80,7 @@ namespace FRESHMusicPlayer.Forms
         {
             var fadeIn = InterfaceUtils.GetDoubleAnimation(0f, 1f, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
             fadeIn.Begin(TitlebarDockPanel);
-            var brightener = InterfaceUtils.GetDoubleAnimation(0.7, 1f, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
+            var brightener = InterfaceUtils.GetDoubleAnimation(0.8, 1f, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
             brightener.Begin(BackgroundDockPanel);
 
             ArtistTextBlock.Visibility = TitleTextBlock.Visibility = Visibility.Collapsed;
@@ -96,7 +91,7 @@ namespace FRESHMusicPlayer.Forms
         {
             var fadeOut = InterfaceUtils.GetDoubleAnimation(1f, 0f, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
             fadeOut.Begin(TitlebarDockPanel);
-            var dimmer = InterfaceUtils.GetDoubleAnimation(1f, 0.7, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
+            var dimmer = InterfaceUtils.GetDoubleAnimation(1f, 0.8, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
             dimmer.Begin(BackgroundDockPanel);
 
             ArtistTextBlock.Visibility = TitleTextBlock.Visibility = Visibility.Visible;
@@ -133,5 +128,12 @@ namespace FRESHMusicPlayer.Forms
         }
 
         private void PreviousButtonData_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => window.PreviousTrackMethod();
+
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            window.Player.CurrentVolume = (float)(VolumeSlider.Value / 100);
+            if (window.Player.Playing) window.Player.UpdateSettings();
+            window.VolumeBar.Value = VolumeSlider.Value;
+        }
     }
 }

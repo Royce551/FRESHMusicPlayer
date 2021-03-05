@@ -59,7 +59,6 @@ namespace FRESHMusicPlayer
         public Player Player;
         public NotificationHandler NotificationHandler = new NotificationHandler();
         public bool MiniPlayerMode = false;
-        //public EventHandler<string> TabChanged;
         public DatabaseHandlerX Library;
         public Track CurrentTrack;
 
@@ -120,53 +119,7 @@ namespace FRESHMusicPlayer
                 Player.PlayMusic();
             }
         }
-        private async void Window_SourceInitialized(object sender, EventArgs e)
-        {
-            UpdateIntegrations();
-            ProcessSettings(true);
-            var sb = new Storyboard();
-            var doubleAnimation = new DoubleAnimation(0f, 1f, TimeSpan.FromSeconds(1));
-            doubleAnimation.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut };
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Opacity"));
-            sb.Children.Add(doubleAnimation);
-            sb.Begin(ContentFrame);
-            sb.Begin(MainBar);
-            if (!Player.Playing) HandlePersistence();
-            await new UpdateHandler(NotificationHandler).UpdateApp();
-        }
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            App.Config.Volume = (int)VolumeBar.Value;
-            App.Config.CurrentMenu = SelectedMenu;
-            TrackingHandler?.Close();
-            ConfigurationHandler.Write(App.Config);
-            Library.Library?.Dispose();
-            progressTimer.Dispose();
-            WritePersistence();
-        }
-        private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
-        {
-            switch (args.Button)
-            {
-                case SystemMediaTransportControlsButton.Play:
-                    Dispatcher.Invoke(() => PlayPauseMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Pause:
-                    Dispatcher.Invoke(() => PlayPauseMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Next:
-                    Dispatcher.Invoke(() => NextTrackMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Previous:
-                    Dispatcher.Invoke(() => PreviousTrackMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Stop:
-                    Dispatcher.Invoke(() => StopMethod());
-                    break;
-                default:
-                    break;
-            }
-        }
+
 
         #region Controls
         public void PlayPauseMethod()
@@ -226,6 +179,7 @@ namespace FRESHMusicPlayer
             else PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
         }
         #endregion
+
         #region Logic
         public async void SetMiniPlayerMode(bool mode)
         { 
@@ -375,6 +329,67 @@ namespace FRESHMusicPlayer
                 }
             }
             return null;
+        }
+        public void UpdateIntegrations()
+        {
+            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
+            {
+                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
+                Window window = GetWindow(this);
+                var wih = new WindowInteropHelper(window);
+                IntPtr hWnd = wih.Handle;
+                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
+                Smtc.IsPlayEnabled = true;
+                Smtc.IsPauseEnabled = true;
+                Smtc.IsNextEnabled = true;
+                Smtc.IsStopEnabled = true;
+                Smtc.IsPreviousEnabled = true;
+                Smtc.ButtonPressed += Smtc_ButtonPressed;
+            }
+            else Smtc = null;
+            if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
+            else Player.DisposeRPC();
+        }
+        public void SetIntegrations(MediaPlaybackStatus status)
+        {
+            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
+            {
+                try
+                {
+                    Smtc.PlaybackStatus = status;
+                    var updater = Smtc.DisplayUpdater;
+                    updater.Type = MediaPlaybackType.Music;
+                    updater.MusicProperties.Artist = CurrentTrack.Artist;
+                    updater.MusicProperties.AlbumArtist = CurrentTrack.AlbumArtist;
+                    updater.MusicProperties.Title = CurrentTrack.Title;
+                    updater.Update();
+                }
+                catch
+                {
+                    // TODO: HACK - ignored; the way i'm detecting windows 10 currently does not work
+                }
+            }
+            if (App.Config.IntegrateDiscordRPC)
+            {
+                string activity = string.Empty;
+                string state = string.Empty;
+                switch (status)
+                {
+                    case MediaPlaybackStatus.Playing:
+                        activity = "play";
+                        state = $"by {CurrentTrack.Artist}";
+                        break;
+                    case MediaPlaybackStatus.Paused:
+                        activity = "pause";
+                        state = "Paused";
+                        break;
+                    case MediaPlaybackStatus.Stopped:
+                        activity = "idle";
+                        state = "Idle";
+                        break;
+                }
+                Player.UpdateRPC(activity, state, CurrentTrack.Title);
+            }
         }
         #region Tabs
         private void ChangeTabs(Menu tab, string search = null)
@@ -591,7 +606,7 @@ namespace FRESHMusicPlayer
         private void SearchButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Search, 335);
         private void QueueManagementButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.QueueManagement, 335);
         private void NotificationButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.Notifications);
-        #endregion
+
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
         {
             NotificationCounterLabel.Text = NotificationHandler.Notifications.Count.ToString();
@@ -618,43 +633,42 @@ namespace FRESHMusicPlayer
             }
         }
         #endregion
-
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (!(e.OriginalSource is TextBox || e.OriginalSource is ListBoxItem) || Keyboard.IsKeyDown(Key.LeftCtrl))
-            switch (e.Key)
-            {
-                case Key.Q:
-                    ShowAuxilliaryPane(AuxiliaryPane.Settings, 335);
-                    break;
-                case Key.A:
-                    ChangeTabs(Menu.Tracks);
-                    break;
-                case Key.S:
-                    ChangeTabs(Menu.Artists);
-                    break;
-                case Key.D:
-                    ChangeTabs(Menu.Albums);
-                    break;
-                case Key.F:
-                    ChangeTabs(Menu.Playlists);
-                    break;
-                case Key.G:
-                    ChangeTabs(Menu.Import);
-                    break;
-                case Key.E:
-                    ShowAuxilliaryPane(AuxiliaryPane.Search, 335);
-                    break;
-                case Key.R:
-                    ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
-                    break;
-                case Key.W:
-                    ShowAuxilliaryPane(AuxiliaryPane.QueueManagement, 335);
-                    break;
-                case Key.Space:
-                    PlayPauseMethod();
-                    break;
-            }
+                switch (e.Key)
+                {
+                    case Key.Q:
+                        ShowAuxilliaryPane(AuxiliaryPane.Settings, 335);
+                        break;
+                    case Key.A:
+                        ChangeTabs(Menu.Tracks);
+                        break;
+                    case Key.S:
+                        ChangeTabs(Menu.Artists);
+                        break;
+                    case Key.D:
+                        ChangeTabs(Menu.Albums);
+                        break;
+                    case Key.F:
+                        ChangeTabs(Menu.Playlists);
+                        break;
+                    case Key.G:
+                        ChangeTabs(Menu.Import);
+                        break;
+                    case Key.E:
+                        ShowAuxilliaryPane(AuxiliaryPane.Search, 335);
+                        break;
+                    case Key.R:
+                        ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
+                        break;
+                    case Key.W:
+                        ShowAuxilliaryPane(AuxiliaryPane.QueueManagement, 335);
+                        break;
+                    case Key.Space:
+                        PlayPauseMethod();
+                        break;
+                }
             switch (e.Key)
             {
                 case Key.OemTilde:
@@ -695,72 +709,10 @@ namespace FRESHMusicPlayer
             Player.PlayMusic();
         }
 
-        public void UpdateIntegrations()
-        {
-            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
-            {
-                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
-                Window window = GetWindow(this);
-                var wih = new WindowInteropHelper(window);
-                IntPtr hWnd = wih.Handle;
-                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
-                Smtc.IsPlayEnabled = true;
-                Smtc.IsPauseEnabled = true;
-                Smtc.IsNextEnabled = true;
-                Smtc.IsStopEnabled = true;
-                Smtc.IsPreviousEnabled = true;
-                Smtc.ButtonPressed += Smtc_ButtonPressed;
-            }
-            else Smtc = null;
-            if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
-            else Player.DisposeRPC();
-        }
-        public void SetIntegrations(MediaPlaybackStatus status)
-        {
-            if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
-            {
-                try
-                {
-                    Smtc.PlaybackStatus = status;
-                    var updater = Smtc.DisplayUpdater;
-                    updater.Type = MediaPlaybackType.Music;
-                    updater.MusicProperties.Artist = CurrentTrack.Artist;
-                    updater.MusicProperties.AlbumArtist = CurrentTrack.AlbumArtist;
-                    updater.MusicProperties.Title = CurrentTrack.Title;
-                    updater.Update();
-                }
-                catch
-                {
-                    // TODO: HACK - ignored; the way i'm detecting windows 10 currently does not work
-                }
-            }
-            if (App.Config.IntegrateDiscordRPC)
-            {
-                string activity = string.Empty;
-                string state = string.Empty;
-                switch (status)
-                {
-                    case MediaPlaybackStatus.Playing:
-                        activity = "play";
-                        state = $"by {CurrentTrack.Artist}";
-                        break;
-                    case MediaPlaybackStatus.Paused:
-                        activity = "pause";
-                        state = "Paused";
-                        break;
-                    case MediaPlaybackStatus.Stopped:
-                        activity = "idle";
-                        state = "Idle";
-                        break;
-                }
-                Player.UpdateRPC(activity, state, CurrentTrack.Title);
-            }
-        }
-
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             VolumeBar.Value += e.Delta / 100 * 3;
-            if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();       
+            if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();
         }
 
         private void ProgressIndicator2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -776,5 +728,53 @@ namespace FRESHMusicPlayer
                 else App.Config.ShowRemainingProgress = true;
             }
         }
+        private async void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            UpdateIntegrations();
+            ProcessSettings(true);
+            var sb = new Storyboard();
+            var doubleAnimation = new DoubleAnimation(0f, 1f, TimeSpan.FromSeconds(1));
+            doubleAnimation.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut };
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Opacity"));
+            sb.Children.Add(doubleAnimation);
+            sb.Begin(ContentFrame);
+            sb.Begin(MainBar);
+            if (!Player.Playing) HandlePersistence();
+            await new UpdateHandler(NotificationHandler).UpdateApp();
+        }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            App.Config.Volume = (int)VolumeBar.Value;
+            App.Config.CurrentMenu = SelectedMenu;
+            TrackingHandler?.Close();
+            ConfigurationHandler.Write(App.Config);
+            Library.Library?.Dispose();
+            progressTimer.Dispose();
+            WritePersistence();
+        }
+        private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
+        {
+            switch (args.Button)
+            {
+                case SystemMediaTransportControlsButton.Play:
+                    Dispatcher.Invoke(() => PlayPauseMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Pause:
+                    Dispatcher.Invoke(() => PlayPauseMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Next:
+                    Dispatcher.Invoke(() => NextTrackMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Previous:
+                    Dispatcher.Invoke(() => PreviousTrackMethod());
+                    break;
+                case SystemMediaTransportControlsButton.Stop:
+                    Dispatcher.Invoke(() => StopMethod());
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
     }
 }
