@@ -118,9 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>An error has occured: {0}
-If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
-The log file they'll need is at {1}.</value>
+    <value>Oopsies! Something went wrong. We'll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
     <value>Go to</value>

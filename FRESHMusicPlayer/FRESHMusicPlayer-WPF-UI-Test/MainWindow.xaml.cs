@@ -272,14 +272,6 @@ namespace FRESHMusicPlayer
             if (File.Exists(persistenceFilePath))
             {
                 var fields = File.ReadAllText(persistenceFilePath).Split(';');
-                if (fields[0] != string.Empty)
-                {
-                    Player.AddQueue(fields[0]);
-                    Player.PlayMusic();
-                    Player.RepositionMusic(int.Parse(fields[1]));
-                    PlayPauseMethod();
-                    ProgressTick();
-                }
                 
                 var top = double.Parse(fields[2]);
                 var left = double.Parse(fields[3]);
@@ -292,6 +284,14 @@ namespace FRESHMusicPlayer
                     Left = left;
                     Height = height;
                     Width = width;
+                }
+                if (fields[0] != string.Empty)
+                {
+                    Player.AddQueue(fields[0]);
+                    Player.PlayMusic();
+                    Player.RepositionMusic(int.Parse(fields[1]));
+                    PlayPauseMethod();
+                    ProgressTick();
                 }
             }
         }
@@ -689,7 +689,7 @@ namespace FRESHMusicPlayer
                     //GC.Collect(2);
                     break;
                 case Key.F2:
-                    NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
+                    //NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
                     throw new Exception("Exception for debugging");
                 case Key.F5:
                     ContentFrame.Refresh();

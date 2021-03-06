@@ -62,17 +62,47 @@ namespace FRESHMusicPlayer
                 $"{System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}\n" +
                 $"{Environment.OSVersion.VersionString}\n" +
                 $"{e.Exception}");
-            try
+            var message = string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName);
+            var maybeWindow = currentWindow as MainWindow;
+            if (!(maybeWindow is null))
             {
-                var box = new CriticalErrorBox(e, logPath, fileName);
-                box.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                box.Owner = currentWindow;
-                box.ShowDialog();
+                try
+                {
+                    maybeWindow.NotificationHandler.Add(new Handlers.Notifications.Notification
+                    {
+                        DisplayAsToast = true,
+                        IsImportant = true,
+                        Type = Handlers.Notifications.NotificationType.Failure,
+                        ContentText = message,
+                        ButtonText = "Open debug log",
+                        OnButtonClicked = () =>
+                        {
+                            System.Diagnostics.Process.Start(logPath);
+                            System.Diagnostics.Process.Start(logPath + fileName);
+                            return true;
+                        }
+                    });
+                }
+                catch
+                {
+                    MessageBox.Show(message);
+                }
             }
-            catch
+            else
             {
-                MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));
+                MessageBox.Show(message);
             }
+            //try
+            //{
+            //    var box = new CriticalErrorBox(e, logPath, fileName);
+            //    box.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //    box.Owner = currentWindow;
+            //    box.ShowDialog();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));
+            //}
             e.Handled = true;
         }
     }

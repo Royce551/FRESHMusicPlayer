@@ -142,7 +142,6 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="UntimedLyricsLabel" Grid.Row="1" Style="{StaticResource Label}" Text="Untimed Lyrics"/>
                     <TextBox x:Name="UntimedLyricsBox" Grid.Row="1" Grid.Column="2" Style="{StaticResource Box}" AcceptsReturn="True" TextChanged="TextChanged"/>
-                    <Button Grid.Row="2" Content="Timed Lyrics Editor" Click="Button_Click_2"/>
                 </Grid>
             </StackPanel>
         </ScrollViewer>

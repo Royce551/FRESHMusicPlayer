@@ -61,9 +61,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error has occured: {0}
-        ///If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
-        ///The log file they&apos;ll need is at {1}..
+        ///   Looks up a localized string similar to Oopsies! Something went wrong. We&apos;ll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues..
         /// </summary>
         public static string APPLICATION_CRITICALERROR {
             get {
