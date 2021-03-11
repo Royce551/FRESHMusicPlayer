@@ -35,9 +35,9 @@ namespace FRESHMusicPlayer.Utilities
 
             return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
         }
-        public static async void DoDragDrop(string[] tracks, Player player, DatabaseHandlerX library, bool enqueue = true, bool import = true, bool clearqueue = true)
+        public static async void DoDragDrop(string[] tracks, Player player, GUILibrary library, bool enqueue = true, bool import = true, bool clearqueue = true)
         {
-            if (clearqueue) player.ClearQueue();
+            if (clearqueue) player.Queue.Clear();
             if (tracks.Any(x => Directory.Exists(x)))
             {
                 foreach (var track in tracks)
@@ -50,12 +50,12 @@ namespace FRESHMusicPlayer.Utilities
                         || name.EndsWith(".flac") || name.EndsWith(".aiff")
                         || name.EndsWith(".wma")
                         || name.EndsWith(".aac")).ToArray();
-                        if (enqueue) player.AddQueue(paths);
+                        if (enqueue) player.Queue.Add(paths);
                         if (import) await Task.Run(() => library.Import(paths));
                     }
                     else
                     {
-                        if (enqueue) player.AddQueue(track);
+                        if (enqueue) player.Queue.Add(track);
                         if (import) await Task.Run(() => library.Import(track));
                     }
                 }
@@ -63,7 +63,7 @@ namespace FRESHMusicPlayer.Utilities
             }
             else
             {
-                if (enqueue) player.AddQueue(tracks);
+                if (enqueue) player.Queue.Add(tracks);
                 if (import) await Task.Run(() => library.Import(tracks));
             }
         }

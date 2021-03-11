@@ -96,7 +96,7 @@ namespace FRESHMusicPlayer.Pages.Library
         }
         public async void ShowPlaylists()
         {
-            var x = window.Library.Library.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var x = window.Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             await Task.Run(() =>
             {
                 if (x.Count == 0) window.Library.CreatePlaylist("Liked");
@@ -185,7 +185,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void Page_Drop(object sender, DragEventArgs e)
         {
-            window.Player.ClearQueue();
+            window.Player.Queue.Clear();
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library);
             window.Player.PlayMusic();
             var selectedItem = CategoryPanel.SelectedItem;
@@ -197,14 +197,14 @@ namespace FRESHMusicPlayer.Pages.Library
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)
         {
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            window.Player.AddQueue(tracks);
+            window.Player.Queue.Add(tracks);
         }
 
         private void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
-            window.Player.ClearQueue();
+            window.Player.Queue.Clear();
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            window.Player.AddQueue(tracks);
+            window.Player.Queue.Add(tracks);
             window.Player.PlayMusic();
         }
     }

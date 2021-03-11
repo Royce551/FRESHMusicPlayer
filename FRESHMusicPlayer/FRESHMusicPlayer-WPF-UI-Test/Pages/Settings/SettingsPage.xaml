@@ -93,7 +93,6 @@
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_MAINTENANCE}" Style="{StaticResource Header}"/>
 
                 <Button x:Name="Maintanence_ResetButton" Content="{x:Static resx:Resources.SETTINGS_RESET}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ResetButton_Click"/>
-                <Button x:Name="Maintanence_ImportButton" Content="{x:Static resx:Resources.SETTINGS_IMPORTOLDFMP}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_ImportButton_Click"/>
                 <Button x:Name="Maintenence_UpdateButton" Content="{x:Static resx:Resources.SETTINGS_CLEANLIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintenence_UpdateButton_Click"/>
                 <Button x:Name="Maintanence_NukeButton" Content="{x:Static resx:Resources.SETTINGS_NUKELIBRARY}" TextBlock.FontSize="16" Margin="0,5,0,5" Click="Maintanence_NukeButton_Click" Foreground="#FFD5463F"/>
                 

@@ -32,7 +32,7 @@ namespace FRESHMusicPlayer.Pages
             dialog.Filter = "Audio Files|*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac|Other|*";
             if (dialog.ShowDialog() == true)
             {
-                window.Player.AddQueue(dialog.FileName);
+                window.Player.Queue.Add(dialog.FileName);
                 await Task.Run(() => window.Library.Import(dialog.FileName));
                 window.Player.PlayMusic();
             }
@@ -60,7 +60,7 @@ namespace FRESHMusicPlayer.Pages
                         continue;
                     }
                 }
-                window.Player.AddQueue(reader.FilePaths.ToArray());
+                window.Player.Queue.Add(reader.FilePaths.ToArray());
                 await Task.Run(() => window.Library.Import(reader.FilePaths.ToArray()));
                 window.Player.PlayMusic();
             }
@@ -79,7 +79,7 @@ namespace FRESHMusicPlayer.Pages
                         || name.EndsWith(".flac") || name.EndsWith(".aiff")
                         || name.EndsWith(".wma")
                         || name.EndsWith(".aac")).ToArray();
-                    window.Player.AddQueue(paths);
+                    window.Player.Queue.Add(paths);
                     await Task.Run(() => window.Library.Import(paths));
                     window.Player.PlayMusic();
                 }
@@ -99,7 +99,7 @@ namespace FRESHMusicPlayer.Pages
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(FilePathBox.Text)) return;
-            window.Player.AddQueue(FilePathBox.Text);
+            window.Player.Queue.Add(FilePathBox.Text);
             window.Library.Import(FilePathBox.Text);
             window.Player.PlayMusic();
         }

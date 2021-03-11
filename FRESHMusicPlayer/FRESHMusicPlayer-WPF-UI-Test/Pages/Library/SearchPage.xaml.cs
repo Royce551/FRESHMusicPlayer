@@ -41,7 +41,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 await Task.Run(() =>
                 {
                     int i = 0;
-                    foreach (var thing in window.Library.Library.GetCollection<DatabaseTrack>("tracks")
+                    foreach (var thing in window.Library.Database.GetCollection<DatabaseTrack>("tracks")
                         .Query()
                         .Where(x => x.Title.ToUpper().Contains(searchterm) || x.Artist.ToUpper().Contains(searchterm) || x.Album.ToUpper().Contains(searchterm))
                         .OrderBy("Title")
@@ -72,7 +72,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             foreach (SongEntry entry in TracksPanel.Items)
             {
-                window.Player.AddQueue(entry.FilePath);
+                window.Player.Queue.Add(entry.FilePath);
             }
         }
 
@@ -80,7 +80,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             foreach (SongEntry entry in TracksPanel.Items)
             {
-                window.Player.AddQueue(entry.FilePath);
+                window.Player.Queue.Add(entry.FilePath);
             }
             window.Player.PlayMusic();
         }

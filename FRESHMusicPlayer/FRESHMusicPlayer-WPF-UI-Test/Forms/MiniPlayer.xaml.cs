@@ -99,9 +99,9 @@ namespace FRESHMusicPlayer.Forms
         }
         public void UpdateControlsState()
         {
-            if (window.Player.RepeatOnce) RepeatButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+            if (window.Player.Queue.RepeatMode == RepeatMode.RepeatOne) RepeatButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             else RepeatButtonData.Fill = (Brush)FindResource("PrimaryTextColor");
-            if (window.Player.Shuffle) ShuffleButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+            if (window.Player.Queue.Shuffle) ShuffleButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             else ShuffleButtonData.Fill = (Brush)FindResource("PrimaryTextColor");
 
             if (!window.Player.Paused) PlayPauseButtonData.Data = (Geometry)FindResource("PauseIcon");
@@ -131,8 +131,7 @@ namespace FRESHMusicPlayer.Forms
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            window.Player.CurrentVolume = (float)(VolumeSlider.Value / 100);
-            if (window.Player.Playing) window.Player.UpdateSettings();
+            window.Player.Volume = (float)(VolumeSlider.Value / 100);
             window.VolumeBar.Value = VolumeSlider.Value;
         }
     }

@@ -16,9 +16,9 @@ namespace FRESHMusicPlayer.Forms.Playlists
     {
         private readonly string track;
 
-        private readonly DatabaseHandlerX library;
+        private readonly GUILibrary library;
         private readonly NotificationHandler notificationHandler;
-        public PlaylistManagement(DatabaseHandlerX library, NotificationHandler notificationHandler, string track = null)
+        public PlaylistManagement(GUILibrary library, NotificationHandler notificationHandler, string track = null)
         {
             this.library = library;
             this.notificationHandler = notificationHandler;
@@ -31,7 +31,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
         public async void InitFields()
         {
             PlaylistBox.Items.Clear();
-            var x = library.Library.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var x = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             await Task.Run(() =>
             {
                 foreach (var thing in x)

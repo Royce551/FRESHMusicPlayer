@@ -21,8 +21,8 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private Player player;
         private NotificationHandler notificationHandler;
-        private DatabaseHandlerX library;
-        public SongEntry(string filePath, string artist, string album, string title, Player player, NotificationHandler notificationHandler, DatabaseHandlerX library)
+        private GUILibrary library;
+        public SongEntry(string filePath, string artist, string album, string title, Player player, NotificationHandler notificationHandler, GUILibrary library)
         {
             this.player = player;
             this.notificationHandler = notificationHandler;
@@ -48,9 +48,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
-                if (player.Playing) player.ClearQueue();
-                player.AddQueue(FilePath);
-                player.PlayMusic();
+                if (player.FileLoaded) player.Queue.Clear();
+                player.PlayMusic(FilePath);
             }
             else
             {
@@ -68,7 +67,7 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        private void QueueButtonClick(object sender, MouseButtonEventArgs e) => player.AddQueue(FilePath);
+        private void QueueButtonClick(object sender, MouseButtonEventArgs e) => player.Queue.Add(FilePath);
 
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e)
         {
@@ -80,9 +79,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             if (e.ClickCount == 2)
             {
-                if (player.Playing) player.ClearQueue();
-                player.AddQueue(FilePath);
-                player.PlayMusic();
+                if (player.FileLoaded) player.Queue.Clear();
+                player.PlayMusic(FilePath);
             }
         }
 
@@ -94,7 +92,7 @@ namespace FRESHMusicPlayer.Pages.Library
         private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             MiscContext.Items.Clear();
-            var playlists = library.Library.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var playlists = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             foreach (var playlist in playlists)
             {
                 var tracks = library.ReadTracksForPlaylist(playlist.Name);

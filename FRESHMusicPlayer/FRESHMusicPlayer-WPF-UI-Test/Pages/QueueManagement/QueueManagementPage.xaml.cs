@@ -29,13 +29,13 @@ namespace FRESHMusicPlayer.Pages
             this.window = window;
             InitializeComponent();
             PopulateList();
-            window.Player.QueueChanged += Player_QueueChanged;
+            window.Player.Queue.QueueChanged += Player_QueueChanged;
             window.Player.SongStopped += Player_SongStopped;
         }
 
         public void PopulateList()
         {
-            displayqueue.Enqueue(window.Player.Queue); // Queue of pending queue management updates
+            displayqueue.Enqueue(window.Player.Queue.Queue); // Queue of pending queue management updates
             async void GetResults()
             {
                 var list = displayqueue.Dequeue();
@@ -52,8 +52,8 @@ namespace FRESHMusicPlayer.Pages
                         var dbTrack = window.Library.GetFallbackTrack(song);
                         entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1, window.Player));
                         Dispatcher.Invoke(() => QueueList.Items.Add(entry));
-                        if (entry.Index + 1 == window.Player.QueuePosition) currentIndex = entry.Index;
-                        if (window.Player.QueuePosition < number) nextlength += dbTrack.Length;
+                        if (entry.Index + 1 == window.Player.Queue.Position) currentIndex = entry.Index;
+                        if (window.Player.Queue.Position < number) nextlength += dbTrack.Length;
                         if (number % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                         number++;
                     }
@@ -81,7 +81,7 @@ namespace FRESHMusicPlayer.Pages
         private void Player_SongStopped(object sender, EventArgs e) => PopulateList();
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            window.Player.QueueChanged -= Player_QueueChanged;
+            window.Player.Queue.QueueChanged -= Player_QueueChanged;
             window.Player.SongStopped -= Player_SongStopped;
             QueueList.Items.Clear();
         }
@@ -92,7 +92,7 @@ namespace FRESHMusicPlayer.Pages
             dialog.Filter = "Audio Files|*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac|Other|*";
             if (dialog.ShowDialog() == true)
             {
-                window.Player.AddQueue(dialog.FileName);
+                window.Player.Queue.Add(dialog.FileName);
             }
         }
 
@@ -116,14 +116,14 @@ namespace FRESHMusicPlayer.Pages
                         });
                         continue;
                     }
-                    window.Player.AddQueue(s);
+                    window.Player.Queue.Add(s);
                 }
             }
         }
 
         private void ClearQueue_Click(object sender, RoutedEventArgs e)
         {
-            window.Player.ClearQueue();
+            window.Player.Queue.Clear();
         }
 
         private void Page_Drop(object sender, DragEventArgs e)

@@ -32,7 +32,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (!window.Player.Playing) return;
+            if (!window.Player.FileLoaded) return;
             if (window.Player.CurrentBackend.CurrentTime < TimedLyrics.Lines.Keys.First()) return;
             var currentLines = TimedLyrics.Lines.Where(x => x.Key < window.Player.CurrentBackend.CurrentTime).ToList();
             if (currentLines.Count != 0)

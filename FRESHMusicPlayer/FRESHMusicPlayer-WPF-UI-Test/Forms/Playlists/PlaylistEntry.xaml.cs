@@ -18,8 +18,8 @@ namespace FRESHMusicPlayer.Forms.Playlists
         private readonly string playlist;
         private readonly string path;
 
-        private readonly DatabaseHandlerX library;
-        public PlaylistEntry(string playlist, string path, DatabaseHandlerX library)
+        private readonly GUILibrary library;
+        public PlaylistEntry(string playlist, string path, GUILibrary library)
         {
             this.library = library;
             InitializeComponent();
@@ -63,10 +63,10 @@ namespace FRESHMusicPlayer.Forms.Playlists
             dialog.ShowDialog();
             if (dialog.OK)
             {
-                var x = library.Library.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
+                var x = library.Database.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
                 x.Name = dialog.Response;
                 TitleLabel.Text = dialog.Response;
-                library.Library.GetCollection<DatabasePlaylist>("playlists").Update(x);
+                library.Database.GetCollection<DatabasePlaylist>("playlists").Update(x);
             }
         }
 

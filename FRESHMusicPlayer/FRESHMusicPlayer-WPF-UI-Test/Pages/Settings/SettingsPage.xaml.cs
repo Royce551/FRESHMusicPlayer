@@ -204,8 +204,6 @@ namespace FRESHMusicPlayer.Pages
             }
         }
 
-        private void Maintanence_ImportButton_Click(object sender, RoutedEventArgs e) => window.Library.Convertv1Tov2();
-
         private void Maintanence_ResetButton_Click(object sender, RoutedEventArgs e)
         {
             App.Config = new ConfigurationFile();

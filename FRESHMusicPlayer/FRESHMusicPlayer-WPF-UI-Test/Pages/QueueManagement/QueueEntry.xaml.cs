@@ -20,7 +20,7 @@ namespace FRESHMusicPlayer.Pages
             TitleLabel.Text = title;
             PositionLabel.Text = position;
             Index = index;
-            if (player.QueuePosition == index + 1) // actual position is index + 1, but i didn't want to convert to int
+            if (player.Queue.Position == index + 1) // actual position is index + 1, but i didn't want to convert to int
             {
                 TitleLabel.FontWeight = FontWeights.Bold;
                 ArtistAlbumLabel.FontWeight = FontWeights.Bold;
@@ -39,17 +39,17 @@ namespace FRESHMusicPlayer.Pages
 
         private void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
-            player.QueuePosition = Index;
+            player.Queue.Position = Index;
             player.PlayMusic();
         }
 
-        private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => player.RemoveQueue(Index);
+        private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => player.Queue.Remove(Index);
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
-                player.QueuePosition = Index;
+                player.Queue.Position = Index;
                 player.PlayMusic();
             }
         }

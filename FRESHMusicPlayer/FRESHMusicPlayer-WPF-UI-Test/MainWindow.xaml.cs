@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer
         public Player Player;
         public NotificationHandler NotificationHandler = new NotificationHandler();
         public bool MiniPlayerMode = false;
-        public DatabaseHandlerX Library;
+        public GUILibrary Library;
         public Track CurrentTrack;
 
         public SystemMediaTransportControls Smtc;
@@ -81,8 +81,8 @@ namespace FRESHMusicPlayer
             LiteDatabase library;
             try
             {
-                library = new LiteDatabase(Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
-                Library = new DatabaseHandlerX(library, NotificationHandler);
+                library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
+                Library = new GUILibrary(library, NotificationHandler);
             }
             catch
             {
@@ -94,8 +94,8 @@ namespace FRESHMusicPlayer
                     {
                         try
                         {
-                            library = new LiteDatabase(Path.Combine(DatabaseHandler.DatabasePath, "database.fdb2"));
-                            Library = new DatabaseHandlerX(library, NotificationHandler);
+                            library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
+                            Library = new GUILibrary(library, NotificationHandler);
                             TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Visible;
                             SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Visible;
                             return true;
@@ -115,7 +115,7 @@ namespace FRESHMusicPlayer
             
             if (initialFile != null)
             {
-                Player.AddQueue(initialFile);
+                Player.Queue.Add(initialFile);
                 Player.PlayMusic();
             }
         }
@@ -124,7 +124,7 @@ namespace FRESHMusicPlayer
         #region Controls
         public void PlayPauseMethod()
         {
-            if (!Player.Playing) return;
+            if (!Player.FileLoaded) return;
             if (Player.Paused)
             {
                 Player.ResumeMusic();
@@ -141,36 +141,40 @@ namespace FRESHMusicPlayer
         }
         public void StopMethod()
         {
-            Player.ClearQueue();
+            Player.Queue.Clear();
             Player.StopMusic();
         }
         public void NextTrackMethod() => Player.NextSong();
         public void PreviousTrackMethod() => Player.PreviousSong();
         public void ShuffleMethod()
         {
-            if (Player.Shuffle)
+            if (Player.Queue.Shuffle)
             {
-                Player.Shuffle = false;
+                Player.Queue.Shuffle = false;
                 ShuffleButton.Fill = (Brush)FindResource("PrimaryTextColor");
             }
             else
             {
-                Player.Shuffle = true;
+                Player.Queue.Shuffle = true;
                 ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
-                Player.ShuffleQueue();
             }
         }
         public void RepeatOneMethod()
         {
-            if (Player.RepeatOnce)
+            if (Player.Queue.RepeatMode == RepeatMode.None)
             {
-                Player.RepeatOnce = false;
-                RepeatOneButton.Fill = (Brush)FindResource("PrimaryTextColor");
+                Player.Queue.RepeatMode = RepeatMode.RepeatAll;
+                RepeatOneButton.Fill = new SolidColorBrush(Color.FromRgb(213, 70, 63));
+            }
+            else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
+            {
+                Player.Queue.RepeatMode = RepeatMode.RepeatOne;
+                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             }
             else
             {
-                Player.RepeatOnce = true;
-                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                Player.Queue.RepeatMode = RepeatMode.None;
+                RepeatOneButton.Fill = (Brush)FindResource("PrimaryTextColor");
             }
         }
         public void UpdatePlayButtonState()
@@ -287,8 +291,7 @@ namespace FRESHMusicPlayer
                 }
                 if (fields[0] != string.Empty)
                 {
-                    Player.AddQueue(fields[0]);
-                    Player.PlayMusic();
+                    Player.PlayMusic(fields[0]);
                     Player.RepositionMusic(int.Parse(fields[1]));
                     PlayPauseMethod();
                     ProgressTick();
@@ -297,7 +300,7 @@ namespace FRESHMusicPlayer
         }
         public void WritePersistence()
         {
-            if (Player.Playing) // TODO: make this less shitty
+            if (Player.FileLoaded) // TODO: make this less shitty
             {
                 File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"),
                     $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width}");
@@ -347,8 +350,8 @@ namespace FRESHMusicPlayer
                 Smtc.ButtonPressed += Smtc_ButtonPressed;
             }
             else Smtc = null;
-            if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
-            else Player.DisposeRPC();
+            //if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
+            //else Player.DisposeRPC();
         }
         public void SetIntegrations(MediaPlaybackStatus status)
         {
@@ -369,27 +372,27 @@ namespace FRESHMusicPlayer
                     // TODO: HACK - ignored; the way i'm detecting windows 10 currently does not work
                 }
             }
-            if (App.Config.IntegrateDiscordRPC)
-            {
-                string activity = string.Empty;
-                string state = string.Empty;
-                switch (status)
-                {
-                    case MediaPlaybackStatus.Playing:
-                        activity = "play";
-                        state = $"by {CurrentTrack.Artist}";
-                        break;
-                    case MediaPlaybackStatus.Paused:
-                        activity = "pause";
-                        state = "Paused";
-                        break;
-                    case MediaPlaybackStatus.Stopped:
-                        activity = "idle";
-                        state = "Idle";
-                        break;
-                }
-                Player.UpdateRPC(activity, state, CurrentTrack.Title);
-            }
+            //if (App.Config.IntegrateDiscordRPC)
+            //{
+            //    string activity = string.Empty;
+            //    string state = string.Empty;
+            //    switch (status)
+            //    {
+            //        case MediaPlaybackStatus.Playing:
+            //            activity = "play";
+            //            state = $"by {CurrentTrack.Artist}";
+            //            break;
+            //        case MediaPlaybackStatus.Paused:
+            //            activity = "pause";
+            //            state = "Paused";
+            //            break;
+            //        case MediaPlaybackStatus.Stopped:
+            //            activity = "idle";
+            //            state = "Idle";
+            //            break;
+            //    }
+            //    Player.UpdateRPC(activity, state, CurrentTrack.Title);
+            //}
         }
         #region Tabs
         private void ChangeTabs(Menu tab, string search = null)
@@ -507,7 +510,7 @@ namespace FRESHMusicPlayer
         }
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            if (Player.Playing)
+            if (Player.FileLoaded)
             {
                 progressTimer.Start();
             }
@@ -516,7 +519,7 @@ namespace FRESHMusicPlayer
 
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (isDragging && Player.Playing)
+            if (isDragging && Player.FileLoaded)
             {
                 Player.RepositionMusic((int)ProgressBar.Value);
                 ProgressTick();
@@ -524,13 +527,12 @@ namespace FRESHMusicPlayer
         }
         private void ProgressBar_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (Player.Playing && !isDragging) Player.RepositionMusic((int)ProgressBar.Value);
+            if (Player.FileLoaded && !isDragging) Player.RepositionMusic((int)ProgressBar.Value);
             ProgressTick();
         }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Player.CurrentVolume = (float)(VolumeBar.Value / 100);
-            if (Player.Playing) Player.UpdateSettings();
+            Player.Volume = (float)(VolumeBar.Value / 100);
         }
         private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
         private void ProgressTick()
@@ -553,15 +555,15 @@ namespace FRESHMusicPlayer
         private void TrackContextTagEditor_Click(object sender, RoutedEventArgs e)
         {
             var tracks = new List<string>();
-            if (Player.Playing) tracks.Add(Player.FilePath); // if playing, edit the file the user is playing
-            else tracks = Player.Queue;
+            if (Player.FileLoaded) tracks.Add(Player.FilePath); // if playing, edit the file the user is playing
+            else tracks = Player.Queue.Queue;
             var tagEditor = new TagEditor(tracks, Player);
             tagEditor.Show();
         }
         private void TrackContentPlaylistManagement_Click(object sender, RoutedEventArgs e)
         {
             string track;
-            if (Player.Playing) track = Player.FilePath;
+            if (Player.FileLoaded) track = Player.FilePath;
             else track = null;
             var playlistManagement = new PlaylistManagement(Library, NotificationHandler, track);
             playlistManagement.Show();
@@ -591,8 +593,7 @@ namespace FRESHMusicPlayer
             dialog.ShowDialog();
             if (dialog.OK)
             {
-                Player.AddQueue(dialog.Response);
-                Player.PlayMusic();
+                Player.PlayMusic(dialog.Response);
             }
         }
         #endregion
@@ -685,7 +686,7 @@ namespace FRESHMusicPlayer
                     Top = miniPlayer.Top;
                     Left = miniPlayer.Left;
                     Show();
-                    if (Player.Playing) progressTimer.Start();
+                    if (Player.FileLoaded) progressTimer.Start();
                     //GC.Collect(2);
                     break;
                 case Key.F2:
@@ -704,7 +705,7 @@ namespace FRESHMusicPlayer
 
         private void ControlsBox_Drop(object sender, DragEventArgs e)
         {
-            Player.ClearQueue();
+            Player.Queue.Clear();
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), Player, Library, import: false);
             Player.PlayMusic();
         }
@@ -712,12 +713,11 @@ namespace FRESHMusicPlayer
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             VolumeBar.Value += e.Delta / 100 * 3;
-            if (Player.Playing && Player.CurrentVolume >= 0 && Player.CurrentVolume <= 1) Player.UpdateSettings();
         }
 
         private void ProgressIndicator2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Player.Playing)
+            if (Player.FileLoaded)
             {
                 if (App.Config.ShowRemainingProgress)
                 {
@@ -739,7 +739,7 @@ namespace FRESHMusicPlayer
             sb.Children.Add(doubleAnimation);
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
-            if (!Player.Playing) HandlePersistence();
+            if (!Player.FileLoaded) HandlePersistence();
             await new UpdateHandler(NotificationHandler).UpdateApp();
         }
         private void Window_Closed(object sender, EventArgs e)
@@ -748,7 +748,7 @@ namespace FRESHMusicPlayer
             App.Config.CurrentMenu = SelectedMenu;
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
-            Library.Library?.Dispose();
+            Library.Database?.Dispose();
             progressTimer.Dispose();
             WritePersistence();
         }
