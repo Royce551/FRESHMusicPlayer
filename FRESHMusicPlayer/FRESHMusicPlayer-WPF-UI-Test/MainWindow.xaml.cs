@@ -4,6 +4,7 @@ using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
+using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Pages;
 using FRESHMusicPlayer.Pages.Library;
@@ -14,17 +15,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using Windows.Media;
 using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer
@@ -62,9 +58,11 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public Track CurrentTrack;
 
-        public SystemMediaTransportControls Smtc;
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
+
+        private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
+        private IPlaybackIntegration discordIntegration;
         public MainWindow(Player player, string[] initialFile = null)
         {
             Player = player;
@@ -128,13 +126,13 @@ namespace FRESHMusicPlayer
             if (Player.Paused)
             {
                 Player.ResumeMusic();
-                SetIntegrations(MediaPlaybackStatus.Playing);
+                SetIntegrations(PlaybackStatus.Playing);
                 progressTimer.Start();
             }
             else
             {
                 Player.PauseMusic();
-                SetIntegrations(MediaPlaybackStatus.Paused);
+                SetIntegrations(PlaybackStatus.Paused);
                 progressTimer.Stop();
             }
             UpdatePlayButtonState();
@@ -337,62 +335,26 @@ namespace FRESHMusicPlayer
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
-                var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
-                Window window = GetWindow(this);
-                var wih = new WindowInteropHelper(window);
-                IntPtr hWnd = wih.Handle;
-                Smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
-                Smtc.IsPlayEnabled = true;
-                Smtc.IsPauseEnabled = true;
-                Smtc.IsNextEnabled = true;
-                Smtc.IsStopEnabled = true;
-                Smtc.IsPreviousEnabled = true;
-                Smtc.ButtonPressed += Smtc_ButtonPressed;
+                smtcIntegration = new SMTCIntegration(this);
             }
-            else Smtc = null;
-            //if (App.Config.IntegrateDiscordRPC) Player.InitDiscordRPC("656678380283887626");
-            //else Player.DisposeRPC();
+            else smtcIntegration = null;
+            if (App.Config.IntegrateDiscordRPC) discordIntegration = new DiscordIntegration();
+            else
+            {
+                discordIntegration.Close();
+                discordIntegration = null;
+            }
         }
-        public void SetIntegrations(MediaPlaybackStatus status)
+        public void SetIntegrations(PlaybackStatus status)
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
-                try
-                {
-                    Smtc.PlaybackStatus = status;
-                    var updater = Smtc.DisplayUpdater;
-                    updater.Type = MediaPlaybackType.Music;
-                    updater.MusicProperties.Artist = CurrentTrack.Artist;
-                    updater.MusicProperties.AlbumArtist = CurrentTrack.AlbumArtist;
-                    updater.MusicProperties.Title = CurrentTrack.Title;
-                    updater.Update();
-                }
-                catch
-                {
-                    // TODO: HACK - ignored; the way i'm detecting windows 10 currently does not work
-                }
+                smtcIntegration.Update(CurrentTrack, status);
             }
-            //if (App.Config.IntegrateDiscordRPC)
-            //{
-            //    string activity = string.Empty;
-            //    string state = string.Empty;
-            //    switch (status)
-            //    {
-            //        case MediaPlaybackStatus.Playing:
-            //            activity = "play";
-            //            state = $"by {CurrentTrack.Artist}";
-            //            break;
-            //        case MediaPlaybackStatus.Paused:
-            //            activity = "pause";
-            //            state = "Paused";
-            //            break;
-            //        case MediaPlaybackStatus.Stopped:
-            //            activity = "idle";
-            //            state = "Idle";
-            //            break;
-            //    }
-            //    Player.UpdateRPC(activity, state, CurrentTrack.Title);
-            //}
+            if (App.Config.IntegrateDiscordRPC)
+            {
+                discordIntegration.Update(CurrentTrack, status);
+            }
         }
         #region Tabs
         private void ChangeTabs(Menu tab, string search = null)
@@ -443,7 +405,7 @@ namespace FRESHMusicPlayer
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             progressTimer.Stop();
             CoverArtBox.Source = null;
-            SetIntegrations(MediaPlaybackStatus.Stopped);
+            SetIntegrations(PlaybackStatus.Stopped);
             SetCoverArtVisibility(false);
         }
 
@@ -456,7 +418,7 @@ namespace FRESHMusicPlayer
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
-            SetIntegrations(MediaPlaybackStatus.Playing);
+            SetIntegrations(PlaybackStatus.Playing);
             UpdatePlayButtonState();
             if (CurrentTrack.EmbeddedPictures.Count == 0)
             {
@@ -751,29 +713,6 @@ namespace FRESHMusicPlayer
             Library.Database?.Dispose();
             progressTimer.Dispose();
             WritePersistence();
-        }
-        private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
-        {
-            switch (args.Button)
-            {
-                case SystemMediaTransportControlsButton.Play:
-                    Dispatcher.Invoke(() => PlayPauseMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Pause:
-                    Dispatcher.Invoke(() => PlayPauseMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Next:
-                    Dispatcher.Invoke(() => NextTrackMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Previous:
-                    Dispatcher.Invoke(() => PreviousTrackMethod());
-                    break;
-                case SystemMediaTransportControlsButton.Stop:
-                    Dispatcher.Invoke(() => StopMethod());
-                    break;
-                default:
-                    break;
-            }
         }
         #endregion
     }
