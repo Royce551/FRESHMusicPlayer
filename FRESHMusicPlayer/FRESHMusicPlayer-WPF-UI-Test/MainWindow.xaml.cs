@@ -162,16 +162,19 @@ namespace FRESHMusicPlayer
             if (Player.Queue.RepeatMode == RepeatMode.None)
             {
                 Player.Queue.RepeatMode = RepeatMode.RepeatAll;
-                RepeatOneButton.Fill = new SolidColorBrush(Color.FromRgb(213, 70, 63));
+                RepeatOneButton.Data = (Geometry)FindResource("RepeatAllIcon");
+                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             }
             else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
                 Player.Queue.RepeatMode = RepeatMode.RepeatOne;
+                RepeatOneButton.Data = (Geometry)FindResource("RepeatOneIcon");
                 RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             }
             else
             {
                 Player.Queue.RepeatMode = RepeatMode.None;
+                RepeatOneButton.Data = (Geometry)FindResource("RepeatAllIcon");
                 RepeatOneButton.Fill = (Brush)FindResource("PrimaryTextColor");
             }
         }

@@ -53,7 +53,7 @@
             </Border>
             <Border x:Name="RepeatButton" Background="Transparent" Width="20" Grid.Column="6" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="RepeatButtonData_MouseLeftButtonDown">
                 <Canvas>
-                    <Path x:Name="RepeatButtonData" Data="{StaticResource RepeatOneIcon}" Fill="{StaticResource PrimaryTextColor}" />
+                    <Path x:Name="RepeatButtonData" Data="{StaticResource RepeatAllIcon}" Fill="{StaticResource PrimaryTextColor}" />
                 </Canvas>
             </Border>
             <Border x:Name="NextButton" Background="Transparent" Width="20" Grid.Column="7" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="NextButton_MouseLeftButtonDown">
