@@ -99,12 +99,12 @@ namespace FRESHMusicPlayer.Forms
         }
         public void UpdateControlsState()
         {
-            if (window.Player.Queue.RepeatMode == RepeatMode.None)
+            if (window.Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
                 RepeatButtonData.Data = (Geometry)FindResource("RepeatAllIcon");
                 RepeatButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
             }
-            else if (window.Player.Queue.RepeatMode == RepeatMode.RepeatAll)
+            else if (window.Player.Queue.RepeatMode == RepeatMode.RepeatOne)
             {
                 RepeatButtonData.Data = (Geometry)FindResource("RepeatOneIcon");
                 RepeatButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);

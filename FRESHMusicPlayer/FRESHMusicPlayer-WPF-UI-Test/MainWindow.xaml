@@ -17,7 +17,7 @@
             </MenuItem>
             <MenuItem Header="{x:Static resx:Resources.LYRICS}" Click="TrackContextLyrics_Click"/>
             <Separator/>
-            <MenuItem Header="{x:Static resx:Resources.CONTROLS_MINIPLAYER}" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.CONTROLS_MINIPLAYER}" Click="TrackContextMiniplayer_Click"/>
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_PAUSE_AFTTER_CURRENT_TRACK}" Click="TrackContext_PauseAuto_Click"/>
         </ContextMenu>
     </Window.Resources>

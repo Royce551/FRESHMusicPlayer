@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -54,7 +55,6 @@ namespace FRESHMusicPlayer
         public AuxiliaryPane SelectedAuxiliaryPane = AuxiliaryPane.None;
         public Player Player;
         public NotificationHandler NotificationHandler = new NotificationHandler();
-        public bool MiniPlayerMode = false;
         public GUILibrary Library;
         public Track CurrentTrack;
 
@@ -143,7 +143,15 @@ namespace FRESHMusicPlayer
             Player.StopMusic();
         }
         public void NextTrackMethod() => Player.NextSong();
-        public void PreviousTrackMethod() => Player.PreviousSong();
+        public void PreviousTrackMethod()
+        {
+            if (Player.CurrentTime.TotalSeconds <= 5) Player.PreviousSong();
+            else
+            {
+                Player.CurrentTime = TimeSpan.FromSeconds(0);
+                progressTimer.Start(); // to resync the progress timer
+            }
+        }
         public void ShuffleMethod()
         {
             if (Player.Queue.Shuffle)
@@ -186,25 +194,7 @@ namespace FRESHMusicPlayer
         #endregion
 
         #region Logic
-        public async void SetMiniPlayerMode(bool mode)
-        { 
-            if (mode)
-            {
-                await InterfaceUtils.GetDoubleAnimation(Width, 559, TimeSpan.FromMilliseconds(100), new PropertyPath("Width")).BeginStoryboardAsync(this);
-                await InterfaceUtils.GetDoubleAnimation(Height, 123, TimeSpan.FromMilliseconds(100), new PropertyPath("Height")).BeginStoryboardAsync(this);
-                MainBar.Visibility = Visibility.Collapsed;
-                MiniPlayerMode = true;
-                Topmost = true;
-            }
-            else
-            {
-                await InterfaceUtils.GetDoubleAnimation(Width, 800, TimeSpan.FromMilliseconds(100), new PropertyPath("Width")).BeginStoryboardAsync(this);
-                await InterfaceUtils.GetDoubleAnimation(Height, 540, TimeSpan.FromMilliseconds(100), new PropertyPath("Height")).BeginStoryboardAsync(this);
-                MainBar.Visibility = Visibility.Visible;
-                MiniPlayerMode = false;
-                Topmost = false;
-            }
-        }
+
         public void SetCoverArtVisibility(bool mode)
         {
             if (!mode) CoverArtArea.Width = new GridLength(5);       
@@ -502,13 +492,15 @@ namespace FRESHMusicPlayer
         private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
         private void ProgressTick()
         {
-            var time = TimeSpan.FromSeconds(Math.Floor(Player.CurrentBackend.CurrentTime.TotalSeconds));
+            var time = Player.CurrentTime;
             ProgressIndicator1.Text = time.ToString(@"mm\:ss");
             if (App.Config.ShowRemainingProgress) ProgressIndicator2.Text 
                     = $"-{TimeSpan.FromSeconds(time.TotalSeconds - Math.Floor(Player.CurrentBackend.TotalTime.TotalSeconds)):mm\\:ss}";
             if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
             if (!isDragging) ProgressBar.Value = time.TotalSeconds;
             Player.AvoidNextQueue = false;
+
+            progressTimer.Start(); // resync the progress timer
         }
         private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
         private void TrackTitle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -535,7 +527,13 @@ namespace FRESHMusicPlayer
         }
         private void TrackContextMiniplayer_Click(object sender, RoutedEventArgs e)
         {
-            if (MiniPlayerMode) SetMiniPlayerMode(false); else SetMiniPlayerMode(true);
+            Hide();
+            var miniPlayer = new MiniPlayer(this);
+            miniPlayer.Owner = this;
+            miniPlayer.ShowDialog();
+            Top = miniPlayer.Top;
+            Left = miniPlayer.Left;
+            Show();
         }
         private void TrackContext_PauseAuto_Click(object sender, RoutedEventArgs e)
         {
@@ -638,25 +636,18 @@ namespace FRESHMusicPlayer
             switch (e.Key)
             {
                 case Key.OemTilde:
-                    var box = new Forms.FMPTextEntryBox(string.Empty);
+                    var box = new FMPTextEntryBox(string.Empty);
                     box.ShowDialog();
                     if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.RelativeOrAbsolute);
                     break;
                 case Key.F1:
-                    Hide();
-                    progressTimer.Stop();
-                    var miniPlayer = new MiniPlayer(this);
-                    miniPlayer.Owner = this;
-                    miniPlayer.ShowDialog();
-                    Top = miniPlayer.Top;
-                    Left = miniPlayer.Left;
-                    Show();
-                    if (Player.FileLoaded) progressTimer.Start();
-                    //GC.Collect(2);
+                    GC.Collect(2);
                     break;
                 case Key.F2:
-                    //NotificationHandler.Add(new Notification { ContentText = Properties.Resources.APPLICATION_CRITICALERROR });
                     throw new Exception("Exception for debugging");
+                case Key.F3:
+                    Topmost = !Topmost;
+                    break;
                 case Key.F5:
                     ContentFrame.Refresh();
                     break;
