@@ -334,7 +334,7 @@ namespace FRESHMusicPlayer
             if (App.Config.IntegrateDiscordRPC) discordIntegration = new DiscordIntegration();
             else
             {
-                discordIntegration.Close();
+                discordIntegration?.Close();
                 discordIntegration = null;
             }
         }
@@ -342,11 +342,11 @@ namespace FRESHMusicPlayer
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
-                smtcIntegration.Update(CurrentTrack, status);
+                smtcIntegration?.Update(CurrentTrack, status);
             }
             if (App.Config.IntegrateDiscordRPC)
             {
-                discordIntegration.Update(CurrentTrack, status);
+                discordIntegration?.Update(CurrentTrack, status);
             }
         }
         #region Tabs
