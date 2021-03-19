@@ -14,6 +14,12 @@ namespace FRESHMusicPlayer.Utilities
 {
     public static class InterfaceUtils
     {
+        /// <summary>
+        /// Collapses the box and lebel if the value is null or empty.
+        /// </summary>
+        /// <param name="box"></param>
+        /// <param name="label"></param>
+        /// <param name="value"></param>
         public static void SetField(TextBlock box, TextBlock label, string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -35,6 +41,15 @@ namespace FRESHMusicPlayer.Utilities
 
             return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
         }
+        /// <summary>
+        /// Handles everything related to drag drop
+        /// </summary>
+        /// <param name="tracks">The file paths that were dropped</param>
+        /// <param name="player">An instance of the Player</param>
+        /// <param name="library">An instance of the Library</param>
+        /// <param name="enqueue">Whether to enqueue the tracks that were dropped</param>
+        /// <param name="import">Whether to import the tracks that were dropped</param>
+        /// <param name="clearqueue">Whether to clear the queue before handling everything else</param>
         public static async void DoDragDrop(string[] tracks, Player player, GUILibrary library, bool enqueue = true, bool import = true, bool clearqueue = true)
         {
             if (clearqueue) player.Queue.Clear();
@@ -67,6 +82,14 @@ namespace FRESHMusicPlayer.Utilities
                 if (import) await Task.Run(() => library.Import(tracks));
             }
         }
+        /// <summary>
+        /// Provides a storyboard with a double animation for convenience
+        /// </summary>
+        /// <param name="from">The start value</param>
+        /// <param name="to">The end value</param>
+        /// <param name="duration">How long the animation will run</param>
+        /// <param name="path">The property to animate</param>
+        /// <returns>A storyboard ready to begin</returns>
         public static Storyboard GetDoubleAnimation(double from, double to, TimeSpan duration, PropertyPath path)
         {
             var sb = new Storyboard();

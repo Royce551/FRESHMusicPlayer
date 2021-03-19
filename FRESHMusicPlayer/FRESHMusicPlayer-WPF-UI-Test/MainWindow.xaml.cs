@@ -516,6 +516,8 @@ namespace FRESHMusicPlayer
             if (Player.FileLoaded) tracks.Add(Player.FilePath); // if playing, edit the file the user is playing
             else tracks = Player.Queue.Queue;
             var tagEditor = new TagEditor(tracks, Player, Library);
+            tagEditor.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            tagEditor.Owner = this;
             tagEditor.Show();
         }
         private void TrackContentPlaylistManagement_Click(object sender, RoutedEventArgs e)
@@ -524,6 +526,8 @@ namespace FRESHMusicPlayer
             if (Player.FileLoaded) track = Player.FilePath;
             else track = null;
             var playlistManagement = new PlaylistManagement(Library, NotificationHandler, track);
+            playlistManagement.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            playlistManagement.Owner = this;
             playlistManagement.Show();
         }
         private void TrackContextMiniplayer_Click(object sender, RoutedEventArgs e)

@@ -7,7 +7,15 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     /// </summary>
     public interface IPlaybackIntegration
     {
+        /// <summary>
+        /// Updates the integration with new information
+        /// </summary>
+        /// <param name="track">The current track</param>
+        /// <param name="status">The playback status of the current track</param>
         void Update(Track track, PlaybackStatus status);
+        /// <summary>
+        /// Prepares the integration to be closed and set to null (basically Dispose)
+        /// </summary>
         void Close();
     }
     /// <summary>

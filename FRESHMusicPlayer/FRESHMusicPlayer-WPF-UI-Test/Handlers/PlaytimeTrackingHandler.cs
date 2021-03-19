@@ -7,6 +7,9 @@ using System.IO;
 
 namespace FRESHMusicPlayer.Handlers
 {
+    /// <summary>
+    /// Writes the currently playing track to a file, which can later be read by FRESHMusicPlayer.Favorites or some other tool
+    /// </summary>
     public class PlaytimeTrackingHandler
     {
         public TrackingFile TrackingFile;
