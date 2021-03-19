@@ -515,7 +515,7 @@ namespace FRESHMusicPlayer
             var tracks = new List<string>();
             if (Player.FileLoaded) tracks.Add(Player.FilePath); // if playing, edit the file the user is playing
             else tracks = Player.Queue.Queue;
-            var tagEditor = new TagEditor(tracks, Player);
+            var tagEditor = new TagEditor(tracks, Player, Library);
             tagEditor.Show();
         }
         private void TrackContentPlaylistManagement_Click(object sender, RoutedEventArgs e)

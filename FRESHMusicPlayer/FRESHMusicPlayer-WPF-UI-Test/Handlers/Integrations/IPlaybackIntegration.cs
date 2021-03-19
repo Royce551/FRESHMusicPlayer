@@ -1,17 +1,18 @@
 ﻿using ATL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Handlers.Integrations
 {
+    /// <summary>
+    /// Integrates FMP with something that can display current playback info
+    /// </summary>
     public interface IPlaybackIntegration
     {
         void Update(Track track, PlaybackStatus status);
         void Close();
     }
+    /// <summary>
+    /// Our own version of WinRT's MediaPlaybackStatus in order to avoid type loading issues on Windows 7.
+    /// </summary>
     public enum PlaybackStatus
     {
         Changing = 1,

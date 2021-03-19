@@ -1,6 +1,6 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
-using FRESHMusicPlayer.Utilities;
+using FRESHMusicPlayer.Handlers;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -27,9 +27,11 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         private readonly HttpClient httpClient = new HttpClient();
 
         private readonly Player player;
-        public TagEditor(List<string> filePaths, Player player = null)
+        private readonly GUILibrary library;
+        public TagEditor(List<string> filePaths, Player player = null, GUILibrary library = null)
         {
             this.player = player ?? new Player();
+            this.library = library;
             InitializeComponent();
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/8.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
             FilePaths = filePaths;
@@ -107,9 +109,9 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
                 track.EmbeddedPictures.Clear();
                 foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
-                track.Save(); // TODO: do something about these
-                //DatabaseUtils.Remove(path);
-                //DatabaseUtils.Import(path);
+                track.Save();
+                library?.Remove(path); // update library entry, if available
+                library?.Import(path);
             }
         }
 
@@ -263,7 +265,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void NewWindowItem_MouseDown(object sender, RoutedEventArgs e)
         {
-            var tagEditor = new TagEditor(FilePaths);
+            var tagEditor = new TagEditor(FilePaths, player, library);
             tagEditor.Show();
         }
 

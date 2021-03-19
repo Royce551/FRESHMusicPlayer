@@ -162,9 +162,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\SkinResourceDictionary.cs" />
-    <Compile Include="Utilities\DatabaseUtils.cs" />
     <Compile Include="Utilities\InterfaceUtils.cs" />
-    <Compile Include="Utilities\WindowsInteropUtils.cs" />
     <Page Include="Forms\MiniPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

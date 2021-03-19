@@ -3,6 +3,7 @@ using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 {
     class SMTCIntegration : IPlaybackIntegration
     {
-        private SystemMediaTransportControls smtc;
+        private readonly SystemMediaTransportControls smtc;
 
         private readonly MainWindow window;
 
@@ -22,7 +23,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         {
             this.window = window;
 
-            var smtcInterop = (WindowsInteropUtils.ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
+            var smtcInterop = (ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
             var wih = new WindowInteropHelper(window);
             IntPtr hWnd = wih.Handle;
             smtc = smtcInterop.GetForWindow(hWnd, new Guid("99FA3FF4-1742-42A6-902E-087D41F965EC"));
@@ -72,6 +73,21 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 default:
                     break;
             }
+        }
+        [Guid("ddb0472d-c911-4a1f-86d9-dc3d71a95f5a")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIInspectable)]
+        interface ISystemMediaTransportControlsInterop
+        {
+            SystemMediaTransportControls GetForWindow(IntPtr Window, in Guid riid);
+        }
+
+        [ComImport]
+        [Guid("3E68D4BD-7135-4D10-8018-9FB6D9F33FA1")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        interface IInitializeWithWindow
+        {
+            void Initialize(IntPtr hwnd);
+
         }
     }
 }
