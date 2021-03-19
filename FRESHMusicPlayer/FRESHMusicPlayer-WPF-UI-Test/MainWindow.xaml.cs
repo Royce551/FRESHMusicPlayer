@@ -1,5 +1,6 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Forms;
+using FRESHMusicPlayer.Forms.Export;
 using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
@@ -649,7 +650,7 @@ namespace FRESHMusicPlayer
                     Topmost = !Topmost;
                     break;
                 case Key.F5:
-                    ContentFrame.Refresh();
+                    new ExportLibrary(this).Show();
                     break;
             }
         }
