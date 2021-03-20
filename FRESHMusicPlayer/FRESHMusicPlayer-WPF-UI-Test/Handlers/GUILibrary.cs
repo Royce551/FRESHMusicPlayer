@@ -23,8 +23,7 @@ namespace FRESHMusicPlayer.Handlers
 
         public override void Nuke(bool nukePlaylists = true)
         {
-            Database.GetCollection<DatabaseTrack>("tracks").DeleteAll();
-            if (nukePlaylists) Database.GetCollection<DatabasePlaylist>("playlists").DeleteAll();
+            base.Nuke(nukePlaylists);
             notificationHandler.Add(new Notification
             {
                 ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
