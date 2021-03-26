@@ -125,6 +125,7 @@
     <Compile Include="Handlers\Integrations\DiscordIntegration.cs" />
     <Compile Include="Handlers\Integrations\IPlaybackIntegration.cs" />
     <Compile Include="Handlers\Integrations\SMTCIntegration.cs" />
+    <Compile Include="Handlers\LoggingHandler.cs" />
     <Compile Include="Handlers\Notifications\Notification.cs" />
     <Compile Include="Handlers\PlaytimeTrackingHandler.cs" />
     <Compile Include="Handlers\UpdateHandler.cs" />

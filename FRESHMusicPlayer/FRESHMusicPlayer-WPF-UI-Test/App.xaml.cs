@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using FRESHMusicPlayer.Handlers;
 
 namespace FRESHMusicPlayer
 {
@@ -23,10 +24,14 @@ namespace FRESHMusicPlayer
         private Player player;
         void App_Startup(object sender, StartupEventArgs e )
         {
+            LoggingHandler.Log("Handling configuration...");
+
             Config = ConfigurationHandler.Read();
             player = new Player { Volume = Config.Volume };
             if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
+
+            LoggingHandler.Log("Handling command line args...");
 
             if (e.Args.Length > 0)
             {

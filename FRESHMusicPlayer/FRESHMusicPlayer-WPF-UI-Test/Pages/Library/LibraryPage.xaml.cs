@@ -16,8 +16,6 @@ namespace FRESHMusicPlayer.Pages.Library
     /// </summary>
     public partial class LibraryPage : Page
     {
-        private Menu previousPage;
-
         private readonly MainWindow window;
         public LibraryPage(MainWindow window, string search = null)
         {
@@ -32,7 +30,7 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        public void LoadLibrary()
+        public async void LoadLibrary() // TODO: figure out how to make this not async void
         {
             TracksPanel.Items.Clear();
             CategoryPanel.Items.Clear();
@@ -40,20 +38,20 @@ namespace FRESHMusicPlayer.Pages.Library
             switch (window.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
                 case Menu.Tracks:
-                    ShowTracks();
+                    await ShowTracks();
                     break;
                 case Menu.Artists:
-                    ShowArtists();
+                    await ShowArtists();
                     break;
                 case Menu.Albums:
-                    ShowAlbums();
+                    await ShowAlbums();
                     break;
                 case Menu.Playlists:
-                    ShowPlaylists();
+                    await ShowPlaylists();
                     break;
             }
         }
-        public async void ShowTracks()
+        public async Task ShowTracks()
         {
             LeftSide.Width = new GridLength(0);
             int length = 0;
@@ -72,7 +70,7 @@ namespace FRESHMusicPlayer.Pages.Library
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {Math.Floor(lengthTimeSpan.TotalHours)}:{lengthTimeSpan:mm}:{lengthTimeSpan:ss}";
         }
-        public async void ShowArtists()
+        public async Task ShowArtists()
         {
             await Task.Run(() =>
             {
@@ -83,7 +81,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 }
             });
         }
-        public async void ShowAlbums()
+        public async Task ShowAlbums()
         {
             await Task.Run(() =>
             {
@@ -94,7 +92,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 }
             });
         }
-        public async void ShowPlaylists()
+        public async Task ShowPlaylists()
         {
             var x = window.Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             await Task.Run(() =>
@@ -107,7 +105,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 }
             });
         }
-        public async void ShowTracksforArtist(string selectedItem)
+        public async Task ShowTracksforArtist(string selectedItem)
         {
             TracksPanel.Items.Clear();
             int length = 0;
@@ -122,7 +120,7 @@ namespace FRESHMusicPlayer.Pages.Library
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-        public async void ShowTracksforAlbum(string selectedItem)
+        public async Task ShowTracksforAlbum(string selectedItem)
         {
             TracksPanel.Items.Clear();
             int length = 0;
@@ -137,7 +135,7 @@ namespace FRESHMusicPlayer.Pages.Library
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-        public async void ShowTracksforPlaylist(string selectedItem)
+        public async Task ShowTracksforPlaylist(string selectedItem)
         {
             TracksPanel.Items.Clear();
             int length = 0;
@@ -152,24 +150,29 @@ namespace FRESHMusicPlayer.Pages.Library
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-        private void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (window.SelectedMenu == Menu.Artists) ShowTracksforArtist(selectedItem);
-            else if (window.SelectedMenu == Menu.Playlists) ShowTracksforPlaylist(selectedItem);
-            else ShowTracksforAlbum(selectedItem);
+            if (window.SelectedMenu == Menu.Artists) await ShowTracksforArtist(selectedItem);
+            else if (window.SelectedMenu == Menu.Playlists) await ShowTracksforPlaylist(selectedItem);
+            else await ShowTracksforAlbum(selectedItem);
         }
-        private void MainWindow_TabChanged(object sender, string e)
+        //private void MainWindow_TabChanged(object sender, string e)
+        //{
+        //    if (previousPage == Menu.Tracks) LeftSide.Width = new GridLength(222);
+        //    LoadLibrary();
+        //    if (e != null)
+        //    {
+        //        Thread.Sleep(10);
+        //        CategoryPanel.SelectedItem = e;
+        //    }
+        //    previousPage = window.SelectedMenu;
+        //}
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (previousPage == Menu.Tracks) LeftSide.Width = new GridLength(222);
-            LoadLibrary();
-            if (e != null)
-            {
-                Thread.Sleep(10);
-                CategoryPanel.SelectedItem = e;
-            }
-            previousPage = window.SelectedMenu;
+
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -207,5 +210,7 @@ namespace FRESHMusicPlayer.Pages.Library
             window.Player.Queue.Add(tracks);
             window.Player.PlayMusic();
         }
+
+        
     }
 }

@@ -7,11 +7,11 @@
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages.Library"
       mc:Ignorable="d" 
       d:DesignHeight="372" d:DesignWidth="694"
-      Title="LibraryPage" Unloaded="Page_Unloaded" DragEnter="Page_DragEnter" Drop="Page_Drop" AllowDrop="True">
+      Title="LibraryPage" Unloaded="Page_Unloaded" DragEnter="Page_DragEnter" Drop="Page_Drop" AllowDrop="True" Loaded="Page_Loaded">
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="23*"/>
-            <RowDefinition x:Name="DetailsPane" Height="45px"/>
+            <RowDefinition x:Name="DetailsPane" Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="LeftSide" Width="222"/>
@@ -35,15 +35,35 @@
               />
         <ListBox x:Name="CategoryPanel" Margin="0,0,5,0" Background="{StaticResource SecondaryColor}" Foreground="{StaticResource PrimaryTextColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0" ScrollViewer.PanningMode="Both"/>
 
-        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Background="{StaticResource BackgroundColor}">
+        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Height="45" Background="{StaticResource BackgroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="InfoLabel" Text="99 Tracks ・ 10:00:00" Grid.Column="0" Foreground="{StaticResource SecondaryTextColor}" FontSize="12" Margin="10" VerticalAlignment="Center"/>
-            <Button x:Name="QueueAllButton" Content="{x:Static resx:Resources.LIBRARY_ENQUEUEALL}" Grid.Column="1" Margin="10,10,0,10" Padding="5,1" Click="QueueAllButton_Click"/>
-            <Button x:Name="PlayAllButton" Content="{x:Static resx:Resources.LIBRARY_PLAYALL}" Grid.Column="2" Margin="10" Padding="5,1" Click="PlayAllButton_Click"/>
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>-->
+
+            <!--<DockPanel Grid.Column="0" Margin="10,5,5,5" LastChildFill="False">
+                <TextBlock DockPanel.Dock="Left" Text="Sort" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+                <ComboBox DockPanel.Dock="Left" Margin="10,0,0,0" Width="120">
+                    <ComboBoxItem Content="{x:Static resx:Resources.TAGEDITOR_TITLE}"/>
+                    <ComboBoxItem Content="{x:Static resx:Resources.TAGEDITOR_ARTIST}"/>
+                    <ComboBoxItem Content="{x:Static resx:Resources.TRACKINFO_ALBUM}"/>
+                    <ComboBoxItem Content="{x:Static resx:Resources.TAGEDITOR_TRACKNUM}"/>
+                    <ComboBoxItem Content="Length"/>
+                </ComboBox>
+                <ComboBox DockPanel.Dock="Left" Margin="10,0,0,0" Width="50">
+                    <ComboBoxItem Content="↑"/>
+                    <ComboBoxItem Content="↓"/>
+                </ComboBox>
+            </DockPanel>-->
+            
+            <TextBlock x:Name="InfoLabel" Text="99 Tracks ・ 10:00:00" Grid.Column="0" Foreground="{StaticResource SecondaryTextColor}" Grid.Row="2" FontSize="12" Margin="10" VerticalAlignment="Center"/>
+            <Button x:Name="QueueAllButton" Content="{x:Static resx:Resources.LIBRARY_ENQUEUEALL}" Grid.Column="1" Grid.Row="2" Margin="10,10,0,10" Padding="5,1" Click="QueueAllButton_Click"/>
+            <Button x:Name="PlayAllButton" Content="{x:Static resx:Resources.LIBRARY_PLAYALL}" Grid.Column="2" Grid.Row="2" Margin="10" Padding="5,1" Click="PlayAllButton_Click"/>
         </Grid>
 
     </Grid>

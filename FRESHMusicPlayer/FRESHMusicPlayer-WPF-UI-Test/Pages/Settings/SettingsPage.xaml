@@ -56,7 +56,7 @@
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="German"/>
                         <ComboBoxItem Content="Vietnamese"/>
-                        <ComboBoxItem Content="Portuguese"/>
+                        <ComboBoxItem Content="Portuguese"/> 
                         <ComboBoxItem Content="Turkish"/>
                         <ComboBoxItem Content="Dutch"/>
                     </ComboBox>

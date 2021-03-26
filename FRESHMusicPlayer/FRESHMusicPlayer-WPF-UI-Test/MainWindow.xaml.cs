@@ -66,6 +66,7 @@ namespace FRESHMusicPlayer
         private IPlaybackIntegration discordIntegration;
         public MainWindow(Player player, string[] initialFile = null)
         {
+            LoggingHandler.Log("Starting main window...");
             Player = player;
             InitializeComponent();
             Player.SongChanged += Player_SongChanged;
@@ -77,6 +78,7 @@ namespace FRESHMusicPlayer
                 Interval = 1000
             };
             progressTimer.Tick += ProgressTimer_Tick;
+            LoggingHandler.Log("Reading library...");
             LiteDatabase library;
             try
             {
@@ -111,7 +113,8 @@ namespace FRESHMusicPlayer
                 TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Collapsed;
                 SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Collapsed;
             }
-            
+            LoggingHandler.Log("Ready to go!");
+
             if (initialFile != null)
             {
                 Player.Queue.Add(initialFile);
@@ -203,6 +206,7 @@ namespace FRESHMusicPlayer
         }
         public void ShowAuxilliaryPane(AuxiliaryPane pane, int width = 235, bool openleft = false)
         {
+            LoggingHandler.Log($"Showing pane --> {pane}");
             if (SelectedAuxiliaryPane == pane)
             {
                 HideAuxilliaryPane();
@@ -350,9 +354,10 @@ namespace FRESHMusicPlayer
                 discordIntegration?.Update(CurrentTrack, status);
             }
         }
-        #region Tabs
         private void ChangeTabs(Menu tab, string search = null)
         {
+            LoggingHandler.Log($"Changing tabs -> {tab}");
+
             SelectedMenu = tab;
             TextBlock tabLabel;
             switch (SelectedMenu)
@@ -388,9 +393,6 @@ namespace FRESHMusicPlayer
         }
         #endregion
 
-
-        #endregion
-
         #region Events
         #region Player
         private void Player_SongStopped(object sender, EventArgs e)
@@ -401,6 +403,8 @@ namespace FRESHMusicPlayer
             CoverArtBox.Source = null;
             SetIntegrations(PlaybackStatus.Stopped);
             SetCoverArtVisibility(false);
+
+            LoggingHandler.Log("Stopping!");
         }
 
         private void Player_SongChanged(object sender, EventArgs e)
@@ -439,6 +443,8 @@ namespace FRESHMusicPlayer
                 PlayPauseMethod();
                 PauseAfterCurrentTrack = false;
             }
+
+            LoggingHandler.Log("Changing tracks");
         }
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
