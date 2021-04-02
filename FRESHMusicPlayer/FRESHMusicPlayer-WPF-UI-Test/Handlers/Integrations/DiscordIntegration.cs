@@ -14,8 +14,14 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public DiscordIntegration()
         {
+            LoggingHandler.Log("Starting Discord integration");
+
             client = new DiscordRpcClient("656678380283887626");
             client.Initialize();
+            client.OnRpcMessage += (sender, e) =>
+            {
+                LoggingHandler.Log($"Discord: {e.Type}");
+            };
         }
 
         public void Update(Track track, PlaybackStatus status)
@@ -52,6 +58,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public void Close()
         {
+            LoggingHandler.Log("Closing Discord integration");
+
+            client.ClearPresence();
             client.Dispose();
         }
 

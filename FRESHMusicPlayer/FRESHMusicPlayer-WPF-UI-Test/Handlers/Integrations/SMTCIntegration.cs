@@ -21,6 +21,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public SMTCIntegration(MainWindow window)
         {
+            LoggingHandler.Log("Starting SMTC Integration");
+
             this.window = window;
 
             var smtcInterop = (ISystemMediaTransportControlsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(SystemMediaTransportControls));
@@ -48,6 +50,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public void Close()
         {
+            LoggingHandler.Log("Closing SMTC integration");
             // nothing needs to be done
         }
 

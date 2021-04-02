@@ -18,6 +18,8 @@ namespace FRESHMusicPlayer.Handlers
         private readonly MainWindow window;
         public PlaytimeTrackingHandler(MainWindow window)
         {
+            LoggingHandler.Log("Starting Playtime Logging Handler");
+
             FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Tracking");
             TrackingFile = Read();
             this.window = window;
@@ -48,9 +50,11 @@ namespace FRESHMusicPlayer.Handlers
                     }
                 };
                 TrackingFile.Entries.Add(trackingEntry);
+                LoggingHandler.Log("Playtime Logging: Entry created!");
             }
-            catch
+            catch (Exception ex)
             {
+                LoggingHandler.Log($"Playtime Logging: Exception was thrown - {ex}");
                 // ignored
             }
         }

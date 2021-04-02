@@ -97,6 +97,7 @@ namespace FRESHMusicPlayer
             {
                 MessageBox.Show(message);
             }
+            LoggingHandler.Log($"There was an unhandled exception:\n{e.Exception}");
             //try
             //{
             //    var box = new CriticalErrorBox(e, logPath, fileName);
