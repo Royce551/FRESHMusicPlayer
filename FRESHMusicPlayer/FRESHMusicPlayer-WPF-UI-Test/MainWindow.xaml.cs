@@ -62,6 +62,7 @@ namespace FRESHMusicPlayer
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
 
+        private FileSystemWatcher watcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
         public MainWindow(Player player, string[] initialFile = null)
@@ -78,6 +79,21 @@ namespace FRESHMusicPlayer
                 Interval = 1000
             };
             progressTimer.Tick += ProgressTimer_Tick;
+
+            watcher.Filter = "instance";
+            watcher.IncludeSubdirectories = false;
+            watcher.EnableRaisingEvents = true;
+            watcher.Changed += (object sender, FileSystemEventArgs args) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    var files = File.ReadAllLines(args.FullPath);
+                    player.Queue.Clear();
+                    player.Queue.Add(files);
+                    player.PlayMusic();
+                    File.Delete(args.FullPath);
+                });
+            };
             LoggingHandler.Log("Reading library...");
             LiteDatabase library;
             try
@@ -85,33 +101,10 @@ namespace FRESHMusicPlayer
                 library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
                 Library = new GUILibrary(library, NotificationHandler);
             }
-            catch
+            catch (IOException) // library is *probably* being used by another FMP.
             {
-                NotificationHandler.Add(new Notification
-                {
-                    ContentText = Properties.Resources.NOTIFICATION_LIBRARYFAILED,
-                    ButtonText = "Retry",
-                    OnButtonClicked = () =>
-                    {
-                        try
-                        {
-                            library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
-                            Library = new GUILibrary(library, NotificationHandler);
-                            TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Visible;
-                            SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Visible;
-                            return true;
-                        }
-                        catch
-                        {
-                            return false;
-                        }
-                    },
-                    DisplayAsToast = true,
-                    Type = NotificationType.Failure
-                });
-                App.Config.CurrentMenu = Menu.Import;
-                TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = Visibility.Collapsed;
-                SearchButton.Visibility = QueueManagementButton.Visibility = Visibility.Collapsed;
+                File.WriteAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "instance"), initialFile);
+                Application.Current.Shutdown();
             }
             LoggingHandler.Log("Ready to go!");
 
@@ -121,7 +114,6 @@ namespace FRESHMusicPlayer
                 Player.PlayMusic();
             }
         }
-
 
         #region Controls
         public void PlayPauseMethod()
@@ -699,6 +691,7 @@ namespace FRESHMusicPlayer
         {
             UpdateIntegrations();
             ProcessSettings(true);
+            if (!Player.FileLoaded) HandlePersistence();
             var sb = new Storyboard();
             var doubleAnimation = new DoubleAnimation(0f, 1f, TimeSpan.FromSeconds(1));
             doubleAnimation.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut };
@@ -706,7 +699,6 @@ namespace FRESHMusicPlayer
             sb.Children.Add(doubleAnimation);
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
-            if (!Player.FileLoaded) HandlePersistence();
             await new UpdateHandler(NotificationHandler).UpdateApp();
         }
         private void Window_Closed(object sender, EventArgs e)
@@ -717,6 +709,7 @@ namespace FRESHMusicPlayer
             ConfigurationHandler.Write(App.Config);
             Library.Database?.Dispose();
             progressTimer.Dispose();
+            watcher.Dispose();
             WritePersistence();
         }
         #endregion
