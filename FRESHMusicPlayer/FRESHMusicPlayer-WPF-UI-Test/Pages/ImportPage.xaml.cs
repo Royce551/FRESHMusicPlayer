@@ -93,7 +93,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void Page_Drop(object sender, DragEventArgs e)
         {
-            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library, enqueue: false);        
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library, clearqueue: false, enqueue: false);        
         }
 
         private void TextBoxButton_Click(object sender, RoutedEventArgs e)

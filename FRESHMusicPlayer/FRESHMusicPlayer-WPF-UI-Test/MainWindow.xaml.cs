@@ -80,6 +80,20 @@ namespace FRESHMusicPlayer
             };
             progressTimer.Tick += ProgressTimer_Tick;
 
+            LoggingHandler.Log("Reading library...");
+
+            LiteDatabase library;
+            try
+            {
+                library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
+                Library = new GUILibrary(library, NotificationHandler);
+            }
+            catch (IOException) // library is *probably* being used by another FMP.
+            {
+                File.WriteAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "instance"), initialFile);
+                Application.Current.Shutdown();
+            }
+
             watcher.Filter = "instance";
             watcher.IncludeSubdirectories = false;
             watcher.EnableRaisingEvents = true;
@@ -94,18 +108,6 @@ namespace FRESHMusicPlayer
                     File.Delete(args.FullPath);
                 });
             };
-            LoggingHandler.Log("Reading library...");
-            LiteDatabase library;
-            try
-            {
-                library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
-                Library = new GUILibrary(library, NotificationHandler);
-            }
-            catch (IOException) // library is *probably* being used by another FMP.
-            {
-                File.WriteAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "instance"), initialFile);
-                Application.Current.Shutdown();
-            }
             LoggingHandler.Log("Ready to go!");
 
             if (initialFile != null)

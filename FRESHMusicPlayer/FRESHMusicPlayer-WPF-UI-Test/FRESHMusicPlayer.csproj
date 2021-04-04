@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Forms\TagEditor\Integrations\IReleaseIntegration.cs" />
     <Compile Include="Forms\TagEditor\Integrations\MusicBrainzIntegration.cs" />
+    <Compile Include="Forms\TagEditor\Integrations\OsuIntegration.cs" />
     <Compile Include="Forms\TagEditor\Integrations\ReleaseIntegrationPage.xaml.cs">
       <DependentUpon>ReleaseIntegrationPage.xaml</DependentUpon>
     </Compile>
