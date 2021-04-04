@@ -144,6 +144,7 @@ namespace FRESHMusicPlayer
             if (Player.CurrentTime.TotalSeconds <= 5) Player.PreviousSong();
             else
             {
+                if (!Player.FileLoaded) return;
                 Player.CurrentTime = TimeSpan.FromSeconds(0);
                 progressTimer.Start(); // to resync the progress timer
             }

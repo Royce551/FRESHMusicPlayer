@@ -16,6 +16,11 @@
                                      From="0"
                                      To="1.0" Duration="0:0:.25"
                                      />
+                    <DoubleAnimation Storyboard.TargetName="Border"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0"
+                                     To="1.0" Duration="0:0:.25"
+                                     />
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
