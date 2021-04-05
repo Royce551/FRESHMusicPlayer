@@ -92,11 +92,11 @@ namespace FRESHMusicPlayer.Pages.Library
         private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             MiscContext.Items.Clear();
-            var playlists = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var playlists = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToEnumerable();
             foreach (var playlist in playlists)
             {
                 var tracks = library.ReadTracksForPlaylist(playlist.Name);
-                var trackIsInPlaylist = tracks.Where(x => x.Path == FilePath).Count() != 0;
+                var trackIsInPlaylist = tracks.Any(x => x.Path == FilePath);
                 var item = new MenuItem
                 {
                     Header = playlist.Name,

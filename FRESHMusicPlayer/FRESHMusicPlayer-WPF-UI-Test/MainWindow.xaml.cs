@@ -716,5 +716,16 @@ namespace FRESHMusicPlayer
             WritePersistence();
         }
         #endregion
+
+        private void CoverArtBox_ToolTipOpening(object sender, ToolTipEventArgs e)
+        {
+            if (CurrentTrack != null)
+                CoverArtBoxToolTip.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
+        }
+
+        private void CoverArtBox_ToolTipClosing(object sender, ToolTipEventArgs e)
+        {
+            CoverArtBoxToolTip.Source = null;
+        }
     }
 }
