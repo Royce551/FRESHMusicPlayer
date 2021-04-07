@@ -83,6 +83,9 @@ namespace FRESHMusicPlayer.Pages
                     General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Prompt;
                     break;
             }
+            AutoImportFoldersListBox.Items.Clear();
+            foreach (var path in App.Config.AutoImportPaths)
+                AutoImportFoldersListBox.Items.Add(path);
             pageInitialized = true;
         }
 
@@ -243,6 +246,15 @@ namespace FRESHMusicPlayer.Pages
         private void Plugins_OpenFolder_Click(object sender, RoutedEventArgs e) => Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "FRESHMusicPlayer", "Plugins", "FMP-WPF"));
 
+        private void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new WinForms.FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                    App.Config.AutoImportPaths.Add(dialog.SelectedPath);
+            }
+            InitFields();
+        }
     }
     public enum LanguageCombo
     {

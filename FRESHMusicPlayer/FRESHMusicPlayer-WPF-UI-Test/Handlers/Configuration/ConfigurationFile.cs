@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace FRESHMusicPlayer.Handlers.Configuration
 {
     /// <summary>
@@ -65,5 +67,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// The last menu FMP was on before closing
         /// </summary>
         public Menu CurrentMenu { get; set; } = Menu.Import;
+        public List<string> AutoImportPaths { get; set; } = new List<string>();
     }
 }

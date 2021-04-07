@@ -62,6 +62,12 @@
                     </ComboBox>
                 </Grid>
                 <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
+
+                <TextBlock Text="Auto Import" Style="{StaticResource Subheader}"/>
+                <TextBlock Text="FMP will import new tracks from these folders:" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+                <ListBox x:Name="AutoImportFoldersListBox" Background="{StaticResource ForegroundColor}" Foreground="{StaticResource PrimaryTextColor}" MinHeight="50" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}"/>
+                <Button x:Name="General_AddFolderButton" Content="Add Folder" TextBlock.FontSize="16" Margin="0,5" Click="General_AddFolderButton_Click"/>
+
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>

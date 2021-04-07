@@ -51,7 +51,7 @@ namespace FRESHMusicPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
-        WinForms.Timer progressTimer;
+        
         public Menu SelectedMenu = Menu.Tracks;
         public AuxiliaryPane SelectedAuxiliaryPane = AuxiliaryPane.None;
         public Player Player;
@@ -63,6 +63,7 @@ namespace FRESHMusicPlayer
         public bool PauseAfterCurrentTrack = false;
 
         private FileSystemWatcher watcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
+        private WinForms.Timer progressTimer;
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
         public MainWindow(Player player, string[] initialFile = null)
@@ -109,7 +110,7 @@ namespace FRESHMusicPlayer
                 });
             };
             LoggingHandler.Log("Ready to go!");
-
+      
             if (initialFile != null)
             {
                 Player.Queue.Add(initialFile);
@@ -189,6 +190,8 @@ namespace FRESHMusicPlayer
         {
             if (!Player.Paused) PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
             else PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
+            if (PauseAfterCurrentTrack) ProgressIndicator2.Foreground = new SolidColorBrush(Color.FromRgb(212, 70, 63));
+            else ProgressIndicator2.Foreground = (Brush)FindResource("SecondaryTextColor");
         }
         #endregion
 
@@ -543,12 +546,8 @@ namespace FRESHMusicPlayer
         }
         private void TrackContext_PauseAuto_Click(object sender, RoutedEventArgs e)
         {
-            if (PauseAfterCurrentTrack) PauseAfterCurrentTrack = false;
-            else
-            {
-                PauseAfterCurrentTrack = true;
-                NotificationHandler.Add(new Notification { ContentText = Properties.Resources.NOTIFICATION_PAUSING });
-            }
+            PauseAfterCurrentTrack = !PauseAfterCurrentTrack;
+            UpdatePlayButtonState();
         }
         private void TrackContextArtist_Click(object sender, RoutedEventArgs e) => ChangeTabs(Menu.Artists, CurrentTrack?.Artist);
 
@@ -654,6 +653,11 @@ namespace FRESHMusicPlayer
                 case Key.F3:
                     Topmost = !Topmost;
                     break;
+                case Key.F4:
+                    var box2 = new FMPTextEntryBox("debug remove later");
+                    box2.ShowDialog();
+                    if (box2.OK) App.Config.AutoImportPaths = box2.Response.Split(';').ToList();
+                    break;
                 case Key.F5:
                     new ExportLibrary(this).Show();
                     break;
@@ -703,6 +707,35 @@ namespace FRESHMusicPlayer
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
             await new UpdateHandler(NotificationHandler).UpdateApp();
+            await PerformAutoImport();
+        }
+        public async Task PerformAutoImport()
+        {
+            if (App.Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
+                                                               // effort (and showing the notification)
+            var notification = new Notification { ContentText = "Scanning for new tracks..." };
+            NotificationHandler.Add(notification);
+            var filesToImport = new List<string>();
+            var library = Library.Read();
+            await Task.Run(() =>
+            {
+                foreach (var folder in App.Config.AutoImportPaths)
+                {
+                    var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                        .Where(name => name.EndsWith(".mp3")
+                            || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                            || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                            || name.EndsWith(".wma")
+                            || name.EndsWith(".aac")).ToArray();
+                    foreach (var file in files)
+                    {
+                        if (!library.Select(x => x.Path).Contains(file))
+                            filesToImport.Add(file);
+                    }
+                }
+                Library.Import(filesToImport);
+            });
+            NotificationHandler.Remove(notification);
         }
         private void Window_Closed(object sender, EventArgs e)
         {
