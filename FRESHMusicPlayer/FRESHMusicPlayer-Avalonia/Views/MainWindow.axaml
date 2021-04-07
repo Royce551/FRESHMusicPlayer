@@ -1,0 +1,82 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FRESHMusicPlayer_Avalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FRESHMusicPlayer_Avalonia.Views.MainWindow"
+        Icon="/Assets/icon.ico"
+        Title="FRESHMusicPlayer Cross-Platform Edition™"
+		
+		TransparencyLevelHint="AcrylicBlur"
+		Background="#E5000000"
+		>
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<DockPanel LastChildFill="False">
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Tracks">
+				<ListBox x:Name="Tracks_TracksListBox"/>
+				</TabItem>
+			
+            <TabItem Header="Artists" />
+            <TabItem Header="Albums" />
+            <TabItem Header="Playlists" />
+            <TabItem Header="Import">
+				<WrapPanel>
+					<TextBox Text="{Binding FilePathToPlay}" Watermark="File path to play"/>
+					<Button Command="{Binding OnClick}" Content="Play"/>
+				</WrapPanel>      
+            </TabItem>
+        </TabControl>
+        <Grid Background="{DynamicResource ThemeBorderMidBrush}" DockPanel.Dock="Bottom" Height="85">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image x:Name="CoverArtImage" Source="{Binding CoverArt}" Grid.Column="0" Margin="5,5,0,5" />
+            <!--Middle Section-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="TrackTitleTextBlock" Grid.Row="0" Text="{Binding Title}" FontSize="20" FontWeight="Bold" Padding="10,10,0,0" />
+                <TextBlock x:Name="TrackArtistTextBlock" Grid.Row="1" Text="{Binding Artist}" Foreground="{DynamicResource ThemeMidBrush}" Padding="10,0,0,0" />
+                <Grid Grid.Row="2" Margin="10, -15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat={}{mm:ss}}" Grid.Column="0" FontSize="12" Padding="0,22" />
+                    <Slider x:Name="ProgressSlider" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="5,0" />
+                    <TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat={}{mm:ss})}" Grid.Column="2" FontSize="12" Padding="0,22" />
+                </Grid>
+            </Grid>
+			<!--Right Section-->
+			<Grid Grid.Column="3">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<TextBlock Grid.Row="0" Text="Volume" Margin="10,0,50,0"/>
+                <Slider x:Name="VolumeSlider" Grid.Row="1" Maximum="1" Value="{Binding Volume}" Margin="10, -10"/>
+				<WrapPanel Grid.Row="2" VerticalAlignment="Center" Margin="10,0">
+					<Button x:Name="PreviousTrackButton" Content="Previous" />
+					<ToggleButton x:Name="ShuffleButton" Content="Shuffle" />
+					<Button x:Name="PlayPauseButton" Content="Pause" />
+					<ToggleButton x:Name="RepeatOneButton" Content="Repeat One" />
+					<Button x:Name="NextTrackButton" Content="Next" />
+				</WrapPanel>
+			</Grid>   
+        </Grid>
+    </DockPanel>
+
+</Window>
