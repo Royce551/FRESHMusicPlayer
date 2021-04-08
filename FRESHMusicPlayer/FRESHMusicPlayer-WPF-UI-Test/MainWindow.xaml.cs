@@ -77,7 +77,7 @@ namespace FRESHMusicPlayer
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
             progressTimer = new WinForms.Timer
             {
-                Interval = 1000
+                Interval = 100
             };
             progressTimer.Tick += ProgressTimer_Tick;
 
@@ -759,6 +759,16 @@ namespace FRESHMusicPlayer
         private void CoverArtBox_ToolTipClosing(object sender, ToolTipEventArgs e)
         {
             CoverArtBoxToolTip.Source = null;
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            progressTimer.Interval = 100;
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            progressTimer.Interval = 1000;
         }
     }
 }

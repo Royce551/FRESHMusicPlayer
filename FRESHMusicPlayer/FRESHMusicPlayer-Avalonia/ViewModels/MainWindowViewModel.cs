@@ -12,33 +12,52 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private Player player = new();
-        private Timer progressTimer = new Timer(100);
+        public Player Player { get; private set; } = new();
+        public Timer ProgressTimer { get; private set; } = new(100);
         public MainWindowViewModel()
         {
-            player.SongChanged += Player_SongChanged;
-            progressTimer.Elapsed += ProgressTimer_Elapsed;
+            Player.SongChanged += Player_SongChanged;
+            Player.SongStopped += Player_SongStopped;
+            Player.SongException += Player_SongException;
+            ProgressTimer.Elapsed += ProgressTimer_Elapsed;
         }
 
-        private void ProgressTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Player_SongException(object? sender, FRESHMusicPlayer.Handlers.PlaybackExceptionEventArgs e)
         {
-            CurrentTime = player.CurrentTime;
+            // TODO: error handling
+        }
+
+        private void Player_SongStopped(object? sender, EventArgs e)
+        {
+            Artist = "Nothing Playing";
+            Title = "Nothing Playing";
+            CoverArt = null;
+            ProgressTimer.Stop();
+        }
+
+        private void ProgressTimer_Elapsed(object sender, ElapsedEventArgs e) => ProgressTick();
+
+        public void ProgressTick()
+        {
+            settingCurrentTimeFromViewModel = true;
+            CurrentTime = Player.CurrentTime;
+            settingCurrentTimeFromViewModel = false;
         }
 
         private void Player_SongChanged(object? sender, EventArgs e)
         {
-            var track = new Track(player.FilePath);
+            var track = new Track(Player.FilePath);
             Artist = track.Artist;
             Title = track.Title;
             CoverArt = new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));
-            TotalTime = player.TotalTime;
-            progressTimer.Start();
+            TotalTime = Player.TotalTime;
+            ProgressTimer.Start();
         }
 
         public void OnClick()
         {
-            player.PlayMusic(FilePathToPlay);
-            player.Volume = 0.6f;
+            Player.PlayMusic(FilePathToPlay);
+            Player.Volume = 0.6f;
         }
 
         private string? filePathToPlay;
@@ -58,11 +77,21 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
                 CurrentTimeSeconds = CurrentTime.TotalSeconds;
             }
         }
+
+        private bool settingCurrentTimeFromViewModel = false; // TODO: figure out how to get rid of this
         private double currentTimeSeconds;
         public double CurrentTimeSeconds
         {
             get => currentTimeSeconds;
-            set => this.RaiseAndSetIfChanged(ref currentTimeSeconds, value);
+            set
+            {
+                if (!settingCurrentTimeFromViewModel)
+                {
+                    Player.CurrentTime = TimeSpan.FromSeconds(value);
+                    ProgressTick();
+                }
+                this.RaiseAndSetIfChanged(ref currentTimeSeconds, value);
+            }
         }
         private TimeSpan totalTime;
         public TimeSpan TotalTime
@@ -70,8 +99,8 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             get => totalTime;
             set
             {
-                this.RaiseAndSetIfChanged(ref currentTime, value);
-                CurrentTimeSeconds = CurrentTime.TotalSeconds;
+                this.RaiseAndSetIfChanged(ref totalTime, value);
+                TotalTimeSeconds = TotalTime.TotalSeconds;
             }
         }
         private double totalTimeSeconds;
@@ -107,7 +136,7 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             get => volume;
             set
             {
-                player.Volume = value;
+                Player.Volume = value;
                 this.RaiseAndSetIfChanged(ref volume, value);
             }
         }

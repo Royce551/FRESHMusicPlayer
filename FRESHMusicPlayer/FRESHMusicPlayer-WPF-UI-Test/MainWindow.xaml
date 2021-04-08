@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" WindowStartupLocation="Manual"
-        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
+        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel" Activated="Window_Activated" Deactivated="Window_Deactivated">
     <Window.Resources>
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>

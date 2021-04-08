@@ -12,9 +12,6 @@
 		Background="#E5000000"
 		>
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
 
 	<DockPanel LastChildFill="False">
         <TabControl DockPanel.Dock="Top">
@@ -54,9 +51,9 @@
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat={}{mm:ss}}" Grid.Column="0" FontSize="12" Padding="0,22" />
+                    <TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Grid.Column="0" FontSize="12" Padding="0,22" />
                     <Slider x:Name="ProgressSlider" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="5,0" />
-                    <TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat={}{mm:ss})}" Grid.Column="2" FontSize="12" Padding="0,22" />
+                    <TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat=\{0:mm\\:ss\}}" Grid.Column="2" FontSize="12" Padding="0,22" />
                 </Grid>
             </Grid>
 			<!--Right Section-->
