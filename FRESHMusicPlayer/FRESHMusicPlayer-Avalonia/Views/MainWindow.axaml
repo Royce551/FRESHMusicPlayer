@@ -3,7 +3,9 @@
         xmlns:vm="using:FRESHMusicPlayer_Avalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="800" Height="540"
         x:Class="FRESHMusicPlayer_Avalonia.Views.MainWindow"
         Icon="/Assets/icon.ico"
         Title="FRESHMusicPlayer Cross-Platform Edition™"
@@ -11,21 +13,35 @@
 		TransparencyLevelHint="AcrylicBlur"
 		Background="#E5000000"
 		>
-
-
+        
+	<Window.Resources>
+		<svg:SvgImage x:Key="Pause" Source="/Assets/pause.svg"/>
+        <svg:SvgImage x:Key="Play" Source="/Assets/play.svg"/>
+	    <svg:SvgImage x:Key="RepeatNone" Source="/Assets/repeatNone.svg"/>
+	    <svg:SvgImage x:Key="RepeatOne" Source="/Assets/repeatOne.svg"/>
+	    <svg:SvgImage x:Key="RepeatQueue" Source="/Assets/repeatQueue.svg"/>
+	    <svg:SvgImage x:Key="ShuffleFalse" Source="/Assets/shuffleFalse.svg"/>
+	    <svg:SvgImage x:Key="ShuffleTrue" Source="/Assets/shuffleTrue.svg"/>
+	    <svg:SvgImage x:Key="SkipNext" Source="/Assets/skipNext.svg"/>
+	    <svg:SvgImage x:Key="SkipPrevious" Source="/Assets/skipPrevious.svg"/>
+	</Window.Resources>
+		
 	<DockPanel LastChildFill="False">
         <TabControl DockPanel.Dock="Top">
             <TabItem Header="Tracks">
-				<ListBox x:Name="Tracks_TracksListBox"/>
+				<TextBlock TextWrapping="Wrap" Text="Welcome to FMP Cross Platform Edition™! This is Development Build #2. There's no library yet. Head to the Import tab to play something!"/>
 				</TabItem>
-			
-            <TabItem Header="Artists" />
+
+			<TabItem Header="Artists" >
+				
+			</TabItem>
             <TabItem Header="Albums" />
             <TabItem Header="Playlists" />
             <TabItem Header="Import">
 				<WrapPanel>
 					<TextBox Text="{Binding FilePathToPlay}" Watermark="File path to play"/>
 					<Button Command="{Binding OnClick}" Content="Play"/>
+					<Button Command="{Binding EnqueueCommand}" Content="Enqueue"/>
 				</WrapPanel>      
             </TabItem>
         </TabControl>
@@ -66,11 +82,31 @@
 				<TextBlock Grid.Row="0" Text="Volume" Margin="10,0,50,0"/>
                 <Slider x:Name="VolumeSlider" Grid.Row="1" Maximum="1" Value="{Binding Volume}" Margin="10, -10"/>
 				<WrapPanel Grid.Row="2" VerticalAlignment="Center" Margin="10,0">
-					<Button x:Name="PreviousTrackButton" Content="Previous" />
-					<ToggleButton x:Name="ShuffleButton" Content="Shuffle" />
-					<Button x:Name="PlayPauseButton" Content="Pause" />
-					<ToggleButton x:Name="RepeatOneButton" Content="Repeat One" />
-					<Button x:Name="NextTrackButton" Content="Next" />
+					<Button x:Name="PreviousTrackButton" Command="{Binding SkipPreviousCommand}">
+					    <Image Source="{DynamicResource SkipPrevious}"/>
+					</Button>
+					<Button x:Name="ShuffleButton" Command="{Binding ShuffleCommand}">
+						<Panel>
+							<Image Source="{DynamicResource ShuffleFalse}" IsVisible="{Binding !Shuffle}"/>
+						    <Image Source="{DynamicResource ShuffleTrue}" IsVisible="{Binding Shuffle}"/>
+						</Panel>
+					</Button>
+					<Button x:Name="PlayPauseButton" Command="{Binding PlayPauseCommand}">
+						<Panel>
+							<Image Source="{DynamicResource Play}" IsVisible="{Binding Paused}"/>
+							<Image Source="{DynamicResource Pause}" IsVisible="{Binding !Paused}"/>
+						</Panel>
+					</Button>
+					<Button x:Name="RepeatOneButton" Command="{Binding RepeatCommand}">
+						<Panel>
+							<Image Source="{DynamicResource RepeatNone}" IsVisible="{Binding RepeatModeNone}"/>
+							<Image Source="{DynamicResource RepeatQueue}" IsVisible="{Binding RepeatModeAll}"/>
+							<Image Source="{DynamicResource RepeatOne}" IsVisible="{Binding RepeatModeOne}"/>
+						</Panel>
+					</Button>
+					<Button x:Name="NextTrackButton" Command="{Binding SkipNextCommand}">
+						<Image Source="{DynamicResource SkipNext}"/>
+					</Button>
 				</WrapPanel>
 			</Grid>   
         </Grid>

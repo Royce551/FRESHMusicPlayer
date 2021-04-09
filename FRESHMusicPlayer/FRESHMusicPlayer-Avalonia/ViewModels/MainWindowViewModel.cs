@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             Player.SongException += Player_SongException;
             ProgressTimer.Elapsed += ProgressTimer_Elapsed;
         }
-
+        #region Core
         private void Player_SongException(object? sender, FRESHMusicPlayer.Handlers.PlaybackExceptionEventArgs e)
         {
             // TODO: error handling
@@ -39,9 +39,11 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
 
         public void ProgressTick()
         {
-            settingCurrentTimeFromViewModel = true;
-            CurrentTime = Player.CurrentTime;
-            settingCurrentTimeFromViewModel = false;
+            currentTime = Player.CurrentTime;
+            currentTimeSeconds = Player.CurrentTime.TotalSeconds;
+            this.RaisePropertyChanged(nameof(CurrentTime));
+            this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
+            Player.AvoidNextQueue = false;
         }
 
         private void Player_SongChanged(object? sender, EventArgs e)
@@ -49,15 +51,101 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             var track = new Track(Player.FilePath);
             Artist = track.Artist;
             Title = track.Title;
-            CoverArt = new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));
+            if (track.EmbeddedPictures.Count != 0)
+                CoverArt = new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));
             TotalTime = Player.TotalTime;
             ProgressTimer.Start();
+        }
+
+        public bool RepeatModeNone { get => Player.Queue.RepeatMode == RepeatMode.None; }
+        public bool RepeatModeAll { get => Player.Queue.RepeatMode == RepeatMode.RepeatAll; }
+        public bool RepeatModeOne { get => Player.Queue.RepeatMode == RepeatMode.RepeatOne; }
+        private RepeatMode repeatMode = RepeatMode.RepeatAll;
+        public RepeatMode RepeatMode
+        {
+            get => repeatMode;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref repeatMode, value);
+                this.RaisePropertyChanged(nameof(RepeatModeNone));
+                this.RaisePropertyChanged(nameof(RepeatModeAll));
+                this.RaisePropertyChanged(nameof(RepeatModeOne));
+            }
+        }
+        private bool paused = false;
+        public bool Paused
+        {
+            get => paused;
+            set => this.RaiseAndSetIfChanged(ref paused, value);
+        }
+        private bool shuffle = false;
+        public bool Shuffle
+        {
+            get => shuffle;
+            set => this.RaiseAndSetIfChanged(ref shuffle, value);
+        }
+
+        public void SkipPreviousCommand()
+        {
+            // TODO: implement skip to beginning logic
+            Player.PreviousSong();
+        }
+        public void RepeatCommand()
+        {
+            if (Player.Queue.RepeatMode == RepeatMode.None)
+            {
+                Player.Queue.RepeatMode = RepeatMode.RepeatAll;
+                RepeatMode = RepeatMode.RepeatAll;
+            }
+            else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
+            {
+                Player.Queue.RepeatMode = RepeatMode.RepeatOne;
+                RepeatMode = RepeatMode.RepeatOne;
+            }
+            else
+            {
+                Player.Queue.RepeatMode = RepeatMode.None;
+                RepeatMode = RepeatMode.None;
+            }
+        }
+        public void PlayPauseCommand()
+        {
+            if (Player.Paused)
+            {
+                Player.ResumeMusic();
+                Paused = false;
+            }
+            else
+            {
+                Player.PauseMusic();
+                Paused = true;
+            }
+        }
+        public void ShuffleCommand()
+        {
+            if (Player.Queue.Shuffle)
+            {
+                Player.Queue.Shuffle = false;
+                Shuffle = false;
+            }
+            else
+            {
+                Player.Queue.Shuffle = true;
+                Shuffle = true;
+            }
+        }
+        public void SkipNextCommand()
+        {
+            Player.NextSong();
         }
 
         public void OnClick()
         {
             Player.PlayMusic(FilePathToPlay);
-            Player.Volume = 0.6f;
+        }
+        public void EnqueueCommand()
+        {
+            Player.Queue.Add(FilePathToPlay);
         }
 
         private string? filePathToPlay;
@@ -78,18 +166,14 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             }
         }
 
-        private bool settingCurrentTimeFromViewModel = false; // TODO: figure out how to get rid of this
         private double currentTimeSeconds;
         public double CurrentTimeSeconds
         {
             get => currentTimeSeconds;
             set
             {
-                if (!settingCurrentTimeFromViewModel)
-                {
-                    Player.CurrentTime = TimeSpan.FromSeconds(value);
-                    ProgressTick();
-                }
+                Player.CurrentTime = TimeSpan.FromSeconds(value);
+                ProgressTick();
                 this.RaiseAndSetIfChanged(ref currentTimeSeconds, value);
             }
         }
@@ -140,5 +224,10 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
                 this.RaiseAndSetIfChanged(ref volume, value);
             }
         }
+        #endregion
+
+        #region Library
+        #endregion
+
     }
 }
