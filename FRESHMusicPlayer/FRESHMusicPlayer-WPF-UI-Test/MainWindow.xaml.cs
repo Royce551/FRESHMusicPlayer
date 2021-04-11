@@ -86,7 +86,7 @@ namespace FRESHMusicPlayer
             LiteDatabase library;
             try
             {
-                library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
+                library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
                 Library = new GUILibrary(library, NotificationHandler);
             }
             catch (IOException) // library is *probably* being used by another FMP.

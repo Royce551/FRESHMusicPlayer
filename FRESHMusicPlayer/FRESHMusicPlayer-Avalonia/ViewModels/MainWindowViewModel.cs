@@ -1,4 +1,4 @@
-using ATL;
+﻿using ATL;
 using FRESHMusicPlayer;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,12 @@ using ReactiveUI;
 using Avalonia.Media.Imaging;
 using System.IO;
 using System.Timers;
+using LiteDB;
+using FRESHMusicPlayer.Handlers;
+using System.Collections.ObjectModel;
+using System.Reactive;
+using System.Linq;
+using System.Diagnostics;
 
 namespace FRESHMusicPlayer_Avalonia.ViewModels
 {
@@ -14,15 +20,29 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
     {
         public Player Player { get; private set; } = new();
         public Timer ProgressTimer { get; private set; } = new(100);
+        public Library Library { get; private set; }
         public MainWindowViewModel()
         {
+            
+            var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
+            Library = new Library(library);
+            InitializeLibrary();
             Player.SongChanged += Player_SongChanged;
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
-            ProgressTimer.Elapsed += ProgressTimer_Elapsed;
+            ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: remove shared
         }
+
+        private const string projectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 3";
+        private string windowTitle = projectName;
+        public string WindowTitle
+        {
+            get => windowTitle;
+            set => this.RaiseAndSetIfChanged(ref windowTitle, value);
+        }
+
         #region Core
-        private void Player_SongException(object? sender, FRESHMusicPlayer.Handlers.PlaybackExceptionEventArgs e)
+        private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
         {
             // TODO: error handling
         }
@@ -32,6 +52,7 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             Artist = "Nothing Playing";
             Title = "Nothing Playing";
             CoverArt = null;
+            WindowTitle = projectName;
             ProgressTimer.Stop();
         }
 
@@ -39,8 +60,6 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
 
         public void ProgressTick()
         {
-            currentTime = Player.CurrentTime;
-            currentTimeSeconds = Player.CurrentTime.TotalSeconds;
             this.RaisePropertyChanged(nameof(CurrentTime));
             this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
             Player.AvoidNextQueue = false;
@@ -53,7 +72,9 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             Title = track.Title;
             if (track.EmbeddedPictures.Count != 0)
                 CoverArt = new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));
-            TotalTime = Player.TotalTime;
+            this.RaisePropertyChanged(nameof(TotalTime));
+            this.RaisePropertyChanged(nameof(TotalTimeSeconds));
+            WindowTitle = $"{track.Artist} - {track.Title} | {projectName}";
             ProgressTimer.Start();
         }
 
@@ -158,39 +179,63 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
         private TimeSpan currentTime;
         public TimeSpan CurrentTime
         {
-            get => currentTime;
+            get
+            {
+                if (Player.FileLoaded)
+                    return Player.CurrentTime;
+                else return TimeSpan.Zero;
+                
+            }
             set
             {
                 this.RaiseAndSetIfChanged(ref currentTime, value);
-                CurrentTimeSeconds = CurrentTime.TotalSeconds;
+                //CurrentTimeSeconds = CurrentTime.TotalSeconds;
             }
         }
 
         private double currentTimeSeconds;
         public double CurrentTimeSeconds
         {
-            get => currentTimeSeconds;
+            get
+            {
+                if (Player.FileLoaded)
+                    return Player.CurrentTime.TotalSeconds;
+                else return 0;
+                
+            }
             set
             {
+                Debug.WriteLine($"CurrentTimeSeconds set. Value is {value}");
+                if (TimeSpan.FromSeconds(value) >= TotalTime) return;
                 Player.CurrentTime = TimeSpan.FromSeconds(value);
-                ProgressTick();
+                //ProgressTick();
                 this.RaiseAndSetIfChanged(ref currentTimeSeconds, value);
             }
         }
         private TimeSpan totalTime;
         public TimeSpan TotalTime
         {
-            get => totalTime;
+            get
+            {
+                if (Player.FileLoaded)
+                    return Player.TotalTime;
+                else return TimeSpan.Zero;
+            }
             set
             {
                 this.RaiseAndSetIfChanged(ref totalTime, value);
-                TotalTimeSeconds = TotalTime.TotalSeconds;
+                //TotalTimeSeconds = TotalTime.TotalSeconds;
             }
         }
         private double totalTimeSeconds;
         public double TotalTimeSeconds
         {
-            get => totalTimeSeconds;
+            get
+            {
+                if (Player.FileLoaded)
+                    return Player.TotalTime.TotalSeconds;
+                else return 0;
+            }
             set => this.RaiseAndSetIfChanged(ref totalTimeSeconds, value);
         }
 
@@ -227,6 +272,48 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
         #endregion
 
         #region Library
+
+        public void InitializeLibrary()
+        {
+            AllTracks?.Clear();
+            AllTracks = new ObservableCollection<DatabaseTrack>(Library.Read());
+            LibraryInfoText = $"Tracks: {AllTracks.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
+        }
+
+        public ObservableCollection<DatabaseTrack> AllTracks { get; set; } = new();
+        private string libraryInfoText;
+        public string LibraryInfoText
+        {
+            get => libraryInfoText;
+            set => this.RaiseAndSetIfChanged(ref libraryInfoText, value);
+        }
+
+        public void PlayCommand(string path)
+        {
+            Player.Queue.Clear();
+            Player.Queue.Add(path);
+            Player.PlayMusic();
+        }
+        public void EnqueueCommand(string path)
+        {
+            Player.Queue.Add(path);
+        }
+        public void DeleteCommand(string path)
+        {
+            Library.Remove(path);
+            InitializeLibrary();
+        }
+        public void EnqueueAllCommand()
+        {
+            Player.Queue.Add(AllTracks.Select(x => x.Path).ToArray());
+        }
+        public void PlayAllCommand()
+        {
+            Player.Queue.Clear();
+            Player.Queue.Add(AllTracks.Select(x => x.Path).ToArray());
+            Player.PlayMusic();
+        }
+
         #endregion
 
     }
