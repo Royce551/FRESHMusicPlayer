@@ -162,12 +162,12 @@
 						<ColumnDefinition Width="Auto"/>
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
-					<Button Grid.Row="0" Grid.ColumnSpan="2"  Content="Browse for tracks"/>
-					<Button Grid.Row="1" Grid.ColumnSpan="2" Content="Browse for playlist files"/>
-					<Button Grid.Row="2" Grid.ColumnSpan="2" Content="Browse for folders"/>
+					<Button Grid.Row="0" Grid.ColumnSpan="2" Command="{Binding BrowseTracksCommand}" Content="Browse for tracks"/>
+					<Button Grid.Row="1" Grid.ColumnSpan="2" Command="{Binding BrowsePlaylistFilesCommand}" Content="Browse for playlist files"/>
+					<Button Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding BrowseFoldersCommand}" Content="Browse for folders"/>
 					<TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="File path or URL"/>
-					<TextBox Grid.Row="4" Grid.Column="0"/>
-					<Button Grid.Row="4" Grid.Column="1" Content="Import"/>
+					<TextBox Grid.Row="4" Grid.Column="0" Text="{Binding FilePathOrURL}"/>
+					<Button Grid.Row="4" Grid.Column="1" Command="{Binding ImportFilePathCommand}" Content="Import"/>
 					<TextBlock Grid.Row="5" Grid.ColumnSpan="2" Text="You can also drag and drop to this page."/>
 				</Grid>
 			</TabItem>

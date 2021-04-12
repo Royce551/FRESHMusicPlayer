@@ -13,6 +13,10 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Linq;
 using System.Diagnostics;
+using Avalonia.Controls;
+using System.Threading.Tasks;
+using Avalonia.Controls.ApplicationLifetimes;
+using ATL.Playlist;
 
 namespace FRESHMusicPlayer_Avalonia.ViewModels
 {
@@ -21,9 +25,9 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
         public Player Player { get; private set; } = new();
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
+
         public MainWindowViewModel()
         {
-            
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
             Library = new Library(library);
             InitializeLibrary();
@@ -160,22 +164,6 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             Player.NextSong();
         }
 
-        public void OnClick()
-        {
-            Player.PlayMusic(FilePathToPlay);
-        }
-        public void EnqueueCommand()
-        {
-            Player.Queue.Add(FilePathToPlay);
-        }
-
-        private string? filePathToPlay;
-        public string? FilePathToPlay
-        {
-            get => filePathToPlay;
-            set => this.RaiseAndSetIfChanged(ref filePathToPlay, value);
-        }
-
         private TimeSpan currentTime;
         public TimeSpan CurrentTime
         {
@@ -189,7 +177,6 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref currentTime, value);
-                //CurrentTimeSeconds = CurrentTime.TotalSeconds;
             }
         }
 
@@ -208,7 +195,7 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
                 Debug.WriteLine($"CurrentTimeSeconds set. Value is {value}");
                 if (TimeSpan.FromSeconds(value) >= TotalTime) return;
                 Player.CurrentTime = TimeSpan.FromSeconds(value);
-                //ProgressTick();
+                ProgressTick();
                 this.RaiseAndSetIfChanged(ref currentTimeSeconds, value);
             }
         }
@@ -224,7 +211,6 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref totalTime, value);
-                //TotalTimeSeconds = TotalTime.TotalSeconds;
             }
         }
         private double totalTimeSeconds;
@@ -314,6 +300,94 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             Player.PlayMusic();
         }
 
+        private string filePathOrURL;
+        public string FilePathOrURL
+        {
+            get => filePathOrURL;
+            set => this.RaiseAndSetIfChanged(ref filePathOrURL, value);
+        }
+
+        private List<string> acceptableFilePaths = "*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac".Split(';').ToList();
+                                                                                                                                        // ripped directly from fmp-wpf 'cause i'm lazy
+        public async void BrowseTracksCommand()
+        {
+            var dialog = new OpenFileDialog()
+            {
+                Filters = new List<FileDialogFilter>
+                {
+                    new FileDialogFilter()
+                    {
+                        Name = "Audio Files",
+                        Extensions = acceptableFilePaths
+                    },
+                    new FileDialogFilter()
+                    {
+                        Name = "Other",
+                        Extensions = new List<string>(){"*"}
+                    }
+                }
+            };
+            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var files = await dialog.ShowAsync(desktop.MainWindow);
+                await Task.Run(() => Library.Import(files));
+            }
+            
+        }
+        public async void BrowsePlaylistFilesCommand()
+        {
+            var dialog = new OpenFileDialog()
+            {
+                Filters = new List<FileDialogFilter>
+                {
+                    new FileDialogFilter()
+                    {
+                        Name = "Playlist Files",
+                        Extensions = new(){ "*.xspf", "*.asx", "*.wvx", "*.b4s", "*.m3u", "*.m3u8", "*.pls", "*.smil", "*.smi", "*.zpl"}
+                    }
+                }
+            };
+            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var files = await dialog.ShowAsync(desktop.MainWindow);
+                IPlaylistIO reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
+                foreach (string s in reader.FilePaths)
+                {
+                    if (!File.Exists(s))
+                        continue; // TODO: show something to the user
+                }
+                Player.Queue.Add(reader.FilePaths.ToArray());
+                await Task.Run(() => Library.Import(reader.FilePaths.ToArray()));
+                Player.PlayMusic();
+            }
+        }
+        public async void BrowseFoldersCommand()
+        {
+            var dialog = new OpenFolderDialog()
+            {
+
+            };
+            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                await dialog.ShowAsync(desktop.MainWindow);
+                var paths = Directory.EnumerateFiles(dialog.Directory, "*", SearchOption.AllDirectories)
+                .Where(name => name.EndsWith(".mp3")
+                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                        || name.EndsWith(".wma")
+                        || name.EndsWith(".aac")).ToArray();
+                Player.Queue.Add(paths);
+                await Task.Run(() => Library.Import(paths));
+                Player.PlayMusic();
+            }
+        }
+        public void ImportFilePathCommand()
+        {
+            if (string.IsNullOrEmpty(FilePathOrURL)) return;
+            Player.Queue.Add(FilePathOrURL);
+            Library.Import(FilePathOrURL);
+            Player.PlayMusic();
+        }
         #endregion
 
     }

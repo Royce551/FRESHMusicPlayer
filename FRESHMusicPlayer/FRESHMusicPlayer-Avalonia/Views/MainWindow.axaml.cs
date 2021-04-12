@@ -19,6 +19,7 @@ namespace FRESHMusicPlayer_Avalonia.Views
             this.AttachDevTools();
 #endif
         }
+
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
