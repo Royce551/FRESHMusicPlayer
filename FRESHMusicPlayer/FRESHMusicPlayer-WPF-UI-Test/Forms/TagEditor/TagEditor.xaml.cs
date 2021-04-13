@@ -1,6 +1,6 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
-using FRESHMusicPlayer.Utilities;
+using FRESHMusicPlayer.Handlers;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -25,12 +25,17 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         private readonly List<PictureInfo> CoverArts = new List<PictureInfo>();
         private bool unsavedChanges = false;
         private readonly HttpClient httpClient = new HttpClient();
-        public TagEditor(List<string> filePaths)
+
+        private readonly Player player;
+        private readonly GUILibrary library;
+        public TagEditor(List<string> filePaths, Player player = null, GUILibrary library = null)
         {
+            this.player = player ?? new Player();
+            this.library = library;
             InitializeComponent();
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/8.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
             FilePaths = filePaths;
-            MainWindow.Player.SongChanged += Player_SongChanged;
+            player.SongChanged += Player_SongChanged;
             InitFields();
         }
 
@@ -105,8 +110,8 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 track.EmbeddedPictures.Clear();
                 foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
                 track.Save();
-                DatabaseUtils.Remove(path);
-                DatabaseUtils.Import(path);
+                library?.Remove(path); // update library entry, if available
+                library?.Import(path);
             }
         }
 
@@ -116,7 +121,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
             foreach (string path in FilePaths)
             {
-                if (path != MainWindow.Player.FilePath) continue; // We're good
+                if (path != player.FilePath) continue; // We're good
                 else
                 {
                     filePathsToSaveInBackground.AddRange(FilePaths); // SongChanged event handler will handle this
@@ -207,7 +212,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             {
                 foreach (string path in filePathsToSaveInBackground)
                 {
-                    if (path == MainWindow.Player.FilePath) break; // still listening to files that can't be properly saved
+                    if (path == player.FilePath) break; // still listening to files that can't be properly saved
                 }
                 SaveChanges(filePathsToSaveInBackground);
                 filePathsToSaveInBackground.Clear();
@@ -238,7 +243,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             }
             else
             {
-                MainWindow.Player.SongChanged -= Player_SongChanged;
+                player.SongChanged -= Player_SongChanged;
             }
         }
 
@@ -260,7 +265,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void NewWindowItem_MouseDown(object sender, RoutedEventArgs e)
         {
-            var tagEditor = new TagEditor(FilePaths);
+            var tagEditor = new TagEditor(FilePaths, player, library);
             tagEditor.Show();
         }
 

@@ -1,4 +1,6 @@
-﻿using FRESHMusicPlayer.Utilities;
+﻿using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,46 +16,51 @@ namespace FRESHMusicPlayer.Pages.Library
     /// </summary>
     public partial class LibraryPage : Page
     {
-        private Menu previousPage;
-        public LibraryPage()
+        private readonly MainWindow window;
+        public LibraryPage(MainWindow window, string search = null)
         {
+            this.window = window;
             InitializeComponent();
             LoadLibrary();
-            MainWindow.TabChanged += MainWindow_TabChanged;
             CategoryPanel.Focus();
+            if (search != null)
+            {
+                Thread.Sleep(10);
+                CategoryPanel.SelectedItem = search;
+            }
         }
 
-        public void LoadLibrary()
+        public async void LoadLibrary() // TODO: figure out how to make this not async void
         {
             TracksPanel.Items.Clear();
             CategoryPanel.Items.Clear();
             InfoLabel.Visibility = Visibility.Hidden;
-            switch (MainWindow.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
+            switch (window.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
                 case Menu.Tracks:
-                    ShowTracks();
+                    await ShowTracks();
                     break;
                 case Menu.Artists:
-                    ShowArtists();
+                    await ShowArtists();
                     break;
                 case Menu.Albums:
-                    ShowAlbums();
+                    await ShowAlbums();
                     break;
                 case Menu.Playlists:
-                    ShowPlaylists();
+                    await ShowPlaylists();
                     break;
             }
         }
-        public async void ShowTracks()
+        public async Task ShowTracks()
         {
             LeftSide.Width = new GridLength(0);
             int length = 0;
             await Task.Run(() =>
             {
                 int i = 0;
-                foreach (var thing in DatabaseUtils.Read())
+                foreach (var thing in window.Library.Read())
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                     if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                     i++;
@@ -63,34 +70,34 @@ namespace FRESHMusicPlayer.Pages.Library
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {Math.Floor(lengthTimeSpan.TotalHours)}:{lengthTimeSpan:mm}:{lengthTimeSpan:ss}";
         }
-        public async void ShowArtists()
+        public async Task ShowArtists()
         {
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.Read("Artist"))
+                foreach (var thing in window.Library.Read("Artist"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Artist)) continue;
                     Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
                 }
             });
         }
-        public async void ShowAlbums()
+        public async Task ShowAlbums()
         {
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.Read("Album"))
+                foreach (var thing in window.Library.Read("Album"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Album)) continue;
                     Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
                 }
             });
         }
-        public async void ShowPlaylists()
+        public async Task ShowPlaylists()
         {
-            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var x = window.Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             await Task.Run(() =>
             {
-                if (x.Count == 0) DatabaseUtils.CreatePlaylist("Liked");
+                if (x.Count == 0) window.Library.CreatePlaylist("Liked");
                 foreach (var thing in x)
                 {
                     if (CategoryPanel.Items.Contains(thing.Name)) continue;
@@ -98,74 +105,78 @@ namespace FRESHMusicPlayer.Pages.Library
                 }
             });
         }
-        public async void ShowTracksforArtist(string selectedItem)
+        public async Task ShowTracksforArtist(string selectedItem)
         {
             TracksPanel.Items.Clear();
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.ReadTracksForArtist(selectedItem))
+                foreach (var thing in window.Library.ReadTracksForArtist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-        public async void ShowTracksforAlbum(string selectedItem)
+        public async Task ShowTracksforAlbum(string selectedItem)
         {
             TracksPanel.Items.Clear();
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.ReadTracksForAlbum(selectedItem))
+                foreach (var thing in window.Library.ReadTracksForAlbum(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}")));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-        public async void ShowTracksforPlaylist(string selectedItem)
+        public async Task ShowTracksforPlaylist(string selectedItem)
         {
             TracksPanel.Items.Clear();
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in DatabaseUtils.ReadTracksForPlaylist(selectedItem))
+                foreach (var thing in window.Library.ReadTracksForPlaylist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title)));
+                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
-        private void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void CategoryPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (MainWindow.SelectedMenu == Menu.Artists) ShowTracksforArtist(selectedItem);
-            else if (MainWindow.SelectedMenu == Menu.Playlists) ShowTracksforPlaylist(selectedItem);
-            else ShowTracksforAlbum(selectedItem);
+            if (window.SelectedMenu == Menu.Artists) await ShowTracksforArtist(selectedItem);
+            else if (window.SelectedMenu == Menu.Playlists) await ShowTracksforPlaylist(selectedItem);
+            else await ShowTracksforAlbum(selectedItem);
         }
-        private void MainWindow_TabChanged(object sender, string e)
+        //private void MainWindow_TabChanged(object sender, string e)
+        //{
+        //    if (previousPage == Menu.Tracks) LeftSide.Width = new GridLength(222);
+        //    LoadLibrary();
+        //    if (e != null)
+        //    {
+        //        Thread.Sleep(10);
+        //        CategoryPanel.SelectedItem = e;
+        //    }
+        //    previousPage = window.SelectedMenu;
+        //}
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (previousPage == Menu.Tracks) LeftSide.Width = new GridLength(222);
-            LoadLibrary();
-            if (e != null)
-            {
-                Thread.Sleep(10);
-                CategoryPanel.SelectedItem = e;
-            }
-            previousPage = MainWindow.SelectedMenu;
+
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.TabChanged -= MainWindow_TabChanged;
             CategoryPanel.Items.Clear();
             TracksPanel.Items.Clear();
         }
@@ -177,9 +188,9 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void Page_Drop(object sender, DragEventArgs e)
         {
-            MainWindow.Player.ClearQueue();
-            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop));
-            MainWindow.Player.PlayMusic();
+            window.Player.Queue.Clear();
+            InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library);
+            window.Player.PlayMusic();
             var selectedItem = CategoryPanel.SelectedItem;
             LoadLibrary();
             Thread.Sleep(10);
@@ -189,15 +200,17 @@ namespace FRESHMusicPlayer.Pages.Library
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)
         {
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            MainWindow.Player.AddQueue(tracks);
+            window.Player.Queue.Add(tracks);
         }
 
         private void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Player.ClearQueue();
+            window.Player.Queue.Clear();
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            MainWindow.Player.AddQueue(tracks);
-            MainWindow.Player.PlayMusic();
+            window.Player.Queue.Add(tracks);
+            window.Player.PlayMusic();
         }
+
+        
     }
 }

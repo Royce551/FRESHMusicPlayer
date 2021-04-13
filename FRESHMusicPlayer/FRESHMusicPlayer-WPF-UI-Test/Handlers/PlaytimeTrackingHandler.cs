@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Utilities;
+﻿using ATL;
+using FRESHMusicPlayer.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,23 +7,28 @@ using System.IO;
 
 namespace FRESHMusicPlayer.Handlers
 {
+    /// <summary>
+    /// Writes the currently playing track to a file, which can later be read by FRESHMusicPlayer.Favorites or some other tool
+    /// </summary>
     public class PlaytimeTrackingHandler
     {
         public TrackingFile TrackingFile;
         public string FilePath;
 
-        private readonly Player player;
-        public PlaytimeTrackingHandler(Player player)
+        private readonly MainWindow window;
+        public PlaytimeTrackingHandler(MainWindow window)
         {
+            LoggingHandler.Log("Starting Playtime Logging Handler");
+
+            this.window = window;
             FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Tracking");
             TrackingFile = Read();
-            this.player = player;
 
-            player.SongChanged += Player_SongChanged;
+            window.Player.SongChanged += Player_SongChanged;
         }
         public void Close()
         {
-            player.SongChanged -= Player_SongChanged;
+            window.Player.SongChanged -= Player_SongChanged;
             Write(TrackingFile);
         }
 
@@ -35,18 +41,20 @@ namespace FRESHMusicPlayer.Handlers
                     DatePlayed = DateTime.Now,
                     Track = new DatabaseTrack
                     {
-                        Path = player.FilePath,
-                        Artist = MainWindow.CurrentTrack.Artist,
-                        Title = MainWindow.CurrentTrack.Title,
-                        Album = MainWindow.CurrentTrack.Album,
-                        TrackNumber = MainWindow.CurrentTrack.TrackNumber,
-                        Length = MainWindow.CurrentTrack.Duration
+                        Path = window.Player.FilePath,
+                        Artist = window.CurrentTrack.Artist,
+                        Title = window.CurrentTrack.Title,
+                        Album = window.CurrentTrack.Album,
+                        TrackNumber = window.CurrentTrack.TrackNumber,
+                        Length = window.CurrentTrack.Duration
                     }
                 };
                 TrackingFile.Entries.Add(trackingEntry);
+                LoggingHandler.Log("Playtime Logging: Entry created!");
             }
-            catch
+            catch (Exception ex)
             {
+                LoggingHandler.Log($"Playtime Logging: Exception was thrown - {ex}");
                 // ignored
             }
         }

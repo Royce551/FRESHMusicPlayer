@@ -61,9 +61,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error has occured: {0}
-        ///If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
-        ///The log file they&apos;ll need is at {1}..
+        ///   Looks up a localized string similar to Oopsies! Something went wrong. We&apos;ll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues..
         /// </summary>
         public static string APPLICATION_CRITICALERROR {
             get {
@@ -135,7 +133,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manual file path/URL entry.
+        ///   Looks up a localized string similar to File path or URL.
         /// </summary>
         public static string IMPORT_MANUALENTRY {
             get {
@@ -189,7 +187,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No lyrics.
+        ///   Looks up a localized string similar to No lyrics available.
         /// </summary>
         public static string LYRICS_NOLYRICS {
             get {
@@ -581,15 +579,6 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import library from old FMP.
-        /// </summary>
-        public static string SETTINGS_IMPORTOLDFMP {
-            get {
-                return ResourceManager.GetString("SETTINGS_IMPORTOLDFMP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Integration.
         /// </summary>
         public static string SETTINGS_INTEGRATION {
@@ -635,7 +624,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Playback Tracking.
+        ///   Looks up a localized string similar to Playtime Logging.
         /// </summary>
         public static string SETTINGS_PLAYBACKTRACKING {
             get {
@@ -644,16 +633,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Get pre-release versions of FMP.
-        /// </summary>
-        public static string SETTINGS_PRERELEASE {
-            get {
-                return ResourceManager.GetString("SETTINGS_PRERELEASE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset configuration to defaults.
+        ///   Looks up a localized string similar to Reset settings to default.
         /// </summary>
         public static string SETTINGS_RESET {
             get {
@@ -662,7 +642,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To apply your changes, FMP needs to restart..
+        ///   Looks up a localized string similar to FMP needs to restart to apply your changes..
         /// </summary>
         public static string SETTINGS_RESTART_NEEDED_PROMPT {
             get {

@@ -11,8 +11,11 @@ namespace FRESHMusicPlayer.Handlers.Notifications
     public partial class NotificationBox : UserControl
     {
         public Notification Notification;
-        public NotificationBox(Notification info)
+
+        private readonly NotificationHandler notificationHandler;
+        public NotificationBox(Notification info, NotificationHandler notificationHandler)
         {
+            this.notificationHandler = notificationHandler;
             InitializeComponent();
             UpdateContent(info);
         }
@@ -36,11 +39,11 @@ namespace FRESHMusicPlayer.Handlers.Notifications
             }
         }
 
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => MainWindow.NotificationHandler.Remove(Notification);
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => notificationHandler.Remove(Notification);
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Notification.OnButtonClicked?.Invoke() ?? true) MainWindow.NotificationHandler.Remove(Notification);
+            if (Notification.OnButtonClicked?.Invoke() ?? true) notificationHandler.Remove(Notification);
         }
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e) => CloseButton.Visibility = Visibility.Visible;

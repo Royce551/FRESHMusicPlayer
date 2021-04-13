@@ -3,9 +3,18 @@ using System.Collections.Generic;
 
 namespace FRESHMusicPlayer.Handlers.Notifications
 {
+    /// <summary>
+    /// Handles FMP's notifications
+    /// </summary>
     public class NotificationHandler
     {
-        public List<Notification> Notifications = new List<Notification>();
+        /// <summary>
+        /// Gets the currently visible notifications for the window.
+        /// </summary>
+        public List<Notification> Notifications { get; private set; } = new List<Notification>();
+        /// <summary>
+        /// Raised whenever a notification is added, removed, or updated.
+        /// </summary>
         public event EventHandler NotificationInvalidate;
 
         public void Add(Notification box)

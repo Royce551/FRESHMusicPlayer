@@ -12,12 +12,15 @@ namespace FRESHMusicPlayer.Handlers
 {
     public class UpdateHandler
     {
-        private static readonly string rootPath;
-        static UpdateHandler()
+        private readonly string rootPath;
+
+        private readonly NotificationHandler notificationHandler;
+        public UpdateHandler(NotificationHandler notificationHandler)
         {
+            this.notificationHandler = notificationHandler;
             rootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"../");
         }
-        public static async Task UpdateApp(bool useDeltaPatching = true, bool forceUpdate = false)
+        public async Task UpdateApp(bool useDeltaPatching = true, bool forceUpdate = false)
         {
             if (App.Config.UpdateMode == UpdateMode.Manual && !forceUpdate) return;
             // Updater not present, probably standalone
@@ -32,7 +35,7 @@ namespace FRESHMusicPlayer.Handlers
                 if (updateInfo.ReleasesToApply.Count == 0) return; // No updates to apply, don't bother
 
                 notification.ContentText = Properties.Resources.NOTIFICATION_INSTALLINGUPDATE;
-                MainWindow.NotificationHandler.Add(notification);
+                notificationHandler.Add(notification);
 
                 await mgr.DownloadReleases(updateInfo.ReleasesToApply);
                 await mgr.ApplyReleases(updateInfo);
@@ -46,7 +49,7 @@ namespace FRESHMusicPlayer.Handlers
                         RestartApp();
                         return true;
                     };
-                    MainWindow.NotificationHandler.Update(notification);
+                    notificationHandler.Update(notification);
                 }
                 else RestartApp();
             }
@@ -59,14 +62,14 @@ namespace FRESHMusicPlayer.Handlers
                 }
                 notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_UPDATEERROR, e.Message);
                 notification.Type = NotificationType.Failure;
-                MainWindow.NotificationHandler.Update(notification);
+                notificationHandler.Update(notification);
             }
             finally
             {
                 mgr?.Dispose();
             }
         }
-        private static void RestartApp()
+        private void RestartApp()
         {
             Application.Current.Shutdown();
             Process.Start(Path.Combine(rootPath, "FRESHMusicPlayer.exe"));

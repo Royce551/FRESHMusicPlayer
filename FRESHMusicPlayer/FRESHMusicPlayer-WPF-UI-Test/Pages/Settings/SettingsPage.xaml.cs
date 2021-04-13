@@ -1,5 +1,6 @@
 ﻿using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
+using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using System;
 using System.Diagnostics;
@@ -22,8 +23,10 @@ namespace FRESHMusicPlayer.Pages
         private bool pageInitialized = false;
         private readonly ConfigurationFile workingConfig = new ConfigurationFile { Language = App.Config.Language, Theme = App.Config.Theme }; // Copy of config that's compared to the actual config file to set AppRestartNeeded.
 
-        public SettingsPage()
+        private readonly MainWindow window;
+        public SettingsPage(MainWindow window)
         {
+            this.window = window;
             InitializeComponent();
             InitFields();
         }
@@ -37,6 +40,9 @@ namespace FRESHMusicPlayer.Pages
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             switch (App.Config.Language) // TODO: investigate making this less ugly
             {
+                case "automatic":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Automatic;
+                    break;
                 case "en":
                     General_LanguageCombo.SelectedIndex = (int)LanguageCombo.English;
                     break;
@@ -77,6 +83,9 @@ namespace FRESHMusicPlayer.Pages
                     General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Prompt;
                     break;
             }
+            AutoImportFoldersListBox.Items.Clear();
+            foreach (var path in App.Config.AutoImportPaths)
+                AutoImportFoldersListBox.Items.Add(path);
             pageInitialized = true;
         }
 
@@ -137,6 +146,9 @@ namespace FRESHMusicPlayer.Pages
             {
                 switch (General_LanguageCombo.SelectedIndex)
                 {
+                    case (int)LanguageCombo.Automatic:
+                        App.Config.Language = "automatic";
+                        break;
                     case (int)LanguageCombo.English:
                         App.Config.Language = "en";
                         break;
@@ -195,8 +207,6 @@ namespace FRESHMusicPlayer.Pages
             }
         }
 
-        private void Maintanence_ImportButton_Click(object sender, RoutedEventArgs e) => DatabaseUtils.Convertv1Tov2();
-
         private void Maintanence_ResetButton_Click(object sender, RoutedEventArgs e)
         {
             App.Config = new ConfigurationFile();
@@ -208,7 +218,7 @@ namespace FRESHMusicPlayer.Pages
                                           "FRESHMusicPlayer",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Warning, MessageBoxResult.No);
-            if (result == MessageBoxResult.Yes) DatabaseUtils.Nuke();
+            if (result == MessageBoxResult.Yes) window.Library.Nuke();
         }
 
         private void RestartNowButton_Click(object sender, RoutedEventArgs e)
@@ -219,7 +229,7 @@ namespace FRESHMusicPlayer.Pages
 
         private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
         {
-            await UpdateHandler.UpdateApp(forceUpdate:true);
+            await new UpdateHandler(window.NotificationHandler).UpdateApp(forceUpdate:true);
             InitFields();
         }
 
@@ -227,18 +237,28 @@ namespace FRESHMusicPlayer.Pages
         {
             await Task.Run(() =>
             {
-                var tracks = DatabaseUtils.Read().Select(x => x.Path).Distinct();
-                Dispatcher.Invoke(() => DatabaseUtils.Nuke(false));
-                DatabaseUtils.Import(tracks.ToArray());
+                var tracks = window.Library.Read().Select(x => x.Path).Distinct();
+                Dispatcher.Invoke(() => window.Library.Nuke(false));
+                window.Library.Import(tracks.ToArray());
             });
         }
 
         private void Plugins_OpenFolder_Click(object sender, RoutedEventArgs e) => Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "FRESHMusicPlayer", "Plugins", "FMP-WPF"));
 
+        private void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new WinForms.FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                    App.Config.AutoImportPaths.Add(dialog.SelectedPath);
+            }
+            InitFields();
+        }
     }
     public enum LanguageCombo
     {
+        Automatic,
         English,
         German,
         Vietnamese,

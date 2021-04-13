@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>FRESHMusicPlayer</RootNamespace>
     <AssemblyName>FRESHMusicPlayer</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -69,10 +69,6 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FRESHMusicPlayer.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\FRESHMusicPlayer.Core.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -96,8 +92,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Forms\CriticalErrorBox.xaml.cs">
-      <DependentUpon>CriticalErrorBox.xaml</DependentUpon>
+    <Compile Include="Forms\MiniPlayer.xaml.cs">
+      <DependentUpon>MiniPlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\Playlists\PlaylistEntry.xaml.cs">
       <DependentUpon>PlaylistEntry.xaml</DependentUpon>
@@ -122,6 +118,14 @@
     </Compile>
     <Compile Include="Handlers\Configuration\ConfigurationHandler.cs" />
     <Compile Include="Handlers\Configuration\ConfigurationFile.cs" />
+    <Compile Include="Forms\Export\ExportLibrary.xaml.cs">
+      <DependentUpon>ExportLibrary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GUILibrary.cs" />
+    <Compile Include="Handlers\Integrations\DiscordIntegration.cs" />
+    <Compile Include="Handlers\Integrations\IPlaybackIntegration.cs" />
+    <Compile Include="Handlers\Integrations\SMTCIntegration.cs" />
+    <Compile Include="Handlers\LoggingHandler.cs" />
     <Compile Include="Handlers\Notifications\Notification.cs" />
     <Compile Include="Handlers\PlaytimeTrackingHandler.cs" />
     <Compile Include="Handlers\UpdateHandler.cs" />
@@ -159,10 +163,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\SkinResourceDictionary.cs" />
-    <Compile Include="Utilities\DatabaseUtils.cs" />
     <Compile Include="Utilities\InterfaceUtils.cs" />
-    <Compile Include="Utilities\WindowsInteropUtils.cs" />
-    <Page Include="Forms\CriticalErrorBox.xaml">
+    <Page Include="Forms\MiniPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +191,10 @@
     <Page Include="Forms\TextEntryBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\Export\ExportLibrary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Handlers\Notifications\NotificationBox.xaml">
       <SubType>Designer</SubType>
@@ -315,7 +321,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\FRESHMusicPlayer.Core.dll" />
     <Resource Include="icon.ico" />
     <Resource Include="favicon.ico" />
   </ItemGroup>
@@ -334,6 +339,9 @@
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence">
       <Version>1.0.150</Version>
+    </PackageReference>
+    <PackageReference Include="FRESHMusicPlayer.Core">
+      <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>5.0.9</Version>
@@ -356,7 +364,7 @@
       <Version>1.4.1</Version>
     </PackageReference>
     <PackageReference Include="z440.atl.core">
-      <Version>3.10.0</Version>
+      <Version>3.19.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />

@@ -5,22 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" WindowStartupLocation="Manual"
-        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel">
+        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel" Activated="Window_Activated" Deactivated="Window_Deactivated">
     <Window.Resources>
-        <Storyboard x:Key="SlideIn">
-            <DoubleAnimation
-                        Storyboard.TargetName="RightFrame"
-                        Storyboard.TargetProperty="Width"
-                        From="0" To="235" Duration="0:0:.15"
-                        />
-        </Storyboard>
-        <Storyboard x:Key="SlideOut">
-            <DoubleAnimation
-                        Storyboard.TargetName="RightFrame"
-                        Storyboard.TargetProperty="Width"
-                        To="0" Duration="0:0:.15"
-                        />
-        </Storyboard>
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
             <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Click="TrackContentPlaylistManagement_Click"/>
@@ -31,7 +17,7 @@
             </MenuItem>
             <MenuItem Header="{x:Static resx:Resources.LYRICS}" Click="TrackContextLyrics_Click"/>
             <Separator/>
-            <MenuItem Header="{x:Static resx:Resources.CONTROLS_MINIPLAYER}" IsCheckable="True" Click="TrackContextMiniplayer_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.CONTROLS_MINIPLAYER}" Click="TrackContextMiniplayer_Click"/>
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_PAUSE_AFTTER_CURRENT_TRACK}" Click="TrackContext_PauseAuto_Click"/>
         </ContextMenu>
     </Window.Resources>
@@ -88,7 +74,13 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="223"/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" MouseRightButtonDown="TrackTitle_MouseRightButtonDown" Cursor="Hand"/>
+                <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" MouseRightButtonDown="TrackTitle_MouseRightButtonDown" Cursor="Hand" ToolTipOpening="CoverArtBox_ToolTipOpening" ToolTipClosing="CoverArtBox_ToolTipClosing" ToolTipService.ShowDuration="12000">
+                    <Image.ToolTip>
+                        <ToolTip>
+                            <Image x:Name="CoverArtBoxToolTip" Width="450" Height="450" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </ToolTip>
+                    </Image.ToolTip>
+                </Image>
                 <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,40,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" MouseRightButtonDown="TrackTitle_MouseRightButtonDown" Cursor="Hand" Grid.ColumnSpan="2" Panel.ZIndex="0"/>
                 <Slider x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Margin="37,54,45,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="9.8" Thumb.DragStarted="ProgressBar_DragStarted" Thumb.DragCompleted="ProgressBar_DragCompleted" ValueChanged="ProgressBar_ValueChanged" IsMoveToPointEnabled="True" MouseLeftButtonUp="ProgressBar_MouseLeftButtonUp"/>
                 <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
@@ -98,7 +90,7 @@
                 <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
                 <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right"/>
                 <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
-                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatOneIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,142.505,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
+                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatAllIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,142.505,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
                 <Path x:Name="PreviousTrackButton" Data="{StaticResource PreviousIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,47.803,182.505,15.997" Width="25.612" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown"/>
                 <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1"/>
 

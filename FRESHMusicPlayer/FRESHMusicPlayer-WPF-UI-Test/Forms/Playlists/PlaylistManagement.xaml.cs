@@ -1,4 +1,5 @@
 ﻿using ATL.Playlist;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
@@ -14,8 +15,13 @@ namespace FRESHMusicPlayer.Forms.Playlists
     public partial class PlaylistManagement : Window
     {
         private readonly string track;
-        public PlaylistManagement(string track = null)
+
+        private readonly GUILibrary library;
+        private readonly NotificationHandler notificationHandler;
+        public PlaylistManagement(GUILibrary library, NotificationHandler notificationHandler, string track = null)
         {
+            this.library = library;
+            this.notificationHandler = notificationHandler;
             InitializeComponent();
             if (track != null) EditingHeader.Text = string.Format(Properties.Resources.PLAYLISTMANAGEMENT_HEADER, Path.GetFileName(track));
             else EditingHeader.Visibility = Visibility.Collapsed;
@@ -25,12 +31,12 @@ namespace FRESHMusicPlayer.Forms.Playlists
         public async void InitFields()
         {
             PlaylistBox.Items.Clear();
-            var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            var x = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             await Task.Run(() =>
             {
                 foreach (var thing in x)
                 {
-                    Dispatcher.Invoke(() => PlaylistBox.Items.Add(new PlaylistEntry(thing.Name, track)));
+                    Dispatcher.Invoke(() => PlaylistBox.Items.Add(new PlaylistEntry(thing.Name, track, library)));
                 }
             });
         }
@@ -41,7 +47,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
         {
             var dialog = new FMPTextEntryBox("Playlist Name");
             dialog.ShowDialog();
-            if (dialog.OK) DatabaseUtils.CreatePlaylist(dialog.Response, track);
+            if (dialog.OK) library.CreatePlaylist(dialog.Response, track);
             InitFields();
         }
 
@@ -56,7 +62,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
                 {
                     if (!File.Exists(s))
                     {
-                        MainWindow.NotificationHandler.Add(new Notification
+                        notificationHandler.Add(new Notification
                         {
                             ContentText = string.Format(Properties.Resources.NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST, s),
                             IsImportant = true,
@@ -65,7 +71,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
                         });
                         continue;
                     }
-                    DatabaseUtils.AddTrackToPlaylist(Path.GetFileNameWithoutExtension(dialog.FileName), s);
+                    library.AddTrackToPlaylist(Path.GetFileNameWithoutExtension(dialog.FileName), s);
                 }
             }
             InitFields();

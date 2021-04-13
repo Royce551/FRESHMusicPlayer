@@ -184,7 +184,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border  Background="Gray" Height="3"/>
+                    <Border  Background="{StaticResource SecondaryColor}" Height="3"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -325,8 +325,6 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="MinWidth" Value="120"/>
-        <Setter Property="MinHeight" Value="20"/>
         <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Template">

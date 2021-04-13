@@ -1,4 +1,5 @@
 ﻿using ATL.Playlist;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
 using System.Collections.Generic;
@@ -16,8 +17,11 @@ namespace FRESHMusicPlayer.Forms.Playlists
         private readonly bool trackExists = true;
         private readonly string playlist;
         private readonly string path;
-        public PlaylistEntry(string playlist, string path)
+
+        private readonly GUILibrary library;
+        public PlaylistEntry(string playlist, string path, GUILibrary library)
         {
+            this.library = library;
             InitializeComponent();
             if (path is null) trackExists = false;
             TitleLabel.Text = playlist;
@@ -27,7 +31,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
         }
         private void CheckIfPlaylistExists()
         {
-            foreach (var thing in DatabaseUtils.ReadTracksForPlaylist(playlist))
+            foreach (var thing in library.ReadTracksForPlaylist(playlist))
             {
                 if (thing.Path == path)
                 {
@@ -59,30 +63,30 @@ namespace FRESHMusicPlayer.Forms.Playlists
             dialog.ShowDialog();
             if (dialog.OK)
             {
-                var x = MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
+                var x = library.Database.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
                 x.Name = dialog.Response;
                 TitleLabel.Text = dialog.Response;
-                MainWindow.Libraryv2.GetCollection<DatabasePlaylist>("playlists").Update(x);
+                library.Database.GetCollection<DatabasePlaylist>("playlists").Update(x);
             }
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseUtils.RemoveTrackFromPlaylist(playlist, path);
+            library.RemoveTrackFromPlaylist(playlist, path);
             CheckIfPlaylistExists();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseUtils.AddTrackToPlaylist(playlist, path);
+            library.AddTrackToPlaylist(playlist, path);
             CheckIfPlaylistExists();
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e) => DatabaseUtils.DeletePlaylist(playlist);
+        private void DeleteButton_Click(object sender, RoutedEventArgs e) => library.DeletePlaylist(playlist);
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
-            var tracks = DatabaseUtils.ReadTracksForPlaylist(playlist);
+            var tracks = library.ReadTracksForPlaylist(playlist);
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "M3U UTF-8 Playlist|*.m3u8|Other|*";
             if (saveFileDialog.ShowDialog() == true)

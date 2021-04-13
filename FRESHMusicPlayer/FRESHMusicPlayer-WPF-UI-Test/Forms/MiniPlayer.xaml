@@ -1,0 +1,66 @@
+﻿<Window x:Class="FRESHMusicPlayer.Forms.MiniPlayer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None" Background="Transparent" AllowsTransparency="True" Topmost="True" ResizeMode="CanMinimize"
+        Title="MiniPlayer" Height="55" Width="500">
+    <DockPanel x:Name="BackgroundDockPanel" Background="Transparent" MouseEnter="DockPanel_MouseEnter" MouseLeave="DockPanel_MouseLeave">
+        <DockPanel x:Name="TitlebarDockPanel" DockPanel.Dock="Top" Background="{StaticResource ForegroundColor}" Height="30" LastChildFill="False" MouseDown="TitlebarDockPanel_MouseDown" Opacity="100">
+            <Border Background="Transparent" DockPanel.Dock="Right" Width="20" Grid.Column="3" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand">
+                <Canvas>
+                    <Path Data="{StaticResource VolumeIcon}" Fill="{StaticResource PrimaryTextColor}" MouseLeftButtonDown="PreviousButtonData_MouseLeftButtonDown"/>
+                </Canvas>
+            </Border>
+            <Slider x:Name="VolumeSlider" Style="{StaticResource Progress_Slider}" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,10,0" Maximum="100" ValueChanged="VolumeSlider_ValueChanged"/>
+            <Button x:Name="FullscreenButton" DockPanel.Dock="Left" Content="Back" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Click="FullscreenButton_Click"/>
+        </DockPanel>
+        <Grid x:Name="ContentGrid" DockPanel.Dock="Bottom" Background="{StaticResource ForegroundColor}" Height="25" VerticalAlignment="Bottom" MouseDown="ContentGrid_MouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/> 
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="TitleTextBlock" Grid.Column="0" Text="Title" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,0,0"/>
+            <TextBlock x:Name="ArtistTextBlock" Grid.Column="1" Text="Artist" Foreground="{StaticResource SecondaryTextColor}" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="9"/>
+
+            <TextBlock x:Name="ProgressIndicator1" Text="00:00" Grid.Column="0" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="10,0,10,0" Visibility="Collapsed"/>
+            <Slider x:Name="ProgressSlider" Style="{StaticResource Progress_Slider}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Visibility="Collapsed"/>
+            <TextBlock x:Name="ProgressIndicator2" Text="00:00" DockPanel.Dock="Left" Grid.Column="2" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="10,0,10,0" Visibility="Collapsed"/>
+
+            <Border x:Name="PreviousButton" Background="Transparent" Width="20" Grid.Column="3" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="PreviousButtonData_MouseLeftButtonDown">
+                <Canvas>
+                    <Path x:Name="PreviousButtonData" Data="{StaticResource PreviousIcon}" Fill="{StaticResource PrimaryTextColor}" />
+                </Canvas>
+            </Border>
+            <Border x:Name="ShuffleButton" Background="Transparent" Width="20" Grid.Column="4" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="ShuffleButtonData_MouseLeftButtonDown">
+                <Canvas>
+                    <Path x:Name="ShuffleButtonData" Data="{StaticResource ShuffleIcon}" Fill="{StaticResource PrimaryTextColor}" />
+                </Canvas>
+            </Border>
+            <Border x:Name="PlayPauseButton" Background="Transparent" Width="20" Grid.Column="5" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="Canvas_MouseLeftButtonDown">
+                <Canvas >
+                    <Path x:Name="PlayPauseButtonData" Data="{StaticResource PlayIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Canvas>
+            </Border>
+            <Border x:Name="RepeatButton" Background="Transparent" Width="20" Grid.Column="6" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="RepeatButtonData_MouseLeftButtonDown">
+                <Canvas>
+                    <Path x:Name="RepeatButtonData" Data="{StaticResource RepeatAllIcon}" Fill="{StaticResource PrimaryTextColor}" />
+                </Canvas>
+            </Border>
+            <Border x:Name="NextButton" Background="Transparent" Width="20" Grid.Column="7" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="NextButton_MouseLeftButtonDown">
+                <Canvas>
+                    <Path x:Name="NextButtonData" Data="{StaticResource NextIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Canvas>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>

@@ -17,15 +17,18 @@ namespace FRESHMusicPlayer.Pages
     public partial class TrackInfoPage : Page
     {
         private readonly string tempPath = Path.Combine(Path.GetTempPath() + "FMPalbumart.png");
-        public TrackInfoPage()
+
+        private readonly MainWindow window;
+        public TrackInfoPage(MainWindow window)
         {
+            this.window = window;
             InitializeComponent();
-            MainWindow.Player.SongChanged += Player_SongChanged;
+            window.Player.SongChanged += Player_SongChanged;
             PopulateFields();
         }
         public void PopulateFields()
         {
-            var track = MainWindow.CurrentTrack;
+            var track = window.CurrentTrack;
             if (track is null) return;
             if (track.EmbeddedPictures.Count == 0)
             {
@@ -51,13 +54,13 @@ namespace FRESHMusicPlayer.Pages
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.Player.SongChanged -= Player_SongChanged;
+            window.Player.SongChanged -= Player_SongChanged;
             if (File.Exists(tempPath)) File.Delete(tempPath);
         }
 
         private void Rectangle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var track = new Track(MainWindow.Player.FilePath);
+            var track = new Track(window.Player.FilePath);
             IList<PictureInfo> embeddedPictures = track.EmbeddedPictures;
             foreach (PictureInfo pic in embeddedPictures)
             {

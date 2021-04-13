@@ -118,9 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>An error has occured: {0}
-If you have the time, please report this to the devs at https://github.com/royce551/freshmusicplayer/issues.
-The log file they'll need is at {1}.</value>
+    <value>Oopsies! Something went wrong. We'll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
     <value>Go to</value>
@@ -144,7 +142,7 @@ The log file they'll need is at {1}.</value>
     <value>You can also drag and drop to this page.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value>Manual file path/URL entry</value>
+    <value>File path or URL</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>Add to playlist</value>
@@ -162,7 +160,7 @@ The log file they'll need is at {1}.</value>
     <value>Lyrics</value>
   </data>
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
-    <value>No lyrics</value>
+    <value>No lyrics available</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>Albums</value>
@@ -295,9 +293,6 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="SETTINGS_IMPORTOLDFMP" xml:space="preserve">
-    <value>Import library from old FMP</value>
-  </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
     <value>Integration</value>
   </data>
@@ -314,16 +309,13 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>You are about to irreversibly clear your library. Are you sure?</value>
   </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value>Playback Tracking</value>
-  </data>
-  <data name="SETTINGS_PRERELEASE" xml:space="preserve">
-    <value>Get pre-release versions of FMP</value>
+    <value>Playtime Logging</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value>Reset configuration to defaults</value>
+    <value>Reset settings to default</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value>To apply your changes, FMP needs to restart.</value>
+    <value>FMP needs to restart to apply your changes.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
     <value>Restart now</value>

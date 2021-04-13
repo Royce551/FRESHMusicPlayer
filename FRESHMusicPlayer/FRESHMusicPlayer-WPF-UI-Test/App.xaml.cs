@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using FRESHMusicPlayer.Handlers;
 
 namespace FRESHMusicPlayer
 {
@@ -19,25 +20,27 @@ namespace FRESHMusicPlayer
     public partial class App : Application
     {
         public static ConfigurationFile Config;
+        private Window currentWindow;
+        private Player player;
         void App_Startup(object sender, StartupEventArgs e )
         {
+            LoggingHandler.Log("Handling configuration...");
+
             Config = ConfigurationHandler.Read();
-            if (Config.Language != "en") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
+            player = new Player { Volume = Config.Volume };
+            if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
-            MainWindow window;
+
+            LoggingHandler.Log("Handling command line args...");
+
             if (e.Args.Length > 0)
             {
-                if (e.Args.Contains("--tageditor"))
-                {
-                    var paths = e.Args.Except(new string[]{"--tageditor"});
-                    var tagEditor = new TagEditor(paths.ToList());
-                    tagEditor.Show();
-                    return;
-                }
-                window = new MainWindow(e.Args.Where(x => File.Exists(x)).ToArray());
+                var args = e.Args.Where(x => x.Contains('.'));
+                if (e.Args.Contains("--tageditor")) currentWindow = new TagEditor(args.ToList(), player);
+                else currentWindow = new MainWindow(player, args.ToArray());
             }
-            else window = new MainWindow();
-            window.Show();
+            else currentWindow = new MainWindow(player);
+            currentWindow.Show();
         }
         public static Skin CurrentSkin { get; set; } = Skin.Dark;
         public void ChangeSkin(Skin newSkin)
@@ -64,16 +67,48 @@ namespace FRESHMusicPlayer
                 $"{System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}\n" +
                 $"{Environment.OSVersion.VersionString}\n" +
                 $"{e.Exception}");
-            try
+            var message = string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName);
+            var maybeWindow = currentWindow as MainWindow;
+            if (!(maybeWindow is null))
             {
-                var box = new CriticalErrorBox(e, logPath, fileName);
-                box.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                box.ShowDialog();
+                try
+                {
+                    maybeWindow.NotificationHandler.Add(new Handlers.Notifications.Notification
+                    {
+                        DisplayAsToast = true,
+                        IsImportant = true,
+                        Type = Handlers.Notifications.NotificationType.Failure,
+                        ContentText = message,
+                        ButtonText = "Open debug log",
+                        OnButtonClicked = () =>
+                        {
+                            System.Diagnostics.Process.Start(logPath);
+                            System.Diagnostics.Process.Start(logPath + fileName);
+                            return true;
+                        }
+                    });
+                }
+                catch
+                {
+                    MessageBox.Show(message);
+                }
             }
-            catch
+            else
             {
-                MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));
+                MessageBox.Show(message);
             }
+            LoggingHandler.Log($"There was an unhandled exception:\n{e.Exception}");
+            //try
+            //{
+            //    var box = new CriticalErrorBox(e, logPath, fileName);
+            //    box.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //    box.Owner = currentWindow;
+            //    box.ShowDialog();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));
+            //}
             e.Handled = true;
         }
     }

@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
         <TextBox x:Name="SearchBox" Grid.Row="0" TextWrapping="Wrap" FontSize="14" Margin="10,5" BorderBrush="{StaticResource SecondaryTextColor}" Foreground="{StaticResource PrimaryTextColor}" TextChanged="SearchBox_TextChanged" TabIndex="0">
             <TextBox.Style>
-                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
                         <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                             <VisualBrush.Visual>

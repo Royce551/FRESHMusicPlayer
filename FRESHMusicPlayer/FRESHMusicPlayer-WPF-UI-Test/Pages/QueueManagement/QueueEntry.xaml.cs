@@ -10,14 +10,17 @@ namespace FRESHMusicPlayer.Pages
     public partial class QueueEntry : UserControl
     {
         public int Index;
-        public QueueEntry(string artist, string album, string title, string position, int index)
+
+        private readonly Player player;
+        public QueueEntry(string artist, string album, string title, string position, int index, Player player)
         {
+            this.player = player;
             InitializeComponent();
             ArtistAlbumLabel.Text = $"{artist} ・ {album}";
             TitleLabel.Text = title;
             PositionLabel.Text = position;
             Index = index;
-            if (MainWindow.Player.QueuePosition == index + 1) // actual position is index + 1, but i didn't want to convert to int
+            if (player.Queue.Position == index + 1) // actual position is index + 1, but i didn't want to convert to int
             {
                 TitleLabel.FontWeight = FontWeights.Bold;
                 ArtistAlbumLabel.FontWeight = FontWeights.Bold;
@@ -36,18 +39,18 @@ namespace FRESHMusicPlayer.Pages
 
         private void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.Player.QueuePosition = Index;
-            MainWindow.Player.PlayMusic();
+            player.Queue.Position = Index;
+            player.PlayMusic();
         }
 
-        private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => MainWindow.Player.RemoveQueue(Index);
+        private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => player.Queue.Remove(Index);
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
-                MainWindow.Player.QueuePosition = Index;
-                MainWindow.Player.PlayMusic();
+                player.Queue.Position = Index;
+                player.PlayMusic();
             }
         }
     }
