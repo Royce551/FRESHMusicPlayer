@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Linq;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Handlers;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -75,12 +76,16 @@ namespace FRESHMusicPlayer.Pages.Library
             ((ListBox)Parent).Items.Remove(this);
         }
 
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
-                if (player.FileLoaded) player.Queue.Clear();
-                player.PlayMusic(FilePath);
+                await Task.Run(() =>
+                {
+                    if (player.FileLoaded) player.Queue.Clear();
+                    player.PlayMusic(FilePath);
+                });
+                
             }
         }
 

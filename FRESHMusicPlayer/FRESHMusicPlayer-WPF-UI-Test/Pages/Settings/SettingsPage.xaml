@@ -64,9 +64,9 @@
                 <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
 
                 <TextBlock Text="Auto Import" Style="{StaticResource Subheader}"/>
-                <TextBlock Text="FMP will import new tracks from these folders:" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
-                <ListBox x:Name="AutoImportFoldersListBox" Background="{StaticResource ForegroundColor}" Foreground="{StaticResource PrimaryTextColor}" MinHeight="50" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}"/>
+                <TextBlock x:Name="General_AutoImportTextBlock" Text="FMP will import new tracks from these folders:" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
                 <Button x:Name="General_AddFolderButton" Content="Add Folder" TextBlock.FontSize="16" Margin="0,5" Click="General_AddFolderButton_Click"/>
+                <Button x:Name="General_ClearButton" Content="Clear" TextBlock.FontSize="16" Click="General_ClearButton_Click"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
@@ -104,8 +104,8 @@
                 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Style="{StaticResource Header}"/>
 
-                <TextBlock x:Name="FMPVersionLabel" Text="FRESHMusicPlayer Ver. 9.2" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <TextBlock x:Name="FMPCoreVersionLabel" Text="FRESHMusicPlayer Core Ver. 2.9.0" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock x:Name="FMPVersionLabel" Text="FRESHMusicPlayer Ver. 10" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock x:Name="FMPCoreVersionLabel" Text="FRESHMusicPlayer Core Ver. 3.0.0" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>
             </StackPanel>
         </ScrollViewer>

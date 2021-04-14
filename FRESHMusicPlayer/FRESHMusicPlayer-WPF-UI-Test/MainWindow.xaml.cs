@@ -86,12 +86,16 @@ namespace FRESHMusicPlayer
             LiteDatabase library;
             try
             {
+#if DEBUG // allow multiple instances of FMP in debug
                 library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
+#elif !DEBUG
+                library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
+#endif
                 Library = new GUILibrary(library, NotificationHandler);
             }
             catch (IOException) // library is *probably* being used by another FMP.
             {
-                File.WriteAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "instance"), initialFile);
+                File.WriteAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "instance"), initialFile ?? Array.Empty<string>());
                 Application.Current.Shutdown();
             }
 
@@ -103,10 +107,16 @@ namespace FRESHMusicPlayer
                 Dispatcher.Invoke(() =>
                 {
                     var files = File.ReadAllLines(args.FullPath);
-                    player.Queue.Clear();
-                    player.Queue.Add(files);
-                    player.PlayMusic();
+                    if (files.Length != 0)
+                    {
+                        player.Queue.Clear();
+                        player.Queue.Add(files);
+                        player.PlayMusic();
+                    }
                     File.Delete(args.FullPath);
+                    Activate();
+                    Topmost = true;
+                    Topmost = false;
                 });
             };
             LoggingHandler.Log("Ready to go!");
@@ -118,7 +128,7 @@ namespace FRESHMusicPlayer
             }
         }
 
-        #region Controls
+#region Controls
         public void PlayPauseMethod()
         {
             if (!Player.FileLoaded) return;
@@ -193,9 +203,9 @@ namespace FRESHMusicPlayer
             if (PauseAfterCurrentTrack) ProgressIndicator2.Foreground = new SolidColorBrush(Color.FromRgb(212, 70, 63));
             else ProgressIndicator2.Foreground = (Brush)FindResource("SecondaryTextColor");
         }
-        #endregion
+#endregion
 
-        #region Logic
+#region Logic
 
         public void SetCoverArtVisibility(bool mode)
         {
@@ -389,60 +399,68 @@ namespace FRESHMusicPlayer
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
         }
-        #endregion
+#endregion
 
-        #region Events
-        #region Player
+#region Events
+#region Player
         private void Player_SongStopped(object sender, EventArgs e)
-        {   
-            Title = "FRESHMusicPlayer";
-            TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
-            progressTimer.Stop();
-            CoverArtBox.Source = null;
-            SetIntegrations(PlaybackStatus.Stopped);
-            SetCoverArtVisibility(false);
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Title = "FRESHMusicPlayer";
+                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+                progressTimer.Stop();
+                CoverArtBox.Source = null;
+                SetIntegrations(PlaybackStatus.Stopped);
+                SetCoverArtVisibility(false);
 
-            LoggingHandler.Log("Stopping!");
+                LoggingHandler.Log("Stopping!");
+            });
+            
         }
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            CurrentTrack = new Track(Player.FilePath);
-            Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
-            TitleLabel.Text = CurrentTrack.Title;
-            ArtistLabel.Text = CurrentTrack.Artist == "" ? Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
-            ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
-            if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
-            else ProgressIndicator2.Text = "∞";
-            SetIntegrations(PlaybackStatus.Playing);
-            UpdatePlayButtonState();
-            if (CurrentTrack.EmbeddedPictures.Count == 0)
+            Dispatcher.Invoke(() =>
             {
-                var file = GetCoverArtFromDirectory();
-                if (file != null)
+                CurrentTrack = new Track(Player.FilePath);
+                Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
+                TitleLabel.Text = CurrentTrack.Title;
+                ArtistLabel.Text = CurrentTrack.Artist == "" ? Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
+                ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
+                if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+                else ProgressIndicator2.Text = "∞";
+                SetIntegrations(PlaybackStatus.Playing);
+                UpdatePlayButtonState();
+                if (CurrentTrack.EmbeddedPictures.Count == 0)
                 {
-                    CoverArtBox.Source = BitmapFrame.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
-                    SetCoverArtVisibility(true);
+                    var file = GetCoverArtFromDirectory();
+                    if (file != null)
+                    {
+                        CoverArtBox.Source = BitmapFrame.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
+                        SetCoverArtVisibility(true);
+                    }
+                    else
+                    {
+                        CoverArtBox.Source = null;
+                        SetCoverArtVisibility(false);
+                    }
                 }
                 else
                 {
-                    CoverArtBox.Source = null;
-                    SetCoverArtVisibility(false);
+                    CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
+                    SetCoverArtVisibility(true);
                 }
-            }
-            else
-            {
-                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
-                SetCoverArtVisibility(true);
-            }
-            progressTimer.Start();
-            if (PauseAfterCurrentTrack && !Player.Paused)
-            {
-                PlayPauseMethod();
-                PauseAfterCurrentTrack = false;
-            }
+                progressTimer.Start();
+                if (PauseAfterCurrentTrack && !Player.Paused)
+                {
+                    PlayPauseMethod();
+                    PauseAfterCurrentTrack = false;
+                }
 
-            LoggingHandler.Log("Changing tracks");
+                LoggingHandler.Log("Changing tracks");
+            });
+            
         }
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
@@ -455,8 +473,8 @@ namespace FRESHMusicPlayer
             });
             Player.NextSong();
         }
-        #endregion
-        #region ControlsBox
+#endregion
+#region ControlsBox
         private void ShuffleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShuffleMethod();
         private void RepeatOneButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => RepeatOneMethod();
         private void PreviousButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PreviousTrackMethod();
@@ -564,8 +582,8 @@ namespace FRESHMusicPlayer
                 Player.PlayMusic(dialog.Response);
             }
         }
-        #endregion
-        #region MenuBar
+#endregion
+#region MenuBar
         private void TracksTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Tracks);
         private void ArtistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Artists);
         private void AlbumsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Menu.Albums);
@@ -601,7 +619,7 @@ namespace FRESHMusicPlayer
                 }
             }
         }
-        #endregion
+#endregion
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (!(e.OriginalSource is TextBox || e.OriginalSource is ListBoxItem) || Keyboard.IsKeyDown(Key.LeftCtrl))
@@ -748,7 +766,7 @@ namespace FRESHMusicPlayer
             watcher.Dispose();
             WritePersistence();
         }
-        #endregion
+#endregion
 
         private void CoverArtBox_ToolTipOpening(object sender, ToolTipEventArgs e)
         {

@@ -36,7 +36,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
             {
                 foreach (var thing in x)
                 {
-                    Dispatcher.Invoke(() => PlaylistBox.Items.Add(new PlaylistEntry(thing.Name, track, library)));
+                    Dispatcher.Invoke(() => PlaylistBox.Items.Add(new PlaylistEntry(thing.Name, track, library, this)));
                 }
             });
         }

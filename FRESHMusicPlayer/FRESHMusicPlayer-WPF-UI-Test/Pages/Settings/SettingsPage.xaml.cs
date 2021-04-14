@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -83,9 +84,11 @@ namespace FRESHMusicPlayer.Pages
                     General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Prompt;
                     break;
             }
-            AutoImportFoldersListBox.Items.Clear();
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("FMP will import new tracks from these folders:");
             foreach (var path in App.Config.AutoImportPaths)
-                AutoImportFoldersListBox.Items.Add(path);
+                stringBuilder.AppendLine(path);
+            General_AutoImportTextBlock.Text = stringBuilder.ToString();
             pageInitialized = true;
         }
 
@@ -253,6 +256,11 @@ namespace FRESHMusicPlayer.Pages
                 if (dialog.ShowDialog() == WinForms.DialogResult.OK)
                     App.Config.AutoImportPaths.Add(dialog.SelectedPath);
             }
+            InitFields();
+        }
+        private void General_ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            App.Config.AutoImportPaths.Clear();
             InitFields();
         }
     }

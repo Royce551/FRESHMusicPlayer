@@ -19,9 +19,11 @@ namespace FRESHMusicPlayer.Forms.Playlists
         private readonly string path;
 
         private readonly GUILibrary library;
-        public PlaylistEntry(string playlist, string path, GUILibrary library)
+        private readonly PlaylistManagement window;
+        public PlaylistEntry(string playlist, string path, GUILibrary library, PlaylistManagement window)
         {
             this.library = library;
+            this.window = window;
             InitializeComponent();
             if (path is null) trackExists = false;
             TitleLabel.Text = playlist;
@@ -82,7 +84,11 @@ namespace FRESHMusicPlayer.Forms.Playlists
             CheckIfPlaylistExists();
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e) => library.DeletePlaylist(playlist);
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            library.DeletePlaylist(playlist);
+            window.InitFields();
+        }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
