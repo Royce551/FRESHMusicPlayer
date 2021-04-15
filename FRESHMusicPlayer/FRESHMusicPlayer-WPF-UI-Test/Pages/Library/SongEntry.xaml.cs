@@ -76,16 +76,12 @@ namespace FRESHMusicPlayer.Pages.Library
             ((ListBox)Parent).Items.Remove(this);
         }
 
-        private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
-                await Task.Run(() =>
-                {
-                    if (player.FileLoaded) player.Queue.Clear();
-                    player.PlayMusic(FilePath);
-                });
-                
+                if (player.FileLoaded) player.Queue.Clear();
+                player.PlayMusic(FilePath);
             }
         }
 
@@ -120,7 +116,7 @@ namespace FRESHMusicPlayer.Pages.Library
             otheritem.Header = Properties.Resources.PLAYLISTMANAGEMENT;
             otheritem.Click += (object send, RoutedEventArgs eee) =>
             {
-                var management = new PlaylistManagement(library, notificationHandler, FilePath);
+                var management = new PlaylistManagement(library, notificationHandler, ((Application.Current as App).MainWindow as MainWindow).SelectedMenu, FilePath);
                 management.ShowDialog();
             };
             MiscContext.Items.Add(otheritem);

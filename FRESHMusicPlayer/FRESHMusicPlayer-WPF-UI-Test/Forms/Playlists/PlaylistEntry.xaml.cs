@@ -20,13 +20,19 @@ namespace FRESHMusicPlayer.Forms.Playlists
 
         private readonly GUILibrary library;
         private readonly PlaylistManagement window;
-        public PlaylistEntry(string playlist, string path, GUILibrary library, PlaylistManagement window)
+        private readonly Menu selectedMenu;
+        public PlaylistEntry(string playlist, string path, GUILibrary library, PlaylistManagement window, Menu selectedMenu)
         {
             this.library = library;
             this.window = window;
+            this.selectedMenu = selectedMenu;
             InitializeComponent();
             if (path is null) trackExists = false;
             TitleLabel.Text = playlist;
+
+            if (selectedMenu == Menu.Artists) AddThingButton.Content = $"+ {Properties.Resources.TAGEDITOR_ARTIST}";
+            else AddThingButton.Content = $"+ {Properties.Resources.TRACKINFO_ALBUM}";
+
             this.playlist = playlist;
             this.path = path;
             CheckIfPlaylistExists();
@@ -47,16 +53,18 @@ namespace FRESHMusicPlayer.Forms.Playlists
         }
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            RenameButton.Visibility = DeleteButton.Visibility = ExportButton.Visibility = Visibility.Visible;
+            MiscButton.Visibility = Visibility.Visible;
             if (trackExists)
             {
                 AddButton.Visibility = RemoveButton.Visibility = Visibility.Visible;
+                if (selectedMenu == Menu.Artists || selectedMenu == Menu.Albums)
+                    AddThingButton.Visibility = Visibility.Visible;
             }
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            AddButton.Visibility = RemoveButton.Visibility = RenameButton.Visibility = DeleteButton.Visibility = ExportButton.Visibility = Visibility.Collapsed;
+            AddButton.Visibility = RemoveButton.Visibility = MiscButton.Visibility = AddThingButton.Visibility = Visibility.Collapsed;
         }
 
         private void RenameButton_Click(object sender, RoutedEventArgs e)
@@ -107,6 +115,23 @@ namespace FRESHMusicPlayer.Forms.Playlists
             }
         }
 
-        
+        private void AddThingButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<DatabaseTrack> things;
+            if (selectedMenu == Menu.Artists)
+                things = library.ReadTracksForArtist(library.GetFallbackTrack(path).Artist);
+            else
+                things = library.ReadTracksForAlbum(library.GetFallbackTrack(path).Album);
+            foreach (var thing in things)
+                library.AddTrackToPlaylist(playlist, thing.Path);
+            CheckIfPlaylistExists();
+        }
+
+        private void MiscButton_Click(object sender, RoutedEventArgs e)
+        {
+            var cm = FindResource("MiscContext") as ContextMenu;
+            cm.PlacementTarget = sender as Button;
+            cm.IsOpen = true;
+        }
     }
 }

@@ -18,10 +18,12 @@ namespace FRESHMusicPlayer.Forms.Playlists
 
         private readonly GUILibrary library;
         private readonly NotificationHandler notificationHandler;
-        public PlaylistManagement(GUILibrary library, NotificationHandler notificationHandler, string track = null)
+        private readonly Menu selectedMenu;
+        public PlaylistManagement(GUILibrary library, NotificationHandler notificationHandler, Menu selectedMenu, string track = null)
         {
             this.library = library;
             this.notificationHandler = notificationHandler;
+            this.selectedMenu = selectedMenu;
             InitializeComponent();
             if (track != null) EditingHeader.Text = string.Format(Properties.Resources.PLAYLISTMANAGEMENT_HEADER, Path.GetFileName(track));
             else EditingHeader.Visibility = Visibility.Collapsed;
@@ -36,7 +38,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
             {
                 foreach (var thing in x)
                 {
-                    Dispatcher.Invoke(() => PlaylistBox.Items.Add(new PlaylistEntry(thing.Name, track, library, this)));
+                    Dispatcher.Invoke(() => PlaylistBox.Items.Add(new PlaylistEntry(thing.Name, track, library, this, selectedMenu)));
                 }
             });
         }

@@ -14,6 +14,7 @@ using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -405,62 +406,54 @@ namespace FRESHMusicPlayer
 #region Player
         private void Player_SongStopped(object sender, EventArgs e)
         {
-            Dispatcher.Invoke(() =>
-            {
-                Title = "FRESHMusicPlayer";
-                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
-                progressTimer.Stop();
-                CoverArtBox.Source = null;
-                SetIntegrations(PlaybackStatus.Stopped);
-                SetCoverArtVisibility(false);
+            Title = "FRESHMusicPlayer";
+            TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+            progressTimer.Stop();
+            CoverArtBox.Source = null;
+            SetIntegrations(PlaybackStatus.Stopped);
+            SetCoverArtVisibility(false);
 
-                LoggingHandler.Log("Stopping!");
-            });
-            
+            LoggingHandler.Log("Stopping!");
         }
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            Dispatcher.Invoke(() =>
+            CurrentTrack = new Track(Player.FilePath);
+            Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
+            TitleLabel.Text = CurrentTrack.Title;
+            ArtistLabel.Text = CurrentTrack.Artist == "" ? Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
+            ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
+            if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+            else ProgressIndicator2.Text = "∞";
+            SetIntegrations(PlaybackStatus.Playing);
+            UpdatePlayButtonState();
+            if (CurrentTrack.EmbeddedPictures.Count == 0)
             {
-                CurrentTrack = new Track(Player.FilePath);
-                Title = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | FRESHMusicPlayer";
-                TitleLabel.Text = CurrentTrack.Title;
-                ArtistLabel.Text = CurrentTrack.Artist == "" ? Properties.Resources.MAINWINDOW_NOARTIST : CurrentTrack.Artist;
-                ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
-                if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
-                else ProgressIndicator2.Text = "∞";
-                SetIntegrations(PlaybackStatus.Playing);
-                UpdatePlayButtonState();
-                if (CurrentTrack.EmbeddedPictures.Count == 0)
+                var file = GetCoverArtFromDirectory();
+                if (file != null)
                 {
-                    var file = GetCoverArtFromDirectory();
-                    if (file != null)
-                    {
-                        CoverArtBox.Source = BitmapFrame.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
-                        SetCoverArtVisibility(true);
-                    }
-                    else
-                    {
-                        CoverArtBox.Source = null;
-                        SetCoverArtVisibility(false);
-                    }
+                    CoverArtBox.Source = BitmapFrame.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
+                    SetCoverArtVisibility(true);
                 }
                 else
                 {
-                    CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
-                    SetCoverArtVisibility(true);
+                    CoverArtBox.Source = null;
+                    SetCoverArtVisibility(false);
                 }
-                progressTimer.Start();
-                if (PauseAfterCurrentTrack && !Player.Paused)
-                {
-                    PlayPauseMethod();
-                    PauseAfterCurrentTrack = false;
-                }
+            }
+            else
+            {
+                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.None);
+                SetCoverArtVisibility(true);
+            }
+            progressTimer.Start();
+            if (PauseAfterCurrentTrack && !Player.Paused)
+            {
+                PlayPauseMethod();
+                PauseAfterCurrentTrack = false;
+            }
 
-                LoggingHandler.Log("Changing tracks");
-            });
-            
+            LoggingHandler.Log("Changing tracks");
         }
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
@@ -547,7 +540,7 @@ namespace FRESHMusicPlayer
             string track;
             if (Player.FileLoaded) track = Player.FilePath;
             else track = null;
-            var playlistManagement = new PlaylistManagement(Library, NotificationHandler, track);
+            var playlistManagement = new PlaylistManagement(Library, NotificationHandler, SelectedMenu, track);
             playlistManagement.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             playlistManagement.Owner = this;
             playlistManagement.Show();
@@ -664,17 +657,15 @@ namespace FRESHMusicPlayer
                     if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.RelativeOrAbsolute);
                     break;
                 case Key.F1:
-                    GC.Collect(2);
+                    Process.Start("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
                     break;
                 case Key.F2:
-                    throw new Exception("Exception for debugging");
-                case Key.F3:
-                    Topmost = !Topmost;
+                    GC.Collect(2);
                     break;
+                case Key.F3:
+                    throw new Exception("Exception for debugging");
                 case Key.F4:
-                    var box2 = new FMPTextEntryBox("debug remove later");
-                    box2.ShowDialog();
-                    if (box2.OK) App.Config.AutoImportPaths = box2.Response.Split(';').ToList();
+                    Topmost = !Topmost;
                     break;
                 case Key.F5:
                     new ExportLibrary(this).Show();

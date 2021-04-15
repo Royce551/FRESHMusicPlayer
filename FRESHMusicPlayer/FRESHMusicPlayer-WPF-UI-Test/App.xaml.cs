@@ -68,8 +68,7 @@ namespace FRESHMusicPlayer
                 $"{Environment.OSVersion.VersionString}\n" +
                 $"{e.Exception}");
             var message = string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName);
-            var maybeWindow = currentWindow as MainWindow;
-            if (!(maybeWindow is null))
+            if (currentWindow is MainWindow maybeWindow)
             {
                 try
                 {
