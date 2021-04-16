@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT_RENAME}" Click="RenameButton_Click"/>
-            <MenuItem Header="Delete" Click="DeleteButton_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT_DELETE}" Click="DeleteButton_Click"/>
             <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT_EXPORT}" Click="ExportButton_Click"/>
         </ContextMenu>
     </UserControl.Resources>

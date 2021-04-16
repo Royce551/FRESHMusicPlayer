@@ -85,7 +85,7 @@ namespace FRESHMusicPlayer.Pages
                     break;
             }
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("FMP will import new tracks from these folders:");
+            stringBuilder.AppendLine(Properties.Resources.SETTINGS_AUTOIMPORTDESCRIPTION);
             foreach (var path in App.Config.AutoImportPaths)
                 stringBuilder.AppendLine(path);
             General_AutoImportTextBlock.Text = stringBuilder.ToString();
@@ -245,9 +245,6 @@ namespace FRESHMusicPlayer.Pages
                 window.Library.Import(tracks.ToArray());
             });
         }
-
-        private void Plugins_OpenFolder_Click(object sender, RoutedEventArgs e) => Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                        "FRESHMusicPlayer", "Plugins", "FMP-WPF"));
 
         private void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
         {

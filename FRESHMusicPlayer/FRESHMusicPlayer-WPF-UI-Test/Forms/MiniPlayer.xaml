@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties" 
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
@@ -16,7 +17,7 @@
                 </Canvas>
             </Border>
             <Slider x:Name="VolumeSlider" Style="{StaticResource Progress_Slider}" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,10,0" Maximum="100" ValueChanged="VolumeSlider_ValueChanged"/>
-            <Button x:Name="FullscreenButton" DockPanel.Dock="Left" Content="Back" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Click="FullscreenButton_Click"/>
+            <Button x:Name="FullscreenButton" DockPanel.Dock="Left" Content="{x:Static resx:Resources.MINIPLAYER_BACK}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Click="FullscreenButton_Click"/>
         </DockPanel>
         <Grid x:Name="ContentGrid" DockPanel.Dock="Bottom" Background="{StaticResource ForegroundColor}" Height="25" VerticalAlignment="Bottom" MouseDown="ContentGrid_MouseDown">
             <Grid.ColumnDefinitions>

@@ -196,6 +196,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Untimed Lyrics.
+        /// </summary>
+        public static string LYRICS_UNTIMEDLYRICS {
+            get {
+                return ResourceManager.GetString("LYRICS_UNTIMEDLYRICS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Albums.
         /// </summary>
         public static string MAINWINDOW_ALBUMS {
@@ -342,6 +351,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string MINIPLAYER_BACK {
+            get {
+                return ResourceManager.GetString("MINIPLAYER_BACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully cleared your library!.
         /// </summary>
         public static string NOTIFICATION_CLEARSUCCESS {
@@ -379,20 +397,11 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The library failed to load. Make sure that you don&apos;t have another instance of FMP running!.
+        ///   Looks up a localized string similar to Scanning for new tracks....
         /// </summary>
-        public static string NOTIFICATION_LIBRARYFAILED {
+        public static string NOTIFICATION_SCANNING {
             get {
-                return ResourceManager.GetString("NOTIFICATION_LIBRARYFAILED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pausing after current track....
-        /// </summary>
-        public static string NOTIFICATION_PAUSING {
-            get {
-                return ResourceManager.GetString("NOTIFICATION_PAUSING", resourceCulture);
+                return ResourceManager.GetString("NOTIFICATION_SCANNING", resourceCulture);
             }
         }
         
@@ -447,6 +456,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string PLAYLISTMANAGEMENT_CREATE {
             get {
                 return ResourceManager.GetString("PLAYLISTMANAGEMENT_CREATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string PLAYLISTMANAGEMENT_DELETE {
+            get {
+                return ResourceManager.GetString("PLAYLISTMANAGEMENT_DELETE", resourceCulture);
             }
         }
         
@@ -537,6 +555,33 @@ namespace FRESHMusicPlayer.Properties {
         public static string SETTINGS_APPEARANCE {
             get {
                 return ResourceManager.GetString("SETTINGS_APPEARANCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Import.
+        /// </summary>
+        public static string SETTINGS_AUTOIMPORT {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOIMPORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Folder.
+        /// </summary>
+        public static string SETTINGS_AUTOIMPORT_ADDFOLDER {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOIMPORT_ADDFOLDER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FMP will import new tracks from these folders:.
+        /// </summary>
+        public static string SETTINGS_AUTOIMPORTDESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOIMPORTDESCRIPTION", resourceCulture);
             }
         }
         

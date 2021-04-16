@@ -6,7 +6,7 @@
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.Playlists"
         mc:Ignorable="d"
-        Title="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" SizeToContent="Height" Width="600">
+        Title="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" SizeToContent="Height" Width="600" ResizeMode="NoResize">
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition/>

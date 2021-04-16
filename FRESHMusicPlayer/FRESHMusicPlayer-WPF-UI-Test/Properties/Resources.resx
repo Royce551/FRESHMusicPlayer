@@ -162,6 +162,9 @@
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
     <value>No lyrics available</value>
   </data>
+  <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
+    <value>Untimed Lyrics</value>
+  </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>Albums</value>
   </data>
@@ -212,6 +215,9 @@ We'll skip to the next track for you</value>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
     <value>_Tag Sources</value>
   </data>
+  <data name="MINIPLAYER_BACK" xml:space="preserve">
+    <value>Back</value>
+  </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
     <value>Clear All</value>
   </data>
@@ -231,11 +237,8 @@ Missing File: {0}</value>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>Installing update...</value>
   </data>
-  <data name="NOTIFICATION_LIBRARYFAILED" xml:space="preserve">
-    <value>The library failed to load. Make sure that you don't have another instance of FMP running!</value>
-  </data>
-  <data name="NOTIFICATION_PAUSING" xml:space="preserve">
-    <value>Pausing after current track...</value>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value>Scanning for new tracks...</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
     <value>An error occured when updating: {0}</value>
@@ -248,6 +251,9 @@ Missing File: {0}</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
     <value>Export</value>
@@ -278,6 +284,15 @@ Missing File: {0}</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
     <value>Appearance</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value>Auto Import</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
+    <value>FMP will import new tracks from these folders:</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
+    <value>Add Folder</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
     <value>Auto Update Mode</value>
@@ -412,7 +427,6 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
     <value>Bitrate</value>
-    <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
     <value>Disc</value>
@@ -425,7 +439,6 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
     <value>Track Info</value>
-    <comment>Track Info header</comment>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
     <value>Track</value>
