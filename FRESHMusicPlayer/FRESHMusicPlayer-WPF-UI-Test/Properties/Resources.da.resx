@@ -390,7 +390,7 @@ Tak fordi du bruger FRESHMusicPlayer! ♥</value>
     <value>Cover-billede</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value>Disk-nummer</value>
+    <value>Disk nr.</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
     <value>Redigering </value>
