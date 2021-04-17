@@ -118,9 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>Er is een fout opgetreden: {0}
-Als je tijd hebt, rapporteer dit dan aan de ontwikkelaars op https://github.com/royce551/freshmusicplayer/issues.
-Het logbestand dat ze nodig hebben is in {1}.</value>
+    <value>Oeps! Er is iets misgegaan. We zullen proberen om verder te gaan. Als dit blijft gebeuren, rapporteer dit dan op https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
     <value>Ga naar</value>
@@ -144,7 +142,7 @@ Het logbestand dat ze nodig hebben is in {1}.</value>
     <value>Je kunt ook bestanden naar deze pagina slepen.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value>Handmatig bestandspad/URL invoeren</value>
+    <value>Bestandspad/URL</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>Toevoegen aan afspeellijst</value>
@@ -162,7 +160,7 @@ Het logbestand dat ze nodig hebben is in {1}.</value>
     <value>Tekst</value>
   </data>
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
-    <value>Geen teksten</value>
+    <value>Geen teksten beschikbaar</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>Albums</value>
@@ -314,16 +312,16 @@ Bedankt voor het gebruiken van FRESHMusicPlayer! ♥</value>
     <value>Je staat op het punt om je bilbiotheek onomkeerbaar te wissen. Weet je het zeker?</value>
   </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value>Afspelen Traceren</value>
+    <value>Afspeeltijd Loggen</value>
   </data>
   <data name="SETTINGS_PRERELEASE" xml:space="preserve">
     <value>Pre-releaseversies van FMP krijgen</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value>Configuratie naar standaarden herstellen</value>
+    <value>Installingen naar standaard herstellen</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value>Om je wijzigingen toe te passen moet FMP worden herstart.</value>
+    <value>FMP moet opnieuw worden opgestart om je wijzigingen toe te passen.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
     <value>Nu Herstarten</value>
@@ -440,5 +438,26 @@ Bedankt voor het gebruiken van FRESHMusicPlayer! ♥</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
     <value>Jaar</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
+    <value>Map Toevoegen</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
+    <value>FMP zal nieuwe nummers importeren uit deze mappen:</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value>Auto-importeren</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
+    <value>Verwijderen</value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value>Aan het scannen voor nieuwe nummers...</value>
+  </data>
+  <data name="MINIPLAYER_BACK" xml:space="preserve">
+    <value>Terug</value>
+  </data>
+  <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
+    <value>Ongetimede Teksten</value>
   </data>
 </root>
