@@ -213,9 +213,7 @@ Tệp không thể tìm: {0}</value>
     <value>_Chép từ</value>
   </data>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>Một lỗi đã xảy ra: {0}.
-Nếu bạn có thể, xin báo cáo lỗi này tại https://github.com/royce551/freshmusicplayer/issues.
-Tệp nhật ký họ cần có thể tìm tại {1}.</value>
+    <value>Ôi, có một đièu bị làm sai! Chúng tôi sẽ cố tiếp tục. Nếu điều này xảy ra liên tục, vui lòng báo cáo lỗi này tại https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
     <value>Tiêu đề</value>
@@ -224,7 +222,7 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
     <value>Số trên đĩa</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value>Bạn có muốn lưu thay đổi vào {0}?</value>
+    <value>Lưu thay đổi vào {0}?</value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
     <value>Lưu</value>
@@ -275,7 +273,7 @@ Tệp nhật ký họ cần có thể tìm tại {1}.</value>
     <value>Đ. tất cả h. p.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value>Điền đường dẫn/URL thủ công</value>
+    <value>Đường dẫn hoặc URL</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
     <value>Bởi Squid Grill (và các người đóng góp nguồn mở)
@@ -289,7 +287,7 @@ Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
     <value>Thay đổi cách hoạt động của FMP</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value>Đặt lại cấu hình</value>
+    <value>Đặt lại cài đặt về mặc định</value>
   </data>
   <data name="SETTINGS_OUTPUTDEVICE" xml:space="preserve">
     <value>Thiết bị đầu ra</value>
@@ -352,7 +350,7 @@ Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
     <value>Khởi chạy lại ngay</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value>Để áp dụng các thầy đổi, bạn cần khởi chạy FMP lại.</value>
+    <value>FMP sẽ cần khởi chạy lại để áp dụng các thay đổi.</value>
   </data>
   <data name="SETTINGS_PRERELEASE" xml:space="preserve">
     <value>Nhân bản xem trước cho FMP</value>
@@ -379,13 +377,13 @@ Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
     <value>Bạn muốn làm gì với "{0}"?</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value>Thêm vào danh sách phát...</value>
+    <value>Thêm vào danh sách phát</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
     <value>Quản lý danh sách phát</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value>Bản cập nhật sản sàng để cài đặt!</value>
+    <value>Một bản cập nhật đã sẵn sàng! Khởi chạy FMP lại để cài bản cập nhật.</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
     <value>Một lỗi xảy ra khi cập nhật: {0}</value>
@@ -425,5 +423,44 @@ Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
     <value>Ảnh bìa</value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value>Không có ảnh bìa</value>
+  </data>
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value>Ghi thời gian phát</value>
+  </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value>Dọn sạch và cập nhật thư viện</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
+    <value>Thêm thư mục</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
+    <value>FMP sẽ nhập bài hát từ các thư mục này:</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value>Tự động nhập</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value>Đang quét cho bài hát mới...</value>
+  </data>
+  <data name="MINIPLAYER_BACK" xml:space="preserve">
+    <value>Lại</value>
+  </data>
+  <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
+    <value>Lời hát không chứa thời gian</value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value>Không có lời hát có sẵn</value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value>Lời hát</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Đi đến</value>
   </data>
 </root>
