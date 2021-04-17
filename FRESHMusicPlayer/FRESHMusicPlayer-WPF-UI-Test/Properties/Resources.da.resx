@@ -118,327 +118,332 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value></value>
+    <value>Hovsa! Noget gik galt. Vi prøver at fortsætte. Hvis det fortsætter, så rapporter det venligt på https://github.com/royce551/freshmusicplayer/issues. Brug helst engelsk.</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
-    <value></value>
+    <value>Gå til</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value></value>
+    <value>Miniafspiller</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
-    <value></value>
+    <value>Paus efter nuværende sang</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value></value>
+    <value>Søg efter mapper</value>
   </data>
   <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Søg efter playliste-filer</value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Søg efter sange</value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Du kan trække filer og mapper hertil.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value></value>
+    <value>Filsti eller URL</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Tilføj til playliste</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value></value>
+    <value>Tilføj alle til kø</value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
-    <value></value>
+    <value>Åben i filbrowser</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value></value>
+    <value>Afspil alle</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
-    <value></value>
+    <value>Sangtekster</value>
   </data>
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
-    <value></value>
+    <value>Ingen sangtekster tilgængelig</value>
   </data>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
-    <value></value>
+    <value>Ikke-tidsbestemte sangtekster</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value></value>
+    <value>Albummer</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value></value>
+    <value>Kunstnere</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value></value>
+    <value>Importer</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value></value>
+    <value>Ingen kunstner</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value></value>
+    <value>Intet spiller</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value></value>
+    <value>Der skete en fejl i at afspille:
+{0}
+Vi springer til næste sang for dig</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
-    <value></value>
+    <value>Playlister</value>
   </data>
   <data name="MAINWINDOW_SEARCH" xml:space="preserve">
-    <value></value>
+    <value>Søg</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value></value>
+    <value>Indstillinger</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Sange</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
-    <value></value>
+    <value>_Afslut</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
-    <value></value>
+    <value>_Fil</value>
   </data>
   <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
-    <value></value>
+    <value>_Nyt vindue</value>
   </data>
   <data name="MENUBAR_OPEN" xml:space="preserve">
-    <value></value>
+    <value>_Åben</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>_Gem</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
-    <value></value>
+    <value>_Kilder</value>
   </data>
   <data name="MINIPLAYER_BACK" xml:space="preserve">
-    <value></value>
+    <value>Tilbage</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value></value>
+    <value>Ryd alle</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Notifikationer</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
-    <value></value>
+    <value>Dit bibliotek er blevet ryddet!</value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Playliste-filen kunne ikke importeres fordi en eller flere af sangene kunne ikke findes.
+Manglende fil: {0}</value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value></value>
+    <value>Filen du prøvede at afspille, "{0}", eksisterer ikke.</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
-    <value></value>
+    <value>Installerer opdatering...</value>
   </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
-    <value></value>
+    <value>Søger efter nye sange...</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
-    <value></value>
+    <value>En fejl skete under opdateringen: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value></value>
+    <value>En opdatering er klar! Genstart FMP for at installer den.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value></value>
+    <value>Playliste-styring</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
-    <value></value>
+    <value>Ny</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
-    <value></value>
+    <value>Slet</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
-    <value></value>
+    <value>Eksporter</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
-    <value></value>
+    <value>Hvad vil du gøre med "{0}"?</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
-    <value></value>
+    <value>Omdøb</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>Tilføj playliste</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value></value>
+    <value>Tilføj sang</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value></value>
+    <value>Ryd kø</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value></value>
+    <value>Kø</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value></value>
+    <value>Tid tilbage - </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
-    <value></value>
+    <value>Om</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
-    <value></value>
+    <value>Udseende</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
-    <value></value>
+    <value>Autoimporter</value>
   </data>
   <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>FMP vil importere nye sange fra disse mapper:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
-    <value></value>
+    <value>Tilføj mappe</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value></value>
+    <value>Installation af opdateringer</value>
   </data>
   <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
-    <value></value>
+    <value>Ryd og opdater bibliotek</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value></value>
+    <value>Af Squid Grill (og open source-bidragere)
+Licenseret under GPL v3
+Tak fordi du bruger FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
-    <value></value>
+    <value>Generel</value>
   </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
-    <value></value>
+    <value>Integration</value>
   </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
-    <value></value>
+    <value>Sprog</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
-    <value></value>
+    <value>Vedligeholdelse</value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
-    <value></value>
+    <value>Ryd bibliotek</value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
-    <value></value>
+    <value>Du er ved at rydde dit bibliotek. Dette kan ikke fortrydes. Er du sikker?</value>
   </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value></value>
+    <value>Logning af afspilningstil</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value></value>
+    <value>Nulstil indstillinger</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>FMP er nødt til at genstarte for at anvende dine ændringer.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
-    <value></value>
+    <value>Genstart nu</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value></value>
+    <value>Ændr på den måde FMP fungerer</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value></value>
+    <value>Tema</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value></value>
+    <value>Mørk</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value></value>
+    <value>Lys</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
-    <value></value>
+    <value>Vis tid i stedet for sangtitel i vindue-navn</value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value></value>
+    <value>Opdateringer</value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value></value>
+    <value>Tjek efter opdateringer nu</value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
-    <value></value>
+    <value>Sidst tjekket {0}</value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value></value>
+    <value>Automatisk</value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
-    <value></value>
+    <value>Manuel</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Spørg før opdatering</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value></value>
+    <value>Metadata-editor</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value></value>
+    <value>Album-kunstner</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value></value>
+    <value>Kunstner</value>
   </data>
   <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
-    <value></value>
+    <value>Ændringerne vil blive anvendt når du afspiller en ny sang.</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value></value>
+    <value>Skift fil...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value></value>
+    <value>Komponist</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value></value>
+    <value>Cover-billede</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value></value>
+    <value>Disk-nummer</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
-    <value></value>
+    <value>Redigering </value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
-    <value></value>
+    <value>Der er mere end et resultat for dette album. Hvilken ønsker du?</value>
   </data>
   <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
-    <value></value>
+    <value>Intet cover-billede tilgængeligt</value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value></value>
+    <value>Du er ikke forbundet til internettet. :(</value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
-    <value></value>
+    <value>Ingen resulter kunne findes for dette album. :(</value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>Gem</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value></value>
+    <value>Gem ændringer til {0}?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Navn</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value></value>
+    <value>Sang nr.</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>Album</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value></value>
+    <value>Album-info</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value></value>
+    <value>Bitrate</value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Disk</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value></value>
+    <value>Genre</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value></value>
+    <value>Teknisk info</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value></value>
+    <value>Sanginfo</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Sang nr.</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value></value>
+    <value>År</value>
   </data>
 </root>
