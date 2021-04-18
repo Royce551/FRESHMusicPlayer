@@ -62,6 +62,9 @@ namespace FRESHMusicPlayer.Pages
                 case "nl":
                     General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Dutch;
                     break;
+                case "da":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Danish;
+                    break;
             }
             switch (App.Config.Theme)
             {
@@ -170,6 +173,9 @@ namespace FRESHMusicPlayer.Pages
                     case (int)LanguageCombo.Dutch:
                         App.Config.Language = "nl";
                         break;
+                    case (int)LanguageCombo.Danish:
+                        App.Config.Language = "da";
+                        break;
                 }
                 SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
             }
@@ -269,7 +275,8 @@ namespace FRESHMusicPlayer.Pages
         Vietnamese,
         Portuguese,
         Turkish,
-        Dutch
+        Dutch,
+        Danish
     }
     public enum UpdateCombo
     {
