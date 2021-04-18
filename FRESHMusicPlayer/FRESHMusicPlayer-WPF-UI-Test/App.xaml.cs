@@ -97,17 +97,6 @@ namespace FRESHMusicPlayer
                 MessageBox.Show(message);
             }
             LoggingHandler.Log($"There was an unhandled exception:\n{e.Exception}");
-            //try
-            //{
-            //    var box = new CriticalErrorBox(e, logPath, fileName);
-            //    box.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            //    box.Owner = currentWindow;
-            //    box.ShowDialog();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show(string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName));
-            //}
             e.Handled = true;
         }
     }

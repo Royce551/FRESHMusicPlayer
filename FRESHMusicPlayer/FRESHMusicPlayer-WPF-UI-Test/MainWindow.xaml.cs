@@ -1,6 +1,5 @@
 ﻿using ATL;
 using FRESHMusicPlayer.Forms;
-using FRESHMusicPlayer.Forms.Export;
 using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
@@ -498,8 +497,11 @@ namespace FRESHMusicPlayer
         }
         private void ProgressBar_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (Player.FileLoaded && !isDragging) Player.RepositionMusic((int)ProgressBar.Value);
-            ProgressTick();
+            if (Player.FileLoaded && !isDragging)
+            {
+                Player.RepositionMusic((int)ProgressBar.Value);
+                ProgressTick();
+            }
         }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -666,9 +668,6 @@ namespace FRESHMusicPlayer
                     throw new Exception("Exception for debugging");
                 case Key.F4:
                     Topmost = !Topmost;
-                    break;
-                case Key.F5:
-                    new ExportLibrary(this).Show();
                     break;
             }
         }

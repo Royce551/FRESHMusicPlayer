@@ -64,7 +64,7 @@
                 </Grid>
                 <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
 
-                <TextBlock Text="Auto Import" Style="{StaticResource Subheader}"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_AUTOIMPORT}" Style="{StaticResource Subheader}"/>
                 <TextBlock x:Name="General_AutoImportTextBlock" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
                 <Button x:Name="General_AddFolderButton" Content="{x:Static resx:Resources.SETTINGS_AUTOIMPORT_ADDFOLDER}" TextBlock.FontSize="16" Margin="0,5" Click="General_AddFolderButton_Click"/>
                 <Button x:Name="General_ClearButton" Content="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" TextBlock.FontSize="16" Click="General_ClearButton_Click"/>

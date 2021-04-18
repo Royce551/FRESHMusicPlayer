@@ -118,9 +118,6 @@
     </Compile>
     <Compile Include="Handlers\Configuration\ConfigurationHandler.cs" />
     <Compile Include="Handlers\Configuration\ConfigurationFile.cs" />
-    <Compile Include="Forms\Export\ExportLibrary.xaml.cs">
-      <DependentUpon>ExportLibrary.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Handlers\GUILibrary.cs" />
     <Compile Include="Handlers\Integrations\DiscordIntegration.cs" />
     <Compile Include="Handlers\Integrations\IPlaybackIntegration.cs" />
@@ -191,10 +188,6 @@
     <Page Include="Forms\TextEntryBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\Export\ExportLibrary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Handlers\Notifications\NotificationBox.xaml">
       <SubType>Designer</SubType>
@@ -368,7 +361,9 @@
       <Version>3.19.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Forms\Export\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'ReleasePackageUpdater'">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">

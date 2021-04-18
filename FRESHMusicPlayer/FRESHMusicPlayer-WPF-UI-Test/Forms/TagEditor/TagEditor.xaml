@@ -137,7 +137,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="UntimedLyricsLabel" Grid.Row="1" Style="{StaticResource Label}" Text="{x:Static resx:Resources.LYRICS_UNTIMEDLYRICS}"/>

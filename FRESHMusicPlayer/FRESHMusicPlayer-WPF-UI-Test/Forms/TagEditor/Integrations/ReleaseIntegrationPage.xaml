@@ -6,7 +6,7 @@
       xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
       xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor.Integrations"
       mc:Ignorable="d" 
-      Height="450" Width="600" SizeToContent="WidthAndHeight"
+      Height="450" Width="600" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
       Title="ReleaseIntegrationPage">
     <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
