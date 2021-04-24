@@ -9,6 +9,7 @@ using System.IO;
 using System.Timers;
 using LiteDB;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer_Avalonia.Views;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Linq;
@@ -482,5 +483,11 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
         }
         #endregion
 
+        #region NavBar
+        public void OpenSettingsCommand()
+        {
+            new Views.Settings().Show();
+        }
+        #endregion
     }
 }

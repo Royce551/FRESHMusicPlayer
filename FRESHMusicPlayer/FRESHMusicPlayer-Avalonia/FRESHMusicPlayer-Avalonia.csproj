@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <RootNamespace>FRESHMusicPlayer_Avalonia</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -11,6 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\icon.ico" />
+    <None Remove="Assets\notification.svg" />
+    <None Remove="Assets\queue.svg" />
+    <None Remove="Assets\search.svg" />
+    <None Remove="Assets\settings.svg" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.0" />

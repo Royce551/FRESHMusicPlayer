@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		Width="600" Height="400"
+        x:Class="FRESHMusicPlayer_Avalonia.Views.Settings"
+        Title="FRESHMusicPlayer Settings">
+	<TabControl TabStripPlacement="Left" SelectedIndex="3">
+		<TabItem Header="General">
+			<StackPanel Margin="10">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+					<TextBlock Text="Language" Margin="0,0,10,0" VerticalAlignment="Center"/>
+					<ComboBox>
+						<ComboBoxItem Content="Automatic"/>
+						<ComboBoxItem Content="English"/>
+					</ComboBox>
+				</StackPanel>
+				<CheckBox Content="Playtime Logging"/>
+
+				<TextBlock FontWeight="Bold" FontSize="18" Text="Auto Import"/>
+				
+				<TextBlock Text="FMP will import new tracks from these folders:"/>
+				<Button Content="Add Folder"/>
+				<Button Content="Clear All"/>
+				
+				<TextBlock FontWeight="Bold" FontSize="18" Text="Integration"/>
+				
+				<CheckBox Content="Discord Rich Presence"/>
+				
+				<TextBlock FontWeight="Bold" FontSize="18" Text="Updates"/>
+				
+				<CheckBox Content="Let me know about new versions of FMP"/>
+			</StackPanel>
+		</TabItem>
+		<TabItem Header="Appearance">
+			
+		</TabItem>
+		<TabItem Header="Maintenance">
+			
+		</TabItem>
+		<TabItem Header="About FMP">
+			<StackPanel Margin="10">
+				<Image Source="/Assets/fmplogofull.png" Stretch="UniformToFill" Margin="0,0,0,20"/>
+				<TextBlock Text="FRESHMusicPlayer (for Mac and Linux) Ver. 69420"/>
+				<TextBlock Text="by Squid Grill (and open source contributors)"/>
+				<TextBlock Text="Licensed under the GPL v3 license" Margin="0,0,0,20"/>
+			
+				<TextBlock Text="Thank you for using FRESHMusicPlayer! ❤" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+			
+				<Button Content="Report an issue"/>
+				<Button Content="View source code"/>
+				<Button Content="View license"/>
+				<Button Content="FMP on the interwebs"/>
+			</StackPanel>
+		</TabItem>
+	</TabControl>
+</Window>
