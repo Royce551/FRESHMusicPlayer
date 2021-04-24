@@ -21,11 +21,23 @@
     <PackageReference Include="FRESHMusicPlayer.Core" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Backends\FmpVlcBackend.dll">
+    <None Update="Backends\bass.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </None>
-    <None Update="Backends\LibVLCSharp.dll">
+    <None Update="Backends\FmpBassBackend.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </None>
+    <None Update="Backends\libbass.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </None>
+    <None Update="Backends\libbass.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </None>
+    <None Update="Backends\ManagedBass.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </None>

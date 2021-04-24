@@ -37,7 +37,7 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
             ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: remove shared
         }
 
-        private const string projectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 3";
+        private const string projectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 4";
         private string windowTitle = projectName;
         public string WindowTitle
         {
@@ -66,6 +66,8 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
         {
             this.RaisePropertyChanged(nameof(CurrentTime));
             this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
+            this.RaisePropertyChanged(nameof(TotalTime));
+            this.RaisePropertyChanged(nameof(TotalTimeSeconds));
             Player.AvoidNextQueue = false;
         }
 
@@ -259,19 +261,109 @@ namespace FRESHMusicPlayer_Avalonia.ViewModels
 
         #region Library
 
-        public void InitializeLibrary()
+        public async void InitializeLibrary()
         {
             AllTracks?.Clear();
-            AllTracks = new ObservableCollection<DatabaseTrack>(Library.Read());
-            LibraryInfoText = $"Tracks: {AllTracks.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
+            CategoryThings?.Clear();
+            switch (SelectedTab)
+            {
+                case 0:
+                    foreach (var track in await Task.Run(() => Library.Read()))
+                        AllTracks.Add(track);
+                    break;
+                case 1:
+                    foreach (var artist in await Task.Run(() => Library.Read("Artist").Select(x => x.Artist).Distinct()))
+                        CategoryThings.Add(artist);
+                    break;
+                case 2:
+                    foreach (var album in await Task.Run(() => Library.Read("Album").Select(x => x.Album).Distinct()))
+                        CategoryThings.Add(album);
+                    break;
+                case 3:
+                    foreach (var playlist in await Task.Run(() => Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToEnumerable()))
+                        CategoryThings.Add(playlist.Name);
+                    break;
+            }
+            UpdateLibraryInfo();
+        }
+        public void UpdateLibraryInfo() => LibraryInfoText = $"Tracks: {AllTracks.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
+
+        private int selectedTab;
+        public int SelectedTab
+        {
+            get => selectedTab;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref selectedTab, value);
+                InitializeLibrary();
+            }
         }
 
         public ObservableCollection<DatabaseTrack> AllTracks { get; set; } = new();
+        public ObservableCollection<string> CategoryThings { get; set; } = new();
+
         private string libraryInfoText;
         public string LibraryInfoText
         {
             get => libraryInfoText;
             set => this.RaiseAndSetIfChanged(ref libraryInfoText, value);
+        }
+
+        private string artistsSelectedItem;
+        public string ArtistsSelectedItem
+        {
+            get => artistsSelectedItem;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref artistsSelectedItem, value);
+                ShowTracksForArtist(value);
+            }
+        }
+        public async void ShowTracksForArtist(string artist)
+        {
+            if (artist is null) return;
+            AllTracks.Clear();
+            foreach (var track in await Task.Run(() => Library.ReadTracksForArtist(artist)))
+                AllTracks.Add(track);
+            UpdateLibraryInfo();
+        }
+
+        private string albumsSelectedItem;
+        public string AlbumsSelectedItem
+        {
+            get => albumsSelectedItem;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref albumsSelectedItem, value);
+                ShowTracksForAlbum(value);
+            }
+        }
+        public async void ShowTracksForAlbum(string album)
+        {
+            if (album is null) return;
+            AllTracks.Clear();
+            foreach (var track in await Task.Run(() => Library.ReadTracksForAlbum(album)))
+                AllTracks.Add(track);
+            UpdateLibraryInfo();
+        }
+
+        private string playlistsSelectedItem;
+        public string PlaylistsSelectedItem
+        {
+            get => playlistsSelectedItem;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref playlistsSelectedItem, value);
+                ShowTracksForPlaylist(value);
+            }
+        }
+        public async void ShowTracksForPlaylist(string playlist)
+        {
+            if (playlist is null) return;
+            AllTracks.Clear();
+            foreach (var track in await Task.Run(() => Library.ReadTracksForPlaylist(playlist))) 
+                AllTracks.Add(track);
+            UpdateLibraryInfo();
         }
 
         public void PlayCommand(string path)
