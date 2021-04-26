@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
+using FRESHMusicPlayer;
 using System;
 
 namespace FRESHMusicPlayer_Avalonia

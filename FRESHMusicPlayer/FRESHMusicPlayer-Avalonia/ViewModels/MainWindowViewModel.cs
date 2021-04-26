@@ -1,25 +1,21 @@
 ﻿using ATL;
-using FRESHMusicPlayer;
+using ATL.Playlist;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Media.Imaging;
+using FRESHMusicPlayer.Handlers;
+using LiteDB;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using ReactiveUI;
-using Avalonia.Media.Imaging;
-using System.IO;
-using System.Timers;
-using LiteDB;
-using FRESHMusicPlayer.Handlers;
-using FRESHMusicPlayer_Avalonia.Views;
 using System.Collections.ObjectModel;
-using System.Reactive;
-using System.Linq;
 using System.Diagnostics;
-using Avalonia.Controls;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Controls.ApplicationLifetimes;
-using ATL.Playlist;
+using System.Timers;
 
-namespace FRESHMusicPlayer_Avalonia.ViewModels
+namespace FRESHMusicPlayer.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {

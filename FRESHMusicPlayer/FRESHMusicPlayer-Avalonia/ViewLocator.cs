@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using FRESHMusicPlayer_Avalonia.ViewModels;
+using FRESHMusicPlayer.ViewModels;
 using System;
 
-namespace FRESHMusicPlayer_Avalonia
+namespace FRESHMusicPlayer
 {
     public class ViewLocator : IDataTemplate
     {

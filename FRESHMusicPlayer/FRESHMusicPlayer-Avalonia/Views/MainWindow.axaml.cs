@@ -1,13 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
-using FRESHMusicPlayer_Avalonia.ViewModels;
+using FRESHMusicPlayer.ViewModels;
 
-namespace FRESHMusicPlayer_Avalonia.Views
+namespace FRESHMusicPlayer.Views
 {
     public class MainWindow : Window
     {

@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using FRESHMusicPlayer_Avalonia.ViewModels;
-using FRESHMusicPlayer_Avalonia.Views;
+using FRESHMusicPlayer.ViewModels;
+using FRESHMusicPlayer.Views;
 
-namespace FRESHMusicPlayer_Avalonia
+namespace FRESHMusicPlayer
 {
     public class App : Application
     {

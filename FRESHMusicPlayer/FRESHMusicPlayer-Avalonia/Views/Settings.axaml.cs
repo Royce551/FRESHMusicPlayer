@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace FRESHMusicPlayer_Avalonia.Views
+namespace FRESHMusicPlayer.Views
 {
     public class Settings : Window
 {

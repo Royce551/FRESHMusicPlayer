@@ -1,11 +1,17 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 		Width="600" Height="400"
-        x:Class="FRESHMusicPlayer_Avalonia.Views.Settings"
+        x:Class="FRESHMusicPlayer.Views.Settings"
         Title="FRESHMusicPlayer Settings">
+	
+	<Window.DataContext>
+		<vm:SettingsViewModel/>
+	</Window.DataContext>
+			
 	<TabControl TabStripPlacement="Left" SelectedIndex="3">
 		<TabItem Header="General">
 			<StackPanel Margin="10">
@@ -40,18 +46,18 @@
 			
 		</TabItem>
 		<TabItem Header="About FMP">
-			<StackPanel Margin="10">
-				<Image Source="/Assets/fmplogofull.png" Stretch="UniformToFill" Margin="0,0,0,20"/>
+			<StackPanel Margin="10" HorizontalAlignment="Stretch">
+				<Image Source="/Assets/fmplogofull.png" Stretch="UniformToFill" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20"/>
 				<TextBlock Text="FRESHMusicPlayer (for Mac and Linux) Ver. 69420"/>
 				<TextBlock Text="by Squid Grill (and open source contributors)"/>
 				<TextBlock Text="Licensed under the GPL v3 license" Margin="0,0,0,20"/>
 			
 				<TextBlock Text="Thank you for using FRESHMusicPlayer! ❤" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 			
-				<Button Content="Report an issue"/>
-				<Button Content="View source code"/>
-				<Button Content="View license"/>
-				<Button Content="FMP on the interwebs"/>
+				<Button Content="Report an issue" Command="{Binding ReportIssueCommand}"/>
+				<Button Content="View source code" Command="{Binding ViewSourceCodeCommand}"/>
+				<Button Content="View license" Command="{Binding ViewLicenseCommand}"/>
+				<Button Content="FMP on the interwebs" Command="{Binding ViewWebsiteCommand}"/>
 			</StackPanel>
 		</TabItem>
 	</TabControl>
