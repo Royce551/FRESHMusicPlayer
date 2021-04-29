@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -34,8 +35,8 @@ namespace FRESHMusicPlayer.ViewModels
             ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: remove shared
         }
 
-        private const string projectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 4";
-        private string windowTitle = projectName;
+        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 4";
+        private string windowTitle = ProjectName;
         public string WindowTitle
         {
             get => windowTitle;
@@ -53,7 +54,7 @@ namespace FRESHMusicPlayer.ViewModels
             Artist = "Nothing Playing";
             Title = "Nothing Playing";
             CoverArt = null;
-            WindowTitle = projectName;
+            WindowTitle = ProjectName;
             ProgressTimer.Stop();
         }
 
@@ -77,7 +78,7 @@ namespace FRESHMusicPlayer.ViewModels
                 CoverArt = new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));
             this.RaisePropertyChanged(nameof(TotalTime));
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
-            WindowTitle = $"{track.Artist} - {track.Title} | {projectName}";
+            WindowTitle = $"{track.Artist} - {track.Title} | {ProjectName}";
             ProgressTimer.Start();
         }
 
