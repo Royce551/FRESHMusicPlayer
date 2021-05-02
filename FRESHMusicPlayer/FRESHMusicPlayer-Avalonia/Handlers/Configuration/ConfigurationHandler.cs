@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Handlers.Configuration
@@ -20,21 +20,20 @@ namespace FRESHMusicPlayer.Handlers.Configuration
 
         public static async Task<ConfigurationFile> Read()
         {
-            if (!File.Exists(Path.Combine(savePath, "config.json"))) await Write(new ConfigurationFile());
-            using Stream file = File.OpenWrite(Path.Combine(savePath, "config.json"));
-
-            return await JsonSerializer.DeserializeAsync<ConfigurationFile>(file);
+            if (!File.Exists(Path.Combine(savePath, "config.json")))
+            {
+                await Write(new ConfigurationFile());
+            }
+            using StreamReader file = File.OpenText(Path.Combine(savePath, "config.json"));
+            var jsonSerializer = new JsonSerializer();
+            return (ConfigurationFile)jsonSerializer.Deserialize(file, typeof(ConfigurationFile));
         }
 
         public static async Task Write(ConfigurationFile config)
         {
             if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
-            using Stream file = File.OpenWrite(Path.Combine(savePath, "config.json"));
-
-            file.SetLength(0);
-            await file.FlushAsync();
-
-            await JsonSerializer.SerializeAsync(file, config);
+            using StreamWriter file = File.CreateText(Path.Combine(savePath, "config.json"));
+            new JsonSerializer().Serialize(file, config);
         }
     }
 }
