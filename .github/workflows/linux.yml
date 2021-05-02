@@ -1,4 +1,4 @@
-name: CI
+name: Linux CI
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       working-directory: Distribution
     - name: "Create AppImage"
       run: |
-        curl https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o appimagetool-x86_64.AppImage
+        curl https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o appimagetool-x86_64.AppImage -L
         chmod +x appimagetool-x86_64.AppImage
         ./appimagetool-x86_64.AppImage FRESHMusicPlayer.AppDir
     - uses: actions/upload-artifact@v1
