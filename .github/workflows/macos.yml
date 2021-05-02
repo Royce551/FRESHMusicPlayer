@@ -16,6 +16,9 @@ jobs:
     - name: "Install Dependencies"
       run: |
         npm install -g appdmg
+    - uses: actions/checkout@v1
+      with:
+        submodules: 'recursive'
     - name: "Build Project"
       run: ./build-macos.sh
       working-directory: Distribution
