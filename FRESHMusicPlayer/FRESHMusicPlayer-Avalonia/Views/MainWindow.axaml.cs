@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
 using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 namespace FRESHMusicPlayer.Views
@@ -39,6 +40,12 @@ namespace FRESHMusicPlayer.Views
                     "If there's something you think was done better here, let us know in the issue tracker!").ShowDialog(this);
             }
         }
+
+        private void OnClosing(object sender, CancelEventArgs e)
+        {
+            viewModel?.CloseThings();
+        }
+
         private void OnPlayButtonClick(object sender, RoutedEventArgs e)    // TODO: figure out why i need this stuff instead
         {                                                                   // of just using commands
             var cmd = (Button)sender;

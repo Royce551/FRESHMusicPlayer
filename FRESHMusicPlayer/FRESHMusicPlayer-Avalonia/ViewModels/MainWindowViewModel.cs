@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Configuration;
 using LiteDB;
 using ReactiveUI;
 using System;
@@ -23,9 +24,11 @@ namespace FRESHMusicPlayer.ViewModels
         public Player Player { get; private set; } = new();
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
+        public ConfigurationFile Config { get; private set; }
 
         public MainWindowViewModel()
         {
+            StartThings();
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
             Library = new Library(library);
             InitializeLibrary();
@@ -285,6 +288,17 @@ namespace FRESHMusicPlayer.ViewModels
             UpdateLibraryInfo();
         }
         public void UpdateLibraryInfo() => LibraryInfoText = $"Tracks: {AllTracks?.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
+
+        public async void StartThings()
+        {
+            Config = await ConfigurationHandler.Read();
+        }
+
+        public async void CloseThings()
+        {
+            Library?.Database.Dispose();
+            await ConfigurationHandler.Write(Config);
+        }
 
         private int selectedTab;
         public int SelectedTab
