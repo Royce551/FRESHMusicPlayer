@@ -1,7 +1,8 @@
 on:
   push:
-    branches: [blueprint]
-  pull_request:
+    branches:
+      - master
+
 name: Linux CI (Flatpak)
 jobs:
   flatpak-builder:
