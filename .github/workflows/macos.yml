@@ -15,8 +15,6 @@ jobs:
     steps:
     - name: "Install Dependencies"
       run: |
-        brew install --cask dotnet-sdk
-        brew install nodejs
         npm install -g appdmg
     - name: "Build Project"
       run: ./Distribution/build-macos.sh
