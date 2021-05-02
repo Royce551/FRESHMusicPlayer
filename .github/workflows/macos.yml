@@ -1,4 +1,4 @@
-name: CI
+name: macOS CI
 
 on:
   push:
@@ -15,13 +15,15 @@ jobs:
     steps:
     - name: "Install Dependencies"
       run: |
-        brew install --cask dotnet-sdk
-        brew install nodejs
         npm install -g appdmg
+    - uses: actions/checkout@v1
+      with:
+        submodules: 'recursive'
     - name: "Build Project"
-      run: ./Distribution/build-macos.sh
+      run: ./build-macos.sh
+      working-directory: Distribution
     - name: "Create Disk Image"
-      run: appdmg ./Distribution/app-dmg-spec.json ./FRESHMusicPlayer.dmg
+      run: appdmg Distribution/app-dmg-spec.json ./FRESHMusicPlayer.dmg
     - uses: actions/upload-artifact@v1
       name: "Upload Artifact"
       with:
