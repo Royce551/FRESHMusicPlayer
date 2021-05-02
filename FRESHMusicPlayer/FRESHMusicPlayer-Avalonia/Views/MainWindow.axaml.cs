@@ -11,7 +11,7 @@ namespace FRESHMusicPlayer.Views
 {
     public class MainWindow : Window
     {
-        private MainWindowViewModel? viewModel { get => DataContext as MainWindowViewModel; }
+        private MainWindowViewModel viewModel { get => DataContext as MainWindowViewModel; }
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace FRESHMusicPlayer.Views
             
         }
 
-        private async void DoStuff()
+        private void DoStuff()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

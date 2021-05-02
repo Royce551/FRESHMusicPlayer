@@ -44,12 +44,12 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         #region Core
-        private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
+        private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
             // TODO: error handling
         }
 
-        private void Player_SongStopped(object? sender, EventArgs e)
+        private void Player_SongStopped(object sender, EventArgs e)
         {
             Artist = "Nothing Playing";
             Title = "Nothing Playing";
@@ -69,7 +69,7 @@ namespace FRESHMusicPlayer.ViewModels
             Player.AvoidNextQueue = false;
         }
 
-        private void Player_SongChanged(object? sender, EventArgs e)
+        private void Player_SongChanged(object sender, EventArgs e)
         {
             var track = new Track(Player.FilePath);
             Artist = track.Artist;
@@ -225,8 +225,8 @@ namespace FRESHMusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref totalTimeSeconds, value);
         }
 
-        private Bitmap? coverArt;
-        public Bitmap? CoverArt
+        private Bitmap coverArt;
+        public Bitmap CoverArt
         {
             get => coverArt;
             set => this.RaiseAndSetIfChanged(ref coverArt, value);
@@ -284,7 +284,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
             UpdateLibraryInfo();
         }
-        public void UpdateLibraryInfo() => LibraryInfoText = $"Tracks: {AllTracks.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
+        public void UpdateLibraryInfo() => LibraryInfoText = $"Tracks: {AllTracks?.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
 
         private int selectedTab;
         public int SelectedTab
@@ -320,9 +320,9 @@ namespace FRESHMusicPlayer.ViewModels
         public async void ShowTracksForArtist(string artist)
         {
             if (artist is null) return;
-            AllTracks.Clear();
+            AllTracks?.Clear();
             foreach (var track in await Task.Run(() => Library.ReadTracksForArtist(artist)))
-                AllTracks.Add(track);
+                AllTracks?.Add(track);
             UpdateLibraryInfo();
         }
 
@@ -339,9 +339,9 @@ namespace FRESHMusicPlayer.ViewModels
         public async void ShowTracksForAlbum(string album)
         {
             if (album is null) return;
-            AllTracks.Clear();
+            AllTracks?.Clear();
             foreach (var track in await Task.Run(() => Library.ReadTracksForAlbum(album)))
-                AllTracks.Add(track);
+                AllTracks?.Add(track);
             UpdateLibraryInfo();
         }
 
