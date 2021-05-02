@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.royce551.FRESHMusicPlayer</id>
+  <id>io.github.royce551.FRESHMusicPlayer.Blueprint</id>
   
-  <name>FRESHMusicPlayer</name>
+  <name>FRESHMusicPlayer Blueprint</name>
   <summary>Music Player</summary>
   
   <metadata_license>MIT</metadata_license>
@@ -14,5 +14,5 @@
     </p>
   </description>
   
-  <launchable type="desktop-id">io.github.royce551.FRESHMusicPlayer.desktop</launchable>
+  <launchable type="desktop-id">io.github.royce551.FRESHMusicPlayer.Blueprint.desktop</launchable>
 </component>
