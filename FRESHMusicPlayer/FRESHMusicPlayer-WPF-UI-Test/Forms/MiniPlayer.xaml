@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        WindowStyle="None" Background="Transparent" AllowsTransparency="True" Topmost="True" ResizeMode="CanMinimize"
+        WindowStyle="None" Background="Transparent" AllowsTransparency="True" Topmost="True" ResizeMode="CanMinimize" LocationChanged="Window_LocationChanged"
         Title="MiniPlayer" Height="55" Width="500">
     <DockPanel x:Name="BackgroundDockPanel" Background="Transparent" MouseEnter="DockPanel_MouseEnter" MouseLeave="DockPanel_MouseLeave">
         <DockPanel x:Name="TitlebarDockPanel" DockPanel.Dock="Top" Background="{StaticResource ForegroundColor}" Height="30" LastChildFill="False" MouseDown="TitlebarDockPanel_MouseDown" Opacity="100">

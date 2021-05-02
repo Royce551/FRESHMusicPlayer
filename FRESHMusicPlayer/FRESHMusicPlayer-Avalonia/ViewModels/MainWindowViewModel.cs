@@ -397,7 +397,7 @@ namespace FRESHMusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref filePathOrURL, value);
         }
 
-        private List<string> acceptableFilePaths = "*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac".Split(';').ToList();
+        private List<string> acceptableFilePaths = "wav;aiff;mp3;wma;3g2;3gp;3gp2;3gpp;asf;wmv;aac;adts;avi;m4a;m4a;m4v;mov;mp4;sami;smi;flac".Split(';').ToList();
                                                                                                                                         // ripped directly from fmp-wpf 'cause i'm lazy
         public async void BrowseTracksCommand()
         {
@@ -413,9 +413,10 @@ namespace FRESHMusicPlayer.ViewModels
                     new FileDialogFilter()
                     {
                         Name = "Other",
-                        Extensions = new List<string>(){"*"}
+                        Extensions = new List<string>() { "*" }
                     }
-                }
+                },
+                AllowMultiple = true
             };
             if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
@@ -433,7 +434,7 @@ namespace FRESHMusicPlayer.ViewModels
                     new FileDialogFilter()
                     {
                         Name = "Playlist Files",
-                        Extensions = new(){ "*.xspf", "*.asx", "*.wvx", "*.b4s", "*.m3u", "*.m3u8", "*.pls", "*.smil", "*.smi", "*.zpl"}
+                        Extensions = new(){ "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"}
                     }
                 }
             };

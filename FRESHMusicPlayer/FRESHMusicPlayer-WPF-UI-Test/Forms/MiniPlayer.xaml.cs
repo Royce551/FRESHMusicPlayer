@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -78,6 +79,8 @@ namespace FRESHMusicPlayer.Forms
 
         private void DockPanel_MouseEnter(object sender, MouseEventArgs e)
         {
+           
+
             var fadeIn = InterfaceUtils.GetDoubleAnimation(0f, 1f, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
             fadeIn.Begin(TitlebarDockPanel);
             var brightener = InterfaceUtils.GetDoubleAnimation(0.8, 1f, TimeSpan.FromMilliseconds(500), new PropertyPath("Opacity"));
@@ -147,6 +150,23 @@ namespace FRESHMusicPlayer.Forms
         {
             window.Player.Volume = (float)(VolumeSlider.Value / 100);
             window.VolumeBar.Value = VolumeSlider.Value;
+        }
+
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            var currentScreen = WinForms.Screen.FromHandle(new WindowInteropHelper(this).Handle).Bounds;
+            var window = new System.Drawing.Rectangle((int)Left, (int)Top, (int)Width, (int)Height);
+            var topHalf = new System.Drawing.Rectangle(currentScreen.X, currentScreen.Y, currentScreen.Width, currentScreen.Height / 2);
+            if (topHalf.Contains(window))
+            {
+                DockPanel.SetDock(ContentGrid, Dock.Top);
+                DockPanel.SetDock(TitlebarDockPanel, Dock.Bottom);
+            }
+            else
+            {
+                DockPanel.SetDock(ContentGrid, Dock.Bottom);
+                DockPanel.SetDock(TitlebarDockPanel, Dock.Top);
+            }
         }
     }
 }

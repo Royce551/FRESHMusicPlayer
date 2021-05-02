@@ -107,16 +107,19 @@ namespace FRESHMusicPlayer
                 Dispatcher.Invoke(() =>
                 {
                     var files = File.ReadAllLines(args.FullPath);
-                    if (files.Length != 0)
+                    if (files.Length != 0) // user wants to play a file
                     {
                         player.Queue.Clear();
                         player.Queue.Add(files);
                         player.PlayMusic();
                     }
+                    else // user might've forgotten fmp is open, let's flash
+                    {
+                        Activate();
+                        Topmost = true;
+                        Topmost = false;
+                    }
                     File.Delete(args.FullPath);
-                    Activate();
-                    Topmost = true;
-                    Topmost = false;
                 });
             };
             LoggingHandler.Log("Ready to go!");

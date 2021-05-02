@@ -47,7 +47,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor.Integrations
         {
             var releases = new List<(string Name, string Id)>();
             string jsonString;
-            try { jsonString = httpClient.GetStringAsync($"https://api.discogs.com/database/search?q={{{query}}}&{{track}}&per_page=1&key={Key}&secret={Secret}").Result; }
+            try { jsonString = httpClient.GetStringAsync($"https://api.discogs.com/database/search?release_title={query}&type=release&per_page=100&key={Key}&secret={Secret}").Result; }
             catch (AggregateException) 
             {
                 Worked = false;
