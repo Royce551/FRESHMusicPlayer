@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.royce551.FRESHMusicPlayer</id>
+  
+  <name>FRESHMusicPlayer</name>
+  <summary>Music Player</summary>
+  
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  
+  <description>
+    <p>
+      .NET music player with the aim of being fast and lightweight with lots of features.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">io.github.royce551.FRESHMusicPlayer.desktop</launchable>
+</component
