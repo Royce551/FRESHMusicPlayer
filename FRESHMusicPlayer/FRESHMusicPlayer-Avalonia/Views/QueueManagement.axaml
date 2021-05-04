@@ -1,0 +1,69 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+        mc:Ignorable="d" Width="500" Height="400" 
+		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
+        x:Class="FRESHMusicPlayer.Views.QueueManagement"
+        Title="QueueManagement">
+	<Window.DataContext>
+		<vm:QueueManagementViewModel/>
+	</Window.DataContext>
+	<Window.Resources>
+        <svg:SvgImage x:Key="Play" Source="/Assets/play.svg"/>
+		<svg:SvgImage x:Key="Delete" Source="/Assets/delete.svg"/>
+	</Window.Resources>
+		
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Margin="5,5,5,0">
+			<CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding $parent[Window].Topmost}" Content="Pin to top"/>
+			<TextBlock Text="Time Remaining:" VerticalAlignment="Center"/>
+			<TextBlock Text="{Binding TimeRemaining, StringFormat=\{0:hh\\:mm\\:ss\}}" VerticalAlignment="Center"/>
+		</StackPanel>
+		
+			
+		<ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Queue}" Margin="5,0,5,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple" Focusable="False">
+			<ListBox.DataTemplates>
+				<DataTemplate>
+					<Grid Margin="-5" Height="25" Background="Transparent" HorizontalAlignment="Stretch">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+							<TextBlock Text="{Binding Position}" FontWeight="Bold" FontSize="16" IsVisible="{Binding !IsCurrentTrack}"/>
+							<TextBlock Text=">" FontWeight="Bold" FontSize="16" IsVisible="{Binding IsCurrentTrack}"/>
+						</StackPanel>
+						<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
+						<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
+						<StackPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
+							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Command="{Binding JumpToCommand}" CommandParameter="{Binding Position}" VerticalAlignment="Center">
+								<Image Source="{DynamicResource Play}"/>
+							</Button>
+							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Command="{Binding RemoveCommand}" CommandParameter="{Binding Position}" VerticalAlignment="Center">
+								<Image Source="{DynamicResource Delete}"/>
+							</Button>
+						</StackPanel>
+					</Grid>
+				</DataTemplate>
+			</ListBox.DataTemplates>
+		</ListBox>
+	
+		<StackPanel Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,5" IsVisible="{Binding $parent[1].IsPointerOver}">
+			<Button Content="Add Track"/>
+			<Button Content="Add Playlist"/>
+			<Button Content="Clear Queue" Foreground="Red"/>
+		</StackPanel>
+	</Grid>
+</Window>

@@ -3,6 +3,7 @@ using ATL.Playlist;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using LiteDB;
@@ -61,7 +62,7 @@ namespace FRESHMusicPlayer.ViewModels
             ProgressTimer.Stop();
         }
 
-        private void ProgressTimer_Elapsed(object sender, ElapsedEventArgs e) => ProgressTick();
+        private async void ProgressTimer_Elapsed(object sender, ElapsedEventArgs e) => await Dispatcher.UIThread.InvokeAsync(() => ProgressTick());
 
         public void ProgressTick()
         {
@@ -499,6 +500,11 @@ namespace FRESHMusicPlayer.ViewModels
         public void OpenSettingsCommand()
         {
             new Views.Settings().Show();
+        }
+
+        public void OpenQueueManagementCommand()
+        {
+            new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer).Show();
         }
         #endregion
     }

@@ -46,7 +46,7 @@
 			<Button Margin="0,5">
 				<Image Source="{DynamicResource Notification}"/>
 			</Button>
-			<Button Margin="0,5">
+			<Button Margin="0,5" Command="{Binding OpenQueueManagementCommand}">
 				<Image Source="{DynamicResource Queue}"/>
 			</Button>
 			<Button Margin="0,5" Command="{Binding OpenSettingsCommand}">
@@ -68,7 +68,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<TextBlock x:Name="TrackTitleTextBlock" Grid.Row="0" Text="{Binding Title}" FontSize="20" FontWeight="Bold" Padding="10,10,0,0" />
+					<TextBlock x:Name="TrackTitleTextBlock" Grid.Row="0" Text="{Binding Title}" TextTrimming="CharacterEllipsis" FontSize="20" FontWeight="Bold" Padding="10,10,0,0" />
 					<TextBlock x:Name="TrackArtistTextBlock" Grid.Row="1" Text="{Binding Artist}" Foreground="{DynamicResource ThemeMidBrush}" Padding="10,0,0,0" />
 					<Grid Grid.Row="2" Margin="10, -15">
 						<Grid.ColumnDefinitions>
