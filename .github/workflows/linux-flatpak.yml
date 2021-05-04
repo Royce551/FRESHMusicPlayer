@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Linux CI (Flatpak)
+jobs:
+  flatpak-builder:
+    name: "Flatpak Builder"
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:kde-5.15
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bilelmoussaoui/flatpak-github-actions@v2
+      with:
+        bundle: "fmp.flatpak"
+        manifest-path: "Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml"
+    - shell: bash
+      env:
+        REPO_TOKEN: ${{ secrets.FLATPAK_REPO_TOKEN }}
+        REPO_LOCATION: https://flatpak.vicr123.com
+        REPO_NAME: partner-blueprint
+      run: |
+        sudo dnf install -y python3-aiohttp python3-tenacity python3-gobject
+        curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client
+        chmod +x flat-manager-client
+        ./flat-manager-client push --commit --publish $(./flat-manager-client create $REPO_LOCATION $REPO_NAME) repo
+

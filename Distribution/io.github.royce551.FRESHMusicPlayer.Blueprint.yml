@@ -1,0 +1,41 @@
+app-id: io.github.royce551.FRESHMusicPlayer.Blueprint
+runtime: org.freedesktop.Platform
+runtime-version: '20.08'
+sdk: org.freedesktop.Sdk
+command: fmp
+finish-args:
+  - --socket=x11
+  - --socket=pulseaudio
+  - --filesystem=home
+build-options:
+  build-args:
+    - --share=network
+cleanup:
+  - '/include'
+  - '/usr/include'
+  - '/app/opt/dotnet'
+modules:
+  - name: dotnet
+    buildsystem: simple
+    build-commands:
+      - chmod +x dotnet-install.sh
+      - ./dotnet-install.sh --install-dir /app/opt/dotnet/ --version 5.0.202
+    sources:
+      - type: file
+        url: https://dot.net/v1/dotnet-install.sh
+        sha256: c96360abc54d74454105df45cba5d6ac78c8d46859d9a1c2164df2a4dd09af6c
+  - name: fmp
+    buildsystem: simple
+    build-commands:
+      - cd FRESHMusicPlayer/FRESHMusicPlayer-Avalonia; /app/opt/dotnet/dotnet publish FRESHMusicPlayer-Avalonia.csproj -c Release -r linux-x64 -o /app/opt/freshmusicplayer
+      - mkdir -p /app/bin
+      - ln -s /app/opt/freshmusicplayer/FRESHMusicPlayer /app/bin/fmp
+      - mkdir -p /app/share/applications
+      - cp Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.desktop /app/share/applications
+      - mkdir -p /app/share/icons/hicolor/scalable/apps
+      - cp Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.svg /app/share/icons/hicolor/scalable/apps/
+      - mkdir -p /app/share/metainfo
+      - cp Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.metainfo.xml /app/share/metainfo/
+    sources:
+      - type: git
+        url: https://github.com/Royce551/FRESHMusicPlayer
