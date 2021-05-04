@@ -19,8 +19,11 @@ namespace FRESHMusicPlayer.ViewModels
 
         public ObservableCollection<QueueManagementEntry> Queue { get; set; } = new();
 
+        private bool isReady = false;
+
         public void Update()
         {
+            isReady = false;
             Queue.Clear();
             int number = 1;
             foreach (var track in Player.Queue.Queue)
@@ -30,22 +33,24 @@ namespace FRESHMusicPlayer.ViewModels
                 {
                     Title = info.Title,
                     Artist = info.Artist,
-                    Position = number
+                    Position = number,
+                    Length = info.Length
                 };
                 entry.IsCurrentTrack = Player.Queue.Position == number;
                 Queue.Add(entry);
                 number++;
             }
+            isReady = true;
         }
 
         public void JumpToCommand(int position)
         {
-            Player.Queue.Position = position;
+            Player.Queue.Position = position - 1;
             Player.PlayMusic();
         }
         public void RemoveCommand(int position)
         {
-            Player.Queue.Remove(position);
+            Player.Queue.Remove(position - 1);
         }
 
         private TimeSpan timeRemaining = new();
@@ -68,15 +73,17 @@ namespace FRESHMusicPlayer.ViewModels
         {
             await Dispatcher.UIThread.InvokeAsync(() =>
             {
+                
                 TimeSpan x = new();
                 int i = 1;
+                int i2 = 0;
                 foreach (var track in Player.Queue.Queue)
                 {
                     i++;
                     if (i <= Player.Queue.Position) continue;
-                    var y = Library.GetFallbackTrack(track);
+                    var y = Queue[i2];
                     x += TimeSpan.FromSeconds(y.Length);
-
+                    i2++;
                 }
                 x -= Player.CurrentTime;
                 TimeRemaining = x;
@@ -104,5 +111,6 @@ namespace FRESHMusicPlayer.ViewModels
         public string Artist { get; init; }
         public int Position { get; init; }
         public bool IsCurrentTrack { get; set; }
+        public int Length { get; init; }
     }
 }

@@ -12,7 +12,7 @@ namespace FRESHMusicPlayer.Views
 {
     public class MainWindow : Window
     {
-        private MainWindowViewModel viewModel { get => DataContext as MainWindowViewModel; }
+        private MainWindowViewModel ViewModel { get => DataContext as MainWindowViewModel; }
         public MainWindow()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace FRESHMusicPlayer.Views
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            viewModel?.CloseThings();
+            ViewModel?.CloseThings();
         }
 
         private void OnPlayButtonClick(object sender, RoutedEventArgs e)    // TODO: figure out why i need this stuff instead
@@ -51,7 +51,7 @@ namespace FRESHMusicPlayer.Views
             var cmd = (Button)sender;
             if (cmd.DataContext is DatabaseTrack x)
             {
-                viewModel?.PlayCommand(x.Path);
+                ViewModel?.PlayCommand(x.Path);
             }
         }
         private void OnEnqueueButtonClick(object sender, RoutedEventArgs e)
@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer.Views
             var cmd = (Button)sender;
             if (cmd.DataContext is DatabaseTrack x)
             {
-                viewModel?.EnqueueCommand(x.Path);
+                ViewModel?.EnqueueCommand(x.Path);
             }
         }
         private void OnDeleteButtonClick(object sender, RoutedEventArgs e)
@@ -67,7 +67,7 @@ namespace FRESHMusicPlayer.Views
             var cmd = (Button)sender;
             if (cmd.DataContext is DatabaseTrack x)
             {
-                viewModel?.DeleteCommand(x.Path);
+                ViewModel?.DeleteCommand(x.Path);
             }
         }
     }

@@ -68,12 +68,11 @@ namespace FRESHMusicPlayer.ViewModels
         {
             this.RaisePropertyChanged(nameof(CurrentTime));
             this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
-            this.RaisePropertyChanged(nameof(TotalTime));
-            this.RaisePropertyChanged(nameof(TotalTimeSeconds));
+            
             Player.AvoidNextQueue = false;
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private async void Player_SongChanged(object sender, EventArgs e)
         {
             var track = new Track(Player.FilePath);
             Artist = track.Artist;
@@ -84,6 +83,10 @@ namespace FRESHMusicPlayer.ViewModels
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
             WindowTitle = $"{track.Artist} - {track.Title} | {ProjectName}";
             ProgressTimer.Start();
+            await Task.Delay(100); // small delay to avoid fuckery with bass backend
+            this.RaisePropertyChanged(nameof(TotalTime));
+            this.RaisePropertyChanged(nameof(TotalTimeSeconds));
+            Volume = Player.Volume;
         }
 
         public bool RepeatModeNone { get => Player.Queue.RepeatMode == RepeatMode.None; }

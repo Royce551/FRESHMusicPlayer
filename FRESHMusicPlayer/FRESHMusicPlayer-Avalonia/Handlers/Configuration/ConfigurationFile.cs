@@ -41,5 +41,9 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// </summary>
         public int CurrentTab { get; set; } = 0;
         public List<string> AutoImportPaths { get; set; } = new List<string>();
+        /// <summary>
+        /// Whether the "downloaded wrong thing" warning was already shown
+        /// </summary>
+        public bool WindowsWarningWasShown { get; set; } = false;
     }
 }

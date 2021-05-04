@@ -5,7 +5,7 @@
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" Width="500" Height="400" 
 		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
-        x:Class="FRESHMusicPlayer.Views.QueueManagement"
+        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing"
         Title="QueueManagement">
 	<Window.DataContext>
 		<vm:QueueManagementViewModel/>
@@ -21,11 +21,11 @@
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Margin="5,5,5,0">
-			<CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding $parent[Window].Topmost}" Content="Pin to top"/>
-			<TextBlock Text="Time Remaining:" VerticalAlignment="Center"/>
-			<TextBlock Text="{Binding TimeRemaining, StringFormat=\{0:hh\\:mm\\:ss\}}" VerticalAlignment="Center"/>
-		</StackPanel>
+		<DockPanel Grid.Column="0" Grid.Row="0" Margin="5,5,5,0">
+			<CheckBox DockPanel.Dock="Left" IsChecked="{Binding $parent[Window].Topmost}" Content="Pin to top"/>
+			<TextBlock DockPanel.Dock="Right" Text="{Binding TimeRemaining, StringFormat=\{0:hh\\:mm\\:ss\}}" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+			<TextBlock DockPanel.Dock="Right" Text="Time Remaining:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+		</DockPanel>
 		
 			
 		<ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Queue}" Margin="5,0,5,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple" Focusable="False">
@@ -37,7 +37,7 @@
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition/>
 							<ColumnDefinition Width="1*"/>
 							<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
@@ -48,10 +48,10 @@
 						<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
 						<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
 						<StackPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
-							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Command="{Binding JumpToCommand}" CommandParameter="{Binding Position}" VerticalAlignment="Center">
+							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnJumpToButtonClick" VerticalAlignment="Center">
 								<Image Source="{DynamicResource Play}"/>
 							</Button>
-							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Command="{Binding RemoveCommand}" CommandParameter="{Binding Position}" VerticalAlignment="Center">
+							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnRemoveButtonClick" VerticalAlignment="Center">
 								<Image Source="{DynamicResource Delete}"/>
 							</Button>
 						</StackPanel>
