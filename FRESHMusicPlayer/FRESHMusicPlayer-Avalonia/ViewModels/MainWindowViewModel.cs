@@ -39,7 +39,7 @@ namespace FRESHMusicPlayer.ViewModels
             ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: remove shared
         }
 
-        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 4";
+        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 5";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
