@@ -38,6 +38,29 @@
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 
+	<NativeMenu.Menu>
+		<NativeMenu>
+			<NativeMenuItem Header="File">
+				<NativeMenu>
+					<NativeMenuItem Header="Open..." Command="{Binding OpenTrackCommand}"/>
+					<NativeMenuItemSeperator/>
+					<NativeMenuItem Header="Import Tracks" Command="{Binding BrowseTracksCommand}"/>
+					<NativeMenuItem Header="Import Folders" Command="{Binding BrowseFoldersCommand}"/>
+					<NativeMenuItem Header="Import Playlist Files" Command="{Binding BrowsePlaylistFilesCommand}"/>
+				</NativeMenu>
+			</NativeMenuItem>
+			<NativeMenuItem Header="Playback">
+				<NativeMenu>
+					<NativeMenuItem Header="What could go here!"/>
+				</NativeMenu>
+			</NativeMenuItem>
+			<NativeMenuItem Header="About">
+				<NativeMenu>
+					<NativeMenuItem Header="About FRESHMusicPlayer" Command="{Binding AboutFMPCommand}"/>
+				</NativeMenu>
+			</NativeMenuItem>
+		</NativeMenu>
+	</NativeMenu.Menu>
 	<Panel>
 		<StackPanel Background="Transparent" Orientation="Horizontal" ZIndex="1" Height="50" Margin="0,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Right">
 			<Button Margin="0,5">
@@ -119,6 +142,9 @@
 					</WrapPanel>
 				</Grid>
 			</Grid>
+			
+			
+				
 			<TabControl DockPanel.Dock="Top" SelectedIndex="{Binding SelectedTab}">
 				<TabItem Header="Tracks">
 					<DockPanel>
