@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -671,6 +672,19 @@ namespace FRESHMusicPlayer
                     throw new Exception("Exception for debugging");
                 case Key.F4:
                     Topmost = !Topmost;
+                    break;
+                case Key.F12:
+                    if (WindowStyle == WindowStyle.SingleBorderWindow)
+                    {
+                        WindowStyle = WindowStyle.None;
+                        WindowState = WindowState.Maximized;
+                        
+                    }
+                    else
+                    {
+                        WindowState = WindowState.Normal;
+                        WindowStyle = WindowStyle.SingleBorderWindow;
+                    }
                     break;
             }
         }

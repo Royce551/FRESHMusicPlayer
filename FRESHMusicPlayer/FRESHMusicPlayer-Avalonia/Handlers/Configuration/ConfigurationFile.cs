@@ -35,7 +35,9 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// <summary>
         /// The volume that FMP was set to before closing
         /// </summary>
-        public int Volume { get; set; } = 100;
+        public float Volume { get; set; } = 1f;
+        public string FilePath { get; set; }
+        public double FilePosition { get; set; } = 0;
         /// <summary>
         /// The last tab FMP was on before closing
         /// </summary>

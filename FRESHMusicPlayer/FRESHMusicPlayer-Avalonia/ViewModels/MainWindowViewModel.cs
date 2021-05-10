@@ -22,13 +22,14 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public Player Player { get; private set; } = new();
+        public Player Player { get; private set; }
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
         public ConfigurationFile Config { get; private set; }
 
         public MainWindowViewModel()
         {
+            Player = new();
             StartThings();
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
             Library = new Library(library);
@@ -296,11 +297,30 @@ namespace FRESHMusicPlayer.ViewModels
         public async void StartThings()
         {
             Config = await ConfigurationHandler.Read();
+            Volume = Config?.Volume ?? 1f;
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length != 0)
+            {
+                Player.Queue.Add(args);
+                Player.PlayMusic();
+                Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(Config.FilePath))
+                {
+                    Player.PlayMusic(Config.FilePath);
+                    Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
+                }
+            }
         }
 
         public async void CloseThings()
         {
             Library?.Database.Dispose();
+            Config.Volume = Volume;
+            Config.FilePath = Config.FilePath;
+            if (Player.FileLoaded) Config.FilePosition = Player.CurrentTime.TotalSeconds;
             await ConfigurationHandler.Write(Config);
         }
 
