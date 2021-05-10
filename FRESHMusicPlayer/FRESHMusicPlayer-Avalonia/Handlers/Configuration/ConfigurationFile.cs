@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FRESHMusicPlayer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Handlers.Configuration
 {
-    public class ConfigurationFile
-    {
+    public class ConfigurationFile : ViewModelBase
+    {                       // this is technically a Model but who cares!
         /// <summary>
         /// The ISO language code for the current language, or "automatic" to use the system default.
         /// </summary>

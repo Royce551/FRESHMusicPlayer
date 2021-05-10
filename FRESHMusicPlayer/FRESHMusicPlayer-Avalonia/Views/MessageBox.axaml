@@ -5,7 +5,7 @@
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" SizeToContent="Height" Width="450"
         x:Class="FRESHMusicPlayer.Views.MessageBox"
-        Title="{Binding Title}">
+        Icon="/Assets/icon.ico" Title="{Binding Title}">
 
 	<Window.DataContext>
 		<vm:MessageBoxViewModel/>

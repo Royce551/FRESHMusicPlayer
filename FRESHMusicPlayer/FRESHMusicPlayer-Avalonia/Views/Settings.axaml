@@ -6,7 +6,7 @@
         mc:Ignorable="d"
 		Width="600" Height="400"
         x:Class="FRESHMusicPlayer.Views.Settings"
-        Title="FRESHMusicPlayer Settings">
+        Icon="/Assets/icon.ico" Title="FRESHMusicPlayer Settings">
 	
 	<Window.DataContext>
 		<vm:SettingsViewModel/>
