@@ -2,10 +2,12 @@
 using ATL.Playlist;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
+using FRESHMusicPlayer.Views;
 using LiteDB;
 using ReactiveUI;
 using System;
@@ -27,6 +29,16 @@ namespace FRESHMusicPlayer.ViewModels
         public Library Library { get; private set; }
         public ConfigurationFile Config { get; private set; }
 
+        private Window Window 
+        { 
+            get 
+            {
+                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                    return desktop.MainWindow;
+                else return null;
+            } 
+        }
+
         public MainWindowViewModel()
         {
             Player = new();
@@ -34,10 +46,6 @@ namespace FRESHMusicPlayer.ViewModels
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
             Library = new Library(library);
             InitializeLibrary();
-            Player.SongChanged += Player_SongChanged;
-            Player.SongStopped += Player_SongStopped;
-            Player.SongException += Player_SongException;
-            ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: remove shared
         }
 
         public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 5";
@@ -296,12 +304,17 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void StartThings()
         {
+            Player.SongChanged += Player_SongChanged;
+            Player.SongStopped += Player_SongStopped;
+            Player.SongException += Player_SongException;
+            ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: remove shared
             Config = await ConfigurationHandler.Read();
             Volume = Config?.Volume ?? 1f;
-            var args = Environment.GetCommandLineArgs();
-            if (args.Length != 0)
+            var args = Environment.GetCommandLineArgs().ToList();
+            args.RemoveRange(0, 1);
+            if (args.Count != 0)
             {
-                Player.Queue.Add(args);
+                Player.Queue.Add(args.ToArray());
                 Player.PlayMusic();
             }
             else
@@ -318,7 +331,7 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Library?.Database.Dispose();
             Config.Volume = Volume;
-            Config.FilePath = Config.FilePath;
+            Config.FilePath = Player.FilePath;
             if (Player.FileLoaded) Config.FilePosition = Player.CurrentTime.TotalSeconds;
             await ConfigurationHandler.Write(Config);
         }

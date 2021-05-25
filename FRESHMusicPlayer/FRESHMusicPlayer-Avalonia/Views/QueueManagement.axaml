@@ -47,7 +47,7 @@
 						</StackPanel>
 						<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
 						<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Artist}" HorizontalAlignment="Stretch" FontSize="10"/>
-						<StackPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
+						<StackPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
 							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnJumpToButtonClick" VerticalAlignment="Center">
 								<Image Source="{DynamicResource Play}"/>
 							</Button>

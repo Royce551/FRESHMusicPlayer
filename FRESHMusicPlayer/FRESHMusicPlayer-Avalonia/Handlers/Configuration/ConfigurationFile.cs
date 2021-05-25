@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Handlers.Configuration
 {
-    public class ConfigurationFile : ViewModelBase
+    public class ConfigurationFile /*: ViewModelBase*/
     {                       // this is technically a Model but who cares!
         /// <summary>
         /// The ISO language code for the current language, or "automatic" to use the system default.
