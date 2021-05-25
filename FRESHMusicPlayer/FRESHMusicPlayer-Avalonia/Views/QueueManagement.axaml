@@ -28,25 +28,25 @@
 		</DockPanel>
 		
 			
-		<ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Queue}" Margin="5,0,5,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple" Focusable="False">
+		<ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Queue}" Margin="5,0,5,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple" HorizontalAlignment="Stretch" Focusable="False">
 			<ListBox.DataTemplates>
 				<DataTemplate>
-					<Grid Margin="-5" Height="25" Background="Transparent" HorizontalAlignment="Stretch">
+					<Grid Margin="-5" Height="25" Background="Transparent" HorizontalAlignment="Stretch" ShowGridLines="True">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition/>
+							<ColumnDefinition Width="Auto"/>
 							<ColumnDefinition Width="1*"/>
 							<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
 						<StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-							<TextBlock Text="{Binding Position}" FontWeight="Bold" FontSize="16" IsVisible="{Binding !IsCurrentTrack}"/>
-							<TextBlock Text=">" FontWeight="Bold" FontSize="16" IsVisible="{Binding IsCurrentTrack}"/>
+							<TextBlock Text="{Binding Position}" Grid.Column="0" FontWeight="Bold" FontSize="16" IsVisible="{Binding !IsCurrentTrack}"/>
+							<TextBlock Text=">" FontWeight="Bold" Grid.Column="0" FontSize="16" IsVisible="{Binding IsCurrentTrack}"/>
 						</StackPanel>
 						<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
-						<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
+						<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Artist}" HorizontalAlignment="Stretch" FontSize="10"/>
 						<StackPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
 							<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnJumpToButtonClick" VerticalAlignment="Center">
 								<Image Source="{DynamicResource Play}"/>

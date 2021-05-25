@@ -303,7 +303,6 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 Player.Queue.Add(args);
                 Player.PlayMusic();
-                Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
             }
             else
             {
@@ -494,12 +493,12 @@ namespace FRESHMusicPlayer.ViewModels
         {
             var dialog = new OpenFolderDialog()
             {
-
+                
             };
             if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                await dialog.ShowAsync(desktop.MainWindow);
-                var paths = Directory.EnumerateFiles(dialog.Directory, "*", SearchOption.AllDirectories)
+                var directory = await dialog.ShowAsync(desktop.MainWindow);
+                var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
                 .Where(name => name.EndsWith(".mp3")
                         || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
                         || name.EndsWith(".flac") || name.EndsWith(".aiff")
