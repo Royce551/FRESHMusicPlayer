@@ -323,6 +323,7 @@ namespace FRESHMusicPlayer.ViewModels
                 {
                     Player.PlayMusic(Config.FilePath);
                     Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
+                    Player.PauseMusic();
                 }
             }
         }
