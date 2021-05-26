@@ -48,7 +48,7 @@ namespace FRESHMusicPlayer.ViewModels
             InitializeLibrary();
         }
 
-        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 5";
+        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 6";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
@@ -331,8 +331,15 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Library?.Database.Dispose();
             Config.Volume = Volume;
-            Config.FilePath = Player.FilePath;
-            if (Player.FileLoaded) Config.FilePosition = Player.CurrentTime.TotalSeconds;
+            if (Player.FileLoaded)
+            {
+                Config.FilePath = Player.FilePath;
+                Config.FilePosition = Player.CurrentTime.TotalSeconds;
+            }
+            else
+            {
+
+            }
             await ConfigurationHandler.Write(Config);
         }
 
