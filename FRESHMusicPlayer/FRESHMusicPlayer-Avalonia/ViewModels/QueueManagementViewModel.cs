@@ -19,11 +19,8 @@ namespace FRESHMusicPlayer.ViewModels
 
         public ObservableCollection<QueueManagementEntry> Queue { get; set; } = new();
 
-        private bool isReady = false;
-
         public void Update()
         {
-            isReady = false;
             Queue.Clear();
             int number = 1;
             foreach (var track in Player.Queue.Queue)
@@ -40,7 +37,6 @@ namespace FRESHMusicPlayer.ViewModels
                 Queue.Add(entry);
                 number++;
             }
-            isReady = true;
         }
 
         public void JumpToCommand(int position)

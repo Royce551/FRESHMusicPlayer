@@ -69,4 +69,5 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public Menu CurrentMenu { get; set; } = Menu.Import;
         public List<string> AutoImportPaths { get; set; } = new List<string>();
     }
+
 }

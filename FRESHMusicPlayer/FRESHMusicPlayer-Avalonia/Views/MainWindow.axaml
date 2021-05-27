@@ -83,7 +83,26 @@
 					<ColumnDefinition Width="1*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Image x:Name="CoverArtImage" Source="{Binding CoverArt}" Grid.Column="0" Margin="10,10,0,5" />
+				<Image x:Name="CoverArtImage" Source="{Binding CoverArt}" Grid.Column="0" Margin="10,10,0,5" ToolTip.ShowDelay="10">
+					<Image.ContextMenu>
+						<ContextMenu>
+							<MenuItem Command="{Binding OpenTagEditorCommand}" Header="Tag Editor"/>
+							<MenuItem Command="{Binding OpenPlaylistManagementCommand}" Header="Playlist Management"/>
+							<MenuItem Command="{Binding OpenTrackCommand}" Header="Open"/>
+							<MenuItem Header="Go to">
+								<MenuItem Command="{Binding GoToArtistCommand}" Header="Artist"/>
+								<MenuItem Command="{Binding GoToAlbumCommand}" Header="Album"/>
+							</MenuItem>
+							<MenuItem Command="{Binding OpenLyricsCommand}" Header="Lyrics"/>
+							<Separator/>
+							<MenuItem Command="{Binding MiniPlayerCommand}" Header="Mini Player"/>
+							<MenuItem Command="{Binding PauseAfterCurrentTrackCommand}" Header="Pause after current track"/>
+						</ContextMenu>
+					</Image.ContextMenu>
+					<ToolTip.Tip>
+						<Image Source="{Binding CoverArt}"/>
+					</ToolTip.Tip>
+				</Image>
 				<!--Middle Section-->
 				<Grid Grid.Column="1" Margin="0,10,0,5">
 					<Grid.RowDefinitions>

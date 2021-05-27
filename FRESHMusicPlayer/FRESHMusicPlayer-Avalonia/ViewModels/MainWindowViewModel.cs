@@ -316,14 +316,14 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 Player.Queue.Add(args.ToArray());
                 Player.PlayMusic();
+                Player.PauseMusic();
             }
             else
             {
                 if (!string.IsNullOrEmpty(Config.FilePath))
                 {
                     Player.PlayMusic(Config.FilePath);
-                    Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
-                    Player.PauseMusic();
+                    Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition)); 
                 }
             }
         }
