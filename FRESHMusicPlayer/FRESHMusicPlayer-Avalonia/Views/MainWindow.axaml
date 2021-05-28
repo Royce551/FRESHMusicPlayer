@@ -51,7 +51,13 @@
 			</NativeMenuItem>
 			<NativeMenuItem Header="Playback">
 				<NativeMenu>
-					<NativeMenuItem Header="What could go here!"/>
+					<NativeMenuItem Header="Play/Pause" Command="{Binding PlayPauseCommand}"/>
+					<NativeMenuItem Header="Previous" Command="{Binding SkipPreviousCommand}"/>
+					<NativeMenuItem Header="Next" Command="{Binding SkipNextCommand}"/>
+					<NativeMenuItemSeperator/>
+					<NativeMenuItem Header="Toggle Repeat" Command="{Binding RepeatCommand}"/>
+					<NativeMenuItem Header="Shuffle" Command="{Binding ShuffleCommand}" IsChecked="{Binding Shuffle}"/>
+					<NativeMenuItem Header="Pause after current track" Command="{Binding PauseAfterCurrentTrackCommand}"/>
 				</NativeMenu>
 			</NativeMenuItem>
 			<NativeMenuItem Header="About">
@@ -359,6 +365,9 @@
 						<TextBlock Text="You can also drag and drop to this page."/>
 					</StackPanel>
 				</TabItem>
+				<!--<TabItem Header="Native Menubar Debug">
+					<NativeMenuBar/>
+				</TabItem>-->
 			</TabControl>
 		</DockPanel>
 

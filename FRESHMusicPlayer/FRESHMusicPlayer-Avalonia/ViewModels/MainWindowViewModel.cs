@@ -28,6 +28,9 @@ namespace FRESHMusicPlayer.ViewModels
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
         public ConfigurationFile Config { get; private set; }
+        public Track CurrentTrack { get; private set; }
+
+        private bool pauseAfterCurrentTrack = false;
 
         private Window Window 
         { 
@@ -83,19 +86,24 @@ namespace FRESHMusicPlayer.ViewModels
 
         private async void Player_SongChanged(object sender, EventArgs e)
         {
-            var track = new Track(Player.FilePath);
-            Artist = track.Artist;
-            Title = track.Title;
-            if (track.EmbeddedPictures.Count != 0)
-                CoverArt = new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));
+            CurrentTrack = new Track(Player.FilePath);
+            Artist = CurrentTrack.Artist;
+            Title = CurrentTrack.Title;
+            if (CurrentTrack.EmbeddedPictures.Count != 0)
+                CoverArt = new Bitmap(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData));
             this.RaisePropertyChanged(nameof(TotalTime));
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
-            WindowTitle = $"{track.Artist} - {track.Title} | {ProjectName}";
+            WindowTitle = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | {ProjectName}";
             ProgressTimer.Start();
             await Task.Delay(100); // small delay to avoid fuckery with bass backend
             this.RaisePropertyChanged(nameof(TotalTime));
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
             Volume = Player.Volume;
+            if (pauseAfterCurrentTrack && !Player.Paused)
+            {
+                PlayPauseCommand();
+                pauseAfterCurrentTrack = false;
+            }
         }
 
         public bool RepeatModeNone { get => Player.Queue.RepeatMode == RepeatMode.None; }
@@ -128,8 +136,13 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void SkipPreviousCommand()
         {
-            // TODO: implement skip to beginning logic
-            Player.PreviousSong();
+            if (Player.CurrentTime.TotalSeconds <= 5) Player.PreviousSong();
+            else
+            {
+                if (!Player.FileLoaded) return;
+                Player.CurrentTime = TimeSpan.FromSeconds(0);
+                ProgressTimer.Start(); // to resync the progress timer
+            }
         }
         public void RepeatCommand()
         {
@@ -179,6 +192,7 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Player.NextSong();
         }
+        public void PauseAfterCurrentTrackCommand() => pauseAfterCurrentTrack = true;
 
         private TimeSpan currentTime;
         public TimeSpan CurrentTime
@@ -314,9 +328,10 @@ namespace FRESHMusicPlayer.ViewModels
             args.RemoveRange(0, 1);
             if (args.Count != 0)
             {
+                pauseAfterCurrentTrack = true;
                 Player.Queue.Add(args.ToArray());
                 Player.PlayMusic();
-                Player.PauseMusic();
+                PlayPauseCommand();
             }
             else
             {
@@ -479,7 +494,7 @@ namespace FRESHMusicPlayer.ViewModels
             if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var files = await dialog.ShowAsync(desktop.MainWindow);
-                await Task.Run(() => Library.Import(files));
+                if (files.Length > 0) await Task.Run(() => Library.Import(files));
             }
             
         }
@@ -530,12 +545,50 @@ namespace FRESHMusicPlayer.ViewModels
                 Player.PlayMusic();
             }
         }
+        public async void OpenTrackCommand()
+        {
+            var dialog = new OpenFileDialog()
+            {
+                Filters = new List<FileDialogFilter>
+                {
+                    new FileDialogFilter()
+                    {
+                        Name = "Audio Files",
+                        Extensions = acceptableFilePaths
+                    },
+                    new FileDialogFilter()
+                    {
+                        Name = "Other",
+                        Extensions = new List<string>() { "*" }
+                    }
+                },
+                AllowMultiple = true
+            };
+            var files = await dialog.ShowAsync(Window);
+            Player.Queue.Add(files);
+            Player.PlayMusic();
+        }
         public void ImportFilePathCommand()
         {
             if (string.IsNullOrEmpty(FilePathOrURL)) return;
             Player.Queue.Add(FilePathOrURL);
             Library.Import(FilePathOrURL);
             Player.PlayMusic();
+        }
+
+        public async void GoToArtistCommand()
+        {
+            if (CurrentTrack is null) return;
+            SelectedTab = 1;
+            await Task.Delay(100);
+            ShowTracksForArtist(CurrentTrack.Artist);
+        }
+        public async void GoToAlbumCommand()
+        {
+            if (CurrentTrack is null) return;
+            SelectedTab = 2;
+            await Task.Delay(100);
+            ShowTracksForAlbum(CurrentTrack.Album);
         }
         #endregion
 
