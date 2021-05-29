@@ -51,7 +51,7 @@ namespace FRESHMusicPlayer.ViewModels
             InitializeLibrary();
         }
 
-        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Dev. Build 6";
+        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Beta 7";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
