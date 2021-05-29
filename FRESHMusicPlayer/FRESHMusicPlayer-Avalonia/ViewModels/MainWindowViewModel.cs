@@ -95,7 +95,7 @@ namespace FRESHMusicPlayer.ViewModels
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
             WindowTitle = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | {ProjectName}";
             ProgressTimer.Start();
-            await Task.Delay(100); // small delay to avoid fuckery with bass backend
+            await Task.Delay(1000); // temporary, to avoid fuckery with Bass backend
             this.RaisePropertyChanged(nameof(TotalTime));
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
             Volume = Player.Volume;
@@ -321,32 +321,34 @@ namespace FRESHMusicPlayer.ViewModels
             Player.SongChanged += Player_SongChanged;
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
-            ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: remove shared
+            ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: put this in a more logical place
             Config = await ConfigurationHandler.Read();
             Volume = Config?.Volume ?? 1f;
+            
             var args = Environment.GetCommandLineArgs().ToList();
             args.RemoveRange(0, 1);
             if (args.Count != 0)
             {
-                pauseAfterCurrentTrack = true;
                 Player.Queue.Add(args.ToArray());
                 Player.PlayMusic();
-                PlayPauseCommand();
             }
             else
             {
                 if (!string.IsNullOrEmpty(Config.FilePath))
                 {
+                    pauseAfterCurrentTrack = true;
                     Player.PlayMusic(Config.FilePath);
-                    Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition)); 
+                    Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
                 }
             }
+            await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Config.CurrentTab, DispatcherPriority.ApplicationIdle); // TODO: unhack the hack
         }
 
         public async void CloseThings()
         {
             Library?.Database.Dispose();
             Config.Volume = Volume;
+            Config.CurrentTab = SelectedTab;
             if (Player.FileLoaded)
             {
                 Config.FilePath = Player.FilePath;
@@ -595,12 +597,12 @@ namespace FRESHMusicPlayer.ViewModels
         #region NavBar
         public void OpenSettingsCommand()
         {
-            new Views.Settings().Show();
+            new Views.Settings().Show(Window);
         }
 
         public void OpenQueueManagementCommand()
         {
-            new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer).Show();
+            new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer).Show(Window);
         }
         #endregion
     }

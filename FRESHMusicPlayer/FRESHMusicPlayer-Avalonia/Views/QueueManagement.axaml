@@ -5,7 +5,7 @@
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" Width="500" Height="400" 
 		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
-        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing"
+        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing" WindowStartupLocation="CenterOwner"
         Icon="/Assets/icon.ico" Title="QueueManagement">
 	<Window.DataContext>
 		<vm:QueueManagementViewModel/>

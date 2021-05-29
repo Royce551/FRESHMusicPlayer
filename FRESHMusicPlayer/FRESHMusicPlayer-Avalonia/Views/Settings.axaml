@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 		Width="600" Height="400"
-        x:Class="FRESHMusicPlayer.Views.Settings"
+        x:Class="FRESHMusicPlayer.Views.Settings" WindowStartupLocation="CenterOwner"
         Icon="/Assets/icon.ico" Title="FRESHMusicPlayer Settings">
 	
 	<Window.DataContext>

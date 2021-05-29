@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" SizeToContent="Height" Width="450"
-        x:Class="FRESHMusicPlayer.Views.MessageBox"
+        x:Class="FRESHMusicPlayer.Views.MessageBox" WindowStartupLocation="CenterOwner"
         Icon="/Assets/icon.ico" Title="{Binding Title}">
 
 	<Window.DataContext>
