@@ -54,7 +54,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     }
 
     [DBusInterface("org.mpris.MediaPlayer2.Player")]
-    public interface IPlayer : IDBusObject
+    interface IPlayer : IDBusObject
     {
         Task NextAsync();
         Task PreviousAsync();
@@ -73,12 +73,15 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    public class Player : IPlayer
+    class Player : IPlayer
     {
         public event Action<PropertyChanges> OnPropertiesChanged;
 
         private FRESHMusicPlayer.Player player;
-        private IDictionary<string, object> properties;
+        private IDictionary<string, object> properties = new Dictionary<string, object>()
+        {
+            { "Volume", 1d }
+        };
 
         public Player(FRESHMusicPlayer.Player player)
         {
@@ -141,5 +144,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         //}
     }
+
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 }
