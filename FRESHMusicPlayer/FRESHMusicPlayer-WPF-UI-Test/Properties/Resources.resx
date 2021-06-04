@@ -120,6 +120,9 @@
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
     <value>Oopsies! Something went wrong. We'll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
+  <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value>Open debug log</value>
+  </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
     <value>Go to</value>
   </data>
@@ -260,6 +263,9 @@ Missing File: {0}</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
     <value>What do you want to do with "{0}"?</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
+    <value>"{0}" isn't a valid playlist name.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
     <value>Rename</value>

@@ -78,7 +78,7 @@ namespace FRESHMusicPlayer
                         IsImportant = true,
                         Type = Handlers.Notifications.NotificationType.Failure,
                         ContentText = message,
-                        ButtonText = "Open debug log",
+                        ButtonText = FRESHMusicPlayer.Properties.Resources.APPLICATION_OPEN_DEBUG_LOG,
                         OnButtonClicked = () =>
                         {
                             System.Diagnostics.Process.Start(logPath);

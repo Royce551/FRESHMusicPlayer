@@ -49,8 +49,17 @@ namespace FRESHMusicPlayer.Forms.Playlists
         {
             var dialog = new FMPTextEntryBox("Playlist Name");
             dialog.ShowDialog();
-            if (dialog.OK) library.CreatePlaylist(dialog.Response, track);
-            InitFields();
+
+            if (dialog.OK)
+            {
+                if (string.IsNullOrWhiteSpace(dialog.Response))
+                    MessageBox.Show(string.Format(Properties.Resources.PLAYLISTMANAGEMENT_INVALIDNAME, dialog.Response));
+                else
+                {
+                    library.CreatePlaylist(dialog.Response, track);
+                    InitFields();
+                }
+            }
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)

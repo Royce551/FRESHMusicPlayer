@@ -169,6 +169,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         {
             CoverArts.Add(new PictureInfo(PictureInfo.PIC_TYPE.Front));
             UpdateCoverArtSelector();
+            if (CoverArtSelector.SelectedIndex == -1) CoverArtSelector.SelectedIndex = 0;
             ChangeCoverArt();
             SetUnsavedChanges(true);
         }

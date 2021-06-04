@@ -52,6 +52,8 @@ namespace FRESHMusicPlayer.Utilities
         /// <param name="clearqueue">Whether to clear the queue before handling everything else</param>
         public static async void DoDragDrop(string[] tracks, Player player, GUILibrary library, bool enqueue = true, bool import = true, bool clearqueue = true)
         {
+            if (tracks is null) return;
+
             if (clearqueue) player.Queue.Clear();
             if (tracks.Any(x => Directory.Exists(x)))
             {

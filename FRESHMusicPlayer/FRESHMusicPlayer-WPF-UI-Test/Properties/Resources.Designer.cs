@@ -70,6 +70,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open debug log.
+        /// </summary>
+        public static string APPLICATION_OPEN_DEBUG_LOG {
+            get {
+                return ResourceManager.GetString("APPLICATION_OPEN_DEBUG_LOG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go to.
         /// </summary>
         public static string CONTROLS_GOTO {
@@ -483,6 +492,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string PLAYLISTMANAGEMENT_HEADER {
             get {
                 return ResourceManager.GetString("PLAYLISTMANAGEMENT_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; isn&apos;t a valid playlist name..
+        /// </summary>
+        public static string PLAYLISTMANAGEMENT_INVALIDNAME {
+            get {
+                return ResourceManager.GetString("PLAYLISTMANAGEMENT_INVALIDNAME", resourceCulture);
             }
         }
         
