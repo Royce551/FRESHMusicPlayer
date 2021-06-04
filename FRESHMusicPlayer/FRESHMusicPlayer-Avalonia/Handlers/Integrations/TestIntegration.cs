@@ -14,12 +14,12 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public void Dispose()
         {
-            Debug.WriteLine("disposing");
+            Console.WriteLine("disposing");
         }
 
         public void Update(Track track, PlaybackStatus status)
         {
-            Debug.WriteLine($"{track.Artist} - {track.Title}; Now {status}");
+            Console.WriteLine($"{track.Artist} - {track.Title}; Now {status}");
         }
     }
 }

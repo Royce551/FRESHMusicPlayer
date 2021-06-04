@@ -22,12 +22,17 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task Initialize()
         {
+		Console.WriteLine("Initializing");
             var server = new ServerConnectionOptions();
-            using var connection = new Connection(server);
-
+Console.WriteLine("2");
+            using var connection = new Connection(Address.Session);
+Console.WriteLine("3");
             await connection.ConnectAsync();
+Console.WriteLine("4");
             await connection.RegisterObjectAsync(player);
+Console.WriteLine("5");
             await connection.RegisterServiceAsync("org.mpris.MediaPlayer2.FRESHMusicPlayer");
+Console.WriteLine("Initialization Complete");
         }
 
         public void Dispose()
