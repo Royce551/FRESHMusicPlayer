@@ -64,7 +64,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         //Task SetPosition(ObjectPath trackID, long position);
         Task OpenUriAsync();
 
-        Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
+        //Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
 
         Task<IDictionary<string, object>> GetAllAsync();
         Task<object> GetAsync(string prop);
@@ -75,7 +75,11 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public class Player : IPlayer
     {
+        public event Action<PropertyChanges> OnPropertiesChanged;
+
         private FRESHMusicPlayer.Player player;
+        private IDictionary<string, object> properties;
+
         public Player(FRESHMusicPlayer.Player player)
         {
             this.player = player;
@@ -83,18 +87,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
 
-        public async Task<IDictionary<string, object>> GetAllAsync()
-        {
-            Console.WriteLine("Not implemented: GetAllAsync");
-            return new Dictionary<string, object>();
-        }
+        public async Task<IDictionary<string, object>> GetAllAsync() => properties;
 
-        public async Task<object> GetAsync(string prop)
-        {
-            Console.WriteLine("Not implemented: GetAsync");
-            return new object();
-        }
-
+        public async Task<object> GetAsync(string prop) => properties[prop];
 
         public async Task NextAsync()
         {
@@ -124,7 +119,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task SetAsync(string prop, object val)
         {
-            Console.WriteLine("Not implemented: Set");
+            properties[prop] = val;
         }
 /*
         public async Task SetPosition(ObjectPath trackID, long position)
@@ -137,18 +132,14 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             player.StopMusic();
         }
 
-        public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
-        {
-            Console.WriteLine("Not implemented: WatchProperties");
-            return new LiteDB.LiteDatabase("lols.db");
-        }
+        public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler) => SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
 
-        public async Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
-        {
-            Console.WriteLine("Not implemented: WatchSeekedAsync");
-            return new LiteDB.LiteDatabase("lols2.db");
+        //public async Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
+        //{
+        //    Console.WriteLine("Not implemented: WatchSeekedAsync");
+        //    return new LiteDB.LiteDatabase("lols2.db");
 
-        }
+        //}
     }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 }
