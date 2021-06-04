@@ -22,17 +22,24 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task Initialize()
         {
-		Console.WriteLine("Initializing");
-            var server = new ServerConnectionOptions();
-Console.WriteLine("2");
-            using var connection = new Connection(Address.Session);
-Console.WriteLine("3");
-            await connection.ConnectAsync();
-Console.WriteLine("4");
-            await connection.RegisterObjectAsync(player);
-Console.WriteLine("5");
-            await connection.RegisterServiceAsync("org.mpris.MediaPlayer2.FRESHMusicPlayer");
-Console.WriteLine("Initialization Complete");
+            try
+            {
+                Console.WriteLine("Initializing");
+                var server = new ServerConnectionOptions();
+                Console.WriteLine("2");
+                using var connection = new Connection(Address.Session);
+                Console.WriteLine("3");
+                await connection.ConnectAsync();
+                Console.WriteLine("4");
+                await connection.RegisterObjectAsync(player);
+                Console.WriteLine("5");
+                await connection.RegisterServiceAsync("org.mpris.MediaPlayer2.FRESHMusicPlayer");
+                Console.WriteLine("Initialization Complete");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         public void Dispose()
@@ -60,7 +67,7 @@ Console.WriteLine("Initialization Complete");
         Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
 
         Task<IDictionary<string, object>> GetAllAsync();
-        Task<T> GetAsync<T>(string prop);
+        Task<object> GetAsync(string prop);
         Task SetAsync(string prop, object val);
         Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
     }
@@ -81,7 +88,7 @@ Console.WriteLine("Initialization Complete");
             throw new NotImplementedException();
         }
 
-        public Task<T> GetAsync<T>(string prop)
+        public Task<object> GetAsync(string prop)
         {
             throw new NotImplementedException();
         }
@@ -120,7 +127,6 @@ Console.WriteLine("Initialization Complete");
 
         public async Task SetPosition(ObjectPath trackID, long position)
         {
-            // HACK: what do i do with trackID?????
             player.CurrentTime = TimeSpan.FromMilliseconds(position * 1000);
         }
 
