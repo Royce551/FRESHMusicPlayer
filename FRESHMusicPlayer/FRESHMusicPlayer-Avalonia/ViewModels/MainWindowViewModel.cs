@@ -7,6 +7,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
+using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Views;
 using LiteDB;
 using ReactiveUI;
@@ -29,6 +30,7 @@ namespace FRESHMusicPlayer.ViewModels
         public Library Library { get; private set; }
         public ConfigurationFile Config { get; private set; }
         public Track CurrentTrack { get; private set; }
+        public IntegrationHandler Integrations { get; private set; } = new();
 
         private bool pauseAfterCurrentTrack = false;
 
@@ -48,7 +50,15 @@ namespace FRESHMusicPlayer.ViewModels
             StartThings();
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
             Library = new Library(library);
+            Integrations.UINeedsUpdate += Integrations_UINeedsUpdate;
+            Integrations.Add(new TestIntegration());
+            Integrations.Add(new MPRISIntegration(Player));
             InitializeLibrary();
+        }
+
+        private void Integrations_UINeedsUpdate(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Beta 7";
@@ -72,6 +82,7 @@ namespace FRESHMusicPlayer.ViewModels
             CoverArt = null;
             WindowTitle = ProjectName;
             ProgressTimer.Stop();
+            Integrations.Update(CurrentTrack, PlaybackStatus.Stopped);
         }
 
         private async void ProgressTimer_Elapsed(object sender, ElapsedEventArgs e) => await Dispatcher.UIThread.InvokeAsync(() => ProgressTick());
@@ -95,6 +106,8 @@ namespace FRESHMusicPlayer.ViewModels
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
             WindowTitle = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | {ProjectName}";
             ProgressTimer.Start();
+            Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
+
             await Task.Delay(1000); // temporary, to avoid fuckery with Bass backend
             this.RaisePropertyChanged(nameof(TotalTime));
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
@@ -168,11 +181,13 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 Player.ResumeMusic();
                 Paused = false;
+                Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
             }
             else
             {
                 Player.PauseMusic();
                 Paused = true;
+                Integrations.Update(CurrentTrack, PlaybackStatus.Paused);
             }
         }
         public void ShuffleCommand()
@@ -347,6 +362,7 @@ namespace FRESHMusicPlayer.ViewModels
         public async void CloseThings()
         {
             Library?.Database.Dispose();
+            Integrations.Dispose();
             Config.Volume = Volume;
             Config.CurrentTab = SelectedTab;
             if (Player.FileLoaded)

@@ -25,6 +25,7 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.5" />
     <PackageReference Include="Avalonia.Svg.Skia" Version="0.10.0" />
     <PackageReference Include="FRESHMusicPlayer.Core" Version="1.0.0" />
+    <PackageReference Include="Tmds.DBus" Version="0.9.1" />
     <PackageReference Include="z440.atl.core" Version="3.19.0" />
   </ItemGroup>
   <ItemGroup>
