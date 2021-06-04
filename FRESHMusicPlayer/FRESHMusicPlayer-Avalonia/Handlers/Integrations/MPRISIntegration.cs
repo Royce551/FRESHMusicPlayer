@@ -92,7 +92,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public async Task<object> GetAsync(string prop)
         {
             Console.WriteLine("Not implemented: GetAsync");
-            return new object;
+            return new object();
         }
 
 
@@ -122,7 +122,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             player.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
         }
 
-        public Task SetAsync(string prop, object val)
+        public async Task SetAsync(string prop, object val)
         {
             Console.WriteLine("Not implemented: Set");
         }
@@ -140,13 +140,13 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
         {
             Console.WriteLine("Not implemented: WatchProperties");
-            return new LiteDB.LiteDatabase();
+            return new LiteDB.LiteDatabase("lols.db");
         }
 
         public async Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
         {
             Console.WriteLine("Not implemented: WatchSeekedAsync");
-            return new LiteDB.LiteDatabase();
+            return new LiteDB.LiteDatabase("lols2.db");
 
         }
     }
