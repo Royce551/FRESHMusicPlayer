@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
+[assembly: InternalsVisibleTo(Tmds.DBus.Connection.DynamicAssemblyName)]
 namespace FRESHMusicPlayer.Handlers.Integrations
 {
     public class MPRISIntegration : IPlaybackIntegration
@@ -35,7 +37,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 Console.WriteLine("5");
                 await connection.RegisterServiceAsync("org.mpris.MediaPlayer2.FRESHMusicPlayer");
                 Console.WriteLine("Initialization Complete");
-                player.Volume = 0.69;
             }
             catch (Exception e)
             {
@@ -67,9 +68,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         //Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
 
-        //Task<IDictionary<string, object>> GetAllAsync();
-        //Task<object> GetAsync(string prop);
-        //Task SetAsync(string prop, object val);
+        Task<IDictionary<string, object>> GetAllAsync();
+        Task<object> GetAsync(string prop);
+        Task SetAsync(string prop, object val);
         Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
     }
 
@@ -79,17 +80,10 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public event Action<PropertyChanges> OnPropertiesChanged;
 
         private FRESHMusicPlayer.Player player;
-
-        private double volume;
-        public double Volume
+        private IDictionary<string, object> properties = new Dictionary<string, object>()
         {
-            get => volume;
-            set
-            {
-                volume = value;
-                OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty(nameof(Volume), value));
-            }
-        }
+            { "Volume", 1d }
+        };
 
         public Player(FRESHMusicPlayer.Player player)
         {
@@ -98,9 +92,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
 
-        //public async Task<IDictionary<string, object>> GetAllAsync() => properties;
+        public async Task<IDictionary<string, object>> GetAllAsync() => properties;
 
-        //public async Task<object> GetAsync(string prop) => properties[prop];
+        public async Task<object> GetAsync(string prop) => properties[prop];
 
         public async Task NextAsync()
         {
@@ -128,10 +122,10 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             player.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
         }
 
-        //public async Task SetAsync(string prop, object val)
-        //{
-        //    properties[prop] = val;
-        //}
+        public async Task SetAsync(string prop, object val)
+        {
+            properties[prop] = val;
+        }
 /*
         public async Task SetPosition(ObjectPath trackID, long position)
         {
