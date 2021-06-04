@@ -60,9 +60,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         Task PreviousAsync();
         Task PlayPauseAsync();
         Task StopAsync();
-        Task Seek(long offset);
-        Task SetPosition(ObjectPath trackID, long position);
-        Task OpenUri();
+        Task SeekAsync(long offset);
+        //Task SetPosition(ObjectPath trackID, long position);
+        Task OpenUriAsync();
 
         Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
 
@@ -83,14 +83,16 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
 
-        public Task<IDictionary<string, object>> GetAllAsync()
+        public async Task<IDictionary<string, object>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not implemented: GetAllAsync");
+            return new Dictionary<string, object>();
         }
 
-        public Task<object> GetAsync(string prop)
+        public async Task<object> GetAsync(string prop)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not implemented: GetAsync");
+            return new object;
         }
 
 
@@ -99,9 +101,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             player.NextSong();
         }
 
-        public async Task OpenUri()
+        public async Task OpenUriAsync()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not implemented: OpenUriAsync");
         }
 
         public async Task PlayPauseAsync()
@@ -115,34 +117,37 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             player.PreviousSong();
         }
 
-        public async Task Seek(long offset)
+        public async Task SeekAsync(long offset)
         {
             player.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
         }
 
         public Task SetAsync(string prop, object val)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not implemented: Set");
         }
-
+/*
         public async Task SetPosition(ObjectPath trackID, long position)
         {
             player.CurrentTime = TimeSpan.FromMilliseconds(position * 1000);
         }
-
+*/
         public async Task StopAsync()
         {
             player.StopMusic();
         }
 
-        public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
+        public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not implemented: WatchProperties");
+            return new LiteDB.LiteDatabase();
         }
 
-        public Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
+        public async Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not implemented: WatchSeekedAsync");
+            return new LiteDB.LiteDatabase();
+
         }
     }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
