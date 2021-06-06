@@ -52,7 +52,6 @@ namespace FRESHMusicPlayer.ViewModels
             Library = new Library(library);
             Integrations.UINeedsUpdate += Integrations_UINeedsUpdate;
             Integrations.Add(new TestIntegration());
-            Integrations.Add(new MPRISIntegration(Player));
             InitializeLibrary();
         }
 
@@ -357,6 +356,9 @@ namespace FRESHMusicPlayer.ViewModels
                 }
             }
             await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Config.CurrentTab, DispatcherPriority.ApplicationIdle); // TODO: unhack the hack
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                Integrations.Add(new MPRISIntegration(this, Window));
         }
 
         public async void CloseThings()
