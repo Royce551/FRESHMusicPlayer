@@ -583,8 +583,11 @@ namespace FRESHMusicPlayer.ViewModels
                 AllowMultiple = true
             };
             var files = await dialog.ShowAsync(Window);
-            Player.Queue.Add(files);
-            Player.PlayMusic();
+            if (files.Length > 0)
+            {
+                Player.Queue.Add(files);
+                Player.PlayMusic();
+            }
         }
         public void ImportFilePathCommand()
         {

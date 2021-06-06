@@ -15,6 +15,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public event EventHandler UINeedsUpdate;
 
         private Player player;
+        private Connection connection;
 
         public MPRISIntegration(FRESHMusicPlayer.Player player)
         {
@@ -29,7 +30,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 Console.WriteLine("Initializing");
                 var server = new ServerConnectionOptions();
                 Console.WriteLine("2");
-                using var connection = new Connection(Address.Session);
+                connection = new Connection(Address.Session);
                 Console.WriteLine("3");
                 await connection.ConnectAsync();
                 Console.WriteLine("4");
@@ -46,7 +47,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public void Dispose()
         {
-           
+            connection.Dispose();
         }
 
         public void Update(Track track, PlaybackStatus status)
