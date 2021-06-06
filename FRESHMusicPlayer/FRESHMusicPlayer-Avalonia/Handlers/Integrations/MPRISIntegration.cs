@@ -65,7 +65,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         Task PlayPauseAsync();
         Task StopAsync();
         Task SeekAsync(long offset);
-        Task SetPosition(ObjectPath trackID, long position);
+        Task SetPositionAsync(ObjectPath trackID, long position);
         Task OpenUriAsync();
 
         //Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
@@ -78,8 +78,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     [DBusInterface("org.mpris.MediaPlayer2")]
     interface IMediaPlayer2 : IDBusObject
     {
-        Task Raise();
-        Task Quit();
+        Task RaiseAsync();
+        Task QuitAsync();
 
         Task<IDictionary<string, object>> GetAllAsync();
         Task<object> GetAsync(string prop);
@@ -127,7 +127,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             properties[prop] = val;
         }
 
-        public async Task SetPosition(ObjectPath trackID, long position)
+        public async Task SetPositionAsync(ObjectPath trackID, long position)
         {
             viewModel.CurrentTime = TimeSpan.FromMilliseconds(position * 1000);
         }
@@ -170,9 +170,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task<object> GetAsync(string prop) => properties[prop];
 
-        public async Task Quit() => window.Close();
+        public async Task QuitAsync() => window.Close();
 
-        public async Task Raise() => window.Activate();
+        public async Task RaiseAsync() => window.Activate();
 
         public async Task SetAsync(string prop, object val) => properties[prop] = val;
 
