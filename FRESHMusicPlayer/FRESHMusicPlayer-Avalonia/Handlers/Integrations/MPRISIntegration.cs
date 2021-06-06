@@ -1,4 +1,6 @@
 ﻿using ATL;
+using Avalonia.Controls;
+using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +17,13 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public event EventHandler UINeedsUpdate;
 
         private Player player;
+        private MediaPlayer2 mediaPlayer2;
         private Connection connection;
 
-        public MPRISIntegration(FRESHMusicPlayer.Player player)
+        public MPRISIntegration(MainWindowViewModel viewModel, Window window)
         {
-            this.player = new(player);
+            player = new(viewModel);
+            mediaPlayer2 = new(window);
             Initialize();
         }
 
@@ -27,17 +31,14 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         {
             try
             {
-                Console.WriteLine("Initializing");
                 var server = new ServerConnectionOptions();
-                Console.WriteLine("2");
                 connection = new Connection(Address.Session);
-                Console.WriteLine("3");
                 await connection.ConnectAsync();
-                Console.WriteLine("4");
+
                 await connection.RegisterObjectAsync(player);
-                Console.WriteLine("5");
+                await connection.RegisterObjectAsync(mediaPlayer2);
+
                 await connection.RegisterServiceAsync("org.mpris.MediaPlayer2.FRESHMusicPlayer");
-                Console.WriteLine("Initialization Complete");
             }
             catch (Exception e)
             {
@@ -64,10 +65,21 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         Task PlayPauseAsync();
         Task StopAsync();
         Task SeekAsync(long offset);
-        //Task SetPosition(ObjectPath trackID, long position);
+        Task SetPosition(ObjectPath trackID, long position);
         Task OpenUriAsync();
 
         //Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
+
+        Task<IDictionary<string, object>> GetAllAsync();
+        Task<object> GetAsync(string prop);
+        Task SetAsync(string prop, object val);
+        Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
+    }
+    [DBusInterface("org.mpris.MediaPlayer2")]
+    interface IMediaPlayer2 : IDBusObject
+    {
+        Task Raise();
+        Task Quit();
 
         Task<IDictionary<string, object>> GetAllAsync();
         Task<object> GetAsync(string prop);
@@ -80,15 +92,15 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     {
         public event Action<PropertyChanges> OnPropertiesChanged;
 
-        private FRESHMusicPlayer.Player player;
+        private MainWindowViewModel viewModel;
         private IDictionary<string, object> properties = new Dictionary<string, object>()
         {
             { "Volume", 1d }
         };
 
-        public Player(FRESHMusicPlayer.Player player)
+        public Player(MainWindowViewModel viewModel)
         {
-            this.player = player;
+            this.viewModel = viewModel;
         }
 
         public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
@@ -97,45 +109,32 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task<object> GetAsync(string prop) => properties[prop];
 
-        public async Task NextAsync()
-        {
-            player.NextSong();
-        }
+        public async Task NextAsync() => viewModel.SkipNextCommand();
 
-        public async Task OpenUriAsync()
-        {
-            Console.WriteLine("Not implemented: OpenUriAsync");
-        }
+        public async Task OpenUriAsync() => viewModel.OpenTrackCommand();
 
-        public async Task PlayPauseAsync()
-        {
-            if (player.Paused) player.ResumeMusic();
-            else player.PauseMusic();
-        }
+        public async Task PlayPauseAsync() => viewModel.PlayPauseCommand();
 
-        public async Task PreviousAsync()
-        {
-            player.PreviousSong();
-        }
+        public async Task PreviousAsync() => viewModel.SkipPreviousCommand();
 
         public async Task SeekAsync(long offset)
         {
-            player.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
+            viewModel.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
         }
 
         public async Task SetAsync(string prop, object val)
         {
             properties[prop] = val;
         }
-/*
+
         public async Task SetPosition(ObjectPath trackID, long position)
         {
-            player.CurrentTime = TimeSpan.FromMilliseconds(position * 1000);
+            viewModel.CurrentTime = TimeSpan.FromMilliseconds(position * 1000);
         }
-*/
+
         public async Task StopAsync()
         {
-            player.StopMusic();
+            viewModel.Player.StopMusic();
         }
 
         public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler) => SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
@@ -148,5 +147,36 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         //}
     }
 
+    class MediaPlayer2 : IMediaPlayer2
+    {
+        public event Action<PropertyChanges> OnPropertiesChanged;
+
+        private IDictionary<string, object> properties = new Dictionary<string, object>()
+        {
+            { "CanQuit", true },
+            { "CanRaise", true },
+            { "HasTrackList", false },
+            { "Identity", "FRESHMusicPlayer" },
+            { "SupportedUriSchemes", new string[]{"file", "http"} },
+            { "SupportedMimeTypes", new string[]{ "audio/mp3", "audio/mpeg", "audio/mpeg3", "audio/wav", "audio/ogg", "audio/mp4", "video/avi", "video/msvideo", "video/mpeg", "video/quicktime", "video/x-ms-wmv" } }
+        };
+
+        private Window window;
+        public MediaPlayer2(Window window) => this.window = window;
+
+        public ObjectPath ObjectPath => new("/org/mpris");
+
+        public async Task<IDictionary<string, object>> GetAllAsync() => properties;
+
+        public async Task<object> GetAsync(string prop) => properties[prop];
+
+        public async Task Quit() => window.Close();
+
+        public async Task Raise() => window.Activate();
+
+        public async Task SetAsync(string prop, object val) => properties[prop] = val;
+
+        public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler) => SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
+    }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 }
