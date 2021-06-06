@@ -31,21 +31,17 @@ namespace FRESHMusicPlayer.Views
 
         private void DoStuff()
         {
-            // TODO: reimplement as notification
-            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            //{
-            //    new MessageBox().SetStuff("Did you download the wrong thing?",
-            //        $"This is FRESHMusicPlayer for Mac and Linux. {Environment.NewLine}" +
-            //        "Although you're free to keep using this version (we won't bother you again), " +
-            //        "you'll get a better experience if you grab the Windows version from" +
-            //        "https://github.com/royce551/freshmusicplayer/releases/latest. " +
-            //        "If there's something you think was done better here, let us know in the issue tracker!").ShowDialog(this);
-            //}
         }
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
             ViewModel?.CloseThings();
+        }
+
+        private void OpenTrackInfo(object sender, PointerPressedEventArgs e)    // HACK: THIS SHOULD NOT BE IN THE
+        {                                                                       // CODE BEHIND!!!!
+            if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            new TrackInfo().SetStuff(ViewModel.Player).Show(this);
         }
 
         private void OnPlayButtonClick(object sender, RoutedEventArgs e)    // TODO: figure out why i need this stuff instead

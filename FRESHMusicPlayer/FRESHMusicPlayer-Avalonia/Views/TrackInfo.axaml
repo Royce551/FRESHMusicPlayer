@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+        mc:Ignorable="d" Width="500" Height="300"
+        x:Class="FRESHMusicPlayer.Views.TrackInfo" WindowStartupLocation="CenterOwner"
+        Icon="/Assets/icon.ico" Title="Track Info">
+	<Window.DataContext>
+		<vm:TrackInfoViewModel/>
+	</Window.DataContext>
+
+	<Grid Margin="10">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width=".5*"/>
+			<ColumnDefinition Width=".5*"/>
+		</Grid.ColumnDefinitions>
+
+		<CheckBox Grid.ColumnSpan="2" IsChecked="{Binding $parent[Window].Topmost}" Content="Pin to top"/>
+		
+		<Image Grid.Row="1" Grid.Column="0" Source="{Binding CoverArt}"/>
+
+		<StackPanel Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Spacing="5">
+			<TextBlock Text="{Binding BitrateText}" TextWrapping="Wrap"/>
+			<TextBlock Text="{Binding DiscNumberText}" TextWrapping="Wrap"/>
+			<TextBlock Text="{Binding TrackNumberText}" TextWrapping="Wrap"/>
+			<TextBlock Text="{Binding YearText}" TextWrapping="Wrap"/>
+			<TextBlock Text="{Binding AlbumText}" TextWrapping="Wrap"/>
+		</StackPanel>
+	</Grid>
+</Window>
