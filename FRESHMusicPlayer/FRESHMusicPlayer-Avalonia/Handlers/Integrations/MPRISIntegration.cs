@@ -1,4 +1,4 @@
-﻿using ATL;
+using ATL;
 using Avalonia.Controls;
 using FRESHMusicPlayer.ViewModels;
 using System;
@@ -16,14 +16,12 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     {
         public event EventHandler UINeedsUpdate;
 
-        private Player player;
         private MediaPlayer2 mediaPlayer2;
         private Connection connection;
 
         public MPRISIntegration(MainWindowViewModel viewModel, Window window)
         {
-            player = new(viewModel);
-            mediaPlayer2 = new(window);
+            mediaPlayer2 = new(viewModel, window);
             Initialize();
         }
 
@@ -35,7 +33,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 connection = new Connection(Address.Session);
                 await connection.ConnectAsync();
 
-                await connection.RegisterObjectAsync(player);
                 await connection.RegisterObjectAsync(mediaPlayer2);
 
                 await connection.RegisterServiceAsync("org.mpris.MediaPlayer2.FRESHMusicPlayer");
@@ -88,14 +85,67 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    class Player : IPlayer
+    //class Player : IPlayer
+    //{
+    //    public event Action<PropertyChanges> OnPropertiesChanged;
+
+    //    private MainWindowViewModel viewModel;
+    //    private IDictionary<string, object> properties = new Dictionary<string, object>()
+    //    {
+           
+    //    };
+
+    //    public Player(MainWindowViewModel viewModel)
+    //    {
+    //        this.viewModel = viewModel;
+            
+    //    }
+
+        
+
+    //    public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2/Player");
+
+    //    public async Task<IDictionary<string, object>> GetAllAsync() => properties;
+
+    //    public async Task<object> GetAsync(string prop) => properties[prop];
+
+        
+
+       
+
+    //    public async Task SetAsync(string prop, object val)
+    //    {
+    //        properties[prop] = val;
+    //    }
+
+        
+
+        
+
+    //    public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler) => SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
+
+    //    //public async Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
+    //    //{
+    //    //    Console.WriteLine("Not implemented: WatchSeekedAsync");
+    //    //    return new LiteDB.LiteDatabase("lols2.db");
+
+    //    //}
+    //}
+
+
+    class MediaPlayer2 : IMediaPlayer2, IPlayer
     {
         public event Action<PropertyChanges> OnPropertiesChanged;
 
-        private MainWindowViewModel viewModel;
         private IDictionary<string, object> properties = new Dictionary<string, object>()
         {
-            { "PlaybackStatus", "Stopped" },
+            { "CanQuit", true },
+            { "CanRaise", true },
+            { "HasTrackList", false },
+            { "Identity", "FRESHMusicPlayer" },
+            { "SupportedUriSchemes", new string[]{"file", "http"} },
+            { "SupportedMimeTypes", new string[]{ "audio/mp3", "audio/mpeg", "audio/mpeg3", "audio/wav", "audio/ogg", "audio/mp4", "video/avi", "video/msvideo", "video/mpeg", "video/quicktime", "video/x-ms-wmv" } },
+             { "PlaybackStatus", "Stopped" },
             { "LoopStatus", "None" },
             { "Shuffle", false },
             { "Metadata", new Dictionary<string, object>()},
@@ -112,13 +162,22 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             { "CanControl", true },
         };
 
-        public Player(MainWindowViewModel viewModel)
+        private MainWindowViewModel viewModel;
+        private Window window;
+        public MediaPlayer2(MainWindowViewModel viewModel, Window window)
         {
             this.viewModel = viewModel;
+            this.window = window;
             viewModel.Player.SongChanged += Player_SongChanged;
+            UpdateMetadata();
         }
 
         private void Player_SongChanged(object sender, EventArgs e) => UpdateMetadata();
+
+        public async Task SeekAsync(long offset)
+        {
+            viewModel.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
+        }
 
         private void UpdateMetadata()
         {
@@ -126,6 +185,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             var x = new Dictionary<string, object>()
             {
                 {"mpris:length", (double)Math.Round(viewModel.Player.TotalTime.TotalMilliseconds * 1000) },
+                {"xesam:artist", track.Artist.Split(Settings.DisplayValueSeparator) },
                 {"xesam:album", track.Album },
                 {"xesam:asText", track.Lyrics.UnsynchronizedLyrics },
                 {"xesam:composer", track.Composer.Split(Settings.DisplayValueSeparator) },
@@ -136,11 +196,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));
         }
 
-        public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2/Player");
-
-        public async Task<IDictionary<string, object>> GetAllAsync() => properties;
-
-        public async Task<object> GetAsync(string prop) => properties[prop];
+        public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
 
         public async Task NextAsync() => viewModel.SkipNextCommand();
 
@@ -150,55 +206,15 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task PreviousAsync() => viewModel.SkipPreviousCommand();
 
-        public async Task SeekAsync(long offset)
+        public async Task StopAsync()
         {
-            viewModel.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
-        }
-
-        public async Task SetAsync(string prop, object val)
-        {
-            properties[prop] = val;
+            viewModel.Player.StopMusic();
         }
 
         public async Task SetPositionAsync(ObjectPath trackID, long position)
         {
             viewModel.CurrentTime = TimeSpan.FromMilliseconds(position * 1000);
         }
-
-        public async Task StopAsync()
-        {
-            viewModel.Player.StopMusic();
-        }
-
-        public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler) => SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
-
-        //public async Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
-        //{
-        //    Console.WriteLine("Not implemented: WatchSeekedAsync");
-        //    return new LiteDB.LiteDatabase("lols2.db");
-
-        //}
-    }
-
-
-    class MediaPlayer2 : IMediaPlayer2
-    {
-        public event Action<PropertyChanges> OnPropertiesChanged;
-
-        private IDictionary<string, object> properties = new Dictionary<string, object>()
-        {
-            { "CanQuit", true },
-            { "CanRaise", true },
-            { "HasTrackList", false },
-            { "Identity", "FRESHMusicPlayer" },
-            { "SupportedUriSchemes", new string[]{"file", "http"} },
-            { "SupportedMimeTypes", new string[]{ "audio/mp3", "audio/mpeg", "audio/mpeg3", "audio/wav", "audio/ogg", "audio/mp4", "video/avi", "video/msvideo", "video/mpeg", "video/quicktime", "video/x-ms-wmv" } }
-        };
-
-        private Window window;
-        public MediaPlayer2(Window window) => this.window = window;
-
-        public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
 
         public async Task<IDictionary<string, object>> GetAllAsync() => properties;
 
