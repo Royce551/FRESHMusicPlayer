@@ -181,17 +181,17 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         private void UpdateMetadata()
         {
-            if (viewModel.Player is null) return;
+            if (!viewModel.Player.FileLoaded) return;
             var track = new Track(viewModel.Player.FilePath);
             var x = new Dictionary<string, object>()
             {
                // {"mpris:length", (double)Math.Round(viewModel.Player?.TotalTime.TotalMilliseconds * 1000) },
-                {"xesam:artist", track.Artist.Split(Settings.DisplayValueSeparator) },
-                {"xesam:album", track.Album },
-                {"xesam:asText", track.Lyrics.UnsynchronizedLyrics },
-                {"xesam:composer", track.Composer.Split(Settings.DisplayValueSeparator) },
-                {"xesam:genre", track.Genre.Split(Settings.DisplayValueSeparator) },
-                {"xesam:title", track.Title },
+                {"xesam:artist", track.Artist.Split(Settings.DisplayValueSeparator)},
+                {"xesam:album", track.Album},
+                {"xesam:asText", track.Lyrics.UnsynchronizedLyrics},
+                {"xesam:composer", track.Composer.Split(Settings.DisplayValueSeparator)},
+                {"xesam:genre", track.Genre.Split(Settings.DisplayValueSeparator)},
+                {"xesam:title", track.Title},
                 {"xesam:trackNumber", track.TrackNumber }
             };
             OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));
