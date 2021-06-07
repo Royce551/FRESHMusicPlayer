@@ -95,15 +95,48 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         private MainWindowViewModel viewModel;
         private IDictionary<string, object> properties = new Dictionary<string, object>()
         {
-            { "Volume", 1d }
+            { "PlaybackStatus", "Stopped" },
+            { "LoopStatus", "None" },
+            { "Shuffle", false },
+            { "Metadata", new Dictionary<string, object>()},
+            { "Rate", 1d },
+            { "Volume", 1d },
+            { "Position", 0l },
+            { "MinimumRate", 1d },
+            { "MaximumRate", 1d},
+            { "CanGoNext", true },
+            { "CanGoPrevious", true },
+            { "CanPlay", true },
+            { "CanPause", true },
+            { "CanSeek", true },
+            { "CanControl", true },
         };
 
         public Player(MainWindowViewModel viewModel)
         {
             this.viewModel = viewModel;
+            viewModel.Player.SongChanged += Player_SongChanged;
         }
 
-        public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
+        private void Player_SongChanged(object sender, EventArgs e) => UpdateMetadata();
+
+        private void UpdateMetadata()
+        {
+            var track = new Track(viewModel.Player.FilePath);
+            var x = new Dictionary<string, object>()
+            {
+                {"mpris:length", (double)Math.Round(viewModel.Player.TotalTime.TotalMilliseconds * 1000) },
+                {"xesam:album", track.Album },
+                {"xesam:asText", track.Lyrics.UnsynchronizedLyrics },
+                {"xesam:composer", track.Composer.Split(Settings.DisplayValueSeparator) },
+                {"xesam:genre", track.Genre.Split(Settings.DisplayValueSeparator) },
+                {"xesam:title", track.Title },
+                {"xesam:trackNumber", track.TrackNumber }
+            };
+            OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));
+        }
+
+        public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2/Player");
 
         public async Task<IDictionary<string, object>> GetAllAsync() => properties;
 
@@ -147,6 +180,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         //}
     }
 
+
     class MediaPlayer2 : IMediaPlayer2
     {
         public event Action<PropertyChanges> OnPropertiesChanged;
@@ -164,7 +198,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         private Window window;
         public MediaPlayer2(Window window) => this.window = window;
 
-        public ObjectPath ObjectPath => new("/org/mpris");
+        public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
 
         public async Task<IDictionary<string, object>> GetAllAsync() => properties;
 
