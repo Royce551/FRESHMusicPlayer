@@ -21,6 +21,9 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// Whether to integrate with Discord Rich Presence
         /// </summary>
         public bool IntegrateDiscordRPC { get; set; } = false;
+
+        public bool IntegrateMPRIS { get; set; } = true;
+        public bool MPRISShowCoverArt { get; set; } = false;
         /// <summary>
         /// Whether to show remaining time instead of total time at the right side of the progress bar
         /// </summary>
@@ -37,16 +40,16 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// The volume that FMP was set to before closing
         /// </summary>
         public float Volume { get; set; } = 1f;
+
         public string FilePath { get; set; }
+
         public double FilePosition { get; set; } = 0;
         /// <summary>
         /// The last tab FMP was on before closing
         /// </summary>
         public int CurrentTab { get; set; } = 0;
         public List<string> AutoImportPaths { get; set; } = new List<string>();
-        /// <summary>
-        /// Whether the "downloaded wrong thing" warning was already shown
-        /// </summary>
-        public bool WindowsWarningWasShown { get; set; } = false;
+        
+
     }
 }

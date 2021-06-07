@@ -618,7 +618,7 @@ namespace FRESHMusicPlayer.ViewModels
         #region NavBar
         public void OpenSettingsCommand()
         {
-            new Views.Settings().Show(Window);
+            new Views.Settings().SetThings(Config).Show(Window);
         }
 
         public void OpenQueueManagementCommand()

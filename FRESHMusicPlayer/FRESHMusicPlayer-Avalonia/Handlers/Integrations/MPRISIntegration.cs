@@ -22,7 +22,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public MPRISIntegration(MainWindowViewModel viewModel, Window window)
         {
             mediaPlayer2 = new(viewModel, window);
-            Initialize();
+            _ = Initialize();
         }
 
         public async Task Initialize()
@@ -85,54 +85,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    //class Player : IPlayer
-    //{
-    //    public event Action<PropertyChanges> OnPropertiesChanged;
-
-    //    private MainWindowViewModel viewModel;
-    //    private IDictionary<string, object> properties = new Dictionary<string, object>()
-    //    {
-           
-    //    };
-
-    //    public Player(MainWindowViewModel viewModel)
-    //    {
-    //        this.viewModel = viewModel;
-            
-    //    }
-
-        
-
-    //    public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2/Player");
-
-    //    public async Task<IDictionary<string, object>> GetAllAsync() => properties;
-
-    //    public async Task<object> GetAsync(string prop) => properties[prop];
-
-        
-
-       
-
-    //    public async Task SetAsync(string prop, object val)
-    //    {
-    //        properties[prop] = val;
-    //    }
-
-        
-
-        
-
-    //    public async Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler) => SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
-
-    //    //public async Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null)
-    //    //{
-    //    //    Console.WriteLine("Not implemented: WatchSeekedAsync");
-    //    //    return new LiteDB.LiteDatabase("lols2.db");
-
-    //    //}
-    //}
-
-
+                               // tmds.dbus requires that methods are async even if they don't need to
     class MediaPlayer2 : IMediaPlayer2, IPlayer
     {
         public event Action<PropertyChanges> OnPropertiesChanged;
@@ -151,7 +104,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             { "Metadata", new Dictionary<string, object>()},
             { "Rate", 1d },
             { "Volume", 1d },
-            { "Position", 0l },
+            { "Position", 0L },
             { "MinimumRate", 1d },
             { "MaximumRate", 1d},
             { "CanGoNext", true },
