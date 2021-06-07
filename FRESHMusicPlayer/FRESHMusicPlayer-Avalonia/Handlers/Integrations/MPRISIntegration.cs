@@ -184,7 +184,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             var track = new Track(viewModel.Player.FilePath);
             var x = new Dictionary<string, object>()
             {
-                {"mpris:length", (double)Math.Round(viewModel.Player.TotalTime.TotalMilliseconds * 1000) },
+               // {"mpris:length", (double)Math.Round(viewModel.Player?.TotalTime.TotalMilliseconds * 1000) },
                 {"xesam:artist", track.Artist.Split(Settings.DisplayValueSeparator) },
                 {"xesam:album", track.Album },
                 {"xesam:asText", track.Lyrics.UnsynchronizedLyrics },
