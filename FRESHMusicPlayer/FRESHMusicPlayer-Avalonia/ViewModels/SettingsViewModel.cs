@@ -25,6 +25,11 @@ namespace FRESHMusicPlayer.ViewModels
                 Config.PlaybackTracking = value;
             }
         }
+        public bool ShowTimeInWindow
+        {
+            get => Config?.ShowTimeInWindow ?? false;
+            set => Config.ShowTimeInWindow = value;
+        }
         public bool IntegrateDiscordRPC
         {
             get => Config?.IntegrateDiscordRPC ?? false;
@@ -66,6 +71,7 @@ namespace FRESHMusicPlayer.ViewModels
         public void StartThings()
         {
             this.RaisePropertyChanged(nameof(PlaytimeLogging));
+            this.RaisePropertyChanged(nameof(ShowTimeInWindow));
             this.RaisePropertyChanged(nameof(IntegrateDiscordRPC));
             this.RaisePropertyChanged(nameof(IntegrateMPRIS));
             this.RaisePropertyChanged(nameof(MPRISShowCoverArt));

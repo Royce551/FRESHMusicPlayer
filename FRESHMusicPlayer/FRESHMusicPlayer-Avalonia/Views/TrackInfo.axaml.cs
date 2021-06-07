@@ -2,11 +2,14 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System.ComponentModel;
 
 namespace FRESHMusicPlayer.Views
 {
     public partial class TrackInfo : Window
     {
+        private TrackInfoViewModel ViewModel { get => DataContext as TrackInfoViewModel; }
+
         public TrackInfo()
         {
             InitializeComponent();
@@ -22,10 +25,14 @@ namespace FRESHMusicPlayer.Views
 
         public TrackInfo SetStuff(Player player)
         {
-            var viewModel = DataContext as TrackInfoViewModel;
-            viewModel.Player = player;
-            viewModel.StartStuff();
+            ViewModel.Player = player;
+            ViewModel.StartThings();
             return this;
+        }
+
+        private void OnClosing(object sender, CancelEventArgs e)
+        {
+            ViewModel?.CloseThings();
         }
     }
 }

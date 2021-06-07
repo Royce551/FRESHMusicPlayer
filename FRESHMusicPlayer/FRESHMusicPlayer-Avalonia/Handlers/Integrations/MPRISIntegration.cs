@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -138,7 +139,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             var track = new Track(viewModel.Player.FilePath);
             var x = new Dictionary<string, object>()
             {
-               // {"mpris:length", (double)Math.Round(viewModel.Player?.TotalTime.TotalMilliseconds * 1000) },
+                {"mpris:length", (long)Math.Round(viewModel.Player.TotalTime.TotalMilliseconds * 1000) },
                 {"xesam:artist", track.Artist.Split(Settings.DisplayValueSeparator)},
                 {"xesam:album", track.Album},
                 {"xesam:asText", track.Lyrics.UnsynchronizedLyrics},
@@ -147,6 +148,17 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 {"xesam:title", track.Title},
                 {"xesam:trackNumber", track.TrackNumber }
             };
+
+            if (viewModel.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count <= 0)
+            {
+                var tempPath = Path.Combine(Path.GetTempPath(), "FMP-CoverArt.png");
+
+                var embeddedPicture = track.EmbeddedPictures[0];
+                using var z = System.Drawing.Image.FromStream(new MemoryStream(embeddedPicture.PictureData));
+                z.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+                x.Add("mpris:artUrl", $"file://{tempPath}");
+            }
+
             OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));
         }
 

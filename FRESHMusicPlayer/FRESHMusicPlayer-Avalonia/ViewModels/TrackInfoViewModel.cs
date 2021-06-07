@@ -56,10 +56,14 @@ namespace FRESHMusicPlayer.ViewModels
             
         }
 
-        public void StartStuff()
+        public void StartThings()
         {
             Player.SongChanged += Player_SongChanged;
             Update();
+        }
+        public void CloseThings()
+        {
+            Player.SongChanged -= Player_SongChanged;
         }
 
         public void Update()

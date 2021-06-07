@@ -31,7 +31,7 @@
 		<ListBox Grid.Column="0" Grid.Row="1" Items="{Binding Queue}" Margin="5,0,5,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple" HorizontalAlignment="Stretch" Focusable="False">
 			<ListBox.DataTemplates>
 				<DataTemplate>
-					<Grid Margin="-5" Height="25" Background="Transparent" HorizontalAlignment="Stretch" ShowGridLines="True">
+					<Grid Margin="-5" Height="25" Background="Transparent" HorizontalAlignment="Stretch">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>

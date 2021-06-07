@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" Width="500" Height="300"
-        x:Class="FRESHMusicPlayer.Views.TrackInfo" WindowStartupLocation="CenterOwner"
+        x:Class="FRESHMusicPlayer.Views.TrackInfo" WindowStartupLocation="CenterOwner" Closing="OnClosing"
         Icon="/Assets/icon.ico" Title="Track Info">
 	<Window.DataContext>
 		<vm:TrackInfoViewModel/>

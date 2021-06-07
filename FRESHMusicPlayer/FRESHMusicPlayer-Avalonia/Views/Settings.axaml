@@ -17,22 +17,23 @@
 			<StackPanel Margin="10">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 					<TextBlock Text="Language" Margin="0,0,10,0" VerticalAlignment="Center"/>
-					<ComboBox>
+					<ComboBox IsEnabled="False">
 						<ComboBoxItem Content="Automatic"/>
 						<ComboBoxItem Content="English"/>
 					</ComboBox>
 				</StackPanel>
 				<CheckBox Content="Playtime Logging" IsChecked="{Binding PlaytimeLogging}"/>
+				<CheckBox Content="Show time in window title" IsChecked="{Binding ShowTimeInWindow}"/>
 
 				<TextBlock FontWeight="Bold" FontSize="18" Text="Auto Import"/>
 				
 				<TextBlock Text="FMP will import new tracks from these folders:"/>
-				<Button Content="Add Folder"/>
-				<Button Content="Clear All"/>
+				<Button Content="Add Folder" IsEnabled="False"/>
+				<Button Content="Clear All" IsEnabled="False"/>
 				
 				<TextBlock FontWeight="Bold" FontSize="18" Text="Integrations"/>
 				
-				<CheckBox Content="Discord Rich Presence" IsChecked="{Binding IntegrateDiscordRPC}"/>
+				<CheckBox Content="Discord Rich Presence" IsChecked="{Binding IntegrateDiscordRPC}" IsEnabled="False"/>
 				<CheckBox Content="MPRIS" IsVisible="{Binding IsRunningOnLinux}" IsChecked="{Binding IntegrateMPRIS}"/>
 				<CheckBox Content="Show cover art in MPRIS" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
 				<TextBlock Text="Will write temporary files to the temp directory" Margin="20,0,0,0" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>

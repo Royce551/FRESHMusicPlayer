@@ -51,16 +51,15 @@ namespace FRESHMusicPlayer.ViewModels
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
             Library = new Library(library);
             Integrations.UINeedsUpdate += Integrations_UINeedsUpdate;
-            Integrations.Add(new TestIntegration());
             InitializeLibrary();
         }
 
         private void Integrations_UINeedsUpdate(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Beta 7";
+        public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Beta 8";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
@@ -90,7 +89,9 @@ namespace FRESHMusicPlayer.ViewModels
         {
             this.RaisePropertyChanged(nameof(CurrentTime));
             this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
-            
+
+            if (Config.ShowTimeInWindow) WindowTitle = $"{CurrentTime:mm\\:ss}/{TotalTime:mm\\:ss} | {ProjectName}";
+
             Player.AvoidNextQueue = false;
         }
 
@@ -107,15 +108,18 @@ namespace FRESHMusicPlayer.ViewModels
             ProgressTimer.Start();
             Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
 
-            await Task.Delay(1000); // temporary, to avoid fuckery with Bass backend
-            this.RaisePropertyChanged(nameof(TotalTime));
-            this.RaisePropertyChanged(nameof(TotalTimeSeconds));
-            Volume = Player.Volume;
+            await Task.Delay(50); // HACK: this whole thing is a massive HACK.
             if (pauseAfterCurrentTrack && !Player.Paused)
             {
                 PlayPauseCommand();
                 pauseAfterCurrentTrack = false;
             }
+
+            await Task.Delay(1000);
+            this.RaisePropertyChanged(nameof(TotalTime));
+            this.RaisePropertyChanged(nameof(TotalTimeSeconds));
+            Volume = Player.Volume;
+           
         }
 
         public bool RepeatModeNone { get => Player.Queue.RepeatMode == RepeatMode.None; }
@@ -357,7 +361,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
             await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Config.CurrentTab, DispatcherPriority.ApplicationIdle); // TODO: unhack the hack
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Config.IntegrateMPRIS)
                 Integrations.Add(new MPRISIntegration(this, Window));
         }
 
