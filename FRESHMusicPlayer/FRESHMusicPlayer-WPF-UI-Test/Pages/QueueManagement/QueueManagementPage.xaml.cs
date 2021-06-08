@@ -131,14 +131,14 @@ namespace FRESHMusicPlayer.Pages
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library, import: false, clearqueue: false);
         }
 
-        private void PreviousQueueButton_Click(object sender, RoutedEventArgs e)
-        {
+        //private void PreviousQueueButton_Click(object sender, RoutedEventArgs e) for use in FMP 10.2
+        //{
 
-        }
+        //}
 
-        private void NextQueueButton_Click(object sender, RoutedEventArgs e)
-        {
+        //private void NextQueueButton_Click(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
     }
 }

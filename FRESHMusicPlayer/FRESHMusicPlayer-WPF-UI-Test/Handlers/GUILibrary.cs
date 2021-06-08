@@ -31,23 +31,23 @@ namespace FRESHMusicPlayer.Handlers
             });
         }
 
-        public List<DatabaseQueue> GetAllQueues()
-        {
-            return Database.GetCollection<DatabaseQueue>("queues").Query().ToList();
-        }
+        //public List<DatabaseQueue> GetAllQueues() FMP 10.2
+        //{
+        //    return Database.GetCollection<DatabaseQueue>("queues").Query().ToList();
+        //}
         
-        public DatabaseQueue CreateQueue(List<string> queue, int position)
-        {
-            var newQueue = new DatabaseQueue { Queue = queue, QueuePosition = position };
-            Database.GetCollection<DatabaseQueue>("queues").Insert(newQueue);
-            return newQueue;
-        }
+        //public DatabaseQueue CreateQueue(List<string> queue, int position)
+        //{
+        //    var newQueue = new DatabaseQueue { Queue = queue, QueuePosition = position };
+        //    Database.GetCollection<DatabaseQueue>("queues").Insert(newQueue);
+        //    return newQueue;
+        //}
     }
 
-    public class DatabaseQueue
-    {
-        public int DatabaseQueueId { get; set; }
-        public List<string> Queue { get; set; }
-        public int QueuePosition { get; set; }
-    }
+    //public class DatabaseQueue
+    //{
+    //    public int DatabaseQueueId { get; set; }
+    //    public List<string> Queue { get; set; }
+    //    public int QueuePosition { get; set; }
+    //}
 }

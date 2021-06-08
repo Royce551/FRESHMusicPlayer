@@ -27,13 +27,13 @@
         </Grid.RowDefinitions>
         <ListBox x:Name="QueueList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="False" Background="{StaticResource SecondaryColor}" Grid.Row="1" BorderBrush="{x:Null}" Grid.ColumnSpan="3"/>
 
-        <DockPanel Grid.ColumnSpan="3" LastChildFill="False" Margin="5,5,2,14">
-            <TextBlock DockPanel.Dock="Left" TextWrapping="Wrap" Text="{x:Static resx:Resources.QUEUEMANAGEMENT_QUEUEHEADER}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="18"  />
+        <!--<DockPanel Grid.ColumnSpan="3" LastChildFill="False" Margin="5,5,2,14">-->
+        <TextBlock DockPanel.Dock="Left" TextWrapping="Wrap" Text="{x:Static resx:Resources.QUEUEMANAGEMENT_QUEUEHEADER}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="18" Margin="5,5,2,14"/>
 
-            <Button x:Name="NextQueueButton" DockPanel.Dock="Right" Content=">" Click="NextQueueButton_Click"/>
+            <!--<Button x:Name="NextQueueButton" DockPanel.Dock="Right" Content=">" Click="NextQueueButton_Click"/>
             <TextBlock x:Name="CurrentQueueIndicator" DockPanel.Dock="Right" Text="0/10" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="10,0"/>
             <Button x:Name="PreviousQueueButton" DockPanel.Dock="Right" Content="&lt;" Click="PreviousQueueButton_Click"/>
-        </DockPanel>
+        </DockPanel>-->
         
         
         <TextBlock x:Name="RemainingTimeLabel" Text="{x:Static resx:Resources.QUEUEMANAGEMENT_REMAININGTIME}" Foreground="{StaticResource PrimaryTextColor}" FontSize="12" Margin="5,29,5,0" Grid.ColumnSpan="3"/>
