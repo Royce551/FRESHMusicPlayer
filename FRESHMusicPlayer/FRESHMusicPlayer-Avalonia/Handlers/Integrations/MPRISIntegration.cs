@@ -150,7 +150,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 {"xesam:trackNumber", track.TrackNumber }
             };
 
-            if (viewModel.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count <= 0)
+            if (viewModel.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count >= 0)
             {
                 var tempPath = Path.GetTempFileName();
 
@@ -159,6 +159,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 using var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate);
                 z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
                 x.Add("mpris:artUrl", $"file://{tempPath}");
+                Console.WriteLine($"file://{tempPath}");
             }
 
             OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));
