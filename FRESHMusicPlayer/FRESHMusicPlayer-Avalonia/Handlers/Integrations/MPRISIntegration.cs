@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Tmds.DBus;
+using Drawing = SixLabors.ImageSharp;
 
 [assembly: InternalsVisibleTo(Tmds.DBus.Connection.DynamicAssemblyName)]
 namespace FRESHMusicPlayer.Handlers.Integrations
@@ -151,11 +152,12 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
             if (viewModel.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count <= 0)
             {
-                var tempPath = Path.Combine(Path.GetTempPath(), "FMP-CoverArt.png");
+                var tempPath = Path.GetTempFileName();
 
                 var embeddedPicture = track.EmbeddedPictures[0];
-                using var z = System.Drawing.Image.FromStream(new MemoryStream(embeddedPicture.PictureData));
-                z.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+                using var z = Drawing.Image.Load(new MemoryStream(embeddedPicture.PictureData));
+                using var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate);
+                z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
                 x.Add("mpris:artUrl", $"file://{tempPath}");
             }
 
