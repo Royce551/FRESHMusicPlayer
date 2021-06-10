@@ -36,7 +36,7 @@
 				<CheckBox Content="Discord Rich Presence" IsChecked="{Binding IntegrateDiscordRPC}" IsEnabled="False"/>
 				<CheckBox Content="MPRIS" IsVisible="{Binding IsRunningOnLinux}" IsChecked="{Binding IntegrateMPRIS}"/>
 				<CheckBox Content="Show cover art in MPRIS" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
-				<TextBlock Text="Will write temporary files to the temp directory" Margin="20,0,0,0" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
+				<TextBlock Text="Will write files to a temp directory, may make changing tracks take long" Margin="20,0,0,0" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
 				
 				<TextBlock FontWeight="Bold" FontSize="18" Text="Updates" IsVisible="{Binding IsRunningOnMac}"/>
 				

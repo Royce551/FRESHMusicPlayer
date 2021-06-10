@@ -21,8 +21,13 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// Whether to integrate with Discord Rich Presence
         /// </summary>
         public bool IntegrateDiscordRPC { get; set; } = false;
-
+        /// <summary>
+        /// Whether to integrate with the Linux desktop
+        /// </summary>
         public bool IntegrateMPRIS { get; set; } = true;
+        /// <summary>
+        /// Whether to provide cover art images to MPRIS
+        /// </summary>
         public bool MPRISShowCoverArt { get; set; } = false;
         /// <summary>
         /// Whether to show remaining time instead of total time at the right side of the progress bar
@@ -40,16 +45,21 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// The volume that FMP was set to before closing
         /// </summary>
         public float Volume { get; set; } = 1f;
-
+        /// <summary>
+        /// The file path that FMP was playing before closing
+        /// </summary>
         public string FilePath { get; set; }
-
+        /// <summary>
+        /// The position into the track that FMP was playing before closing
+        /// </summary>
         public double FilePosition { get; set; } = 0;
         /// <summary>
         /// The last tab FMP was on before closing
         /// </summary>
         public int CurrentTab { get; set; } = 0;
+        /// <summary>
+        /// Directories to scan for tracks to import from on startup
+        /// </summary>
         public List<string> AutoImportPaths { get; set; } = new List<string>();
-        
-
     }
 }

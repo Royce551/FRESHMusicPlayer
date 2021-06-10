@@ -29,9 +29,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task Initialize()
         {
+            LoggingHandler.Log("Starting MPRIS Integration");
             try
             {
-                var server = new ServerConnectionOptions();
                 connection = new Connection(Address.Session);
                 await connection.ConnectAsync();
 
@@ -41,7 +41,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                LoggingHandler.Log($"MPRIS: {e}");
             }
         }
 
@@ -152,14 +152,17 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
             if (viewModel.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count >= 0)
             {
-                var tempPath = Path.GetTempFileName();
+                var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
+                var tempPath = Path.Combine(runtimeDir, "fmp");
+                if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
+                var fileName = Path.Combine(tempPath, Path.GetRandomFileName());
 
                 var embeddedPicture = track.EmbeddedPictures[0];
                 using var z = Drawing.Image.Load(new MemoryStream(embeddedPicture.PictureData));
                 using var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate);
                 z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
-                x.Add("mpris:artUrl", $"file://{tempPath}");
-                Console.WriteLine($"file://{tempPath}");
+                x.Add("mpris:artUrl", $"file://{fileName}");
+                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{fileName}");
             }
 
             OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));

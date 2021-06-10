@@ -70,11 +70,12 @@ namespace FRESHMusicPlayer.ViewModels
         #region Core
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
-            // TODO: error handling
+            LoggingHandler.Log($"Player: An exception was thrown: {e.Exception}");
         }
 
         private void Player_SongStopped(object sender, EventArgs e)
         {
+            LoggingHandler.Log("Player: Stopping!");
             Artist = "Nothing Playing";
             Title = "Nothing Playing";
             CoverArt = null;
@@ -97,6 +98,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         private async void Player_SongChanged(object sender, EventArgs e)
         {
+            LoggingHandler.Log("Player: SongChanged");
             CurrentTrack = new Track(Player.FilePath);
             Artist = CurrentTrack.Artist;
             Title = CurrentTrack.Title;
@@ -309,6 +311,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void InitializeLibrary()
         {
+            LoggingHandler.Log("Showing library!");
             AllTracks?.Clear();
             CategoryThings?.Clear();
             switch (SelectedTab)
@@ -336,13 +339,16 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void StartThings()
         {
+            LoggingHandler.Log("Starting FMP...");
             Player.SongChanged += Player_SongChanged;
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
             ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: put this in a more logical place
+            LoggingHandler.Log("Handling config...");
             Config = await ConfigurationHandler.Read();
             Volume = Config?.Volume ?? 1f;
-            
+
+            LoggingHandler.Log("Handling command line args...");
             var args = Environment.GetCommandLineArgs().ToList();
             args.RemoveRange(0, 1);
             if (args.Count != 0)
@@ -367,6 +373,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void CloseThings()
         {
+            LoggingHandler.Log("FMP is shutting down!");
             Library?.Database.Dispose();
             Integrations.Dispose();
             Config.Volume = Volume;
@@ -381,6 +388,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             }
             await ConfigurationHandler.Write(Config);
+            LoggingHandler.Log("Goodbye!");
         }
 
         private int selectedTab;
