@@ -50,13 +50,7 @@ namespace FRESHMusicPlayer.ViewModels
             StartThings();
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
             Library = new Library(library);
-            Integrations.UINeedsUpdate += Integrations_UINeedsUpdate;
             InitializeLibrary();
-        }
-
-        private void Integrations_UINeedsUpdate(object sender, EventArgs e)
-        {
-            
         }
 
         public const string ProjectName = "FRESHMusicPlayer Cross-Platform Edition™ Beta 8";
@@ -127,13 +121,12 @@ namespace FRESHMusicPlayer.ViewModels
         public bool RepeatModeNone { get => Player.Queue.RepeatMode == RepeatMode.None; }
         public bool RepeatModeAll { get => Player.Queue.RepeatMode == RepeatMode.RepeatAll; }
         public bool RepeatModeOne { get => Player.Queue.RepeatMode == RepeatMode.RepeatOne; }
-        private RepeatMode repeatMode = RepeatMode.RepeatAll;
         public RepeatMode RepeatMode
         {
-            get => repeatMode;
+            get => Player.Queue.RepeatMode;
             set
             {
-                this.RaiseAndSetIfChanged(ref repeatMode, value);
+                Player.Queue.RepeatMode = value;
                 this.RaisePropertyChanged(nameof(RepeatModeNone));
                 this.RaisePropertyChanged(nameof(RepeatModeAll));
                 this.RaisePropertyChanged(nameof(RepeatModeOne));
@@ -145,11 +138,10 @@ namespace FRESHMusicPlayer.ViewModels
             get => paused;
             set => this.RaiseAndSetIfChanged(ref paused, value);
         }
-        private bool shuffle = false;
         public bool Shuffle
         {
-            get => shuffle;
-            set => this.RaiseAndSetIfChanged(ref shuffle, value);
+            get => Player.Queue.Shuffle;
+            set => Player.Queue.Shuffle = value;
         }
 
         public void SkipPreviousCommand()
@@ -167,17 +159,17 @@ namespace FRESHMusicPlayer.ViewModels
             if (Player.Queue.RepeatMode == RepeatMode.None)
             {
                 Player.Queue.RepeatMode = RepeatMode.RepeatAll;
-                RepeatMode = RepeatMode.RepeatAll;
+
             }
             else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
                 Player.Queue.RepeatMode = RepeatMode.RepeatOne;
-                RepeatMode = RepeatMode.RepeatOne;
+
             }
             else
             {
                 Player.Queue.RepeatMode = RepeatMode.None;
-                RepeatMode = RepeatMode.None;
+
             }
         }
         public void PlayPauseCommand()

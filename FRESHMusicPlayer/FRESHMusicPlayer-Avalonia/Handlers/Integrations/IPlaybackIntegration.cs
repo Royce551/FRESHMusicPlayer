@@ -12,8 +12,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     /// </summary>
     public interface IPlaybackIntegration
     {
-        event EventHandler UINeedsUpdate;
-
         /// <summary>
         /// Updates the integration with new information
         /// </summary>

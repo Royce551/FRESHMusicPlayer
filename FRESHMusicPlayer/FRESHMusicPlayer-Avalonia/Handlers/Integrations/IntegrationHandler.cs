@@ -11,19 +11,17 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     {
         public List<IPlaybackIntegration> AllIntegrations { get; private set; } = new();
 
-        public event EventHandler UINeedsUpdate;
-
         public void Add(IPlaybackIntegration integration)
         {
             AllIntegrations.Add(integration);
-            integration.UINeedsUpdate += Integration_UINeedsUpdate;
+
         }
 
         public void Remove(IPlaybackIntegration integration)
         {
             integration.Dispose();
             AllIntegrations.Remove(integration);
-            integration.UINeedsUpdate -= Integration_UINeedsUpdate;
+
         }
 
         public void Update(Track track, PlaybackStatus status)
@@ -37,7 +35,5 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             foreach (var integration in AllIntegrations)
                 integration.Dispose();
         }
-
-        private void Integration_UINeedsUpdate(object sender, EventArgs e) => UINeedsUpdate?.Invoke(null, EventArgs.Empty);
     }
 }

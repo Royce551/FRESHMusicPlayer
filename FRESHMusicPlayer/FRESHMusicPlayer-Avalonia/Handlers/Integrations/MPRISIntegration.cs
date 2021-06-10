@@ -16,10 +16,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 {
     public class MPRISIntegration : IPlaybackIntegration
     {
-        public event EventHandler UINeedsUpdate;
-
         private MediaPlayer2 mediaPlayer2;
         private Connection connection;
+        private event EventHandler mprisUpdateNeeded;
 
         public MPRISIntegration(MainWindowViewModel viewModel, Window window)
         {
@@ -124,7 +123,59 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             this.viewModel = viewModel;
             this.window = window;
             viewModel.Player.SongChanged += Player_SongChanged;
+            viewModel.Player.SongStopped += Player_SongStopped;
+            OnPropertiesChanged += MediaPlayer2_OnPropertiesChanged;
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
             UpdateMetadata();
+        }
+
+        private void Player_SongStopped(object sender, EventArgs e)
+        {
+            OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("PlaybackStatus", "Stopped"));
+        }
+
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Shuffle":
+                    OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Shuffle", viewModel.Player.Queue.Shuffle));
+                    break;
+                case "Volume":
+                    OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Volume", (double)viewModel.Player.Volume));
+                    break;
+                case "Paused":
+                    OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("PlaybackStatus", viewModel.Paused switch
+                    {
+                        true => "Paused",
+                        false => "Playing"
+                    }));
+                    break;
+            }
+        }
+
+        private void MediaPlayer2_OnPropertiesChanged(PropertyChanges obj)
+        {
+            foreach (var prop in obj.Changed)
+            {
+                switch (prop.Key)
+                {
+                    case "LoopStatus":
+                        viewModel.RepeatMode = (prop.Value as string) switch
+                        {
+                            "None" => RepeatMode.None,
+                            "Track" => RepeatMode.RepeatOne,
+                            "Playlist" or _ => RepeatMode.RepeatAll
+                        };
+                        break;
+                    case "Shuffle":
+                        viewModel.Shuffle = (bool)prop.Value;
+                        break;
+                    case "Volume":
+                        viewModel.Volume = (float)(double)prop.Value;
+                        break;
+                }
+            }
         }
 
         private void Player_SongChanged(object sender, EventArgs e) => UpdateMetadata();
@@ -136,6 +187,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         private void UpdateMetadata()
         {
+
             if (!viewModel.Player.FileLoaded) return;
             var track = new Track(viewModel.Player.FilePath);
             var x = new Dictionary<string, object>()
