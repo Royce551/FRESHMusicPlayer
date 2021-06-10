@@ -155,14 +155,14 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
                 var tempPath = Path.Combine(runtimeDir, "fmp");
                 if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
-                var fileName = Path.Combine(tempPath, Path.GetRandomFileName());
+                var filePath = Path.Combine(tempPath, Path.GetRandomFileName());
 
                 var embeddedPicture = track.EmbeddedPictures[0];
                 using var z = Drawing.Image.Load(new MemoryStream(embeddedPicture.PictureData));
-                using var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate);
+                using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
                 z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
-                x.Add("mpris:artUrl", $"file://{fileName}");
-                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{fileName}");
+                x.Add("mpris:artUrl", $"file://{filePath}");
+                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{filePath}");
             }
 
             OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));
