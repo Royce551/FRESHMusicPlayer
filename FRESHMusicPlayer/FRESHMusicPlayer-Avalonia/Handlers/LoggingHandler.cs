@@ -15,13 +15,20 @@ namespace FRESHMusicPlayer.Handlers
         public static void Log(string message)
         {
 #if DEBUG
-            var line = $"[{DateTime.Now:T}] {message}";
-            Console.WriteLine(line);
-            Console.ResetColor();
-            var logFilePath = "log.txt";
-            using (var sw = File.AppendText(logFilePath))
+            try
             {
-                sw.WriteLine(line);
+                var line = $"[{DateTime.Now:T}] {message}";
+                Console.WriteLine(line);
+                Console.ResetColor();
+                var logFilePath = "log.txt";
+                using (var sw = File.AppendText(logFilePath))
+                {
+                    sw.WriteLine(line);
+                }
+            }
+            catch (IOException)
+            {
+                // ignored
             }
 #endif
         }
