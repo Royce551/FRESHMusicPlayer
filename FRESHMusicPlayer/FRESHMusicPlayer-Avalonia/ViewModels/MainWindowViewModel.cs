@@ -337,7 +337,7 @@ namespace FRESHMusicPlayer.ViewModels
             Player.SongException += Player_SongException;
             ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: put this in a more logical place
             LoggingHandler.Log("Handling config...");
-            Config = await ConfigurationHandler.Read();
+            Config = Program.Config; // HACK: this is a hack
             Volume = Config?.Volume ?? 1f;
 
             LoggingHandler.Log("Handling command line args...");

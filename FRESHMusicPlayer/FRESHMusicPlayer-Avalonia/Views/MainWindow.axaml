@@ -3,6 +3,7 @@
         xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
 		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		Width="800" Height="540"
@@ -53,29 +54,29 @@
 
 	<NativeMenu.Menu>
 		<NativeMenu>
-			<NativeMenuItem Header="File">
+			<NativeMenuItem Header="{x:Static resx:Resources.Menu_File}">
 				<NativeMenu>
-					<NativeMenuItem Header="Open..." Command="{Binding OpenTrackCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.OpenDialog}" Command="{Binding OpenTrackCommand}"/>
 					<NativeMenuItemSeperator/>
-					<NativeMenuItem Header="Import Tracks" Command="{Binding BrowseTracksCommand}"/>
-					<NativeMenuItem Header="Import Folders" Command="{Binding BrowseFoldersCommand}"/>
-					<NativeMenuItem Header="Import Playlist Files" Command="{Binding BrowsePlaylistFilesCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.ImportTracks}" Command="{Binding BrowseTracksCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.ImportFolders}" Command="{Binding BrowseFoldersCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.ImportPlaylistFiles}" Command="{Binding BrowsePlaylistFilesCommand}"/>
 				</NativeMenu>
 			</NativeMenuItem>
-			<NativeMenuItem Header="Playback">
+			<NativeMenuItem Header="{x:Static resx:Resources.Menu_Playback}">
 				<NativeMenu>
-					<NativeMenuItem Header="Play/Pause" Command="{Binding PlayPauseCommand}"/>
-					<NativeMenuItem Header="Previous" Command="{Binding SkipPreviousCommand}"/>
-					<NativeMenuItem Header="Next" Command="{Binding SkipNextCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_Playback_PlayPause}" Command="{Binding PlayPauseCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_Playback_Previous}" Command="{Binding SkipPreviousCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_Playback_Next}" Command="{Binding SkipNextCommand}"/>
 					<NativeMenuItemSeperator/>
 					<NativeMenuItem Header="Toggle Repeat" Command="{Binding RepeatCommand}"/>
-					<NativeMenuItem Header="Shuffle" Command="{Binding ShuffleCommand}" IsChecked="{Binding Shuffle}"/>
-					<NativeMenuItem Header="Pause after current track" Command="{Binding PauseAfterCurrentTrackCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_Playback_Shuffle}" Command="{Binding ShuffleCommand}" IsChecked="{Binding Shuffle}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_Playback_PauseAfterCurrentTrack}" Command="{Binding PauseAfterCurrentTrackCommand}"/>
 				</NativeMenu>
 			</NativeMenuItem>
-			<NativeMenuItem Header="About">
+			<NativeMenuItem Header="{x:Static resx:Resources.Menu_About}">
 				<NativeMenu>
-					<NativeMenuItem Header="About FRESHMusicPlayer" Command="{Binding AboutFMPCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_About_AboutFMP}" Command="{Binding AboutFMPCommand}"/>
 				</NativeMenu>
 			</NativeMenuItem>
 		</NativeMenu>
@@ -363,9 +364,9 @@
 						<TextBlock Text="You can also drag and drop to this page."/>
 					</StackPanel>
 				</TabItem>
-				<!--<TabItem Header="Native Menubar Debug">
+				<TabItem Header="Native Menubar Debug">
 					<NativeMenuBar/>
-				</TabItem>-->
+				</TabItem>
 			</TabControl>
 		</DockPanel>
 
