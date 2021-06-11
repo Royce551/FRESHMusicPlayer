@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ImportFolders" xml:space="preserve">
-    <value></value>
+    <value>Nhập thư mục</value>
   </data>
   <data name="ImportPlaylistFiles" xml:space="preserve">
-    <value></value>
+    <value>Nhập tệp danh sách phát</value>
   </data>
   <data name="ImportTracks" xml:space="preserve">
-    <value></value>
+    <value>Nhập bài hát</value>
   </data>
   <data name="Menu_About" xml:space="preserve">
-    <value></value>
+    <value>Giới thiệu</value>
   </data>
   <data name="Menu_About_AboutFMP" xml:space="preserve">
-    <value></value>
+    <value>Giới thiệu về</value>
   </data>
   <data name="Menu_File" xml:space="preserve">
-    <value></value>
+    <value>Tệp</value>
   </data>
   <data name="Menu_Playback" xml:space="preserve">
-    <value></value>
+    <value>Phát</value>
   </data>
   <data name="Menu_Playback_Next" xml:space="preserve">
-    <value></value>
+    <value>Tiếp</value>
   </data>
   <data name="Menu_Playback_PauseAfterCurrentTrack" xml:space="preserve">
-    <value></value>
+    <value>Tạm dừng sau bài hát này</value>
   </data>
   <data name="Menu_Playback_PlayPause" xml:space="preserve">
-    <value></value>
+    <value>Phát/Tạm dừng</value>
   </data>
   <data name="Menu_Playback_Previous" xml:space="preserve">
-    <value></value>
+    <value>Lại</value>
   </data>
   <data name="Menu_Playback_Repeat" xml:space="preserve">
-    <value></value>
+    <value>Lặp lại</value>
   </data>
   <data name="Menu_Playback_Shuffle" xml:space="preserve">
-    <value></value>
+    <value>Xáo trộn</value>
   </data>
   <data name="OpenDialog" xml:space="preserve">
-    <value></value>
+    <value>Mở...</value>
   </data>
 </root>
