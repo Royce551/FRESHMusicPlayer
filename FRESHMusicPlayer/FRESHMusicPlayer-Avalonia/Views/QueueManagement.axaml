@@ -61,9 +61,9 @@
 		</ListBox>
 	
 		<StackPanel Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,5" IsVisible="{Binding $parent[1].IsPointerOver}">
-			<Button Content="Add Track"/>
-			<Button Content="Add Playlist"/>
-			<Button Content="Clear Queue" Foreground="Red"/>
+			<Button Content="Add Track" Command="{Binding AddTrackCommand}"/>
+			<Button Content="Add Playlist" Command="{Binding AddPlaylistCommand}"/>
+			<Button Content="Clear Queue" Command="{Binding ClearQueueCommand}" Foreground="Red"/>
 		</StackPanel>
 	</Grid>
 </Window>

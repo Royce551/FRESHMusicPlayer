@@ -79,8 +79,8 @@ namespace FRESHMusicPlayer.ViewModels
 
             DiscNumberText = track.DiscNumber == 0 ? null : $"Disc {track.DiscNumber}";
             if (track.DiscTotal > 0) DiscNumberText = $"Disc {track.DiscNumber}/{track.DiscTotal}";
-            TrackNumberText = track.TrackNumber == 0 ? null : $"Disc {track.TrackNumber}";
-            if (track.TrackTotal > 0) TrackNumberText = $"Disc {track.TrackNumber}/{track.TrackTotal}";
+            TrackNumberText = track.TrackNumber == 0 ? null : $"Track {track.TrackNumber}";
+            if (track.TrackTotal > 0) TrackNumberText = $"Track {track.TrackNumber}/{track.TrackTotal}";
 
             YearText = track.Year == 0 ? null : $"Year {track.Year}";
             AlbumText = track.Album is null ? null : $"Album - {track.Album}";

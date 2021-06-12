@@ -359,6 +359,8 @@ namespace FRESHMusicPlayer.ViewModels
             }
             await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Config.CurrentTab, DispatcherPriority.ApplicationIdle); // TODO: unhack the hack
 
+            if (Config.IntegrateDiscordRPC)
+                Integrations.Add(new DiscordIntegration());
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Config.IntegrateMPRIS)
                 Integrations.Add(new MPRISIntegration(this, Window));
         }

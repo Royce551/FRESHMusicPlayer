@@ -14,6 +14,7 @@
 			
 	<TabControl TabStripPlacement="Left" SelectedIndex="0">
 		<TabItem Header="General">
+			<ScrollViewer>
 			<StackPanel Margin="10">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 					<TextBlock Text="Language" Margin="0,0,10,0" VerticalAlignment="Center"/>
@@ -33,15 +34,16 @@
 				
 				<TextBlock FontWeight="Bold" FontSize="18" Text="Integrations"/>
 				
-				<CheckBox Content="Discord Rich Presence" IsChecked="{Binding IntegrateDiscordRPC}" IsEnabled="False"/>
+				<CheckBox Content="Discord Rich Presence" IsChecked="{Binding IntegrateDiscordRPC}"/>
 				<CheckBox Content="MPRIS" IsVisible="{Binding IsRunningOnLinux}" IsChecked="{Binding IntegrateMPRIS}"/>
 				<CheckBox Content="Show cover art in MPRIS" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
-				<TextBlock Text="Will write files to a temp directory, may make changing tracks take long" Margin="20,0,0,0" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
+				<TextBlock Text="Will write files to a temp directory, may make changing tracks take longer" Margin="20,0,0,0" TextWrapping="Wrap" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
 				
 				<TextBlock FontWeight="Bold" FontSize="18" Text="Updates" IsVisible="{Binding IsRunningOnMac}"/>
 				
 				<CheckBox Content="Let me know about new versions of FMP" IsChecked="{Binding CheckForUpdates}" IsVisible="{Binding IsRunningOnMac}"/>
 			</StackPanel>
+				</ScrollViewer>
 		</TabItem>
 		<TabItem Header="Appearance">
 			

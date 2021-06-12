@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using System.Timers;
 using Avalonia.Threading;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using ATL.Playlist;
+using System.IO;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -18,6 +22,16 @@ namespace FRESHMusicPlayer.ViewModels
         public Timer ProgressTimer { get; set; }
 
         public ObservableCollection<QueueManagementEntry> Queue { get; set; } = new();
+
+        private Window Window
+        {
+            get
+            {
+                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                    return desktop.MainWindow;
+                else return null;
+            }
+        }
 
         public void Update()
         {
@@ -48,6 +62,56 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Player.Queue.Remove(position - 1);
         }
+
+        private List<string> acceptableFilePaths = "wav;aiff;mp3;wma;3g2;3gp;3gp2;3gpp;asf;wmv;aac;adts;avi;m4a;m4a;m4v;mov;mp4;sami;smi;flac".Split(';').ToList();
+        public async void AddTrackCommand()
+        {
+            var dialog = new OpenFileDialog()
+            {
+                Filters = new List<FileDialogFilter>
+                {
+                    new FileDialogFilter()
+                    {
+                        Name = "Audio Files",
+                        Extensions = acceptableFilePaths
+                    },
+                    new FileDialogFilter()
+                    {
+                        Name = "Other",
+                        Extensions = new List<string>() { "*" }
+                    }
+                },
+                AllowMultiple = true
+            };
+            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var files = await dialog.ShowAsync(desktop.MainWindow);
+                if (files.Length > 0) Player.Queue.Add(files);
+            }
+        }
+        public async void AddPlaylistCommand()
+        {
+            var dialog = new OpenFileDialog()
+            {
+                Filters = new List<FileDialogFilter>
+                {
+                    new FileDialogFilter()
+                    {
+                        Name = "Playlist Files",
+                        Extensions = new(){ "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"}
+                    }
+                }
+            };
+            var files = await dialog.ShowAsync(Window);
+            IPlaylistIO reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
+            foreach (string s in reader.FilePaths)
+            {
+                if (!File.Exists(s))
+                    continue; // TODO: show something to the user
+            }
+            Player.Queue.Add(reader.FilePaths.ToArray());
+        }
+        public void ClearQueueCommand() => Player.Queue.Clear();
 
         private TimeSpan timeRemaining = new();
         public TimeSpan TimeRemaining
