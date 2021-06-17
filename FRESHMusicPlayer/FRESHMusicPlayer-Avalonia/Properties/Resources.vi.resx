@@ -159,4 +159,145 @@
   <data name="OpenDialog" xml:space="preserve">
     <value>Mở...</value>
   </data>
+  <data name="Tracks" xml:space="preserve">
+    <value>Bài Hát</value>
+  </data>
+  <data name="TagEditor" xml:space="preserve">
+    <value>Bộ sữa nhãn</value>
+  </data>
+  <data name="Settings_ViewWebsite" xml:space="preserve">
+    <value>FMP trên Internet</value>
+  </data>
+  <data name="Settings_ViewSourceCode" xml:space="preserve">
+    <value>Xem mã nguồn</value>
+  </data>
+  <data name="Settings_ViewLicense" xml:space="preserve">
+    <value>Xem giấy phép</value>
+  </data>
+  <data name="Settings_Updates" xml:space="preserve">
+    <value>Bản cập nhật</value>
+  </data>
+  <data name="Settings_ThankYou" xml:space="preserve">
+    <value>Cảm ơn bạn đã sử dụng FRESHMusicPlayer! ❤</value>
+  </data>
+  <data name="Settings_ShowTimeInWindow" xml:space="preserve">
+    <value>Hiển thị thời gian trong tiêu đề cửa sổ</value>
+  </data>
+  <data name="Settings_Report" xml:space="preserve">
+    <value>Báo cáo lỗi</value>
+  </data>
+  <data name="Settings_PlaytimeLogging" xml:space="preserve">
+    <value>Ghi thời gian phát</value>
+  </data>
+  <data name="Settings_MPRISShowCoverArt_Info" xml:space="preserve">
+    <value>Sẽ ghi tệp vào một thư mục tạm, có thể làm vụ đổi bài hát mất thêm thời gian</value>
+  </data>
+  <data name="Settings_MPRISShowCoverArt" xml:space="preserve">
+    <value>Hiện ảnh đĩa trong MPRIS</value>
+  </data>
+  <data name="Settings_Maintenance" xml:space="preserve">
+    <value>Bảo trì</value>
+  </data>
+  <data name="Settings_License" xml:space="preserve">
+    <value>Cấp phép theo giấy phép GPL v3</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="Settings_Integrations" xml:space="preserve">
+    <value>Tích hợp</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>Chung</value>
+  </data>
+  <data name="Settings_Credits" xml:space="preserve">
+    <value>bởi Squid Grill (và những người đóng góp nguồn mở)</value>
+  </data>
+  <data name="Settings_ClearAll" xml:space="preserve">
+    <value>Xóa Tất Cả</value>
+  </data>
+  <data name="Settings_CheckForUpdates" xml:space="preserve">
+    <value>Nhắc tôi về phiên bản FMP mới</value>
+  </data>
+  <data name="Settings_Automatic" xml:space="preserve">
+    <value>Tự động</value>
+  </data>
+  <data name="Settings_AutoImport_Info" xml:space="preserve">
+    <value>FMP sẽ nhập bài hát từ các thư mục này:</value>
+  </data>
+  <data name="Settings_AutoImport" xml:space="preserve">
+    <value>Tự động nhập</value>
+  </data>
+  <data name="Settings_Appearance" xml:space="preserve">
+    <value>Giao diện</value>
+  </data>
+  <data name="Settings_AddFolder" xml:space="preserve">
+    <value>Thêm thư mục</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Cài đặt FRESHMusicPlayer</value>
+  </data>
+  <data name="QueueManagement_TimeRemaining" xml:space="preserve">
+    <value>Thời gian còn lại:</value>
+  </data>
+  <data name="QueueManagement_ClearQueue" xml:space="preserve">
+    <value>Xóa hàng chờ</value>
+  </data>
+  <data name="QueueManagement_AddTrack" xml:space="preserve">
+    <value>Thêm bài hát</value>
+  </data>
+  <data name="QueueManagement_AddPlaylist" xml:space="preserve">
+    <value>Thêm hàng phát</value>
+  </data>
+  <data name="QueueManagement" xml:space="preserve">
+    <value>Quản lý hàng phát</value>
+  </data>
+  <data name="Playlists" xml:space="preserve">
+    <value>Danh sách phát</value>
+  </data>
+  <data name="PlaylistManagement" xml:space="preserve">
+    <value>Quản lý danh sách phát</value>
+  </data>
+  <data name="PinToTop" xml:space="preserve">
+    <value>Ghim trên đầu</value>
+  </data>
+  <data name="NothingPlaying" xml:space="preserve">
+    <value>Không có gì đang phát</value>
+  </data>
+  <data name="MiniPlayer" xml:space="preserve">
+    <value>Bộ phát nhỏ</value>
+  </data>
+  <data name="Menu_GoTo" xml:space="preserve">
+    <value>Đi đến</value>
+  </data>
+  <data name="Lyrics" xml:space="preserve">
+    <value>Lời hát</value>
+  </data>
+  <data name="Library_PlayAll" xml:space="preserve">
+    <value>Phát tất cả</value>
+  </data>
+  <data name="Library_EnqueueAll" xml:space="preserve">
+    <value>Đ. tất cả h. p.</value>
+  </data>
+  <data name="Import_DragDropHint" xml:space="preserve">
+    <value>Bạn cũng được kéo và thả trên trang này.</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Nhập</value>
+  </data>
+  <data name="FilePathOrUrl" xml:space="preserve">
+    <value>Đường dẫn hoặc URL</value>
+  </data>
+  <data name="Artists" xml:space="preserve">
+    <value>Nghệ Sĩ</value>
+  </data>
+  <data name="Artist" xml:space="preserve">
+    <value>Nghệ sĩ</value>
+  </data>
+  <data name="Albums" xml:space="preserve">
+    <value>Đĩa</value>
+  </data>
+  <data name="Album" xml:space="preserve">
+    <value>Đĩa</value>
+  </data>
 </root>
