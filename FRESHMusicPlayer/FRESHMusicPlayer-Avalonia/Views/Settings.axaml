@@ -3,21 +3,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d"
 		Width="600" Height="400"
         x:Class="FRESHMusicPlayer.Views.Settings" WindowStartupLocation="CenterOwner"
-        Icon="/Assets/icon.ico" Title="FRESHMusicPlayer Settings">
+        Icon="/Assets/icon.ico" Title="{x:Static resx:Resources.Settings}">
 	
 	<Window.DataContext>
 		<vm:SettingsViewModel/>
 	</Window.DataContext>
 			
 	<TabControl TabStripPlacement="Left" SelectedIndex="0">
-		<TabItem Header="General">
+		<TabItem Header="{x:Static resx:Resources.Settings_General}">
 			<ScrollViewer>
 			<StackPanel Margin="10">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-					<TextBlock Text="Language" Margin="0,0,10,0" VerticalAlignment="Center"/>
+					<TextBlock Text="{x:Static resx:Resources.Settings_Language}" Margin="0,0,10,0" VerticalAlignment="Center"/>
 					<ComboBox Items="{Binding AvailableLanguages}" SelectedItem="{Binding Language}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate>
@@ -26,47 +27,47 @@
 						</ComboBox.ItemTemplate>
 					</ComboBox>
 				</StackPanel>
-				<CheckBox Content="Playtime Logging" IsChecked="{Binding PlaytimeLogging}"/>
-				<CheckBox Content="Show time in window title" IsChecked="{Binding ShowTimeInWindow}"/>
+				<CheckBox Content="{x:Static resx:Resources.Settings_PlaytimeLogging}" IsChecked="{Binding PlaytimeLogging}"/>
+				<CheckBox Content="{x:Static resx:Resources.Settings_ShowTimeInWindow}" IsChecked="{Binding ShowTimeInWindow}"/>
 
-				<TextBlock FontWeight="Bold" FontSize="18" Text="Auto Import"/>
+				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_AutoImport}"/>
 				
-				<TextBlock Text="FMP will import new tracks from these folders:"/>
-				<Button Content="Add Folder" IsEnabled="False"/>
-				<Button Content="Clear All" IsEnabled="False"/>
+				<TextBlock Text="{x:Static resx:Resources.Settings_AutoImport_Info}"/>
+				<Button Content="{x:Static resx:Resources.Settings_AddFolder}" IsEnabled="False"/>
+				<Button Content="{x:Static resx:Resources.Settings_ClearAll}" IsEnabled="False"/>
 				
 				<TextBlock FontWeight="Bold" FontSize="18" Text="Integrations"/>
 				
-				<CheckBox Content="Discord Rich Presence" IsChecked="{Binding IntegrateDiscordRPC}"/>
+				<CheckBox Content="{x:Static resx:Resources.Settings_IntegrateDiscordRPC}" IsChecked="{Binding IntegrateDiscordRPC}"/>
 				<CheckBox Content="MPRIS" IsVisible="{Binding IsRunningOnLinux}" IsChecked="{Binding IntegrateMPRIS}"/>
-				<CheckBox Content="Show cover art in MPRIS" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
-				<TextBlock Text="Will write files to a temp directory, may make changing tracks take longer" Margin="20,0,0,0" TextWrapping="Wrap" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
+				<CheckBox Content="{x:Static resx:Resources.Settings_MPRISShowCoverArt}" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
+				<TextBlock Text="{x:Static resx:Resources.Settings_MPRISShowCoverArt_Info}" Margin="20,0,0,0" TextWrapping="Wrap" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
 				
 				<TextBlock FontWeight="Bold" FontSize="18" Text="Updates" IsVisible="{Binding IsRunningOnMac}"/>
 				
-				<CheckBox Content="Let me know about new versions of FMP" IsChecked="{Binding CheckForUpdates}" IsVisible="{Binding IsRunningOnMac}"/>
+				<CheckBox Content="{x:Static resx:Resources.Settings_CheckForUpdates}" IsChecked="{Binding CheckForUpdates}" IsVisible="{Binding IsRunningOnMac}"/>
 			</StackPanel>
 				</ScrollViewer>
 		</TabItem>
-		<TabItem Header="Appearance">
+		<TabItem Header="{x:Static resx:Resources.Settings_Appearance}">
 			
 		</TabItem>
-		<TabItem Header="Maintenance">
+		<TabItem Header="{x:Static resx:Resources.Settings_Maintenance}">
 			
 		</TabItem>
-		<TabItem Header="About FMP">
+		<TabItem Header="{x:Static resx:Resources.Menu_About_AboutFMP}">
 			<StackPanel Margin="10" HorizontalAlignment="Stretch">
 				<Image Source="/Assets/fmplogofull.png" Stretch="UniformToFill" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20"/>
 				<TextBlock Text="FRESHMusicPlayer (for Mac and Linux) Ver. 69420"/>
-				<TextBlock Text="by Squid Grill (and open source contributors)"/>
-				<TextBlock Text="Licensed under the GPL v3 license" Margin="0,0,0,20"/>
+				<TextBlock Text="{x:Static resx:Resources.Settings_Credits}"/>
+				<TextBlock Text="{x:Static resx:Resources.Settings_License}" Margin="0,0,0,20"/>
 			
-				<TextBlock Text="Thank you for using FRESHMusicPlayer! ❤" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+				<TextBlock Text="{x:Static resx:Resources.Settings_ThankYou}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 			
-				<Button Content="Report an issue" Command="{Binding ReportIssueCommand}"/>
-				<Button Content="View source code" Command="{Binding ViewSourceCodeCommand}"/>
-				<Button Content="View license" Command="{Binding ViewLicenseCommand}"/>
-				<Button Content="FMP on the interwebs" Command="{Binding ViewWebsiteCommand}"/>
+				<Button Content="{x:Static resx:Resources.Settings_Report}" Command="{Binding ReportIssueCommand}"/>
+				<Button Content="{x:Static resx:Resources.Settings_ViewSourceCode}" Command="{Binding ViewSourceCodeCommand}"/>
+				<Button Content="{x:Static resx:Resources.Settings_ViewLicense}" Command="{Binding ViewLicenseCommand}"/>
+				<Button Content="{x:Static resx:Resources.Settings_ViewWebsite}" Command="{Binding ViewWebsiteCommand}"/>
 			</StackPanel>
 		</TabItem>
 	</TabControl>

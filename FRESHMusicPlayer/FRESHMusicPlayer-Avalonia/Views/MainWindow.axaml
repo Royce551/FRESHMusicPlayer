@@ -29,17 +29,17 @@
 		<svg:SvgImage x:Key="Notification" Source="/Assets/notification.svg"/>
 		<svg:SvgImage x:Key="Search" Source="/Assets/search.svg"/>
 		<ContextMenu x:Key="OverflowMenu">
-			<MenuItem Command="{Binding OpenTagEditorCommand}" Header="Tag Editor"/>
-			<MenuItem Command="{Binding OpenPlaylistManagementCommand}" Header="Playlist Management"/>
-			<MenuItem Command="{Binding OpenTrackCommand}" Header="Open"/>
-			<MenuItem Header="Go to">
-				<MenuItem Command="{Binding GoToArtistCommand}" Header="Artist"/>
-				<MenuItem Command="{Binding GoToAlbumCommand}" Header="Album"/>
+			<MenuItem Command="{Binding OpenTagEditorCommand}" Header="{x:Static resx:Resources.TagEditor}"/>
+			<MenuItem Command="{Binding OpenPlaylistManagementCommand}" Header="{x:Static resx:Resources.PlaylistManagement}"/>
+			<MenuItem Command="{Binding OpenTrackCommand}" Header="{x:Static resx:Resources.OpenDialog}"/>
+			<MenuItem Header="{x:Static resx:Resources.Menu_GoTo}">
+				<MenuItem Command="{Binding GoToArtistCommand}" Header="{x:Static resx:Resources.Artist}"/>
+				<MenuItem Command="{Binding GoToAlbumCommand}" Header="{x:Static resx:Resources.Album}"/>
 			</MenuItem>
-			<MenuItem Command="{Binding OpenLyricsCommand}" Header="Lyrics"/>
+			<MenuItem Command="{Binding OpenLyricsCommand}" Header="{x:Static resx:Resources.Lyrics}"/>
 			<Separator/>
-			<MenuItem Command="{Binding MiniPlayerCommand}" Header="Mini Player"/>
-			<MenuItem Command="{Binding PauseAfterCurrentTrackCommand}" Header="Pause after current track"/>
+			<MenuItem Command="{Binding MiniPlayerCommand}" Header="{x:Static resx:Resources.MiniPlayer}"/>
+			<MenuItem Command="{Binding PauseAfterCurrentTrackCommand}" Header="{x:Static resx:Resources.Menu_Playback_PauseAfterCurrentTrack}"/>
 		</ContextMenu>
 	</Window.Resources>
 	<Window.Styles>
@@ -170,12 +170,12 @@
 			
 				
 			<TabControl DockPanel.Dock="Top" SelectedIndex="{Binding SelectedTab}">
-				<TabItem Header="Tracks">
+				<TabItem Header="{x:Static resx:Resources.Tracks}">
 					<DockPanel>
 						<DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="Play All"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="Enqueue All"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
 							<ListBox.ItemTemplate>
@@ -208,7 +208,7 @@
 						</ListBox>
 					</DockPanel>
 				</TabItem>
-				<TabItem Header="Artists" >
+				<TabItem Header="{x:Static resx:Resources.Artists}" >
 					<DockPanel>
 						<ListBox DockPanel.Dock="Left" Items="{Binding CategoryThings}" Width="222" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" SelectedItem="{Binding ArtistsSelectedItem}" VirtualizationMode="Simple">
 							<ListBox.ItemTemplate>
@@ -222,8 +222,8 @@
 						</ListBox>
 						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="Play All"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="Enqueue All"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
 							<ListBox.ItemTemplate>
@@ -256,7 +256,7 @@
 						</ListBox>
 					</DockPanel>
 				</TabItem>
-				<TabItem Header="Albums" >
+				<TabItem Header="{x:Static resx:Resources.Albums}" >
 					<DockPanel>
 						<ListBox DockPanel.Dock="Left" Items="{Binding CategoryThings}" Width="222" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" SelectedItem="{Binding AlbumsSelectedItem}" VirtualizationMode="Simple">
 							<ListBox.ItemTemplate>
@@ -270,8 +270,8 @@
 						</ListBox>
 						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="Play All"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="Enqueue All"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
 							<ListBox.ItemTemplate>
@@ -304,7 +304,7 @@
 						</ListBox>
 					</DockPanel>
 				</TabItem>
-				<TabItem Header="Playlists" >
+				<TabItem Header="{x:Static resx:Resources.Playlists}" >
 					<DockPanel>
 						<ListBox DockPanel.Dock="Left" Items="{Binding CategoryThings}" Width="222" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" SelectedItem="{Binding PlaylistsSelectedItem}" VirtualizationMode="Simple">
 							<ListBox.ItemTemplate>
@@ -318,8 +318,8 @@
 						</ListBox>
 						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="Play All"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="Enqueue All"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
 							<ListBox.ItemTemplate>
@@ -352,21 +352,21 @@
 						</ListBox>
 					</DockPanel>
 				</TabItem>
-				<TabItem Header="Import">
+				<TabItem Header="{x:Static resx:Resources.Import}">
 					<StackPanel>
-						<Button Command="{Binding BrowseTracksCommand}" Content="Browse for tracks"/>
-						<Button Command="{Binding BrowsePlaylistFilesCommand}" Content="Browse for playlist files"/>
-						<Button Command="{Binding BrowseFoldersCommand}" Content="Browse for folders"/>
+						<Button Command="{Binding BrowseTracksCommand}" Content="{x:Static resx:Resources.ImportTracks}"/>
+						<Button Command="{Binding BrowsePlaylistFilesCommand}" Content="{x:Static resx:Resources.ImportPlaylistFiles}"/>
+						<Button Command="{Binding BrowseFoldersCommand}" Content="{x:Static resx:Resources.ImportFolders}"/>
 						<StackPanel Orientation="Horizontal">
-							<TextBox Text="{Binding FilePathOrURL}" Watermark="File path or URL"/>
-							<Button Command="{Binding ImportFilePathCommand}" Content="Import"/>
+							<TextBox Text="{Binding FilePathOrURL}" Watermark="{x:Static resx:Resources.FilePathOrUrl}"/>
+							<Button Command="{Binding ImportFilePathCommand}" Content="{x:Static resx:Resources.Import}"/>
 						</StackPanel>
-						<TextBlock Text="You can also drag and drop to this page."/>
+						<TextBlock Text="{x:Static resx:Resources.Import_DragDropHint}"/>
 					</StackPanel>
 				</TabItem>
-				<TabItem Header="Native Menubar Debug">
+				<!--<TabItem Header="Native Menubar Debug">
 					<NativeMenuBar/>
-				</TabItem>
+				</TabItem>-->
 			</TabControl>
 		</DockPanel>
 

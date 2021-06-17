@@ -5,8 +5,9 @@
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" Width="500" Height="400" 
 		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing" WindowStartupLocation="CenterOwner"
-        Icon="/Assets/icon.ico" Title="Queue Management">
+        Icon="/Assets/icon.ico" Title="{x:Static resx:Resources.QueueManagement}">
 	<Window.DataContext>
 		<vm:QueueManagementViewModel/>
 	</Window.DataContext>
@@ -22,9 +23,9 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<DockPanel Grid.Column="0" Grid.Row="0" Margin="5,5,5,0">
-			<CheckBox DockPanel.Dock="Left" IsChecked="{Binding $parent[Window].Topmost}" Content="Pin to top"/>
+			<CheckBox DockPanel.Dock="Left" IsChecked="{Binding $parent[Window].Topmost}" Content="{x:Static resx:Resources.PinToTop}"/>
 			<TextBlock DockPanel.Dock="Right" Text="{Binding TimeRemaining, StringFormat=\{0:hh\\:mm\\:ss\}}" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-			<TextBlock DockPanel.Dock="Right" Text="Time Remaining:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+			<TextBlock DockPanel.Dock="Right" Text="{x:Static resx:Resources.QueueManagement_TimeRemaining}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 		</DockPanel>
 		
 			
@@ -61,9 +62,9 @@
 		</ListBox>
 	
 		<StackPanel Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,5" IsVisible="{Binding $parent[1].IsPointerOver}">
-			<Button Content="Add Track" Command="{Binding AddTrackCommand}"/>
-			<Button Content="Add Playlist" Command="{Binding AddPlaylistCommand}"/>
-			<Button Content="Clear Queue" Command="{Binding ClearQueueCommand}" Foreground="Red"/>
+			<Button Content="{x:Static resx:Resources.QueueManagement_AddTrack}" Command="{Binding AddTrackCommand}"/>
+			<Button Content="{x:Static resx:Resources.QueueManagement_AddPlaylist}" Command="{Binding AddPlaylistCommand}"/>
+			<Button Content="{x:Static resx:Resources.QueueManagement_ClearQueue}" Command="{Binding ClearQueueCommand}" Foreground="Red"/>
 		</StackPanel>
 	</Grid>
 </Window>

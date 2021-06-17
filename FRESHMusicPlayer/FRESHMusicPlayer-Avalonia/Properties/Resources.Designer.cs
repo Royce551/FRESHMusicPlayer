@@ -61,6 +61,69 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album.
+        /// </summary>
+        public static string Album {
+            get {
+                return ResourceManager.GetString("Album", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Albums.
+        /// </summary>
+        public static string Albums {
+            get {
+                return ResourceManager.GetString("Albums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist.
+        /// </summary>
+        public static string Artist {
+            get {
+                return ResourceManager.GetString("Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artists.
+        /// </summary>
+        public static string Artists {
+            get {
+                return ResourceManager.GetString("Artists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File path or URL.
+        /// </summary>
+        public static string FilePathOrUrl {
+            get {
+                return ResourceManager.GetString("FilePathOrUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string Import {
+            get {
+                return ResourceManager.GetString("Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can also drag and drop to this page..
+        /// </summary>
+        public static string Import_DragDropHint {
+            get {
+                return ResourceManager.GetString("Import_DragDropHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import Folders.
         /// </summary>
         public static string ImportFolders {
@@ -88,6 +151,33 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enqueue All.
+        /// </summary>
+        public static string Library_EnqueueAll {
+            get {
+                return ResourceManager.GetString("Library_EnqueueAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play All.
+        /// </summary>
+        public static string Library_PlayAll {
+            get {
+                return ResourceManager.GetString("Library_PlayAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lyrics.
+        /// </summary>
+        public static string Lyrics {
+            get {
+                return ResourceManager.GetString("Lyrics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         public static string Menu_About {
@@ -111,6 +201,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string Menu_File {
             get {
                 return ResourceManager.GetString("Menu_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to.
+        /// </summary>
+        public static string Menu_GoTo {
+            get {
+                return ResourceManager.GetString("Menu_GoTo", resourceCulture);
             }
         }
         
@@ -178,11 +277,344 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mini Player.
+        /// </summary>
+        public static string MiniPlayer {
+            get {
+                return ResourceManager.GetString("MiniPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing Playing.
+        /// </summary>
+        public static string NothingPlaying {
+            get {
+                return ResourceManager.GetString("NothingPlaying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open....
         /// </summary>
         public static string OpenDialog {
             get {
                 return ResourceManager.GetString("OpenDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin to top.
+        /// </summary>
+        public static string PinToTop {
+            get {
+                return ResourceManager.GetString("PinToTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlist Management.
+        /// </summary>
+        public static string PlaylistManagement {
+            get {
+                return ResourceManager.GetString("PlaylistManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlists.
+        /// </summary>
+        public static string Playlists {
+            get {
+                return ResourceManager.GetString("Playlists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queue Management.
+        /// </summary>
+        public static string QueueManagement {
+            get {
+                return ResourceManager.GetString("QueueManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Playlist.
+        /// </summary>
+        public static string QueueManagement_AddPlaylist {
+            get {
+                return ResourceManager.GetString("QueueManagement_AddPlaylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Track.
+        /// </summary>
+        public static string QueueManagement_AddTrack {
+            get {
+                return ResourceManager.GetString("QueueManagement_AddTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Queue.
+        /// </summary>
+        public static string QueueManagement_ClearQueue {
+            get {
+                return ResourceManager.GetString("QueueManagement_ClearQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time Remaining:.
+        /// </summary>
+        public static string QueueManagement_TimeRemaining {
+            get {
+                return ResourceManager.GetString("QueueManagement_TimeRemaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRESHMusicPlayer Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Folder.
+        /// </summary>
+        public static string Settings_AddFolder {
+            get {
+                return ResourceManager.GetString("Settings_AddFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string Settings_Appearance {
+            get {
+                return ResourceManager.GetString("Settings_Appearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Import.
+        /// </summary>
+        public static string Settings_AutoImport {
+            get {
+                return ResourceManager.GetString("Settings_AutoImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FMP will import new tracks from these folders:.
+        /// </summary>
+        public static string Settings_AutoImport_Info {
+            get {
+                return ResourceManager.GetString("Settings_AutoImport_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic.
+        /// </summary>
+        public static string Settings_Automatic {
+            get {
+                return ResourceManager.GetString("Settings_Automatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Let me know about new versions of FMP.
+        /// </summary>
+        public static string Settings_CheckForUpdates {
+            get {
+                return ResourceManager.GetString("Settings_CheckForUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear All.
+        /// </summary>
+        public static string Settings_ClearAll {
+            get {
+                return ResourceManager.GetString("Settings_ClearAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to by Squid Grill (and open source contributors).
+        /// </summary>
+        public static string Settings_Credits {
+            get {
+                return ResourceManager.GetString("Settings_Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string Settings_General {
+            get {
+                return ResourceManager.GetString("Settings_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discord Rich Presence.
+        /// </summary>
+        public static string Settings_IntegrateDiscordRPC {
+            get {
+                return ResourceManager.GetString("Settings_IntegrateDiscordRPC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integrations.
+        /// </summary>
+        public static string Settings_Integrations {
+            get {
+                return ResourceManager.GetString("Settings_Integrations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Settings_Language {
+            get {
+                return ResourceManager.GetString("Settings_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Licensed under the GPL v3 license.
+        /// </summary>
+        public static string Settings_License {
+            get {
+                return ResourceManager.GetString("Settings_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maintenance.
+        /// </summary>
+        public static string Settings_Maintenance {
+            get {
+                return ResourceManager.GetString("Settings_Maintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show cover art in MPRIS.
+        /// </summary>
+        public static string Settings_MPRISShowCoverArt {
+            get {
+                return ResourceManager.GetString("Settings_MPRISShowCoverArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Will write files to a temp directory, may make changing tracks take longer.
+        /// </summary>
+        public static string Settings_MPRISShowCoverArt_Info {
+            get {
+                return ResourceManager.GetString("Settings_MPRISShowCoverArt_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playtime Logging.
+        /// </summary>
+        public static string Settings_PlaytimeLogging {
+            get {
+                return ResourceManager.GetString("Settings_PlaytimeLogging", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report an issue.
+        /// </summary>
+        public static string Settings_Report {
+            get {
+                return ResourceManager.GetString("Settings_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show time in window title.
+        /// </summary>
+        public static string Settings_ShowTimeInWindow {
+            get {
+                return ResourceManager.GetString("Settings_ShowTimeInWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for using FRESHMusicPlayer! ❤.
+        /// </summary>
+        public static string Settings_ThankYou {
+            get {
+                return ResourceManager.GetString("Settings_ThankYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates.
+        /// </summary>
+        public static string Settings_Updates {
+            get {
+                return ResourceManager.GetString("Settings_Updates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View license.
+        /// </summary>
+        public static string Settings_ViewLicense {
+            get {
+                return ResourceManager.GetString("Settings_ViewLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View source code.
+        /// </summary>
+        public static string Settings_ViewSourceCode {
+            get {
+                return ResourceManager.GetString("Settings_ViewSourceCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FMP on the interwebs.
+        /// </summary>
+        public static string Settings_ViewWebsite {
+            get {
+                return ResourceManager.GetString("Settings_ViewWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag Editor.
+        /// </summary>
+        public static string TagEditor {
+            get {
+                return ResourceManager.GetString("TagEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracks.
+        /// </summary>
+        public static string Tracks {
+            get {
+                return ResourceManager.GetString("Tracks", resourceCulture);
             }
         }
     }
