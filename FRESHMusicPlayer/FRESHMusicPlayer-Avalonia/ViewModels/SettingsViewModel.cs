@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI;
+using System.Collections.ObjectModel;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -16,6 +17,23 @@ namespace FRESHMusicPlayer.ViewModels
 
         public bool IsRunningOnLinux { get => RuntimeInformation.IsOSPlatform(OSPlatform.Linux); }
         public bool IsRunningOnMac { get => RuntimeInformation.IsOSPlatform(OSPlatform.OSX); }
+
+        public ObservableCollection<DisplayLanguage> AvailableLanguages { get; } = new()
+        {
+            new("Automatic", "automatic"),
+            new("Vietnamese", "vi")
+        };
+
+        public DisplayLanguage Language
+        {
+            get
+            {
+                if (Config is not null)
+                    return AvailableLanguages.First(x => x.Code == Config?.Language);
+                else return AvailableLanguages[0];
+            }
+            set => Config.Language = value.Code;
+        }
 
         public bool PlaytimeLogging
         {
@@ -70,6 +88,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void StartThings()
         {
+            this.RaisePropertyChanged(nameof(Language));
             this.RaisePropertyChanged(nameof(PlaytimeLogging));
             this.RaisePropertyChanged(nameof(ShowTimeInWindow));
             this.RaisePropertyChanged(nameof(IntegrateDiscordRPC));
@@ -82,5 +101,17 @@ namespace FRESHMusicPlayer.ViewModels
         public void ViewSourceCodeCommand() => InterfaceUtils.OpenURL(@"https://github.com/Royce551/FRESHMusicPlayer");
         public void ViewLicenseCommand() => InterfaceUtils.OpenURL(@"https://choosealicense.com/licenses/gpl-3.0/");
         public void ViewWebsiteCommand() => InterfaceUtils.OpenURL(@"https://royce551.github.io/FRESHMusicPlayer");
+    }
+
+    public class DisplayLanguage
+    {
+        public string Name { get; }
+        public string Code { get; }
+
+        public DisplayLanguage(string name, string code)
+        {
+            Name = name;
+            Code = code;
+        }
     }
 }

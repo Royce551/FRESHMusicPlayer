@@ -18,9 +18,12 @@
 			<StackPanel Margin="10">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 					<TextBlock Text="Language" Margin="0,0,10,0" VerticalAlignment="Center"/>
-					<ComboBox IsEnabled="False">
-						<ComboBoxItem Content="Automatic"/>
-						<ComboBoxItem Content="English"/>
+					<ComboBox Items="{Binding AvailableLanguages}" SelectedItem="{Binding Language}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Name}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
 					</ComboBox>
 				</StackPanel>
 				<CheckBox Content="Playtime Logging" IsChecked="{Binding PlaytimeLogging}"/>
