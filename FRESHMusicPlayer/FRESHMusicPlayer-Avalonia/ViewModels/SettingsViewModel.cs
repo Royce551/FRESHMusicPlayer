@@ -24,6 +24,8 @@ namespace FRESHMusicPlayer.ViewModels
             new("Vietnamese", "vi")
         };
 
+        public string Version => MainWindowViewModel.ProjectName;
+
         public DisplayLanguage Language
         {
             get

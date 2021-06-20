@@ -36,14 +36,14 @@
 				<Button Content="{x:Static resx:Resources.Settings_AddFolder}" IsEnabled="False"/>
 				<Button Content="{x:Static resx:Resources.Settings_ClearAll}" IsEnabled="False"/>
 				
-				<TextBlock FontWeight="Bold" FontSize="18" Text="Integrations"/>
+				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Integrations}"/>
 				
 				<CheckBox Content="{x:Static resx:Resources.Settings_IntegrateDiscordRPC}" IsChecked="{Binding IntegrateDiscordRPC}"/>
 				<CheckBox Content="MPRIS" IsVisible="{Binding IsRunningOnLinux}" IsChecked="{Binding IntegrateMPRIS}"/>
 				<CheckBox Content="{x:Static resx:Resources.Settings_MPRISShowCoverArt}" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
 				<TextBlock Text="{x:Static resx:Resources.Settings_MPRISShowCoverArt_Info}" Margin="20,0,0,0" TextWrapping="Wrap" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
 				
-				<TextBlock FontWeight="Bold" FontSize="18" Text="Updates" IsVisible="{Binding IsRunningOnMac}"/>
+				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Updates}" IsVisible="{Binding IsRunningOnMac}"/>
 				
 				<CheckBox Content="{x:Static resx:Resources.Settings_CheckForUpdates}" IsChecked="{Binding CheckForUpdates}" IsVisible="{Binding IsRunningOnMac}"/>
 			</StackPanel>
@@ -55,10 +55,10 @@
 		<TabItem Header="{x:Static resx:Resources.Settings_Maintenance}">
 			
 		</TabItem>
-		<TabItem Header="{x:Static resx:Resources.Menu_About_AboutFMP}">
+		<TabItem Header="{x:Static resx:Resources.Menu_About}">
 			<StackPanel Margin="10" HorizontalAlignment="Stretch">
 				<Image Source="/Assets/fmplogofull.png" Stretch="UniformToFill" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20"/>
-				<TextBlock Text="FRESHMusicPlayer (for Mac and Linux) Ver. 69420"/>
+				<TextBlock Text="{Binding Version}"/>
 				<TextBlock Text="{x:Static resx:Resources.Settings_Credits}"/>
 				<TextBlock Text="{x:Static resx:Resources.Settings_License}" Margin="0,0,0,20"/>
 			
