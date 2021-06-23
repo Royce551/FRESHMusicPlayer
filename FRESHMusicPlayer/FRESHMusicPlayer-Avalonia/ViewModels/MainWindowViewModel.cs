@@ -70,8 +70,8 @@ namespace FRESHMusicPlayer.ViewModels
         private void Player_SongStopped(object sender, EventArgs e)
         {
             LoggingHandler.Log("Player: Stopping!");
-            Artist = "Nothing Playing";
-            Title = "Nothing Playing";
+            Artist = Properties.Resources.NothingPlaying;
+            Title = Properties.Resources.NothingPlaying;
             CoverArt = null;
             WindowTitle = ProjectName;
             ProgressTimer.Stop();
@@ -361,6 +361,8 @@ namespace FRESHMusicPlayer.ViewModels
 
             if (Config.IntegrateDiscordRPC)
                 Integrations.Add(new DiscordIntegration());
+            if (Config.PlaybackTracking)
+                Integrations.Add(new PlaytimeLoggingIntegration(Player));
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Config.IntegrateMPRIS)
                 Integrations.Add(new MPRISIntegration(this, Window));
         }

@@ -6,6 +6,7 @@ using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
 using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
@@ -21,6 +22,11 @@ namespace FRESHMusicPlayer.Views
             this.AttachDevTools();
 #endif
             DoStuff();
+            var rootPanel = this.FindControl<Panel>("RootPanel");
+            DragDrop.SetAllowDrop(rootPanel, true);
+            rootPanel.AddHandler(DragDrop.DragEnterEvent, OnDragEnter);
+            rootPanel.AddHandler(DragDrop.DragOverEvent, OnDragEnter);
+            rootPanel.AddHandler(DragDrop.DropEvent, OnDragDrop);
         }
 
         private void InitializeComponent()
@@ -116,6 +122,16 @@ namespace FRESHMusicPlayer.Views
                         ViewModel.PlayPauseCommand();
                         break;
                 }
+        }
+
+        private void OnDragEnter(object sender, DragEventArgs e)
+        {
+            e.DragEffects &= DragDropEffects.Copy;
+        }
+        private void OnDragDrop(object sender, DragEventArgs e)
+        {
+            ViewModel.Player.Queue.Add(e.Data.GetFileNames().ToArray());
+            ViewModel.Player.PlayMusic();
         }
     }
 }

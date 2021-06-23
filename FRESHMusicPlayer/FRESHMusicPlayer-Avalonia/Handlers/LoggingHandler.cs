@@ -19,6 +19,7 @@ namespace FRESHMusicPlayer.Handlers
             {
                 var line = $"[{DateTime.Now:T}] {message}";
                 Console.WriteLine(line);
+                Debug.WriteLine(line);
                 Console.ResetColor();
                 var logFilePath = "log.txt";
                 using (var sw = File.AppendText(logFilePath))
