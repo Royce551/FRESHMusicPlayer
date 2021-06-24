@@ -98,7 +98,7 @@
 			</Button>
 		</StackPanel>
 		<DockPanel LastChildFill="True" ZIndex="0">
-			<Grid Background="{DynamicResource ThemeBorderMidBrush}" DockPanel.Dock="Bottom" Height="85" Margin="0,10,0,10">
+			<Grid Background="{StaticResource ForegroundColor}" DockPanel.Dock="Bottom" Height="85" Margin="0,10,0,10">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="1*" />
