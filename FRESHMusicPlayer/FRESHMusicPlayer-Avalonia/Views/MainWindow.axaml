@@ -47,6 +47,9 @@
 		<Style Selector="ListBoxItem">
 			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 		</Style>
+		<Style Selector="StackPanel">
+			<Setter Property="Spacing" Value="3"/>
+		</Style>
 	</Window.Styles>
 
 	<Design.DataContext>
@@ -98,35 +101,35 @@
 			</Button>
 		</StackPanel>
 		<DockPanel LastChildFill="True" ZIndex="0">
-			<Grid Background="{StaticResource ForegroundColor}" DockPanel.Dock="Bottom" Height="85" Margin="0,10,0,10">
+			<Grid Background="{StaticResource ForegroundColor}" DockPanel.Dock="Bottom" Height="85" Margin="0,10,0,0">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="1*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Image Source="{Binding CoverArt}" Grid.Column="0" Margin="10,10,0,5" ToolTip.ShowDelay="10" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}">
+				<Image Source="{Binding CoverArt}" Grid.Column="0" Margin="10,0,5,0" MaxWidth="64" MaxHeight="64" VerticalAlignment="Center" ToolTip.ShowDelay="10" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}">
 					<ToolTip.Tip>
 						<Image Source="{Binding CoverArt}"/>
 					</ToolTip.Tip>
 				</Image>
 				<!--Middle Section-->
-				<Grid Grid.Column="1" Margin="0,10,0,5">
+				<Grid Grid.Column="1" Margin="5,8,0,0" >
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<TextBlock x:Name="TrackTitleTextBlock" Grid.Row="0" Text="{Binding Title}" TextTrimming="CharacterEllipsis" FontSize="20" FontWeight="Bold" Padding="10,10,0,0" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}"/>
-					<TextBlock x:Name="TrackArtistTextBlock" Grid.Row="1" Text="{Binding Artist}" Foreground="{DynamicResource ThemeMidBrush}" Padding="10,0,0,0" />
-					<Grid Grid.Row="2" Margin="10, -15">
+					<TextBlock x:Name="TrackTitleTextBlock" Grid.Row="0" Text="{Binding Title}" TextTrimming="CharacterEllipsis" FontSize="21" FontWeight="Bold" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}"/>
+					<TextBlock x:Name="TrackArtistTextBlock" Grid.Row="1" Text="{Binding Artist}" FontSize="12" Foreground="{StaticResource SecondaryTextColor}"/>
+					<Grid Grid.Row="2" Margin="0,5,0,0">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="1*" />
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Grid.Column="0" FontSize="12" Padding="0,22" />
-						<Slider x:Name="ProgressSlider" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="5,0" />
-						<TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat=\{0:mm\\:ss\}}" Grid.Column="2" FontSize="12" Padding="0,22" />
+						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="0" FontSize="12" Margin="0,0,5,0"/>
+						<Slider x:Name="ProgressSlider" Height="50" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="0,-21,0,0"/>
+						<TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="2" FontSize="12" Margin="5,0,0,0"/>
 					</Grid>
 				</Grid>
 				<!--Right Section-->
@@ -136,9 +139,8 @@
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
-					<TextBlock Grid.Row="0" Text="Volume" Margin="10,0,50,0"/>
-					<Slider x:Name="VolumeSlider" Grid.Row="1" Maximum="1" Value="{Binding Volume}" Margin="10, -10"/>
-					<WrapPanel Grid.Row="2" VerticalAlignment="Center" Margin="10,0">
+					<Slider x:Name="VolumeSlider" Grid.Row="1" Maximum="1" Value="{Binding Volume}" Margin="10,-10,10,-5"/>
+					<StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0">
 						<Button x:Name="PreviousTrackButton" Command="{Binding SkipPreviousCommand}">
 							<Image Source="{DynamicResource SkipPrevious}"/>
 						</Button>
@@ -164,7 +166,7 @@
 						<Button x:Name="NextTrackButton" Command="{Binding SkipNextCommand}">
 							<Image Source="{DynamicResource SkipNext}"/>
 						</Button>
-					</WrapPanel>
+					</StackPanel>
 				</Grid>
 			</Grid>
 			

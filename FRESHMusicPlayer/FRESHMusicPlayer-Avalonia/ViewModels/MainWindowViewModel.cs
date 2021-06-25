@@ -234,7 +234,6 @@ namespace FRESHMusicPlayer.ViewModels
             }
             set
             {
-                Debug.WriteLine($"CurrentTimeSeconds set. Value is {value}");
                 if (TimeSpan.FromSeconds(value) >= TotalTime) return;
                 Player.CurrentTime = TimeSpan.FromSeconds(value);
                 ProgressTick();
@@ -331,7 +330,10 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void StartThings()
         {
-            LoggingHandler.Log("Starting FMP...");
+            LoggingHandler.Log("Hi! I'm FMP!\n" +
+            $"{ProjectName}\n" +
+            $"{RuntimeInformation.FrameworkDescription}\n" +
+            $"{Environment.OSVersion.VersionString}\n");
             Player.SongChanged += Player_SongChanged;
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
@@ -381,7 +383,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
             else
             {
-
+                Config.FilePath = null;
             }
             await ConfigurationHandler.Write(Config);
             LoggingHandler.Log("Goodbye!");
