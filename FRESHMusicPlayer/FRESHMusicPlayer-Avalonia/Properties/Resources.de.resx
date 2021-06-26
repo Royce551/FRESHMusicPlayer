@@ -118,189 +118,189 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value></value>
+    <value>Album</value>
   </data>
   <data name="Albums" xml:space="preserve">
-    <value></value>
+    <value>Alben</value>
   </data>
   <data name="Artist" xml:space="preserve">
-    <value></value>
+    <value>Künstler</value>
   </data>
   <data name="Artists" xml:space="preserve">
-    <value></value>
+    <value>Künstler</value>
   </data>
   <data name="FilePathOrUrl" xml:space="preserve">
-    <value></value>
+    <value>Dateipfad oder URL</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value></value>
+    <value>Importieren</value>
   </data>
   <data name="ImportFolders" xml:space="preserve">
-    <value></value>
+    <value>Ordner importieren</value>
   </data>
   <data name="ImportPlaylistFiles" xml:space="preserve">
-    <value></value>
+    <value>Playlistdateien importieren</value>
   </data>
   <data name="ImportTracks" xml:space="preserve">
-    <value></value>
+    <value>Tracks importieren</value>
   </data>
   <data name="Import_DragDropHint" xml:space="preserve">
-    <value></value>
+    <value>Du kannst auch Dateien auf diese Seite ziehen.</value>
   </data>
   <data name="Library_EnqueueAll" xml:space="preserve">
-    <value></value>
+    <value>Alle einreihen</value>
   </data>
   <data name="Library_PlayAll" xml:space="preserve">
-    <value></value>
+    <value>Alle abspielen</value>
   </data>
   <data name="Lyrics" xml:space="preserve">
-    <value></value>
+    <value>Songtext</value>
   </data>
   <data name="Menu_About" xml:space="preserve">
-    <value></value>
+    <value>Über</value>
   </data>
   <data name="Menu_About_AboutFMP" xml:space="preserve">
-    <value></value>
+    <value>Über FRESHMusicPlayer</value>
   </data>
   <data name="Menu_File" xml:space="preserve">
-    <value></value>
+    <value>Datei</value>
   </data>
   <data name="Menu_GoTo" xml:space="preserve">
-    <value></value>
+    <value>Gehe zu</value>
   </data>
   <data name="Menu_Playback" xml:space="preserve">
-    <value></value>
+    <value>Wiedergabe</value>
   </data>
   <data name="Menu_Playback_Next" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback_PauseAfterCurrentTrack" xml:space="preserve">
-    <value></value>
+    <value>Nach diesem Track pausieren</value>
   </data>
   <data name="Menu_Playback_PlayPause" xml:space="preserve">
-    <value></value>
+    <value>Spielen/Pausieren</value>
   </data>
   <data name="Menu_Playback_Previous" xml:space="preserve">
-    <value></value>
+    <value>Vorheriges</value>
   </data>
   <data name="Menu_Playback_Repeat" xml:space="preserve">
-    <value></value>
+    <value>Wiederholen</value>
   </data>
   <data name="Menu_Playback_Shuffle" xml:space="preserve">
-    <value></value>
+    <value>Zufallswiedergabe</value>
   </data>
   <data name="MiniPlayer" xml:space="preserve">
-    <value></value>
+    <value>Miniplayer</value>
   </data>
   <data name="NothingPlaying" xml:space="preserve">
-    <value></value>
+    <value>Nichts spielt</value>
   </data>
   <data name="OpenDialog" xml:space="preserve">
-    <value></value>
+    <value>Öffnen...</value>
   </data>
   <data name="PinToTop" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="PlaylistManagement" xml:space="preserve">
-    <value></value>
+    <value>Playlistmanagement</value>
   </data>
   <data name="Playlists" xml:space="preserve">
-    <value></value>
+    <value>Playlisten</value>
   </data>
   <data name="QueueManagement" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="QueueManagement_AddPlaylist" xml:space="preserve">
-    <value></value>
+    <value>Playlist hinzufügen</value>
   </data>
   <data name="QueueManagement_AddTrack" xml:space="preserve">
-    <value></value>
+    <value>Track hinzufügen</value>
   </data>
   <data name="QueueManagement_ClearQueue" xml:space="preserve">
-    <value></value>
+    <value>Queue leeren</value>
   </data>
   <data name="QueueManagement_TimeRemaining" xml:space="preserve">
-    <value></value>
+    <value>Verbleibende Zeit:</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value></value>
+    <value>FRESHMusicPlayer Einstellungen</value>
   </data>
   <data name="Settings_AddFolder" xml:space="preserve">
-    <value></value>
+    <value>Ordner hinzufügen</value>
   </data>
   <data name="Settings_Appearance" xml:space="preserve">
-    <value></value>
+    <value>Aussehen</value>
   </data>
   <data name="Settings_AutoImport" xml:space="preserve">
-    <value></value>
+    <value>Automatisches Importieren</value>
   </data>
   <data name="Settings_AutoImport_Info" xml:space="preserve">
-    <value></value>
+    <value>FMP wird neue Tracks von diesen Ordnern importieren:</value>
   </data>
   <data name="Settings_Automatic" xml:space="preserve">
-    <value></value>
+    <value>Automatisch</value>
   </data>
   <data name="Settings_CheckForUpdates" xml:space="preserve">
-    <value></value>
+    <value>Informiere mich über neue FMP-Versionen</value>
   </data>
   <data name="Settings_ClearAll" xml:space="preserve">
-    <value></value>
+    <value>Alles entfernen</value>
   </data>
   <data name="Settings_Credits" xml:space="preserve">
-    <value></value>
+    <value>von Squid Grill (und open-source Beitragenden)</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value></value>
+    <value>Allgemein</value>
   </data>
   <data name="Settings_IntegrateDiscordRPC" xml:space="preserve">
-    <value></value>
+    <value>Discord Rich Presence</value>
   </data>
   <data name="Settings_Integrations" xml:space="preserve">
-    <value></value>
+    <value>Integrationen</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
-    <value></value>
+    <value>Sprache</value>
   </data>
   <data name="Settings_License" xml:space="preserve">
-    <value></value>
+    <value>Lizensiert unter der GPL v3 Lizenz</value>
   </data>
   <data name="Settings_Maintenance" xml:space="preserve">
-    <value></value>
+    <value>Wartung</value>
   </data>
   <data name="Settings_MPRISShowCoverArt" xml:space="preserve">
-    <value></value>
+    <value>Zeige Deckblattkunst in MPRIS</value>
   </data>
   <data name="Settings_MPRISShowCoverArt_Info" xml:space="preserve">
-    <value></value>
+    <value>Wird Dateien zu einem temporären Ordner schreiben, Tracks wechseln dauert womöglich länger</value>
   </data>
   <data name="Settings_PlaytimeLogging" xml:space="preserve">
-    <value></value>
+    <value>Trackverlauf speichern</value>
   </data>
   <data name="Settings_Report" xml:space="preserve">
-    <value></value>
+    <value>Ein Problem melden</value>
   </data>
   <data name="Settings_ShowTimeInWindow" xml:space="preserve">
-    <value></value>
+    <value>Zeige Zeit im Fenstertitel</value>
   </data>
   <data name="Settings_ThankYou" xml:space="preserve">
-    <value></value>
+    <value>Danke, dass du FRESHMusicPlayer verwendest! ♥</value>
   </data>
   <data name="Settings_Updates" xml:space="preserve">
-    <value></value>
+    <value>Updates</value>
   </data>
   <data name="Settings_ViewLicense" xml:space="preserve">
-    <value></value>
+    <value>Lizenz anzeigen</value>
   </data>
   <data name="Settings_ViewSourceCode" xml:space="preserve">
-    <value></value>
+    <value>Quellcode ansehen</value>
   </data>
   <data name="Settings_ViewWebsite" xml:space="preserve">
-    <value></value>
+    <value>FMP auf dem Internetz</value>
   </data>
   <data name="TagEditor" xml:space="preserve">
-    <value></value>
+    <value>Tageditor</value>
   </data>
   <data name="Tracks" xml:space="preserve">
-    <value></value>
+    <value>Tracks</value>
   </data>
 </root>
