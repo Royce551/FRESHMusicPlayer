@@ -53,7 +53,7 @@ namespace FRESHMusicPlayer.ViewModels
             InitializeLibrary();
         }
 
-        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Beta 9";
+        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Beta 10";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
@@ -90,7 +90,7 @@ namespace FRESHMusicPlayer.ViewModels
             Player.AvoidNextQueue = false;
         }
 
-        private async void Player_SongChanged(object sender, EventArgs e)
+        private void Player_SongChanged(object sender, EventArgs e)
         {
             LoggingHandler.Log("Player: SongChanged");
             CurrentTrack = new Track(Player.FilePath);
@@ -104,18 +104,11 @@ namespace FRESHMusicPlayer.ViewModels
             ProgressTimer.Start();
             Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
 
-            await Task.Delay(50); // HACK: this whole thing is a massive HACK.
             if (pauseAfterCurrentTrack && !Player.Paused)
             {
                 PlayPauseCommand();
                 pauseAfterCurrentTrack = false;
             }
-
-            await Task.Delay(1000);
-            this.RaisePropertyChanged(nameof(TotalTime));
-            this.RaisePropertyChanged(nameof(TotalTimeSeconds));
-            Volume = Player.Volume;
-           
         }
 
         public bool RepeatModeNone { get => Player.Queue.RepeatMode == RepeatMode.None; }

@@ -18,15 +18,17 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public PlaytimeLoggingIntegration(Player player)
         {
             this.player = player;
+            player.SongChanged += Player_SongChanged;
             filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Tracking");
             trackingFile = Read();
             LoggingHandler.Log("Playtime Logging: Starting!");
         }
 
-        public void Update(Track track, PlaybackStatus status)
+        private void Player_SongChanged(object sender, EventArgs e)
         {
             try
             {
+                var track = new Track(player.FilePath);
                 var trackingEntry = new TrackingEntry
                 {
                     DatePlayed = DateTime.Now,
@@ -43,16 +45,22 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 trackingFile.Entries.Add(trackingEntry);
                 LoggingHandler.Log("Playtime Logging: Entry created!");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                LoggingHandler.Log($"Playtime Logging: Exception was thrown - {e}");
+                LoggingHandler.Log($"Playtime Logging: Exception was thrown - {ex}");
                 // ignored
             }
+        }
+
+        public void Update(Track track, PlaybackStatus status)
+        {
+            
         }
 
         public void Dispose()
         {
             Write(trackingFile);
+            player.SongChanged -= Player_SongChanged;
         }
 
         private TrackingFile Read()

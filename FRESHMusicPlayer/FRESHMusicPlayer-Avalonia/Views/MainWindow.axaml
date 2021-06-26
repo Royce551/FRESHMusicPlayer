@@ -107,7 +107,7 @@
 					<ColumnDefinition Width="1*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Image Source="{Binding CoverArt}" Grid.Column="0" Margin="10,0,5,0" MaxWidth="64" MaxHeight="64" VerticalAlignment="Center" ToolTip.ShowDelay="10" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}">
+				<Image Source="{Binding CoverArt}" Grid.Column="0" Margin="10,-10,5,0" MaxWidth="64" MaxHeight="64" VerticalAlignment="Center" ToolTip.ShowDelay="10" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}">
 					<ToolTip.Tip>
 						<Image Source="{Binding CoverArt}"/>
 					</ToolTip.Tip>
@@ -127,9 +127,9 @@
 							<ColumnDefinition Width="1*" />
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="0" FontSize="12" Margin="0,0,5,0"/>
+						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="0" FontSize="12" Margin="0,0,2,0"/>
 						<Slider x:Name="ProgressSlider" Height="50" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="0,-13,0,0"/>
-						<TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="2" FontSize="12" Margin="5,0,0,0"/>
+						<TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="2" FontSize="12" Margin="2,0,0,0"/>
 					</Grid>
 				</Grid>
 				<!--Right Section-->
