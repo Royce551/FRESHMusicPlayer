@@ -127,9 +127,6 @@ namespace FRESHMusicPlayer.ViewModels
             set
             {
                 Player.Queue.RepeatMode = value;
-                this.RaisePropertyChanged(nameof(RepeatModeNone));
-                this.RaisePropertyChanged(nameof(RepeatModeAll));
-                this.RaisePropertyChanged(nameof(RepeatModeOne));
             }
         }
         private bool paused = false;
@@ -159,18 +156,18 @@ namespace FRESHMusicPlayer.ViewModels
             if (Player.Queue.RepeatMode == RepeatMode.None)
             {
                 Player.Queue.RepeatMode = RepeatMode.RepeatAll;
-
             }
             else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
                 Player.Queue.RepeatMode = RepeatMode.RepeatOne;
-
             }
             else
             {
                 Player.Queue.RepeatMode = RepeatMode.None;
-
             }
+            this.RaisePropertyChanged(nameof(RepeatModeNone));
+            this.RaisePropertyChanged(nameof(RepeatModeAll));
+            this.RaisePropertyChanged(nameof(RepeatModeOne));
         }
         public void PlayPauseCommand()
         {
@@ -199,6 +196,7 @@ namespace FRESHMusicPlayer.ViewModels
                 Player.Queue.Shuffle = true;
                 Shuffle = true;
             }
+            this.RaisePropertyChanged(nameof(Shuffle));
         }
         public void SkipNextCommand()
         {

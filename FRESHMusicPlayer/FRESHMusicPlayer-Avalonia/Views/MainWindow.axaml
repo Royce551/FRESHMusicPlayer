@@ -86,7 +86,7 @@
 		</NativeMenu>
 	</NativeMenu.Menu>
 	<Panel x:Name="RootPanel" DragDrop.AllowDrop="True">
-		<StackPanel Background="Transparent" Orientation="Horizontal" ZIndex="1" Height="50" Margin="0,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Right">
+		<StackPanel Background="Transparent" Orientation="Horizontal" ZIndex="1" Height="40" Margin="0,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Right">
 			<Button Margin="0,5">
 				<Image Source="{DynamicResource Search}"/>
 			</Button>
@@ -128,7 +128,7 @@
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="0" FontSize="12" Margin="0,0,5,0"/>
-						<Slider x:Name="ProgressSlider" Height="50" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="0,-21,0,0"/>
+						<Slider x:Name="ProgressSlider" Height="50" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="0,-13,0,0"/>
 						<TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="2" FontSize="12" Margin="5,0,0,0"/>
 					</Grid>
 				</Grid>
@@ -139,7 +139,7 @@
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
-					<Slider x:Name="VolumeSlider" Grid.Row="1" Maximum="1" Value="{Binding Volume}" Margin="10,-10,10,-5"/>
+					<Slider x:Name="VolumeSlider" Grid.Row="1" Maximum="1" Value="{Binding Volume}" Margin="10,0,10,-5"/>
 					<StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0">
 						<Button x:Name="PreviousTrackButton" Command="{Binding SkipPreviousCommand}">
 							<Image Source="{DynamicResource SkipPrevious}"/>
