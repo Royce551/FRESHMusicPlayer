@@ -118,9 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>Es ist ein Fehler aufgetreten: {0}.
-Solltest du die Zeit haben, bitte teile es den Entwicklern mit auf https://github.com/royce551/freshmusicplayer/issues.
-Die Log-Datei die sie brauchen werden befindet sich in {1}.</value>
+    <value>Ups! Etwas ist schief gelaufen. Wir versuchen fortzufahren. Sollte dies wiederholt auftreten, bitte melde dies auf https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
     <value>Nach Ordern suchen</value>
@@ -147,7 +145,8 @@ Die Log-Datei die sie brauchen werden befindet sich in {1}.</value>
     <value>Kein Künstler</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value>{0}
+    <value>Es trat beim Abspielen ein Fehler auf:
+{0}
 Wir werden für dich zum nächsten Track springen</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
@@ -181,7 +180,8 @@ Wir werden für dich zum nächsten Track springen</value>
     <value>Benachrichtigungen</value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value>Fehlende Datei</value>
+    <value>Diese Playlistdatei konnte nicht importiert werden, weil ein oder mehrere Tracks nicht gefunden worden konnten.
+Fehlende Datei: {0}</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
     <value>Playlist hinzufügen</value>
@@ -199,22 +199,22 @@ Wir werden für dich zum nächsten Track springen</value>
     <value>Verbleibende Zeit - </value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>Album Künstler - </value>
+    <value>Album Künstler</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value>Künstler - </value>
+    <value>Künstler</value>
   </data>
   <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
-    <value>Die Änderungen werden angewendet wenn du einen neuen Track abspielst.</value>
+    <value>Die Änderungen werden angewendet, sobald du einen neuen Track abspielst.</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
     <value>Datei ändern...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value>Komponist - </value>
+    <value>Komponist</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value>CD Nummer - </value>
+    <value>CD Nummer</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
     <value>Bearbeitet </value>
@@ -226,26 +226,26 @@ Wir werden für dich zum nächsten Track springen</value>
     <value>Möchtest du deine Änderungen zu {0} speichern?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value>Titel - </value>
+    <value>Titel</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value>Tracknummer - </value>
+    <value>Tracknummer</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value>Album - </value>
+    <value>Album</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
     <value>Album Info</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value>Bitrate - </value>
+    <value>Bitrate</value>
     <comment>"kbps" is inserted after this</comment>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value>CD </value>
+    <value>CD</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value>Genre - </value>
+    <value>Genre</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
     <value>Technische Info</value>
@@ -255,10 +255,10 @@ Wir werden für dich zum nächsten Track springen</value>
     <comment>Track Info header</comment>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value>Track </value>
+    <value>Track</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value>Jahr - </value>
+    <value>Jahr</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
     <value>Alle einreihen</value>
@@ -288,7 +288,7 @@ Wir werden für dich zum nächsten Track springen</value>
     <value>Allgemein</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value>Von Squid Grill (und open-source Beitragende)
+    <value>Von Squid Grill (und open-source Beitragenden)
 Lizensiert unter GPL v3
 Danke, dass du FRESHMusicPlayer verwendest! ♥</value>
   </data>
@@ -363,5 +363,104 @@ Danke, dass du FRESHMusicPlayer verwendest! ♥</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
     <value>Was willst du mit "{0}" machen?</value>
+  </data>
+  <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
+    <value>Es wurden für dieses Album keine Ergebnisse gefunden :(</value>
+  </data>
+  <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
+    <value>Du bist nicht mit dem Internet verbunden :(</value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value>Keine Deckblattkunst vorhanden</value>
+  </data>
+  <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
+    <value>Es gibt mehrere Suchergebnisse für dieses Album. Welches benötigst du?</value>
+  </data>
+  <data name="TAGEDITOR_COVERART" xml:space="preserve">
+    <value>Deckblattkunst</value>
+  </data>
+  <data name="TAGEDITOR" xml:space="preserve">
+    <value>Tageditor</value>
+  </data>
+  <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
+    <value>Jetzt neustarten</value>
+  </data>
+  <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
+    <value>FMP muss neugestartet werden, um deine Änderungen anzunehmen.</value>
+  </data>
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value>Trackverlauf speichern</value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
+    <value>Bist du dir sicher, dass du deine Bibliothek unwiderruflich leeren willst?</value>
+  </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value>Bibliothek reinigen und aktualisieren</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
+    <value>Ordner hinzufügen</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
+    <value>FMP wird neue Tracks von diesen Ordnern importieren:</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value>Automatisches Importieren</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
+    <value>"{0}" ist kein gültiger Name für eine Playlist.</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
+    <value>Playlistmanagement</value>
+  </data>
+  <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
+    <value>Ein Update ist bereit! Starte FMP neu, um das Update anzuwenden.</value>
+  </data>
+  <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
+    <value>Beim Aktualisieren trat ein Fehler ein: {0}</value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value>Scannt nach neuen Tracks...</value>
+  </data>
+  <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
+    <value>Installiert Update...</value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
+    <value>Die Datei, die du abzuspielen versucht hast ("{0}"), scheint nicht zu existieren.</value>
+  </data>
+  <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
+    <value>Bibliothek erfolgreich geleert!</value>
+  </data>
+  <data name="MINIPLAYER_BACK" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
+    <value>Ungetimter Songtext</value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value>Kein Songtext verfügbar</value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value>Songtext</value>
+  </data>
+  <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
+    <value>In Dateiexplorer öffnen</value>
+  </data>
+  <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
+    <value>Zur Playlist hinzufügen</value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
+    <value>Nach diesem Track pausieren</value>
+  </data>
+  <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
+    <value>Miniplayer</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Gehe zu</value>
+  </data>
+  <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value>Debuglog öffnen</value>
   </data>
 </root>
