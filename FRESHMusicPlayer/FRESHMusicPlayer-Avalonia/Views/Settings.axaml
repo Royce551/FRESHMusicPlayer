@@ -6,7 +6,7 @@
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d"
 		Width="600" Height="400"
-        x:Class="FRESHMusicPlayer.Views.Settings" WindowStartupLocation="CenterOwner"
+        x:Class="FRESHMusicPlayer.Views.Settings" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
         Icon="/Assets/icon.ico" Title="{x:Static resx:Resources.Settings}">
 	
 	<Window.DataContext>

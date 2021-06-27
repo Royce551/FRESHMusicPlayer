@@ -97,6 +97,24 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bitrate.
+        /// </summary>
+        public static string Bitrate {
+            get {
+                return ResourceManager.GetString("Bitrate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc.
+        /// </summary>
+        public static string Disc {
+            get {
+                return ResourceManager.GetString("Disc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File path or URL.
         /// </summary>
         public static string FilePathOrUrl {
@@ -610,11 +628,38 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Track.
+        /// </summary>
+        public static string Track {
+            get {
+                return ResourceManager.GetString("Track", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track Info.
+        /// </summary>
+        public static string TrackInfo {
+            get {
+                return ResourceManager.GetString("TrackInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tracks.
         /// </summary>
         public static string Tracks {
             get {
                 return ResourceManager.GetString("Tracks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
     }

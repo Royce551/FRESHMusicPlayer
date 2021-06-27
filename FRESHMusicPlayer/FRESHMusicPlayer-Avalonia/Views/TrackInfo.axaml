@@ -4,9 +4,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:controls="clr-namespace:FRESHMusicPlayer.Controls.BlurryImage"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" Width="500" Height="300"
-        x:Class="FRESHMusicPlayer.Views.TrackInfo" WindowStartupLocation="CenterOwner" Closing="OnClosing"
-        Icon="/Assets/icon.ico" Title="Track Info">
+        x:Class="FRESHMusicPlayer.Views.TrackInfo" WindowStartupLocation="CenterOwner" Closing="OnClosing" ShowInTaskbar="False"
+        Icon="/Assets/icon.ico" Title="{x:Static resx:Resources.TrackInfo}">
 	<Window.DataContext>
 		<vm:TrackInfoViewModel/>
 	</Window.DataContext>
@@ -24,7 +25,7 @@
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 
-			<CheckBox Grid.ColumnSpan="3" IsChecked="{Binding $parent[Window].Topmost}" Content="Pin to top"/>
+			<CheckBox Grid.ColumnSpan="3" IsChecked="{Binding $parent[Window].Topmost}" Content="{x:Static resx:Resources.PinToTop}"/>
 		
 			<Image Grid.Row="1" Grid.Column="0" Source="{Binding CoverArt}" HorizontalAlignment="Right">
 				</Image>
@@ -42,11 +43,11 @@
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 			
-				<TextBlock Grid.Column="0" Grid.Row="0" Margin="0,2" Text="Bitrate" Foreground="{StaticResource SecondaryTextColor}"/>
-				<TextBlock Grid.Column="0" Grid.Row="1" Margin="0,2" Text="Disc" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding DiscNumberShouldBeVisible}"/>
-				<TextBlock Grid.Column="0" Grid.Row="2" Margin="0,2" Text="Track" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding TrackNumberShouldBeVisible}"/>
-				<TextBlock Grid.Column="0" Grid.Row="3" Margin="0,2" Text="Year" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding YearShouldBeVisible}"/>
-				<TextBlock Grid.Column="0" Grid.Row="4" Margin="0,2" Text="Album" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding AlbumShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="0" Margin="0,2" Text="{x:Static resx:Resources.Bitrate}" Foreground="{StaticResource SecondaryTextColor}"/>
+				<TextBlock Grid.Column="0" Grid.Row="1" Margin="0,2" Text="{x:Static resx:Resources.Disc}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding DiscNumberShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="2" Margin="0,2" Text="{x:Static resx:Resources.Track}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding TrackNumberShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="3" Margin="0,2" Text="{x:Static resx:Resources.Year}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding YearShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="4" Margin="0,2" Text="{x:Static resx:Resources.Album}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding AlbumShouldBeVisible}"/>
 			
 				<TextBlock Grid.Column="1" Grid.Row="0" Margin="10,2,0,2" Text="{Binding BitrateText}"/>
 				<TextBlock Grid.Column="1" Grid.Row="1" Margin="10,2,0,2" Text="{Binding DiscNumberText}" IsVisible="{Binding DiscNumberShouldBeVisible}"/>

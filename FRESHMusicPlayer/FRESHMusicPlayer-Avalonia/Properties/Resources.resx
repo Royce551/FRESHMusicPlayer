@@ -129,6 +129,12 @@
   <data name="Artists" xml:space="preserve">
     <value>Artists</value>
   </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="Disc" xml:space="preserve">
+    <value>Disc</value>
+  </data>
   <data name="FilePathOrUrl" xml:space="preserve">
     <value>File path or URL</value>
   </data>
@@ -300,7 +306,16 @@
   <data name="TagEditor" xml:space="preserve">
     <value>Tag Editor</value>
   </data>
+  <data name="Track" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="TrackInfo" xml:space="preserve">
+    <value>Track Info</value>
+  </data>
   <data name="Tracks" xml:space="preserve">
     <value>Tracks</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>

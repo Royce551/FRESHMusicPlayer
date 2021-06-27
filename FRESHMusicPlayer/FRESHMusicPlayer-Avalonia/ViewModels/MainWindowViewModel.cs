@@ -264,13 +264,13 @@ namespace FRESHMusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref coverArt, value);
         }
 
-        private string artist = "Nothing Playing";
+        private string artist = Properties.Resources.NothingPlaying;
         public string Artist
         {
             get => artist;
             set => this.RaiseAndSetIfChanged(ref artist, value);
         }
-        private string title = "Nothing Playing";
+        private string title = Properties.Resources.NothingPlaying;
         public string Title
         {
             get => title;

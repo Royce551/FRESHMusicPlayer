@@ -6,7 +6,7 @@
         mc:Ignorable="d" Width="500" Height="400" 
 		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
-        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing" WindowStartupLocation="CenterOwner"
+        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
         Icon="/Assets/icon.ico" Title="{x:Static resx:Resources.QueueManagement}">
 	<Window.DataContext>
 		<vm:QueueManagementViewModel/>
@@ -15,7 +15,12 @@
         <svg:SvgImage x:Key="Play" Source="/Assets/play.svg"/>
 		<svg:SvgImage x:Key="Delete" Source="/Assets/delete.svg"/>
 	</Window.Resources>
-		
+	<Window.Styles>
+		<Style Selector="ListBoxItem">
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+		</Style>
+	</Window.Styles>	
+	
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>

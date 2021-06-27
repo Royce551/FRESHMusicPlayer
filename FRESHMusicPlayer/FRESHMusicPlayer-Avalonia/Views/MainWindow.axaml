@@ -93,10 +93,10 @@
 			<Button Margin="0,5">
 				<Image Source="{DynamicResource Notification}"/>
 			</Button>
-			<Button Margin="0,5" Command="{Binding OpenQueueManagementCommand}">
+			<Button Margin="0,5" Command="{Binding OpenQueueManagementCommand}" ToolTip.Tip="{x:Static resx:Resources.QueueManagement}">
 				<Image Source="{DynamicResource Queue}"/>
 			</Button>
-			<Button Margin="0,5" Command="{Binding OpenSettingsCommand}">
+			<Button Margin="0,5" Command="{Binding OpenSettingsCommand}" ToolTip.Tip="{x:Static resx:Resources.Settings}">
 				<Image Source="{DynamicResource Settings}"/>
 			</Button>
 		</StackPanel>
