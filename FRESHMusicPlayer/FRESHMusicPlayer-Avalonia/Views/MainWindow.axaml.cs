@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using FRESHMusicPlayer.Utilities;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -122,6 +123,20 @@ namespace FRESHMusicPlayer.Views
                         ViewModel.PlayPauseCommand();
                         break;
                 }
+            switch (e.Key)
+            {
+                case Key.F1:
+                    InterfaceUtils.OpenURL("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
+                    break;
+                case Key.F2:
+                    GC.Collect(2);
+                    break;
+                case Key.F3:
+                    throw new Exception("Exception for debugging");
+                case Key.F4:
+                    Topmost = !Topmost;
+                    break;
+            }
         }
 
         private void OnDragEnter(object sender, DragEventArgs e)
