@@ -10,6 +10,9 @@ using System.Linq;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using FRESHMusicPlayer.Utilities;
+using System.Globalization;
+using Avalonia.Data.Converters;
+using Avalonia.Media;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -50,6 +53,8 @@ namespace FRESHMusicPlayer.Views
             if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
                 ActualOpenTrackInfo();
         }
+
+        private void ToggleShowRemainingProgress(object sender, PointerPressedEventArgs e) => ViewModel?.ShowRemainingProgressCommand();
 
         private void ActualOpenTrackInfo()
         {
@@ -149,4 +154,6 @@ namespace FRESHMusicPlayer.Views
             ViewModel.Player.PlayMusic();
         }
     }
+
+    
 }

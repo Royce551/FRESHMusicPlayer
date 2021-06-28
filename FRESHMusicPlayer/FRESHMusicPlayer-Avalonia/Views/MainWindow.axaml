@@ -42,6 +42,8 @@
 			<MenuItem Command="{Binding MiniPlayerCommand}" Header="{x:Static resx:Resources.MiniPlayer}"/>
 			<MenuItem Command="{Binding PauseAfterCurrentTrackCommand}" Header="{x:Static resx:Resources.Menu_Playback_PauseAfterCurrentTrack}"/>
 		</ContextMenu>
+		<vm:PauseAfterCurrentTrackToBrushConverter x:Key="PauseAfterCurrentTrackToBrushConverter"/>
+		<vm:TotalTimeDisplayConverter x:Key="TotalTimeDisplayConverter"/>
 	</Window.Resources>
 	<Window.Styles>
 		<Style Selector="ListBoxItem">
@@ -129,7 +131,14 @@
 						</Grid.ColumnDefinitions>
 						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="0" FontSize="12" Margin="0,0,2,0"/>
 						<Slider x:Name="ProgressSlider" Height="50" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="0,-13,0,0"/>
-						<TextBlock x:Name="ProgressIndicator2" Text="{Binding TotalTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="2" FontSize="12" Margin="2,0,0,0"/>
+						<TextBlock x:Name="ProgressIndicator2" Foreground="{Binding PauseAfterCurrentTrack, Converter={StaticResource PauseAfterCurrentTrackToBrushConverter}}" Grid.Column="2" FontSize="12" Margin="2,0,0,0" PointerPressed="ToggleShowRemainingProgress">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource TotalTimeDisplayConverter}">
+									<Binding Path="CurrentTime"/>
+									<Binding Path="TotalTime"/>
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
 					</Grid>
 				</Grid>
 				<!--Right Section-->

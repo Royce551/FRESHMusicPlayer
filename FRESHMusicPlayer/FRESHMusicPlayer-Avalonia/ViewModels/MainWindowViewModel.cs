@@ -1,8 +1,11 @@
 ﻿using ATL;
 using ATL.Playlist;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Converters;
 using Avalonia.Input;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using FRESHMusicPlayer.Handlers;
@@ -15,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -32,7 +36,7 @@ namespace FRESHMusicPlayer.ViewModels
         public Track CurrentTrack { get; private set; }
         public IntegrationHandler Integrations { get; private set; } = new();
 
-        private bool pauseAfterCurrentTrack = false;
+        
 
         private Window Window 
         { 
@@ -86,6 +90,8 @@ namespace FRESHMusicPlayer.ViewModels
             this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
 
             if (Config.ShowTimeInWindow) WindowTitle = $"{CurrentTime:mm\\:ss}/{TotalTime:mm\\:ss} | {ProjectName}";
+            if (Config.ShowRemainingProgress) this.RaisePropertyChanged(nameof(TotalTime)); // little hacky but this triggers it
+                                                                                            // to show the new time
 
             Player.AvoidNextQueue = false;
         }
@@ -104,10 +110,10 @@ namespace FRESHMusicPlayer.ViewModels
             ProgressTimer.Start();
             Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
 
-            if (pauseAfterCurrentTrack && !Player.Paused)
+            if (PauseAfterCurrentTrack && !Player.Paused)
             {
                 PlayPauseCommand();
-                pauseAfterCurrentTrack = false;
+                PauseAfterCurrentTrack = false;
             }
         }
 
@@ -195,7 +201,9 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Player.NextSong();
         }
-        public void PauseAfterCurrentTrackCommand() => pauseAfterCurrentTrack = true;
+        public void PauseAfterCurrentTrackCommand() => PauseAfterCurrentTrack = true;
+
+        public void ShowRemainingProgressCommand() => Config.ShowRemainingProgress = !Config.ShowRemainingProgress;
 
         private TimeSpan currentTime;
         public TimeSpan CurrentTime
@@ -287,6 +295,14 @@ namespace FRESHMusicPlayer.ViewModels
                 this.RaiseAndSetIfChanged(ref volume, value);
             }
         }
+
+        private bool pauseAfterCurrentTrack = false;
+        public bool PauseAfterCurrentTrack
+        {
+            get => pauseAfterCurrentTrack;
+            set => this.RaiseAndSetIfChanged(ref pauseAfterCurrentTrack, value);
+        }
+
         #endregion
 
         #region Library
@@ -345,7 +361,7 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 if (!string.IsNullOrEmpty(Config.FilePath))
                 {
-                    pauseAfterCurrentTrack = true;
+                    PauseAfterCurrentTrack = true;
                     Player.PlayMusic(Config.FilePath);
                     Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
                 }
@@ -654,5 +670,49 @@ namespace FRESHMusicPlayer.ViewModels
             new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer).Show(Window);
         }
         #endregion
+    }
+
+    public class PauseAfterCurrentTrackToBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool x)
+            {
+                if (x) return new SolidColorBrush(Color.FromRgb(213, 70, 63));
+                else return Application.Current.FindResource("SecondaryTextColor");
+            }
+            else throw new Exception("idoit");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class TotalTimeDisplayConverter : IMultiValueConverter
+    {
+        public object Convert(IList<object> values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var x = values[0];
+            var z = values[1];
+            if (x is TimeSpan currentTime && z is TimeSpan totalTime)
+            {
+                if (Program.Config.ShowRemainingProgress)
+                {
+                    return $"-{currentTime - totalTime:mm\\:ss}";
+                }
+                else
+                {
+                    return $"{totalTime:mm\\:ss}";
+                }
+            }
+            else return "i dunno";
+        }
+
+        public object ConvertBack(List<object> value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
