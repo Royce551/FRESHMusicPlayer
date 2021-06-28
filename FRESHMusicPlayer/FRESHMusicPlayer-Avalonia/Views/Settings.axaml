@@ -32,9 +32,9 @@
 
 				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_AutoImport}"/>
 				
-				<TextBlock Text="{x:Static resx:Resources.Settings_AutoImport_Info}"/>
-				<Button Content="{x:Static resx:Resources.Settings_AddFolder}" IsEnabled="False"/>
-				<Button Content="{x:Static resx:Resources.Settings_ClearAll}" IsEnabled="False"/>
+				<TextBlock Text="{Binding AutoImportText}"/>
+				<Button Content="{x:Static resx:Resources.Settings_AddFolder}" Command="{Binding AddFolderCommand}"/>
+				<Button Content="{x:Static resx:Resources.Settings_ClearAll}" Command="{Binding ClearAllCommand}"/>
 				
 				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Integrations}"/>
 				
@@ -46,6 +46,9 @@
 				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Updates}" IsVisible="{Binding IsRunningOnMac}"/>
 				
 				<CheckBox Content="{x:Static resx:Resources.Settings_CheckForUpdates}" IsChecked="{Binding CheckForUpdates}" IsVisible="{Binding IsRunningOnMac}"/>
+				
+				<TextBlock Text="FMP needs to restart to apply your changes." Foreground="{StaticResource Green}" IsVisible="{Binding IsRestartNeeded}"/>
+				<Button Content="Restart now" Foreground="{StaticResource Green}" Command="{Binding RestartCommand}" IsVisible="{Binding IsRestartNeeded}"/>
 			</StackPanel>
 				</ScrollViewer>
 		</TabItem>

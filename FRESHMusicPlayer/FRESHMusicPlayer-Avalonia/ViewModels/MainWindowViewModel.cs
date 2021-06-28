@@ -358,6 +358,7 @@ namespace FRESHMusicPlayer.ViewModels
                 Integrations.Add(new PlaytimeLoggingIntegration(Player));
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Config.IntegrateMPRIS)
                 Integrations.Add(new MPRISIntegration(this, Window));
+            await PerformAutoImport();
         }
 
         public async void CloseThings()
@@ -378,6 +379,32 @@ namespace FRESHMusicPlayer.ViewModels
             }
             await ConfigurationHandler.Write(Config);
             LoggingHandler.Log("Goodbye!");
+        }
+
+        public async Task PerformAutoImport()
+        {
+            if (Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
+                                                               // effort (and showing the notification)
+            var filesToImport = new List<string>();
+            var library = Library.Read();
+            await Task.Run(() =>
+            {
+                foreach (var folder in Config.AutoImportPaths)
+                {
+                    var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                        .Where(name => name.EndsWith(".mp3")
+                            || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                            || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                            || name.EndsWith(".wma")
+                            || name.EndsWith(".aac")).ToArray();
+                    foreach (var file in files)
+                    {
+                        if (!library.Select(x => x.Path).Contains(file))
+                            filesToImport.Add(file);
+                    }
+                }
+                Library.Import(filesToImport);
+            });
         }
 
         private int selectedTab;
