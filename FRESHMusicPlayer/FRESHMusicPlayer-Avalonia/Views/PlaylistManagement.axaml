@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+        mc:Ignorable="d" SizeToContent="Height" Width="600" CanResize="False"
+        x:Class="FRESHMusicPlayer.Views.PlaylistManagement"
+        Title="PlaylistManagement">
+
+	<Window.DataContext>
+		<vm:PlaylistManagementViewModel/>
+	</Window.DataContext>
+	<Window.Styles>
+		<Style Selector="ListBoxItem">
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+		</Style>
+	</Window.Styles>	
+	<DockPanel>
+		<DockPanel DockPanel.Dock="Bottom" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+			<Button DockPanel.Dock="Right" Margin="10" Click="OnOKButtonClick">OK</Button>
+		</DockPanel>
+
+		<StackPanel Margin="10" Spacing="5">
+			<TextBlock Text="{Binding EditingHeader}" FontSize="16" TextWrapping="Wrap"/>
+			<ListBox Items="{Binding Playlists}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple" HorizontalAlignment="Stretch" Focusable="False">
+				<ListBox.DataTemplates>
+					<DataTemplate>
+						<Grid Margin="-5" Height="30" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="1*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+
+							<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15"/>
+							<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Spacing="10" Orientation="Horizontal">
+								<Button IsEnabled="{Binding IsSelectedTrackHere}" Click="OnRemoveButtonClick" IsVisible="{Binding $parent[1].IsPointerOver}">
+									<TextBlock Text="-"/>
+								</Button>
+								<Button IsEnabled="{Binding !IsSelectedTrackHere}" Click="OnAddButtonClick" IsVisible="{Binding $parent[1].IsPointerOver}">
+									<TextBlock Text="+"/>
+								</Button>
+								<Button IsVisible="{Binding $parent[1].IsPointerOver}" IsEnabled="{Binding ShouldThingBeVisible}" Click="OnAddThingButtonClick">
+									<TextBlock Text="{Binding ThingName}" />
+								</Button>
+								<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnMiscButtonClick">
+									<TextBlock Text="・・・"/>
+									<Button.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Rename" Click="OnRenameItemClick"/>
+											<MenuItem Header="Delete" Click="OnDeleteItemClick"/>
+											<MenuItem Header="Export" Click="OnExportItemClick"/>
+										</ContextMenu>
+									</Button.ContextMenu>
+								</Button>
+							</StackPanel>
+						</Grid>
+					</DataTemplate>
+				</ListBox.DataTemplates>
+			</ListBox>
+			<StackPanel Margin="5" Orientation="Horizontal" Spacing="3" HorizontalAlignment="Right">
+				<Button Command="{Binding ImportCommand}">Import</Button>
+				<Button Command="{Binding CreatePlaylistCommand}">Create</Button>
+			</StackPanel>
+
+		</StackPanel>
+	</DockPanel>
+
+</Window>

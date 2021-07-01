@@ -667,7 +667,12 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void OpenQueueManagementCommand()
         {
-            new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer).Show(Window);
+            new QueueManagement().SetStuff(Player, Library, ProgressTimer).Show(Window);
+        }
+
+        public void OpenPlaylistManagementCommand()
+        {
+            new PlaylistManagement().SetStuff(this, Player.FilePath ?? null).Show(Window);
         }
         #endregion
     }
