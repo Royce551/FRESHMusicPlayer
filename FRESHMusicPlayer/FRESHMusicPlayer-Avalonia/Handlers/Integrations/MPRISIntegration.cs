@@ -18,7 +18,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     {
         private MediaPlayer2 mediaPlayer2;
         private Connection connection;
-        private event EventHandler mprisUpdateNeeded;
 
         public MPRISIntegration(MainWindowViewModel viewModel, Window window)
         {
@@ -178,7 +177,11 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             }
         }
 
-        private void Player_SongChanged(object sender, EventArgs e) => UpdateMetadata();
+        private void Player_SongChanged(object sender, EventArgs e)
+        {
+            UpdateMetadata();
+            ViewModel_PropertyChanged(null, new("Paused")); // jank alert!
+        }
 
         public async Task SeekAsync(long offset)
         {

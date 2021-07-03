@@ -57,7 +57,7 @@ namespace FRESHMusicPlayer.ViewModels
             InitializeLibrary();
         }
 
-        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Beta 10";
+        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Beta 11";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
@@ -201,7 +201,7 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Player.NextSong();
         }
-        public void PauseAfterCurrentTrackCommand() => PauseAfterCurrentTrack = true;
+        public void PauseAfterCurrentTrackCommand() => PauseAfterCurrentTrack = !PauseAfterCurrentTrack;
 
         public void ShowRemainingProgressCommand() => Config.ShowRemainingProgress = !Config.ShowRemainingProgress;
 
@@ -673,6 +673,11 @@ namespace FRESHMusicPlayer.ViewModels
         public void OpenPlaylistManagementCommand()
         {
             new PlaylistManagement().SetStuff(this, Player.FilePath ?? null).Show(Window);
+        }
+
+        public void OpenLyricsCommand()
+        {
+            new Lyrics().SetStuff(this).Show(Window);
         }
         #endregion
     }

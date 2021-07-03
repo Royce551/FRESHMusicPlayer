@@ -8,7 +8,7 @@
         mc:Ignorable="d" 
 		Width="800" Height="540"
         x:Class="FRESHMusicPlayer.Views.MainWindow"
-		DragDrop.AllowDrop="True" 
+		DragDrop.AllowDrop="True"
         Icon="/Assets/icon.ico" Closing="OnClosing" PointerWheelChanged="OnPointerWheelChanged" KeyDown="OnKeyDown"
         Title="{Binding WindowTitle}"
 		>

@@ -5,7 +5,7 @@
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" SizeToContent="Height" Width="600" CanResize="False"
         x:Class="FRESHMusicPlayer.Views.PlaylistManagement"
-        Title="PlaylistManagement">
+        Title="Playlist Management">
 
 	<Window.DataContext>
 		<vm:PlaylistManagementViewModel/>
