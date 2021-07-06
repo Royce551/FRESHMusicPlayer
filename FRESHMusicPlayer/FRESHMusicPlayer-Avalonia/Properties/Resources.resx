@@ -132,8 +132,17 @@
   <data name="Bitrate" xml:space="preserve">
     <value>Bitrate</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Disc" xml:space="preserve">
     <value>Disc</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
   </data>
   <data name="FilePathOrUrl" xml:space="preserve">
     <value>File path or URL</value>
@@ -161,6 +170,9 @@
   </data>
   <data name="Lyrics" xml:space="preserve">
     <value>Lyrics</value>
+  </data>
+  <data name="Lyrics_NoLyrics" xml:space="preserve">
+    <value>No lyrics available</value>
   </data>
   <data name="Menu_About" xml:space="preserve">
     <value>About</value>
@@ -210,6 +222,15 @@
   <data name="PlaylistManagement" xml:space="preserve">
     <value>Playlist Management</value>
   </data>
+  <data name="PlaylistManagement_Header" xml:space="preserve">
+    <value>What do you want to do with "{0}"?</value>
+  </data>
+  <data name="PlaylistManagement_InvalidName" xml:space="preserve">
+    <value>That's not a valid name for a playlist.</value>
+  </data>
+  <data name="PlaylistManagement_PlaylistName" xml:space="preserve">
+    <value>Playlist Name</value>
+  </data>
   <data name="Playlists" xml:space="preserve">
     <value>Playlists</value>
   </data>
@@ -227,6 +248,9 @@
   </data>
   <data name="QueueManagement_TimeRemaining" xml:space="preserve">
     <value>Time Remaining:</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>FRESHMusicPlayer Settings</value>

@@ -7,7 +7,7 @@
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" Width="500" Height="300"
         x:Class="FRESHMusicPlayer.Views.Lyrics" WindowStartupLocation="CenterOwner"
-        Title="Lyrics">
+        Title="{x:Static resx:Resources.Lyrics}">
 	<Window.DataContext>
 		<vm:LyricsViewModel/>
 	</Window.DataContext>

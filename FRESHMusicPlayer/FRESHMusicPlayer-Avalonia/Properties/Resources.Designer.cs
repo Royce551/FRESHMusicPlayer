@@ -106,11 +106,38 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disc.
         /// </summary>
         public static string Disc {
             get {
                 return ResourceManager.GetString("Disc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Export {
+            get {
+                return ResourceManager.GetString("Export", resourceCulture);
             }
         }
         
@@ -192,6 +219,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string Lyrics {
             get {
                 return ResourceManager.GetString("Lyrics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No lyrics available.
+        /// </summary>
+        public static string Lyrics_NoLyrics {
+            get {
+                return ResourceManager.GetString("Lyrics_NoLyrics", resourceCulture);
             }
         }
         
@@ -340,6 +376,33 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to What do you want to do with &quot;{0}&quot;?.
+        /// </summary>
+        public static string PlaylistManagement_Header {
+            get {
+                return ResourceManager.GetString("PlaylistManagement_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to That&apos;s not a valid name for a playlist..
+        /// </summary>
+        public static string PlaylistManagement_InvalidName {
+            get {
+                return ResourceManager.GetString("PlaylistManagement_InvalidName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlist Name.
+        /// </summary>
+        public static string PlaylistManagement_PlaylistName {
+            get {
+                return ResourceManager.GetString("PlaylistManagement_PlaylistName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Playlists.
         /// </summary>
         public static string Playlists {
@@ -390,6 +453,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string QueueManagement_TimeRemaining {
             get {
                 return ResourceManager.GetString("QueueManagement_TimeRemaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string Rename {
+            get {
+                return ResourceManager.GetString("Rename", resourceCulture);
             }
         }
         

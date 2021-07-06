@@ -3,9 +3,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" SizeToContent="Height" Width="600" CanResize="False"
         x:Class="FRESHMusicPlayer.Views.PlaylistManagement"
-        Title="Playlist Management">
+        Title="{x:Static resx:Resources.PlaylistManagement}">
 
 	<Window.DataContext>
 		<vm:PlaylistManagementViewModel/>
@@ -50,9 +51,9 @@
 									<TextBlock Text="・・・"/>
 									<Button.ContextMenu>
 										<ContextMenu>
-											<MenuItem Header="Rename" Click="OnRenameItemClick"/>
-											<MenuItem Header="Delete" Click="OnDeleteItemClick"/>
-											<MenuItem Header="Export" Click="OnExportItemClick"/>
+											<MenuItem Header="{x:Static resx:Resources.Rename}" Click="OnRenameItemClick"/>
+											<MenuItem Header="{x:Static resx:Resources.Delete}" Click="OnDeleteItemClick"/>
+											<MenuItem Header="{x:Static resx:Resources.Export}" Click="OnExportItemClick"/>
 										</ContextMenu>
 									</Button.ContextMenu>
 								</Button>
@@ -62,8 +63,8 @@
 				</ListBox.DataTemplates>
 			</ListBox>
 			<StackPanel Margin="5" Orientation="Horizontal" Spacing="3" HorizontalAlignment="Right">
-				<Button Command="{Binding ImportCommand}">Import</Button>
-				<Button Command="{Binding CreatePlaylistCommand}">Create</Button>
+				<Button Command="{Binding ImportCommand}" Content="{x:Static resx:Resources.Import}"/>
+				<Button Command="{Binding CreatePlaylistCommand}" Content="{x:Static resx:Resources.Create}"/>
 			</StackPanel>
 
 		</StackPanel>

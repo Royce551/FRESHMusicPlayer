@@ -62,12 +62,12 @@ namespace FRESHMusicPlayer.ViewModels
             }
             else // No lyrics
             {
-                Text = "No lyrics available";
+                Text = Properties.Resources.Lyrics_NoLyrics;
                 TimedLyrics = null;
             }
         }
 
-        private string text = "No lyrics available";
+        private string text = Properties.Resources.Lyrics_NoLyrics;
         public string Text
         {
             get => text;

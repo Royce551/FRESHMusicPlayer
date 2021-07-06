@@ -30,7 +30,7 @@ namespace FRESHMusicPlayer.ViewModels
         public void Initialize()
         {
             if (Track is not null)
-                EditingHeader = $"What do you want to do with \"{Path.GetFileName(Track)}\"?";
+                EditingHeader = string.Format(Properties.Resources.PlaylistManagement_Header, Path.GetFileName(Track));
 
             Playlists.Clear();
             var x = MainWindow.Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
@@ -79,7 +79,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void RenamePlaylistCommand(string playlist)
         {
-            var dialog = new TextEntryBox().SetStuff("Playlist Name");
+            var dialog = new TextEntryBox().SetStuff(Properties.Resources.PlaylistManagement_PlaylistName);
             (dialog.DataContext as TextEntryBoxViewModel).Text = playlist;
             await dialog.ShowDialog(GetMainWindow());
 
@@ -123,13 +123,13 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void CreatePlaylistCommand()
         {
-            var dialog = new TextEntryBox().SetStuff("Playlist Name");
+            var dialog = new TextEntryBox().SetStuff(Properties.Resources.PlaylistManagement_PlaylistName);
             await dialog.ShowDialog(GetMainWindow());
 
             if (dialog.OK)
             {
                 if (string.IsNullOrWhiteSpace((dialog.DataContext as TextEntryBoxViewModel).Text))
-                    new MessageBox().SetStuff("idoit", "That's not a valid name for a playlist.").Show(GetMainWindow());
+                    new MessageBox().SetStuff(MainWindowViewModel.ProjectName, Properties.Resources.PlaylistManagement_InvalidName).Show(GetMainWindow());
                 else
                 {
                     MainWindow.Library.CreatePlaylist((dialog.DataContext as TextEntryBoxViewModel).Text, Track);
