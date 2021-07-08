@@ -300,4 +300,46 @@
   <data name="Album" xml:space="preserve">
     <value>Đĩa</value>
   </data>
+  <data name="Settings_IntegrateDiscordRPC" xml:space="preserve">
+    <value>Chia sẻ hoạt động với Discord</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Năm</value>
+  </data>
+  <data name="TrackInfo" xml:space="preserve">
+    <value>Thông tin bài hát</value>
+  </data>
+  <data name="Track" xml:space="preserve">
+    <value>Số trên đĩa</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Đổi tên</value>
+  </data>
+  <data name="PlaylistManagement_PlaylistName" xml:space="preserve">
+    <value>Tên danh sách phát</value>
+  </data>
+  <data name="PlaylistManagement_InvalidName" xml:space="preserve">
+    <value>Đó không phải tên phù hợp với danh sách phát.</value>
+  </data>
+  <data name="PlaylistManagement_Header" xml:space="preserve">
+    <value>Bạn muốn làm gì với "{0}"?</value>
+  </data>
+  <data name="Lyrics_NoLyrics" xml:space="preserve">
+    <value>Lời hát không có sẵn</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Xuất</value>
+  </data>
+  <data name="Disc" xml:space="preserve">
+    <value>Đĩa</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Tạo</value>
+  </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>Tốc độ bit</value>
+  </data>
 </root>
