@@ -118,333 +118,338 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value></value>
+    <value>عفوا! هناك خطأ ما. سنحاول الاستمرار. إذا استمر هذا في الحدوث، يرجى الإبلاغ عن ذلك على https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
-    <value></value>
+    <value>افتح سجل التصحيح</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
-    <value></value>
+    <value>اذهب إلى</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value></value>
+    <value>مشغل صغير</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
-    <value></value>
+    <value>وقفة بعد المسار الحالي</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value></value>
+    <value>تصفح للوصول إلى المجلدات</value>
   </data>
   <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>تصفح لملفات قائمة التشغيل</value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>تصفح عن المسارات</value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>يمكنك أيضًا السحب والإفلات في هذه الصفحة.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value></value>
+    <value>مسار الملف أو URL</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>أضف إلى قائمة التشغيل</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value></value>
+    <value>قم بالأنتظار الكل</value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
-    <value></value>
+    <value>افتح في File Explorer</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value></value>
+    <value>لعب كل</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
-    <value></value>
+    <value>كلمات</value>
   </data>
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
-    <value></value>
+    <value>لا توجد كلمات</value>
   </data>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
-    <value></value>
+    <value>كلمات غير موقوتة</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value></value>
+    <value>البومات</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value></value>
+    <value>الفنانين</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value></value>
+    <value>استورد</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value></value>
+    <value>لا فنان</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value></value>
+    <value>لا شيء يلعب</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value></value>
+    <value>حدث خطأ في التشغيل:
+{0}
+سننتقل إلى المسار التالي نيابة عنك</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
-    <value></value>
+    <value>قوائم التشغيل</value>
   </data>
   <data name="MAINWINDOW_SEARCH" xml:space="preserve">
-    <value></value>
+    <value>بحث</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value></value>
+    <value>إعدادات</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>المسارات</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
-    <value></value>
+    <value>_أخرج</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
-    <value></value>
+    <value>_ملف</value>
   </data>
   <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
-    <value></value>
+    <value>_نافذة جديدة</value>
   </data>
   <data name="MENUBAR_OPEN" xml:space="preserve">
-    <value></value>
+    <value>_أفتح</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>_أحفظ</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
-    <value></value>
+    <value>مصادر _Tag</value>
   </data>
   <data name="MINIPLAYER_BACK" xml:space="preserve">
-    <value></value>
+    <value>أرجع</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value></value>
+    <value>امسح الكل</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value></value>
+    <value>إشعارات</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
-    <value></value>
+    <value>تم مسح مكتبتك بنجاح!</value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>لا يمكن العثور على قائمة التشغيل أو المسار
+ملف المفقود: {0}</value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value></value>
+    <value>يبدو أن الملف الذي حاولت تشغيله "{0}" غير موجود.</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
-    <value></value>
+    <value>تثبيت التحديث...</value>
   </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
-    <value></value>
+    <value>جارٍ البحث عن مسارات جديدة ...</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
-    <value></value>
+    <value>حدث خطأ أثناء التحديث: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value></value>
+    <value>التحديث جاهز! أعد تشغيل FMP لتطبيق التحديث.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value></value>
+    <value>إدارة قائمة التشغيل</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
-    <value></value>
+    <value>صنع</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
-    <value></value>
+    <value>حذف</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
-    <value></value>
+    <value>صدر</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
-    <value></value>
+    <value>ماذا تريد أن تفعل ب "{0}"؟</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
-    <value></value>
+    <value>"{0}" ليس اسم قائمة تشغيل صالحًا.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
-    <value></value>
+    <value>إعادة تسمية</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>أضف قائمة التشغيل</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value></value>
+    <value>أضف المسار</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value></value>
+    <value>مسح قائمة الانتظار</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value></value>
+    <value>قائمة الانتظار</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value></value>
+    <value>الوقت المتبقي: </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
-    <value></value>
+    <value>حول</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
-    <value></value>
+    <value>مظهر</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
-    <value></value>
+    <value>استيراد السريع</value>
   </data>
   <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>FMP سيستورد مسارات جديدة من هذه المجلدات:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
-    <value></value>
+    <value>أضف المجلد</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value></value>
+    <value>وضع التحديث التلقائي</value>
   </data>
   <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
-    <value></value>
+    <value>نظف المكتبة وحدث</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value></value>
+    <value>بواسطة Squid Grill (والناشرين من المصدر المتوح)
+مرخصة بموجب الترخيص GPL v3
+شكرا لأستخدامك FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
-    <value></value>
+    <value>جنرال لواء</value>
   </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
-    <value></value>
+    <value>دمج</value>
   </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
-    <value></value>
+    <value>لغة</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
-    <value></value>
+    <value>صيانة</value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
-    <value></value>
+    <value>إزالة المكتبة</value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
-    <value></value>
+    <value>أنت على وشك مسح مكتبتك بشكل لا رجعة الي. هل أنت واثق؟</value>
   </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value></value>
+    <value>تسجيل وقت اللعب</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value></value>
+    <value>إعادة تعيين الإعدادات إلى الافتراضي</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>FMP يحتاج إلى إعادة التشغيل لتطبيق التغييرات الخاصة بك.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
-    <value></value>
+    <value>اعد البدء الان</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value></value>
+    <value>تغيير الطريقة التي يتصرف بها FMP</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value></value>
+    <value>مظهر خارجي</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value></value>
+    <value>داكن</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value></value>
+    <value>فاتح</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
-    <value></value>
+    <value>إظهار الوقت بدلاً من العنوان في عنوان النافذة</value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value></value>
+    <value>التحديثات</value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value></value>
+    <value>تحقق من وجود تحديثات الآن</value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
-    <value></value>
+    <value>آخر أنفحص {0}</value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value></value>
+    <value>تلقائي</value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
-    <value></value>
+    <value>يدوي</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>موجه قبل التحديث</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value></value>
+    <value>محرر العلامات</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value></value>
+    <value>فنان الألبوم</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value></value>
+    <value>فنان</value>
   </data>
   <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
-    <value></value>
+    <value>سيتم تطبيق التغييرات عند تشغيل مسار جديد.</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value></value>
+    <value>تغيير الملف ...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value></value>
+    <value>ملحن</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value></value>
+    <value>فن الغلاف</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value></value>
+    <value>رقم القرص</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
-    <value></value>
+    <value>التحرير: </value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
-    <value></value>
+    <value>هناك العديد من نتائج البحث لهذا الألبوم. أي واحدة تريد؟</value>
   </data>
   <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
-    <value></value>
+    <value>لا يوجد غلاف فني موجود</value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value></value>
+    <value>أنت غير متصل بالإنترنت :(</value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
-    <value></value>
+    <value>لم يتم العثور على نتائج لهذا الألبوم :(</value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>حفظ</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value></value>
+    <value>حفظ التغييرات إلى {0}؟</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value></value>
+    <value>لقب</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value></value>
+    <value>رقم المسار</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>البوم</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value></value>
+    <value>معلومات الألبوم</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value></value>
+    <value>Bitrate</value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value></value>
+    <value>قرص</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value></value>
+    <value>النوع</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value></value>
+    <value>المعلومات الفنية</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value></value>
+    <value>معلومات المسار</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value></value>
+    <value>مسار</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value></value>
+    <value>السنة</value>
   </data>
 </root>
