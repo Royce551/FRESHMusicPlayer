@@ -118,228 +118,228 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value></value>
+    <value>البوم</value>
   </data>
   <data name="Albums" xml:space="preserve">
-    <value></value>
+    <value>البومات</value>
   </data>
   <data name="Artist" xml:space="preserve">
-    <value></value>
+    <value>فنان</value>
   </data>
   <data name="Artists" xml:space="preserve">
-    <value></value>
+    <value>الفنانين</value>
   </data>
   <data name="Bitrate" xml:space="preserve">
-    <value></value>
+    <value>Bitrate</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value></value>
+    <value>صنع</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value></value>
+    <value>حذف</value>
   </data>
   <data name="Disc" xml:space="preserve">
-    <value></value>
+    <value>قرص</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value></value>
+    <value>صدر</value>
   </data>
   <data name="FilePathOrUrl" xml:space="preserve">
-    <value></value>
+    <value>مسار الملف أو URL</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value></value>
+    <value>استورد</value>
   </data>
   <data name="ImportFolders" xml:space="preserve">
-    <value></value>
+    <value>استورد المجلدات</value>
   </data>
   <data name="ImportPlaylistFiles" xml:space="preserve">
-    <value></value>
+    <value>استورد ملفات قائمة التشغيل</value>
   </data>
   <data name="ImportTracks" xml:space="preserve">
-    <value></value>
+    <value>استورد المسارات</value>
   </data>
   <data name="Import_DragDropHint" xml:space="preserve">
-    <value></value>
+    <value>يمكنك أيضًا السحب والإفلات في هذه الصفحة.</value>
   </data>
   <data name="Library_EnqueueAll" xml:space="preserve">
-    <value></value>
+    <value>قم بالأنتظار الكل</value>
   </data>
   <data name="Library_PlayAll" xml:space="preserve">
-    <value></value>
+    <value>لعب كل</value>
   </data>
   <data name="Lyrics" xml:space="preserve">
-    <value></value>
+    <value>كلمات</value>
   </data>
   <data name="Lyrics_NoLyrics" xml:space="preserve">
-    <value></value>
+    <value>لا توجد كلمات</value>
   </data>
   <data name="Menu_About" xml:space="preserve">
-    <value></value>
+    <value>حول</value>
   </data>
   <data name="Menu_About_AboutFMP" xml:space="preserve">
-    <value></value>
+    <value>حول FRESHMusicPlayer</value>
   </data>
   <data name="Menu_File" xml:space="preserve">
-    <value></value>
+    <value>ملف</value>
   </data>
   <data name="Menu_GoTo" xml:space="preserve">
-    <value></value>
+    <value>اذهب إلى</value>
   </data>
   <data name="Menu_Playback" xml:space="preserve">
-    <value></value>
+    <value>تشغيل</value>
   </data>
   <data name="Menu_Playback_Next" xml:space="preserve">
-    <value></value>
+    <value>التالي</value>
   </data>
   <data name="Menu_Playback_PauseAfterCurrentTrack" xml:space="preserve">
-    <value></value>
+    <value>وقفة بعد المسار الحالي</value>
   </data>
   <data name="Menu_Playback_PlayPause" xml:space="preserve">
-    <value></value>
+    <value>تشغيل / وقف</value>
   </data>
   <data name="Menu_Playback_Previous" xml:space="preserve">
-    <value></value>
+    <value>سابق</value>
   </data>
   <data name="Menu_Playback_Repeat" xml:space="preserve">
-    <value></value>
+    <value>كرر</value>
   </data>
   <data name="Menu_Playback_Shuffle" xml:space="preserve">
-    <value></value>
+    <value>خلط</value>
   </data>
   <data name="MiniPlayer" xml:space="preserve">
-    <value></value>
+    <value>مشغل صغير</value>
   </data>
   <data name="NothingPlaying" xml:space="preserve">
-    <value></value>
+    <value>لا شيء يلعب</value>
   </data>
   <data name="OpenDialog" xml:space="preserve">
-    <value></value>
+    <value>أفتح...</value>
   </data>
   <data name="PinToTop" xml:space="preserve">
-    <value></value>
+    <value>دبس الى أعلى الصفحة</value>
   </data>
   <data name="PlaylistManagement" xml:space="preserve">
-    <value></value>
+    <value>إدارة قائمة التشغيل</value>
   </data>
   <data name="PlaylistManagement_Header" xml:space="preserve">
-    <value></value>
+    <value>ماذا تريد أن تفعل ب "{0}"؟</value>
   </data>
   <data name="PlaylistManagement_InvalidName" xml:space="preserve">
-    <value></value>
+    <value>هذا ليس اسمًا صالحًا لقائمة التشغيل.</value>
   </data>
   <data name="PlaylistManagement_PlaylistName" xml:space="preserve">
-    <value></value>
+    <value>اسم قائمة التشغيل</value>
   </data>
   <data name="Playlists" xml:space="preserve">
-    <value></value>
+    <value>قوائم التشغيل</value>
   </data>
   <data name="QueueManagement" xml:space="preserve">
-    <value></value>
+    <value>إدارة قائمة الانتظار</value>
   </data>
   <data name="QueueManagement_AddPlaylist" xml:space="preserve">
-    <value></value>
+    <value>أضف قائمة التشغيل</value>
   </data>
   <data name="QueueManagement_AddTrack" xml:space="preserve">
-    <value></value>
+    <value>أضف المسار</value>
   </data>
   <data name="QueueManagement_ClearQueue" xml:space="preserve">
-    <value></value>
+    <value>مسح قائمة الانتظار</value>
   </data>
   <data name="QueueManagement_TimeRemaining" xml:space="preserve">
-    <value></value>
+    <value>الوقت الباقي:</value>
   </data>
   <data name="Rename" xml:space="preserve">
-    <value></value>
+    <value>إعادة تسمية</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value></value>
+    <value>إعدادات FRESHMusicPlayer</value>
   </data>
   <data name="Settings_AddFolder" xml:space="preserve">
-    <value></value>
+    <value>أضف المجلد</value>
   </data>
   <data name="Settings_Appearance" xml:space="preserve">
-    <value></value>
+    <value>مظهر</value>
   </data>
   <data name="Settings_AutoImport" xml:space="preserve">
-    <value></value>
+    <value>استيراد السريع</value>
   </data>
   <data name="Settings_AutoImport_Info" xml:space="preserve">
-    <value></value>
+    <value>FMP سيستورد مسارات جديدة من هذه المجلدات:</value>
   </data>
   <data name="Settings_Automatic" xml:space="preserve">
-    <value></value>
+    <value>تلقائي</value>
   </data>
   <data name="Settings_CheckForUpdates" xml:space="preserve">
-    <value></value>
+    <value>اسمحوا لي أن أعرف عن الإصدارات الجديدة من FMP</value>
   </data>
   <data name="Settings_ClearAll" xml:space="preserve">
-    <value></value>
+    <value>امسح الكل</value>
   </data>
   <data name="Settings_Credits" xml:space="preserve">
-    <value></value>
+    <value>بواسطة Squid Grill (والناشرين من المصدر المتوح)</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value></value>
+    <value>جنرال لواء</value>
   </data>
   <data name="Settings_IntegrateDiscordRPC" xml:space="preserve">
-    <value></value>
+    <value>Discord Rich Presence</value>
   </data>
   <data name="Settings_Integrations" xml:space="preserve">
-    <value></value>
+    <value>تكاملات</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
-    <value></value>
+    <value>لغة</value>
   </data>
   <data name="Settings_License" xml:space="preserve">
-    <value></value>
+    <value>مرخصة بموجب الترخيص GPL v3</value>
   </data>
   <data name="Settings_Maintenance" xml:space="preserve">
-    <value></value>
+    <value>صيانة</value>
   </data>
   <data name="Settings_MPRISShowCoverArt" xml:space="preserve">
-    <value></value>
+    <value>أظهر صورة الغلاف بتنسيق MPRIS</value>
   </data>
   <data name="Settings_MPRISShowCoverArt_Info" xml:space="preserve">
-    <value></value>
+    <value>ستكتب الملفات إلى دليل مؤقت، قد سيجعل تغيير المسارات يستغرق وقتًا أطول</value>
   </data>
   <data name="Settings_PlaytimeLogging" xml:space="preserve">
-    <value></value>
+    <value>تسجيل وقت اللعب</value>
   </data>
   <data name="Settings_Report" xml:space="preserve">
-    <value></value>
+    <value>بلغ عن خطأ</value>
   </data>
   <data name="Settings_ShowTimeInWindow" xml:space="preserve">
-    <value></value>
+    <value>عرض الوقت في عنوان النافذة</value>
   </data>
   <data name="Settings_ThankYou" xml:space="preserve">
-    <value></value>
+    <value>شكرا لأستخدامك FRESHMusicPlayer! ❤</value>
   </data>
   <data name="Settings_Updates" xml:space="preserve">
-    <value></value>
+    <value>التحديثات</value>
   </data>
   <data name="Settings_ViewLicense" xml:space="preserve">
-    <value></value>
+    <value>عرض الترخيص</value>
   </data>
   <data name="Settings_ViewSourceCode" xml:space="preserve">
-    <value></value>
+    <value>عرض التعليمات البرمجية</value>
   </data>
   <data name="Settings_ViewWebsite" xml:space="preserve">
-    <value></value>
+    <value>FMP على الانترويب</value>
   </data>
   <data name="TagEditor" xml:space="preserve">
-    <value></value>
+    <value>محرر العلامات</value>
   </data>
   <data name="Track" xml:space="preserve">
-    <value></value>
+    <value>مسار</value>
   </data>
   <data name="TrackInfo" xml:space="preserve">
-    <value></value>
+    <value>معلومات المسار</value>
   </data>
   <data name="Tracks" xml:space="preserve">
-    <value></value>
+    <value>المسارات</value>
   </data>
   <data name="Year" xml:space="preserve">
-    <value></value>
+    <value>السنة</value>
   </data>
 </root>
