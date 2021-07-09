@@ -30,7 +30,8 @@ namespace FRESHMusicPlayer.ViewModels
             new("Automatic", "automatic"),
             new("English", "en"),
             new("German", "de"),
-            new("Vietnamese", "vi")
+            new("Vietnamese", "vi"),
+            new("Arabic (Saudi Arabia)", "ar")
         };
 
         public string Version => MainWindowViewModel.ProjectName;

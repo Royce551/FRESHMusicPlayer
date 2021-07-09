@@ -60,6 +60,7 @@
                         <ComboBoxItem Content="Turkish"/>
                         <ComboBoxItem Content="Dutch"/>
                         <ComboBoxItem Content="Danish"/>
+                        <ComboBoxItem Content="Arabic (Saudi Arabia)"/>
                     </ComboBox>
                 </Grid>
                 <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
