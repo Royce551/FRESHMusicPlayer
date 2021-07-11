@@ -13,6 +13,8 @@ using FRESHMusicPlayer.Utilities;
 using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using FRESHMusicPlayer.Handlers.Notifications;
+using Avalonia.Controls.Primitives;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -87,6 +89,21 @@ namespace FRESHMusicPlayer.Views
             }
         }
 
+        private void OnShowNotificationButtonClick(object sender, RoutedEventArgs e)
+        {
+            var button = this.FindControl<Button>("NotificationButton");
+            button.ContextFlyout.ShowAt(button);
+        }
+
+        private void OnNotificationButtonClick(object sender, RoutedEventArgs e)
+        {
+            var cmd = (Button)sender;
+            if (cmd.DataContext is Notification x)
+            {
+                if (x.OnButtonClicked?.Invoke() ?? true) ViewModel?.Notifications.Remove(x);
+            }
+        }
+
         private void OnPointerWheelChanged(object sender, PointerWheelEventArgs e)
         {
             ViewModel.Volume += ((float)((e.Delta.Y) / 100) * 3);
@@ -140,6 +157,19 @@ namespace FRESHMusicPlayer.Views
                     throw new Exception("Exception for debugging");
                 case Key.F4:
                     Topmost = !Topmost;
+                    break;
+                case Key.F6:
+                    ViewModel.Notifications.Add(new()
+                    {
+                        ContentText = "Catgirls are cute catgirls are cute catgirls are cute text wrap test text wrap test",
+                        ButtonText = "Testing 1 2 3!",
+                        DisplayAsToast = true,
+                        OnButtonClicked = () =>
+                        {
+                            new MessageBox().SetStuff("lols", "wtf, that actually worked?").ShowDialog(this);
+                            return true;
+                        }
+                    });
                     break;
             }
         }

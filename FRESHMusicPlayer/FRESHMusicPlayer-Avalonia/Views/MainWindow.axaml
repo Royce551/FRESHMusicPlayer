@@ -92,7 +92,31 @@
 			<Button Margin="0,5">
 				<Image Source="{DynamicResource Search}"/>
 			</Button>
-			<Button Margin="0,5">
+			<Button x:Name="NotificationButton" Click="OnShowNotificationButtonClick" Margin="0,5" IsVisible="{Binding AreThereAnyNotifications}">
+				<Button.ContextFlyout>
+					<Flyout ShowMode="Transient">
+						<DockPanel>
+							<DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="0,0,0,10">
+								<TextBlock DockPanel.Dock="Left" Text="Notifications" FontSize="16" VerticalAlignment="Center" FontWeight="Bold"/>
+								<Button DockPanel.Dock="Right" Content="Clear All" VerticalAlignment="Center" Command="{Binding ClearAllNotificationsCommand}"/>
+							</DockPanel>
+							<ListBox Items="{Binding VisibleNotifications}" MinWidth="300" MaxWidth="300">
+								<ListBox.DataTemplates>
+									<DataTemplate>
+										<StackPanel Background="Transparent" Margin="-10">
+											<TextBlock Text="{Binding ContentText}" TextWrapping="Wrap"/>
+											<Button Click="OnNotificationButtonClick" HorizontalAlignment="Center" IsVisible="{Binding ShouldButtonBeVisible}">
+												<Button.Content>
+													<TextBlock Text="{Binding ButtonText}"/>
+												</Button.Content>
+											</Button>
+										</StackPanel>
+									</DataTemplate>
+								</ListBox.DataTemplates>
+							</ListBox>
+						</DockPanel>
+					</Flyout>
+				</Button.ContextFlyout>
 				<Image Source="{DynamicResource Notification}"/>
 			</Button>
 			<Button Margin="0,5" Command="{Binding OpenQueueManagementCommand}" ToolTip.Tip="{x:Static resx:Resources.QueueManagement}">

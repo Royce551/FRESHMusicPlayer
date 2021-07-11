@@ -3,6 +3,7 @@ using ATL.Playlist;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using AvaloniaPrimatives = Avalonia.Controls.Primitives;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
@@ -10,6 +11,7 @@ using Avalonia.Threading;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Integrations;
+using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Views;
 using LiteDB;
 using ReactiveUI;
@@ -22,6 +24,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
+using Avalonia.Markup.Xaml;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -33,7 +36,7 @@ namespace FRESHMusicPlayer.ViewModels
         public ConfigurationFile Config { get; private set; }
         public Track CurrentTrack { get; private set; }
         public IntegrationHandler Integrations { get; private set; } = new();
-
+        public NotificationHandler Notifications { get; private set; } = new();
         
         private Window Window 
         { 
@@ -61,6 +64,11 @@ namespace FRESHMusicPlayer.ViewModels
             get => windowTitle;
             set => this.RaiseAndSetIfChanged(ref windowTitle, value);
         }
+
+        public ObservableCollection<Notification> VisibleNotifications => new(Notifications.Notifications);
+        public bool AreThereAnyNotifications => Notifications.Notifications.Count > 0;
+
+        public void ClearAllNotificationsCommand() => Notifications.ClearAll();
 
         #region Core
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
@@ -342,6 +350,7 @@ namespace FRESHMusicPlayer.ViewModels
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
             ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: put this in a more logical place
+            Notifications.NotificationInvalidate += Notifications_NotificationInvalidate;
             LoggingHandler.Log("Handling config...");
             Config = Program.Config; // HACK: this is a hack
             Volume = Config?.Volume ?? 1f;
@@ -372,6 +381,20 @@ namespace FRESHMusicPlayer.ViewModels
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Config.IntegrateMPRIS)
                 Integrations.Add(new MPRISIntegration(this, Window));
             await PerformAutoImport();
+        }
+
+        private void Notifications_NotificationInvalidate(object sender, EventArgs e)
+        {
+            this.RaisePropertyChanged(nameof(VisibleNotifications));
+            this.RaisePropertyChanged(nameof(AreThereAnyNotifications));
+            foreach (Notification box in Notifications.Notifications)
+            {
+                if (box.DisplayAsToast && !box.Read)
+                {
+                    var button = Window.FindControl<Button>("NotificationButton");
+                    button.ContextFlyout.ShowAt(button);
+                }
+            }
         }
 
         public async void CloseThings()
