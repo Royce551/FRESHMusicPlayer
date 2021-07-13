@@ -349,6 +349,53 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Successfully cleared your library!.
+        /// </summary>
+        public static string Notification_ClearSuccess {
+            get {
+                return ResourceManager.GetString("Notification_ClearSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file you tried to play, &quot;{0}&quot;, doesn&apos;t seem to exist..
+        /// </summary>
+        public static string Notification_FileGone {
+            get {
+                return ResourceManager.GetString("Notification_FileGone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One of the tracks in the playlist doesn&apos;t seem to exist and has been skipped:
+        ///{0}.
+        /// </summary>
+        public static string Notification_FileInPlaylistMissing {
+            get {
+                return ResourceManager.GetString("Notification_FileInPlaylistMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A playback error occured:
+        ///{0}.
+        /// </summary>
+        public static string Notification_PlaybackError {
+            get {
+                return ResourceManager.GetString("Notification_PlaybackError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scanning for new tracks....
+        /// </summary>
+        public static string Notification_Scanning {
+            get {
+                return ResourceManager.GetString("Notification_Scanning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open....
         /// </summary>
         public static string OpenDialog {

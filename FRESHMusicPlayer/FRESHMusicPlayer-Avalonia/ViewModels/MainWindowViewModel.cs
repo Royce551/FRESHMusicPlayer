@@ -73,6 +73,14 @@ namespace FRESHMusicPlayer.ViewModels
         #region Core
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
+            Notifications.Add(new()
+            {
+                ContentText = string.Format(Properties.Resources.Notification_PlaybackError, e.Details),
+                DisplayAsToast = true,
+                IsImportant = true,
+                Type = NotificationType.Failure
+            });
+            SkipNextCommand();
             LoggingHandler.Log($"Player: An exception was thrown: {e.Exception}");
         }
 
@@ -420,7 +428,12 @@ namespace FRESHMusicPlayer.ViewModels
         public async Task PerformAutoImport()
         {
             if (Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
-                                                               // effort (and showing the notification)
+                                                           // effort (and showing the notification)
+            var notification = new Notification()
+            {
+                ContentText = Properties.Resources.Notification_Scanning
+            };
+            Notifications.Add(notification);
             var filesToImport = new List<string>();
             var library = Library.Read();
             await Task.Run(() =>
@@ -441,6 +454,7 @@ namespace FRESHMusicPlayer.ViewModels
                 }
                 Library.Import(filesToImport);
             });
+            Notifications.Remove(notification);
         }
 
         private int selectedTab;
@@ -602,7 +616,16 @@ namespace FRESHMusicPlayer.ViewModels
                 foreach (string s in reader.FilePaths)
                 {
                     if (!File.Exists(s))
-                        continue; // TODO: show something to the user
+                    {
+                        Notifications.Add(new()
+                        {
+                            ContentText = string.Format(Properties.Resources.Notification_FileInPlaylistMissing, Path.GetFileName(s)),
+                            DisplayAsToast = true,
+                            IsImportant = true,
+                            Type = NotificationType.Failure
+                        });
+                        continue;
+                    }
                 }
                 Player.Queue.Add(reader.FilePaths.ToArray());
                 await Task.Run(() => Library.Import(reader.FilePaths.ToArray()));

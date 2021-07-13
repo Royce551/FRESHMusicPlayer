@@ -103,7 +103,7 @@
 							<ListBox Items="{Binding VisibleNotifications}" MinWidth="300" MaxWidth="300">
 								<ListBox.DataTemplates>
 									<DataTemplate>
-										<StackPanel Background="Transparent" Margin="-10">
+										<StackPanel Background="Transparent" PointerPressed="OnNotificationClick">
 											<TextBlock Text="{Binding ContentText}" TextWrapping="Wrap"/>
 											<Button Click="OnNotificationButtonClick" HorizontalAlignment="Center" IsVisible="{Binding ShouldButtonBeVisible}">
 												<Button.Content>

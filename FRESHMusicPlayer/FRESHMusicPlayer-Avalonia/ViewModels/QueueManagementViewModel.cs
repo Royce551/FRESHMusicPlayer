@@ -12,6 +12,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using ATL.Playlist;
 using System.IO;
+using FRESHMusicPlayer.Handlers.Notifications;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -107,7 +108,16 @@ namespace FRESHMusicPlayer.ViewModels
             foreach (string s in reader.FilePaths)
             {
                 if (!File.Exists(s))
-                    continue; // TODO: show something to the user
+                {
+                    (GetMainWindow().DataContext as MainWindowViewModel)?.Notifications.Add(new()
+                    {
+                        ContentText = string.Format(Properties.Resources.Notification_FileInPlaylistMissing, Path.GetFileName(s)),
+                        DisplayAsToast = true,
+                        IsImportant = true,
+                        Type = NotificationType.Failure
+                    });
+                    continue;
+                }
             }
             Player.Queue.Add(reader.FilePaths.ToArray());
         }

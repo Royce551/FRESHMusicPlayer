@@ -98,7 +98,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             { "Identity", "FRESHMusicPlayer" },
             { "SupportedUriSchemes", new string[]{"file", "http"} },
             { "SupportedMimeTypes", new string[]{ "audio/mp3", "audio/mpeg", "audio/mpeg3", "audio/wav", "audio/ogg", "audio/mp4", "video/avi", "video/msvideo", "video/mpeg", "video/quicktime", "video/x-ms-wmv" } },
-             { "PlaybackStatus", "Stopped" },
+            { "PlaybackStatus", "Stopped" },
             { "LoopStatus", "None" },
             { "Shuffle", false },
             { "Metadata", new Dictionary<string, object>()},

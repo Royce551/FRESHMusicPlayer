@@ -213,6 +213,23 @@
   <data name="NothingPlaying" xml:space="preserve">
     <value>Nothing Playing</value>
   </data>
+  <data name="Notification_ClearSuccess" xml:space="preserve">
+    <value>Successfully cleared your library!</value>
+  </data>
+  <data name="Notification_FileGone" xml:space="preserve">
+    <value>The file you tried to play, "{0}", doesn't seem to exist.</value>
+  </data>
+  <data name="Notification_FileInPlaylistMissing" xml:space="preserve">
+    <value>One of the tracks in the playlist doesn't seem to exist and has been skipped:
+{0}</value>
+  </data>
+  <data name="Notification_PlaybackError" xml:space="preserve">
+    <value>A playback error occured:
+{0}</value>
+  </data>
+  <data name="Notification_Scanning" xml:space="preserve">
+    <value>Scanning for new tracks...</value>
+  </data>
   <data name="OpenDialog" xml:space="preserve">
     <value>Open...</value>
   </data>

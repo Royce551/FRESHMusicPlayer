@@ -103,6 +103,14 @@ namespace FRESHMusicPlayer.Views
                 if (x.OnButtonClicked?.Invoke() ?? true) ViewModel?.Notifications.Remove(x);
             }
         }
+        private void OnNotificationClick(object sender, PointerPressedEventArgs e)
+        {
+            var cmd = (StackPanel)sender;
+            if (cmd.DataContext is Notification x)
+            {
+                ViewModel?.Notifications.Remove(x);
+            }
+        }
 
         private void OnPointerWheelChanged(object sender, PointerWheelEventArgs e)
         {

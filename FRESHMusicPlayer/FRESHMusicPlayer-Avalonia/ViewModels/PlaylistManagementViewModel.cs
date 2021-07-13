@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ATL.Playlist;
 using Avalonia.Controls;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Views;
 using ReactiveUI;
 
@@ -156,7 +157,16 @@ namespace FRESHMusicPlayer.ViewModels
             foreach (string s in reader.FilePaths)
             {
                 if (!File.Exists(s))
-                    continue; // TODO: show something to the user
+                {
+                    MainWindow.Notifications.Add(new()
+                    {
+                        ContentText = string.Format(Properties.Resources.Notification_FileInPlaylistMissing, Path.GetFileName(s)),
+                        DisplayAsToast = true,
+                        IsImportant = true,
+                        Type = NotificationType.Failure
+                    });
+                    continue;
+                }
                 MainWindow.Library.AddTrackToPlaylist(Path.GetFileNameWithoutExtension(files[0]), s);
             }
             Initialize();
