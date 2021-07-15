@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System.ComponentModel;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -21,6 +22,11 @@ namespace FRESHMusicPlayer.Views
             context.MainWindow = mainWindow;
             context.Initialize();
             return this;
+        }
+
+        private void OnClosing(object sender, CancelEventArgs e)
+        {
+            (DataContext as LyricsViewModel)?.Deinitialize();
         }
 
         private void InitializeComponent()

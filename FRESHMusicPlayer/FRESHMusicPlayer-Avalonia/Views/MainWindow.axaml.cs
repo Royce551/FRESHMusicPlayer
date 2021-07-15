@@ -117,7 +117,7 @@ namespace FRESHMusicPlayer.Views
             ViewModel.Volume += ((float)((e.Delta.Y) / 100) * 3);
         }
 
-        private void OnKeyDown(object sender, KeyEventArgs e)
+        private async void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Source is not TextBox or ListBoxItem)
                 switch (e.Key)
@@ -155,6 +155,11 @@ namespace FRESHMusicPlayer.Views
                 }
             switch (e.Key)
             {
+                case Key.OemTilde:
+                    var dialog = new TextEntryBox().SetStuff(Properties.Resources.FilePathOrUrl);
+                    await dialog.ShowDialog(this);
+                    if (dialog.OK) ViewModel.Player.PlayMusic((dialog.DataContext as TextEntryBoxViewModel).Text);
+                    break;
                 case Key.F1:
                     InterfaceUtils.OpenURL("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
                     break;
