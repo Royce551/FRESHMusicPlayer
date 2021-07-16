@@ -89,11 +89,19 @@ namespace FRESHMusicPlayer.Views
             }
         }
 
+        private void OnSearchButtonClick(object sender, RoutedEventArgs e) => ShowSearch();
+        private void ShowSearch()
+        {
+            var button = this.FindControl<Button>("SearchButton");
+            button.ContextFlyout.ShowAt(button);
+        }
+
         private void OnShowNotificationButtonClick(object sender, RoutedEventArgs e)
         {
             var button = this.FindControl<Button>("NotificationButton");
             button.ContextFlyout.ShowAt(button);
         }
+        private void OnSearchClosed(object sender, EventArgs e) => ViewModel?.ClearSearchCommand();
 
         private void OnNotificationButtonClick(object sender, RoutedEventArgs e)
         {
@@ -141,7 +149,7 @@ namespace FRESHMusicPlayer.Views
                         ViewModel.SelectedTab = 4;
                         break;
                     case Key.E:
-                        //ViewModel.OpenSearchCommand();
+                        ShowSearch();
                         break;
                     case Key.R:
                         ActualOpenTrackInfo();

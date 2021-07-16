@@ -561,6 +561,54 @@ namespace FRESHMusicPlayer.ViewModels
             Player.PlayMusic();
         }
 
+        // Searching
+        public ObservableCollection<DatabaseTrack> SearchTracks { get; set; } = new();
+        private string searchTerm;
+        public string SearchTerm
+        {
+            get => searchTerm;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref searchTerm, value);
+                PerformSearch(value);
+            }
+        }
+
+        private Queue<string> searchQueries = new();
+        private bool isSearchOperationRunning = false;
+        private async void PerformSearch(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                SearchTracks.Clear();
+                return;
+            }
+            searchQueries.Enqueue(query.ToUpper());
+            async Task GetResults()
+            {
+                isSearchOperationRunning = true;
+                var query = searchQueries.Dequeue();
+                SearchTracks.Clear();
+                await Task.Run(() =>
+                {
+                    foreach (var thing in Library.Database.GetCollection<DatabaseTrack>("tracks")
+                    .Query()
+                    .Where(x => x.Title.ToUpper().Contains(query) || x.Artist.ToUpper().Contains(query) || x.Album.ToUpper().Contains(query))
+                    .OrderBy("Title")
+                    .ToList())
+                    {
+                        if (searchQueries.Count > 1) break;
+                        SearchTracks.Add(thing);
+                    }
+                });
+                isSearchOperationRunning = false;
+                if (searchQueries.Count != 0) await GetResults();
+            }
+            if (!isSearchOperationRunning) await GetResults();
+        }
+        public void ClearSearchCommand() => SearchTerm = string.Empty;
+
+        // Import Tab
         private string filePathOrURL;
         public string FilePathOrURL
         {
