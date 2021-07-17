@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
 using Avalonia.Markup.Xaml;
+using FRESHMusicPlayer.Views.TagEditor;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -57,7 +58,7 @@ namespace FRESHMusicPlayer.ViewModels
             InitializeLibrary();
         }
 
-        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Beta 11";
+        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Beta 12";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
@@ -769,6 +770,11 @@ namespace FRESHMusicPlayer.ViewModels
         public void OpenLyricsCommand()
         {
             new Lyrics().SetStuff(this).Show(Window);
+        }
+
+        public void OpenTagEditorCommand()
+        {
+            new FRESHMusicPlayer.Views.TagEditor.TagEditor().Show();
         }
         #endregion
     }

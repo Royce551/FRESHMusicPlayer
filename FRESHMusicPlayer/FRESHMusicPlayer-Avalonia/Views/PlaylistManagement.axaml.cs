@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
+using System;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -17,6 +18,11 @@ namespace FRESHMusicPlayer.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
+            if (OperatingSystem.IsLinux()) // TODO: Avalonia has issues with autosize on Linux. Can remove when fixed.
+            {
+                SizeToContent = SizeToContent.Manual;
+                Height = 500;
+            }
         }
 
         private void InitializeComponent()

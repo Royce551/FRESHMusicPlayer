@@ -1,0 +1,111 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
+		xmlns:vm="using:FRESHMusicPlayer.ViewModels.TagEditor"
+        mc:Ignorable="d" Height="451" Width="600"
+        x:Class="FRESHMusicPlayer.Views.TagEditor.TagEditor"
+        Title="TagEditor">
+
+	<Window.DataContext>
+		<vm:TagEditorViewModel/>
+	</Window.DataContext>
+	<NativeMenu.Menu>
+		<NativeMenu>
+			<NativeMenuItem Header="{x:Static resx:Resources.Menu_File}">
+				<NativeMenu>
+					<NativeMenuItem Header="New Window" Command="{Binding NewWindowCommand}"/>
+					<NativeMenuItem Header="Open" Command="{Binding OpenCommand}"/>
+					<NativeMenuItem Header="Save" Command="{Binding SaveCommand}"/>
+					<NativeMenuItemSeperator/>
+					<NativeMenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+				</NativeMenu>
+			</NativeMenuItem>
+			<NativeMenuItem Header="Tag Sources">
+				<NativeMenu>
+					<NativeMenuItem Header="Discogs" Command="{Binding DiscogsIntegrationCommand}"/>
+					<NativeMenuItem Header="MusicBrainz" Command="{Binding MusicBrainzIntegrationCommand}"/>
+				</NativeMenu>
+			</NativeMenuItem>
+		</NativeMenu>
+	</NativeMenu.Menu>
+	<Window.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="TextWrapping" Value="Wrap"/>
+			<Setter Property="AcceptsReturn" Value="True"/>
+		</Style>
+	</Window.Styles>
+	
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<NativeMenuBar Grid.Row="0"/>
+		<DockPanel Grid.Row="2" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+			<Button DockPanel.Dock="Right" Content="Save" Margin="10" Command="{Binding SaveCommand}"/>
+			<Button DockPanel.Dock="Right" Content="Change File..." Margin="10" Command="{Binding OpenCommand}"/>
+			<TextBlock DockPanel.Dock="Right" Text="Your changes will be saved when you play a new track." VerticalAlignment="Center" IsVisible="{Binding IsBackgroundSaveNeeded}"/>
+		</DockPanel>
+
+		<ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch">
+			<StackPanel Margin="10" Grid.IsSharedSizeScope="True" HorizontalAlignment="Stretch">
+				<TextBlock Text="Editing jfdaskf"/>
+				<TextBlock Text="Track Info" Margin="0,10" FontWeight="Bold" FontSize="18"/>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition SharedSizeGroup="leftColumn" Width="Auto"/>
+						<ColumnDefinition Width="1*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					
+					<TextBlock Text="Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Title" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Year" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Genre" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Album" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					
+					<TextBox Text="{Binding Artist}" Grid.Column="1" Grid.Row="0"/>
+					<TextBox Text="{Binding Title}" Grid.Column="1" Grid.Row="1"/>
+					<TextBox Text="{Binding Year}" Grid.Column="1" Grid.Row="2"/>
+					<TextBox Text="{Binding Genre}" Grid.Column="1" Grid.Row="3"/>
+					<TextBox Text="{Binding Album}" Grid.Column="1" Grid.Row="4"/>
+				</Grid>
+
+				<TextBlock Text="Album Info" Margin="0,10" FontWeight="Bold" FontSize="18"/>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition SharedSizeGroup="leftColumn" Width="Auto"/>
+						<ColumnDefinition Width="1*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+
+					<TextBlock Text="Album Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Composer" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Track Number" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Disc Number" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+					<TextBox Text="{Binding AlbumArtist}" Grid.Column="1" Grid.Row="0"/>
+					<TextBox Text="{Binding Composer}" Grid.Column="1" Grid.Row="1"/>
+					<TextBox Text="{Binding TrackNumber}" Grid.Column="1" Grid.Row="2"/>
+					<TextBox Text="{Binding DiscNumber}" Grid.Column="1" Grid.Row="3"/>
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</Window>
