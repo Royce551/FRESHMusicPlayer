@@ -1,0 +1,127 @@
+[10:16:34 PM] Hi! I'm FMP!
+FRESHMusicPlayer for Mac and Linux Beta 12
+.NET 5.0.8
+Unix 10.15.1
+
+[10:16:34 PM] Handling config...
+[10:16:34 PM] Handling command line args...
+[10:16:34 PM] Showing library!
+[10:16:36 PM] Showing library!
+[10:16:47 PM] Showing library!
+[10:16:48 PM] Showing library!
+[10:16:57 PM] Showing library!
+[10:16:58 PM] Showing library!
+[10:16:58 PM] Showing library!
+[10:16:59 PM] Showing library!
+[10:16:59 PM] Showing library!
+[10:17:00 PM] Showing library!
+[10:17:18 PM] FMP is shutting down!
+[10:17:18 PM] Goodbye!
+[10:19:06 PM] Hi! I'm FMP!
+FRESHMusicPlayer for Mac and Linux Beta 12
+.NET 5.0.8
+Unix 10.15.1
+
+[10:19:06 PM] Handling config...
+[10:19:06 PM] Handling command line args...
+[10:19:06 PM] Showing library!
+[10:19:07 PM] Showing library!
+[10:22:27 PM] FMP is shutting down!
+[10:22:27 PM] Goodbye!
+[10:24:39 PM] Hi! I'm FMP!
+FRESHMusicPlayer for Mac and Linux Beta 12
+.NET 5.0.8
+Unix 10.15.1
+
+[10:24:39 PM] Handling config...
+[10:24:39 PM] Handling command line args...
+[10:24:39 PM] Showing library!
+[10:24:40 PM] Showing library!
+[10:25:26 PM] FMP is shutting down!
+[10:25:26 PM] Goodbye!
+[10:25:34 PM] Hi! I'm FMP!
+FRESHMusicPlayer for Mac and Linux Beta 12
+.NET 5.0.8
+Unix 10.15.1
+
+[10:25:34 PM] Handling config...
+[10:25:34 PM] Handling command line args...
+[10:25:34 PM] Showing library!
+[10:25:35 PM] Showing library!
+[10:25:41 PM] FMP is shutting down!
+[10:25:41 PM] Goodbye!
+[10:31:04 PM] Hi! I'm FMP!
+FRESHMusicPlayer for Mac and Linux Beta 12
+.NET 5.0.8
+Unix 10.15.1
+
+[10:31:04 PM] Handling config...
+[10:31:04 PM] Handling command line args...
+[10:31:04 PM] Showing library!
+[10:31:05 PM] Showing library!
+[10:33:17 PM] Hi! I'm FMP!
+FRESHMusicPlayer for Mac and Linux Beta 12
+.NET 5.0.8
+Unix 10.15.1
+
+[10:33:17 PM] Handling config...
+[10:33:17 PM] Handling command line args...
+[10:33:17 PM] Showing library!
+[10:33:18 PM] Showing library!
+[10:35:06 PM] Hi! I'm FMP!
+FRESHMusicPlayer for Mac and Linux Beta 12
+.NET 5.0.8
+Unix 10.15.1
+
+[10:35:06 PM] Handling config...
+[10:35:06 PM] Handling command line args...
+[10:35:06 PM] Showing library!
+[10:35:07 PM] Showing library!
+[10:36:53 PM] Showing library!
+[10:36:53 PM] Showing library!
+[10:36:53 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:54 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:55 PM] Showing library!
+[10:36:56 PM] Showing library!
+[10:36:56 PM] Showing library!
+[10:36:56 PM] Showing library!
+[10:36:56 PM] Showing library!
+[10:36:56 PM] Showing library!
+[10:36:57 PM] Showing library!
+[10:36:57 PM] Showing library!
+[10:36:57 PM] Showing library!
+[10:36:57 PM] Showing library!
+[10:36:58 PM] Showing library!
+[10:36:59 PM] Showing library!
+[10:36:59 PM] Showing library!
+[10:37:00 PM] Showing library!
+[10:41:49 PM] Showing library!
+[10:42:19 PM] Showing library!
+[10:42:27 PM] Player: SongChanged
+[10:43:13 PM] Showing library!
+[10:43:13 PM] Showing library!
+[10:43:14 PM] Showing library!
+[10:43:14 PM] Showing library!
+[10:43:14 PM] Showing library!
+[10:43:14 PM] Showing library!
+[10:43:14 PM] Showing library!
+[10:43:14 PM] Showing library!
+[10:43:15 PM] Showing library!
+[10:46:01 PM] Player: Stopping!

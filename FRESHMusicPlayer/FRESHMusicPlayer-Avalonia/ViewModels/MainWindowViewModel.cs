@@ -774,7 +774,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void OpenTagEditorCommand()
         {
-            new FRESHMusicPlayer.Views.TagEditor.TagEditor().Show();
+            new FRESHMusicPlayer.Views.TagEditor.TagEditor().SetStuff(Player, Library).Show();
         }
         #endregion
     }

@@ -12,7 +12,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
 {
     public class TagEditorViewModel : ViewModelBase
     {
-        public Player Player { get; set; } = new();
+        public Window Window { get; set; }
+        public Player Player { get; set; }
         public Library Library { get; set; }
 
         private string artist;
@@ -73,13 +74,23 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
 
         public List<string> FilePaths { get; private set; } = new();
 
+        private const string windowName = "FRESHMusicPlayer Tag Editor";
         private string windowTitle = "FRESHMusicPlayer Tag Editor";
         public string WindowTitle
         {
-            get => windowTitle;
-            set
+            get
             {
-                this.RaiseAndSetIfChanged(ref windowTitle, value);
+                string initialString;
+                if (FilePaths.Count > 0)
+                {
+                    initialString = $"{string.Join(", ", FilePaths} | {windowName}";
+                }
+                else
+                {
+                    initialString = windowName;
+                }
+                if (UnsavedChanges) initialString = $"*{initialString}";
+                return initialString;
             }
         }
 
@@ -186,20 +197,4 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
 
         }
     }
-
-    public class Duck
-    {
-        public int Test { get; set; }
-
-        public Duck()
-        {
-
-        }
-
-        public Duck(int test)
-        {
-            Test = test;
-        }
-    }
-
 }
