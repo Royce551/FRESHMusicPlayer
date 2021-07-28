@@ -68,17 +68,17 @@
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 					
-					<TextBlock Text="Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0"/>
-					<TextBlock Text="Title" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-					<TextBlock Text="Year" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
-					<TextBlock Text="Genre" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,0,10,0"/>
-					<TextBlock Text="Album" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="Title" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="Year" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="Genre" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="Album" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="0,5,10,0"/>
 					
-					<TextBox Text="{Binding Artist}" Grid.Column="1" Grid.Row="0"/>
-					<TextBox Text="{Binding Title}" Grid.Column="1" Grid.Row="1"/>
-					<TextBox Text="{Binding Year}" Grid.Column="1" Grid.Row="2"/>
-					<TextBox Text="{Binding Genre}" Grid.Column="1" Grid.Row="3"/>
-					<TextBox Text="{Binding Album}" Grid.Column="1" Grid.Row="4"/>
+					<TextBox Text="{Binding Artist}" Grid.Column="1" Grid.Row="0" Margin="0,5,0,0"/>
+					<TextBox Text="{Binding Title}" Grid.Column="1" Grid.Row="1" Margin="0,5,0,0"/>
+					<TextBox Text="{Binding Year}" Grid.Column="1" Grid.Row="2" Margin="0,5,0,0"/>
+					<TextBox Text="{Binding Genre}" Grid.Column="1" Grid.Row="3" Margin="0,5,0,0"/>
+					<TextBox Text="{Binding Album}" Grid.Column="1" Grid.Row="4" Margin="0,5,0,0"/>
 				</Grid>
 
 				<TextBlock Text="Album Info" Margin="0,10" FontWeight="Bold" FontSize="18"/>
@@ -95,15 +95,15 @@
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 
-					<TextBlock Text="Album Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0"/>
-					<TextBlock Text="Composer" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-					<TextBlock Text="Track Number" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
-					<TextBlock Text="Disc Number" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,0,10,0"/>
+					<TextBlock Text="Album Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="Composer" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="Track Number" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="Disc Number" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,5,10,0"/>
 
-					<TextBox Text="{Binding AlbumArtist}" Grid.Column="1" Grid.Row="0"/>
-					<TextBox Text="{Binding Composer}" Grid.Column="1" Grid.Row="1"/>
-					<TextBox Text="{Binding TrackNumber}" Grid.Column="1" Grid.Row="2"/>
-					<TextBox Text="{Binding DiscNumber}" Grid.Column="1" Grid.Row="3"/>
+					<TextBox Text="{Binding AlbumArtist}" Grid.Column="1" Grid.Row="0" Margin="0,5,0,0"/>
+					<TextBox Text="{Binding Composer}" Grid.Column="1" Grid.Row="1" Margin="0,5,0,0"/>
+					<TextBox Text="{Binding TrackNumber}" Grid.Column="1" Grid.Row="2" Margin="0,5,0,0"/>
+					<TextBox Text="{Binding DiscNumber}" Grid.Column="1" Grid.Row="3" Margin="0,5,0,0"/>
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>

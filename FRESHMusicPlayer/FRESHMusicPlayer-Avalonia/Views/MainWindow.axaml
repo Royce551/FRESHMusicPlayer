@@ -46,12 +46,7 @@
 		<vm:TotalTimeDisplayConverter x:Key="TotalTimeDisplayConverter"/>
 	</Window.Resources>
 	<Window.Styles>
-		<Style Selector="ListBoxItem">
-			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-		</Style>
-		<Style Selector="StackPanel">
-			<Setter Property="Spacing" Value="3"/>
-		</Style>
+		
 	</Window.Styles>
 
 	<Design.DataContext>
@@ -172,7 +167,7 @@
 				</Grid.ColumnDefinitions>
 				<Image Source="{Binding CoverArt}" Grid.Column="0" Margin="10,-10,5,0" MaxWidth="64" MaxHeight="64" VerticalAlignment="Center" ToolTip.ShowDelay="10" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}">
 					<ToolTip.Tip>
-						<Image Source="{Binding CoverArt}"/>
+						<Image Source="{Binding CoverArt}" Width="450" Height="450"/>
 					</ToolTip.Tip>
 				</Image>
 				<!--Middle Section-->

@@ -83,7 +83,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 string initialString;
                 if (FilePaths.Count > 0)
                 {
-                    initialString = $"{string.Join(", ", FilePaths} | {windowName}";
+                    initialString = $"{string.Join(", ", FilePaths)} | {windowName}";
                 }
                 else
                 {

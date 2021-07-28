@@ -9,5 +9,11 @@
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
 		<StyleInclude Source="avares://SIADL.Avalonia/Styles.axaml"/>
+		<Style Selector="ListBoxItem">
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+		</Style>
+		<Style Selector="StackPanel">
+			<Setter Property="Spacing" Value="3"/>
+		</Style>
     </Application.Styles>
 </Application>
