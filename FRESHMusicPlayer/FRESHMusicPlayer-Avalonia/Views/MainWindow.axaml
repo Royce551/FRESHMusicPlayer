@@ -29,6 +29,7 @@
 		<svg:SvgImage x:Key="Queue" Source="/Assets/queue.svg"/>
 		<svg:SvgImage x:Key="Notification" Source="/Assets/notification.svg"/>
 		<svg:SvgImage x:Key="Search" Source="/Assets/search.svg"/>
+		<svg:SvgImage x:Key="Volume" Source="/Assets/volume.svg"/>
 		<ContextMenu x:Key="OverflowMenu">
 			<MenuItem Command="{Binding OpenTagEditorCommand}" Header="{x:Static resx:Resources.TagEditor}"/>
 			<MenuItem Command="{Binding OpenPlaylistManagementCommand}" Header="{x:Static resx:Resources.PlaylistManagement}"/>
@@ -204,7 +205,29 @@
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
-					<Slider x:Name="VolumeSlider" Grid.Row="1" Maximum="1" Value="{Binding Volume}" Margin="10,0,10,-5"/>
+					<Grid Grid.Row="1" Margin="10,0,10,-5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<Slider x:Name="VolumeSlider" Grid.Column="0" Maximum="1" Value="{Binding Volume}">
+							<Slider.Transitions>
+								<Transitions>
+									<DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+								</Transitions>
+							</Slider.Transitions>
+							<Slider.Styles>
+								<Style Selector="Slider">
+									<Setter Property="Opacity" Value="0"/>
+								</Style>
+								<Style Selector="Slider:pointerover">
+									<Setter Property="Opacity" Value="1"/>
+								</Style>
+							</Slider.Styles>
+						</Slider>
+						<Image Grid.Column="1" Source="{DynamicResource Volume}"/>
+					</Grid>
+					
 					<StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0">
 						<Button x:Name="PreviousTrackButton" Command="{Binding SkipPreviousCommand}">
 							<Image Source="{DynamicResource SkipPrevious}"/>
