@@ -16,7 +16,10 @@
 			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
 		</Style>
-	</Window.Styles>	
+	</Window.Styles>
+	<Window.Resources>
+		<vm:AndValueConverter x:Key="AndValueConverter"/>
+	</Window.Resources>
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Bottom" Background="{StaticResource ForegroundColor}" LastChildFill="False">
 			<Button DockPanel.Dock="Right" Margin="10" Click="OnOKButtonClick">OK</Button>
@@ -44,8 +47,14 @@
 								<Button IsEnabled="{Binding !IsSelectedTrackHere}" Click="OnAddButtonClick" IsVisible="{Binding $parent[1].IsPointerOver}">
 									<TextBlock Text="+"/>
 								</Button>
-								<Button IsVisible="{Binding $parent[1].IsPointerOver}" IsEnabled="{Binding ShouldThingBeVisible}" Click="OnAddThingButtonClick">
+								<Button Click="OnAddThingButtonClick">
 									<TextBlock Text="{Binding ThingName}" />
+									<Button.IsVisible>
+										<MultiBinding Converter="{StaticResource AndValueConverter}">
+											<Binding Path="$parent[1].IsPointerOver"/>
+											<Binding Path="ShouldThingBeVisible"/>
+										</MultiBinding>
+									</Button.IsVisible>
 								</Button>
 								<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnMiscButtonClick">
 									<TextBlock Text="・・・"/>

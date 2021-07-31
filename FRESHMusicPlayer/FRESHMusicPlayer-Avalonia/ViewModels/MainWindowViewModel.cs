@@ -389,6 +389,7 @@ namespace FRESHMusicPlayer.ViewModels
                 Integrations.Add(new PlaytimeLoggingIntegration(Player));
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Config.IntegrateMPRIS)
                 Integrations.Add(new MPRISIntegration(this, Window));
+            (GetMainWindow() as MainWindow).RootPanel.Opacity = 1;
             await PerformAutoImport();
         }
 

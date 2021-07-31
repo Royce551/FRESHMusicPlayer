@@ -21,6 +21,7 @@ namespace FRESHMusicPlayer.Views
     public class MainWindow : Window
     {
         private MainWindowViewModel ViewModel { get => DataContext as MainWindowViewModel; }
+        public Panel RootPanel { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -28,11 +29,11 @@ namespace FRESHMusicPlayer.Views
             this.AttachDevTools();
 #endif
             DoStuff();
-            var rootPanel = this.FindControl<Panel>("RootPanel");
-            DragDrop.SetAllowDrop(rootPanel, true);
-            rootPanel.AddHandler(DragDrop.DragEnterEvent, OnDragEnter);
-            rootPanel.AddHandler(DragDrop.DragOverEvent, OnDragEnter);
-            rootPanel.AddHandler(DragDrop.DropEvent, OnDragDrop);
+            RootPanel = this.FindControl<Panel>("RootPanel");
+            DragDrop.SetAllowDrop(RootPanel, true);
+            RootPanel.AddHandler(DragDrop.DragEnterEvent, OnDragEnter);
+            RootPanel.AddHandler(DragDrop.DragOverEvent, OnDragEnter);
+            RootPanel.AddHandler(DragDrop.DropEvent, OnDragDrop);
         }
 
         private void InitializeComponent()
@@ -48,6 +49,11 @@ namespace FRESHMusicPlayer.Views
         private void OnClosing(object sender, CancelEventArgs e)
         {
             ViewModel?.CloseThings();
+        }
+
+        private void OnInitialized(object sender, EventArgs e)
+        {
+            
         }
 
         private void OpenTrackInfo(object sender, PointerPressedEventArgs e)    // HACK: THIS SHOULD NOT BE IN THE

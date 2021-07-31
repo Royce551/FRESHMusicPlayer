@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATL.Playlist;
 using Avalonia.Controls;
+using Avalonia.Data.Converters;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Views;
@@ -181,5 +183,21 @@ namespace FRESHMusicPlayer.ViewModels
 
         public string ThingName { get; init; } // bit hacky but it works lol
         public bool ShouldThingBeVisible { get; init; }
+    }
+
+    public class AndValueConverter : IMultiValueConverter
+    {
+        public object Convert(IList<object> values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var x = values[0];
+            var z = values[1];
+            if (x is bool object1 && z is bool object2) return object1 && object2;
+            else return false;
+        }
+
+        public object ConvertBack(List<object> value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

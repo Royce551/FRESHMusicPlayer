@@ -20,56 +20,92 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string Artist
         {
             get => artist;
-            set => this.RaiseAndSetIfChanged(ref artist, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref artist, value);
+                UnsavedChanges = true;
+            }
         }
         private string title;
         public string Title
         {
             get => title;
-            set => this.RaiseAndSetIfChanged(ref title, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref title, value);
+                UnsavedChanges = true;
+            }
         }
         private string year;
         public string Year
         {
             get => year;
-            set => this.RaiseAndSetIfChanged(ref year, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref year, value);
+                UnsavedChanges = true;
+            }
         }
         private string genre;
         public string Genre
         {
             get => genre;
-            set => this.RaiseAndSetIfChanged(ref genre, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref genre, value);
+                UnsavedChanges = true;
+            }
         }
         private string album;
         public string Album
         {
             get => album;
-            set => this.RaiseAndSetIfChanged(ref album, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref album, value);
+                UnsavedChanges = true;
+            }
         }
 
         private string albumArtist;
         public string AlbumArtist
         {
             get => albumArtist;
-            set => this.RaiseAndSetIfChanged(ref albumArtist, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref albumArtist, value);
+                UnsavedChanges = true;
+            }
         }
         private string composer;
         public string Composer
         {
             get => composer;
-            set => this.RaiseAndSetIfChanged(ref composer, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref composer, value);
+                UnsavedChanges = true;
+            }
         }
         private string trackNumber;
         public string TrackNumber
         {
             get => trackNumber;
-            set => this.RaiseAndSetIfChanged(ref trackNumber, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref trackNumber, value);
+                UnsavedChanges = true;
+            }
         }
         private string discNumber;
         public string DiscNumber
         {
             get => discNumber;
-            set => this.RaiseAndSetIfChanged(ref discNumber, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref discNumber, value);
+                UnsavedChanges = true;
+            }
         }
 
         public List<string> FilePaths { get; private set; } = new();
@@ -84,13 +120,13 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 if (FilePaths.Count > 0)
                 {
                     initialString = $"{string.Join(", ", FilePaths)} | {windowName}";
+                    if (UnsavedChanges) initialString = $"*{initialString}";
+                    return initialString;
                 }
                 else
                 {
-                    initialString = windowName;
+                    return windowName;
                 }
-                if (UnsavedChanges) initialString = $"*{initialString}";
-                return initialString;
             }
         }
 
@@ -101,7 +137,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             set
             {
                 this.RaiseAndSetIfChanged(ref unsavedChanges, value);
-                // TODO: asterisk thing
+                this.RaisePropertyChanged(nameof(WindowTitle));
             }
         }
         private bool isBackgroundSaveNeeded = false;
@@ -128,6 +164,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 TrackNumber = track.TrackNumber.ToString();
                 DiscNumber = track.DiscNumber.ToString();
             }
+            UnsavedChanges = false; // override setting these usually making unsaved changes true, kinda jank but it works lol
         }
 
         public void NewWindowCommand()

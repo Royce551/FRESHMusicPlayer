@@ -9,7 +9,7 @@
 		Width="800" Height="540"
         x:Class="FRESHMusicPlayer.Views.MainWindow"
 		DragDrop.AllowDrop="True"
-        Icon="/Assets/icon.ico" Closing="OnClosing" PointerWheelChanged="OnPointerWheelChanged" KeyDown="OnKeyDown"
+        Icon="/Assets/icon.ico" Closing="OnClosing" PointerWheelChanged="OnPointerWheelChanged" KeyDown="OnKeyDown" Initialized="OnInitialized"
         Title="{Binding WindowTitle}"
 		>
 
@@ -47,7 +47,7 @@
 		<vm:TotalTimeDisplayConverter x:Key="TotalTimeDisplayConverter"/>
 	</Window.Resources>
 	<Window.Styles>
-		
+
 	</Window.Styles>
 
 	<Design.DataContext>
@@ -83,7 +83,7 @@
 			</NativeMenuItem>
 		</NativeMenu>
 	</NativeMenu.Menu>
-	<Panel x:Name="RootPanel" DragDrop.AllowDrop="True">
+	<Panel x:Name="RootPanel" DragDrop.AllowDrop="True" Opacity="0">
 		<StackPanel Background="Transparent" Orientation="Horizontal" ZIndex="1" Height="35" Margin="0,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Right">
 			<Button x:Name="SearchButton" Margin="0,5" Click="OnSearchButtonClick">
 				<Button.ContextFlyout>
@@ -227,7 +227,7 @@
 						</Slider>
 						<Image Grid.Column="1" Source="{DynamicResource Volume}"/>
 					</Grid>
-					
+
 					<StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0">
 						<Button x:Name="PreviousTrackButton" Command="{Binding SkipPreviousCommand}">
 							<Image Source="{DynamicResource SkipPrevious}"/>
@@ -265,7 +265,7 @@
 					<DockPanel>
 						<DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
 							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
@@ -313,7 +313,7 @@
 						</ListBox>
 						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
 							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
@@ -361,7 +361,7 @@
 						</ListBox>
 						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
 							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
@@ -409,7 +409,7 @@
 						</ListBox>
 						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
 							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}"/>
+							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
 							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
 						</DockPanel>
 						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
@@ -461,6 +461,11 @@
 			</TabControl>
 		</DockPanel>
 
+		<Panel.Transitions>
+			<Transitions>
+				<DoubleTransition Property="Opacity" Duration="0:0:2" Easing="ExponentialEaseOut"/>
+			</Transitions>
+		</Panel.Transitions>
 	</Panel>
 
 </Window>
