@@ -30,10 +30,9 @@ namespace FRESHMusicPlayer.Views
 #endif
             DoStuff();
             RootPanel = this.FindControl<Panel>("RootPanel");
-            DragDrop.SetAllowDrop(RootPanel, true);
-            RootPanel.AddHandler(DragDrop.DragEnterEvent, OnDragEnter);
-            RootPanel.AddHandler(DragDrop.DragOverEvent, OnDragEnter);
-            RootPanel.AddHandler(DragDrop.DropEvent, OnDragDrop);
+            SetValue(DragDrop.AllowDropProperty, true);
+            AddHandler(DragDrop.DragEnterEvent, (s, e) => OnDragEnter(s, e));
+            AddHandler(DragDrop.DropEvent, (s, e) => OnDragDrop(s, e));
         }
 
         private void InitializeComponent()

@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <Folder Include="NewFolder\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\icon.ico" />

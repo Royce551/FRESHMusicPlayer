@@ -3,11 +3,19 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System;
 
 namespace FRESHMusicPlayer.Views
 {
     public class MessageBox : Window
     {
+        private MessageBoxViewModel ViewModel => DataContext as MessageBoxViewModel;
+
+        public bool OK { get; private set; } = false;
+        public bool Yes { get; private set; } = false;
+        public bool No { get; private set; } = false;
+        public bool Cancel { get; private set; } = false;
+
         public MessageBox()
         {
             InitializeComponent();
@@ -17,11 +25,19 @@ namespace FRESHMusicPlayer.Views
             
         }
 
-        public MessageBox SetStuff(string title, string content)
+        public MessageBox SetStuff(string title,
+                                   string content,
+                                   bool hasOK = true,
+                                   bool hasYes = false,
+                                   bool hasNo = false,
+                                   bool hasCancel = false)
         {
-            var context = DataContext as MessageBoxViewModel;
-            context.Title = title;
-            context.Content = content;
+            ViewModel.Title = title;
+            ViewModel.Content = content;
+            ViewModel.HasOK = hasOK;
+            ViewModel.HasYes = hasYes;
+            ViewModel.HasNo = hasNo;
+            ViewModel.HasCancel = hasCancel;
             return this;
         }
 
@@ -32,6 +48,22 @@ namespace FRESHMusicPlayer.Views
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
+            OK = true;
+            Close();
+        }
+        private void OnYesButtonClick(object sender, RoutedEventArgs e)
+        {
+            Yes = true;
+            Close();
+        }
+        private void OnNoButtonClick(object sender, RoutedEventArgs e)
+        {
+            No = true;
+            Close();
+        }
+        private void OnCancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            Cancel = true;
             Close();
         }
     }

@@ -15,12 +15,14 @@ using System.Diagnostics;
 using System.IO;
 using FRESHMusicPlayer.Handlers;
 using Avalonia.Controls;
+using FRESHMusicPlayer.Views;
 
 namespace FRESHMusicPlayer.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
         public ConfigurationFile Config;
+        public Library Library;
 
         public bool IsRunningOnLinux { get => RuntimeInformation.IsOSPlatform(OSPlatform.Linux); }
         public bool IsRunningOnMac { get => RuntimeInformation.IsOSPlatform(OSPlatform.OSX); }
@@ -149,6 +151,7 @@ namespace FRESHMusicPlayer.ViewModels
             this.RaisePropertyChanged(nameof(IntegrateMPRIS));
             this.RaisePropertyChanged(nameof(MPRISShowCoverArt));
             this.RaisePropertyChanged(nameof(CheckForUpdates));
+            this.RaisePropertyChanged(nameof(IsRestartNeeded));
         }
 
         public void ReportIssueCommand() => InterfaceUtils.OpenURL(@"https://github.com/Royce551/FRESHMusicPlayer/issues/new");
@@ -177,6 +180,30 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Config.AutoImportPaths.Clear();
             this.RaisePropertyChanged(nameof(AutoImportText));
+        }
+
+        public void ResetSettingsCommand()
+        {
+            var mainWindow = GetMainWindow().DataContext as MainWindowViewModel; // little messy, maybe figure out how to make this cleaner
+            mainWindow.Config = new ConfigurationFile();
+            Program.Config = mainWindow.Config;
+            Config = mainWindow.Config;
+            StartThings();
+        }
+        public async void CleanLibraryCommand()
+        {
+            await Task.Run(() =>
+            {
+                var tracks = Library.Read().Select(x => x.Path).Distinct();
+                Library.Nuke(false);
+                Library.Import(tracks.ToArray());
+            });
+        }
+        public async void NukeLibraryCommand()
+        {
+            var messageBox = new MessageBox().SetStuff(MainWindowViewModel.ProjectName, "You are about to irreversibly clear your library.", true, false, false, true);
+            await messageBox.ShowDialog(Window);
+            if (messageBox.OK) Library.Nuke();
         }
 
         private void CheckRestartNeeded()

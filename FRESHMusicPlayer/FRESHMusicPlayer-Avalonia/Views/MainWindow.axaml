@@ -166,13 +166,13 @@
 					<ColumnDefinition Width="1*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Image Source="{Binding CoverArt}" Grid.Column="0" Margin="10,-10,5,0" MaxWidth="64" MaxHeight="64" VerticalAlignment="Center" ToolTip.ShowDelay="10" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}">
+				<Image Source="{Binding CoverArt}" Grid.Column="0" Margin="10,-10,10,0" MaxWidth="64" MaxHeight="64" VerticalAlignment="Center" ToolTip.ShowDelay="10" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}">
 					<ToolTip.Tip>
 						<Image Source="{Binding CoverArt}" Width="450" Height="450"/>
 					</ToolTip.Tip>
 				</Image>
 				<!--Middle Section-->
-				<Grid Grid.Column="1" Margin="5,8,0,0" >
+				<Grid Grid.Column="1" Margin="0,8,0,0" >
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />

@@ -34,7 +34,7 @@ namespace FRESHMusicPlayer.ViewModels
         public Player Player { get; private set; }
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
-        public ConfigurationFile Config { get; private set; }
+        public ConfigurationFile Config { get; set; }
         public Track CurrentTrack { get; private set; }
         public IntegrationHandler Integrations { get; private set; } = new();
         public NotificationHandler Notifications { get; private set; } = new();
@@ -755,7 +755,7 @@ namespace FRESHMusicPlayer.ViewModels
         #region NavBar
         public void OpenSettingsCommand()
         {
-            new Views.Settings().SetThings(Config).Show(Window);
+            new Views.Settings().SetThings(Config, Library).Show(Window);
         }
 
         public void OpenQueueManagementCommand()
