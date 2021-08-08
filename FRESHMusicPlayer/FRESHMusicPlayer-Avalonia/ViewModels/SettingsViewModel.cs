@@ -201,7 +201,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
         public async void NukeLibraryCommand()
         {
-            var messageBox = new MessageBox().SetStuff(MainWindowViewModel.ProjectName, "You are about to irreversibly clear your library.", true, false, false, true);
+            var messageBox = new MessageBox().SetStuff("You are about to irreversibly clear your library.", true, false, false, true);
             await messageBox.ShowDialog(Window);
             if (messageBox.OK) Library.Nuke();
         }

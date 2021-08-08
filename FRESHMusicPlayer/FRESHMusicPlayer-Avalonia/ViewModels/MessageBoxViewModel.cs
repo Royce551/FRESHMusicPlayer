@@ -9,12 +9,7 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public class MessageBoxViewModel : ViewModelBase
     {
-        private string title;
-        public string Title
-        {
-            get => title;
-            set => this.RaiseAndSetIfChanged(ref title, value);
-        }
+        public string Title => MainWindowViewModel.ProjectName;
 
         private string content;
         public string Content

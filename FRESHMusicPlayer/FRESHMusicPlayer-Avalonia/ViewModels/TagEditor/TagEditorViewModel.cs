@@ -108,10 +108,9 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             }
         }
 
-        public List<string> FilePaths { get; private set; } = new();
+        public List<string> FilePaths { get; set; } = new();
 
         private const string windowName = "FRESHMusicPlayer Tag Editor";
-        private string windowTitle = "FRESHMusicPlayer Tag Editor";
         public string WindowTitle
         {
             get
@@ -150,6 +149,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public void Initialize(List<string> filePaths)
         {
             FilePaths = filePaths;
+            this.RaisePropertyChanged(nameof(WindowTitle));
             foreach (var path in filePaths)
             {
                 var track = new Track(path);

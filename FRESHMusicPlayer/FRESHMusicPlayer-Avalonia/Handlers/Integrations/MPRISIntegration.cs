@@ -126,6 +126,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             OnPropertiesChanged += MediaPlayer2_OnPropertiesChanged;
             viewModel.PropertyChanged += ViewModel_PropertyChanged;
             UpdateMetadata();
+            InitializeState();
         }
 
         private void Player_SongStopped(object sender, EventArgs e)
@@ -186,6 +187,13 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public async Task SeekAsync(long offset)
         {
             viewModel.CurrentTime.Add(TimeSpan.FromMilliseconds(offset * 1000));
+        }
+
+        private void InitializeState()
+        {
+            ViewModel_PropertyChanged(null, new("Paused")); // jank alert!
+            ViewModel_PropertyChanged(null, new("Volume"));
+            ViewModel_PropertyChanged(null, new("Shuffle"));
         }
 
         private void UpdateMetadata()

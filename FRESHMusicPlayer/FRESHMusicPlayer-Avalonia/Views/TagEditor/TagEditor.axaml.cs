@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels.TagEditor;
 using FRESHMusicPlayer.Handlers;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace FRESHMusicPlayer.Views.TagEditor
 {
@@ -27,11 +28,35 @@ namespace FRESHMusicPlayer.Views.TagEditor
             return this;
         }
 
-        private void OnClosing(object sender, CancelEventArgs e)
+        public TagEditor SetInitialFiles(List<string> initialFiles)
+        {
+            ViewModel.Initialize(initialFiles);
+            return this;
+        }
+
+        private async void OnClosing(object sender, CancelEventArgs e)
         {
             if (ViewModel.UnsavedChanges)
             {
-
+                e.Cancel = true;
+                var messageBox = new MessageBox().SetStuff($"Save changes to {string.Join(", ", ViewModel.FilePaths)}?", false, true, true, true);
+                await messageBox.ShowDialog(this);
+                if (messageBox.Yes)
+                {
+                    ViewModel.SaveCommand();
+                    e.Cancel = false;
+                    Close();
+                }
+                else if (messageBox.No)
+                {
+                    e.Cancel = false;
+                    ViewModel.UnsavedChanges = false; // this is a lie, but it's ok because it's gonna close anyway :)
+                    Close();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
 

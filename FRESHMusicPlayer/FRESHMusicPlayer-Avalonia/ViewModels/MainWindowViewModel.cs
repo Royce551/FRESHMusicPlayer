@@ -104,8 +104,7 @@ namespace FRESHMusicPlayer.ViewModels
             this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
 
             if (Config.ShowTimeInWindow) WindowTitle = $"{CurrentTime:mm\\:ss}/{TotalTime:mm\\:ss} | {ProjectName}";
-            if (Config.ShowRemainingProgress) this.RaisePropertyChanged(nameof(TotalTime)); // little hacky but this triggers it
-                                                                                            // to show the new time
+            if (Config.ShowRemainingProgress) this.RaisePropertyChanged(nameof(TotalTime));
 
             Player.AvoidNextQueue = false;
         }
@@ -114,8 +113,8 @@ namespace FRESHMusicPlayer.ViewModels
         {
             LoggingHandler.Log("Player: SongChanged");
             CurrentTrack = new Track(Player.FilePath);
-            Artist = CurrentTrack.Artist;
-            Title = CurrentTrack.Title;
+            Artist = string.IsNullOrEmpty(CurrentTrack.Artist) ? "Unknown Artist" : CurrentTrack.Artist;
+            Title = string.IsNullOrEmpty(CurrentTrack.Title) ? "Unknown Title" : CurrentTrack.Title;
             if (CurrentTrack.EmbeddedPictures.Count != 0)
                 CoverArt = new Bitmap(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData));
             this.RaisePropertyChanged(nameof(TotalTime));
@@ -123,6 +122,7 @@ namespace FRESHMusicPlayer.ViewModels
             WindowTitle = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | {ProjectName}";
             ProgressTimer.Start();
             Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
+            UpdatePausedState();
 
             if (PauseAfterCurrentTrack && !Player.Paused)
             {
@@ -156,10 +156,10 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void SkipPreviousCommand()
         {
+            if (!Player.FileLoaded) return;
             if (Player.CurrentTime.TotalSeconds <= 5) Player.PreviousSong();
             else
             {
-                if (!Player.FileLoaded) return;
                 Player.CurrentTime = TimeSpan.FromSeconds(0);
                 ProgressTimer.Start(); // to resync the progress timer
             }
@@ -187,15 +187,14 @@ namespace FRESHMusicPlayer.ViewModels
             if (Player.Paused)
             {
                 Player.ResumeMusic();
-                Paused = false;
                 Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
             }
             else
             {
                 Player.PauseMusic();
-                Paused = true;
                 Integrations.Update(CurrentTrack, PlaybackStatus.Paused);
             }
+            UpdatePausedState();
         }
         public void ShuffleCommand()
         {
@@ -218,6 +217,8 @@ namespace FRESHMusicPlayer.ViewModels
         public void PauseAfterCurrentTrackCommand() => PauseAfterCurrentTrack = !PauseAfterCurrentTrack;
 
         public void ShowRemainingProgressCommand() => Config.ShowRemainingProgress = !Config.ShowRemainingProgress;
+
+        private void UpdatePausedState() => Paused = Player.Paused;
 
         private TimeSpan currentTime;
         public TimeSpan CurrentTime
@@ -775,7 +776,10 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void OpenTagEditorCommand()
         {
-            new FRESHMusicPlayer.Views.TagEditor.TagEditor().SetStuff(Player, Library).Show();
+            var tracks = new List<string>();
+            if (Player.FileLoaded) tracks.Add(Player.FilePath);
+            else tracks = Player.Queue.Queue;
+            new Views.TagEditor.TagEditor().SetStuff(Player, Library).SetInitialFiles(tracks).Show();
         }
         #endregion
     }

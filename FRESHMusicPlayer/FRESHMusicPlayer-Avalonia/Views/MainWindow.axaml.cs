@@ -192,7 +192,7 @@ namespace FRESHMusicPlayer.Views
                         DisplayAsToast = true,
                         OnButtonClicked = () =>
                         {
-                            new MessageBox().SetStuff("lols", "wtf, that actually worked?").ShowDialog(this);
+                            new MessageBox().SetStuff("wtf, that actually worked?").ShowDialog(this);
                             return true;
                         }
                     });

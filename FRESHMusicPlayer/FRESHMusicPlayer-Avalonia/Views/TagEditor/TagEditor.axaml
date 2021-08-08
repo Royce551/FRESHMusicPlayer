@@ -5,7 +5,7 @@
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels.TagEditor"
         mc:Ignorable="d" Height="451" Width="600"
-        x:Class="FRESHMusicPlayer.Views.TagEditor.TagEditor"
+        x:Class="FRESHMusicPlayer.Views.TagEditor.TagEditor" Closing="OnClosing"
         Title="{Binding WindowTitle}">
 
 	<Window.DataContext>

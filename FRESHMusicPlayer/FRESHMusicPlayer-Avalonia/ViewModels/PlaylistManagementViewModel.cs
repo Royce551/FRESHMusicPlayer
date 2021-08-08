@@ -132,7 +132,7 @@ namespace FRESHMusicPlayer.ViewModels
             if (dialog.OK)
             {
                 if (string.IsNullOrWhiteSpace((dialog.DataContext as TextEntryBoxViewModel).Text))
-                    new MessageBox().SetStuff(MainWindowViewModel.ProjectName, Properties.Resources.PlaylistManagement_InvalidName).Show(GetMainWindow());
+                    new MessageBox().SetStuff(Properties.Resources.PlaylistManagement_InvalidName).Show(GetMainWindow());
                 else
                 {
                     MainWindow.Library.CreatePlaylist((dialog.DataContext as TextEntryBoxViewModel).Text, Track);

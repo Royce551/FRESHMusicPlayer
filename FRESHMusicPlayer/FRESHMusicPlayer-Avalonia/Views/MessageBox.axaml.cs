@@ -25,14 +25,13 @@ namespace FRESHMusicPlayer.Views
             
         }
 
-        public MessageBox SetStuff(string title,
+        public MessageBox SetStuff(
                                    string content,
                                    bool hasOK = true,
                                    bool hasYes = false,
                                    bool hasNo = false,
                                    bool hasCancel = false)
         {
-            ViewModel.Title = title;
             ViewModel.Content = content;
             ViewModel.HasOK = hasOK;
             ViewModel.HasYes = hasYes;
