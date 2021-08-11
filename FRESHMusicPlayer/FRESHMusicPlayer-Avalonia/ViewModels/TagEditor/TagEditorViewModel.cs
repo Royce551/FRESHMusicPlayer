@@ -10,6 +10,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Views.TagEditor;
 using ReactiveUI;
 using Drawing = SixLabors.ImageSharp;
 
@@ -164,8 +165,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             ChangeCoverArt();
             UnsavedChanges = true;
         }
-        [DependsOn(nameof(FilePaths))]
-        public bool CanImportCoverArtCommand(object parameter) => /*FilePaths.Any();*/true;
+        public bool CanImportCoverArt => FilePaths.Any();
 
         public void AddCoverArtCommand()
         {
@@ -183,11 +183,12 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             ChangeCoverArt();
             UnsavedChanges = true;
         }
-        [DependsOn(nameof(AvailableCoverArts))]
-        public bool CanRemoveCoverArtCommand(object parameter) => /*AvailableCoverArts.Any();*/true;
+        public bool CanRemoveCoverArt => AvailableCoverArts.Any();
 
         public void ChangeCoverArt()
         {
+            this.RaisePropertyChanged(nameof(CanImportCoverArt));
+            this.RaisePropertyChanged(nameof(CanRemoveCoverArt));
             if (SelectedCoverArt == -1) SelectedCoverArt = 0;
             var currentCover = CoverArts[SelectedCoverArt];
             if (currentCover.PictureData is null)
@@ -293,10 +294,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             UnsavedChanges = false; // override setting these usually making unsaved changes true, kinda jank but it works lol
         }
 
-        public void NewWindowCommand()
-        {
-
-        }
+        public void NewWindowCommand() => new Views.TagEditor.TagEditor().SetStuff(Player, Library).SetInitialFiles(FilePaths).Show();
 
         private List<string> acceptableFilePaths = "wav;aiff;mp3;wma;3g2;3gp;3gp2;3gpp;asf;wmv;aac;adts;avi;m4a;m4a;m4v;mov;mp4;sami;smi;flac".Split(';').ToList();
         public async void OpenCommand()
@@ -349,6 +347,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                     TrackNumber = Convert.ToInt32(TrackNumber),
                     DiscNumber = Convert.ToInt32(DiscNumber)
                 };
+                track.EmbeddedPictures.Clear();
+                foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
                 track.Save();
                 Library?.Remove(path); // update library entry, if available
                 Library?.Import(path);
