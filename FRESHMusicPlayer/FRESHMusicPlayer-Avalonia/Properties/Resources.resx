@@ -365,4 +365,7 @@
   <data name="FileFilter_Other" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="FileFilter_PlaylistFiles" xml:space="preserve">
+    <value>Playlist Files</value>
+  </data>
 </root>

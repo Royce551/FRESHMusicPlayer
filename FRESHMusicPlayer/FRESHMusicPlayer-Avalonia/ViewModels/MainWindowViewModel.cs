@@ -670,39 +670,64 @@ namespace FRESHMusicPlayer.ViewModels
         }
         public async void BrowsePlaylistFilesCommand()
         {
-            var dialog = new OpenFileDialog()
+            string[] acceptableFiles = {"xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"};
+            string[] files = null;
+            
+            if (await FreedesktopPortal.IsPortalAvailable())
             {
-                Filters = new List<FileDialogFilter>
+                files = await FreedesktopPortal.OpenFiles(Resources.ImportPlaylistFiles, new Dictionary<string, object>()
                 {
-                    new FileDialogFilter()
+                    {"multiple", true},
+                    {"accept_label", Resources.ImportPlaylistFiles},
+                    {"filters", new[]
                     {
-                        Name = "Playlist Files",
-                        Extensions = new(){ "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"}
-                    }
-                }
-            };
-            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                var files = await dialog.ShowAsync(desktop.MainWindow);
-                IPlaylistIO reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
-                foreach (string s in reader.FilePaths)
-                {
-                    if (!File.Exists(s))
-                    {
-                        Notifications.Add(new()
-                        {
-                            ContentText = string.Format(Properties.Resources.Notification_FileInPlaylistMissing, Path.GetFileName(s)),
-                            DisplayAsToast = true,
-                            IsImportant = true,
-                            Type = NotificationType.Failure
-                        });
-                        continue;
-                    }
-                }
-                Player.Queue.Add(reader.FilePaths.ToArray());
-                await Task.Run(() => Library.Import(reader.FilePaths.ToArray()));
-                Player.PlayMusic();
+                        (Resources.FileFilter_PlaylistFiles, acceptableFiles.Select(type => (0u, "*." + type)).ToArray()),
+                    }}
+                });
             }
+
+            if (files == null)
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Filters = new List<FileDialogFilter>
+                    {
+                        new FileDialogFilter()
+                        {
+                            Name = Resources.FileFilter_PlaylistFiles,
+                            Extensions = acceptableFiles.ToList()
+                        }
+                    }
+                };
+
+                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    files = await dialog.ShowAsync(desktop.MainWindow);
+                }
+            }
+
+            if (files is not {Length: > 0}) return;
+            
+            var reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
+            foreach (var s in reader.FilePaths)
+            {
+                if (!File.Exists(s))
+                {
+                    Notifications.Add(new()
+                    {
+                        ContentText = string.Format(Properties.Resources.Notification_FileInPlaylistMissing,
+                            Path.GetFileName(s)),
+                        DisplayAsToast = true,
+                        IsImportant = true,
+                        Type = NotificationType.Failure
+                    });
+                    continue;
+                }
+            }
+
+            Player.Queue.Add(reader.FilePaths.ToArray());
+            await Task.Run(() => Library.Import(reader.FilePaths.ToArray()));
+            Player.PlayMusic();
         }
         public async void BrowseFoldersCommand()
         {
