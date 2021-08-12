@@ -359,4 +359,10 @@
   <data name="Year" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="FileFilter_AudioFiles" xml:space="preserve">
+    <value>Audio Files</value>
+  </data>
+  <data name="FileFilter_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
 </root>

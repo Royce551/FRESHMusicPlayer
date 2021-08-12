@@ -25,6 +25,8 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
 using Avalonia.Markup.Xaml;
+using FRESHMusicPlayer.Properties;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Views.TagEditor;
 
 namespace FRESHMusicPlayer.ViewModels
@@ -623,18 +625,37 @@ namespace FRESHMusicPlayer.ViewModels
                                                                                                                                         // ripped directly from fmp-wpf 'cause i'm lazy
         public async void BrowseTracksCommand()
         {
+            if (await FreedesktopPortal.IsPortalAvailable())
+            {
+                var files = await FreedesktopPortal.OpenFiles(Resources.Import, new Dictionary<string, object>()
+                {
+                    {"multiple", true},
+                    {"accept_label", Resources.Import},
+                    {"filters", new[]
+                    {
+                        (Resources.FileFilter_AudioFiles, acceptableFilePaths.Select(type => (0u, "*." + type)).ToArray()),
+                        (Resources.FileFilter_Other, new[]
+                        {
+                            (0u, "*")
+                        })
+                    }}
+                });
+                if (files.Length != 0) await Task.Run(() => Library.Import(files));
+                return;
+            }
+            
             var dialog = new OpenFileDialog()
             {
                 Filters = new List<FileDialogFilter>
                 {
                     new FileDialogFilter()
                     {
-                        Name = "Audio Files",
+                        Name = Resources.FileFilter_AudioFiles,
                         Extensions = acceptableFilePaths
                     },
                     new FileDialogFilter()
                     {
-                        Name = "Other",
+                        Name = Resources.FileFilter_Other,
                         Extensions = new List<string>() { "*" }
                     }
                 },
