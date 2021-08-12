@@ -10,6 +10,8 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Properties;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Views.TagEditor;
 using ReactiveUI;
 using Drawing = SixLabors.ImageSharp;
@@ -143,24 +145,50 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
 
         public async void ImportCoverArtCommand()
         {
-            var dialog = new OpenFileDialog()
+            string[] files = null;
+
+            if (await FreedesktopPortal.IsPortalAvailable())
             {
-                Filters = new List<FileDialogFilter>
+                files = await FreedesktopPortal.OpenFiles("", new Dictionary<string, object>()
                 {
-                    new FileDialogFilter()
+                    {"filters", new[]
                     {
-                        Name = "Image Files",
-                        Extensions = new List<string>() { "png", "jpg" }
+                        (Resources.FileFilter_ImageFiles, new[]
+                        {
+                            (0, "*.png"),
+                            (0, "*.jpg")
+                        }),
+                        (Resources.FileFilter_Other, new[]
+                        {
+                            (0, "*")
+                        })
+                    }}
+                });
+            }
+            else
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Filters = new List<FileDialogFilter>
+                    {
+                        new FileDialogFilter()
+                        {
+                            Name = Resources.FileFilter_ImageFiles,
+                            Extensions = new List<string>() { "png", "jpg" }
+                        },
+                        new FileDialogFilter()
+                        {
+                            Name = Resources.FileFilter_Other,
+                            Extensions = new List<string>() { "*" }
+                        }
                     },
-                    new FileDialogFilter()
-                    {
-                        Name = "Other",
-                        Extensions = new List<string>() { "*" }
-                    }
-                },
-                AllowMultiple = true
-            };
-            var files = await dialog.ShowAsync(Window);
+                    AllowMultiple = true
+                };
+                files = await dialog.ShowAsync(Window);
+            }
+
+            if (files == null) return;
+            
             CoverArts[SelectedCoverArt] = PictureInfo.fromBinaryData(File.ReadAllBytes(files[0]), CoverArts[SelectedCoverArt].PicType);
             ChangeCoverArt();
             UnsavedChanges = true;
@@ -299,24 +327,45 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         private List<string> acceptableFilePaths = "wav;aiff;mp3;wma;3g2;3gp;3gp2;3gpp;asf;wmv;aac;adts;avi;m4a;m4a;m4v;mov;mp4;sami;smi;flac".Split(';').ToList();
         public async void OpenCommand()
         {
-            var dialog = new OpenFileDialog()
+            string[] files;
+
+            if (await FreedesktopPortal.IsPortalAvailable())
             {
-                Filters = new List<FileDialogFilter>
+                files = await FreedesktopPortal.OpenFiles("", new Dictionary<string, object>()
                 {
-                    new FileDialogFilter()
+                    {"multiple", true},
+                    {"filters", new[]
                     {
-                        Name = "Audio Files",
-                        Extensions = acceptableFilePaths
+                        (Resources.FileFilter_AudioFiles, acceptableFilePaths.Select(type => (0u, "*." + type)).ToArray()),
+                        (Resources.FileFilter_Other, new[]
+                        {
+                            (0u, "*")
+                        })
+                    }}
+                });
+            }
+            else
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Filters = new List<FileDialogFilter>
+                    {
+                        new FileDialogFilter()
+                        {
+                            Name = Resources.FileFilter_AudioFiles,
+                            Extensions = acceptableFilePaths
+                        },
+                        new FileDialogFilter()
+                        {
+                            Name = Resources.FileFilter_Other,
+                            Extensions = new List<string>() { "*" }
+                        }
                     },
-                    new FileDialogFilter()
-                    {
-                        Name = "Other",
-                        Extensions = new List<string>() { "*" }
-                    }
-                },
-                AllowMultiple = true
-            };
-            var files = await dialog.ShowAsync(Window);
+                    AllowMultiple = true
+                };
+                files = await dialog.ShowAsync(Window);
+            }
+            
             Initialize(files.ToList());
         }
 

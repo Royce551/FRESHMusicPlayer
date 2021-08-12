@@ -359,4 +359,19 @@
   <data name="Year" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="FileFilter_AudioFiles" xml:space="preserve">
+    <value>Audio Files</value>
+  </data>
+  <data name="FileFilter_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="FileFilter_PlaylistFiles" xml:space="preserve">
+    <value>Playlist Files</value>
+  </data>
+  <data name="FileFilter_M3UUTF8" xml:space="preserve">
+    <value>M3U UTF-8 Playlist</value>
+  </data>
+  <data name="FileFilter_ImageFiles" xml:space="preserve">
+    <value>Image Files</value>
+  </data>
 </root>

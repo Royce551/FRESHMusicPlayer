@@ -11,6 +11,8 @@ using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Properties;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Views;
 using ReactiveUI;
 
@@ -101,18 +103,34 @@ namespace FRESHMusicPlayer.ViewModels
         }
         public async void ExportPlaylistCommand(string playlist)
         {
-            var dialog = new SaveFileDialog()
+            string path;
+            if (await FreedesktopPortal.IsPortalAvailable())
             {
-                Filters = new List<FileDialogFilter>
+                path = await FreedesktopPortal.SaveFile(Resources.Export, new Dictionary<string, object>()
                 {
-                    new FileDialogFilter()
+                    {"filters", new[]
                     {
-                        Name = "M3U UTF-8 Playlist",
-                        Extensions = new(){ "m3u8" }
+                        (Resources.FileFilter_M3UUTF8, new[]{(0u, "*.m3u8")}),
+                    }}
+                });
+            }
+            else
+            {
+                var dialog = new SaveFileDialog()
+                {
+                    Filters = new List<FileDialogFilter>
+                    {
+                        new FileDialogFilter()
+                        {
+                            Name = Resources.FileFilter_M3UUTF8,
+                            Extensions = new(){ "m3u8" }
+                        }
                     }
-                }
-            };
-            var path = await dialog.ShowAsync(GetMainWindow());
+                };
+                path = await dialog.ShowAsync(GetMainWindow());
+            }
+
+            if (path == null) return;
 
             var tracks = MainWindow.Library.ReadTracksForPlaylist(playlist);
             IPlaylistIO pls = PlaylistIOFactory.GetInstance().GetPlaylistIO(path);
@@ -143,18 +161,42 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void ImportCommand()
         {
-            var dialog = new OpenFileDialog()
+            
+            string[] acceptableFiles = {"xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"};
+            string[] files = null;
+            
+            if (await FreedesktopPortal.IsPortalAvailable())
             {
-                Filters = new List<FileDialogFilter>
+                files = await FreedesktopPortal.OpenFiles(Resources.ImportPlaylistFiles, new Dictionary<string, object>()
                 {
-                    new FileDialogFilter()
+                    {"multiple", true},
+                    {"accept_label", Resources.ImportPlaylistFiles},
+                    {"filters", new[]
                     {
-                        Name = "Playlist Files",
-                        Extensions = new(){ "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"}
+                        (Resources.FileFilter_PlaylistFiles, acceptableFiles.Select(type => (0u, "*." + type)).ToArray()),
+                    }}
+                });
+            }
+
+            if (files == null)
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Filters = new List<FileDialogFilter>
+                    {
+                        new FileDialogFilter()
+                        {
+                            Name = Resources.FileFilter_PlaylistFiles,
+                            Extensions = acceptableFiles.ToList()
+                        }
                     }
-                }
-            };
-            var files = await dialog.ShowAsync(GetMainWindow());
+                };
+
+                files = await dialog.ShowAsync(GetMainWindow());
+            }
+
+            if (files is not {Length: > 0}) return;
+            
             IPlaylistIO reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
             foreach (string s in reader.FilePaths)
             {
