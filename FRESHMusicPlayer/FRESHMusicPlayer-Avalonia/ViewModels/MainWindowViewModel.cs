@@ -731,13 +731,40 @@ namespace FRESHMusicPlayer.ViewModels
         }
         public async void BrowseFoldersCommand()
         {
-            var dialog = new OpenFolderDialog()
+            string directory = null;
+            if (await FreedesktopPortal.IsPortalAvailable())
             {
+                var result = await FreedesktopPortal.OpenFiles(Resources.ImportFolders, new Dictionary<string, object>()
+                {
+                    {"multiple", true},
+                    {"accept_label", Resources.ImportFolders},
+                    {"directory", true}
+                });
                 
-            };
-            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                if (result.Length == 1)
+                {
+                    directory = result[0];
+                }
+                else
+                {
+                    //The dialog was closed
+                    return;
+                }
+            }
+
+            if (directory == null)
             {
-                var directory = await dialog.ShowAsync(desktop.MainWindow);
+                var dialog = new OpenFolderDialog()
+                {
+                
+                };
+                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    directory = await dialog.ShowAsync(desktop.MainWindow);
+                }
+            }
+            
+            if (directory != null) {
                 var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
                 .Where(name => name.EndsWith(".mp3")
                         || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
