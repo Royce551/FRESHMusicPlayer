@@ -542,5 +542,17 @@ namespace FRESHMusicPlayer.Properties {
                 return ResourceManager.GetString("FileFilter_PlaylistFiles", resourceCulture);
             }
         }
+        
+        public static string FileFilter_M3UUTF8 {
+            get {
+                return ResourceManager.GetString("FileFilter_M3UUTF8", resourceCulture);
+            }
+        }
+        
+        public static string FileFilter_ImageFiles {
+            get {
+                return ResourceManager.GetString("FileFilter_ImageFiles", resourceCulture);
+            }
+        }
     }
 }
