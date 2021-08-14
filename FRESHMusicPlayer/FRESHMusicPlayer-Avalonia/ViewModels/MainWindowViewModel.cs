@@ -366,7 +366,7 @@ namespace FRESHMusicPlayer.ViewModels
             Volume = Program.Config?.Volume ?? 1f;
 
             LoggingHandler.Log("Handling command line args...");
-            var args = Environment.GetCommandLineArgs().ToList();
+            var args = Environment.GetCommandLineArgs().ToList(); // TODO: handle at startup
             args.RemoveRange(0, 1);
             if (args.Count != 0)
             {
@@ -384,14 +384,35 @@ namespace FRESHMusicPlayer.ViewModels
             }
             await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Program.Config.CurrentTab, DispatcherPriority.ApplicationIdle);
             // this delays the tab switch until avalonia is ready
-            if (Program.Config.IntegrateDiscordRPC)
-                Integrations.Add(new DiscordIntegration());
-            if (Program.Config.PlaybackTracking)
-                Integrations.Add(new PlaytimeLoggingIntegration(Player));
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Program.Config.IntegrateMPRIS)
-                Integrations.Add(new MPRISIntegration(this, Window));
+            
+            HandleIntegrations();
+
             (GetMainWindow() as MainWindow).RootPanel.Opacity = 1; // this triggers the startup fade
             await PerformAutoImport();
+        }
+
+        public void HandleIntegrations()
+        {
+            if (Program.Config.IntegrateDiscordRPC) Integrations.Add(new DiscordIntegration());
+            else
+            {
+                var discord = Integrations.AllIntegrations.Find(x => x is DiscordIntegration);
+                if (discord is not null) Integrations.Remove(discord);
+            }
+
+            if (Program.Config.PlaybackTracking) Integrations.Add(new PlaytimeLoggingIntegration(Player));
+            else
+            {
+                var playtime = Integrations.AllIntegrations.Find(x => x is PlaytimeLoggingIntegration);
+                if (playtime is not null) Integrations.Remove(playtime);
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Program.Config.IntegrateMPRIS) Integrations.Add(new MPRISIntegration(this, Window));
+            else
+            {
+                var mpris = Integrations.AllIntegrations.Find(x => x is MPRISIntegration);
+                if (mpris is not null) Integrations.Remove(mpris);
+            }
         }
 
         private void Notifications_NotificationInvalidate(object sender, EventArgs e)

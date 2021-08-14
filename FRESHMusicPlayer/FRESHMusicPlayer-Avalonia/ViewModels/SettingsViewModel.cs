@@ -79,6 +79,7 @@ namespace FRESHMusicPlayer.ViewModels
             set
             {
                 Config.PlaybackTracking = value;
+                WindowViewModel.HandleIntegrations();
             }
         }
         public bool ShowTimeInWindow
@@ -92,7 +93,7 @@ namespace FRESHMusicPlayer.ViewModels
             set
             {
                 Config.IntegrateDiscordRPC = value;
-                CheckRestartNeeded();
+                WindowViewModel.HandleIntegrations();
             }
         }
         public bool IntegrateMPRIS
@@ -101,7 +102,7 @@ namespace FRESHMusicPlayer.ViewModels
             set
             {
                 Config.IntegrateMPRIS = value;
-                CheckRestartNeeded();
+                WindowViewModel.HandleIntegrations();
             }
         }
         public bool MPRISShowCoverArt
@@ -132,6 +133,7 @@ namespace FRESHMusicPlayer.ViewModels
                 else return null;
             }
         }
+        private MainWindowViewModel WindowViewModel => Window.DataContext as MainWindowViewModel;
 
         public SettingsViewModel()
         {
@@ -204,7 +206,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         private void CheckRestartNeeded()
         {
-            if (workingConfig.Language == Config.Language && workingConfig.IntegrateDiscordRPC == Config.IntegrateDiscordRPC && workingConfig.IntegrateMPRIS == Config.IntegrateMPRIS) IsRestartNeeded = false;
+            if (workingConfig.Language == Config.Language) IsRestartNeeded = false;
             else IsRestartNeeded = true;
         }
     }

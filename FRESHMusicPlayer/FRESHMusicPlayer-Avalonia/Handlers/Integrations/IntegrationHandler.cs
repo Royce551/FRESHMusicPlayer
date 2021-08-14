@@ -17,7 +17,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         {
             integration.Dispose();
             AllIntegrations.Remove(integration);
-
         }
 
         public void Update(Track track, PlaybackStatus status)
