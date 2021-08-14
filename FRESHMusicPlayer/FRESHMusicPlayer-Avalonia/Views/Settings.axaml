@@ -16,7 +16,7 @@
 	<TabControl TabStripPlacement="Left" SelectedIndex="0">
 		<TabItem Header="{x:Static resx:Resources.Settings_General}">
 			<ScrollViewer>
-			<StackPanel Margin="10">
+			<StackPanel Margin="10,10,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 					<TextBlock Text="{x:Static resx:Resources.Settings_Language}" Margin="0,0,10,0" VerticalAlignment="Center"/>
 					<ComboBox Items="{Binding AvailableLanguages}" SelectedItem="{Binding Language}">

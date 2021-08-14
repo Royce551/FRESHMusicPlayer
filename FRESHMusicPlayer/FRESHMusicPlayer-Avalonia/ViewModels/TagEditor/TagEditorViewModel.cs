@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ATL;
@@ -10,8 +11,10 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.DatabaseIntegrations;
 using FRESHMusicPlayer.Properties;
 using FRESHMusicPlayer.Utilities;
+using FRESHMusicPlayer.Views;
 using FRESHMusicPlayer.Views.TagEditor;
 using ReactiveUI;
 using Drawing = SixLabors.ImageSharp;
@@ -23,6 +26,12 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public Window Window { get; set; }
         public Player Player { get; set; }
         public Library Library { get; set; }
+
+        private readonly HttpClient httpClient = new();
+        public TagEditorViewModel()
+        {
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/10.1 (https://github.com/Royce551/FRESHMusicPlayer)");
+        }
 
         private string artist;
         public string Artist
@@ -406,5 +415,50 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         }
 
         public void ExitCommand() => Window.Close();
+
+        public void DiscogsIntegrationCommand() => OpenDatabaseIntegration(new DiscogsIntegration(httpClient));
+        public void MusicBrainzIntegrationCommand() => OpenDatabaseIntegration(new MusicBrainzIntegration(httpClient));
+        public async void OpenDatabaseIntegration(IDatabaseIntegration integration)
+        {
+            var dialog = new TextEntryBox().SetStuff(Resources.Album, Album);
+            await dialog.ShowDialog(Window);
+            if (!dialog.OK) return;
+
+            string query = (dialog.DataContext as TextEntryBoxViewModel).Text; // TODO: fix this mess
+            var results = integration.Search(query);
+
+            var index = 0;
+            if (!integration.Worked && integration.NeedsInternetConnection)
+            {
+                new MessageBox().SetStuff("You aren't connected to the internet :(").Show(Window);
+                return;
+            }
+            if (results.Count == 0 | !integration.Worked)
+            {
+                new MessageBox().SetStuff("No results were found for this album :(").Show(Window);
+                return;
+            }
+            if (results.Count > 1 && (results.Where(x => x.Name == Album).Count() != 1))
+            {
+                var disambiguation = new IntegrationDisambiguation().SetStuff(results);
+                await disambiguation.ShowDialog(Window);
+                if (disambiguation.OK) index = disambiguation.SelectedItem;
+                else return;
+            }
+
+            var filePath = FilePaths[0];
+            var release = integration.Fetch(results[index].Id);
+            var editor = new ReleaseIntegrationPage().SetStuff(release, new Track(filePath));
+            await editor .ShowDialog(Window);
+            if (editor.OK)
+            {
+                Artist = editor.TrackToSave.Artist;
+                Title = editor.TrackToSave.Title;
+                Album = editor.TrackToSave.Album;
+                Genre = editor.TrackToSave.Genre;
+                Year = editor.TrackToSave.Year.ToString();
+                TrackNumber = editor.TrackToSave.TrackNumber.ToString();
+            }
+        }
     }
 }

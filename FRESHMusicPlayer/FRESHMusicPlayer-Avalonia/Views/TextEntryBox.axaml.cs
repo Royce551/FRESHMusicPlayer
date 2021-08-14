@@ -18,10 +18,11 @@ namespace FRESHMusicPlayer.Views
 #endif
         }
 
-        public TextEntryBox SetStuff(string header)
+        public TextEntryBox SetStuff(string header, string initialText = "")
         {
             var context = DataContext as TextEntryBoxViewModel;
             context.Header = header;
+            context.Text = initialText;
             return this;
         }
 
