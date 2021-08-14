@@ -350,7 +350,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
             UpdateLibraryInfo();
         }
-        public void UpdateLibraryInfo() => LibraryInfoText = $"Tracks: {AllTracks?.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
+        public void UpdateLibraryInfo() => LibraryInfoText = $"{Resources.Tracks}: {AllTracks?.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
 
         public async void StartThings()
         {

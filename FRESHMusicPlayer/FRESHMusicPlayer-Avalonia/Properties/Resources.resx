@@ -374,4 +374,91 @@
   <data name="FileFilter_ImageFiles" xml:space="preserve">
     <value>Image Files</value>
   </data>
+  <data name="AlbumArtist" xml:space="preserve">
+    <value>Album Artist</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Composer" xml:space="preserve">
+    <value>Composer</value>
+  </data>
+  <data name="CoverArt" xml:space="preserve">
+    <value>Cover Art</value>
+  </data>
+  <data name="DiscNumber" xml:space="preserve">
+    <value>Disc Number</value>
+  </data>
+  <data name="Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="Lyrics_UntimedLyrics" xml:space="preserve">
+    <value>Untimed Lyrics</value>
+  </data>
+  <data name="Menu_File_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Menu_File_NewWindow" xml:space="preserve">
+    <value>New Window</value>
+  </data>
+  <data name="Menu_File_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Menu_File_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Menu_TagSources" xml:space="preserve">
+    <value>Tag Sources</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoInternet" xml:space="preserve">
+    <value>You aren't connected to the Internet :(</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="RestartNow" xml:space="preserve">
+    <value>Restart now</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Search_Prompt" xml:space="preserve">
+    <value>Type here to search!</value>
+  </data>
+  <data name="Settings_CleanLibrary" xml:space="preserve">
+    <value>Clean and update library</value>
+  </data>
+  <data name="Settings_NukeLibrary" xml:space="preserve">
+    <value>Nuke library</value>
+  </data>
+  <data name="Settings_NukeLibrary_Warning" xml:space="preserve">
+    <value>You are about to irreversibly clear your library.</value>
+  </data>
+  <data name="Settings_Reset" xml:space="preserve">
+    <value>Reset settings to default</value>
+  </data>
+  <data name="Settings_RestartNeeded" xml:space="preserve">
+    <value>FMP needs to restart to apply your changes.</value>
+  </data>
+  <data name="TagEditor_Disambiguation" xml:space="preserve">
+    <value>There are multiple search results for this album. Which one do you want?</value>
+  </data>
+  <data name="TagEditor_NoResults" xml:space="preserve">
+    <value>No results were found for this album :(</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="TrackNumber" xml:space="preserve">
+    <value>Track Number</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>

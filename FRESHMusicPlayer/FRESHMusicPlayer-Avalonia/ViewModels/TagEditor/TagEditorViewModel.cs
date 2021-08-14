@@ -230,7 +230,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             var currentCover = CoverArts[SelectedCoverArt];
             if (currentCover.PictureData is null)
             {
-                CoverArtLabel = "No data for this cover";
+                CoverArtLabel = string.Empty;
                 CoverArt = null;
                 return;
             }
@@ -430,12 +430,12 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             var index = 0;
             if (!integration.Worked && integration.NeedsInternetConnection)
             {
-                new MessageBox().SetStuff("You aren't connected to the internet :(").Show(Window);
+                new MessageBox().SetStuff(Resources.NoInternet).Show(Window);
                 return;
             }
             if (results.Count == 0 | !integration.Worked)
             {
-                new MessageBox().SetStuff("No results were found for this album :(").Show(Window);
+                new MessageBox().SetStuff(Resources.TagEditor_NoResults).Show(Window);
                 return;
             }
             if (results.Count > 1 && (results.Where(x => x.Name == Album).Count() != 1))

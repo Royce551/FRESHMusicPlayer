@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" SizeToContent="Height" Width="450"
         x:Class="FRESHMusicPlayer.Views.MessageBox" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" CanResize="False"
         Icon="/Assets/icon.ico" Title="{Binding Title}">
@@ -14,10 +15,10 @@
 	<StackPanel Margin="10">
 		<TextBlock Text="{Binding Content}" TextWrapping="Wrap"/>
 		<StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
-			<Button Content="OK" Click="OnButtonClick" IsVisible="{Binding HasOK}"/>
-			<Button Content="Yes" Click="OnYesButtonClick" IsVisible="{Binding HasYes}"/>
-			<Button Content="No" Click="OnNoButtonClick" IsVisible="{Binding HasNo}"/>
-			<Button Content="Cancel" Click="OnCancelButtonClick" IsVisible="{Binding HasCancel}"/>
+			<Button Content="{x:Static resx:Resources.OK}" Click="OnButtonClick" IsVisible="{Binding HasOK}"/>
+			<Button Content="{x:Static resx:Resources.Yes}" Click="OnYesButtonClick" IsVisible="{Binding HasYes}"/>
+			<Button Content="{x:Static resx:Resources.No}" Click="OnNoButtonClick" IsVisible="{Binding HasNo}"/>
+			<Button Content="{x:Static resx:Resources.Cancel}" Click="OnCancelButtonClick" IsVisible="{Binding HasCancel}"/>
 		</StackPanel>
 	</StackPanel>
 </Window>

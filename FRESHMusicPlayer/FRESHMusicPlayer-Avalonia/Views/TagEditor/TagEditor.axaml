@@ -15,14 +15,14 @@
 		<NativeMenu>
 			<NativeMenuItem Header="{x:Static resx:Resources.Menu_File}">
 				<NativeMenu>
-					<NativeMenuItem Header="New Window" Command="{Binding NewWindowCommand}"/>
-					<NativeMenuItem Header="Open" Command="{Binding OpenCommand}"/>
-					<NativeMenuItem Header="Save" Command="{Binding SaveCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_File_NewWindow}" Command="{Binding NewWindowCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_File_Open}" Command="{Binding OpenCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_File_Save}" Command="{Binding SaveCommand}"/>
 					<NativeMenuItemSeperator/>
-					<NativeMenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+					<NativeMenuItem Header="{x:Static resx:Resources.Menu_File_Exit}" Command="{Binding ExitCommand}"/>
 				</NativeMenu>
 			</NativeMenuItem>
-			<NativeMenuItem Header="Tag Sources">
+			<NativeMenuItem Header="{x:Static resx:Resources.Menu_TagSources}">
 				<NativeMenu>
 					<NativeMenuItem Header="Discogs" Command="{Binding DiscogsIntegrationCommand}"/>
 					<NativeMenuItem Header="MusicBrainz" Command="{Binding MusicBrainzIntegrationCommand}"/>
@@ -46,16 +46,15 @@
 		</Grid.RowDefinitions>
 		<NativeMenuBar Grid.Row="0"/>
 		<DockPanel Grid.Row="2" Background="{StaticResource ForegroundColor}" LastChildFill="False">
-			<Button DockPanel.Dock="Right" Content="Save" Margin="10" Command="{Binding SaveCommand}"/>
-			<Button DockPanel.Dock="Right" Content="Change File..." Margin="10" Command="{Binding OpenCommand}"/>
-			<TextBlock DockPanel.Dock="Right" Text="Your changes will be saved when you play a new track." VerticalAlignment="Center" IsVisible="{Binding IsBackgroundSaveNeeded}"/>
+			<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.Menu_File_Save}" Margin="10" Command="{Binding SaveCommand}"/>
+			<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.Menu_File_Open}" Margin="10" Command="{Binding OpenCommand}"/>
 		</DockPanel>
 
 		<ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch">
 			<StackPanel Margin="10" Grid.IsSharedSizeScope="True" HorizontalAlignment="Stretch">
 				
 				<TextBlock Text="Editing jfdaskf"/>
-				<TextBlock Text="Track Info" Margin="0,10" FontWeight="Bold" FontSize="18"/>
+				<TextBlock Text="{x:Static resx:Resources.TrackInfo}" Margin="0,10" FontWeight="Bold" FontSize="18"/>
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition SharedSizeGroup="leftColumn" Width="Auto"/>
@@ -69,11 +68,11 @@
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 					
-					<TextBlock Text="Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,5,10,0"/>
-					<TextBlock Text="Title" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,5,10,0"/>
-					<TextBlock Text="Year" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,5,10,0"/>
-					<TextBlock Text="Genre" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,5,10,0"/>
-					<TextBlock Text="Album" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.Artist}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.Title}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.Year}" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.Genre}" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.Album}" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="0,5,10,0"/>
 					
 					<TextBox Text="{Binding Artist}" Grid.Column="1" Grid.Row="0" Margin="0,5,0,0"/>
 					<TextBox Text="{Binding Title}" Grid.Column="1" Grid.Row="1" Margin="0,5,0,0"/>
@@ -96,10 +95,10 @@
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 
-					<TextBlock Text="Album Artist" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,5,10,0"/>
-					<TextBlock Text="Composer" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,5,10,0"/>
-					<TextBlock Text="Track Number" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,5,10,0"/>
-					<TextBlock Text="Disc Number" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.AlbumArtist}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.Composer}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.TrackNumber}" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="0,5,10,0"/>
+					<TextBlock Text="{x:Static resx:Resources.DiscNumber}" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="0,5,10,0"/>
 
 					<TextBox Text="{Binding AlbumArtist}" Grid.Column="1" Grid.Row="0" Margin="0,5,0,0"/>
 					<TextBox Text="{Binding Composer}" Grid.Column="1" Grid.Row="1" Margin="0,5,0,0"/>
@@ -107,7 +106,7 @@
 					<TextBox Text="{Binding DiscNumber}" Grid.Column="1" Grid.Row="3" Margin="0,5,0,0"/>
 				</Grid>
 			
-				<TextBlock Text="Cover Art" Margin="0,10" FontWeight="Bold" FontSize="18"/>
+				<TextBlock Text="{x:Static resx:Resources.CoverArt}" Margin="0,10" FontWeight="Bold" FontSize="18"/>
 			
 				<Grid>
 					<Grid.RowDefinitions>
@@ -122,7 +121,7 @@
 					<Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Width="200" Height="200" Source="{Binding CoverArt}"/>
 					<TextBlock Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Text="{Binding CoverArtLabel}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 					<DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="False" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
-						<Button DockPanel.Dock="Left" Content="Import" Margin="5,0,0,0" Command="{Binding ImportCoverArtCommand}" IsEnabled="{Binding CanImportCoverArt}"/>
+						<Button DockPanel.Dock="Left" Content="{x:Static resx:Resources.Import}" Margin="5,0,0,0" Command="{Binding ImportCoverArtCommand}" IsEnabled="{Binding CanImportCoverArt}"/>
 						
 						<Button DockPanel.Dock="Right" Content="-" Command="{Binding RemoveCoverArtCommand}" IsEnabled="{Binding CanRemoveCoverArt}"/>
 						<Button DockPanel.Dock="Right" Content="+" Command="{Binding AddCoverArtCommand}" Margin="0,0,5,0"/>
