@@ -1,18 +1,16 @@
-﻿using FRESHMusicPlayer.Handlers;
+﻿using ATL.Playlist;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Threading;
+using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Notifications;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReactiveUI;
-using System.Timers;
-using Avalonia.Threading;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using ATL.Playlist;
 using System.IO;
-using FRESHMusicPlayer.Handlers.Notifications;
+using System.Linq;
+using System.Timers;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -143,7 +141,7 @@ namespace FRESHMusicPlayer.ViewModels
         {
             await Dispatcher.UIThread.InvokeAsync(() =>
             {
-                
+
                 TimeSpan x = new();
                 int i = 1;
                 int i2 = 0;
@@ -174,7 +172,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         private void Queue_QueueChanged(object sender, EventArgs e) => Update();
     }
-    
+
     public class QueueManagementEntry
     {
         public string Title { get; init; }

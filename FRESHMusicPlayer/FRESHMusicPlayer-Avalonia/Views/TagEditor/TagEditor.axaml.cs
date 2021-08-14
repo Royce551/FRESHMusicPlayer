@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using FRESHMusicPlayer.ViewModels.TagEditor;
 using FRESHMusicPlayer.Handlers;
-using System.ComponentModel;
+using FRESHMusicPlayer.ViewModels.TagEditor;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace FRESHMusicPlayer.Views.TagEditor
 {

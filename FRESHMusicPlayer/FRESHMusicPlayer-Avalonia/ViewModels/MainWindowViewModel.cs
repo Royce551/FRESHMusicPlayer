@@ -3,7 +3,6 @@ using ATL.Playlist;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using AvaloniaPrimatives = Avalonia.Controls.Primitives;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
@@ -12,6 +11,8 @@ using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Properties;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Views;
 using LiteDB;
 using ReactiveUI;
@@ -24,10 +25,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
-using Avalonia.Markup.Xaml;
-using FRESHMusicPlayer.Properties;
-using FRESHMusicPlayer.Utilities;
-using FRESHMusicPlayer.Views.TagEditor;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -36,19 +33,18 @@ namespace FRESHMusicPlayer.ViewModels
         public Player Player { get; private set; }
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
-        public ConfigurationFile Config { get; set; }
         public Track CurrentTrack { get; private set; }
         public IntegrationHandler Integrations { get; private set; } = new();
         public NotificationHandler Notifications { get; private set; } = new();
-        
-        private Window Window 
-        { 
-            get 
+
+        private Window Window
+        {
+            get
             {
                 if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                     return desktop.MainWindow;
                 else return null;
-            } 
+            }
         }
 
         public MainWindowViewModel()
@@ -105,8 +101,8 @@ namespace FRESHMusicPlayer.ViewModels
             this.RaisePropertyChanged(nameof(CurrentTime));
             this.RaisePropertyChanged(nameof(CurrentTimeSeconds));
 
-            if (Config.ShowTimeInWindow) WindowTitle = $"{CurrentTime:mm\\:ss}/{TotalTime:mm\\:ss} | {ProjectName}";
-            if (Config.ShowRemainingProgress) this.RaisePropertyChanged(nameof(TotalTime));
+            if (Program.Config.ShowTimeInWindow) WindowTitle = $"{CurrentTime:mm\\:ss}/{TotalTime:mm\\:ss} | {ProjectName}";
+            if (Program.Config.ShowRemainingProgress) this.RaisePropertyChanged(nameof(TotalTime));
 
             Player.AvoidNextQueue = false;
         }
@@ -218,7 +214,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
         public void PauseAfterCurrentTrackCommand() => PauseAfterCurrentTrack = !PauseAfterCurrentTrack;
 
-        public void ShowRemainingProgressCommand() => Config.ShowRemainingProgress = !Config.ShowRemainingProgress;
+        public void ShowRemainingProgressCommand() => Program.Config.ShowRemainingProgress = !Program.Config.ShowRemainingProgress;
 
         private void UpdatePausedState() => Paused = Player.Paused;
 
@@ -230,7 +226,7 @@ namespace FRESHMusicPlayer.ViewModels
                 if (Player.FileLoaded)
                     return Player.CurrentTime;
                 else return TimeSpan.Zero;
-                
+
             }
             set
             {
@@ -246,7 +242,7 @@ namespace FRESHMusicPlayer.ViewModels
                 if (Player.FileLoaded)
                     return Player.CurrentTime.TotalSeconds;
                 else return 0;
-                
+
             }
             set
             {
@@ -358,14 +354,16 @@ namespace FRESHMusicPlayer.ViewModels
             $"{ProjectName}\n" +
             $"{RuntimeInformation.FrameworkDescription}\n" +
             $"{Environment.OSVersion.VersionString}\n");
+
             Player.SongChanged += Player_SongChanged;
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
-            ProgressTimer.Elapsed += ProgressTimer_Elapsed; // TODO: put this in a more logical place
+            ProgressTimer.Elapsed += ProgressTimer_Elapsed;
             Notifications.NotificationInvalidate += Notifications_NotificationInvalidate;
+
             LoggingHandler.Log("Handling config...");
-            Config = Program.Config; // HACK: this is a hack
-            Volume = Config?.Volume ?? 1f;
+
+            Volume = Program.Config?.Volume ?? 1f;
 
             LoggingHandler.Log("Handling command line args...");
             var args = Environment.GetCommandLineArgs().ToList();
@@ -377,22 +375,22 @@ namespace FRESHMusicPlayer.ViewModels
             }
             else
             {
-                if (!string.IsNullOrEmpty(Config.FilePath))
+                if (!string.IsNullOrEmpty(Program.Config.FilePath))
                 {
                     PauseAfterCurrentTrack = true;
-                    Player.PlayMusic(Config.FilePath);
-                    Player.CurrentTime.Add(TimeSpan.FromSeconds(Config.FilePosition));
+                    Player.PlayMusic(Program.Config.FilePath);
+                    Player.CurrentTime.Add(TimeSpan.FromSeconds(Program.Config.FilePosition));
                 }
             }
-            await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Config.CurrentTab, DispatcherPriority.ApplicationIdle); // TODO: unhack the hack
-
-            if (Config.IntegrateDiscordRPC)
+            await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Program.Config.CurrentTab, DispatcherPriority.ApplicationIdle);
+            // this delays the tab switch until avalonia is ready
+            if (Program.Config.IntegrateDiscordRPC)
                 Integrations.Add(new DiscordIntegration());
-            if (Config.PlaybackTracking)
+            if (Program.Config.PlaybackTracking)
                 Integrations.Add(new PlaytimeLoggingIntegration(Player));
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Config.IntegrateMPRIS)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && Program.Config.IntegrateMPRIS)
                 Integrations.Add(new MPRISIntegration(this, Window));
-            (GetMainWindow() as MainWindow).RootPanel.Opacity = 1;
+            (GetMainWindow() as MainWindow).RootPanel.Opacity = 1; // this triggers the startup fade
             await PerformAutoImport();
         }
 
@@ -415,25 +413,25 @@ namespace FRESHMusicPlayer.ViewModels
             LoggingHandler.Log("FMP is shutting down!");
             Library?.Database.Dispose();
             Integrations.Dispose();
-            Config.Volume = Volume;
-            Config.CurrentTab = SelectedTab;
+            Program.Config.Volume = Volume;
+            Program.Config.CurrentTab = SelectedTab;
             if (Player.FileLoaded)
             {
-                Config.FilePath = Player.FilePath;
-                Config.FilePosition = Player.CurrentTime.TotalSeconds;
+                Program.Config.FilePath = Player.FilePath;
+                Program.Config.FilePosition = Player.CurrentTime.TotalSeconds;
             }
             else
             {
-                Config.FilePath = null;
+                Program.Config.FilePath = null;
             }
-            await ConfigurationHandler.Write(Config);
+            await ConfigurationHandler.Write(Program.Config);
             LoggingHandler.Log("Goodbye!");
         }
 
         public async Task PerformAutoImport()
         {
-            if (Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
-                                                           // effort (and showing the notification)
+            if (Program.Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
+                                                                   // effort (and showing the notification)
             var notification = new Notification()
             {
                 ContentText = Properties.Resources.Notification_Scanning
@@ -443,7 +441,7 @@ namespace FRESHMusicPlayer.ViewModels
             var library = Library.Read();
             await Task.Run(() =>
             {
-                foreach (var folder in Config.AutoImportPaths)
+                foreach (var folder in Program.Config.AutoImportPaths)
                 {
                     var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
                         .Where(name => name.EndsWith(".mp3")
@@ -535,7 +533,7 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (playlist is null) return;
             AllTracks.Clear();
-            foreach (var track in await Task.Run(() => Library.ReadTracksForPlaylist(playlist))) 
+            foreach (var track in await Task.Run(() => Library.ReadTracksForPlaylist(playlist)))
                 AllTracks.Add(track);
             UpdateLibraryInfo();
         }
@@ -622,7 +620,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         private List<string> acceptableFilePaths = "wav;aiff;mp3;wma;3g2;3gp;3gp2;3gpp;asf;wmv;aac;adts;avi;m4a;m4a;m4v;mov;mp4;sami;smi;flac".Split(';').ToList();
-                                                                                                                                        // ripped directly from fmp-wpf 'cause i'm lazy
+        // ripped directly from fmp-wpf 'cause i'm lazy
         public async void BrowseTracksCommand()
         {
             if (await FreedesktopPortal.IsPortalAvailable())
@@ -643,7 +641,7 @@ namespace FRESHMusicPlayer.ViewModels
                 if (files.Length != 0) await Task.Run(() => Library.Import(files));
                 return;
             }
-            
+
             var dialog = new OpenFileDialog()
             {
                 Filters = new List<FileDialogFilter>
@@ -666,13 +664,13 @@ namespace FRESHMusicPlayer.ViewModels
                 var files = await dialog.ShowAsync(desktop.MainWindow);
                 if (files.Length > 0) await Task.Run(() => Library.Import(files));
             }
-            
+
         }
         public async void BrowsePlaylistFilesCommand()
         {
-            string[] acceptableFiles = {"xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"};
+            string[] acceptableFiles = { "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl" };
             string[] files = null;
-            
+
             if (await FreedesktopPortal.IsPortalAvailable())
             {
                 files = await FreedesktopPortal.OpenFiles(Resources.ImportPlaylistFiles, new Dictionary<string, object>()
@@ -706,8 +704,8 @@ namespace FRESHMusicPlayer.ViewModels
                 }
             }
 
-            if (files is not {Length: > 0}) return;
-            
+            if (files is not { Length: > 0 }) return;
+
             var reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
             foreach (var s in reader.FilePaths)
             {
@@ -740,7 +738,7 @@ namespace FRESHMusicPlayer.ViewModels
                     {"accept_label", Resources.ImportFolders},
                     {"directory", true}
                 });
-                
+
                 if (result.Length == 1)
                 {
                     directory = result[0];
@@ -756,15 +754,16 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 var dialog = new OpenFolderDialog()
                 {
-                
+
                 };
                 if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     directory = await dialog.ShowAsync(desktop.MainWindow);
                 }
             }
-            
-            if (directory != null) {
+
+            if (directory != null)
+            {
                 var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
                 .Where(name => name.EndsWith(".mp3")
                         || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
@@ -829,7 +828,7 @@ namespace FRESHMusicPlayer.ViewModels
         #region NavBar
         public void OpenSettingsCommand()
         {
-            new Views.Settings().SetThings(Config, Library).Show(Window);
+            new Views.Settings().SetThings(Program.Config, Library).Show(Window);
         }
 
         public void OpenQueueManagementCommand()

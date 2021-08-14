@@ -9,6 +9,9 @@ namespace FRESHMusicPlayer.Views
     public partial class TextEntryBox : Window
     {
         public bool OK { get; private set; } = false;
+        public string Text => ViewModel.Text;
+
+        private TextEntryBoxViewModel ViewModel => DataContext as TextEntryBoxViewModel;
 
         public TextEntryBox()
         {
@@ -20,9 +23,8 @@ namespace FRESHMusicPlayer.Views
 
         public TextEntryBox SetStuff(string header, string initialText = "")
         {
-            var context = DataContext as TextEntryBoxViewModel;
-            context.Header = header;
-            context.Text = initialText;
+            ViewModel.Header = header;
+            ViewModel.Text = initialText;
             return this;
         }
 

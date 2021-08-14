@@ -12,9 +12,9 @@ namespace FRESHMusicPlayer.Views
         public Settings()
         {
             InitializeComponent();
-    #if DEBUG
+#if DEBUG
             this.AttachDevTools();
-    #endif
+#endif
         }
 
         public Settings SetThings(ConfigurationFile config, Library library)
@@ -29,7 +29,7 @@ namespace FRESHMusicPlayer.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-            
+
         }
     }
 }

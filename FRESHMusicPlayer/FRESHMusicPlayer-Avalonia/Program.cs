@@ -1,7 +1,5 @@
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
-using FRESHMusicPlayer;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.ViewModels;
@@ -26,7 +24,7 @@ namespace FRESHMusicPlayer
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-            
+
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -4,9 +4,7 @@ using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using Tmds.DBus;
 using Drawing = SixLabors.ImageSharp;
@@ -50,7 +48,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public void Update(Track track, PlaybackStatus status)
         {
-            
+
         }
     }
 
@@ -85,7 +83,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
     }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-                               // tmds.dbus requires that methods are async even if they don't need to
+    // tmds.dbus requires that methods are async even if they don't need to
     class MediaPlayer2 : IMediaPlayer2, IPlayer
     {
         public event Action<PropertyChanges> OnPropertiesChanged;
@@ -213,7 +211,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 {"xesam:trackNumber", track.TrackNumber }
             };
 
-            if (viewModel.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count >= 0)
+            if (Program.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count >= 0)
             {
                 var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
                 var tempPath = Path.Combine(runtimeDir, "fmp");

@@ -2,8 +2,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FRESHMusicPlayer.ViewModels
 {

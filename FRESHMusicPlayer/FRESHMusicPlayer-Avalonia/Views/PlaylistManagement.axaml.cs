@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
 using System;
 

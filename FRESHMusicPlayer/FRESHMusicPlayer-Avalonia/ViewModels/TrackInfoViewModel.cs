@@ -2,11 +2,7 @@
 using Avalonia.Media.Imaging;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -43,7 +39,7 @@ namespace FRESHMusicPlayer.ViewModels
         private string trackNumberText;
         public string TrackNumberText
         {
-            get => trackNumberText; 
+            get => trackNumberText;
             set => this.RaiseAndSetIfChanged(ref trackNumberText, value);
         }
         private bool trackNumberShouldBeVisible = true;
@@ -81,7 +77,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public TrackInfoViewModel()
         {
-            
+
         }
 
         public void StartThings()
@@ -108,7 +104,7 @@ namespace FRESHMusicPlayer.ViewModels
             BitrateText = $"{track.Bitrate}kbps {track.SampleRate / 1000}kHz";
 
             if (track.DiscNumber == 0) DiscNumberShouldBeVisible = false;
-            else DiscNumberText = track.DiscTotal <= 0 ? track.DiscNumber.ToString() : $"{track.DiscNumber}/{track.DiscTotal}"; 
+            else DiscNumberText = track.DiscTotal <= 0 ? track.DiscNumber.ToString() : $"{track.DiscNumber}/{track.DiscTotal}";
 
             if (track.TrackNumber == 0) TrackNumberShouldBeVisible = false;
             else TrackNumberText = track.TrackTotal <= 0 ? track.TrackNumber.ToString() : $"{track.TrackNumber}/{track.TrackTotal}";

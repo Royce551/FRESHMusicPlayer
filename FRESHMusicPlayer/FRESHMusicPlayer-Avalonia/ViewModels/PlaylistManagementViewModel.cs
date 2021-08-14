@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ATL.Playlist;
+﻿using ATL.Playlist;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using FRESHMusicPlayer.Handlers;
@@ -15,6 +7,13 @@ using FRESHMusicPlayer.Properties;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Views;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -84,14 +83,13 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void RenamePlaylistCommand(string playlist)
         {
-            var dialog = new TextEntryBox().SetStuff(Properties.Resources.PlaylistManagement_PlaylistName);
-            (dialog.DataContext as TextEntryBoxViewModel).Text = playlist;
+            var dialog = new TextEntryBox().SetStuff(Resources.PlaylistManagement_PlaylistName, playlist);
             await dialog.ShowDialog(GetMainWindow());
 
             if (dialog.OK)
             {
                 var x = MainWindow.Library.Database.GetCollection<DatabasePlaylist>("playlists").FindOne(y => y.Name == playlist);
-                x.Name = (dialog.DataContext as TextEntryBoxViewModel).Text;
+                x.Name = dialog.Text;
                 MainWindow.Library.Database.GetCollection<DatabasePlaylist>("playlists").Update(x);
                 Initialize();
             }
@@ -149,11 +147,11 @@ namespace FRESHMusicPlayer.ViewModels
 
             if (dialog.OK)
             {
-                if (string.IsNullOrWhiteSpace((dialog.DataContext as TextEntryBoxViewModel).Text))
+                if (string.IsNullOrWhiteSpace(dialog.Text))
                     new MessageBox().SetStuff(Properties.Resources.PlaylistManagement_InvalidName).Show(GetMainWindow());
                 else
                 {
-                    MainWindow.Library.CreatePlaylist((dialog.DataContext as TextEntryBoxViewModel).Text, Track);
+                    MainWindow.Library.CreatePlaylist(dialog.Text, Track);
                     Initialize();
                 }
             }
@@ -161,10 +159,10 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void ImportCommand()
         {
-            
-            string[] acceptableFiles = {"xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"};
+
+            string[] acceptableFiles = { "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl" };
             string[] files = null;
-            
+
             if (await FreedesktopPortal.IsPortalAvailable())
             {
                 files = await FreedesktopPortal.OpenFiles(Resources.ImportPlaylistFiles, new Dictionary<string, object>()
@@ -195,8 +193,8 @@ namespace FRESHMusicPlayer.ViewModels
                 files = await dialog.ShowAsync(GetMainWindow());
             }
 
-            if (files is not {Length: > 0}) return;
-            
+            if (files is not { Length: > 0 }) return;
+
             IPlaylistIO reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
             foreach (string s in reader.FilePaths)
             {

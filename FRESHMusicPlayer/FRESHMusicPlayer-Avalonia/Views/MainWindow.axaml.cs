@@ -4,17 +4,12 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.ViewModels;
 using System;
-using System.Linq;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-using FRESHMusicPlayer.Utilities;
-using System.Globalization;
-using Avalonia.Data.Converters;
-using Avalonia.Media;
-using FRESHMusicPlayer.Handlers.Notifications;
-using Avalonia.Controls.Primitives;
+using System.Linq;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -52,11 +47,11 @@ namespace FRESHMusicPlayer.Views
 
         private void OnInitialized(object sender, EventArgs e)
         {
-            
+
         }
 
-        private void OpenTrackInfo(object sender, PointerPressedEventArgs e)    // HACK: THIS SHOULD NOT BE IN THE
-        {                                                                       // CODE BEHIND!!!!
+        private void OpenTrackInfo(object sender, PointerPressedEventArgs e)
+        {
             if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
                 ActualOpenTrackInfo();
         }
@@ -211,5 +206,5 @@ namespace FRESHMusicPlayer.Views
         }
     }
 
-    
+
 }

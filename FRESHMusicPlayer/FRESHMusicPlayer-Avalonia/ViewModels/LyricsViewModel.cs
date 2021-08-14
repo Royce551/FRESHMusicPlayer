@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ATL;
+﻿using ATL;
 using Avalonia.Media.Imaging;
 using FRESHMusicPlayer.Handlers.Lyrics;
 using ReactiveUI;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace FRESHMusicPlayer.ViewModels
 {

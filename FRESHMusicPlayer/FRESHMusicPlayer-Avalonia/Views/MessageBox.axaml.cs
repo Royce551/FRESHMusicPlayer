@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
-using System;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -22,7 +21,7 @@ namespace FRESHMusicPlayer.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
-            
+
         }
 
         public MessageBox SetStuff(

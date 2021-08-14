@@ -1,15 +1,9 @@
 ﻿using ATL;
-using Avalonia.Controls;
 using FRESHMusicPlayer.Handlers.DatabaseIntegrations;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Views.TagEditor;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels.TagEditor
 {

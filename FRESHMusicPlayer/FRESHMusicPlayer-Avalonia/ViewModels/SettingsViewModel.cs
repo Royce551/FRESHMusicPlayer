@@ -1,21 +1,19 @@
-﻿using FRESHMusicPlayer.Handlers.Configuration;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Utilities;
-using System;
-using System.Collections.Generic;
+using FRESHMusicPlayer.Views;
+using ReactiveUI;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using ReactiveUI;
-using System.Collections.ObjectModel;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using System.Reflection;
-using System.Diagnostics;
-using System.IO;
-using FRESHMusicPlayer.Handlers;
-using Avalonia.Controls;
-using FRESHMusicPlayer.Views;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -137,7 +135,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public SettingsViewModel()
         {
-            
+
         }
 
         public void StartThings()
@@ -184,10 +182,8 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void ResetSettingsCommand()
         {
-            var mainWindow = GetMainWindow().DataContext as MainWindowViewModel; // little messy, maybe figure out how to make this cleaner
-            mainWindow.Config = new ConfigurationFile();
-            Program.Config = mainWindow.Config;
-            Config = mainWindow.Config;
+            Program.Config = new ConfigurationFile();
+            Config = Program.Config;
             StartThings();
         }
         public async void CleanLibraryCommand()

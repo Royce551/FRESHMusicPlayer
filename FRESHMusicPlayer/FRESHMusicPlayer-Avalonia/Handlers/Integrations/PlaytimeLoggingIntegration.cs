@@ -3,9 +3,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Handlers.Integrations
 {
@@ -54,7 +51,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public void Update(Track track, PlaybackStatus status)
         {
-            
+
         }
 
         public void Dispose()

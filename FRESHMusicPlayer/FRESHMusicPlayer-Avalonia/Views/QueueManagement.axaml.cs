@@ -44,7 +44,7 @@ namespace FRESHMusicPlayer.Views
                 ViewModel?.JumpToCommand(x.Position);
             }
         }
-        
+
         private void OnRemoveButtonClick(object sender, RoutedEventArgs e)
         {
             var cmd = (Button)sender;

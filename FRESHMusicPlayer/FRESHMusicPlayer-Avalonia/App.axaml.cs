@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer
                 {
                     DataContext = new MainWindowViewModel(),
                 };
-                
+
             }
             Name = MainWindowViewModel.ProjectName;
             base.OnFrameworkInitializationCompleted();

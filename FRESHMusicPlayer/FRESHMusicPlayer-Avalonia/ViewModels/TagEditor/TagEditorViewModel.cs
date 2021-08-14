@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using ATL;
+﻿using ATL;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
-using Avalonia.Metadata;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.DatabaseIntegrations;
 using FRESHMusicPlayer.Properties;
@@ -17,6 +8,12 @@ using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Views;
 using FRESHMusicPlayer.Views.TagEditor;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 using Drawing = SixLabors.ImageSharp;
 
 namespace FRESHMusicPlayer.ViewModels.TagEditor
@@ -47,7 +44,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string Title
         {
             get => title;
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref title, value);
                 UnsavedChanges = true;
@@ -57,7 +54,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string Year
         {
             get => year;
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref year, value);
                 UnsavedChanges = true;
@@ -67,7 +64,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string Genre
         {
             get => genre;
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref genre, value);
                 UnsavedChanges = true;
@@ -77,7 +74,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string Album
         {
             get => album;
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref album, value);
                 UnsavedChanges = true;
@@ -88,7 +85,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string AlbumArtist
         {
             get => albumArtist;
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref albumArtist, value);
                 UnsavedChanges = true;
@@ -98,7 +95,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string Composer
         {
             get => composer;
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref composer, value);
                 UnsavedChanges = true;
@@ -108,7 +105,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
         public string TrackNumber
         {
             get => trackNumber;
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref trackNumber, value);
                 UnsavedChanges = true;
@@ -197,7 +194,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             }
 
             if (files == null) return;
-            
+
             CoverArts[SelectedCoverArt] = PictureInfo.fromBinaryData(File.ReadAllBytes(files[0]), CoverArts[SelectedCoverArt].PicType);
             ChangeCoverArt();
             UnsavedChanges = true;
@@ -374,7 +371,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 };
                 files = await dialog.ShowAsync(Window);
             }
-            
+
             Initialize(files.ToList());
         }
 
@@ -424,7 +421,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             await dialog.ShowDialog(Window);
             if (!dialog.OK) return;
 
-            string query = (dialog.DataContext as TextEntryBoxViewModel).Text; // TODO: fix this mess
+            string query = dialog.Text;
             var results = integration.Search(query);
 
             var index = 0;
@@ -449,7 +446,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             var filePath = FilePaths[0];
             var release = integration.Fetch(results[index].Id);
             var editor = new ReleaseIntegrationPage().SetStuff(release, new Track(filePath));
-            await editor .ShowDialog(Window);
+            await editor.ShowDialog(Window);
             if (editor.OK)
             {
                 Artist = editor.TrackToSave.Artist;
