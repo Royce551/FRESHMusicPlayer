@@ -106,6 +106,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatic.
+        /// </summary>
+        public static string Automatic {
+            get {
+                return ResourceManager.GetString("Automatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bitrate.
         /// </summary>
         public static string Bitrate {
@@ -1067,6 +1076,24 @@ namespace FRESHMusicPlayer.Properties {
         public static string Tracks {
             get {
                 return ResourceManager.GetString("Tracks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Artist.
+        /// </summary>
+        public static string UnknownArtist {
+            get {
+                return ResourceManager.GetString("UnknownArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Title.
+        /// </summary>
+        public static string UnknownTitle {
+            get {
+                return ResourceManager.GetString("UnknownTitle", resourceCulture);
             }
         }
         

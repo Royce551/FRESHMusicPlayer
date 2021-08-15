@@ -6,6 +6,9 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <RootNamespace>FRESHMusicPlayer</RootNamespace>
     <AssemblyName>FRESHMusicPlayer</AssemblyName>
+    <Version>10.1.0</Version>
+    <Authors>Squid Grill (and open source contributors)</Authors>
+    <Company>Squid Grill</Company>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG</DefineConstants>

@@ -56,7 +56,7 @@ namespace FRESHMusicPlayer.ViewModels
             InitializeLibrary();
         }
 
-        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Beta 13";
+        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Release Candidate 1";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
@@ -111,8 +111,8 @@ namespace FRESHMusicPlayer.ViewModels
         {
             LoggingHandler.Log("Player: SongChanged");
             CurrentTrack = new Track(Player.FilePath);
-            Artist = string.IsNullOrEmpty(CurrentTrack.Artist) ? "Unknown Artist" : CurrentTrack.Artist;
-            Title = string.IsNullOrEmpty(CurrentTrack.Title) ? "Unknown Title" : CurrentTrack.Title;
+            Artist = string.IsNullOrEmpty(CurrentTrack.Artist) ? Resources.UnknownArtist : CurrentTrack.Artist;
+            Title = string.IsNullOrEmpty(CurrentTrack.Title) ? Resources.UnknownTitle : CurrentTrack.Title;
             if (CurrentTrack.EmbeddedPictures.Count != 0)
                 CoverArt = new Bitmap(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData));
             this.RaisePropertyChanged(nameof(TotalTime));

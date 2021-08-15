@@ -253,7 +253,7 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
 
         public List<string> FilePaths { get; set; } = new();
 
-        private const string windowName = "FRESHMusicPlayer Tag Editor";
+        public const string WindowName = "FRESHMusicPlayer Tag Editor";
         public string WindowTitle
         {
             get
@@ -261,13 +261,13 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 string initialString;
                 if (FilePaths.Count > 0)
                 {
-                    initialString = $"{string.Join(", ", FilePaths)} | {windowName}";
+                    initialString = $"{string.Join(", ", FilePaths)} | {WindowName}";
                     if (UnsavedChanges) initialString = $"*{initialString}";
                     return initialString;
                 }
                 else
                 {
-                    return windowName;
+                    return WindowName;
                 }
             }
         }

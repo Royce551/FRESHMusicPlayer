@@ -71,12 +71,12 @@ namespace FRESHMusicPlayer.ViewModels
                 {
                     new FileDialogFilter()
                     {
-                        Name = "Audio Files",
+                        Name = Properties.Resources.FileFilter_AudioFiles,
                         Extensions = acceptableFilePaths
                     },
                     new FileDialogFilter()
                     {
-                        Name = "Other",
+                        Name = Properties.Resources.FileFilter_Other,
                         Extensions = new List<string>() { "*" }
                     }
                 },
@@ -96,7 +96,7 @@ namespace FRESHMusicPlayer.ViewModels
                 {
                     new FileDialogFilter()
                     {
-                        Name = "Playlist Files",
+                        Name = Properties.Resources.FileFilter_PlaylistFiles,
                         Extensions = new(){ "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl"}
                     }
                 }

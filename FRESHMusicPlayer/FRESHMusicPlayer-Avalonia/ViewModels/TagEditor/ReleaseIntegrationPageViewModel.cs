@@ -69,6 +69,13 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             set => this.RaiseAndSetIfChanged(ref albumShouldBeVisible, value);
         }
 
+        private string url;
+        public string URL
+        {
+            get => url;
+            set => this.RaiseAndSetIfChanged(ref url, value);
+        }
+
         public ObservableCollection<string> Entries { get; set; } = new();
         private int selectedItem;
         public int SelectedItem
@@ -90,6 +97,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
 
             if (Release.Year == 0) YearShouldBeVisible = false;
             else Year = Release.Year.ToString();
+
+            URL = Release.URL;
 
             foreach (var x in Release.Tracks)
             {

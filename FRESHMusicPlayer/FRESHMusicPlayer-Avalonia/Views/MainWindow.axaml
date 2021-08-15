@@ -40,7 +40,7 @@
 			</MenuItem>
 			<MenuItem Command="{Binding OpenLyricsCommand}" Header="{x:Static resx:Resources.Lyrics}"/>
 			<Separator/>
-			<MenuItem Command="{Binding MiniPlayerCommand}" Header="{x:Static resx:Resources.MiniPlayer}"/>
+			<!--<MenuItem Command="{Binding MiniPlayerCommand}" Header="{x:Static resx:Resources.MiniPlayer}"/>-->
 			<MenuItem Command="{Binding PauseAfterCurrentTrackCommand}" Header="{x:Static resx:Resources.Menu_Playback_PauseAfterCurrentTrack}"/>
 		</ContextMenu>
 		<vm:PauseAfterCurrentTrackToBrushConverter x:Key="PauseAfterCurrentTrackToBrushConverter"/>

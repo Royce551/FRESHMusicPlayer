@@ -6,7 +6,7 @@
         x:Class="FRESHMusicPlayer.Views.TagEditor.ReleaseIntegrationPage"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels.TagEditor"
-        Title="ReleaseIntegrationPage">
+        Title="{Binding Album}">
 
 	<Window.DataContext>
 		<vm:ReleaseIntegrationPageViewModel/>

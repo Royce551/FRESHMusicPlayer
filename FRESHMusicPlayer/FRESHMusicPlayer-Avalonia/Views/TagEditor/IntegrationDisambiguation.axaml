@@ -6,7 +6,7 @@
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels.TagEditor"
         mc:Ignorable="d" Width="600" Height="400"
         x:Class="FRESHMusicPlayer.Views.TagEditor.IntegrationDisambiguation"
-        Title="IntegrationDisambiguation" CanResize="False" WindowStartupLocation="CenterOwner">
+        Title="{x:Static vm:TagEditorViewModel.WindowName}" CanResize="False" WindowStartupLocation="CenterOwner">
 	
 	<Window.DataContext>
 		<vm:IntegrationDisambiguationViewModel/>
@@ -23,7 +23,7 @@
 		</DockPanel>
 	
 		<StackPanel>
-			<TextBlock Text="There are multiple search results for this album. Which one do you want?" Margin="10,10,0,10"/>
+			<TextBlock Text="{x:Static resx:Resources.TagEditor_Disambiguation}" Margin="10,10,0,10"/>
 			<ListBox Items="{Binding Results}" SelectedIndex="{Binding SelectedItem}" Height="300" Margin="10,0,10,10"/>
 		</StackPanel>
 	</Grid>

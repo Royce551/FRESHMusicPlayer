@@ -27,7 +27,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public ObservableCollection<DisplayLanguage> AvailableLanguages { get; } = new()
         {
-            new("Automatic", "automatic"),
+            new(Properties.Resources.Automatic, "automatic"),
             new("English", "en"),
             new("German", "de"),
             new("Vietnamese", "vi"),
