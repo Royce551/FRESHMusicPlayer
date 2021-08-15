@@ -342,4 +342,123 @@
   <data name="Bitrate" xml:space="preserve">
     <value>Tốc độ bit</value>
   </data>
+  <data name="Lyrics_UntimedLyrics" xml:space="preserve">
+    <value>Lời hát không đánh dấu thời</value>
+  </data>
+  <data name="Menu_File_Exit" xml:space="preserve">
+    <value>Thoát</value>
+  </data>
+  <data name="Menu_File_NewWindow" xml:space="preserve">
+    <value>Cửa sổ mới</value>
+  </data>
+  <data name="Menu_File_Open" xml:space="preserve">
+    <value>Mở</value>
+  </data>
+  <data name="Menu_File_Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Menu_TagSources" xml:space="preserve">
+    <value>Nguồn thẻ</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="NoInternet" xml:space="preserve">
+    <value>Bạn không có ket nói với Internet :(</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Thông báo</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="RestartNow" xml:space="preserve">
+    <value>Khởi chạy lại ngay</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Settings_CleanLibrary" xml:space="preserve">
+    <value>Dọn sạch và cập nhật thư viện</value>
+  </data>
+  <data name="Search_Prompt" xml:space="preserve">
+    <value>Đánh đây để tìm kiếm!</value>
+  </data>
+  <data name="Settings_NukeLibrary" xml:space="preserve">
+    <value>Đặt lại thư viện</value>
+  </data>
+  <data name="Settings_NukeLibrary_Warning" xml:space="preserve">
+    <value>Bạn sắp xóa thư viện của bạn.</value>
+  </data>
+  <data name="Settings_Reset" xml:space="preserve">
+    <value>Đặt lại cài đặt vè mặc định</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="Composer" xml:space="preserve">
+    <value>Nhà soạn</value>
+  </data>
+  <data name="Settings_RestartNeeded" xml:space="preserve">
+    <value>FMP cần khởi chạy lại để áp dụng các thay đổi.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="Notification_ClearSuccess" xml:space="preserve">
+    <value>Đã xóa thư viện thành công!</value>
+  </data>
+  <data name="Notification_FileGone" xml:space="preserve">
+    <value>Có vẻ như tệp bạn mới cố phát, "{0}", không có tôn tại.</value>
+  </data>
+  <data name="TagEditor_Disambiguation" xml:space="preserve">
+    <value>Đã tìm hơn một kết quả cho đĩa này. Bạn muốn cái nào?</value>
+  </data>
+  <data name="TagEditor_NoResults" xml:space="preserve">
+    <value>Không tìm kết quả nào cho đĩa này :(</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Tiểu đề</value>
+  </data>
+  <data name="TrackNumber" xml:space="preserve">
+    <value>Số trên đĩa</value>
+  </data>
+  <data name="Notification_FileInPlaylistMissing" xml:space="preserve">
+    <value>Có vẻ như một bài hát trong danh sách phát không có tôn tại, và sẽ bị bỏ qua:
+{0}</value>
+  </data>
+  <data name="FileFilter_AudioFiles" xml:space="preserve">
+    <value>Tệp âm thanh</value>
+  </data>
+  <data name="FileFilter_Other" xml:space="preserve">
+    <value>Tệp khác</value>
+  </data>
+  <data name="FileFilter_PlaylistFiles" xml:space="preserve">
+    <value>Tệp đánh sách phát</value>
+  </data>
+  <data name="FileFilter_M3UUTF8" xml:space="preserve">
+    <value>Tệp đánh sách phát M3U UTF-8</value>
+  </data>
+  <data name="FileFilter_ImageFiles" xml:space="preserve">
+    <value>Tệp hình ảnh</value>
+  </data>
+  <data name="AlbumArtist" xml:space="preserve">
+    <value>Nghệ sĩ đĩa</value>
+  </data>
+  <data name="CoverArt" xml:space="preserve">
+    <value>Ảnh bìa</value>
+  </data>
+  <data name="DiscNumber" xml:space="preserve">
+    <value>Số đĩa</value>
+  </data>
+  <data name="Genre" xml:space="preserve">
+    <value>Thể loại</value>
+  </data>
+  <data name="Notification_PlaybackError" xml:space="preserve">
+    <value>Đã xảy ra lời phát bài hát:
+{0}</value>
+  </data>
+  <data name="Notification_Scanning" xml:space="preserve">
+    <value>Đăng quét bài hát mới...</value>
+  </data>
 </root>
