@@ -118,354 +118,354 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value></value>
+    <value>Album</value>
   </data>
   <data name="Albums" xml:space="preserve">
-    <value></value>
+    <value>Albums</value>
   </data>
   <data name="Artist" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Artists" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Bitrate" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Create" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Delete" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Disc" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Export" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="FilePathOrUrl" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Import" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ImportFolders" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ImportPlaylistFiles" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ImportTracks" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Import_DragDropHint" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Library_EnqueueAll" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Library_PlayAll" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Lyrics" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Lyrics_NoLyrics" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_About" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_About_AboutFMP" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_File" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_GoTo" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback_Next" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback_PauseAfterCurrentTrack" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback_PlayPause" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback_Previous" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback_Repeat" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_Playback_Shuffle" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="MiniPlayer" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="NothingPlaying" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Notification_ClearSuccess" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Notification_FileGone" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Notification_FileInPlaylistMissing" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Notification_PlaybackError" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Notification_Scanning" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="OpenDialog" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="PinToTop" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="PlaylistManagement" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="PlaylistManagement_Header" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="PlaylistManagement_InvalidName" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="PlaylistManagement_PlaylistName" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Playlists" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="QueueManagement" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="QueueManagement_AddPlaylist" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="QueueManagement_AddTrack" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="QueueManagement_ClearQueue" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="QueueManagement_TimeRemaining" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Rename" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_AddFolder" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Appearance" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_AutoImport" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_AutoImport_Info" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Automatic" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_CheckForUpdates" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_ClearAll" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Credits" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_IntegrateDiscordRPC" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Integrations" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Language" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_License" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Maintenance" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_MPRISShowCoverArt" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_MPRISShowCoverArt_Info" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_PlaytimeLogging" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Report" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_ShowTimeInWindow" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_ThankYou" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Updates" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_ViewLicense" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_ViewSourceCode" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_ViewWebsite" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TagEditor" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Track" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TrackInfo" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Tracks" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Year" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="FileFilter_AudioFiles" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="FileFilter_Other" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="FileFilter_PlaylistFiles" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="FileFilter_M3UUTF8" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="FileFilter_ImageFiles" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="AlbumArtist" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Composer" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="CoverArt" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DiscNumber" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Genre" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Lyrics_UntimedLyrics" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_File_Exit" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_File_NewWindow" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_File_Open" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_File_Save" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Menu_TagSources" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="No" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="NoInternet" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="OK" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Search" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Search_Prompt" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_CleanLibrary" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_NukeLibrary" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_NukeLibrary_Warning" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_Reset" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Settings_RestartNeeded" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TagEditor_Disambiguation" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TagEditor_NoResults" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Title" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TrackNumber" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Yes" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Automatic" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UnknownArtist" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UnknownTitle" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
 </root>
