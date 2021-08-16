@@ -118,354 +118,356 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value></value>
+    <value>Album</value>
   </data>
   <data name="Albums" xml:space="preserve">
-    <value></value>
+    <value>Albummer</value>
   </data>
   <data name="Artist" xml:space="preserve">
-    <value></value>
+    <value>Kunstner</value>
   </data>
   <data name="Artists" xml:space="preserve">
-    <value></value>
+    <value>Kunstnere</value>
   </data>
   <data name="Bitrate" xml:space="preserve">
-    <value></value>
+    <value>Bitrate</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value></value>
+    <value>Ny playliste</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value></value>
+    <value>Slet playliste</value>
   </data>
   <data name="Disc" xml:space="preserve">
-    <value></value>
+    <value>Disk</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value></value>
+    <value>Eksporter</value>
   </data>
   <data name="FilePathOrUrl" xml:space="preserve">
-    <value></value>
+    <value>Filsti eller URL</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value></value>
+    <value>Importer</value>
   </data>
   <data name="ImportFolders" xml:space="preserve">
-    <value></value>
+    <value>Importer mapper</value>
   </data>
   <data name="ImportPlaylistFiles" xml:space="preserve">
-    <value></value>
+    <value>Importer playliste-filer</value>
   </data>
   <data name="ImportTracks" xml:space="preserve">
-    <value></value>
+    <value>Importer spor</value>
   </data>
   <data name="Import_DragDropHint" xml:space="preserve">
-    <value></value>
+    <value>Du kan også trække filer herover.</value>
   </data>
   <data name="Library_EnqueueAll" xml:space="preserve">
-    <value></value>
+    <value>Tilføj alle til kø</value>
   </data>
   <data name="Library_PlayAll" xml:space="preserve">
-    <value></value>
+    <value>Afspil alle</value>
   </data>
   <data name="Lyrics" xml:space="preserve">
-    <value></value>
+    <value>Sangtekster</value>
   </data>
   <data name="Lyrics_NoLyrics" xml:space="preserve">
-    <value></value>
+    <value>Ingen sangtekster tilgængelig</value>
   </data>
   <data name="Menu_About" xml:space="preserve">
-    <value></value>
+    <value>Om</value>
   </data>
   <data name="Menu_About_AboutFMP" xml:space="preserve">
-    <value></value>
+    <value>Om FRESHMusicPlayer</value>
   </data>
   <data name="Menu_File" xml:space="preserve">
-    <value></value>
+    <value>Fil</value>
   </data>
   <data name="Menu_GoTo" xml:space="preserve">
-    <value></value>
+    <value>Gå til</value>
   </data>
   <data name="Menu_Playback" xml:space="preserve">
-    <value></value>
+    <value>Afspilning</value>
   </data>
   <data name="Menu_Playback_Next" xml:space="preserve">
-    <value></value>
+    <value>Næste</value>
   </data>
   <data name="Menu_Playback_PauseAfterCurrentTrack" xml:space="preserve">
-    <value></value>
+    <value>Pause efter nuværende spor</value>
   </data>
   <data name="Menu_Playback_PlayPause" xml:space="preserve">
-    <value></value>
+    <value>Afspil/pause</value>
   </data>
   <data name="Menu_Playback_Previous" xml:space="preserve">
-    <value></value>
+    <value>Tilbage</value>
   </data>
   <data name="Menu_Playback_Repeat" xml:space="preserve">
-    <value></value>
+    <value>Gentag</value>
   </data>
   <data name="Menu_Playback_Shuffle" xml:space="preserve">
-    <value></value>
+    <value>Bland</value>
   </data>
   <data name="MiniPlayer" xml:space="preserve">
-    <value></value>
+    <value>Miniafspiller</value>
   </data>
   <data name="NothingPlaying" xml:space="preserve">
-    <value></value>
+    <value>Intet spiller</value>
   </data>
   <data name="Notification_ClearSuccess" xml:space="preserve">
-    <value></value>
+    <value>Dit musikbibliotek er blevet ryddet!</value>
   </data>
   <data name="Notification_FileGone" xml:space="preserve">
-    <value></value>
+    <value>Filen du prøvede at afspille, "{0}", eksisterer ikke.</value>
   </data>
   <data name="Notification_FileInPlaylistMissing" xml:space="preserve">
-    <value></value>
+    <value>En af sporene i playlisten eksistere ikke og er blevet sprunget over:
+{0}</value>
   </data>
   <data name="Notification_PlaybackError" xml:space="preserve">
-    <value></value>
+    <value>En fejl skete under afspilningen:
+{0}</value>
   </data>
   <data name="Notification_Scanning" xml:space="preserve">
-    <value></value>
+    <value>Leder efter nye spor...</value>
   </data>
   <data name="OpenDialog" xml:space="preserve">
-    <value></value>
+    <value>Åben...</value>
   </data>
   <data name="PinToTop" xml:space="preserve">
-    <value></value>
+    <value>Fastgør til toppen</value>
   </data>
   <data name="PlaylistManagement" xml:space="preserve">
-    <value></value>
+    <value>Playliste-håndtering</value>
   </data>
   <data name="PlaylistManagement_Header" xml:space="preserve">
-    <value></value>
+    <value>Hvad ønsker du at gøre med "{0}"?</value>
   </data>
   <data name="PlaylistManagement_InvalidName" xml:space="preserve">
-    <value></value>
+    <value>Det er ikke et gyldigt navn til en playliste.</value>
   </data>
   <data name="PlaylistManagement_PlaylistName" xml:space="preserve">
-    <value></value>
+    <value>Playliste-navn</value>
   </data>
   <data name="Playlists" xml:space="preserve">
-    <value></value>
+    <value>Playlister</value>
   </data>
   <data name="QueueManagement" xml:space="preserve">
-    <value></value>
+    <value>Kø-håndtering</value>
   </data>
   <data name="QueueManagement_AddPlaylist" xml:space="preserve">
-    <value></value>
+    <value>Tilføj playliste</value>
   </data>
   <data name="QueueManagement_AddTrack" xml:space="preserve">
-    <value></value>
+    <value>Tilføj spor</value>
   </data>
   <data name="QueueManagement_ClearQueue" xml:space="preserve">
-    <value></value>
+    <value>Ryd kø</value>
   </data>
   <data name="QueueManagement_TimeRemaining" xml:space="preserve">
-    <value></value>
+    <value>Tid tilbage:</value>
   </data>
   <data name="Rename" xml:space="preserve">
-    <value></value>
+    <value>Omnavngiv</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value></value>
+    <value>FRESHMusicPlayer-indstillinger</value>
   </data>
   <data name="Settings_AddFolder" xml:space="preserve">
-    <value></value>
+    <value>Tilføj mappe</value>
   </data>
   <data name="Settings_Appearance" xml:space="preserve">
-    <value></value>
+    <value>Udseende</value>
   </data>
   <data name="Settings_AutoImport" xml:space="preserve">
-    <value></value>
+    <value>Auto-importer</value>
   </data>
   <data name="Settings_AutoImport_Info" xml:space="preserve">
-    <value></value>
+    <value>FMP vil importere nye spor fra disse mapper:</value>
   </data>
   <data name="Settings_Automatic" xml:space="preserve">
-    <value></value>
+    <value>Automatisk</value>
   </data>
   <data name="Settings_CheckForUpdates" xml:space="preserve">
-    <value></value>
+    <value>Fortæl mig om nye versioner af FMP</value>
   </data>
   <data name="Settings_ClearAll" xml:space="preserve">
-    <value></value>
+    <value>Ryd alle</value>
   </data>
   <data name="Settings_Credits" xml:space="preserve">
-    <value></value>
+    <value>af Squid Grill (og open source-bidragydere)</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
-    <value></value>
+    <value>Generel</value>
   </data>
   <data name="Settings_IntegrateDiscordRPC" xml:space="preserve">
-    <value></value>
+    <value>Discord Rich Presence</value>
   </data>
   <data name="Settings_Integrations" xml:space="preserve">
-    <value></value>
+    <value>Integrationer</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
-    <value></value>
+    <value>Sprog</value>
   </data>
   <data name="Settings_License" xml:space="preserve">
-    <value></value>
+    <value>Licenseret under GPL v3-licensen</value>
   </data>
   <data name="Settings_Maintenance" xml:space="preserve">
-    <value></value>
+    <value>Vedligholdelse</value>
   </data>
   <data name="Settings_MPRISShowCoverArt" xml:space="preserve">
-    <value></value>
+    <value>Vis cover-billede i MPRIS</value>
   </data>
   <data name="Settings_MPRISShowCoverArt_Info" xml:space="preserve">
-    <value></value>
+    <value>Vil skrive filer til en midlertidlig mappe, kan gøre skiftning af spor langsommere</value>
   </data>
   <data name="Settings_PlaytimeLogging" xml:space="preserve">
-    <value></value>
+    <value>Spiltid-logging</value>
   </data>
   <data name="Settings_Report" xml:space="preserve">
-    <value></value>
+    <value>Rapporter et problem</value>
   </data>
   <data name="Settings_ShowTimeInWindow" xml:space="preserve">
-    <value></value>
+    <value>Vis tid i vindue-navn</value>
   </data>
   <data name="Settings_ThankYou" xml:space="preserve">
-    <value></value>
+    <value>Tak for at du bruger FRESHMusicPlayer!❤</value>
   </data>
   <data name="Settings_Updates" xml:space="preserve">
-    <value></value>
+    <value>Opdateringer</value>
   </data>
   <data name="Settings_ViewLicense" xml:space="preserve">
-    <value></value>
+    <value>Vis licens</value>
   </data>
   <data name="Settings_ViewSourceCode" xml:space="preserve">
-    <value></value>
+    <value>Vis kildekode</value>
   </data>
   <data name="Settings_ViewWebsite" xml:space="preserve">
-    <value></value>
+    <value>FMP på internettet</value>
   </data>
   <data name="TagEditor" xml:space="preserve">
-    <value></value>
+    <value>Tag-redigering</value>
   </data>
   <data name="Track" xml:space="preserve">
-    <value></value>
+    <value>Spor</value>
   </data>
   <data name="TrackInfo" xml:space="preserve">
-    <value></value>
+    <value>Sporinfo</value>
   </data>
   <data name="Tracks" xml:space="preserve">
-    <value></value>
+    <value>Spor</value>
   </data>
   <data name="Year" xml:space="preserve">
-    <value></value>
+    <value>År</value>
   </data>
   <data name="FileFilter_AudioFiles" xml:space="preserve">
-    <value></value>
+    <value>Lydfiler</value>
   </data>
   <data name="FileFilter_Other" xml:space="preserve">
-    <value></value>
+    <value>Andet</value>
   </data>
   <data name="FileFilter_PlaylistFiles" xml:space="preserve">
-    <value></value>
+    <value>Playliste-filer</value>
   </data>
   <data name="FileFilter_M3UUTF8" xml:space="preserve">
-    <value></value>
+    <value>M3U UTF-8-Playliste</value>
   </data>
   <data name="FileFilter_ImageFiles" xml:space="preserve">
-    <value></value>
+    <value>Billedfiler</value>
   </data>
   <data name="AlbumArtist" xml:space="preserve">
-    <value></value>
+    <value>Album-kunstner</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value></value>
+    <value>Annuller</value>
   </data>
   <data name="Composer" xml:space="preserve">
-    <value></value>
+    <value>Komponist</value>
   </data>
   <data name="CoverArt" xml:space="preserve">
-    <value></value>
+    <value>Cover-billede</value>
   </data>
   <data name="DiscNumber" xml:space="preserve">
-    <value></value>
+    <value>Disk-nummer</value>
   </data>
   <data name="Genre" xml:space="preserve">
-    <value></value>
+    <value>Genre</value>
   </data>
   <data name="Lyrics_UntimedLyrics" xml:space="preserve">
-    <value></value>
+    <value>Sangtekster uden tid</value>
   </data>
   <data name="Menu_File_Exit" xml:space="preserve">
-    <value></value>
+    <value>Luk</value>
   </data>
   <data name="Menu_File_NewWindow" xml:space="preserve">
-    <value></value>
+    <value>Nyt vindue</value>
   </data>
   <data name="Menu_File_Open" xml:space="preserve">
-    <value></value>
+    <value>Åben</value>
   </data>
   <data name="Menu_File_Save" xml:space="preserve">
-    <value></value>
+    <value>Gem</value>
   </data>
   <data name="Menu_TagSources" xml:space="preserve">
-    <value></value>
+    <value>Tag-kilder</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value></value>
+    <value>Nej</value>
   </data>
   <data name="NoInternet" xml:space="preserve">
-    <value></value>
+    <value>Du er ikke forbundet til internettet :(</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value></value>
+    <value>Notifikationer</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value></value>
+    <value>Okay</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value></value>
+    <value>Genstart nu</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value></value>
+    <value>Søg</value>
   </data>
   <data name="Search_Prompt" xml:space="preserve">
-    <value></value>
+    <value>Skriv her for at søge!</value>
   </data>
   <data name="Settings_CleanLibrary" xml:space="preserve">
-    <value></value>
+    <value>Ryd og opdater bibliotek</value>
   </data>
   <data name="Settings_NukeLibrary" xml:space="preserve">
-    <value></value>
+    <value>Nulstil bibliotek</value>
   </data>
   <data name="Settings_NukeLibrary_Warning" xml:space="preserve">
-    <value></value>
+    <value>Du er ved at nulstille dit bibliotek. Dette kan ikke fortrydes.</value>
   </data>
   <data name="Settings_Reset" xml:space="preserve">
-    <value></value>
+    <value>Nulstil indstillinger til standard</value>
   </data>
   <data name="Settings_RestartNeeded" xml:space="preserve">
-    <value></value>
+    <value>FMP er nød til at genstarte før dine ændringer tager effekt.</value>
   </data>
   <data name="TagEditor_Disambiguation" xml:space="preserve">
-    <value></value>
+    <value>Der er mere end et resultat for dette album. Hvilken ønsker du at vælge?</value>
   </data>
   <data name="TagEditor_NoResults" xml:space="preserve">
-    <value></value>
+    <value>Ingen resultater kunne findes for dette album :(</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value></value>
+    <value>Navn</value>
   </data>
   <data name="TrackNumber" xml:space="preserve">
-    <value></value>
+    <value>Spornummer</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value></value>
+    <value>Ja</value>
   </data>
   <data name="Automatic" xml:space="preserve">
-    <value></value>
+    <value>Automatisk</value>
   </data>
   <data name="UnknownArtist" xml:space="preserve">
-    <value></value>
+    <value>Ukendt kunstner</value>
   </data>
   <data name="UnknownTitle" xml:space="preserve">
-    <value></value>
+    <value>Ukendt navn</value>
   </data>
 </root>
