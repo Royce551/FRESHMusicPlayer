@@ -460,4 +460,10 @@ Bedankt voor het gebruiken van FRESHMusicPlayer! ♥</value>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
     <value>Ongetimede Teksten</value>
   </data>
+  <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value>Debuglog openen</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
+    <value>"{0}" is geen geldige naam voor een afspeellijst.</value>
+  </data>
 </root>
