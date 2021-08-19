@@ -23,18 +23,18 @@ jobs:
     - shell: bash
       id: checkbp
       run: |
-        echo "::set-output name=is-blueprint::${{ github.event.inputs.blueprint || github.event.action == 'published' }}"
+        echo "::set-output name=is-blueprint::${{ (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && github.event.inputs.blueprint) || (github.event_name == 'release' && false) }}"
     - shell: bash
       id: setvars
       env:
         BLUEPRINT: $${{ steps.checkbp.outputs.is-blueprint }}
       run: |
-        if [ $BLUEPRINT == 'true' ]; then
-          echo "::set-output name=manifest-path::'Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml'"
-          echo "::set-output name=repo-name::'partner-blueprint'"
+        if [ $BLUEPRINT == $true ]; then
+          echo "::set-output name=manifest-path::Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml"
+          echo "::set-output name=repo-name::partner-blueprint"
         else
-          echo "::set-output name=manifest-path::'Distribution/io.github.royce551.FRESHMusicPlayer.yml'"
-          echo "::set-output name=repo-name::'partner'"
+          echo "::set-output name=manifest-path::Distribution/io.github.royce551.FRESHMusicPlayer.yml"
+          echo "::set-output name=repo-name::partner"
         fi
     - uses: actions/checkout@v2
     - uses: bilelmoussaoui/flatpak-github-actions@v2
