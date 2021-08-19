@@ -21,22 +21,39 @@ jobs:
       options: --privileged
     steps:
     - shell: bash
-      id: setvars
+      id: checkbp
       outputs:
         is-blueprint:
           description: "Determines if this is a Blueprint build"
       run: |
         echo "::set-output name=is-blueprint::${{ github.event.inputs.blueprint || github.event.action == "published" || "false" }}"
+    - shell: bash
+      id: setvars
+      env:
+        BLUEPRINT: $${{ steps.checkbp.outputs.is-blueprint }}
+      outputs:
+        manifest-path:
+          description: "Flatpak Manifest Path"
+        repo-name:
+          description: "Repository Name"
+      run: |
+        if [ $BLUEPRINT == 'true' ]; then
+          echo "::set-output name=manifest-path::'Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml'"
+	  echo "::set-output name=repo-name::'partner-blueprint'"
+        else
+          echo "::set-output name=manifest-path::'Distribution/io.github.royce551.FRESHMusicPlayer.yml'"
+	  echo "::set-output name=repo-name::'partner'"
+        fi
     - uses: actions/checkout@v2
     - uses: bilelmoussaoui/flatpak-github-actions@v2
       with:
         bundle: "fmp.flatpak"
-        manifest-path: $${{ steps.setvars.outputs.is-blueprint ? "Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml" : "Distribution/io.github.royce551.FRESHMusicPlayer.yml" }}
+        manifest-path: $${{ steps.setvars.outputs.manifest-path }}
     - shell: bash
       env:
         REPO_TOKEN: ${{ secrets.FLATPAK_REPO_TOKEN }}
         REPO_LOCATION: https://flatpak.vicr123.com
-        REPO_NAME: $${{ steps.setvars.outputs.is-blueprint ? "partner-blueprint" : "partner" }}
+        REPO_NAME: $${{ steps.setvars.outputs.repo-name }}
       run: |
         sudo dnf install -y python3-aiohttp python3-tenacity python3-gobject
         curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client
