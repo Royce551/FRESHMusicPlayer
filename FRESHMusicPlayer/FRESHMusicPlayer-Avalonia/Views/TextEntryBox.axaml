@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" SizeToContent="Height" Width="450" WindowStartupLocation="CenterOwner"
-        x:Class="FRESHMusicPlayer.Views.TextEntryBox"
+        x:Class="FRESHMusicPlayer.Views.TextEntryBox" Icon="/Assets/icon.ico" ShowInTaskbar="False"
         Title="">
 	<Window.DataContext>
 		<vm:TextEntryBoxViewModel/>

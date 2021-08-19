@@ -29,12 +29,13 @@ namespace FRESHMusicPlayer.ViewModels
         {
             new(Properties.Resources.Automatic, "automatic"),
             new("English", "en"),
+            new("Danish", "da"),
             new("German", "de"),
             new("Vietnamese", "vi"),
             new("Arabic (Saudi Arabia)", "ar")
         };
 
-        public string Version => MainWindowViewModel.ProjectName;
+        public string Version => $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version} for Mac and Linux";
 
         public DisplayLanguage Language
         {

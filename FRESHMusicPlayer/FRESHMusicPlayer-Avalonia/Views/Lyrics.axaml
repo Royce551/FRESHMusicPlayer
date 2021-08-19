@@ -5,7 +5,7 @@
 		xmlns:controls="clr-namespace:FRESHMusicPlayer.Controls.BlurryImage"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
-        mc:Ignorable="d" Width="500" Height="300"
+        mc:Ignorable="d" Width="500" Height="300" Icon="/Assets/icon.ico" ShowInTaskbar="False"
         x:Class="FRESHMusicPlayer.Views.Lyrics" WindowStartupLocation="CenterOwner" Closing="OnClosing"
         Title="{x:Static resx:Resources.Lyrics}">
 	<Window.DataContext>

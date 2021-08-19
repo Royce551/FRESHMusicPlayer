@@ -51,12 +51,16 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Player = new();
             StartThings();
+#if DEBUG // allow multiple instances of FMP in debug (at the expense of stability with heavy library use)
             var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
+#elif !DEBUG
+            var library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
+#endif
             Library = new Library(library);
             InitializeLibrary();
         }
 
-        public const string ProjectName = "FRESHMusicPlayer for Mac and Linux Release Candidate 1";
+        public const string ProjectName = "FRESHMusicPlayer";
         private string windowTitle = ProjectName;
         public string WindowTitle
         {
@@ -69,7 +73,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void ClearAllNotificationsCommand() => Notifications.ClearAll();
 
-        #region Core
+#region Core
         private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
             Notifications.Add(new()
@@ -316,9 +320,9 @@ namespace FRESHMusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref pauseAfterCurrentTrack, value);
         }
 
-        #endregion
+#endregion
 
-        #region Library
+#region Library
 
         public async void InitializeLibrary()
         {
@@ -844,9 +848,9 @@ namespace FRESHMusicPlayer.ViewModels
             await Task.Delay(100);
             ShowTracksForAlbum(CurrentTrack.Album);
         }
-        #endregion
+#endregion
 
-        #region NavBar
+#region NavBar
         public void OpenSettingsCommand()
         {
             new Views.Settings().SetThings(Program.Config, Library).Show(Window);
@@ -872,9 +876,9 @@ namespace FRESHMusicPlayer.ViewModels
             var tracks = new List<string>();
             if (Player.FileLoaded) tracks.Add(Player.FilePath);
             else tracks = Player.Queue.Queue;
-            new Views.TagEditor.TagEditor().SetStuff(Player, Library).SetInitialFiles(tracks).Show();
+            new Views.TagEditor.TagEditor().SetStuff(Player, Library).SetInitialFiles(tracks).Show(Window);
         }
-        #endregion
+#endregion
     }
 
     public class PauseAfterCurrentTrackToBrushConverter : IValueConverter

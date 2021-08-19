@@ -5,7 +5,7 @@
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels.TagEditor"
         mc:Ignorable="d" Width="600" Height="400"
-        x:Class="FRESHMusicPlayer.Views.TagEditor.IntegrationDisambiguation"
+        x:Class="FRESHMusicPlayer.Views.TagEditor.IntegrationDisambiguation" Icon="/Assets/icon.ico"
         Title="{x:Static vm:TagEditorViewModel.WindowName}" CanResize="False" WindowStartupLocation="CenterOwner">
 	
 	<Window.DataContext>

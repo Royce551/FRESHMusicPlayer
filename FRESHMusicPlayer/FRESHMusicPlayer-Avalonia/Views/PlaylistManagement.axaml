@@ -5,7 +5,7 @@
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" SizeToContent="Height" Width="600" CanResize="False"
-        x:Class="FRESHMusicPlayer.Views.PlaylistManagement"
+        x:Class="FRESHMusicPlayer.Views.PlaylistManagement" Icon="/Assets/icon.ico"
         Title="{x:Static resx:Resources.PlaylistManagement}">
 
 	<Window.DataContext>

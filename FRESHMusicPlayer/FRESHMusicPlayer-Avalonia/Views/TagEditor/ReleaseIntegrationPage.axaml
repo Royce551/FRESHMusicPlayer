@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Width="600" Height="450"
         x:Class="FRESHMusicPlayer.Views.TagEditor.ReleaseIntegrationPage"
-		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties" Icon="/Assets/icon.ico"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels.TagEditor"
         Title="{Binding Album}">
 
