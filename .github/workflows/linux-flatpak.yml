@@ -23,7 +23,7 @@ jobs:
     - shell: bash
       id: checkbp
       run: |
-        echo "::set-output name=is-blueprint::${{ github.event.inputs.blueprint || github.event.action == "published" || "false" }}"
+        echo "::set-output name=is-blueprint::${{ github.event.inputs.blueprint || github.event.action == 'published' }}"
     - shell: bash
       id: setvars
       env:
