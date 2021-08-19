@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       blueprint:
-        description: 'Is this a Blueprint build?'
+        description: 'Is Blueprint build? (true/false)'
         required: true
         default: false
   release:
@@ -27,9 +27,9 @@ jobs:
     - shell: bash
       id: setvars
       env:
-        BLUEPRINT: $${{ steps.checkbp.outputs.is-blueprint }}
+        BLUEPRINT: ${{ steps.checkbp.outputs.is-blueprint }}
       run: |
-        if [ $BLUEPRINT == $true ]; then
+        if [ $BLUEPRINT == 'true' ]; then
           echo "::set-output name=manifest-path::Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml"
           echo "::set-output name=repo-name::partner-blueprint"
         else
@@ -40,12 +40,12 @@ jobs:
     - uses: bilelmoussaoui/flatpak-github-actions@v2
       with:
         bundle: "fmp.flatpak"
-        manifest-path: $${{ steps.setvars.outputs.manifest-path }}
+        manifest-path: ${{ steps.setvars.outputs.manifest-path }}
     - shell: bash
       env:
         REPO_TOKEN: ${{ secrets.FLATPAK_REPO_TOKEN }}
         REPO_LOCATION: https://flatpak.vicr123.com
-        REPO_NAME: $${{ steps.setvars.outputs.repo-name }}
+        REPO_NAME: ${{ steps.setvars.outputs.repo-name }}
       run: |
         sudo dnf install -y python3-aiohttp python3-tenacity python3-gobject
         curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client
