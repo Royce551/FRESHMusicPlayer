@@ -2,6 +2,14 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      blueprint:
+        description: 'Is this a Blueprint build?'
+        required: true
+        default: false
+  release:
+    types: [published]
 
 name: Linux CI (Flatpak)
 jobs:
@@ -12,16 +20,23 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:kde-5.15
       options: --privileged
     steps:
+    - shell: bash
+      id: setvars
+      outputs:
+        is-blueprint:
+          description: "Determines if this is a Blueprint build"
+      run: |
+        echo "::set-output name=is-blueprint::${{ github.event.inputs.blueprint || github.event.action == "published" || "false" }}"
     - uses: actions/checkout@v2
     - uses: bilelmoussaoui/flatpak-github-actions@v2
       with:
         bundle: "fmp.flatpak"
-        manifest-path: "Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml"
+        manifest-path: $${{ steps.setvars.outputs.is-blueprint ? "Distribution/io.github.royce551.FRESHMusicPlayer.Blueprint.yml" : "Distribution/io.github.royce551.FRESHMusicPlayer.yml" }}
     - shell: bash
       env:
         REPO_TOKEN: ${{ secrets.FLATPAK_REPO_TOKEN }}
         REPO_LOCATION: https://flatpak.vicr123.com
-        REPO_NAME: partner-blueprint
+        REPO_NAME: $${{ steps.setvars.outputs.is-blueprint ? "partner-blueprint" : "partner" }}
       run: |
         sudo dnf install -y python3-aiohttp python3-tenacity python3-gobject
         curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client
