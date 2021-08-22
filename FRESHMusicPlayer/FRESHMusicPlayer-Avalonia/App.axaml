@@ -15,5 +15,8 @@
 		<Style Selector="StackPanel">
 			<Setter Property="Spacing" Value="3"/>
 		</Style>
+        <Style Selector="ListBox">
+			<Setter Property="IsTextSearchEnabled" Value="True"/>
+		</Style>
     </Application.Styles>
 </Application>
