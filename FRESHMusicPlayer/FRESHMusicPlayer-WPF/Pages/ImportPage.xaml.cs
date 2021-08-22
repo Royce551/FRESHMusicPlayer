@@ -34,7 +34,7 @@ namespace FRESHMusicPlayer.Pages
             {
                 window.Player.Queue.Add(dialog.FileName);
                 await Task.Run(() => window.Library.Import(dialog.FileName));
-                window.Player.PlayMusic();
+                await window.Player.PlayAsync();
             }
         }
 
@@ -62,7 +62,7 @@ namespace FRESHMusicPlayer.Pages
                 }
                 window.Player.Queue.Add(reader.FilePaths.ToArray());
                 await Task.Run(() => window.Library.Import(reader.FilePaths.ToArray()));
-                window.Player.PlayMusic();
+                await window.Player.PlayAsync();
             }
         }
 
@@ -81,7 +81,7 @@ namespace FRESHMusicPlayer.Pages
                         || name.EndsWith(".aac")).ToArray();
                     window.Player.Queue.Add(paths);
                     await Task.Run(() => window.Library.Import(paths));
-                    window.Player.PlayMusic();
+                    await window.Player.PlayAsync();
                 }
             }
         }
@@ -96,12 +96,12 @@ namespace FRESHMusicPlayer.Pages
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library, clearqueue: false, enqueue: false);        
         }
 
-        private void TextBoxButton_Click(object sender, RoutedEventArgs e)
+        private async void TextBoxButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(FilePathBox.Text)) return;
             window.Player.Queue.Add(FilePathBox.Text);
             window.Library.Import(FilePathBox.Text);
-            window.Player.PlayMusic();
+            await window.Player.PlayAsync();
         }
     }
 }

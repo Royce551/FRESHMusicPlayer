@@ -42,11 +42,11 @@ namespace FRESHMusicPlayer.Handlers
                     Track = new DatabaseTrack
                     {
                         Path = window.Player.FilePath,
-                        Artist = window.CurrentTrack.Artist,
+                        Artist = string.Join(", ", window.CurrentTrack.Artists),
                         Title = window.CurrentTrack.Title,
                         Album = window.CurrentTrack.Album,
                         TrackNumber = window.CurrentTrack.TrackNumber,
-                        Length = window.CurrentTrack.Duration
+                        Length = (int)window.Player.TotalTime.TotalSeconds
                     }
                 };
                 TrackingFile.Entries.Add(trackingEntry);

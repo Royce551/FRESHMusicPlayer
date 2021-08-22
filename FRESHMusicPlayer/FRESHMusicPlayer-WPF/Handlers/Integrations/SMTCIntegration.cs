@@ -1,4 +1,5 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
@@ -37,13 +38,13 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             smtc.ButtonPressed += Smtc_ButtonPressed;
         }
 
-        public void Update(Track track, PlaybackStatus status)
+        public void Update(IMetadataProvider track, PlaybackStatus status)
         {
             smtc.PlaybackStatus = (MediaPlaybackStatus)status;
             var updater = smtc.DisplayUpdater;
             updater.Type = MediaPlaybackType.Music;
-            updater.MusicProperties.Artist = track.Artist;
-            updater.MusicProperties.AlbumArtist = track.AlbumArtist;
+            updater.MusicProperties.Artist = string.Join(", ", track.Artists);
+            //updater.MusicProperties.AlbumArtist = track.AlbumArtist; // TODO: figure out how to deal with this
             updater.MusicProperties.Title = track.Title;
             updater.Update();
         }

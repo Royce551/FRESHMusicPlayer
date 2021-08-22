@@ -76,13 +76,13 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        private void PlayAllButton_Click(object sender, RoutedEventArgs e)
+        private async void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (SongEntry entry in TracksPanel.Items)
             {
                 window.Player.Queue.Add(entry.FilePath);
             }
-            window.Player.PlayMusic();
+            await window.Player.PlayAsync();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) => Dispatcher.Invoke(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);

@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer.Forms
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            ArtistTextBlock.Text = window.CurrentTrack.Artist;
+            ArtistTextBlock.Text = string.Join(", ", window.CurrentTrack.Artists);
             TitleTextBlock.Text = window.CurrentTrack.Title;
 
             ProgressSlider.Maximum = window.Player.CurrentBackend.TotalTime.TotalSeconds;

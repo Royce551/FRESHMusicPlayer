@@ -37,20 +37,20 @@ namespace FRESHMusicPlayer.Pages
             PlayButton.Visibility = DeleteButton.Visibility = Visibility.Collapsed;
         }
 
-        private void PlayButtonClick(object sender, MouseButtonEventArgs e)
+        private async void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
             player.Queue.Position = Index;
-            player.PlayMusic();
+            await player.PlayAsync();
         }
 
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => player.Queue.Remove(Index);
 
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
                 player.Queue.Position = Index;
-                player.PlayMusic();
+                await player.PlayAsync();
             }
         }
     }

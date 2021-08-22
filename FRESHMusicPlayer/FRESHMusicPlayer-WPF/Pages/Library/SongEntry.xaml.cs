@@ -45,12 +45,12 @@ namespace FRESHMusicPlayer.Pages.Library
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Collapsed;
         }
 
-        private void PlayButtonClick(object sender, MouseButtonEventArgs e)
+        private async void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
                 if (player.FileLoaded) player.Queue.Clear();
-                player.PlayMusic(FilePath);
+                await player.PlayMusicAsync(FilePath);
             }
             else
             {
@@ -76,12 +76,12 @@ namespace FRESHMusicPlayer.Pages.Library
             ((ListBox)Parent).Items.Remove(this);
         }
 
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
                 if (player.FileLoaded) player.Queue.Clear();
-                player.PlayMusic(FilePath);
+                await player.PlayMusicAsync(FilePath);
             }
         }
 

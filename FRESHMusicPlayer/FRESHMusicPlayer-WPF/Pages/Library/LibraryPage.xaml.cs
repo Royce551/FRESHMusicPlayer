@@ -186,11 +186,11 @@ namespace FRESHMusicPlayer.Pages.Library
             e.Effects = DragDropEffects.Copy;
         }
 
-        private void Page_Drop(object sender, DragEventArgs e)
+        private async void Page_Drop(object sender, DragEventArgs e)
         {
             window.Player.Queue.Clear();
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library);
-            window.Player.PlayMusic();
+            await window.Player.PlayAsync();
             var selectedItem = CategoryPanel.SelectedItem;
             LoadLibrary();
             Thread.Sleep(10);
@@ -203,12 +203,12 @@ namespace FRESHMusicPlayer.Pages.Library
             window.Player.Queue.Add(tracks);
         }
 
-        private void PlayAllButton_Click(object sender, RoutedEventArgs e)
+        private async void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
             window.Player.Queue.Clear();
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
             window.Player.Queue.Add(tracks);
-            window.Player.PlayMusic();
+            await window.Player.PlayAsync();
         }
 
         

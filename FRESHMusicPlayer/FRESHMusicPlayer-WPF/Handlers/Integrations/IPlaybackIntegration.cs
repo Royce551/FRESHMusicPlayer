@@ -1,4 +1,5 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Backends;
 
 namespace FRESHMusicPlayer.Handlers.Integrations
 {
@@ -12,7 +13,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         /// </summary>
         /// <param name="track">The current track</param>
         /// <param name="status">The playback status of the current track</param>
-        void Update(Track track, PlaybackStatus status);
+        void Update(IMetadataProvider track, PlaybackStatus status);
         /// <summary>
         /// Prepares the integration to be closed and set to null (basically Dispose)
         /// </summary>

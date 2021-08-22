@@ -46,21 +46,21 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         {
             var track = window.CurrentTrack;
             if (track is null) return;
-            if (track.EmbeddedPictures.Count == 0)
+            if (track.CoverArt is null)
             {
                 CoverArtBox.Source = null;
                 CoverArtOverlay.Visibility = Visibility.Hidden;
             }
             else
             {
-                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.EmbeddedPictures[0].PictureData), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 CoverArtOverlay.Visibility = Visibility.Visible;
             }
         }
         public void HandleLyrics()
         {
             LyricsBox.Text = string.Empty;
-            var track = window.CurrentTrack;
+            var track = new Track(window.Player.FilePath);
             if (track is null) return;
             // LRC file present
             if (File.Exists(Path.Combine(Path.GetDirectoryName(window.Player.FilePath), Path.GetFileNameWithoutExtension(window.Player.FilePath) + ".lrc")))
