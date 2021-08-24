@@ -53,13 +53,14 @@ namespace FRESHMusicPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
-        
         public Menu SelectedMenu = Menu.Tracks;
         public AuxiliaryPane SelectedAuxiliaryPane = AuxiliaryPane.None;
         public Player Player;
         public NotificationHandler NotificationHandler = new NotificationHandler();
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
+
+        public const string WindowName = "FRESHMusicPlayer [Ver. 11 Development; Not stable!]";
 
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -100,7 +101,7 @@ namespace FRESHMusicPlayer
 #endif
                 Library = new GUILibrary(library, NotificationHandler);
             }
-            catch (IOException) // library is *probably* being used by another FMP.
+            catch (IOException) // library is *probably* being used by another FMP, write initial files, hopefully existing FMP will pick them up
             {
                 File.WriteAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "instance"), initialFile ?? Array.Empty<string>());
                 Application.Current.Shutdown();
@@ -415,7 +416,7 @@ namespace FRESHMusicPlayer
 #region Player
         private void Player_SongStopped(object sender, EventArgs e)
         {
-            Title = "FRESHMusicPlayer";
+            Title = WindowName;
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             progressTimer.Stop();
             CoverArtBox.Source = null;
@@ -428,7 +429,7 @@ namespace FRESHMusicPlayer
         private void Player_SongChanged(object sender, EventArgs e)
         {
             CurrentTrack = Player.CurrentBackend.Metadata;
-            Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | FRESHMusicPlayer";
+            Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {WindowName}";
             TitleLabel.Text = CurrentTrack.Title;
             ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
@@ -524,7 +525,7 @@ namespace FRESHMusicPlayer
             ProgressIndicator1.Text = time.ToString(@"mm\:ss");
             if (App.Config.ShowRemainingProgress) ProgressIndicator2.Text 
                     = $"-{TimeSpan.FromSeconds(time.TotalSeconds - Math.Floor(Player.CurrentBackend.TotalTime.TotalSeconds)):mm\\:ss}";
-            if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
+            if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} | {WindowName}";
             if (!isDragging) ProgressBar.Value = time.TotalSeconds;
             Player.AvoidNextQueue = false;
 

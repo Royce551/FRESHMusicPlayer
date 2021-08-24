@@ -3,6 +3,7 @@ using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -44,7 +45,10 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             var updater = smtc.DisplayUpdater;
             updater.Type = MediaPlaybackType.Music;
             updater.MusicProperties.Artist = string.Join(", ", track.Artists);
-            //updater.MusicProperties.AlbumArtist = track.AlbumArtist; // TODO: figure out how to deal with this
+            updater.MusicProperties.AlbumTitle = track.Album;
+            updater.MusicProperties.TrackNumber = (uint)track.TrackNumber;
+            updater.MusicProperties.AlbumTrackCount = (uint)track.TrackTotal;
+            updater.Thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromStream(System.IO.WindowsRuntimeStreamExtensions.AsRandomAccessStream(new MemoryStream(track.CoverArt)));
             updater.MusicProperties.Title = track.Title;
             updater.Update();
         }
