@@ -48,7 +48,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             updater.MusicProperties.AlbumTitle = track.Album;
             updater.MusicProperties.TrackNumber = (uint)track.TrackNumber;
             updater.MusicProperties.AlbumTrackCount = (uint)track.TrackTotal;
-            updater.Thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromStream(System.IO.WindowsRuntimeStreamExtensions.AsRandomAccessStream(new MemoryStream(track.CoverArt)));
+            //updater.Thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromStream(System.IO.WindowsRuntimeStreamExtensions.AsRandomAccessStream(new MemoryStream(track.CoverArt)));
             updater.MusicProperties.Title = track.Title;
             updater.Update();
         }

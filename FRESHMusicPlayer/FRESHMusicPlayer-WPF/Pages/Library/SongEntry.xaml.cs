@@ -50,7 +50,7 @@ namespace FRESHMusicPlayer.Pages.Library
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
                 if (player.FileLoaded) player.Queue.Clear();
-                await player.PlayMusicAsync(FilePath);
+                await player.PlayAsync(FilePath);
             }
             else
             {
@@ -81,7 +81,7 @@ namespace FRESHMusicPlayer.Pages.Library
             if (e.ClickCount == 2)
             {
                 if (player.FileLoaded) player.Queue.Clear();
-                await player.PlayMusicAsync(FilePath);
+                await player.PlayAsync(FilePath);
             }
         }
 

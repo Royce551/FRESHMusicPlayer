@@ -1,5 +1,4 @@
-﻿using ATL;
-using FRESHMusicPlayer.Backends;
+﻿using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Forms;
 using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Forms.TagEditor;
@@ -21,7 +20,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -60,7 +58,7 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
-        public const string WindowName = "FRESHMusicPlayer [Ver. 11 Development; Not stable!]";
+        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.8.24.2021; Not stable!]";
 
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -105,6 +103,7 @@ namespace FRESHMusicPlayer
             {
                 File.WriteAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "instance"), initialFile ?? Array.Empty<string>());
                 Application.Current.Shutdown();
+                return; // stop initial files from trying to load
             }
 
             watcher.Filter = "instance";
@@ -306,7 +305,7 @@ namespace FRESHMusicPlayer
                 }
                 if (fields[0] != string.Empty)
                 {
-                    await Player.PlayMusicAsync(fields[0]);
+                    await Player.PlayAsync(fields[0]);
                     Player.RepositionMusic(int.Parse(fields[1]));
                     PlayPauseMethod();
                     ProgressTick();
@@ -585,7 +584,7 @@ namespace FRESHMusicPlayer
             dialog.ShowDialog();
             if (dialog.OK)
             {
-                await Player.PlayMusicAsync(dialog.Response);
+                await Player.PlayAsync(dialog.Response);
             }
         }
 #endregion
