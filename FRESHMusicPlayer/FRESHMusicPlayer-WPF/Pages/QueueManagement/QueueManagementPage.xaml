@@ -25,7 +25,13 @@
             <RowDefinition/>
             <RowDefinition Height="Auto" MinHeight="29"/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="QueueList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="False" Background="{StaticResource SecondaryColor}" Grid.Row="1" BorderBrush="{x:Null}" Grid.ColumnSpan="3"/>
+        <ListBox x:Name="QueueList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="False" Background="{StaticResource SecondaryColor}" Grid.Row="1" BorderBrush="{x:Null}" Grid.ColumnSpan="3">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
 
         <!--<DockPanel Grid.ColumnSpan="3" LastChildFill="False" Margin="5,5,2,14">-->
         <TextBlock DockPanel.Dock="Left" TextWrapping="Wrap" Text="{x:Static resx:Resources.QUEUEMANAGEMENT_QUEUEHEADER}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="18" Margin="5,5,2,14"/>

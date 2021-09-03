@@ -58,7 +58,7 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
-        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.8.24.2021; Not stable!]";
+        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.8.29.2021; Not stable!]";
 
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -164,10 +164,10 @@ namespace FRESHMusicPlayer
         public async void NextTrackMethod() => await Player.NextAsync();
         public async void PreviousTrackMethod()
         {
+            if (!Player.FileLoaded) return;
             if (Player.CurrentTime.TotalSeconds <= 5) await Player.PreviousAsync();
             else
             {
-                if (!Player.FileLoaded) return;
                 Player.CurrentTime = TimeSpan.FromSeconds(0);
                 progressTimer.Start(); // to resync the progress timer
             }
@@ -222,15 +222,15 @@ namespace FRESHMusicPlayer
             if (!mode) CoverArtArea.Width = new GridLength(5);       
             else CoverArtArea.Width = new GridLength(75);
         }
-        public void ShowAuxilliaryPane(AuxiliaryPane pane, int width = 235, bool openleft = false)
+        public async void ShowAuxilliaryPane(AuxiliaryPane pane, int width = 235, bool openleft = false)
         {
             LoggingHandler.Log($"Showing pane --> {pane}");
             if (SelectedAuxiliaryPane == pane)
             {
-                HideAuxilliaryPane();
+                await HideAuxilliaryPane();
                 return;
             }
-            if (SelectedAuxiliaryPane != AuxiliaryPane.None) HideAuxilliaryPane(false);
+            if (SelectedAuxiliaryPane != AuxiliaryPane.None) await HideAuxilliaryPane(true);
             switch (pane)
             {
                 case AuxiliaryPane.Settings:
@@ -256,18 +256,41 @@ namespace FRESHMusicPlayer
             }
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
-            var sb = InterfaceUtils.GetDoubleAnimation(0, width, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
+            RightFrame.Width = width;
+
+            var sb = new Storyboard();
+            var ta = new ThicknessAnimation();
+            ta.SetValue(Storyboard.TargetNameProperty, "RightFrame");
+            Storyboard.SetTargetProperty(ta, new PropertyPath(MarginProperty));
+
+            ta.To = new Thickness(0);
+            ta.From = openleft ? new Thickness(width * -1 /*negate*/, 0, 0, 0) : new Thickness(0, 0, width * -1 /*negate*/, 0);
+            ta.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut, Exponent = 3 };
+            ta.Duration = new Duration(TimeSpan.FromMilliseconds(120));
+            sb.Children.Add(ta);
             sb.Begin(RightFrame);
+
             SelectedAuxiliaryPane = pane;
             RightFrame.NavigationService.RemoveBackEntry();
         }
-        public async void HideAuxilliaryPane(bool animate = true)
+        public async Task HideAuxilliaryPane(bool animate = true)
         {
-            var sb = InterfaceUtils.GetDoubleAnimation(RightFrame.Width, 0, TimeSpan.FromMilliseconds(100), new PropertyPath("Width"));
+            var sb = new Storyboard();
+            var ta = new ThicknessAnimation();
+            ta.SetValue(Storyboard.TargetNameProperty, "RightFrame");
+            Storyboard.SetTargetProperty(ta, new PropertyPath(MarginProperty));
+
+            ta.From = new Thickness(0);
+            ta.To = DockPanel.GetDock(RightFrame) == Dock.Left ? new Thickness(RightFrame.Width * -1, 0, 0, 0) : new Thickness(0, 0, RightFrame.Width * -1, 0);
+            ta.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 };
+            ta.Duration = new Duration(TimeSpan.FromMilliseconds(120));
+            sb.Children.Add(ta);
+            sb.Begin(RightFrame);
+
             if (animate) await sb.BeginStoryboardAsync(RightFrame);
-            else sb.Begin(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Source = null;
+            RightFrame.Navigate(new object());
             SelectedAuxiliaryPane = AuxiliaryPane.None;
         }
         public void ProcessSettings(bool initialize = false)

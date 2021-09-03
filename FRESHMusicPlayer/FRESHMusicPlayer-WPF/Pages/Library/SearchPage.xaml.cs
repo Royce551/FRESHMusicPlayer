@@ -32,8 +32,13 @@ namespace FRESHMusicPlayer.Pages.Library
             searchqueries.Enqueue(SearchBox.Text.ToUpper());
             async void GetResults()
             {
+                if (string.IsNullOrEmpty(SearchBox.Text))
+                {
+                    searchqueries.Clear();
+                    return;
+                }
                 TracksPanel.Visibility = Visibility.Hidden; // avoids making everything flash
-                InfoLabel.Text = "Loading, please wait.";
+                InfoLabel.Visibility = Visibility.Hidden;
                 int length = 0;
                 taskIsRunning = true;
                 searchterm = searchqueries.Dequeue();
@@ -63,7 +68,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 else
                 {
                     TracksPanel.Visibility = Visibility.Visible;
-                    return;
+                    InfoLabel.Visibility = Visibility.Visible;
                 }
             }
             if (!taskIsRunning) GetResults();
