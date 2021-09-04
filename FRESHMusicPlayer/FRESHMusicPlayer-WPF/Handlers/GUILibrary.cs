@@ -21,6 +21,22 @@ namespace FRESHMusicPlayer.Handlers
             this.notificationHandler = notificationHandler;
         }
 
+        public override void Import(List<string> tracks)
+        {
+            var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
+            notificationHandler.Add(notification);
+            base.Import(tracks);
+            notificationHandler.Remove(notification);
+        }
+
+        public override void Import(string[] tracks)
+        {
+            var notification = new Notification { ContentText = $"Importing {tracks.Length} tracks" };
+            notificationHandler.Add(notification);
+            base.Import(tracks);
+            notificationHandler.Remove(notification);
+        }
+
         public override void Nuke(bool nukePlaylists = true)
         {
             base.Nuke(nukePlaylists);
