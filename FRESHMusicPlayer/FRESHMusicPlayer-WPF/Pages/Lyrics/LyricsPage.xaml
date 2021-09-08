@@ -12,7 +12,13 @@
     <Grid Background="{StaticResource SecondaryColor}">
 
         <ScrollViewer x:Name="LyricsScrollViewer" PanningMode="Both" Panel.ZIndex="1" VerticalAlignment="Center" Foreground="{x:Null}">
-            <TextBlock x:Name="LyricsBox" Foreground="{StaticResource PrimaryTextColor}" TextAlignment="Center" TextWrapping="Wrap"/>
+            <StackPanel>
+                <TextBlock x:Name="LyricsBoxMinus2" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+                <TextBlock x:Name="LyricsBoxMinus1" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+                <TextBlock x:Name="LyricsBox" Foreground="{StaticResource PrimaryTextColor}" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"/>
+                <TextBlock x:Name="LyricsBoxPlus1" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+                <TextBlock x:Name="LyricsBoxPlus2" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+            </StackPanel>
         </ScrollViewer>
         
 
