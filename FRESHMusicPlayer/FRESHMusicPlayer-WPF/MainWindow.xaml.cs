@@ -34,6 +34,7 @@ namespace FRESHMusicPlayer
         Albums,
         Playlists,
         Import,
+        Fullscreen,
         Other
     }
     public enum AuxiliaryPane
@@ -64,7 +65,7 @@ namespace FRESHMusicPlayer
         public bool PauseAfterCurrentTrack = false;
 
         private FileSystemWatcher watcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
-        private WinForms.Timer progressTimer;
+        public WinForms.Timer ProgressTimer;
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
         public MainWindow(Player player, string[] initialFile = null)
@@ -76,11 +77,11 @@ namespace FRESHMusicPlayer
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
-            progressTimer = new WinForms.Timer
+            ProgressTimer = new WinForms.Timer
             {
                 Interval = 100
             };
-            progressTimer.Tick += ProgressTimer_Tick;
+            ProgressTimer.Tick += ProgressTimer_Tick;
 
             Initialize(initialFile);
         }
@@ -146,13 +147,13 @@ namespace FRESHMusicPlayer
             {
                 Player.Resume();
                 SetIntegrations(PlaybackStatus.Playing);
-                progressTimer.Start();
+                ProgressTimer.Start();
             }
             else
             {
                 Player.Pause();
                 SetIntegrations(PlaybackStatus.Paused);
-                progressTimer.Stop();
+                ProgressTimer.Stop();
             }
             UpdatePlayButtonState();
         }
@@ -169,7 +170,7 @@ namespace FRESHMusicPlayer
             else
             {
                 Player.CurrentTime = TimeSpan.FromSeconds(0);
-                progressTimer.Start(); // to resync the progress timer
+                ProgressTimer.Start(); // to resync the progress timer
             }
         }
         public void ShuffleMethod()
@@ -258,16 +259,13 @@ namespace FRESHMusicPlayer
             RightFrame.Visibility = Visibility.Visible;
             RightFrame.Width = width;
 
-            var sb = new Storyboard();
-            var ta = new ThicknessAnimation();
-            ta.SetValue(Storyboard.TargetNameProperty, "RightFrame");
-            Storyboard.SetTargetProperty(ta, new PropertyPath(MarginProperty));
+            var sb = InterfaceUtils.GetThicknessAnimation(
+                openleft ? new Thickness(width * -1 /*negate*/, 0, 0, 0) : new Thickness(0, 0, width * -1 /*negate*/, 0),
+                new Thickness(0),
+                TimeSpan.FromMilliseconds(120),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseOut, Exponent = 3 });
 
-            ta.To = new Thickness(0);
-            ta.From = openleft ? new Thickness(width * -1 /*negate*/, 0, 0, 0) : new Thickness(0, 0, width * -1 /*negate*/, 0);
-            ta.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut, Exponent = 3 };
-            ta.Duration = new Duration(TimeSpan.FromMilliseconds(120));
-            sb.Children.Add(ta);
             sb.Begin(RightFrame);
 
             SelectedAuxiliaryPane = pane;
@@ -275,17 +273,12 @@ namespace FRESHMusicPlayer
         }
         public async Task HideAuxilliaryPane(bool animate = true)
         {
-            var sb = new Storyboard();
-            var ta = new ThicknessAnimation();
-            ta.SetValue(Storyboard.TargetNameProperty, "RightFrame");
-            Storyboard.SetTargetProperty(ta, new PropertyPath(MarginProperty));
-
-            ta.From = new Thickness(0);
-            ta.To = DockPanel.GetDock(RightFrame) == Dock.Left ? new Thickness(RightFrame.Width * -1, 0, 0, 0) : new Thickness(0, 0, RightFrame.Width * -1, 0);
-            ta.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 };
-            ta.Duration = new Duration(TimeSpan.FromMilliseconds(120));
-            sb.Children.Add(ta);
-            sb.Begin(RightFrame);
+            var sb = InterfaceUtils.GetThicknessAnimation(
+                new Thickness(0),
+                DockPanel.GetDock(RightFrame) == Dock.Left ? new Thickness(RightFrame.Width * -1, 0, 0, 0) : new Thickness(0, 0, RightFrame.Width * -1, 0),
+                TimeSpan.FromMilliseconds(120),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
 
             if (animate) await sb.BeginStoryboardAsync(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
@@ -293,6 +286,46 @@ namespace FRESHMusicPlayer
             RightFrame.Navigate(new object());
             SelectedAuxiliaryPane = AuxiliaryPane.None;
         }
+        public bool IsControlsBoxVisible { get; private set; } = false;
+        public void ShowControlsBox()
+        {
+            IsControlsBoxVisible = true;
+            var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
+                new Thickness(0, -25, 0, 0),
+                new Thickness(0),
+                TimeSpan.FromMilliseconds(500),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+            var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
+                new Thickness(0, 0, 0, -84),
+                new Thickness(0),
+                TimeSpan.FromMilliseconds(500),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+            navBarStoryboard.Begin(MainBar);
+            controlsBoxStoryboard.Begin(ControlsBoxBorder);
+            
+        }
+        public void HideControlsBox()
+        {
+            IsControlsBoxVisible = false;
+            var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
+                new Thickness(0),
+                new Thickness(0, -25, 0, 0),
+                TimeSpan.FromMilliseconds(500),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+            var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
+                new Thickness(0),
+                new Thickness(0, 0, 0, -84),
+                TimeSpan.FromMilliseconds(500),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+            navBarStoryboard.Begin(MainBar);
+            controlsBoxStoryboard.Begin(ControlsBoxBorder);
+            
+        }
+
         public void ProcessSettings(bool initialize = false)
         {
             if (initialize)
@@ -423,6 +456,10 @@ namespace FRESHMusicPlayer
                     ContentFrame.Navigate(new ImportPage(this));
                     tabLabel = ImportTab;
                     break;
+                case Menu.Fullscreen:
+                    ContentFrame.Navigate(new FullscreenPage(this));
+                tabLabel = ImportTab;
+                    break;
                 default:
                     tabLabel = null;
                     break;
@@ -440,7 +477,7 @@ namespace FRESHMusicPlayer
         {
             Title = WindowName;
             TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
-            progressTimer.Stop();
+            ProgressTimer.Stop();
             CoverArtBox.Source = null;
             SetIntegrations(PlaybackStatus.Stopped);
             SetCoverArtVisibility(false);
@@ -478,7 +515,7 @@ namespace FRESHMusicPlayer
                 CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
                 SetCoverArtVisibility(true);
             }
-            progressTimer.Start();
+            ProgressTimer.Start();
             if (PauseAfterCurrentTrack && !Player.Paused)
             {
                 PlayPauseMethod();
@@ -509,13 +546,13 @@ namespace FRESHMusicPlayer
         private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             isDragging = true;
-            progressTimer.Stop();
+            ProgressTimer.Stop();
         }
         private void ProgressBar_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             if (Player.FileLoaded)
             {
-                progressTimer.Start();
+                ProgressTimer.Start();
             }
             isDragging = false;
         }
@@ -551,7 +588,7 @@ namespace FRESHMusicPlayer
             if (!isDragging) ProgressBar.Value = time.TotalSeconds;
             Player.AvoidNextQueue = false;
 
-            progressTimer.Start(); // resync the progress timer
+            ProgressTimer.Start(); // resync the progress timer
         }
         private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(AuxiliaryPane.TrackInfo, 235, true);
         private void TrackTitle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -707,12 +744,16 @@ namespace FRESHMusicPlayer
                     {
                         WindowStyle = WindowStyle.None;
                         WindowState = WindowState.Maximized;
-                        
+                        ChangeTabs(Menu.Fullscreen);
+                        TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = ImportTab.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
                         WindowState = WindowState.Normal;
                         WindowStyle = WindowStyle.SingleBorderWindow;
+                        ChangeTabs(Menu.Playlists);
+                        ShowControlsBox();
+                        TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = ImportTab.Visibility = Visibility.Visible;
                     }
                     break;
             }
@@ -798,7 +839,7 @@ namespace FRESHMusicPlayer
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Library.Database?.Dispose();
-            progressTimer.Dispose();
+            ProgressTimer.Dispose();
             watcher.Dispose();
             WritePersistence();
         }
@@ -817,12 +858,12 @@ namespace FRESHMusicPlayer
 
         private void Window_Activated(object sender, EventArgs e)
         {
-            progressTimer.Interval = 100;
+            ProgressTimer.Interval = 100;
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            progressTimer.Interval = 1000;
+            ProgressTimer.Interval = 1000;
         }
     }
 }

@@ -100,6 +100,15 @@ namespace FRESHMusicPlayer.Utilities
             sb.Children.Add(doubleAnimation);
             return sb;
         }
+        public static Storyboard GetThicknessAnimation(Thickness from, Thickness to, TimeSpan duration, PropertyPath path, IEasingFunction easingFunction = null)
+        {
+            var sb = new Storyboard();
+            var thicknessAnimation = new ThicknessAnimation(from, to, duration);
+            if (easingFunction != null) thicknessAnimation.EasingFunction = easingFunction;
+            Storyboard.SetTargetProperty(thicknessAnimation, path);
+            sb.Children.Add(thicknessAnimation);
+            return sb;
+        }
         public static Task BeginStoryboardAsync(this Storyboard storyboard, FrameworkElement containingObject)
         {
             var tcs = new TaskCompletionSource<bool>();
