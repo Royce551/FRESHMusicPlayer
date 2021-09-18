@@ -11,7 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using Windows.Graphics.Imaging;
 using Windows.Media;
+using Windows.Storage.Streams;
 
 namespace FRESHMusicPlayer.Handlers.Integrations
 {
@@ -39,7 +41,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             smtc.ButtonPressed += Smtc_ButtonPressed;
         }
 
-        public void Update(IMetadataProvider track, PlaybackStatus status)
+        public async void Update(IMetadataProvider track, PlaybackStatus status)
         {
             smtc.PlaybackStatus = (MediaPlaybackStatus)status;
             var updater = smtc.DisplayUpdater;
@@ -48,7 +50,18 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             updater.MusicProperties.AlbumTitle = track.Album;
             updater.MusicProperties.TrackNumber = (uint)track.TrackNumber;
             updater.MusicProperties.AlbumTrackCount = (uint)track.TrackTotal;
-            //updater.Thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromStream(System.IO.WindowsRuntimeStreamExtensions.AsRandomAccessStream(new MemoryStream(track.CoverArt)));
+            if (track.CoverArt != null)
+            {
+                var decoder = await BitmapDecoder.CreateAsync(new MemoryStream(track.CoverArt).AsRandomAccessStream());
+                var transcodedImage = new InMemoryRandomAccessStream();
+
+                BitmapEncoder encoder = await BitmapEncoder.CreateForTranscodingAsync(transcodedImage, decoder);
+                await encoder.FlushAsync();
+
+                transcodedImage.Seek(0);
+                updater.Thumbnail = RandomAccessStreamReference.CreateFromStream(transcodedImage);
+            }
+            
             updater.MusicProperties.Title = track.Title;
             updater.Update();
         }

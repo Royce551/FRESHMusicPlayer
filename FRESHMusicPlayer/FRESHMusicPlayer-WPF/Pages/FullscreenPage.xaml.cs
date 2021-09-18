@@ -77,7 +77,7 @@ namespace FRESHMusicPlayer.Pages
         public void SetCoverArtVisibility(bool mode)
         {
             if (!mode) CoverArtArea.Width = new GridLength(5);
-            else CoverArtArea.Width = new GridLength(75);
+            else CoverArtArea.Width = new GridLength(155);
         }
 
         private void Player_SongStopped(object sender, EventArgs e)

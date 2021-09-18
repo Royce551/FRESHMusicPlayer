@@ -20,32 +20,27 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        
+
         <Rectangle Fill="Transparent" Height="50" Grid.Row="0" Grid.ColumnSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
         <Rectangle Fill="Transparent" Height="50" Grid.Row="2" Grid.ColumnSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
         <Rectangle Fill="Transparent" Width="50" Grid.Column="0" Grid.RowSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
         <Rectangle Fill="Transparent" Width="50" Grid.Column="2" Grid.RowSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
         <Viewbox Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Grid.Column="1">
             <DockPanel LastChildFill="False" Width="700" Height="350">
-                <Image Source="https://royce551.github.io/assets/images/fmp/fullfmplogo.png" DockPanel.Dock="Top" HorizontalAlignment="Left" Width="100" Margin="10,0,0,0"/>
+                <Image Source="https://royce551.github.io/assets/images/fmp/fullfmplogo.png" DockPanel.Dock="Top" HorizontalAlignment="Left" Width="100" RenderOptions.BitmapScalingMode="HighQuality" Margin="10,0,0,0"/>
 
                 <Grid DockPanel.Dock="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality">
-                        <Image.ToolTip>
-                            <ToolTip>
-                                <Image x:Name="CoverArtBoxToolTip" Width="450" Height="450" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            </ToolTip>
-                        </Image.ToolTip>
+                    <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="150" Width="150" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality">
                     </Image>
-                    <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,40,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" Grid.ColumnSpan="2" Panel.ZIndex="0"/>
-                    <Slider x:Name="ProgressBar" Grid.Column="1" IsEnabled="False" HorizontalAlignment="Stretch" Margin="37,54,45,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="9.8"/>
-                    <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
-                    <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
-                    <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,89,40,-44" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" FontWeight="Bold" FontSize="22" Grid.Column="1" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" Panel.ZIndex="0"/>
+                    <Slider x:Name="ProgressBar" Grid.Column="1" IsEnabled="False" HorizontalAlignment="Stretch" Margin="37,138,45,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="9.8"/>
+                    <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
+                    <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
+                    <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,119,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
 
                 </Grid>
             </DockPanel>
