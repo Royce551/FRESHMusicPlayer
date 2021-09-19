@@ -27,12 +27,14 @@ namespace FRESHMusicPlayer.Pages
         {
             this.window = window;
             InitializeComponent();
-            window.HideControlsBox();
             window.Player.SongStopped += Player_SongStopped;
             window.Player.SongChanged += Player_SongChanged;
             window.ProgressTimer.Tick += ProgressTimer_Tick;
             Player_SongChanged(null, EventArgs.Empty);
+            controlDismissTimer.Tick += ControlDismissTimer_Tick;
         }
+
+        
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
@@ -89,8 +91,8 @@ namespace FRESHMusicPlayer.Pages
 
         private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (window.IsControlsBoxVisible) window.HideControlsBox();
-            else window.ShowControlsBox();
+            //if (window.IsControlsBoxVisible) window.HideControlsBox();
+            //else window.ShowControlsBox();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -98,6 +100,59 @@ namespace FRESHMusicPlayer.Pages
             window.Player.SongStopped -= Player_SongStopped;
             window.Player.SongChanged -= Player_SongChanged;
             window.ProgressTimer.Tick -= ProgressTimer_Tick;
+            controlDismissTimer.Tick -= ControlDismissTimer_Tick;
+            Mouse.OverrideCursor = null;
+        }
+
+        private readonly WinForms.Timer controlDismissTimer = new WinForms.Timer { Interval = 3000, Enabled = true };
+
+        private Point lastMouseMovePosition;
+        private void Page_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (lastMouseMovePosition != null)
+            {
+                var position = Mouse.GetPosition(this);
+                if (Math.Abs(position.X - lastMouseMovePosition.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                    Math.Abs(position.Y - lastMouseMovePosition.Y) > SystemParameters.MinimumVerticalDragDistance)
+                {
+                    if (!controlDismissTimer.Enabled)
+                    {
+                        if (!window.IsControlsBoxVisible) window.ShowControlsBox();
+                        controlDismissTimer.Start();
+                        Mouse.OverrideCursor = null;
+                        TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            lastMouseMovePosition = Mouse.GetPosition(this);
+        }
+
+        private void ControlDismissTimer_Tick(object sender, EventArgs e)
+        {
+            if (!IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
+            controlDismissTimer.Stop();
+            window.HideControlsBox();
+            Mouse.OverrideCursor = Cursors.None;
+            TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Collapsed;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FocusMode_Changed(object sender, RoutedEventArgs e)
+        {
+            if ((bool)FocusModeCheckBox.IsChecked)
+            {
+                CoverArtOverlay.Opacity = 1;
+                CoverArtOverlay.Fill = (Brush)FindResource("BackgroundColor");
+            }
+            else
+            {
+                CoverArtOverlay.Opacity = 0.55;
+                CoverArtOverlay.Fill = (Brush)FindResource("ForegroundColor");
+            }
         }
     }
 }

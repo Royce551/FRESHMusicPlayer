@@ -7,25 +7,21 @@
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="FullscreenPage" Unloaded="Page_Unloaded">
+      Title="FullscreenPage" Unloaded="Page_Unloaded" MouseMove="Page_MouseMove">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
 
-        <Rectangle Fill="Transparent" Height="50" Grid.Row="0" Grid.ColumnSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
-        <Rectangle Fill="Transparent" Height="50" Grid.Row="2" Grid.ColumnSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
-        <Rectangle Fill="Transparent" Width="50" Grid.Column="0" Grid.RowSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
-        <Rectangle Fill="Transparent" Width="50" Grid.Column="2" Grid.RowSpan="3" Panel.ZIndex="2" MouseEnter="Rectangle_MouseEnter"/>
-        <Viewbox Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Grid.Column="1">
+        <DockPanel x:Name="TopBar" Panel.ZIndex="4" Background="Transparent" LastChildFill="False" Grid.Row="0" Height="30">
+            <Button x:Name="BackButton" DockPanel.Dock="Left" Content="Back" Margin="10,5,0,5" Click="BackButton_Click"/>
+            <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="Focus Mode" Foreground="{StaticResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
+        </DockPanel>
+        <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{StaticResource BackgroundColor}"/>
+
+        <Viewbox Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="25">
             <DockPanel LastChildFill="False" Width="700" Height="350">
                 <Image Source="https://royce551.github.io/assets/images/fmp/fullfmplogo.png" DockPanel.Dock="Top" HorizontalAlignment="Left" Width="100" RenderOptions.BitmapScalingMode="HighQuality" Margin="10,0,0,0"/>
 

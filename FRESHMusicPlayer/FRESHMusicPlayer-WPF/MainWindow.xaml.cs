@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
-        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.8.29.2021; Not stable!]";
+        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.9.18.2021; Not stable!]";
 
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -287,28 +287,28 @@ namespace FRESHMusicPlayer
             SelectedAuxiliaryPane = AuxiliaryPane.None;
         }
         public bool IsControlsBoxVisible { get; private set; } = false;
-        public void ShowControlsBox()
+        public async void ShowControlsBox()
         {
+            
+            var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
+                new Thickness(0, -25, 0, 0),
+                new Thickness(0),
+                TimeSpan.FromMilliseconds(500),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+            var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
+                new Thickness(0, 0, 0, -84),
+                new Thickness(0),
+                TimeSpan.FromMilliseconds(500),
+                new PropertyPath(MarginProperty),
+                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+            navBarStoryboard.Begin(MainBar);
+            await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
             IsControlsBoxVisible = true;
-            var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
-                new Thickness(0, -25, 0, 0),
-                new Thickness(0),
-                TimeSpan.FromMilliseconds(500),
-                new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
-            var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
-                new Thickness(0, 0, 0, -84),
-                new Thickness(0),
-                TimeSpan.FromMilliseconds(500),
-                new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
-            navBarStoryboard.Begin(MainBar);
-            controlsBoxStoryboard.Begin(ControlsBoxBorder);
-            
         }
-        public void HideControlsBox()
+        public async void HideControlsBox()
         {
-            IsControlsBoxVisible = false;
+            
             var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0),
                 new Thickness(0, -25, 0, 0),
@@ -322,8 +322,8 @@ namespace FRESHMusicPlayer
                 new PropertyPath(MarginProperty),
                 new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
             navBarStoryboard.Begin(MainBar);
-            controlsBoxStoryboard.Begin(ControlsBoxBorder);
-            
+            await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
+            IsControlsBoxVisible = false;
         }
 
         public void ProcessSettings(bool initialize = false)
