@@ -31,7 +31,7 @@ namespace FRESHMusicPlayer.Forms
             window.Player.SongChanged += Player_SongChanged;
             window.Player.SongStopped += Player_SongStopped;
             progressTimer.Tick += ProgressTimer_Tick;
-            Player_SongChanged(null, EventArgs.Empty); // call our own song changed because a song is probably already playing at this point
+            if (window.Player.FileLoaded) Player_SongChanged(null, EventArgs.Empty); // call our own song changed because a song is probably already playing at this point
             UpdateControlsState();
             VolumeSlider.Value = window.VolumeBar.Value;
         }

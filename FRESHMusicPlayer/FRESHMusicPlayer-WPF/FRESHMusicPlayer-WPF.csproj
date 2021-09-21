@@ -96,6 +96,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Lyrics\Lyrics.xaml.cs">
+      <DependentUpon>Lyrics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TrackInfo.xaml.cs">
+      <DependentUpon>TrackInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MiniPlayer.xaml.cs">
       <DependentUpon>MiniPlayer.xaml</DependentUpon>
     </Compile>
@@ -168,6 +174,14 @@
     </Compile>
     <Compile Include="Resources\SkinResourceDictionary.cs" />
     <Compile Include="Utilities\InterfaceUtils.cs" />
+    <Page Include="Controls\Lyrics\Lyrics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TrackInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\MiniPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

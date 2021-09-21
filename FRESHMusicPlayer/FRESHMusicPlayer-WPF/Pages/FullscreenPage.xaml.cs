@@ -23,18 +23,22 @@ namespace FRESHMusicPlayer.Pages
     public partial class FullscreenPage : Page
     {
         private readonly MainWindow window;
-        public FullscreenPage(MainWindow window)
+        private readonly Menu previousMenu;
+        public FullscreenPage(MainWindow window, Menu previousMenu)
         {
             this.window = window;
+            this.previousMenu = previousMenu;
             InitializeComponent();
             window.Player.SongStopped += Player_SongStopped;
             window.Player.SongChanged += Player_SongChanged;
             window.ProgressTimer.Tick += ProgressTimer_Tick;
-            Player_SongChanged(null, EventArgs.Empty);
             controlDismissTimer.Tick += ControlDismissTimer_Tick;
-        }
+            if (window.Player.FileLoaded) Player_SongChanged(null, EventArgs.Empty);
 
-        
+            window.WindowStyle = WindowStyle.None;
+            window.WindowState = WindowState.Maximized;
+            window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Collapsed;
+        }
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
@@ -89,12 +93,6 @@ namespace FRESHMusicPlayer.Pages
             SetCoverArtVisibility(false);
         }
 
-        private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //if (window.IsControlsBoxVisible) window.HideControlsBox();
-            //else window.ShowControlsBox();
-        }
-
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             window.Player.SongStopped -= Player_SongStopped;
@@ -102,11 +100,19 @@ namespace FRESHMusicPlayer.Pages
             window.ProgressTimer.Tick -= ProgressTimer_Tick;
             controlDismissTimer.Tick -= ControlDismissTimer_Tick;
             Mouse.OverrideCursor = null;
+
+            window.WindowState = WindowState.Normal;
+            window.WindowStyle = WindowStyle.SingleBorderWindow;
+            window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Visible;
+            if (!window.IsControlsBoxVisible) window.ShowControlsBox();
+            if (previousMenu != Menu.Fullscreen) window.ChangeTabs(previousMenu);
+            else window.ChangeTabs(Menu.Import);
         }
 
-        private readonly WinForms.Timer controlDismissTimer = new WinForms.Timer { Interval = 3000, Enabled = true };
+        private readonly WinForms.Timer controlDismissTimer = new WinForms.Timer { Interval = 2000, Enabled = true };
 
         private Point lastMouseMovePosition;
+        private bool isMouseMoving = false;
         private void Page_MouseMove(object sender, MouseEventArgs e)
         {
             if (lastMouseMovePosition != null)
@@ -122,13 +128,16 @@ namespace FRESHMusicPlayer.Pages
                         Mouse.OverrideCursor = null;
                         TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Visible;
                     }
+                    isMouseMoving = true;
                 }
+                else isMouseMoving = false;
             }
             lastMouseMovePosition = Mouse.GetPosition(this);
         }
 
         private void ControlDismissTimer_Tick(object sender, EventArgs e)
         {
+            if (isMouseMoving) return;
             if (!IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
             controlDismissTimer.Stop();
             window.HideControlsBox();

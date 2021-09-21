@@ -41,17 +41,8 @@ namespace FRESHMusicPlayer.Pages
                 CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 CoverArtOverlay.Visibility = Visibility.Visible;
             }
-            InterfaceUtils.SetField(AlbumBox, AlbumLabel, track.Album);
-            InterfaceUtils.SetField(GenreBox, GenreLabel, string.Join(", ", track.Genres));
-            InterfaceUtils.SetField(YearBox, YearLabel, track.Year.ToString() == "0" ? null : track.Year.ToString());
 
-            InterfaceUtils.SetField(TrackBox, TrackNumberLabel, track.TrackNumber.ToString() == "0" ? null : track.TrackNumber.ToString());
-            if (track.TrackTotal > 0) TrackBox.Text += "/" + track.TrackTotal;
-            InterfaceUtils.SetField(DiscBox, DiscNumberLabel, track.DiscNumber.ToString() == "0" ? null : track.DiscNumber.ToString());
-            if (track.DiscTotal > 0) DiscBox.Text += "/" + track.DiscTotal;
-
-            if (window.CurrentTrack is FileMetadataProvider file) BitrateBox.Text = file.ATLTrack.Bitrate + "kbps " + (file.ATLTrack.SampleRate / 1000) + "kHz";
-            else BitrateBox.Text = "Not available"; // TODO: translate
+            TrackInfo.Update(track);
         }
         private void Player_SongChanged(object sender, EventArgs e) => PopulateFields();
 

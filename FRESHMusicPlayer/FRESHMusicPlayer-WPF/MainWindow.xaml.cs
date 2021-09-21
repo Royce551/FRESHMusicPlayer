@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
-        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.9.18.2021; Not stable!]";
+        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.9.19.2021; Not stable!]";
 
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -428,10 +428,11 @@ namespace FRESHMusicPlayer
                 discordIntegration?.Update(CurrentTrack, status);
             }
         }
-        private void ChangeTabs(Menu tab, string search = null)
+        public void ChangeTabs(Menu tab, string search = null)
         {
             LoggingHandler.Log($"Changing tabs -> {tab}");
 
+            var previousMenu = SelectedMenu;
             SelectedMenu = tab;
             TextBlock tabLabel;
             switch (SelectedMenu)
@@ -457,8 +458,8 @@ namespace FRESHMusicPlayer
                     tabLabel = ImportTab;
                     break;
                 case Menu.Fullscreen:
-                    ContentFrame.Navigate(new FullscreenPage(this));
-                tabLabel = ImportTab;
+                    ContentFrame.Navigate(new FullscreenPage(this, previousMenu));
+                    tabLabel = ImportTab;
                     break;
                 default:
                     tabLabel = null;
@@ -731,30 +732,38 @@ namespace FRESHMusicPlayer
                 case Key.F1:
                     Process.Start("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
                     break;
-                case Key.F2:
-                    GC.Collect(2);
-                    break;
-                case Key.F3:
-                    throw new Exception("Exception for debugging");
-                case Key.F4:
-                    Topmost = !Topmost;
+                case Key.F11:
+                    if (SelectedMenu != Menu.Fullscreen) ChangeTabs(Menu.Fullscreen);
+                    else ChangeTabs(Menu.Playlists);
                     break;
                 case Key.F12:
-                    if (WindowStyle == WindowStyle.SingleBorderWindow)
+                    NotificationHandler.Add(new Notification { ContentText = "Debug Tools" });
+                    NotificationHandler.Add(new Notification
                     {
-                        WindowStyle = WindowStyle.None;
-                        WindowState = WindowState.Maximized;
-                        ChangeTabs(Menu.Fullscreen);
-                        TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = ImportTab.Visibility = Visibility.Collapsed;
-                    }
-                    else
+                        ButtonText = "Garbage Collect",
+                        OnButtonClicked = () =>
+                        {
+                            GC.Collect(2);
+                            return false;
+                        }
+                    });
+                    NotificationHandler.Add(new Notification
                     {
-                        WindowState = WindowState.Normal;
-                        WindowStyle = WindowStyle.SingleBorderWindow;
-                        ChangeTabs(Menu.Playlists);
-                        ShowControlsBox();
-                        TracksTab.Visibility = ArtistsTab.Visibility = AlbumsTab.Visibility = PlaylistsTab.Visibility = ImportTab.Visibility = Visibility.Visible;
-                    }
+                        ButtonText = "Throw exception",
+                        OnButtonClicked = () =>
+                        {
+                            throw new Exception("Exception for debugging");
+                        }
+                    });
+                    NotificationHandler.Add(new Notification
+                    {
+                        ButtonText = "Make FMP topmost",
+                        OnButtonClicked = () =>
+                        {
+                            Topmost = !Topmost;
+                            return false;
+                        }
+                    });
                     break;
             }
         }
