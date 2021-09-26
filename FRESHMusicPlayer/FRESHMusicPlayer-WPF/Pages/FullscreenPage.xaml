@@ -21,11 +21,22 @@
         </DockPanel>
         <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{StaticResource BackgroundColor}"/>
 
-        <Viewbox Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="25">
-            <DockPanel LastChildFill="False" Width="700" Height="350">
-                <Image Source="https://royce551.github.io/assets/images/fmp/fullfmplogo.png" DockPanel.Dock="Top" HorizontalAlignment="Left" Width="100" RenderOptions.BitmapScalingMode="HighQuality" Margin="10,0,0,0"/>
+        <Viewbox Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="25,-5,25,25">
+            <Grid Width="700" Height="350">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Image Source="https://royce551.github.io/assets/images/fmp/fullfmplogo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Width="100" RenderOptions.BitmapScalingMode="HighQuality" Margin="10,0,0,0"/>
 
-                <Grid DockPanel.Dock="Bottom">
+                <ContentControl x:Name="InfoThing" Grid.Row="0" Grid.Column="1" Height="200" Width="300" HorizontalAlignment="Right"/>
+
+                <Grid Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
                         <ColumnDefinition Width="1*"/>
@@ -39,7 +50,7 @@
                     <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,119,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
 
                 </Grid>
-            </DockPanel>
+            </Grid>
         </Viewbox>
 
         <Image x:Name="BackgroundCoverArtBox" HorizontalAlignment="Stretch" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="0" >

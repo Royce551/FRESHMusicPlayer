@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FRESHMusicPlayer.Controls.Lyrics;
+using FRESHMusicPlayer.Controls;
 using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer.Pages
@@ -78,6 +80,19 @@ namespace FRESHMusicPlayer.Pages
                 CoverArtBox.Source = BackgroundCoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
                 SetCoverArtVisibility(true);
             }
+
+            var lyrics = new FRESHMusicPlayer.Controls.Lyrics.Lyrics();
+            lyrics.Initialize(window);
+            if (lyrics.HandleLyrics())
+            {
+                InfoThing.Content = lyrics;
+            }
+            else
+            {
+                var trackInfo = new TrackInfo();
+                trackInfo.Update(CurrentTrack);
+                InfoThing.Content = trackInfo;
+            }
         }
 
         public void SetCoverArtVisibility(bool mode)
@@ -142,7 +157,7 @@ namespace FRESHMusicPlayer.Pages
             controlDismissTimer.Stop();
             window.HideControlsBox();
             Mouse.OverrideCursor = Cursors.None;
-            TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Collapsed;
+            TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

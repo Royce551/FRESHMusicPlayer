@@ -54,11 +54,11 @@ namespace FRESHMusicPlayer.Controls.Lyrics
             }
         }
 
-        public void HandleLyrics()
+        public bool HandleLyrics()
         {
             LyricsBox.Text = LyricsBoxMinus2.Text = LyricsBoxMinus1.Text = LyricsBoxPlus1.Text = LyricsBoxPlus2.Text = string.Empty;
             var track = new Track(window.Player.FilePath);
-            if (track is null) return;
+            if (track is null) return false;
             // LRC file present
             if (File.Exists(Path.Combine(Path.GetDirectoryName(window.Player.FilePath), Path.GetFileNameWithoutExtension(window.Player.FilePath) + ".lrc")))
             {
@@ -67,6 +67,7 @@ namespace FRESHMusicPlayer.Controls.Lyrics
                 ScrollViewer.SetVerticalScrollBarVisibility(LyricsScrollViewer, ScrollBarVisibility.Hidden);
                 LyricsBoxMinus2.Visibility = LyricsBoxMinus1.Visibility = LyricsBoxPlus1.Visibility = LyricsBoxPlus2.Visibility = Visibility.Visible;
                 LyricsBox.FontWeight = FontWeights.Bold;
+                return true;
             }
             else if (!string.IsNullOrWhiteSpace(track.Lyrics.UnsynchronizedLyrics)) // Embedded untimed lyrics
             {
@@ -75,6 +76,7 @@ namespace FRESHMusicPlayer.Controls.Lyrics
                 ScrollViewer.SetVerticalScrollBarVisibility(LyricsScrollViewer, ScrollBarVisibility.Auto);
                 LyricsBoxMinus2.Visibility = LyricsBoxMinus1.Visibility = LyricsBoxPlus1.Visibility = LyricsBoxPlus2.Visibility = Visibility.Collapsed;
                 LyricsBox.FontWeight = FontWeights.Regular;
+                return true;
             }
             else // No lyrics
             {
@@ -83,6 +85,7 @@ namespace FRESHMusicPlayer.Controls.Lyrics
                 ScrollViewer.SetVerticalScrollBarVisibility(LyricsScrollViewer, ScrollBarVisibility.Hidden);
                 LyricsBoxMinus2.Visibility = LyricsBoxMinus1.Visibility = LyricsBoxPlus1.Visibility = LyricsBoxPlus2.Visibility = Visibility.Collapsed;
                 LyricsBox.FontWeight = FontWeights.Regular;
+                return false;
             }
         }
 
