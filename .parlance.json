@@ -1,0 +1,17 @@
+{
+    "name": "FRESHMusicPlayer",
+    "subprojects": [
+        {
+            "name": "FRESHMusicPlayer for Windows",
+            "type": "resx",
+            "path": "/FRESHMusicPlayer/FRESHMusicPlayer/FRESHMusicPlayer-WPF/Properties/Resources.{lang}.resx",
+            "baseLang": "en"
+        },
+        {
+            "name": "FRESHMusicPlayer for Mac and Linux",
+            "type": "resx",
+            "path": "/FRESHMusicPlayer/FRESHMusicPlayer/FRESHMusicPlayer-Avalonia/Properties/Resources.{lang}.resx",
+            "baseLang": "en"
+        }
+    ]
+}
