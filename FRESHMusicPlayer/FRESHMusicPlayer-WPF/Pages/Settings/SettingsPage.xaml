@@ -1,4 +1,4 @@
-﻿<Page x:Class="FRESHMusicPlayer.Pages.SettingsPage"
+﻿<UserControl x:Class="FRESHMusicPlayer.Pages.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,8 +7,8 @@
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="1072" d:DesignWidth="335"
-      Title="SettingsPage" Unloaded="Page_Unloaded">
-    <Page.Resources>
+      Unloaded="Page_Unloaded">
+    <UserControl.Resources>
         <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}" x:Key="{x:Type Button}">
             <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
             <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
@@ -24,7 +24,7 @@
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
-    </Page.Resources>
+    </UserControl.Resources>
     <Grid Background="{StaticResource SecondaryColor}"> 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -112,4 +112,4 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
-</Page>
+</UserControl>

@@ -14,7 +14,7 @@ namespace FRESHMusicPlayer.Pages.Library
     /// <summary>
     /// Interaction logic for SearchPage.xaml
     /// </summary>
-    public partial class SearchPage : Page
+    public partial class SearchPage : UserControl
     {
         private bool taskIsRunning = false;
         private Queue<string> searchqueries = new Queue<string>();
@@ -53,7 +53,7 @@ namespace FRESHMusicPlayer.Pages.Library
                         .ToList())
                     {
                         if (searchqueries.Count > 1) break; // optimization for typing quickly
-                        Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                         length += thing.Length;
                         if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                         i++;
@@ -90,6 +90,6 @@ namespace FRESHMusicPlayer.Pages.Library
             await window.Player.PlayAsync();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) => Dispatcher.Invoke(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
+        private void Page_Loaded(object sender, RoutedEventArgs e) => window.Dispatcher.Invoke(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
     }
 }

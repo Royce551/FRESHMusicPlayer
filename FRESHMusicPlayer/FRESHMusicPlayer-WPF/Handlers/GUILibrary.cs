@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Handlers
 {
@@ -16,35 +17,41 @@ namespace FRESHMusicPlayer.Handlers
     public class GUILibrary : Library
     {
         private readonly NotificationHandler notificationHandler;
-        public GUILibrary(LiteDatabase library, NotificationHandler notificationHandler) : base(library)
+        private readonly Dispatcher dispatcher;
+        public GUILibrary(LiteDatabase library, NotificationHandler notificationHandler, Dispatcher dispatcher) : base(library)
         {
             this.notificationHandler = notificationHandler;
+            this.dispatcher = dispatcher;
         }
 
         public override void Import(List<string> tracks)
         {
             var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
-            notificationHandler.Add(notification);
+            dispatcher.Invoke(() => notificationHandler.Add(notification));
             base.Import(tracks);
-            notificationHandler.Remove(notification);
+            dispatcher.Invoke(() => notificationHandler.Remove(notification));
         }
 
         public override void Import(string[] tracks)
         {
             var notification = new Notification { ContentText = $"Importing {tracks.Length} tracks" };
-            notificationHandler.Add(notification);
+            dispatcher.Invoke(() => notificationHandler.Add(notification));
             base.Import(tracks);
-            notificationHandler.Remove(notification);
+            dispatcher.Invoke(() => notificationHandler.Remove(notification));
         }
 
         public override void Nuke(bool nukePlaylists = true)
         {
             base.Nuke(nukePlaylists);
-            notificationHandler.Add(new Notification
+            dispatcher.Invoke(() =>
             {
-                ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
-                Type = NotificationType.Success
+                notificationHandler.Add(new Notification
+                {
+                    ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
+                    Type = NotificationType.Success
+                });
             });
+            
         }
 
         //public List<DatabaseQueue> GetAllQueues() FMP 10.2

@@ -17,7 +17,7 @@ namespace FRESHMusicPlayer.Pages
     /// <summary>
     /// Interaction logic for QueueManagementPage.xaml
     /// </summary>
-    public partial class QueueManagement : Page
+    public partial class QueueManagement : UserControl
     {
         private bool taskisrunning;
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();

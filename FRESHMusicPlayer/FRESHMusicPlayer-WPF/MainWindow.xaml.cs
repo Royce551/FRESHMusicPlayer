@@ -99,7 +99,7 @@ namespace FRESHMusicPlayer
 #elif !DEBUG
                 library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
 #endif
-                Library = new GUILibrary(library, NotificationHandler);
+                Library = new GUILibrary(library, NotificationHandler, Dispatcher);
             }
             catch (IOException) // library is *probably* being used by another FMP, write initial files, hopefully existing FMP will pick them up
             {
@@ -236,22 +236,22 @@ namespace FRESHMusicPlayer
             switch (pane)
             {
                 case AuxiliaryPane.Settings:
-                    RightFrame.Navigate(new SettingsPage(this));
+                    RightFrame.Content = new SettingsPage(this);
                     break;
                 case AuxiliaryPane.QueueManagement:
-                    RightFrame.Navigate(new QueueManagement(this));
+                    RightFrame.Content = new QueueManagement(this);
                     break;
                 case AuxiliaryPane.Search:
-                    RightFrame.Navigate(new SearchPage(this));
+                    RightFrame.Content = new SearchPage(this);
                     break;
                 case AuxiliaryPane.Notifications:
-                    RightFrame.Navigate(new NotificationPage(this));
+                    RightFrame.Content = new NotificationPage(this);
                     break;
                 case AuxiliaryPane.TrackInfo:
-                    RightFrame.Navigate(new TrackInfoPage(this));
+                    RightFrame.Content = new TrackInfoPage(this);
                     break;
                 case AuxiliaryPane.Lyrics:
-                    RightFrame.Navigate(new LyricsPage(this));
+                    RightFrame.Content = new LyricsPage(this);
                     break;
                 default:
                     return;
@@ -270,7 +270,6 @@ namespace FRESHMusicPlayer
             sb.Begin(RightFrame);
 
             SelectedAuxiliaryPane = pane;
-            RightFrame.NavigationService.RemoveBackEntry();
         }
         public async Task HideAuxilliaryPane(bool animate = true)
         {
@@ -283,8 +282,7 @@ namespace FRESHMusicPlayer
 
             if (animate) await sb.BeginStoryboardAsync(RightFrame);
             RightFrame.Visibility = Visibility.Collapsed;
-            RightFrame.Source = null;
-            RightFrame.Navigate(new object());
+            RightFrame.Content = null;
             SelectedAuxiliaryPane = AuxiliaryPane.None;
         }
         public bool IsControlsBoxVisible { get; private set; } = false;
@@ -439,34 +437,33 @@ namespace FRESHMusicPlayer
             switch (SelectedMenu)
             {
                 case Menu.Tracks:
-                    ContentFrame.Navigate(new LibraryPage(this, search));
+                    ContentFrame.Content = new LibraryPage(this, search);
                     tabLabel = TracksTab;
                     break;
                 case Menu.Artists:
-                    ContentFrame.Navigate(new LibraryPage(this, search));
+                    ContentFrame.Content = new LibraryPage(this, search);
                     tabLabel = ArtistsTab;
                     break;
                 case Menu.Albums:
-                    ContentFrame.Navigate(new LibraryPage(this, search));
+                    ContentFrame.Content = new LibraryPage(this, search);
                     tabLabel = AlbumsTab;
                     break;
                 case Menu.Playlists:
-                    ContentFrame.Navigate(new LibraryPage(this, search));
+                    ContentFrame.Content = new LibraryPage(this, search);
                     tabLabel = PlaylistsTab;
                     break;
                 case Menu.Import:
-                    ContentFrame.Navigate(new ImportPage(this));
+                    ContentFrame.Content = new ImportPage(this);
                     tabLabel = ImportTab;
                     break;
                 case Menu.Fullscreen:
-                    ContentFrame.Navigate(new FullscreenPage(this, previousMenu));
+                    ContentFrame.Content = new FullscreenPage(this, previousMenu);
                     tabLabel = ImportTab;
                     break;
                 default:
                     tabLabel = null;
                     break;
             }
-            ContentFrame.NavigationService.RemoveBackEntry();
             //TabChanged?.Invoke(null, search);
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
@@ -728,11 +725,6 @@ namespace FRESHMusicPlayer
                 }
             switch (e.Key)
             {
-                case Key.OemTilde:
-                    var box = new FMPTextEntryBox(string.Empty);
-                    box.ShowDialog();
-                    if (box.OK) ContentFrame.Source = new Uri(box.Response, UriKind.RelativeOrAbsolute);
-                    break;
                 case Key.F1:
                     Process.Start("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
                     break;

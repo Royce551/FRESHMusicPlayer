@@ -12,7 +12,7 @@ namespace FRESHMusicPlayer.Pages.Lyrics
     /// <summary>
     /// Interaction logic for LyricsPage.xaml
     /// </summary>
-    public partial class LyricsPage : Page
+    public partial class LyricsPage : UserControl
     {
         private readonly MainWindow window;
         public LyricsPage(MainWindow window)

@@ -15,7 +15,7 @@ namespace FRESHMusicPlayer.Pages
     /// <summary>
     /// Interaction logic for TrackInfoPage.xaml
     /// </summary>
-    public partial class TrackInfoPage : Page
+    public partial class TrackInfoPage : UserControl
     {
         private readonly string tempPath = Path.Combine(Path.GetTempPath() + "FMPalbumart.png");
 

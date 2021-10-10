@@ -22,7 +22,7 @@ namespace FRESHMusicPlayer.Pages
     /// <summary>
     /// Interaction logic for FullscreenPage.xaml
     /// </summary>
-    public partial class FullscreenPage : Page
+    public partial class FullscreenPage : UserControl
     {
         private readonly MainWindow window;
         private readonly Menu previousMenu;
@@ -48,14 +48,12 @@ namespace FRESHMusicPlayer.Pages
             ProgressIndicator1.Text = time.ToString(@"mm\:ss");
             if (App.Config.ShowRemainingProgress) ProgressIndicator2.Text
                     = $"-{TimeSpan.FromSeconds(time.TotalSeconds - Math.Floor(window.Player.CurrentBackend.TotalTime.TotalSeconds)):mm\\:ss}";
-            if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{window.Player.CurrentBackend.TotalTime:mm\\:ss} | {MainWindow.WindowName}";
             ProgressBar.Value = time.TotalSeconds;
         }
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
             var CurrentTrack = window.Player.CurrentBackend.Metadata;
-            Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {MainWindow.WindowName}";
             TitleLabel.Text = CurrentTrack.Title;
             ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
             ProgressBar.Maximum = window.Player.CurrentBackend.TotalTime.TotalSeconds;

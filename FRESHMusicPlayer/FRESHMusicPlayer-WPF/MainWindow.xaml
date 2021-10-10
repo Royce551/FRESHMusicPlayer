@@ -26,16 +26,12 @@
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
             <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
             <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
             <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
             <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="PlaylistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2,5" Stroke="{StaticResource SecondaryTextColor}" DockPanel.Dock="Left"/>
             <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
 
@@ -151,8 +147,8 @@
                 </Slider>
             </Grid>
         </Border>
-        <Frame x:Name="RightFrame" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" Width="235" NavigationUIVisibility="Hidden"/>
-        <Frame x:Name="ContentFrame"  NavigationUIVisibility="Hidden"/>
+        <ContentControl x:Name="RightFrame" DockPanel.Dock="Right" Visibility="Collapsed" Width="235"/>
+        <ContentControl x:Name="ContentFrame"/>
 
 
     </DockPanel>

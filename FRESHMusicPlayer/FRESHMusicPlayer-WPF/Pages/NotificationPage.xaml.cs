@@ -9,7 +9,7 @@ namespace FRESHMusicPlayer.Pages
     /// <summary>
     /// Interaction logic for NotificationPage.xaml
     /// </summary>
-    public partial class NotificationPage : Page
+    public partial class NotificationPage : UserControl
     {
         private readonly MainWindow window;
         public NotificationPage(MainWindow window)
@@ -18,7 +18,6 @@ namespace FRESHMusicPlayer.Pages
             window.NotificationHandler.NotificationInvalidate += InvalidateNotifications;
             InitializeComponent();
             ShowNotifications();
-            KeepAlive = false;
         }
 
         private void InvalidateNotifications(object sender, EventArgs e) => ShowNotifications();

@@ -17,7 +17,7 @@ namespace FRESHMusicPlayer.Pages
     /// <summary>
     /// Interaction logic for ImportPage.xaml
     /// </summary>
-    public partial class ImportPage : Page
+    public partial class ImportPage : UserControl
     {
         private readonly MainWindow window;
         public ImportPage(MainWindow window)

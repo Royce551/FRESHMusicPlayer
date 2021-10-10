@@ -14,7 +14,7 @@ namespace FRESHMusicPlayer.Pages.Library
     /// <summary>
     /// Interaction logic for LibraryPage.xaml
     /// </summary>
-    public partial class LibraryPage : Page
+    public partial class LibraryPage : UserControl
     {
         private readonly MainWindow window;
         public LibraryPage(MainWindow window, string search = null)
@@ -60,7 +60,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 int i = 0;
                 foreach (var thing in window.Library.Read())
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                     if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                     i++;
@@ -77,7 +77,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 foreach (var thing in window.Library.Read("Artist"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Artist)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
+                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
                 }
             });
         }
@@ -88,7 +88,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 foreach (var thing in window.Library.Read("Album"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Album)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
+                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
                 }
             });
         }
@@ -101,7 +101,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 foreach (var thing in x)
                 {
                     if (CategoryPanel.Items.Contains(thing.Name)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Name));
+                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Name));
                 }
             });
         }
@@ -113,7 +113,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in window.Library.ReadTracksForArtist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
@@ -128,7 +128,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in window.Library.ReadTracksForAlbum(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
@@ -143,7 +143,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in window.Library.ReadTracksForPlaylist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });

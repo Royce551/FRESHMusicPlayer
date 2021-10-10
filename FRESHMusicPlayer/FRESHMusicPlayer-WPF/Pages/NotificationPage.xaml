@@ -1,4 +1,4 @@
-﻿<Page x:Class="FRESHMusicPlayer.Pages.NotificationPage"
+﻿<UserControl x:Class="FRESHMusicPlayer.Pages.NotificationPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
       xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="372" d:DesignWidth="235"
-      Title="NotificationPage" Unloaded="Page_Unloaded">
+      Unloaded="Page_Unloaded">
     <Grid Background="{StaticResource SecondaryColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="33"/>
@@ -19,4 +19,4 @@
         <TextBlock Text="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" Foreground="{StaticResource PrimaryTextColor}" FontSize="10" Margin="0,10,6,8" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" HorizontalAlignment="Right"/>
     </Grid>
 
-</Page>
+</UserControl>
