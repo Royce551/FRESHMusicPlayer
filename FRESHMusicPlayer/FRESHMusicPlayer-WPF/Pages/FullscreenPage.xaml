@@ -34,7 +34,7 @@
                 
                 <Image Source="https://royce551.github.io/assets/images/fmp/fullfmplogo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Width="100" RenderOptions.BitmapScalingMode="HighQuality" Margin="10,0,0,0"/>
 
-                <ContentControl x:Name="InfoThing" Grid.Row="0" Grid.Column="1" Height="200" Width="300" HorizontalAlignment="Right"/>
+                <ContentControl x:Name="InfoThing" Grid.Row="0" Grid.Column="1" Width="300" HorizontalAlignment="Right"/>
 
                 <Grid Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>

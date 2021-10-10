@@ -25,7 +25,6 @@ namespace FRESHMusicPlayer
         void App_Startup(object sender, StartupEventArgs e )
         {
             LoggingHandler.Log("Handling configuration...");
-
             Config = ConfigurationHandler.Read();
             player = new Player { Volume = Config.Volume };
             if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);

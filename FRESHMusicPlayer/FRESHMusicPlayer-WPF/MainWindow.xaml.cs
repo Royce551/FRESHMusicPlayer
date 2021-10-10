@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
-        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.9.19.2021; Not stable!]";
+        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.10.02.2021; Not stable!]";
 
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -74,6 +74,7 @@ namespace FRESHMusicPlayer
             Player = player;
             InitializeComponent();
             Player.SongChanged += Player_SongChanged;
+            Player.SongLoading += Player_SongLoading;
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
@@ -486,8 +487,11 @@ namespace FRESHMusicPlayer
             LoggingHandler.Log("Stopping!");
         }
 
+        private void Player_SongLoading(object sender, EventArgs e) => Mouse.OverrideCursor = Cursors.AppStarting;
+
         private void Player_SongChanged(object sender, EventArgs e)
         {
+            Mouse.OverrideCursor = null;
             CurrentTrack = Player.CurrentBackend.Metadata;
             Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {WindowName}";
             TitleLabel.Text = CurrentTrack.Title;
