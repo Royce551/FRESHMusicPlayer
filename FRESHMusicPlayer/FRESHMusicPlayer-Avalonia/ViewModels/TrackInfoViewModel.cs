@@ -8,7 +8,7 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public class TrackInfoViewModel : ViewModelBase
     {
-        public Player Player { get; set; }
+        public Player? Player { get; set; }
 
         private Bitmap coverArt;
         public Bitmap CoverArt
@@ -116,6 +116,6 @@ namespace FRESHMusicPlayer.ViewModels
             else AlbumText = track.Album;
         }
 
-        private void Player_SongChanged(object sender, EventArgs e) => Update();
+        private void Player_SongChanged(object? sender, EventArgs e) => Update();
     }
 }

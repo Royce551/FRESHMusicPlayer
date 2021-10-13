@@ -11,20 +11,18 @@ namespace FRESHMusicPlayer
 {
     public class Program
     {
-        public static ConfigurationFile Config;
+        public static ConfigurationFile Config = ConfigurationFile.Read();
 
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
         [STAThread]
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            Config = await ConfigurationHandler.Read();
             if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

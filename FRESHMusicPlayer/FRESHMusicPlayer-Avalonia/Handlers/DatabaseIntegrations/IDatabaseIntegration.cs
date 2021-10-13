@@ -11,17 +11,17 @@ namespace FRESHMusicPlayer.Handlers.DatabaseIntegrations
     }
     public class TagEditorRelease
     {
-        public string Id { get; set; }
-        public string Artist { get; set; }
-        public string Name { get; set; }
+        public string? Id { get; set; }
+        public string? Artist { get; set; }
+        public string? Name { get; set; }
         public int Year { get; set; }
-        public string Genre { get; set; }
-        public string URL { get; set; }
-        public List<TagEditorTrack> Tracks { get; set; }
+        public string? Genre { get; set; }
+        public string? URL { get; set; }
+        public List<TagEditorTrack>? Tracks { get; set; }
     }
     public class TagEditorTrack
     {
         public int TrackNumber { get; set; }
-        public string Title { get; set; }
+        public string? Title { get; set; }
     }
 }

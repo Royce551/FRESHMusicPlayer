@@ -3,12 +3,13 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System;
 
 namespace FRESHMusicPlayer.Views
 {
     public class MessageBox : Window
     {
-        private MessageBoxViewModel ViewModel => DataContext as MessageBoxViewModel;
+        private MessageBoxViewModel ViewModel => DataContext as MessageBoxViewModel ?? throw new InvalidCastException();
 
         public bool OK { get; private set; } = false;
         public bool Yes { get; private set; } = false;

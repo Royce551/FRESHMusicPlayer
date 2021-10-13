@@ -15,7 +15,7 @@ namespace FRESHMusicPlayer.Views
 {
     public class MainWindow : Window
     {
-        private MainWindowViewModel ViewModel { get => DataContext as MainWindowViewModel; }
+        private MainWindowViewModel ViewModel { get => DataContext as MainWindowViewModel ?? throw new InvalidCastException(); }
         public Panel RootPanel { get; private set; }
         public MainWindow()
         {
@@ -93,13 +93,13 @@ namespace FRESHMusicPlayer.Views
         private void ShowSearch()
         {
             var button = this.FindControl<Button>("SearchButton");
-            button.ContextFlyout.ShowAt(button);
+            button.ContextFlyout?.ShowAt(button);
         }
 
         private void OnShowNotificationButtonClick(object sender, RoutedEventArgs e)
         {
             var button = this.FindControl<Button>("NotificationButton");
-            button.ContextFlyout.ShowAt(button);
+            button.ContextFlyout?.ShowAt(button);
         }
         private void OnSearchClosed(object sender, EventArgs e) => ViewModel?.ClearSearchCommand();
 
@@ -166,7 +166,7 @@ namespace FRESHMusicPlayer.Views
                 case Key.OemTilde:
                     var dialog = new TextEntryBox().SetStuff(Properties.Resources.FilePathOrUrl);
                     await dialog.ShowDialog(this);
-                    if (dialog.OK) ViewModel.Player.PlayMusic((dialog.DataContext as TextEntryBoxViewModel).Text);
+                    if (dialog.OK) ViewModel.Player.PlayMusic((dialog.DataContext as TextEntryBoxViewModel ?? throw new InvalidCastException()).Text);
                     break;
                 case Key.F1:
                     InterfaceUtils.OpenURL("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
@@ -195,13 +195,13 @@ namespace FRESHMusicPlayer.Views
             }
         }
 
-        private void OnDragEnter(object sender, DragEventArgs e)
+		private void OnDragEnter(object? sender, DragEventArgs e)
         {
             e.DragEffects &= DragDropEffects.Copy;
         }
-        private void OnDragDrop(object sender, DragEventArgs e)
+        private void OnDragDrop(object? sender, DragEventArgs e)
         {
-            ViewModel.Player.Queue.Add(e.Data.GetFileNames().ToArray());
+            ViewModel.Player.Queue.Add(e.Data.GetFileNames()?.ToArray());
             ViewModel.Player.PlayMusic();
         }
     }

@@ -127,12 +127,12 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             InitializeState();
         }
 
-        private void Player_SongStopped(object sender, EventArgs e)
+        private void Player_SongStopped(object? sender, EventArgs e)
         {
             OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("PlaybackStatus", "Stopped"));
         }
 
-        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -176,7 +176,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             }
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private void Player_SongChanged(object? sender, EventArgs e)
         {
             UpdateMetadata();
             ViewModel_PropertyChanged(null, new("Paused")); // jank alert!
@@ -214,7 +214,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             if (Program.Config.MPRISShowCoverArt && track.EmbeddedPictures.Count >= 0)
             {
                 var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
-                var tempPath = Path.Combine(runtimeDir, "fmp");
+                var tempPath = Path.Combine(runtimeDir!, "fmp");
                 if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
                 var filePath = Path.Combine(tempPath, Path.GetRandomFileName());
 

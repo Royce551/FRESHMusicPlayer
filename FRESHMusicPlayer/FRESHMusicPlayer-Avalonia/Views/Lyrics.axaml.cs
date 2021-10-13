@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System;
 using System.ComponentModel;
 
 namespace FRESHMusicPlayer.Views
@@ -18,7 +19,7 @@ namespace FRESHMusicPlayer.Views
 
         public Lyrics SetStuff(MainWindowViewModel mainWindow)
         {
-            var context = DataContext as LyricsViewModel;
+            var context = DataContext as LyricsViewModel ?? throw new InvalidCastException();
             context.MainWindow = mainWindow;
             context.Initialize();
             return this;

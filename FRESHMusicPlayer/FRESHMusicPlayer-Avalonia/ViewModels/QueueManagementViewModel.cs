@@ -158,9 +158,9 @@ namespace FRESHMusicPlayer.ViewModels
             });
         }
 
-        private void Player_SongStopped(object sender, EventArgs e) => Update();
+        private void Player_SongStopped(object? sender, EventArgs e) => Update();
 
-        private void Player_SongChanged(object sender, EventArgs e) => Update();
+        private void Player_SongChanged(object? sender, EventArgs e) => Update();
 
         public void CloseThings()
         {
@@ -170,13 +170,13 @@ namespace FRESHMusicPlayer.ViewModels
             ProgressTimer.Elapsed -= ProgressTimer_Elapsed;
         }
 
-        private void Queue_QueueChanged(object sender, EventArgs e) => Update();
+        private void Queue_QueueChanged(object? sender, EventArgs e) => Update();
     }
 
     public class QueueManagementEntry
     {
-        public string Title { get; init; }
-        public string Artist { get; init; }
+        public string? Title { get; init; }
+        public string? Artist { get; init; }
         public int Position { get; init; }
         public bool IsCurrentTrack { get; set; }
         public int Length { get; init; }

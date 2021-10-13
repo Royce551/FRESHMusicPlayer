@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers.DatabaseIntegrations;
 using FRESHMusicPlayer.ViewModels.TagEditor;
+using System;
 
 namespace FRESHMusicPlayer.Views.TagEditor
 {
@@ -13,7 +14,7 @@ namespace FRESHMusicPlayer.Views.TagEditor
         public bool OK { get; set; } = false;
         public Track TrackToSave => ViewModel.TrackToSave;
 
-        private ReleaseIntegrationPageViewModel ViewModel => DataContext as ReleaseIntegrationPageViewModel;
+        private ReleaseIntegrationPageViewModel ViewModel => DataContext as ReleaseIntegrationPageViewModel ?? throw new InvalidCastException();
 
         public ReleaseIntegrationPage()
         {

@@ -8,7 +8,6 @@ using FRESHMusicPlayer.Views;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -19,7 +18,6 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public ConfigurationFile Config;
         public Library Library;
 
         public bool IsRunningOnLinux { get => RuntimeInformation.IsOSPlatform(OSPlatform.Linux); }
@@ -35,19 +33,19 @@ namespace FRESHMusicPlayer.ViewModels
             new("Arabic (Saudi Arabia)", "ar")
         };
 
-        public string Version => $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version} for Mac and Linux";
+        public string Version => $"FRESHMusicPlayer {Assembly.GetEntryAssembly()?.GetName().Version} for Mac and Linux";
 
         public DisplayLanguage Language
         {
             get
             {
-                if (Config is not null)
-                    return AvailableLanguages.First(x => x.Code == Config?.Language);
+                if (Program.Config is not null)
+                    return AvailableLanguages.First(x => x.Code == Program.Config?.Language);
                 else return AvailableLanguages[0];
             }
             set
             {
-                Config.Language = value.Code;
+                Program.Config.Language = value.Code;
                 CheckRestartNeeded();
             }
         }
@@ -58,9 +56,9 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 var stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine(Properties.Resources.Settings_AutoImport_Info);
-                if (Config.AutoImportPaths is not null)
+                if (Program.Config.AutoImportPaths is not null)
                 {
-                    foreach (var path in Config.AutoImportPaths)
+                    foreach (var path in Program.Config.AutoImportPaths)
                         stringBuilder.AppendLine(path);
                 }
                 return stringBuilder.ToString();
@@ -76,56 +74,56 @@ namespace FRESHMusicPlayer.ViewModels
 
         public bool PlaytimeLogging
         {
-            get => Config?.PlaybackTracking ?? false;
+            get => Program.Config?.PlaybackTracking ?? false;
             set
             {
-                Config.PlaybackTracking = value;
-                WindowViewModel.HandleIntegrations();
+                Program.Config.PlaybackTracking = value;
+                WindowViewModel?.HandleIntegrations();
             }
         }
         public bool ShowTimeInWindow
         {
-            get => Config?.ShowTimeInWindow ?? false;
-            set => Config.ShowTimeInWindow = value;
+            get => Program.Config?.ShowTimeInWindow ?? false;
+            set => Program.Config.ShowTimeInWindow = value;
         }
         public bool IntegrateDiscordRPC
         {
-            get => Config?.IntegrateDiscordRPC ?? false;
+            get => Program.Config?.IntegrateDiscordRPC ?? false;
             set
             {
-                Config.IntegrateDiscordRPC = value;
-                WindowViewModel.HandleIntegrations();
+                Program.Config.IntegrateDiscordRPC = value;
+                WindowViewModel?.HandleIntegrations();
             }
         }
         public bool IntegrateMPRIS
         {
-            get => Config?.IntegrateMPRIS ?? false;
+            get => Program.Config?.IntegrateMPRIS ?? false;
             set
             {
-                Config.IntegrateMPRIS = value;
-                WindowViewModel.HandleIntegrations();
+                Program.Config.IntegrateMPRIS = value;
+                WindowViewModel?.HandleIntegrations();
             }
         }
         public bool MPRISShowCoverArt
         {
-            get => Config?.MPRISShowCoverArt ?? false;
+            get => Program.Config?.MPRISShowCoverArt ?? false;
             set
             {
-                Config.MPRISShowCoverArt = value;
+                Program.Config.MPRISShowCoverArt = value;
             }
         }
         public bool CheckForUpdates
         {
-            get => Config?.CheckForUpdates ?? false;
+            get => Program.Config?.CheckForUpdates ?? false;
             set
             {
-                Config.CheckForUpdates = value;
+                Program.Config.CheckForUpdates = value;
             }
         }
 
         private ConfigurationFile workingConfig;
 
-        private Window Window
+        private Window? Window
         {
             get
             {
@@ -134,7 +132,7 @@ namespace FRESHMusicPlayer.ViewModels
                 else return null;
             }
         }
-        private MainWindowViewModel WindowViewModel => Window.DataContext as MainWindowViewModel;
+        private MainWindowViewModel? WindowViewModel => Window?.DataContext as MainWindowViewModel;
 
         public SettingsViewModel()
         {
@@ -143,7 +141,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void StartThings()
         {
-            workingConfig = new ConfigurationFile { Language = Config.Language, IntegrateDiscordRPC = Config.IntegrateDiscordRPC, IntegrateMPRIS = Config.IntegrateMPRIS }; // Copy of config that's compared to the actual config file to set AppRestartNeeded.
+            workingConfig = new ConfigurationFile { Language = Program.Config.Language, IntegrateDiscordRPC = Program.Config.IntegrateDiscordRPC, IntegrateMPRIS = Program.Config.IntegrateMPRIS }; // Copy of config that's compared to the actual config file to set AppRestartNeeded.
             this.RaisePropertyChanged(nameof(Language));
             this.RaisePropertyChanged(nameof(AutoImportText));
             this.RaisePropertyChanged(nameof(PlaytimeLogging));
@@ -165,7 +163,9 @@ namespace FRESHMusicPlayer.ViewModels
             if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifeTime)
             {
                 lifeTime.Shutdown();
-                Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "FRESHMusicPlayer"));
+                var path = Process.GetCurrentProcess().MainModule?.FileName;
+                if (path != null)
+                    Process.Start(path);
             }
         }
 
@@ -174,21 +174,21 @@ namespace FRESHMusicPlayer.ViewModels
             var dialog = new OpenFolderDialog();
             var directory = await dialog.ShowAsync(Window);
             if (directory is not null)
-                Config.AutoImportPaths.Add(directory);
+                Program.Config.AutoImportPaths.Add(directory);
             this.RaisePropertyChanged(nameof(AutoImportText));
         }
         public void ClearAllCommand()
         {
-            Config.AutoImportPaths.Clear();
+            Program.Config.AutoImportPaths.Clear();
             this.RaisePropertyChanged(nameof(AutoImportText));
         }
 
         public void ResetSettingsCommand()
         {
             Program.Config = new ConfigurationFile();
-            Config = Program.Config;
             StartThings();
         }
+
         public async void CleanLibraryCommand()
         {
             await Task.Run(() =>
@@ -207,7 +207,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         private void CheckRestartNeeded()
         {
-            if (workingConfig.Language == Config.Language) IsRestartNeeded = false;
+            if (workingConfig.Language == Program.Config.Language) IsRestartNeeded = false;
             else IsRestartNeeded = true;
         }
     }

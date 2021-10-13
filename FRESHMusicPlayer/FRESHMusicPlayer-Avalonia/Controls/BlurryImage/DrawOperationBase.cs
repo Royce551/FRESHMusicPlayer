@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer.Controls.BlurryImage
             // do nothing
         }
 
-        public virtual bool Equals(ICustomDrawOperation other) => false;
+        public virtual bool Equals(ICustomDrawOperation? other) => false;
 
         public virtual bool HitTest(Point p) => true;
 
