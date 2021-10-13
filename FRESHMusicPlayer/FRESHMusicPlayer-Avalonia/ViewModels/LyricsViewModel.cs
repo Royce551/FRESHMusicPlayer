@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer.ViewModels
             Update();
         }
 
-        private void ProgressTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void ProgressTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             if (!MainWindow.Player.FileLoaded || TimedLyrics is null) return;
             if (MainWindow.Player.CurrentBackend.CurrentTime < TimedLyrics.Lines.Keys.First()) return;
@@ -33,7 +33,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        private void Player_SongChanged(object sender, EventArgs e) => Update();
+        private void Player_SongChanged(object? sender, EventArgs e) => Update();
 
         public void Deinitialize()
         {

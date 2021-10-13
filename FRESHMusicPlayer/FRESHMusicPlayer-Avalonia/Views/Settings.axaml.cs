@@ -2,8 +2,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
-using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.ViewModels;
+using System;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -17,10 +17,9 @@ namespace FRESHMusicPlayer.Views
 #endif
         }
 
-        public Settings SetThings(ConfigurationFile config, Library library)
+        public Settings SetThings(Library library)
         {
-            var viewModel = DataContext as SettingsViewModel;
-            viewModel.Config = config;
+            var viewModel = DataContext as SettingsViewModel ?? throw new InvalidCastException();
             viewModel.Library = library;
             viewModel.StartThings();
             return this;
@@ -29,7 +28,6 @@ namespace FRESHMusicPlayer.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-
         }
     }
 }

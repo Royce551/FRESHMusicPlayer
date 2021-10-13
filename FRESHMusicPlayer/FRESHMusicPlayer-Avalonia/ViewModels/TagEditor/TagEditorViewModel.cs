@@ -20,9 +20,9 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
 {
     public class TagEditorViewModel : ViewModelBase
     {
-        public Window Window { get; set; }
-        public Player Player { get; set; }
-        public Library Library { get; set; }
+        public Window? Window { get; set; }
+        public Player? Player { get; set; }
+        public Library? Library { get; set; }
 
         private readonly HttpClient httpClient = new();
         public TagEditorViewModel()
@@ -30,8 +30,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/10.1 (https://github.com/Royce551/FRESHMusicPlayer)");
         }
 
-        private string artist;
-        public string Artist
+        private string? artist;
+        public string? Artist
         {
             get => artist;
             set
@@ -40,8 +40,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 UnsavedChanges = true;
             }
         }
-        private string title;
-        public string Title
+        private string? title;
+        public string? Title
         {
             get => title;
             set
@@ -50,8 +50,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 UnsavedChanges = true;
             }
         }
-        private string year;
-        public string Year
+        private string? year;
+        public string? Year
         {
             get => year;
             set
@@ -60,8 +60,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 UnsavedChanges = true;
             }
         }
-        private string genre;
-        public string Genre
+        private string? genre;
+        public string? Genre
         {
             get => genre;
             set
@@ -70,8 +70,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 UnsavedChanges = true;
             }
         }
-        private string album;
-        public string Album
+        private string? album;
+        public string? Album
         {
             get => album;
             set
@@ -81,8 +81,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             }
         }
 
-        private string albumArtist;
-        public string AlbumArtist
+        private string? albumArtist;
+        public string? AlbumArtist
         {
             get => albumArtist;
             set
@@ -91,8 +91,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 UnsavedChanges = true;
             }
         }
-        private string composer;
-        public string Composer
+        private string? composer;
+        public string? Composer
         {
             get => composer;
             set
@@ -101,8 +101,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 UnsavedChanges = true;
             }
         }
-        private string trackNumber;
-        public string TrackNumber
+        private string? trackNumber;
+        public string? TrackNumber
         {
             get => trackNumber;
             set
@@ -111,8 +111,8 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 UnsavedChanges = true;
             }
         }
-        private string discNumber;
-        public string DiscNumber
+        private string? discNumber;
+        public string? DiscNumber
         {
             get => discNumber;
             set
@@ -122,14 +122,14 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
             }
         }
 
-        private Bitmap coverArt;
-        public Bitmap CoverArt
+        private Bitmap? coverArt;
+        public Bitmap? CoverArt
         {
             get => coverArt;
             set => this.RaiseAndSetIfChanged(ref coverArt, value);
         }
-        private string coverArtLabel;
-        public string CoverArtLabel
+        private string? coverArtLabel;
+        public string? CoverArtLabel
         {
             get => coverArtLabel;
             set => this.RaiseAndSetIfChanged(ref coverArtLabel, value);

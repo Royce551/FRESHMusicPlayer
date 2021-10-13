@@ -19,13 +19,13 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public class PlaylistManagementViewModel : ViewModelBase
     {
-        public MainWindowViewModel MainWindow { get; set; }
-        public string Track { get; set; }
+        public MainWindowViewModel MainWindow { get; set; } = null!;
+        public string? Track { get; set; }
 
         public ObservableCollection<DisplayPlaylist> Playlists { get; } = new();
 
-        private string editingHeader;
-        public string EditingHeader
+        private string? editingHeader;
+        public string? EditingHeader
         {
             get => editingHeader;
             set => this.RaiseAndSetIfChanged(ref editingHeader, value);

@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System;
 
 namespace FRESHMusicPlayer.Views
 {
@@ -11,7 +12,7 @@ namespace FRESHMusicPlayer.Views
         public bool OK { get; private set; } = false;
         public string Text => ViewModel.Text;
 
-        private TextEntryBoxViewModel ViewModel => DataContext as TextEntryBoxViewModel;
+        private TextEntryBoxViewModel ViewModel => DataContext as TextEntryBoxViewModel ?? throw new InvalidCastException();
 
         public TextEntryBox()
         {

@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
+using System;
 using System.ComponentModel;
 using System.Timers;
 
@@ -11,7 +12,7 @@ namespace FRESHMusicPlayer.Views
 {
     public class QueueManagement : Window
     {
-        private QueueManagementViewModel ViewModel { get => DataContext as QueueManagementViewModel; }
+        private QueueManagementViewModel ViewModel { get => DataContext as QueueManagementViewModel ?? throw new InvalidCastException(); }
 
         public QueueManagement()
         {
@@ -28,7 +29,7 @@ namespace FRESHMusicPlayer.Views
 
         public QueueManagement SetStuff(Player player, Library library, Timer progressTimer)
         {
-            var context = DataContext as QueueManagementViewModel;
+            var context = DataContext as QueueManagementViewModel ?? throw new InvalidCastException();
             context.Player = player;
             context.Library = library;
             context.ProgressTimer = progressTimer;

@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             LoggingHandler.Log("Playtime Logging: Starting!");
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private void Player_SongChanged(object? sender, EventArgs e)
         {
             try
             {

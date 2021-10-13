@@ -37,7 +37,7 @@ namespace FRESHMusicPlayer.ViewModels
         public IntegrationHandler Integrations { get; private set; } = new();
         public NotificationHandler Notifications { get; private set; } = new();
 
-        private Window Window
+        private Window? Window
         {
             get
             {
@@ -74,7 +74,7 @@ namespace FRESHMusicPlayer.ViewModels
         public void ClearAllNotificationsCommand() => Notifications.ClearAll();
 
 #region Core
-        private void Player_SongException(object sender, PlaybackExceptionEventArgs e)
+        private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
         {
             Notifications.Add(new()
             {
@@ -87,7 +87,7 @@ namespace FRESHMusicPlayer.ViewModels
             LoggingHandler.Log($"Player: An exception was thrown: {e.Exception}");
         }
 
-        private void Player_SongStopped(object sender, EventArgs e)
+        private void Player_SongStopped(object? sender, EventArgs e)
         {
             LoggingHandler.Log("Player: Stopping!");
             Artist = Properties.Resources.NothingPlaying;
@@ -98,7 +98,7 @@ namespace FRESHMusicPlayer.ViewModels
             Integrations.Update(CurrentTrack, PlaybackStatus.Stopped);
         }
 
-        private async void ProgressTimer_Elapsed(object sender, ElapsedEventArgs e) => await Dispatcher.UIThread.InvokeAsync(() => ProgressTick());
+        private async void ProgressTimer_Elapsed(object? sender, ElapsedEventArgs e) => await Dispatcher.UIThread.InvokeAsync(() => ProgressTick());
 
         public void ProgressTick()
         {
@@ -111,7 +111,7 @@ namespace FRESHMusicPlayer.ViewModels
             Player.AvoidNextQueue = false;
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private void Player_SongChanged(object? sender, EventArgs e)
         {
             LoggingHandler.Log("Player: SongChanged");
             CurrentTrack = new Track(Player.FilePath);
@@ -282,21 +282,21 @@ namespace FRESHMusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref totalTimeSeconds, value);
         }
 
-        private Bitmap coverArt;
-        public Bitmap CoverArt
+        private Bitmap? coverArt;
+        public Bitmap? CoverArt
         {
             get => coverArt;
             set => this.RaiseAndSetIfChanged(ref coverArt, value);
         }
 
-        private string artist = Properties.Resources.NothingPlaying;
-        public string Artist
+        private string? artist = Properties.Resources.NothingPlaying;
+        public string? Artist
         {
             get => artist;
             set => this.RaiseAndSetIfChanged(ref artist, value);
         }
-        private string title = Properties.Resources.NothingPlaying;
-        public string Title
+        private string? title = Properties.Resources.NothingPlaying;
+        public string? Title
         {
             get => title;
             set => this.RaiseAndSetIfChanged(ref title, value);
@@ -333,19 +333,19 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 case 0:
                     foreach (var track in await Task.Run(() => Library.Read()))
-                        AllTracks.Add(track);
+                        AllTracks?.Add(track);
                     break;
                 case 1:
                     foreach (var artist in await Task.Run(() => Library.Read("Artist").Select(x => x.Artist).Distinct()))
-                        CategoryThings.Add(artist);
+                        CategoryThings?.Add(artist);
                     break;
                 case 2:
                     foreach (var album in await Task.Run(() => Library.Read("Album").Select(x => x.Album).Distinct()))
-                        CategoryThings.Add(album);
+                        CategoryThings?.Add(album);
                     break;
                 case 3:
                     foreach (var playlist in await Task.Run(() => Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToEnumerable()))
-                        CategoryThings.Add(playlist.Name);
+                        CategoryThings?.Add(playlist.Name);
                     break;
             }
             UpdateLibraryInfo();
@@ -391,7 +391,7 @@ namespace FRESHMusicPlayer.ViewModels
             
             HandleIntegrations();
 
-            (GetMainWindow() as MainWindow).RootPanel.Opacity = 1; // this triggers the startup fade
+            (GetMainWindow() as MainWindow ?? throw new InvalidCastException()).RootPanel.Opacity = 1; // this triggers the startup fade
             await PerformAutoImport();
         }
 
@@ -419,7 +419,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        private void Notifications_NotificationInvalidate(object sender, EventArgs e)
+        private void Notifications_NotificationInvalidate(object? sender, EventArgs e)
         {
             this.RaisePropertyChanged(nameof(VisibleNotifications));
             this.RaisePropertyChanged(nameof(AreThereAnyNotifications));
@@ -433,7 +433,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        public async void CloseThings()
+        public void CloseThings()
         {
             LoggingHandler.Log("FMP is shutting down!");
             Library?.Database.Dispose();
@@ -449,7 +449,7 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 Program.Config.FilePath = null;
             }
-            await ConfigurationHandler.Write(Program.Config);
+            ConfigurationFile.Write(Program.Config);
             LoggingHandler.Log("Goodbye!");
         }
 
@@ -853,7 +853,7 @@ namespace FRESHMusicPlayer.ViewModels
 #region NavBar
         public void OpenSettingsCommand()
         {
-            new Views.Settings().SetThings(Program.Config, Library).Show(Window);
+            new Views.Settings().SetThings(Library).Show(Window);
         }
 
         public void OpenQueueManagementCommand()
@@ -863,7 +863,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void OpenPlaylistManagementCommand()
         {
-            new PlaylistManagement().SetStuff(this, Player.FilePath ?? null).Show(Window);
+            new PlaylistManagement().SetStuff(this, Player.FilePath).Show(Window);
         }
 
         public void OpenLyricsCommand()

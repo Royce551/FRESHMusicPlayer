@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels.TagEditor;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -10,7 +11,7 @@ namespace FRESHMusicPlayer.Views.TagEditor
 {
     public partial class TagEditor : Window
     {
-        private TagEditorViewModel ViewModel => DataContext as TagEditorViewModel;
+        private TagEditorViewModel ViewModel => DataContext as TagEditorViewModel ?? throw new InvalidCastException();
 
         public TagEditor()
         {
@@ -20,7 +21,7 @@ namespace FRESHMusicPlayer.Views.TagEditor
 #endif
         }
 
-        public TagEditor SetStuff(Player player = null, Library library = null)
+        public TagEditor SetStuff(Player? player = null, Library? library = null)
         {
             ViewModel.Player = player;
             ViewModel.Library = library;

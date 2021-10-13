@@ -22,18 +22,22 @@ namespace FRESHMusicPlayer.Handlers.DatabaseIntegrations
             var release = new TagEditorRelease
             {
                 Id = id,
-                Artist = json.SelectToken("artist-credit[0].name").ToString(),
-                Name = json.SelectToken("title").ToString(),
+                Artist = json.SelectToken("artist-credit[0].name")?.ToString(),
+                Name = json.SelectToken("title")?.ToString(),
                 URL = $"https://musicbrainz.org/release/{id}",
                 Tracks = new List<TagEditorTrack>()
             };
-            foreach (var x in json.SelectToken("media[0].tracks"))
-            {
-                release.Tracks.Add(new TagEditorTrack
+            var tracks = json.SelectToken("media[0].tracks");
+            if (tracks != null)
+			{
+                foreach (var x in tracks)
                 {
-                    TrackNumber = int.Parse(x.SelectToken("number").ToString()),
-                    Title = x.SelectToken("title").ToString()
-                });
+                    release.Tracks.Add(new TagEditorTrack
+                    {
+                        TrackNumber = int.TryParse(x.SelectToken("number")?.ToString(), out int result) ? result : 0,
+                        Title = x.SelectToken("title")?.ToString()
+                    });
+                }
             }
             return release;
         }
@@ -50,9 +54,12 @@ namespace FRESHMusicPlayer.Handlers.DatabaseIntegrations
             }
             var json = JObject.Parse(jsonString);
             var z = json.SelectToken("releases");
-            foreach (var x in z)
-            {
-                releases.Add((x.SelectToken("title").ToString(), x.SelectToken("id").ToString()));
+            if (z != null)
+			{
+                foreach (var x in z)
+                {
+                    releases.Add((x.SelectToken("title")?.ToString() ?? "", x.SelectToken("id")?.ToString() ?? ""));
+                }
             }
             return releases;
         }

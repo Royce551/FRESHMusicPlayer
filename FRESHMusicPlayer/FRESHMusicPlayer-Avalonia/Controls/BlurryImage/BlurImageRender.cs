@@ -14,7 +14,7 @@ namespace FRESHMusicPlayer.Controls.BlurryImage
 
     public class BlurImageRender : DrawOperationBase, ICustomDrawOperation
     {
-        public BlurImageRender(MemoryStream data, Rect src, Rect dest, float levelX, float levelY, IFormattedTextImpl noSkia) : base(src, noSkia)
+        public BlurImageRender(MemoryStream data, Rect src, Rect dest, float levelX, float levelY, IFormattedTextImpl? noSkia) : base(src, noSkia!)
         {
             _data = data;
             _levelx = levelX;

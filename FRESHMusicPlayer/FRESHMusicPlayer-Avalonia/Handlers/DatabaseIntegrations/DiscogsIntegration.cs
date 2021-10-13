@@ -55,9 +55,12 @@ namespace FRESHMusicPlayer.Handlers.DatabaseIntegrations
             }
             var json = JObject.Parse(jsonString);
             var z = json.SelectToken("results"); // Format for searching: https://www.discogs.com/developers#page:database,header:database-search
-            foreach (var x in z)
-            {
-                releases.Add(($"{x.SelectToken("title")}; {x.SelectToken("year") ?? "no year"}; {string.Join(", ", x.SelectToken("format") ?? "no format") }; {x.SelectToken("country") ?? "no country"}", x.SelectToken("id").ToString()));
+            if (z != null)
+			{
+                foreach (var x in z)
+                {
+                    releases.Add(($"{x.SelectToken("title")}; {x.SelectToken("year") ?? "no year"}; {string.Join(", ", x.SelectToken("format") ?? "no format") }; {x.SelectToken("country") ?? "no country"}", x.SelectToken("id")?.ToString() ?? "no id"));
+                }
             }
             return releases;
         }

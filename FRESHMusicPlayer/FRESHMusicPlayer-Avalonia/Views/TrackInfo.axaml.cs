@@ -2,13 +2,14 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System;
 using System.ComponentModel;
 
 namespace FRESHMusicPlayer.Views
 {
     public partial class TrackInfo : Window
     {
-        private TrackInfoViewModel ViewModel { get => DataContext as TrackInfoViewModel; }
+        private TrackInfoViewModel ViewModel { get => DataContext as TrackInfoViewModel ?? throw new InvalidCastException(); }
 
         public TrackInfo()
         {

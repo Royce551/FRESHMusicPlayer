@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace FRESHMusicPlayer.Handlers.Configuration
 {
     public class ConfigurationFile /*: ViewModelBase*/
     {                       // this is technically a Model but who cares!
+
+        private static string savePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-Avalonia");
+
         /// <summary>
         /// The ISO language code for the current language, or "automatic" to use the system default.
         /// </summary>
@@ -43,7 +49,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// <summary>
         /// The file path that FMP was playing before closing
         /// </summary>
-        public string FilePath { get; set; }
+        public string? FilePath { get; set; }
         /// <summary>
         /// The position into the track that FMP was playing before closing
         /// </summary>
@@ -56,5 +62,23 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// Directories to scan for tracks to import from on startup
         /// </summary>
         public List<string> AutoImportPaths { get; set; } = new List<string>();
+
+        public static ConfigurationFile Read()
+        {
+            if (!File.Exists(Path.Combine(savePath, "config.json")))
+            {
+                Write(new ConfigurationFile());
+            }
+            using StreamReader file = File.OpenText(Path.Combine(savePath, "config.json"));
+            var jsonSerializer = new JsonSerializer();
+            return jsonSerializer.Deserialize(file, typeof(ConfigurationFile)) as ConfigurationFile ?? throw new InvalidCastException();
+        }
+
+        public static void Write(ConfigurationFile config)
+        {
+            if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
+            using StreamWriter file = File.CreateText(Path.Combine(savePath, "config.json"));
+            new JsonSerializer().Serialize(file, config);
+        }
     }
 }

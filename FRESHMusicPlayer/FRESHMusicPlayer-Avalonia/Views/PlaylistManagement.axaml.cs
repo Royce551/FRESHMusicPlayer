@@ -9,7 +9,7 @@ namespace FRESHMusicPlayer.Views
 {
     public partial class PlaylistManagement : Window
     {
-        private PlaylistManagementViewModel ViewModel { get => DataContext as PlaylistManagementViewModel; }
+        private PlaylistManagementViewModel ViewModel { get => DataContext as PlaylistManagementViewModel ?? throw new InvalidCastException(); }
 
         public PlaylistManagement()
         {
@@ -67,7 +67,7 @@ namespace FRESHMusicPlayer.Views
         private void OnMiscButtonClick(object sender, RoutedEventArgs e)
         {
             var cmd = (Button)sender;
-            cmd.ContextMenu.Open();
+            cmd.ContextMenu?.Open();
         }
 
         private void OnRenameItemClick(object sender, RoutedEventArgs e)

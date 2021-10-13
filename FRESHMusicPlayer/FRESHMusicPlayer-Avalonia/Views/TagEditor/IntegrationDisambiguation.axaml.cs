@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels.TagEditor;
+using System;
 using System.Collections.Generic;
 
 namespace FRESHMusicPlayer.Views.TagEditor
@@ -11,7 +12,7 @@ namespace FRESHMusicPlayer.Views.TagEditor
         public bool OK { get; set; } = false;
         public int SelectedItem => ViewModel.SelectedItem;
 
-        private IntegrationDisambiguationViewModel ViewModel => DataContext as IntegrationDisambiguationViewModel;
+        private IntegrationDisambiguationViewModel ViewModel => DataContext as IntegrationDisambiguationViewModel ?? throw new InvalidCastException();
 
         public IntegrationDisambiguation()
         {
