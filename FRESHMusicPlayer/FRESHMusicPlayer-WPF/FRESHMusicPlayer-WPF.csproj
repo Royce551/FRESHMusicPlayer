@@ -136,6 +136,8 @@
     <Compile Include="Handlers\Notifications\Notification.cs" />
     <Compile Include="Handlers\PlaytimeTrackingHandler.cs" />
     <Compile Include="Handlers\UpdateHandler.cs" />
+    <Compile Include="MainWindow_Controls.xaml.cs" />
+    <Compile Include="MainWindow_Logic.xaml.cs" />
     <Compile Include="Pages\FullscreenPage.xaml.cs">
       <DependentUpon>FullscreenPage.xaml</DependentUpon>
     </Compile>

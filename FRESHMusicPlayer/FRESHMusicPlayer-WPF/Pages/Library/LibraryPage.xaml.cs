@@ -35,18 +35,18 @@ namespace FRESHMusicPlayer.Pages.Library
             TracksPanel.Items.Clear();
             CategoryPanel.Items.Clear();
             InfoLabel.Visibility = Visibility.Hidden;
-            switch (window.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
+            switch (window.CurrentTab) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
-                case Menu.Tracks:
+                case Tab.Tracks:
                     await ShowTracks();
                     break;
-                case Menu.Artists:
+                case Tab.Artists:
                     await ShowArtists();
                     break;
-                case Menu.Albums:
+                case Tab.Albums:
                     await ShowAlbums();
                     break;
-                case Menu.Playlists:
+                case Tab.Playlists:
                     await ShowPlaylists();
                     break;
             }
@@ -154,8 +154,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (window.SelectedMenu == Menu.Artists) await ShowTracksforArtist(selectedItem);
-            else if (window.SelectedMenu == Menu.Playlists) await ShowTracksforPlaylist(selectedItem);
+            if (window.CurrentTab == Tab.Artists) await ShowTracksforArtist(selectedItem);
+            else if (window.CurrentTab == Tab.Playlists) await ShowTracksforPlaylist(selectedItem);
             else await ShowTracksforAlbum(selectedItem);
         }
         //private void MainWindow_TabChanged(object sender, string e)

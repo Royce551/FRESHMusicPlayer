@@ -66,7 +66,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// <summary>
         /// The last menu FMP was on before closing
         /// </summary>
-        public Menu CurrentMenu { get; set; } = Menu.Import;
+        public Tab CurrentMenu { get; set; } = Tab.Import;
         public List<string> AutoImportPaths { get; set; } = new List<string>();
     }
 

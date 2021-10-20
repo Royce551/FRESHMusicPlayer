@@ -18,8 +18,8 @@ namespace FRESHMusicPlayer.Forms.Playlists
 
         private readonly GUILibrary library;
         private readonly NotificationHandler notificationHandler;
-        private readonly Menu selectedMenu;
-        public PlaylistManagement(GUILibrary library, NotificationHandler notificationHandler, Menu selectedMenu, string track = null)
+        private readonly Tab selectedMenu;
+        public PlaylistManagement(GUILibrary library, NotificationHandler notificationHandler, Tab selectedMenu, string track = null)
         {
             this.library = library;
             this.notificationHandler = notificationHandler;

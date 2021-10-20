@@ -116,7 +116,7 @@ namespace FRESHMusicPlayer.Pages.Library
             otheritem.Header = Properties.Resources.PLAYLISTMANAGEMENT;
             otheritem.Click += (object send, RoutedEventArgs eee) =>
             {
-                var management = new PlaylistManagement(library, notificationHandler, ((Application.Current as App).MainWindow as MainWindow).SelectedMenu, FilePath);
+                var management = new PlaylistManagement(library, notificationHandler, ((Application.Current as App).MainWindow as MainWindow).CurrentTab, FilePath);
                 management.ShowDialog();
             };
             MiscContext.Items.Add(otheritem);

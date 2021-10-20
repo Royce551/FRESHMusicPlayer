@@ -25,8 +25,8 @@ namespace FRESHMusicPlayer.Pages
     public partial class FullscreenPage : UserControl
     {
         private readonly MainWindow window;
-        private readonly Menu previousMenu;
-        public FullscreenPage(MainWindow window, Menu previousMenu)
+        private readonly Tab previousMenu;
+        public FullscreenPage(MainWindow window, Tab previousMenu)
         {
             this.window = window;
             this.previousMenu = previousMenu;
@@ -118,8 +118,8 @@ namespace FRESHMusicPlayer.Pages
             window.WindowStyle = WindowStyle.SingleBorderWindow;
             window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Visible;
             if (!window.IsControlsBoxVisible) window.ShowControlsBox();
-            if (previousMenu != Menu.Fullscreen) window.ChangeTabs(previousMenu);
-            else window.ChangeTabs(Menu.Import);
+            if (previousMenu != Tab.Fullscreen) window.ChangeTabs(previousMenu);
+            else window.ChangeTabs(Tab.Import);
         }
 
         private readonly WinForms.Timer controlDismissTimer = new WinForms.Timer { Interval = 2000, Enabled = true };

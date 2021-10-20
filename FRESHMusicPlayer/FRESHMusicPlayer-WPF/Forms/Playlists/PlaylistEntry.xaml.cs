@@ -20,8 +20,8 @@ namespace FRESHMusicPlayer.Forms.Playlists
 
         private readonly GUILibrary library;
         private readonly PlaylistManagement window;
-        private readonly Menu selectedMenu;
-        public PlaylistEntry(string playlist, string path, GUILibrary library, PlaylistManagement window, Menu selectedMenu)
+        private readonly Tab selectedMenu;
+        public PlaylistEntry(string playlist, string path, GUILibrary library, PlaylistManagement window, Tab selectedMenu)
         {
             this.library = library;
             this.window = window;
@@ -30,7 +30,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
             if (path is null) trackExists = false;
             TitleLabel.Text = playlist;
 
-            if (selectedMenu == Menu.Artists) AddThingButton.Content = $"+ {Properties.Resources.TAGEDITOR_ARTIST}";
+            if (selectedMenu == Tab.Artists) AddThingButton.Content = $"+ {Properties.Resources.TAGEDITOR_ARTIST}";
             else AddThingButton.Content = $"+ {Properties.Resources.TRACKINFO_ALBUM}";
 
             this.playlist = playlist;
@@ -57,7 +57,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
             if (trackExists)
             {
                 AddButton.Visibility = RemoveButton.Visibility = Visibility.Visible;
-                if (selectedMenu == Menu.Artists || selectedMenu == Menu.Albums)
+                if (selectedMenu == Tab.Artists || selectedMenu == Tab.Albums)
                     AddThingButton.Visibility = Visibility.Visible;
             }
         }
@@ -118,7 +118,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
         private void AddThingButton_Click(object sender, RoutedEventArgs e)
         {
             List<DatabaseTrack> things;
-            if (selectedMenu == Menu.Artists)
+            if (selectedMenu == Tab.Artists)
                 things = library.ReadTracksForArtist(library.GetFallbackTrack(path).Artist);
             else
                 things = library.ReadTracksForAlbum(library.GetFallbackTrack(path).Album);
