@@ -90,6 +90,6 @@ namespace FRESHMusicPlayer.Pages.Library
             await window.Player.PlayAsync();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) => window.Dispatcher.Invoke(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
+        private async void Page_Loaded(object sender, RoutedEventArgs e) => await window.Dispatcher.InvokeAsync(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
     }
 }

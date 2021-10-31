@@ -16,7 +16,6 @@
                                 CornerRadius="2" 
                                 BorderBrush="{TemplateBinding Background}" 
                                 TextElement.Foreground="{TemplateBinding Foreground}" 
-                                Tag="{TemplateBinding Background}"
                                 BorderThickness="1" 
                                 Background="{TemplateBinding Background}"
                                 RenderTransformOrigin="0.5,0.5">
@@ -490,14 +489,14 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="Grid" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,5,0" Width="22" Height="22"
+                        <Border x:Name="Grid" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,5,0" Width="20" Height="20"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="2"
                             CornerRadius="2"
                             RenderTransformOrigin="0.5,0.5"
-                            SnapsToDevicePixels="True" Padding="3">
-                            <Viewbox x:Name="Check" Stretch="UniformToFill" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-3,0,0">
+                            SnapsToDevicePixels="True" Padding="2">
+                            <Viewbox x:Name="Check" Stretch="UniformToFill" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-10,0,0">
                                 <Path Fill="{StaticResource PrimaryTextColor}" Data="M 17.939453 5.439453 L 7.5 15.888672 L 2.060547 10.439453 L 2.939453 9.560547 L 7.5 14.111328 L 17.060547 4.560547 Z"/>
                             </Viewbox>
                             <Border.RenderTransform>
@@ -506,33 +505,8 @@
                         </Border>
                         <ContentPresenter Grid.Column="1" VerticalAlignment="Center"/>
                     </Grid>
-                    
+
                     <ControlTemplate.Triggers>
-                        <!--<MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsChecked" Value="True"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                                <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
-                            </MultiTrigger.Conditions>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsChecked" Value="True"/>
-                                <Condition Property="IsMouseOver" Value="False"/>
-                            </MultiTrigger.Conditions>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsChecked" Value="False"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                            </MultiTrigger.Conditions>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsChecked" Value="True"/>
-                                <Condition Property="IsMouseOver" Value="False"/>
-                            </MultiTrigger.Conditions>
-                        </MultiTrigger>-->
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
                         </Trigger>

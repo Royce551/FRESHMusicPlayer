@@ -84,16 +84,16 @@
                 <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
 
                 <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
-                <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,55,15" Width="20" HorizontalAlignment="Right"/>
+                <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,142.505,15" Width="20" HorizontalAlignment="Right"/>
                 <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
-                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatAllIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,142.505,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
+                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatAllIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,55,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
                 <Path x:Name="PreviousTrackButton" Data="{StaticResource PreviousIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,47.803,182.505,15.997" Width="25.612" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown"/>
                 <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1"/>
 
                 <!--Hitboxes for the above paths-->
-                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,143,13" Width="23" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown" Cursor="Hand"/>
+                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,55,15" Width="23" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown" Cursor="Hand"/>
                 <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown" Cursor="Hand"/>
-                <Rectangle Grid.Column="2" Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Margin="0,46,55,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="ShuffleButton_MouseLeftButtonDown" Cursor="Hand"/>
+                <Rectangle Grid.Column="2" Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Margin="0,45,143,13" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="ShuffleButton_MouseLeftButtonDown" Cursor="Hand"/>
                 <Rectangle Grid.Column="2" Margin="0,40,92,8" Width="36" HorizontalAlignment="Right" MouseLeftButtonDown="PlayPauseButton_MouseLeftButtonDown" Fill="Transparent" Cursor="Hand"/>
                 <Rectangle Grid.Column="2" Margin="0,48,183,16" Width="22" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown" Fill="Transparent" Cursor="Hand"/>
                 <!--Sorry, this is more than a little messy LMAO-->
@@ -121,7 +121,7 @@
                         </EventTrigger>
                     </Rectangle.Triggers>
                 </Rectangle>
-                <Slider x:Name="VolumeBar" Grid.Column="2" Margin="0,14,43,0" Foreground="Red" BorderBrush="#FFAC0505" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Opacity="0" Maximum="100" ValueChanged="VolumeBar_ValueChanged" IsMoveToPointEnabled="True" Value="100" Style="{StaticResource Progress_Slider}" Panel.ZIndex="1">
+                <Slider x:Name="VolumeBar" Grid.Column="2" Margin="0,14,43,0" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Opacity="0" Maximum="100" ValueChanged="VolumeBar_ValueChanged" IsMoveToPointEnabled="True" Value="100" Style="{StaticResource Progress_Slider}" Panel.ZIndex="1">
                     <Slider.Triggers>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>

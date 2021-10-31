@@ -5,26 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FRESHMusicPlayer.Handlers.Notifications"
              mc:Ignorable="d" 
-             d:DesignHeight="120
-             " d:DesignWidth="200" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
-    <UserControl.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard>
-                <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="BackgroundPanel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     From="0"
-                                     To="1.0" Duration="0:0:.25"
-                                     />
-                    <DoubleAnimation Storyboard.TargetName="Border"
-                                     Storyboard.TargetProperty="Opacity"
-                                     From="0"
-                                     To="1.0" Duration="0:0:.25"
-                                     />
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </UserControl.Triggers>
+             d:DesignHeight="120" d:DesignWidth="200" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
     <Border x:Name="Border" CornerRadius="2" BorderBrush="{StaticResource ForegroundColor}" BorderThickness="1">
         <Grid MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
             <Grid x:Name="BackgroundPanel" Background="{StaticResource ForegroundColor}">

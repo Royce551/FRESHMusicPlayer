@@ -106,8 +106,7 @@
                 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Style="{StaticResource Header}"/>
 
-                <TextBlock x:Name="FMPVersionLabel" Text="FRESHMusicPlayer Ver. 10.1.1" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <TextBlock x:Name="FMPCoreVersionLabel" Text="FRESHMusicPlayer Core Ver. 3.0.0" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock x:Name="FMPVersionLabel" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>
             </StackPanel>
         </ScrollViewer>

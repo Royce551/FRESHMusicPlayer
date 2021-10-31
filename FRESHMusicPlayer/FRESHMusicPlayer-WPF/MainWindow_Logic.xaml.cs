@@ -7,8 +7,10 @@ using FRESHMusicPlayer.Pages.Lyrics;
 using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -353,6 +355,17 @@ namespace FRESHMusicPlayer
                 TrackingHandler?.Close();
                 TrackingHandler = null;
             }
+
+            var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            if (version != App.Config.LastRecordedVersion)
+                NotificationHandler.Add(new Notification
+                {
+                    ContentText = $"You're now on FRESHMusicPlayer {version}!",
+                    ButtonText = "Changelog",
+                    Type = NotificationType.Success,
+                    OnButtonClicked = () => { Process.Start("https://github.com/royce551/freshmusicplayer/releases/latest"); return true; }
+                });
+            App.Config.LastRecordedVersion = version;
         }
         public async void HandlePersistence()
         {

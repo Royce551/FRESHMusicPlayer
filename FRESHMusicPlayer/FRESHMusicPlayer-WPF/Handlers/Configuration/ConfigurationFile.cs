@@ -67,7 +67,16 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// The last menu FMP was on before closing
         /// </summary>
         public Tab CurrentMenu { get; set; } = Tab.Import;
+        /// <summary>
+        /// File paths to automatically import tracks from on startup
+        /// </summary>
         public List<string> AutoImportPaths { get; set; } = new List<string>();
+
+        /// <summary>
+        /// The last recorded version of FMP we're on. If this doesn't match the actual version,
+        /// FMP was updated.
+        /// </summary>
+        public string LastRecordedVersion { get; set; }
     }
 
 }
