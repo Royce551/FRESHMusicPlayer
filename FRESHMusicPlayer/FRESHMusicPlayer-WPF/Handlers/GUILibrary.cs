@@ -16,6 +16,8 @@ namespace FRESHMusicPlayer.Handlers
     /// </summary>
     public class GUILibrary : Library
     {
+        public event EventHandler LibraryChanged;
+
         private readonly NotificationHandler notificationHandler;
         private readonly Dispatcher dispatcher;
         public GUILibrary(LiteDatabase library, NotificationHandler notificationHandler, Dispatcher dispatcher) : base(library)
@@ -29,7 +31,11 @@ namespace FRESHMusicPlayer.Handlers
             var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
             base.Import(tracks);
-            dispatcher.Invoke(() => notificationHandler.Remove(notification));
+            dispatcher.Invoke(() =>
+            {
+                notificationHandler.Remove(notification);
+                LibraryChanged?.Invoke(null, EventArgs.Empty);
+            });
         }
 
         public override void Import(string[] tracks)
@@ -37,7 +43,11 @@ namespace FRESHMusicPlayer.Handlers
             var notification = new Notification { ContentText = $"Importing {tracks.Length} tracks" };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
             base.Import(tracks);
-            dispatcher.Invoke(() => notificationHandler.Remove(notification));
+            dispatcher.Invoke(() =>
+            {
+                notificationHandler.Remove(notification);
+                LibraryChanged?.Invoke(null, EventArgs.Empty);
+            });
         }
 
         public override void Nuke(bool nukePlaylists = true)
@@ -50,8 +60,8 @@ namespace FRESHMusicPlayer.Handlers
                     ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
                     Type = NotificationType.Success
                 });
+                LibraryChanged?.Invoke(null, EventArgs.Empty);
             });
-            
         }
 
         //public List<DatabaseQueue> GetAllQueues() FMP 10.2

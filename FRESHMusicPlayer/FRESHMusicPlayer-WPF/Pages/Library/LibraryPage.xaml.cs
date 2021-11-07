@@ -20,6 +20,7 @@ namespace FRESHMusicPlayer.Pages.Library
         public LibraryPage(MainWindow window, string search = null)
         {
             this.window = window;
+            window.Library.LibraryChanged += Library_LibraryChanged;
             InitializeComponent();
             LoadLibrary();
             CategoryPanel.Focus();
@@ -28,6 +29,14 @@ namespace FRESHMusicPlayer.Pages.Library
                 Thread.Sleep(10);
                 CategoryPanel.SelectedItem = search;
             }
+        }
+
+        private void Library_LibraryChanged(object sender, EventArgs e)
+        {
+            var selectedItem = CategoryPanel.SelectedItem;
+            LoadLibrary();
+            Thread.Sleep(10);
+            CategoryPanel.SelectedItem = selectedItem;
         }
 
         public async void LoadLibrary() // TODO: figure out how to make this not async void
@@ -177,6 +186,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
+            window.Library.LibraryChanged -= Library_LibraryChanged;
             CategoryPanel.Items.Clear();
             TracksPanel.Items.Clear();
         }
@@ -191,10 +201,10 @@ namespace FRESHMusicPlayer.Pages.Library
             window.Player.Queue.Clear();
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library);
             await window.Player.PlayAsync();
-            var selectedItem = CategoryPanel.SelectedItem;
-            LoadLibrary();
-            Thread.Sleep(10);
-            CategoryPanel.SelectedItem = selectedItem;
+            //var selectedItem = CategoryPanel.SelectedItem;
+            //LoadLibrary();
+            //Thread.Sleep(10);
+            //CategoryPanel.SelectedItem = selectedItem;
         }
 
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)

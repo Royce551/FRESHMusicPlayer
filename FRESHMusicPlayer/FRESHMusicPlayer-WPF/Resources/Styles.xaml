@@ -37,11 +37,11 @@
                                     <DoubleAnimation
                                             Storyboard.TargetName="buttonScaleTransform"
                                             Storyboard.TargetProperty="ScaleX"
-                                            To="0.9" Duration="0:0:.10" AutoReverse="True"/>
+                                            To="0.95" Duration="0:0:.10" AutoReverse="True"/>
                                     <DoubleAnimation
                                             Storyboard.TargetName="buttonScaleTransform"
                                             Storyboard.TargetProperty="ScaleY"
-                                            To="0.9" Duration="0:0:.10" AutoReverse="True"/>
+                                            To="0.95" Duration="0:0:.10" AutoReverse="True"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -457,15 +457,16 @@
 
     <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="CaretBrush" Value="#FF338BC1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border x:Name="TextBorder" CornerRadius="2" Background="{x:Null}" BorderBrush="{StaticResource SecondaryTextColor}" BorderThickness="1">
+                    <Border x:Name="TextBorder" CornerRadius="2" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource ForegroundColor}" BorderThickness="2">
                         <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="{StaticResource PrimaryTextColor}"/>
+                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="#FF338BC1"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
                             <Setter TargetName="TextBorder" Property="BorderBrush" Value="#FF338BC1"/>

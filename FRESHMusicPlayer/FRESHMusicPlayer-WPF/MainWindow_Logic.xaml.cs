@@ -204,38 +204,54 @@ namespace FRESHMusicPlayer
         public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false)
         {
             LoggingHandler.Log($"Showing pane --> {pane}");
+
+            UserControl GetPageForPane(Pane panex)
+            {
+                switch (panex)
+                {
+                    case Pane.Settings:
+                        return new SettingsPage(this);
+                    case Pane.QueueManagement:
+                        return new QueueManagement(this);
+                    case Pane.Search:
+                        return new SearchPage(this);
+                    case Pane.Notifications:
+                        return new NotificationPage(this);
+                    case Pane.TrackInfo:
+                        return new TrackInfoPage(this);
+                    case Pane.Lyrics:
+                        return new LyricsPage(this);
+                    default:
+                        return null;
+                }
+            }
+
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                new Window 
+                { 
+                    Content = GetPageForPane(pane), 
+                    Width = 600, 
+                    Height = 500, 
+                    Topmost = true, 
+                    ShowInTaskbar = false, 
+                    Owner = this, 
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner 
+                }.Show();
+                return;
+            }
+
             if (CurrentPane == pane)
             {
                 await HideAuxilliaryPane();
                 return;
             }
             if (CurrentPane != Pane.None) await HideAuxilliaryPane(true);
-            switch (pane)
-            {
-                case Pane.Settings:
-                    RightFrame.Content = new SettingsPage(this);
-                    break;
-                case Pane.QueueManagement:
-                    RightFrame.Content = new QueueManagement(this);
-                    break;
-                case Pane.Search:
-                    RightFrame.Content = new SearchPage(this);
-                    break;
-                case Pane.Notifications:
-                    RightFrame.Content = new NotificationPage(this);
-                    break;
-                case Pane.TrackInfo:
-                    RightFrame.Content = new TrackInfoPage(this);
-                    break;
-                case Pane.Lyrics:
-                    RightFrame.Content = new LyricsPage(this);
-                    break;
-                default:
-                    return;
-            }
+            
             if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
             RightFrame.Visibility = Visibility.Visible;
             RightFrame.Width = width;
+            RightFrame.Content = GetPageForPane(pane);
 
             var sb = InterfaceUtils.GetThicknessAnimation(
                 openleft ? new Thickness(width * -1 /*negate*/, 0, 0, 0) : new Thickness(0, 0, width * -1 /*negate*/, 0),
