@@ -9,8 +9,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public static string ConfigurationPath;
         static ConfigurationHandler()
         {
-            ConfigurationPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                                             "FRESHMusicPlayer",
+            ConfigurationPath = Path.Combine(App.DataFolderLocation,
                                              "Configuration",
                                              "FMP-WPF");
         }

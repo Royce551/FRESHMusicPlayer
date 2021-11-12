@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer.Handlers
             LoggingHandler.Log("Starting Playtime Logging Handler");
 
             this.window = window;
-            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Tracking");
+            FilePath = Path.Combine(App.DataFolderLocation, "Tracking");
             TrackingFile = Read();
 
             window.Player.SongChanged += Player_SongChanged;

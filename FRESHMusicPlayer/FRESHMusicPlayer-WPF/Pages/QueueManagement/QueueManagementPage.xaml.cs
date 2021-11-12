@@ -22,6 +22,7 @@ namespace FRESHMusicPlayer.Pages
         private bool taskisrunning;
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
         private int currentIndex = 0;
+        private List<string> lastQueue = new List<string>();
 
         private readonly MainWindow window;
         public QueueManagement(MainWindow window)
@@ -42,28 +43,47 @@ namespace FRESHMusicPlayer.Pages
                 var nextlength = 0;
                 int number = 1;
                 SetControlEnabled(false);
-                QueueList.Items.Clear();
                 await Task.Run(() => // Display controls
                 {
-                    foreach (var song in list)
+                    if (!list.SequenceEqual(lastQueue))
                     {
-                        if (displayqueue.Count > 1) break;
-                        QueueEntry entry;
-                        var dbTrack = window.Library.GetFallbackTrack(song);
-                        entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1, window.Player));
-                        Dispatcher.Invoke(() => QueueList.Items.Add(entry));
-                        if (entry.Index + 1 == window.Player.Queue.Position) currentIndex = entry.Index;
-                        if (window.Player.Queue.Position < number) nextlength += dbTrack.Length;
-                        if (number % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
-                        number++;
+                        Dispatcher.Invoke(() => QueueList.Items.Clear());
+                        foreach (var song in list)
+                        {
+                            if (displayqueue.Count > 1) break;
+                            
+                            QueueEntry entry;
+                            var dbTrack = window.Library.GetFallbackTrack(song);
+                            entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1, dbTrack.Length, window.Player));
+                            Dispatcher.Invoke(() => QueueList.Items.Add(entry));
+                            if (entry.Index + 1 == window.Player.Queue.Position) currentIndex = entry.Index;
+                            if (window.Player.Queue.Position < number) nextlength += dbTrack.Length;
+                            if (number % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
+                            number++;
+                        }
                     }
+                    else
+                    {
+                        foreach (var item in QueueList.Items)
+                        {
+                            if (item is QueueEntry entry)
+                            {
+                                Dispatcher.Invoke(() => entry.UpdatePosition());
+                                if (entry.Index + 1 == window.Player.Queue.Position) currentIndex = entry.Index;
+                                if (window.Player.Queue.Position < number) nextlength += entry.Length;
+                            }
+                            number++;
+                        }
+                    }
+                    lastQueue = Dispatcher.Invoke(() => QueueList.Items.Cast<QueueEntry>().Select(x => window.Player.Queue.Queue[x.Index]).ToList());
                 });
+
+
                 if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
                 RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + new TimeSpan(0, 0, 0, nextlength).ToString(@"hh\:mm\:ss");
                 SetControlEnabled(true);
                 taskisrunning = false;
                 if (displayqueue.Count != 0) GetResults();
-                else return;
             }
             if (!taskisrunning)
             {

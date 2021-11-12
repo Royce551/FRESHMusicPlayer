@@ -385,7 +385,7 @@ namespace FRESHMusicPlayer
         }
         public async void HandlePersistence()
         {
-            var persistenceFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence");
+            var persistenceFilePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
             if (File.Exists(persistenceFilePath))
             {
                 var fields = File.ReadAllText(persistenceFilePath).Split(';');
@@ -415,12 +415,12 @@ namespace FRESHMusicPlayer
         {
             if (Player.FileLoaded) // TODO: make this less shitty
             {
-                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"),
+                File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
                     $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width}");
             }
             else
             {
-                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-WPF", "persistence"),
+                File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
                     $";;{Top};{Left};{Height};{Width}");
             }
         }
