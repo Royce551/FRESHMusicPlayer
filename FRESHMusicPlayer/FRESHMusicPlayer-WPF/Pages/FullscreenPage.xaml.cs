@@ -53,29 +53,20 @@ namespace FRESHMusicPlayer.Pages
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            var CurrentTrack = window.Player.CurrentBackend.Metadata;
-            TitleLabel.Text = CurrentTrack.Title;
-            ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
+            var currentTrack = window.Player.Metadata;
+            TitleLabel.Text = currentTrack.Title;
+            ArtistLabel.Text = string.Join(", ", currentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", currentTrack.Artists);
             ProgressBar.Maximum = window.Player.CurrentBackend.TotalTime.TotalSeconds;
             if (window.Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = window.Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
-            if (CurrentTrack.CoverArt is null)
+            if (currentTrack.CoverArt is null)
             {
-                var file = window.GetCoverArtFromDirectory();
-                if (file != null)
-                {
-                    CoverArtBox.Source = BitmapFrame.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
-                    SetCoverArtVisibility(true);
-                }
-                else
-                {
-                    CoverArtBox.Source = null;
-                    SetCoverArtVisibility(false);
-                }
+                CoverArtBox.Source = null;
+                SetCoverArtVisibility(false);
             }
             else
             {
-                CoverArtBox.Source = BackgroundCoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
+                CoverArtBox.Source = BackgroundCoverArtBox.Source = BitmapFrame.Create(new MemoryStream(currentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
                 SetCoverArtVisibility(true);
             }
 
@@ -88,7 +79,7 @@ namespace FRESHMusicPlayer.Pages
             else
             {
                 var trackInfo = new TrackInfo();
-                trackInfo.Update(CurrentTrack);
+                trackInfo.Update(currentTrack);
                 InfoThing.Content = trackInfo;
             }
         }

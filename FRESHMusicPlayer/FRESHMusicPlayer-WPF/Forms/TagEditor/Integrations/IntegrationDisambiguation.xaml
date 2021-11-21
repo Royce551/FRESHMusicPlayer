@@ -14,9 +14,9 @@
         </Grid.RowDefinitions>
         <StackPanel Background="{StaticResource BackgroundColor}">
             <TextBlock Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_INTEGRATIONDISAMBIGUATION}" TextWrapping="Wrap" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"/>
-            <ListBox x:Name="ReleaseBox" Background="{StaticResource SecondaryColor}" Margin="15,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="265"/>
+            <ListBox x:Name="ReleaseBox" Background="{StaticResource ForegroundColor}" Margin="15,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="265"/>
         </StackPanel>
-        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
+        <Grid Grid.Row="2" Background="{StaticResource SecondaryColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>

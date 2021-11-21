@@ -9,6 +9,7 @@ using System.Linq;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Handlers;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -90,13 +91,21 @@ namespace FRESHMusicPlayer.Pages.Library
             
         }
 
-        private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
+        private async void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             MiscContext.Items.Clear();
             var playlists = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToEnumerable();
             foreach (var playlist in playlists)
             {
-                var tracks = library.ReadTracksForPlaylist(playlist.Name);
+                List<DatabaseTrack> tracks;
+                try
+                {
+                    tracks = await Task.Run(() => library.ReadTracksForPlaylist(playlist.Name));
+                }
+                catch
+                {
+                    continue;
+                }
                 var trackIsInPlaylist = tracks.Any(x => x.Path == FilePath);
                 var item = new MenuItem
                 {

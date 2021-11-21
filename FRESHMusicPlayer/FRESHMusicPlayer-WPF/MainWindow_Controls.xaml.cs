@@ -45,7 +45,7 @@ namespace FRESHMusicPlayer
         {
             if (isDragging && Player.FileLoaded)
             {
-                Player.RepositionMusic((int)ProgressBar.Value);
+                Player.CurrentTime = TimeSpan.FromSeconds(ProgressBar.Value);
                 ProgressTick();
             }
         }
@@ -53,7 +53,7 @@ namespace FRESHMusicPlayer
         {
             if (Player.FileLoaded && !isDragging)
             {
-                Player.RepositionMusic((int)ProgressBar.Value);
+                Player.CurrentTime = TimeSpan.FromSeconds(ProgressBar.Value);
                 ProgressTick();
             }
         }

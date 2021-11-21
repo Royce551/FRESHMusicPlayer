@@ -5,7 +5,7 @@
     <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Padding" Value="20,1"/>
         <Setter Property="Template">

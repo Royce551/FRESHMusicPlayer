@@ -13,7 +13,7 @@
             <Setter Property="TextTrimming" Value="WordEllipsis"/> 
             <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/> 
             <Setter Property="FontSize" Value="16"/>
-            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="TextAlignment" Value="Left"/>
         </Style>
         <Style x:Key="Box" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Background" Value="{x:Null}"/>
@@ -87,10 +87,10 @@
                         <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="AlbumArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ALBUMARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="ComposerLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_COMPOSER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="TrackNumLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_TRACKNUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                    <TextBlock x:Name="DiscNumLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_DISCNUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                    <TextBlock x:Name="AlbumArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ALBUMARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Left" />
+                    <TextBlock x:Name="ComposerLabel" Margin="20,2,5,2" Grid.Row="2" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_COMPOSER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Left" />
+                    <TextBlock x:Name="TrackNumLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_TRACKNUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Left" />
+                    <TextBlock x:Name="DiscNumLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_DISCNUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Left" />
 
                     <TextBox x:Name="AlbumArtistBox" Grid.Row="1" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
                     <TextBox x:Name="ComposerBox" Grid.Row="2" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" CaretBrush="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextChanged="TextChanged" TextWrapping="Wrap"/>
@@ -145,7 +145,7 @@
                 </Grid>
             </StackPanel>
         </ScrollViewer>
-        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
+        <Grid Grid.Row="2" Background="{StaticResource SecondaryColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="250" MaxWidth="250px"/>

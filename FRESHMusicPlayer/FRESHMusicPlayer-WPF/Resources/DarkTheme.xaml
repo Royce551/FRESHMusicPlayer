@@ -6,6 +6,6 @@
     <SolidColorBrush x:Key="ControlBoxColor" Color="#FF2C2F33"/>
     <SolidColorBrush x:Key="NavBarColor" Color="Black"/>
     <SolidColorBrush x:Key="ForegroundColor" Color="#FF2C2F33"/>
-    <SolidColorBrush x:Key="SecondaryColor" Color="#FF46494E"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#FF3A3C40"/>
     <SolidColorBrush x:Key="BackgroundColor" Color="Black"/>
 </ResourceDictionary>

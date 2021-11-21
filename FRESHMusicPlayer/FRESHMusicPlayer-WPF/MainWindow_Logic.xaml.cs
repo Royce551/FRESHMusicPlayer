@@ -139,7 +139,7 @@ namespace FRESHMusicPlayer
         private void Player_SongChanged(object sender, EventArgs e)
         {
             Mouse.OverrideCursor = null;
-            CurrentTrack = Player.CurrentBackend.Metadata;
+            CurrentTrack = Player.Metadata;
             Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {WindowName}";
             TitleLabel.Text = CurrentTrack.Title;
             ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
@@ -150,17 +150,8 @@ namespace FRESHMusicPlayer
             UpdatePlayButtonState();
             if (CurrentTrack.CoverArt is null)
             {
-                var file = GetCoverArtFromDirectory();
-                if (file != null)
-                {
-                    CoverArtBox.Source = BitmapFrame.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
-                    SetCoverArtVisibility(true);
-                }
-                else
-                {
-                    CoverArtBox.Source = null;
-                    SetCoverArtVisibility(false);
-                }
+                CoverArtBox.Source = null;
+                SetCoverArtVisibility(false);
             }
             else
             {
@@ -405,7 +396,7 @@ namespace FRESHMusicPlayer
                 if (fields[0] != string.Empty)
                 {
                     await Player.PlayAsync(fields[0]);
-                    Player.RepositionMusic(int.Parse(fields[1]));
+                    Player.CurrentTime = TimeSpan.FromSeconds(int.Parse(fields[1]));
                     PlayPauseMethod();
                     ProgressTick();
                 }
@@ -424,28 +415,7 @@ namespace FRESHMusicPlayer
                     $";;{Top};{Left};{Height};{Width}");
             }
         }
-        public MemoryStream GetCoverArtFromDirectory()
-        {
-            if (File.Exists(Player.FilePath))
-            {
-                var currentDirectory = Path.GetDirectoryName(Player.FilePath);
-                foreach (var file in Directory.EnumerateFiles(currentDirectory))
-                {
-                    if (Path.GetFileNameWithoutExtension(file).ToUpper() == "COVER" ||
-                        Path.GetFileNameWithoutExtension(file).ToUpper() == "ARTWORK" ||
-                        Path.GetFileNameWithoutExtension(file).ToUpper() == "FRONT" ||
-                        Path.GetFileNameWithoutExtension(file).ToUpper() == "BACK" ||
-                        Path.GetFileNameWithoutExtension(file).ToUpper() == Player.FilePath)
-                    {
-                        if (Path.GetExtension(file) == ".png" || Path.GetExtension(file) == ".jpg" || Path.GetExtension(file) == ".jpeg")
-                        {
-                            return new MemoryStream(File.ReadAllBytes(file));
-                        }
-                    }
-                }
-            }
-            return null;
-        }
+
         public void UpdateIntegrations()
         {
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
