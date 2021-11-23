@@ -5,7 +5,7 @@
     <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
+        <Setter Property="Background" Value="{StaticResource ControlColor}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Padding" Value="20,1"/>
         <Setter Property="Template">
@@ -315,13 +315,13 @@
                   x:Name="Border" 
                   Grid.ColumnSpan="2"
                   CornerRadius="2" Padding="5"
-                  Background="{StaticResource ForegroundColor}"/>
+                  Background="{StaticResource ControlColor}"/>
             <Border 
                 x:Name="Border2"
                   Grid.Column="0"
                   CornerRadius="2" 
                   Margin="1" 
-                  Background="{StaticResource ForegroundColor}" />
+                  Background="{StaticResource ControlColor}" />
             <Path 
                   x:Name="Arrow"
                   Grid.Column="1"     
@@ -349,7 +349,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlColor}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -377,7 +377,7 @@
                             VerticalAlignment="Center" 
                             Margin="3,3,23,3"
                             Focusable="True" 
-                            Background="{StaticResource ForegroundColor}"
+                            Background="{StaticResource ControlColor}"
                             Foreground="Green"
                             Visibility="Hidden"
                             IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -395,7 +395,7 @@
                               MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                 <Border 
                                 x:Name="DropDownBorder"
-                                Background="{StaticResource ForegroundColor}"/>
+                                Background="{StaticResource ControlColor}"/>
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
@@ -457,11 +457,10 @@
 
     <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="CaretBrush" Value="#FF338BC1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border x:Name="TextBorder" CornerRadius="2" Background="{StaticResource ForegroundColor}" BorderBrush="{StaticResource ForegroundColor}" BorderThickness="2">
+                    <Border x:Name="TextBorder" CornerRadius="2" Background="{StaticResource ControlColor}" BorderBrush="{StaticResource ControlColor}" BorderThickness="2">
                         <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -480,8 +479,8 @@
     <!--CheckBox-->
 
     <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
-        <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
+        <Setter Property="Background" Value="{StaticResource ControlColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlColor}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">

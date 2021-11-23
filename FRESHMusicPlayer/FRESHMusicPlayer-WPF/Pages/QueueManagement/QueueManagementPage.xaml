@@ -8,12 +8,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="372" d:DesignWidth="235"
       Unloaded="Page_Unloaded" AllowDrop="True" Drop="Page_Drop">
-    <UserControl.Resources>
-        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}" x:Key="{x:Type Button}">
-            <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
-            <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
-        </Style>
-    </UserControl.Resources>
     <Grid Background="{StaticResource SecondaryColor}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

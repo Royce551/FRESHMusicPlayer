@@ -9,10 +9,6 @@
       d:DesignHeight="1072" d:DesignWidth="335"
       Unloaded="Page_Unloaded">
     <UserControl.Resources>
-        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}" x:Key="{x:Type Button}">
-            <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
-            <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
-        </Style>
         <Style TargetType="{x:Type TextBlock}" x:Key="Subheader">
             <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -36,7 +32,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="RestartNeededHeader" Grid.Row="0" Foreground="{StaticResource PrimaryTextColor}" Text="{x:Static resx:Resources.SETTINGS_RESTART_NEEDED_PROMPT}" TextWrapping="Wrap" Margin="5" FontSize="14" TextAlignment="Center" Visibility="Collapsed"/>
-            <Button x:Name="RestartNowButton" Grid.Row="1" Margin="0,0,0,5" HorizontalAlignment="Center" Padding="10,5,10,5" Visibility="Collapsed" Click="RestartNowButton_Click" Content="{x:Static resx:Resources.SETTINGS_RESTART_NOW}" Background="{StaticResource SecondaryColor}"/>
+            <Button x:Name="RestartNowButton" Grid.Row="1" Margin="0,0,0,5" HorizontalAlignment="Center" Padding="10,5,10,5" Visibility="Collapsed" Click="RestartNowButton_Click" Content="{x:Static resx:Resources.SETTINGS_RESTART_NOW}"/>
         </Grid>
         <ScrollViewer Grid.Row="0" PanningMode="Both">
             <StackPanel Background="{StaticResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">

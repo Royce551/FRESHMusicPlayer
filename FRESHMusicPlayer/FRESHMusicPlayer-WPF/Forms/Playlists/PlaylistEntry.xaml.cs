@@ -3,6 +3,7 @@ using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -37,9 +38,9 @@ namespace FRESHMusicPlayer.Forms.Playlists
             this.path = path;
             CheckIfPlaylistExists();
         }
-        private void CheckIfPlaylistExists()
+        private async void CheckIfPlaylistExists()
         {
-            foreach (var thing in library.ReadTracksForPlaylist(playlist))
+            foreach (var thing in await Task.Run(() => library.ReadTracksForPlaylist(playlist)))
             {
                 if (thing.Path == path)
                 {

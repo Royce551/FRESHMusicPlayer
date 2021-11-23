@@ -56,7 +56,7 @@
                 <TextBlock x:Name="Link" Grid.Column="0" Text="Test" Foreground="#3399FF" FontSize="14" VerticalAlignment="Center" Margin="10,0" MouseLeftButtonDown="Link_MouseLeftButtonDown" Cursor="Hand" TextTrimming="CharacterEllipsis"/>
             </Grid>
         </Grid>
-        <Grid Grid.Row="2" Background="{StaticResource SecondaryColor}">
+        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>

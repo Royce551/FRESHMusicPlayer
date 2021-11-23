@@ -29,7 +29,7 @@
                 </Grid>
             </StackPanel>
         </ScrollViewer>
-        <Grid Grid.Row="2" Background="{StaticResource SecondaryColor}">
+        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>
