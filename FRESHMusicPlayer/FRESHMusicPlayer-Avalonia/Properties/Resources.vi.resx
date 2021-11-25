@@ -461,4 +461,13 @@
   <data name="Notification_Scanning" xml:space="preserve">
     <value>Đăng quét bài hát mới...</value>
   </data>
+  <data name="UnknownTitle" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UnknownArtist" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Automatic" xml:space="preserve">
+    <value></value>
+  </data>
 </root>
