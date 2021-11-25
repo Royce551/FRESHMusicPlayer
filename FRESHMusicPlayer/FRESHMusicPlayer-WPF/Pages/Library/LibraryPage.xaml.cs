@@ -14,12 +14,13 @@ namespace FRESHMusicPlayer.Pages.Library
     /// <summary>
     /// Interaction logic for LibraryPage.xaml
     /// </summary>
-    public partial class LibraryPage : Page
+    public partial class LibraryPage : UserControl
     {
         private readonly MainWindow window;
         public LibraryPage(MainWindow window, string search = null)
         {
             this.window = window;
+            window.Library.LibraryChanged += Library_LibraryChanged;
             InitializeComponent();
             LoadLibrary();
             CategoryPanel.Focus();
@@ -30,23 +31,31 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
+        private void Library_LibraryChanged(object sender, EventArgs e)
+        {
+            var selectedItem = CategoryPanel.SelectedItem;
+            LoadLibrary();
+            Thread.Sleep(10);
+            CategoryPanel.SelectedItem = selectedItem;
+        }
+
         public async void LoadLibrary() // TODO: figure out how to make this not async void
         {
             TracksPanel.Items.Clear();
             CategoryPanel.Items.Clear();
             InfoLabel.Visibility = Visibility.Hidden;
-            switch (window.SelectedMenu) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
+            switch (window.CurrentTab) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
-                case Menu.Tracks:
+                case Tab.Tracks:
                     await ShowTracks();
                     break;
-                case Menu.Artists:
+                case Tab.Artists:
                     await ShowArtists();
                     break;
-                case Menu.Albums:
+                case Tab.Albums:
                     await ShowAlbums();
                     break;
-                case Menu.Playlists:
+                case Tab.Playlists:
                     await ShowPlaylists();
                     break;
             }
@@ -60,7 +69,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 int i = 0;
                 foreach (var thing in window.Library.Read())
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                     if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                     i++;
@@ -77,7 +86,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 foreach (var thing in window.Library.Read("Artist"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Artist)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
+                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
                 }
             });
         }
@@ -88,7 +97,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 foreach (var thing in window.Library.Read("Album"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Album)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
+                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
                 }
             });
         }
@@ -101,7 +110,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 foreach (var thing in x)
                 {
                     if (CategoryPanel.Items.Contains(thing.Name)) continue;
-                    Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Name));
+                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Name));
                 }
             });
         }
@@ -113,7 +122,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in window.Library.ReadTracksForArtist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
@@ -128,7 +137,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in window.Library.ReadTracksForAlbum(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
@@ -143,7 +152,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in window.Library.ReadTracksForPlaylist(selectedItem))
                 {
-                    Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });
@@ -154,8 +163,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (window.SelectedMenu == Menu.Artists) await ShowTracksforArtist(selectedItem);
-            else if (window.SelectedMenu == Menu.Playlists) await ShowTracksforPlaylist(selectedItem);
+            if (window.CurrentTab == Tab.Artists) await ShowTracksforArtist(selectedItem);
+            else if (window.CurrentTab == Tab.Playlists) await ShowTracksforPlaylist(selectedItem);
             else await ShowTracksforAlbum(selectedItem);
         }
         //private void MainWindow_TabChanged(object sender, string e)
@@ -177,6 +186,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
+            window.Library.LibraryChanged -= Library_LibraryChanged;
             CategoryPanel.Items.Clear();
             TracksPanel.Items.Clear();
         }
@@ -186,15 +196,15 @@ namespace FRESHMusicPlayer.Pages.Library
             e.Effects = DragDropEffects.Copy;
         }
 
-        private void Page_Drop(object sender, DragEventArgs e)
+        private async void Page_Drop(object sender, DragEventArgs e)
         {
             window.Player.Queue.Clear();
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library);
-            window.Player.PlayMusic();
-            var selectedItem = CategoryPanel.SelectedItem;
-            LoadLibrary();
-            Thread.Sleep(10);
-            CategoryPanel.SelectedItem = selectedItem;
+            await window.Player.PlayAsync();
+            //var selectedItem = CategoryPanel.SelectedItem;
+            //LoadLibrary();
+            //Thread.Sleep(10);
+            //CategoryPanel.SelectedItem = selectedItem;
         }
 
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)
@@ -203,12 +213,12 @@ namespace FRESHMusicPlayer.Pages.Library
             window.Player.Queue.Add(tracks);
         }
 
-        private void PlayAllButton_Click(object sender, RoutedEventArgs e)
+        private async void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
             window.Player.Queue.Clear();
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
             window.Player.Queue.Add(tracks);
-            window.Player.PlayMusic();
+            await window.Player.PlayAsync();
         }
 
         

@@ -106,6 +106,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Focus Mode.
+        /// </summary>
+        public static string FULLSCREEN_FOCUSMODE {
+            get {
+                return ResourceManager.GetString("FULLSCREEN_FOCUSMODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse for folders.
         /// </summary>
         public static string IMPORT_BROWSE_FOLDERS {
@@ -433,6 +442,24 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;re now on FRESHMusicPlayer {0}!.
+        /// </summary>
+        public static string NOTIFICATION_UPTODATE {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_UPTODATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string NOTIFICATION_UPTODATE_CHANGELOG {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_UPTODATE_CHANGELOG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear All.
         /// </summary>
         public static string NOTIFICATIONS_CLEAR_ALL {
@@ -550,7 +577,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remaining Time - .
+        ///   Looks up a localized string similar to Remaining Time: .
         /// </summary>
         public static string QUEUEMANAGEMENT_REMAININGTIME {
             get {

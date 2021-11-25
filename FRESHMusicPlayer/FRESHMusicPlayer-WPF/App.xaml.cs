@@ -20,12 +20,20 @@ namespace FRESHMusicPlayer
     public partial class App : Application
     {
         public static ConfigurationFile Config;
+        public static string DataFolderLocation
+        {
+            get
+            {
+                if (Directory.Exists("Data")) return "Data";
+                else return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer");
+            }
+        }
+
         private Window currentWindow;
         private Player player;
         void App_Startup(object sender, StartupEventArgs e )
         {
             LoggingHandler.Log("Handling configuration...");
-
             Config = ConfigurationHandler.Read();
             player = new Player { Volume = Config.Volume };
             if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
@@ -59,7 +67,7 @@ namespace FRESHMusicPlayer
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            string logPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\FRESHMusicPlayer\\Logs";
+            string logPath = Path.Combine(DataFolderLocation, "Logs");
             string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
             File.WriteAllText(logPath + fileName, 

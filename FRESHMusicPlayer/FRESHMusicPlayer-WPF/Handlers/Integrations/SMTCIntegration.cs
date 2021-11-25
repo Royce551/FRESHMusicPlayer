@@ -1,7 +1,9 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -9,7 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using Windows.Graphics.Imaging;
 using Windows.Media;
+using Windows.Storage.Streams;
 
 namespace FRESHMusicPlayer.Handlers.Integrations
 {
@@ -37,13 +41,27 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             smtc.ButtonPressed += Smtc_ButtonPressed;
         }
 
-        public void Update(Track track, PlaybackStatus status)
+        public async void Update(IMetadataProvider track, PlaybackStatus status)
         {
             smtc.PlaybackStatus = (MediaPlaybackStatus)status;
             var updater = smtc.DisplayUpdater;
             updater.Type = MediaPlaybackType.Music;
-            updater.MusicProperties.Artist = track.Artist;
-            updater.MusicProperties.AlbumArtist = track.AlbumArtist;
+            updater.MusicProperties.Artist = string.Join(", ", track.Artists);
+            updater.MusicProperties.AlbumTitle = track.Album;
+            updater.MusicProperties.TrackNumber = (uint)track.TrackNumber;
+            updater.MusicProperties.AlbumTrackCount = (uint)track.TrackTotal;
+            if (track.CoverArt != null)
+            {
+                var decoder = await BitmapDecoder.CreateAsync(new MemoryStream(track.CoverArt).AsRandomAccessStream());
+                var transcodedImage = new InMemoryRandomAccessStream();
+
+                BitmapEncoder encoder = await BitmapEncoder.CreateForTranscodingAsync(transcodedImage, decoder);
+                await encoder.FlushAsync();
+
+                transcodedImage.Seek(0);
+                updater.Thumbnail = RandomAccessStreamReference.CreateFromStream(transcodedImage);
+            }
+            
             updater.MusicProperties.Title = track.Title;
             updater.Update();
         }

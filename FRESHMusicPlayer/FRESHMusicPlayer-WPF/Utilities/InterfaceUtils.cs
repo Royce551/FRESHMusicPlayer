@@ -34,13 +34,13 @@ namespace FRESHMusicPlayer.Utilities
                 label.Visibility = Visibility.Visible;
             }
         }
-        public static IEnumerable<CultureInfo> GetAvailableCultures()
-        {
-            CultureInfo[] culture = CultureInfo.GetCultures(CultureTypes.AllCultures);
-            string exeLocation = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
+        //public static IEnumerable<CultureInfo> GetAvailableCultures()
+        //{
+        //    CultureInfo[] culture = CultureInfo.GetCultures(CultureTypes.AllCultures);
+        //    string exeLocation = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
 
-            return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
-        }
+        //    return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
+        //}
         /// <summary>
         /// Handles everything related to drag drop
         /// </summary>
@@ -98,6 +98,15 @@ namespace FRESHMusicPlayer.Utilities
             var doubleAnimation = new DoubleAnimation(from, to, duration);
             Storyboard.SetTargetProperty(doubleAnimation, path);
             sb.Children.Add(doubleAnimation);
+            return sb;
+        }
+        public static Storyboard GetThicknessAnimation(Thickness from, Thickness to, TimeSpan duration, PropertyPath path, IEasingFunction easingFunction = null)
+        {
+            var sb = new Storyboard();
+            var thicknessAnimation = new ThicknessAnimation(from, to, duration);
+            if (easingFunction != null) thicknessAnimation.EasingFunction = easingFunction;
+            Storyboard.SetTargetProperty(thicknessAnimation, path);
+            sb.Children.Add(thicknessAnimation);
             return sb;
         }
         public static Task BeginStoryboardAsync(this Storyboard storyboard, FrameworkElement containingObject)

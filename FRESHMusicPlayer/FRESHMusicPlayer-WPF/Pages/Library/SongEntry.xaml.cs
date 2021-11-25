@@ -9,6 +9,7 @@ using System.Linq;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Handlers;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -45,12 +46,12 @@ namespace FRESHMusicPlayer.Pages.Library
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Collapsed;
         }
 
-        private void PlayButtonClick(object sender, MouseButtonEventArgs e)
+        private async void PlayButtonClick(object sender, MouseButtonEventArgs e)
         {
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
                 if (player.FileLoaded) player.Queue.Clear();
-                player.PlayMusic(FilePath);
+                await player.PlayAsync(FilePath);
             }
             else
             {
@@ -76,12 +77,12 @@ namespace FRESHMusicPlayer.Pages.Library
             ((ListBox)Parent).Items.Remove(this);
         }
 
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
                 if (player.FileLoaded) player.Queue.Clear();
-                player.PlayMusic(FilePath);
+                await player.PlayAsync(FilePath);
             }
         }
 
@@ -90,13 +91,21 @@ namespace FRESHMusicPlayer.Pages.Library
             
         }
 
-        private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
+        private async void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             MiscContext.Items.Clear();
             var playlists = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToEnumerable();
             foreach (var playlist in playlists)
             {
-                var tracks = library.ReadTracksForPlaylist(playlist.Name);
+                List<DatabaseTrack> tracks;
+                try
+                {
+                    tracks = await Task.Run(() => library.ReadTracksForPlaylist(playlist.Name));
+                }
+                catch
+                {
+                    continue;
+                }
                 var trackIsInPlaylist = tracks.Any(x => x.Path == FilePath);
                 var item = new MenuItem
                 {
@@ -116,7 +125,7 @@ namespace FRESHMusicPlayer.Pages.Library
             otheritem.Header = Properties.Resources.PLAYLISTMANAGEMENT;
             otheritem.Click += (object send, RoutedEventArgs eee) =>
             {
-                var management = new PlaylistManagement(library, notificationHandler, ((Application.Current as App).MainWindow as MainWindow).SelectedMenu, FilePath);
+                var management = new PlaylistManagement(library, notificationHandler, ((Application.Current as App).MainWindow as MainWindow).CurrentTab, FilePath);
                 management.ShowDialog();
             };
             MiscContext.Items.Add(otheritem);

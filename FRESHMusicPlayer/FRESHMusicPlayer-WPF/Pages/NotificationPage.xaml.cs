@@ -9,7 +9,7 @@ namespace FRESHMusicPlayer.Pages
     /// <summary>
     /// Interaction logic for NotificationPage.xaml
     /// </summary>
-    public partial class NotificationPage : Page
+    public partial class NotificationPage : UserControl
     {
         private readonly MainWindow window;
         public NotificationPage(MainWindow window)
@@ -18,11 +18,10 @@ namespace FRESHMusicPlayer.Pages
             window.NotificationHandler.NotificationInvalidate += InvalidateNotifications;
             InitializeComponent();
             ShowNotifications();
-            KeepAlive = false;
         }
 
         private void InvalidateNotifications(object sender, EventArgs e) => ShowNotifications();
-        private void ShowNotifications()
+        private async void ShowNotifications()
         {
             NotificationList.Items.Clear();
             foreach (Notification box in window.NotificationHandler.Notifications)
@@ -30,7 +29,7 @@ namespace FRESHMusicPlayer.Pages
                 box.Read = true;
                 NotificationList.Items.Add(new NotificationBox(box, window.NotificationHandler));
             }
-            if (NotificationList.Items.Count == 0) (Application.Current.MainWindow as MainWindow)?.HideAuxilliaryPane();
+            if (NotificationList.Items.Count == 0) await window.HideAuxilliaryPane();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

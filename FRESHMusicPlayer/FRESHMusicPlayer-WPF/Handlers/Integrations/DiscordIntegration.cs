@@ -1,5 +1,6 @@
 ﻿using ATL;
 using DiscordRPC;
+using FRESHMusicPlayer.Backends;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             };
         }
 
-        public void Update(Track track, PlaybackStatus status)
+        public void Update(IMetadataProvider track, PlaybackStatus status)
         {
             string activity = string.Empty;
             string state = string.Empty;
@@ -32,7 +33,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             {
                 case PlaybackStatus.Playing:
                     activity = "play";
-                    state = $"by {track.Artist}";
+                    state = $"by {string.Join(", ", track.Artists)}";
                     break;
                 case PlaybackStatus.Paused:
                     activity = "pause";

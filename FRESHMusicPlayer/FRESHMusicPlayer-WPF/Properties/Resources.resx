@@ -132,6 +132,9 @@
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
     <value>Pause after current track</value>
   </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>Focus Mode</value>
+  </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
     <value>Browse for folders</value>
   </data>
@@ -249,6 +252,12 @@ Missing File: {0}</value>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
     <value>An update is ready! Restart FMP to apply the update.</value>
   </data>
+  <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
+    <value>You're now on FRESHMusicPlayer {0}!</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
     <value>Playlist Management</value>
   </data>
@@ -283,7 +292,7 @@ Missing File: {0}</value>
     <value>Queue</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Remaining Time - </value>
+    <value>Remaining Time: </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>About</value>

@@ -31,7 +31,7 @@ namespace FRESHMusicPlayer.Forms
             window.Player.SongChanged += Player_SongChanged;
             window.Player.SongStopped += Player_SongStopped;
             progressTimer.Tick += ProgressTimer_Tick;
-            Player_SongChanged(null, EventArgs.Empty); // call our own song changed because a song is probably already playing at this point
+            if (window.Player.FileLoaded) Player_SongChanged(null, EventArgs.Empty); // call our own song changed because a song is probably already playing at this point
             UpdateControlsState();
             VolumeSlider.Value = window.VolumeBar.Value;
         }
@@ -45,7 +45,7 @@ namespace FRESHMusicPlayer.Forms
             ProgressIndicator1.Text = time.ToString(@"mm\:ss");
             if (App.Config.ShowRemainingProgress) ProgressIndicator2.Text
                     = $"-{TimeSpan.FromSeconds(time.TotalSeconds - Math.Floor(window.Player.CurrentBackend.TotalTime.TotalSeconds)):mm\\:ss}";
-            if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{window.Player.CurrentBackend.TotalTime:mm\\:ss} | FRESHMusicPlayer";
+            if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{window.Player.CurrentBackend.TotalTime:mm\\:ss} | {MainWindow.WindowName}";
             if (!isDragging) ProgressSlider.Value = time.TotalSeconds;
             window.Player.AvoidNextQueue = false;
         }
@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer.Forms
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            ArtistTextBlock.Text = window.CurrentTrack.Artist;
+            ArtistTextBlock.Text = string.Join(", ", window.CurrentTrack.Artists);
             TitleTextBlock.Text = window.CurrentTrack.Title;
 
             ProgressSlider.Maximum = window.Player.CurrentBackend.TotalTime.TotalSeconds;

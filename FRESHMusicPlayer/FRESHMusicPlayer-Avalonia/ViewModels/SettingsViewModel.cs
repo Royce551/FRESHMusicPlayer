@@ -165,7 +165,7 @@ namespace FRESHMusicPlayer.ViewModels
             if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifeTime)
             {
                 lifeTime.Shutdown();
-                Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "FRESHMusicPlayer"));
+                Process.Start(Path.Combine(Path.GetDirectoryName(System.AppContext.BaseDirectory), "FRESHMusicPlayer"));
             }
         }
 

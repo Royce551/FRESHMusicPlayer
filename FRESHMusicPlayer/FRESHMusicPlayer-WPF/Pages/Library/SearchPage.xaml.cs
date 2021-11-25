@@ -14,7 +14,7 @@ namespace FRESHMusicPlayer.Pages.Library
     /// <summary>
     /// Interaction logic for SearchPage.xaml
     /// </summary>
-    public partial class SearchPage : Page
+    public partial class SearchPage : UserControl
     {
         private bool taskIsRunning = false;
         private Queue<string> searchqueries = new Queue<string>();
@@ -32,8 +32,13 @@ namespace FRESHMusicPlayer.Pages.Library
             searchqueries.Enqueue(SearchBox.Text.ToUpper());
             async void GetResults()
             {
+                if (string.IsNullOrEmpty(SearchBox.Text))
+                {
+                    searchqueries.Clear();
+                    return;
+                }
                 TracksPanel.Visibility = Visibility.Hidden; // avoids making everything flash
-                InfoLabel.Text = "Loading, please wait.";
+                InfoLabel.Visibility = Visibility.Hidden;
                 int length = 0;
                 taskIsRunning = true;
                 searchterm = searchqueries.Dequeue();
@@ -48,7 +53,7 @@ namespace FRESHMusicPlayer.Pages.Library
                         .ToList())
                     {
                         if (searchqueries.Count > 1) break; // optimization for typing quickly
-                        Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                         length += thing.Length;
                         if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                         i++;
@@ -63,7 +68,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 else
                 {
                     TracksPanel.Visibility = Visibility.Visible;
-                    return;
+                    InfoLabel.Visibility = Visibility.Visible;
                 }
             }
             if (!taskIsRunning) GetResults();
@@ -76,15 +81,15 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        private void PlayAllButton_Click(object sender, RoutedEventArgs e)
+        private async void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (SongEntry entry in TracksPanel.Items)
             {
                 window.Player.Queue.Add(entry.FilePath);
             }
-            window.Player.PlayMusic();
+            await window.Player.PlayAsync();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) => Dispatcher.Invoke(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
+        private async void Page_Loaded(object sender, RoutedEventArgs e) => await window.Dispatcher.InvokeAsync(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
     }
 }

@@ -127,7 +127,7 @@ namespace FRESHMusicPlayer.Views
 
         private async void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Source is not TextBox or ListBoxItem)
+            if (e.Source is not TextBox && e.Source is not ListBoxItem)
                 switch (e.Key)
                 {
                     case Key.Q:

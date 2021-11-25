@@ -21,7 +21,7 @@ namespace FRESHMusicPlayer.Handlers
             LoggingHandler.Log("Starting Playtime Logging Handler");
 
             this.window = window;
-            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Tracking");
+            FilePath = Path.Combine(App.DataFolderLocation, "Tracking");
             TrackingFile = Read();
 
             window.Player.SongChanged += Player_SongChanged;
@@ -42,11 +42,11 @@ namespace FRESHMusicPlayer.Handlers
                     Track = new DatabaseTrack
                     {
                         Path = window.Player.FilePath,
-                        Artist = window.CurrentTrack.Artist,
+                        Artist = string.Join(", ", window.CurrentTrack.Artists),
                         Title = window.CurrentTrack.Title,
                         Album = window.CurrentTrack.Album,
                         TrackNumber = window.CurrentTrack.TrackNumber,
-                        Length = window.CurrentTrack.Duration
+                        Length = (int)window.Player.TotalTime.TotalSeconds
                     }
                 };
                 TrackingFile.Entries.Add(trackingEntry);
