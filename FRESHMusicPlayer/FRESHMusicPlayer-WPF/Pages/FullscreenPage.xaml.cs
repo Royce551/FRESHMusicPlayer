@@ -78,9 +78,7 @@ namespace FRESHMusicPlayer.Pages
             }
             else
             {
-                var trackInfo = new TrackInfo();
-                trackInfo.Update(currentTrack);
-                InfoThing.Content = trackInfo;
+                InfoThing.Content = null;
             }
         }
 
@@ -149,10 +147,7 @@ namespace FRESHMusicPlayer.Pages
             TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void BackButton_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Playlists);
 
         private void FocusMode_Changed(object sender, RoutedEventArgs e)
         {

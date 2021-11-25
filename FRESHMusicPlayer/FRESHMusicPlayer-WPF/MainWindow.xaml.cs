@@ -41,7 +41,7 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
-        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.11.14.2021; Not stable!]";
+        public const string WindowName = "FRESHMusicPlayer [Blueprint 11 b.11.23.2021; Not stable!]";
 
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;

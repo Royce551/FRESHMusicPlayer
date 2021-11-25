@@ -102,7 +102,7 @@
         <Setter Property="Stylus.IsFlicksEnabled"
             Value="True" />
         <Setter Property="Foreground"
-            Value="{StaticResource ForegroundColor}" />
+            Value="{StaticResource ControlColor}" />
         <Setter Property="Background"
             Value="Transparent" />
         <Setter Property="Width"

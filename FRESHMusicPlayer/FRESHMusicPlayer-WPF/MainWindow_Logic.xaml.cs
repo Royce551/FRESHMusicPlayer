@@ -367,8 +367,8 @@ namespace FRESHMusicPlayer
             if (version != App.Config.LastRecordedVersion)
                 NotificationHandler.Add(new Notification
                 {
-                    ContentText = $"You're now on FRESHMusicPlayer {version}!",
-                    ButtonText = "Changelog",
+                    ContentText = string.Format(Properties.Resources.NOTIFICATION_UPTODATE, version),
+                    ButtonText = Properties.Resources.NOTIFICATION_UPTODATE_CHANGELOG,
                     Type = NotificationType.Success,
                     OnButtonClicked = () => { Process.Start("https://github.com/royce551/freshmusicplayer/releases/latest"); return true; }
                 });

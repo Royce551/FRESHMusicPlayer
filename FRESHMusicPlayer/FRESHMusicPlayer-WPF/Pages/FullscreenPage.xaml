@@ -16,8 +16,8 @@
         </Grid.RowDefinitions>
 
         <DockPanel x:Name="TopBar" Panel.ZIndex="4" Background="Transparent" LastChildFill="False" Grid.Row="0" Height="30">
-            <Button x:Name="BackButton" DockPanel.Dock="Left" Content="Back" Margin="10,5,0,5" Click="BackButton_Click"/>
-            <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="Focus Mode" Foreground="{StaticResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
+            <Button x:Name="BackButton" DockPanel.Dock="Left" Content="{x:Static resx:Resources.MINIPLAYER_BACK}" Margin="10,5,0,5" Click="BackButton_Click"/>
+            <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="{x:Static resx:Resources.FULLSCREEN_FOCUSMODE}" Foreground="{StaticResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
         </DockPanel>
         <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{StaticResource BackgroundColor}"/>
 
@@ -32,8 +32,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
-                <Image Source="https://royce551.github.io/assets/images/fmp/fullfmplogo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Width="100" RenderOptions.BitmapScalingMode="HighQuality" Margin="10,0,0,0"/>
-
                 <ContentControl x:Name="InfoThing" Grid.Row="0" Grid.Column="1" Width="300" HorizontalAlignment="Right"/>
 
                 <Grid Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom">

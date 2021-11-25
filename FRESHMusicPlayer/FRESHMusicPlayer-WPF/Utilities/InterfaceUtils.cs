@@ -34,13 +34,13 @@ namespace FRESHMusicPlayer.Utilities
                 label.Visibility = Visibility.Visible;
             }
         }
-        public static IEnumerable<CultureInfo> GetAvailableCultures()
-        {
-            CultureInfo[] culture = CultureInfo.GetCultures(CultureTypes.AllCultures);
-            string exeLocation = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
+        //public static IEnumerable<CultureInfo> GetAvailableCultures()
+        //{
+        //    CultureInfo[] culture = CultureInfo.GetCultures(CultureTypes.AllCultures);
+        //    string exeLocation = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
 
-            return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
-        }
+        //    return culture.Where(cultureInfo => Directory.Exists(Path.Combine(exeLocation, cultureInfo.Name)));
+        //}
         /// <summary>
         /// Handles everything related to drag drop
         /// </summary>
