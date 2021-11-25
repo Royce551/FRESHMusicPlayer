@@ -40,7 +40,7 @@ namespace FRESHMusicPlayer.Controls
             if (track.DiscTotal > 0) DiscBox.Text += "/" + track.DiscTotal;
 
             if (track is FileMetadataProvider file) BitrateBox.Text = file.ATLTrack.Bitrate + "kbps " + (file.ATLTrack.SampleRate / 1000) + "kHz";
-            else BitrateBox.Text = "Not available"; // TODO: translate
+            else BitrateBox.Text = Properties.Resources.TRACKINFO_NOTAVAILABLE;
         }
     }
 }

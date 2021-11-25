@@ -97,7 +97,6 @@ namespace FRESHMusicPlayer.Pages
                 });
 
                 if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
-                //RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + TimeSpan.FromSeconds(nextLength).ToString(@"hh\:mm\:ss");
                 SetControlEnabled(true);
                 taskIsRunning = false;
                 if (displayqueue.Count != 0) GetResults();

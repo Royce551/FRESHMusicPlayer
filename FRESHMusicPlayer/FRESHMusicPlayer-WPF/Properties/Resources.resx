@@ -449,6 +449,9 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
     <value>Genre</value>
   </data>
+  <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
+    <value>Not available</value>
+  </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
     <value>Technical Info</value>
   </data>

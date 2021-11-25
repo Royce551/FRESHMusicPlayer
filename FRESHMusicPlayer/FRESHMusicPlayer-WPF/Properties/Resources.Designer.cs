@@ -1047,6 +1047,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not available.
+        /// </summary>
+        public static string TRACKINFO_NOTAVAILABLE {
+            get {
+                return ResourceManager.GetString("TRACKINFO_NOTAVAILABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Technical Info.
         /// </summary>
         public static string TRACKINFO_TECHNICALINFO {
