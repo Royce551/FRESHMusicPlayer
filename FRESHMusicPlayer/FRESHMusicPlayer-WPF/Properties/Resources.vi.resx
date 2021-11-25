@@ -127,7 +127,7 @@
     <value>Nhập</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>Không có nghệ sĩ {0} {2} {1}</value>
+    <value>Nghệ sĩ không xác định</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
     <value>Một lỗi phát nhạc xảy ra:
@@ -177,7 +177,7 @@ Tệp không thể tìm: {0}</value>
     <value>Đĩa</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Thời gian còn lại - </value>
+    <value>Thời gian còn lại: </value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
     <value>Hàng chờ</value>
@@ -468,5 +468,17 @@ Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
   </data>
   <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
     <value>Mở nhật ký gỡ lỗi</value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>Chế độ tập trung</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
+    <value>Bạn đã cập nhật FRESHMusicPlayer lên {0}!</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
+    <value>Nhật ký thay đổi</value>
+  </data>
+  <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
+    <value>Không có sẵn</value>
   </data>
 </root>
