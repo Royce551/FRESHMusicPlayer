@@ -181,7 +181,7 @@
     <value>Import</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>No Artist</value>
+    <value>Unknown Artist</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
     <value>Nothing Playing</value>

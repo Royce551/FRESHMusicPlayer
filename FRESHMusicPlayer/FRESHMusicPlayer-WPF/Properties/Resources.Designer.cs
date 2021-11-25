@@ -250,7 +250,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Artist.
+        ///   Looks up a localized string similar to Unknown Artist.
         /// </summary>
         public static string MAINWINDOW_NOARTIST {
             get {
