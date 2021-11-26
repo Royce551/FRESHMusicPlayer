@@ -172,7 +172,7 @@
     <value>Importeren</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>Geen Artiest</value>
+    <value>Onbekende Artiest</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
     <value>Niets aan het spelen</value>
@@ -271,7 +271,7 @@ Ontbrekend Bestand: {0}</value>
     <value>Wachtrij</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Tijd te Gaan - </value>
+    <value>Tijd te Gaan: </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>Over</value>
@@ -465,5 +465,17 @@ Bedankt voor het gebruiken van FRESHMusicPlayer! ♥</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
     <value>"{0}" is geen geldige naam voor een afspeellijst.</value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>Focusstand</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
+    <value>Je gebruikt nu FreshMusicPlayer {0}!</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
+    <value>Wijzigingen</value>
+  </data>
+  <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
+    <value>Niet beschikbaar</value>
   </data>
 </root>
