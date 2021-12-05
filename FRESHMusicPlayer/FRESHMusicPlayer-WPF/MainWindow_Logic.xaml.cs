@@ -364,14 +364,14 @@ namespace FRESHMusicPlayer
             }
 
             var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
-            if (version != App.Config.LastRecordedVersion)
-                NotificationHandler.Add(new Notification
-                {
-                    ContentText = string.Format(Properties.Resources.NOTIFICATION_UPTODATE, version),
-                    ButtonText = Properties.Resources.NOTIFICATION_UPTODATE_CHANGELOG,
-                    Type = NotificationType.Success,
-                    OnButtonClicked = () => { Process.Start("https://github.com/royce551/freshmusicplayer/releases/latest"); return true; }
-                });
+            //if (version != App.Config.LastRecordedVersion)
+            //    NotificationHandler.Add(new Notification
+            //    {
+            //        ContentText = string.Format(Properties.Resources.NOTIFICATION_UPTODATE, version),
+            //        ButtonText = Properties.Resources.NOTIFICATION_UPTODATE_CHANGELOG,
+            //        Type = NotificationType.Success,
+            //        OnButtonClicked = () => { Process.Start("https://github.com/royce551/freshmusicplayer/releases/latest"); return true; }
+            //    });  disabled for now until everyone is at FMP 11
             App.Config.LastRecordedVersion = version;
         }
         public async void HandlePersistence()
