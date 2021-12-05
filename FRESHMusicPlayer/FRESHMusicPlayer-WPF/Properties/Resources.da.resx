@@ -175,7 +175,7 @@
     <value>Importer</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>Ingen kunstner</value>
+    <value>Ukendt kunstner</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
     <value>Intet spiller</value>
@@ -277,7 +277,7 @@ Manglende fil: {0}</value>
     <value>Kø</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Tid tilbage - </value>
+    <value>Tid tilbage: </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>Om</value>
@@ -451,5 +451,17 @@ Tak fordi du bruger FRESHMusicPlayer! ♥</value>
   </data>
   <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
     <value>Åben fejlfindingslog</value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>Fokustilstand</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
+    <value>Du er nu på FRESHMusicPlater {0}!</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
+    <value>Ændringslog</value>
+  </data>
+  <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
+    <value>Ikke tilgængelig</value>
   </data>
 </root>
