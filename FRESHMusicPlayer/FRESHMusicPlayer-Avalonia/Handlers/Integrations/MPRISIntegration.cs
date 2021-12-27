@@ -241,7 +241,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task StopAsync()
         {
-            viewModel.Player.StopMusic();
+            viewModel.Player.Stop();
         }
 
         public async Task SetPositionAsync(ObjectPath trackID, long position)

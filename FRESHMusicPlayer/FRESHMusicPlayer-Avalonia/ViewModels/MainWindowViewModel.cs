@@ -156,10 +156,10 @@ namespace FRESHMusicPlayer.ViewModels
             set => Player.Queue.Shuffle = value;
         }
 
-        public void SkipPreviousCommand()
+        public async void SkipPreviousCommand()
         {
             if (!Player.FileLoaded) return;
-            if (Player.CurrentTime.TotalSeconds <= 5) Player.PreviousSong();
+            if (Player.CurrentTime.TotalSeconds <= 5) await Player.PreviousAsync();
             else
             {
                 Player.CurrentTime = TimeSpan.FromSeconds(0);
@@ -188,12 +188,12 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (Player.Paused)
             {
-                Player.ResumeMusic();
+                Player.Resume();
                 Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
             }
             else
             {
-                Player.PauseMusic();
+                Player.Pause();
                 Integrations.Update(CurrentTrack, PlaybackStatus.Paused);
             }
             UpdatePausedState();
@@ -212,9 +212,9 @@ namespace FRESHMusicPlayer.ViewModels
             }
             this.RaisePropertyChanged(nameof(Shuffle));
         }
-        public void SkipNextCommand()
+        public async void SkipNextCommand()
         {
-            Player.NextSong();
+            await Player.NextAsync();
         }
         public void PauseAfterCurrentTrackCommand() => PauseAfterCurrentTrack = !PauseAfterCurrentTrack;
 
@@ -375,14 +375,14 @@ namespace FRESHMusicPlayer.ViewModels
             if (args.Count != 0)
             {
                 Player.Queue.Add(args.ToArray());
-                Player.PlayMusic();
+                await Player.PlayAsync();
             }
             else
             {
                 if (!string.IsNullOrEmpty(Program.Config.FilePath))
                 {
                     PauseAfterCurrentTrack = true;
-                    Player.PlayMusic(Program.Config.FilePath);
+                    await Player.PlayAsync(Program.Config.FilePath);
                     Player.CurrentTime.Add(TimeSpan.FromSeconds(Program.Config.FilePosition));
                 }
             }
@@ -563,11 +563,11 @@ namespace FRESHMusicPlayer.ViewModels
             UpdateLibraryInfo();
         }
 
-        public void PlayCommand(string path)
+        public async void PlayCommand(string path)
         {
             Player.Queue.Clear();
             Player.Queue.Add(path);
-            Player.PlayMusic();
+            await Player.PlayAsync();
         }
         public void EnqueueCommand(string path)
         {
@@ -582,11 +582,11 @@ namespace FRESHMusicPlayer.ViewModels
         {
             Player.Queue.Add(AllTracks.Select(x => x.Path).ToArray());
         }
-        public void PlayAllCommand()
+        public async void PlayAllCommand()
         {
             Player.Queue.Clear();
             Player.Queue.Add(AllTracks.Select(x => x.Path).ToArray());
-            Player.PlayMusic();
+            await Player.PlayAsync();
         }
 
         // Searching
@@ -750,7 +750,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             Player.Queue.Add(reader.FilePaths.ToArray());
             await Task.Run(() => Library.Import(reader.FilePaths.ToArray()));
-            Player.PlayMusic();
+            await Player.PlayAsync();
         }
         public async void BrowseFoldersCommand()
         {
@@ -797,7 +797,7 @@ namespace FRESHMusicPlayer.ViewModels
                         || name.EndsWith(".aac")).ToArray();
                 Player.Queue.Add(paths);
                 await Task.Run(() => Library.Import(paths));
-                Player.PlayMusic();
+                await Player.PlayAsync();
             }
         }
         public async void OpenTrackCommand()
@@ -823,15 +823,15 @@ namespace FRESHMusicPlayer.ViewModels
             if (files.Length > 0)
             {
                 Player.Queue.Add(files);
-                Player.PlayMusic();
+                await Player.PlayAsync();
             }
         }
-        public void ImportFilePathCommand()
+        public async void ImportFilePathCommand()
         {
             if (string.IsNullOrEmpty(FilePathOrURL)) return;
             Player.Queue.Add(FilePathOrURL);
             Library.Import(FilePathOrURL);
-            Player.PlayMusic();
+            await Player.PlayAsync();
         }
 
         public async void GoToArtistCommand()

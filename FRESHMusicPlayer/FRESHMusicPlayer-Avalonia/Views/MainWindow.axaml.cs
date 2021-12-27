@@ -166,7 +166,7 @@ namespace FRESHMusicPlayer.Views
                 case Key.OemTilde:
                     var dialog = new TextEntryBox().SetStuff(Properties.Resources.FilePathOrUrl);
                     await dialog.ShowDialog(this);
-                    if (dialog.OK) ViewModel.Player.PlayMusic((dialog.DataContext as TextEntryBoxViewModel).Text);
+                    if (dialog.OK) await ViewModel.Player.PlayAsync((dialog.DataContext as TextEntryBoxViewModel).Text);
                     break;
                 case Key.F1:
                     InterfaceUtils.OpenURL("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
@@ -199,10 +199,10 @@ namespace FRESHMusicPlayer.Views
         {
             e.DragEffects &= DragDropEffects.Copy;
         }
-        private void OnDragDrop(object sender, DragEventArgs e)
+        private async void OnDragDrop(object sender, DragEventArgs e)
         {
             ViewModel.Player.Queue.Add(e.Data.GetFileNames().ToArray());
-            ViewModel.Player.PlayMusic();
+            await ViewModel.Player.PlayAsync();
         }
     }
 

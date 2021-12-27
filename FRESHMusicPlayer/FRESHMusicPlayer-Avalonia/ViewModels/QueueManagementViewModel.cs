@@ -52,10 +52,10 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        public void JumpToCommand(int position)
+        public async void JumpToCommand(int position)
         {
             Player.Queue.Position = position - 1;
-            Player.PlayMusic();
+            await Player.PlayAsync();
         }
         public void RemoveCommand(int position)
         {
