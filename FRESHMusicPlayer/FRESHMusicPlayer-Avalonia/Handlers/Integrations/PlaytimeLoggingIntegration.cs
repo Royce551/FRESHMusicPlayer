@@ -1,4 +1,5 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Backends;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             }
         }
 
-        public void Update(Track track, PlaybackStatus status)
+        public void Update(IMetadataProvider track, PlaybackStatus status)
         {
 
         }

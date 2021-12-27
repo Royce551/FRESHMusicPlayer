@@ -7,6 +7,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Integrations;
@@ -33,7 +34,7 @@ namespace FRESHMusicPlayer.ViewModels
         public Player Player { get; private set; }
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
-        public Track CurrentTrack { get; private set; }
+        public IMetadataProvider CurrentTrack { get; private set; }
         public IntegrationHandler Integrations { get; private set; } = new();
         public NotificationHandler Notifications { get; private set; } = new();
 
@@ -114,14 +115,14 @@ namespace FRESHMusicPlayer.ViewModels
         private void Player_SongChanged(object sender, EventArgs e)
         {
             LoggingHandler.Log("Player: SongChanged");
-            CurrentTrack = new Track(Player.FilePath);
-            Artist = string.IsNullOrEmpty(CurrentTrack.Artist) ? Resources.UnknownArtist : CurrentTrack.Artist;
+            CurrentTrack = Player.Metadata;
+            Artist = string.IsNullOrEmpty(string.Join(", ", CurrentTrack.Artists)) ? Resources.UnknownArtist : string.Join(", ", CurrentTrack.Artists);
             Title = string.IsNullOrEmpty(CurrentTrack.Title) ? Resources.UnknownTitle : CurrentTrack.Title;
-            if (CurrentTrack.EmbeddedPictures.Count != 0)
-                CoverArt = new Bitmap(new MemoryStream(CurrentTrack.EmbeddedPictures[0].PictureData));
+            if (CurrentTrack.CoverArt is not null)
+                CoverArt = new Bitmap(new MemoryStream(CurrentTrack.CoverArt));
             this.RaisePropertyChanged(nameof(TotalTime));
             this.RaisePropertyChanged(nameof(TotalTimeSeconds));
-            WindowTitle = $"{CurrentTrack.Artist} - {CurrentTrack.Title} | {ProjectName}";
+            WindowTitle = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {ProjectName}";
             ProgressTimer.Start();
             Integrations.Update(CurrentTrack, PlaybackStatus.Playing);
             UpdatePausedState();
@@ -839,7 +840,7 @@ namespace FRESHMusicPlayer.ViewModels
             if (CurrentTrack is null) return;
             SelectedTab = 1;
             await Task.Delay(100);
-            ShowTracksForArtist(CurrentTrack.Artist);
+            ShowTracksForArtist(string.Join(", ", CurrentTrack.Artists));
         }
         public async void GoToAlbumCommand()
         {

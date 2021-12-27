@@ -1,4 +1,5 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Backends;
 using System.Collections.Generic;
 
 namespace FRESHMusicPlayer.Handlers.Integrations
@@ -19,7 +20,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             AllIntegrations.Remove(integration);
         }
 
-        public void Update(Track track, PlaybackStatus status)
+        public void Update(IMetadataProvider track, PlaybackStatus status)
         {
             foreach (var integration in AllIntegrations)
                 integration.Update(track, status);

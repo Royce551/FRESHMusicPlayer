@@ -1,5 +1,6 @@
 using ATL;
 using Avalonia.Controls;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             connection.Dispose();
         }
 
-        public void Update(Track track, PlaybackStatus status)
+        public void Update(IMetadataProvider track, PlaybackStatus status)
         {
 
         }
