@@ -134,11 +134,16 @@ namespace FRESHMusicPlayer
             LoggingHandler.Log("Stopping!");
         }
 
-        private void Player_SongLoading(object sender, EventArgs e) => Mouse.OverrideCursor = Cursors.AppStarting;
+        private bool InFullscreen => WindowStyle != WindowStyle.SingleBorderWindow;
+
+        private void Player_SongLoading(object sender, EventArgs e)
+        {
+            if (!InFullscreen) Mouse.OverrideCursor = Cursors.AppStarting;
+        }
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            Mouse.OverrideCursor = null;
+            if (!InFullscreen) Mouse.OverrideCursor = null;
             CurrentTrack = Player.Metadata;
             Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {WindowName}";
             TitleLabel.Text = CurrentTrack.Title;
@@ -169,6 +174,7 @@ namespace FRESHMusicPlayer
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
+            if (!InFullscreen) Mouse.OverrideCursor = null;
             NotificationHandler.Add(new Notification
             {
                 ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),

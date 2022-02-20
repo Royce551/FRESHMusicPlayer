@@ -34,9 +34,9 @@ namespace FRESHMusicPlayer.Pages
             window.Player.SongStopped += Player_SongStopped;
             window.Player.SongChanged += Player_SongChanged;
             window.ProgressTimer.Tick += ProgressTimer_Tick;
-            controlDismissTimer.Tick += ControlDismissTimer_Tick;
+            controlDismissTimer.Tick += ControlDismissTimer_Tick;controlDismissTimer.Start();
             if (window.Player.FileLoaded) Player_SongChanged(null, EventArgs.Empty);
-
+            MoveHandler();
             window.WindowStyle = WindowStyle.None;
             window.WindowState = WindowState.Maximized;
             window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Collapsed;
@@ -115,7 +115,21 @@ namespace FRESHMusicPlayer.Pages
 
         private Point lastMouseMovePosition;
         private bool isMouseMoving = false;
-        private void Page_MouseMove(object sender, MouseEventArgs e)
+        private void Page_MouseMove(object sender, MouseEventArgs e) => MoveHandler();
+
+        private void ControlDismissTimer_Tick(object sender, EventArgs e)
+        {
+            MoveHandler();
+
+            if (isMouseMoving) return;
+            if (!IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
+            controlDismissTimer.Stop();
+            window.HideControlsBox();
+            Mouse.OverrideCursor = Cursors.None;
+            TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;
+        }
+
+        private void MoveHandler()
         {
             if (lastMouseMovePosition != null)
             {
@@ -135,16 +149,6 @@ namespace FRESHMusicPlayer.Pages
                 else isMouseMoving = false;
             }
             lastMouseMovePosition = Mouse.GetPosition(this);
-        }
-
-        private void ControlDismissTimer_Tick(object sender, EventArgs e)
-        {
-            if (isMouseMoving) return;
-            if (!IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
-            controlDismissTimer.Stop();
-            window.HideControlsBox();
-            Mouse.OverrideCursor = Cursors.None;
-            TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Playlists);
