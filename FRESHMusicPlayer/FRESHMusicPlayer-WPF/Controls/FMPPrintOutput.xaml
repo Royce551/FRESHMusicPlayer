@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="FRESHMusicPlayer.PrintOutput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FRESHMusicPlayer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Margin="50">
+        <Grid Margin="0,0,0,50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image x:Name="CoverArt" Grid.RowSpan="2" Grid.Column="0" Width="200" Height="200">
+                
+            </Image>
+            <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                <TextBlock x:Name="AlbumName" Text="Album Name" Foreground="Black" FontWeight="Bold" FontSize="32"/>
+                <TextBlock x:Name="AlbumInfo" Text="lols" Foreground="#525252" FontSize="16"/>
+            </StackPanel>
+        </Grid>
+        
+        <ListBox x:Name="TracksPanel"  Background="White" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}" ScrollViewer.PanningMode="Both">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+    </StackPanel>
+</UserControl>

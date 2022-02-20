@@ -229,6 +229,11 @@ namespace FRESHMusicPlayer
                     case Key.Space:
                         PlayPauseMethod();
                         break;
+                    case Key.P:
+                        var printdlg = new PrintDialog();
+                        printdlg.ShowDialog();
+                        printdlg.PrintVisual(new PrintOutput(this, CurrentTrack.Album), "FMP Window");
+                        break;
                 }
             switch (e.Key)
             {
