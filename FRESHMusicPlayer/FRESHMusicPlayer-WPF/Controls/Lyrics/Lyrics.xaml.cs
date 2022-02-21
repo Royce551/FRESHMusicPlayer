@@ -56,6 +56,7 @@ namespace FRESHMusicPlayer.Controls.Lyrics
 
         public bool HandleLyrics()
         {
+            if (string.IsNullOrEmpty(window.Player.FilePath)) return false;
             LyricsBox.Text = LyricsBoxMinus2.Text = LyricsBoxMinus1.Text = LyricsBoxPlus1.Text = LyricsBoxPlus2.Text = string.Empty;
             var track = new Track(window.Player.FilePath);
             if (track is null) return false;

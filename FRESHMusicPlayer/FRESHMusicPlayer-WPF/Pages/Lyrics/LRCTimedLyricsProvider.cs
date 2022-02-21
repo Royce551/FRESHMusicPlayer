@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace FRESHMusicPlayer.Pages.Lyrics
 {
@@ -12,15 +14,24 @@ namespace FRESHMusicPlayer.Pages.Lyrics
         {
             var filetoRead = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + ".lrc");
             var lines = File.ReadAllLines(filetoRead);
-            foreach (var line in lines) // This will only parse simple LRC files correctly. ID tags, etc. will make this explode.
+
+            var lineExpression = new Regex(@"\[(\d+):(\d+).(\d+)\]+\s*(.*)");
+
+            foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
-                var minutes = int.Parse(line.Substring(1, 2));
-                var seconds = int.Parse(line.Substring(4, 2));
-                var hundredths = double.Parse(line.Substring(7, 2));
+                if (!lineExpression.IsMatch(line)) continue; // not a timestamp; not interested
+
+                var match = lineExpression.Match(line);
+
+                var minutes = int.Parse(match.Groups[1].Value);
+                var seconds = int.Parse(match.Groups[2].Value);
+                var hundredths = double.Parse(match.Groups[3].Value);
+                var lyric = match.Groups[4].Value;
+
                 var timeStamp = new TimeSpan(0, 0, minutes, seconds, (int)Math.Round(hundredths / 10));
-                var lyrics = line.Substring(10);
-                if (!Lines.ContainsKey(timeStamp)) Lines.Add(timeStamp, lyrics);
+
+                if (!Lines.ContainsKey(timeStamp)) Lines.Add(timeStamp, lyric);
             }
         }
     }
