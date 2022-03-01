@@ -61,6 +61,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 transcodedImage.Seek(0);
                 updater.Thumbnail = RandomAccessStreamReference.CreateFromStream(transcodedImage);
             }
+            else updater.Thumbnail = null;
             
             updater.MusicProperties.Title = track.Title;
             updater.Update();

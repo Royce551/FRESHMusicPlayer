@@ -144,15 +144,27 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         public void ChangeCoverArt()
         {
+            void ShowNoCoverArt()
+            {
+                CoverArtLabel.Text = Properties.Resources.TAGEDITOR_NOCOVERART;
+                CoverArtBox.Source = null;
+            }
             RemoveCoverButton.IsEnabled = true;
             ImportCoverButton.IsEnabled = true;
             int selectedIndex = CoverArtSelector.SelectedIndex;
             if (selectedIndex == -1) selectedIndex = 0;
+            if (CoverArts.Count <= 0)
+            {
+                RemoveCoverButton.IsEnabled = false;
+                ShowNoCoverArt();
+                CoverArtSelector.SelectedIndex = 0;
+                return;
+            }
+
             var currentCover = CoverArts[selectedIndex];
             if (currentCover.PictureData is null)
             {
-                CoverArtLabel.Text = Properties.Resources.TAGEDITOR_NOCOVERART;
-                CoverArtBox.Source = null;
+                ShowNoCoverArt();
                 return;
             }
             var currentCoverImage = System.Drawing.Image.FromStream(new MemoryStream(currentCover.PictureData));

@@ -384,7 +384,7 @@ namespace FRESHMusicPlayer
         public async void HandlePersistence()
         {
             var persistenceFilePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
-            if (File.Exists(persistenceFilePath))
+            if (File.Exists(persistenceFilePath) && !Player.IsLoading && !Player.FileLoaded /*if a track is already loading or playing then it's probs being opened*/)
             {
                 var fields = File.ReadAllText(persistenceFilePath).Split(';');
 
