@@ -41,8 +41,11 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
+#if !BLUEPRINT
         public const string WindowName = "FRESHMusicPlayer";
-
+#else
+        public const string WindowName = "FRESHMusicPlayer (Blueprint; possibly unstable!)";
+#endif
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
 
@@ -78,7 +81,7 @@ namespace FRESHMusicPlayer
             {
 #if DEBUG // allow multiple instances of FMP in debug (at the expense of stability with heavy library use)
                 library = new LiteDatabase($"Filename=\"{Path.Combine(App.DataFolderLocation, "database.fdb2")}\";Connection=shared");
-#elif !DEBUG
+#else
                 library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb2"));
 #endif
                 Library = new GUILibrary(library, NotificationHandler, Dispatcher);

@@ -80,6 +80,7 @@ namespace FRESHMusicPlayer.Pages
                     Appearance_ThemeDarkRadio.IsChecked = true;
                     break;
             }
+#if UPDATER
             switch (App.Config.UpdateMode)
             {
                 case UpdateMode.Automatic:
@@ -92,6 +93,15 @@ namespace FRESHMusicPlayer.Pages
                     General_UpdateModeCombo.SelectedIndex = (int)UpdateCombo.Prompt;
                     break;
             }
+#else
+            UpdateHeader.Visibility =
+            UpdateModeGrid.Visibility = 
+            UpdateModeHeader.Visibility = 
+            General_UpdateModeCombo.Visibility = 
+            Updates_LastCheckedLabel.Visibility =
+            Updates_CheckUpdatesButton.Visibility =
+            Visibility.Collapsed;
+#endif
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(Properties.Resources.SETTINGS_AUTOIMPORTDESCRIPTION);
             foreach (var path in App.Config.AutoImportPaths)
