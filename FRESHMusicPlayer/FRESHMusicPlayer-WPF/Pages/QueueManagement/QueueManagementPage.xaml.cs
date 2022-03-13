@@ -21,8 +21,6 @@ namespace FRESHMusicPlayer.Pages
     {
         private bool taskIsRunning;
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
-        private int currentIndex = 0;
-        private List<string> lastQueue = new List<string>();
 
         private readonly MainWindow window;
         public QueueManagement(MainWindow window)
@@ -59,59 +57,39 @@ namespace FRESHMusicPlayer.Pages
             async void GetResults()
             {
                 var list = displayqueue.Dequeue();
-                var nextLength = 0; // length of the tracks that come after the current
-                int number = 1;
                 SetControlEnabled(false);
                 await Task.Run(() =>
                 {
-                    
-                    if (!list.SequenceEqual(lastQueue)) // has the contents of the queue changed, or just the positions?
-                    {                                   // yes; refresh list
-                        var difference = QueueList.Items.Count - window.Player.Queue.Queue.Count;
-                        while (difference > 0)
-                        {
-                            Dispatcher.Invoke(() => QueueList.Items.RemoveAt(QueueList.Items.Count - 1));
-                            difference--;
-                        }
-                        while (difference < 0)
-                        {
-                            Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(null, null, null, null, 0, 0, window.Player)));
-                            difference++;
-                        }
-                        for (int i = 0; i < QueueList.Items.Count; i++)
-                        {
-                            var entry = QueueList.Items[i] as QueueEntry;
-                            var correspondingQueueEntry = window.Library.GetFallbackTrack(window.Player.Queue.Queue[i]);
-
-                            Dispatcher.Invoke(() =>
-                            {
-                                entry.Artist = correspondingQueueEntry.Artist;
-                                entry.Album = correspondingQueueEntry.Album;
-                                entry.Title = correspondingQueueEntry.Title;
-                                entry.Index = i;
-                                entry.Position = (i + 1).ToString();
-                                entry.Length = correspondingQueueEntry.Length;
-                                entry.UpdatePosition();
-                            });
-                        }
-                    }
-                    else // no; just update positions (massively faster)
+                    var difference = QueueList.Items.Count - window.Player.Queue.Queue.Count;
+                    while (difference > 0)
                     {
-                        foreach (var item in QueueList.Items)
+                        Dispatcher.Invoke(() => QueueList.Items.RemoveAt(QueueList.Items.Count - 1));
+                        difference--;
+                    }
+                    while (difference < 0)
+                    {
+                        Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(null, null, null, null, 0, 0, window.Player)));
+                        difference++;
+                    }
+                    for (int i = 0; i < QueueList.Items.Count; i++)
+                    {
+                        var entry = QueueList.Items[i] as QueueEntry;
+                        var correspondingQueueEntry = window.Library.GetFallbackTrack(window.Player.Queue.Queue[i]);
+
+                        Dispatcher.Invoke(() =>
                         {
-                            if (item is QueueEntry entry)
-                            {
-                                Dispatcher.Invoke(() => entry.UpdatePosition());
-                                if (entry.Index + 1 == window.Player.Queue.Position) currentIndex = entry.Index;
-                                if (window.Player.Queue.Position < number) nextLength += entry.Length;
-                            }
-                            number++;
-                        }
-                    }            // convert the items in the listbox into a list of file paths to be compared with `list`
-                    lastQueue = Dispatcher.Invoke(() => QueueList.Items.Cast<QueueEntry>().Select(x => window.Player.Queue.Queue[x.Index]).ToList());
+                            entry.Artist = correspondingQueueEntry.Artist;
+                            entry.Album = correspondingQueueEntry.Album;
+                            entry.Title = correspondingQueueEntry.Title;
+                            entry.Index = i;
+                            entry.Position = (i + 1).ToString();
+                            entry.Length = correspondingQueueEntry.Length;
+                            entry.UpdatePosition();
+                        });
+                    }
                 });
 
-                if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
+                //if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
                 SetControlEnabled(true);
                 taskIsRunning = false;
                 if (displayqueue.Count != 0) GetResults();
