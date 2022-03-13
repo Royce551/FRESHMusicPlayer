@@ -70,7 +70,7 @@ namespace FRESHMusicPlayer.Pages
                 SetCoverArtVisibility(true);
             }
 
-            var lyrics = new FRESHMusicPlayer.Controls.Lyrics.Lyrics();
+            var lyrics = new Controls.Lyrics.Lyrics();
             lyrics.Initialize(window);
             if (lyrics.HandleLyrics())
             {
@@ -117,7 +117,7 @@ namespace FRESHMusicPlayer.Pages
         private bool isMouseMoving = false;
         private void Page_MouseMove(object sender, MouseEventArgs e) => MoveHandler();
 
-        private void ControlDismissTimer_Tick(object sender, EventArgs e)
+        private async void ControlDismissTimer_Tick(object sender, EventArgs e)
         {
             MoveHandler();
 
@@ -125,15 +125,17 @@ namespace FRESHMusicPlayer.Pages
             if (!IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
             controlDismissTimer.Stop();
             window.HideControlsBox();
+            
             Mouse.OverrideCursor = Cursors.None;
             TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;
+            await window.HideAuxilliaryPane();
         }
 
         private void MoveHandler()
         {
             if (lastMouseMovePosition != null)
             {
-                var position = Mouse.GetPosition(this);
+                var position = Mouse.GetPosition(window);
                 if (Math.Abs(position.X - lastMouseMovePosition.X) > SystemParameters.MinimumHorizontalDragDistance ||
                     Math.Abs(position.Y - lastMouseMovePosition.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
@@ -148,7 +150,7 @@ namespace FRESHMusicPlayer.Pages
                 }
                 else isMouseMoving = false;
             }
-            lastMouseMovePosition = Mouse.GetPosition(this);
+            lastMouseMovePosition = Mouse.GetPosition(window);
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Playlists);
