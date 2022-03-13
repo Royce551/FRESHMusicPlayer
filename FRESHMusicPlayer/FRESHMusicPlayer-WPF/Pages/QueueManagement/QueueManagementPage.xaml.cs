@@ -64,20 +64,35 @@ namespace FRESHMusicPlayer.Pages
                 SetControlEnabled(false);
                 await Task.Run(() =>
                 {
+                    
                     if (!list.SequenceEqual(lastQueue)) // has the contents of the queue changed, or just the positions?
                     {                                   // yes; refresh list
-                        Dispatcher.Invoke(() => QueueList.Items.Clear());
-                        foreach (var song in list)
+                        var difference = QueueList.Items.Count - window.Player.Queue.Queue.Count;
+                        while (difference > 0)
                         {
-                            if (displayqueue.Count > 1) break;
-                            QueueEntry entry;
-                            var dbTrack = window.Library.GetFallbackTrack(song);
-                            entry = Dispatcher.Invoke(() => new QueueEntry(dbTrack.Artist, dbTrack.Album, dbTrack.Title, number.ToString(), number - 1, dbTrack.Length, window.Player));
-                            Dispatcher.Invoke(() => QueueList.Items.Add(entry));
-                            if (entry.Index + 1 == window.Player.Queue.Position) currentIndex = entry.Index;
-                            if (window.Player.Queue.Position < number) nextLength += dbTrack.Length;
-                            if (number % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
-                            number++;
+                            Dispatcher.Invoke(() => QueueList.Items.RemoveAt(QueueList.Items.Count - 1));
+                            difference--;
+                        }
+                        while (difference < 0)
+                        {
+                            Dispatcher.Invoke(() => QueueList.Items.Add(new QueueEntry(null, null, null, null, 0, 0, window.Player)));
+                            difference++;
+                        }
+                        for (int i = 0; i < QueueList.Items.Count; i++)
+                        {
+                            var entry = QueueList.Items[i] as QueueEntry;
+                            var correspondingQueueEntry = window.Library.GetFallbackTrack(window.Player.Queue.Queue[i]);
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                entry.Artist = correspondingQueueEntry.Artist;
+                                entry.Album = correspondingQueueEntry.Album;
+                                entry.Title = correspondingQueueEntry.Title;
+                                entry.Index = i;
+                                entry.Position = (i + 1).ToString();
+                                entry.Length = correspondingQueueEntry.Length;
+                                entry.UpdatePosition();
+                            });
                         }
                     }
                     else // no; just update positions (massively faster)

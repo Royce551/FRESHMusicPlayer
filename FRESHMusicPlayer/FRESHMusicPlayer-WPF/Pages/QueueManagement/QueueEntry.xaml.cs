@@ -9,6 +9,37 @@ namespace FRESHMusicPlayer.Pages
     /// </summary>
     public partial class QueueEntry : UserControl
     {
+        private string artist;
+        public string Artist
+        {
+            get => artist;
+            set
+            {
+                artist = value;
+                UpdateMetadata();
+            }
+        }
+        private string album;
+        public string Album
+        {
+            get => album;
+            set
+            {
+                album = value;
+                UpdateMetadata();
+            }
+        }
+        private string title;
+        public string Title
+        {
+            get => title;
+            set
+            {
+                title = value;
+                UpdateMetadata();
+            }
+        }
+
         public int Index;
         public string Position;
         public int Length;
@@ -18,12 +49,15 @@ namespace FRESHMusicPlayer.Pages
         {
             this.player = player;
             InitializeComponent();
-            ArtistAlbumLabel.Text = $"{artist} ・ {album}";
-            TitleLabel.Text = title;
+            Artist = artist;
+            Album = album;
+            Title = title;
+            
             Index = index;
             Position = position;
             Length = length;
             UpdatePosition();
+            UpdateMetadata();
         }
 
         public void UpdatePosition()
@@ -42,14 +76,20 @@ namespace FRESHMusicPlayer.Pages
             }
         }
 
+        public void UpdateMetadata()
+        {
+            ArtistAlbumLabel.Text = $"{Artist} ・ {Album}";
+            TitleLabel.Text = Title;
+        }
+
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            PlayButton.Visibility = DeleteButton.Visibility = Visibility.Visible;
+            PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Visible;
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            PlayButton.Visibility = DeleteButton.Visibility = Visibility.Collapsed;
+            PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Collapsed;
         }
 
         private async void PlayButtonClick(object sender, MouseButtonEventArgs e)
