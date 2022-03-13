@@ -348,3 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# FMP WPF release files
+FRESHMusicPlayer/FRESHMusicPlayer-WPF/Releases
+FRESHMusicPlayer/FRESHMusicPlayer-WPF/ReleasesBackup
+FRESHMusicPlayer/FRESHMusicPlayer-WPF/BlueprintReleases

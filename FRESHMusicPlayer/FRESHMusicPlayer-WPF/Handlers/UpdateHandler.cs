@@ -27,7 +27,15 @@ namespace FRESHMusicPlayer.Handlers
             if (!File.Exists(Path.Combine(rootPath, "Update.exe"))) return;
             App.Config.UpdatesLastChecked = DateTime.Now;
             var notification = new Notification();
-            UpdateManager mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Royce551/FRESHMusicPlayer");
+
+            var updatePath =
+#if !BLUEPRINT
+            "https://github.com/Royce551/FRESHMusicPlayer";
+#else
+            "https://github.com/Royce551/FRESHMusicPlayer-WindowsBlueprint-Releases";
+#endif
+
+            UpdateManager mgr = await UpdateManager.GitHubUpdateManager(updatePath);
             try
             {
                 UpdateInfo updateInfo = await mgr.CheckForUpdate(!useDeltaPatching);

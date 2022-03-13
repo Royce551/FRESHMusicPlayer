@@ -44,7 +44,7 @@ namespace FRESHMusicPlayer
 #if !BLUEPRINT
         public const string WindowName = "FRESHMusicPlayer";
 #else
-        public const string WindowName = "FRESHMusicPlayer (Blueprint; possibly unstable!)";
+        public const string WindowName = "FRESHMusicPlayer Blueprint (possibly unstable!)";
 #endif
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
