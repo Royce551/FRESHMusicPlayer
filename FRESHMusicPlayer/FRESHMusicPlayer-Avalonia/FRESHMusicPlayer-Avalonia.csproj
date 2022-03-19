@@ -31,7 +31,7 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.7" />
     <PackageReference Include="Avalonia.Svg.Skia" Version="0.10.7.1" />
     <PackageReference Include="DiscordRichPresence" Version="1.0.150" />
-    <PackageReference Include="FRESHMusicPlayer.Core" Version="4.0.0" />
+    <PackageReference Include="FRESHMusicPlayer.Core" Version="4.0.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     <PackageReference Include="Tmds.DBus" Version="0.9.1" />
     <PackageReference Include="z440.atl.core" Version="3.19.0" />

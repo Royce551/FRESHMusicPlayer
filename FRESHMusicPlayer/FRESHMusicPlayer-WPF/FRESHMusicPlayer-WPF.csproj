@@ -385,7 +385,7 @@
       <Version>1.0.150</Version>
     </PackageReference>
     <PackageReference Include="FRESHMusicPlayer.Core">
-      <Version>4.0.0</Version>
+      <Version>4.0.1</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>5.0.9</Version>
@@ -422,12 +422,12 @@
     <Exec Command="nuget pack FMPRelease.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
     <Exec Command="squirrel --releasify $(OutDir)MyApp.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg" />
   </Target>
-	<Target Name="AfterBuild" Condition=" '$(Configuration)' == 'BlueprintPackageUpdater'">
-		<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-			<Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
-		</GetAssemblyIdentity>
-		<Exec Command="nuget pack FMPBlueprintRelease.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Blueprint -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
-		<Exec Command="squirrel --releasify $(OutDir)FRESHMusicPlayerBlueprint.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=BlueprintReleases"/>
-	</Target>
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'BlueprintPackageUpdater'">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
+    </GetAssemblyIdentity>
+    <Exec Command="nuget pack FMPBlueprintRelease.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Blueprint -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
+    <Exec Command="squirrel --releasify $(OutDir)FRESHMusicPlayerBlueprint.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=BlueprintReleases" />
+  </Target>
   <Import Project="..\packages\squirrel.windows.1.9.1\build\squirrel.windows.targets" Condition="Exists('..\packages\squirrel.windows.1.9.1\build\squirrel.windows.targets')" />
 </Project>
