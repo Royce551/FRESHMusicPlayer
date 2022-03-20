@@ -36,19 +36,17 @@ namespace FRESHMusicPlayer.Pages
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
             var remainingTime = new TimeSpan();
-            int i = 1;
-            int i2 = 0;
             var queueAsQueueEntries = QueueList.Items.Cast<QueueEntry>().ToList();
-            foreach (var track in queueAsQueueEntries)
+
+            for (int i = 0; i < queueAsQueueEntries.Count; i++)
             {
-                i++;
-                if (i < window.Player.Queue.Position) continue;
-                var y = queueAsQueueEntries[i2];
-                remainingTime += TimeSpan.FromSeconds(y.Length);
-                i2++;
+                if ((i + 1) < window.Player.Queue.Position) continue;
+                var track = queueAsQueueEntries[i];
+                if (i != (queueAsQueueEntries.Count - 1)) remainingTime += TimeSpan.FromSeconds(track.Length);
             }
-            remainingTime -= window.Player.CurrentTime;
-            RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + remainingTime.ToString(@"hh\:mm\:ss");
+            remainingTime += (window.Player.TotalTime - window.Player.CurrentTime);
+            var lengthString = remainingTime.Days != 0 ? remainingTime.ToString(@"d\:hh\:mm\:ss") : remainingTime.ToString(@"hh\:mm\:ss");
+            RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + lengthString;
         }
 
         public void PopulateList()
@@ -159,6 +157,16 @@ namespace FRESHMusicPlayer.Pages
         private void Page_Drop(object sender, DragEventArgs e)
         {  
             InterfaceUtils.DoDragDrop((string[])e.Data.GetData(DataFormats.FileDrop), window.Player, window.Library, import: false, clearqueue: false);
+        }
+
+        private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Visible;
+        }
+
+        private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Collapsed;
         }
 
         //private void PreviousQueueButton_Click(object sender, RoutedEventArgs e) for use in FMP 10.2

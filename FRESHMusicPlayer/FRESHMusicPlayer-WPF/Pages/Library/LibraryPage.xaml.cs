@@ -77,7 +77,8 @@ namespace FRESHMusicPlayer.Pages.Library
             });
             var lengthTimeSpan = new TimeSpan(0, 0, 0, length);
             InfoLabel.Visibility = Visibility.Visible;
-            InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {Math.Floor(lengthTimeSpan.TotalHours)}:{lengthTimeSpan:mm}:{lengthTimeSpan:ss}";
+            var lengthString = lengthTimeSpan.Days != 0 ? lengthTimeSpan.ToString(@"d\:hh\:mm\:ss") : lengthTimeSpan.ToString(@"hh\:mm\:ss");
+            InfoLabel.Text = $@"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {lengthString}";
         }
         public async Task ShowArtists()
         {
