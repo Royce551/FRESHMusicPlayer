@@ -64,11 +64,48 @@ namespace FRESHMusicPlayer.Handlers
             });
         }
 
+        public override void AddTrackToPlaylist(string playlist, string path)
+        {
+            base.AddTrackToPlaylist(playlist, path);
+            LibraryChanged?.Invoke(null, EventArgs.Empty);
+        }
+
+        public override DatabasePlaylist CreatePlaylist(string playlist, string path = null)
+        {
+            var newPlaylist = base.CreatePlaylist(playlist, path);
+            LibraryChanged?.Invoke(null, EventArgs.Empty);
+            return newPlaylist;
+        }
+
+        public override void DeletePlaylist(string playlist)
+        {
+            base.DeletePlaylist(playlist);
+            LibraryChanged?.Invoke(null, EventArgs.Empty);
+        }
+
+        public override void Import(string path)
+        {
+            base.Import(path);
+            LibraryChanged?.Invoke(null, EventArgs.Empty);
+        }
+
+        public override void Remove(string path)
+        {
+            base.Remove(path);
+            LibraryChanged?.Invoke(null, EventArgs.Empty);
+        }
+
+        public override void RemoveTrackFromPlaylist(string playlist, string path)
+        {
+            base.RemoveTrackFromPlaylist(playlist, path);
+            LibraryChanged?.Invoke(null, EventArgs.Empty);
+        }
+
         //public List<DatabaseQueue> GetAllQueues() FMP 10.2
         //{
         //    return Database.GetCollection<DatabaseQueue>("queues").Query().ToList();
         //}
-        
+
         //public DatabaseQueue CreateQueue(List<string> queue, int position)
         //{
         //    var newQueue = new DatabaseQueue { Queue = queue, QueuePosition = position };
