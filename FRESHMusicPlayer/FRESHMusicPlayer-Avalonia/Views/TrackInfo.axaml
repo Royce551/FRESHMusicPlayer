@@ -14,7 +14,7 @@
 
 	<Panel>
 		<controls:BlurryImage ZIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding CoverArt}" BlurLevel="10" Stretch="UniformToFill" Margin="-10"/>
-		<Rectangle ZIndex="1" Fill="{StaticResource BackgroundColor}" Opacity="0.55"/>
+		<Rectangle ZIndex="1" Fill="{DynamicResource BackgroundColor}" Opacity="0.55"/>
 		<Grid ZIndex="2" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Stretch">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
@@ -43,11 +43,11 @@
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 			
-				<TextBlock Grid.Column="0" Grid.Row="0" Margin="0,2" Text="{x:Static resx:Resources.Bitrate}" Foreground="{StaticResource SecondaryTextColor}"/>
-				<TextBlock Grid.Column="0" Grid.Row="1" Margin="0,2" Text="{x:Static resx:Resources.Disc}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding DiscNumberShouldBeVisible}"/>
-				<TextBlock Grid.Column="0" Grid.Row="2" Margin="0,2" Text="{x:Static resx:Resources.Track}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding TrackNumberShouldBeVisible}"/>
-				<TextBlock Grid.Column="0" Grid.Row="3" Margin="0,2" Text="{x:Static resx:Resources.Year}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding YearShouldBeVisible}"/>
-				<TextBlock Grid.Column="0" Grid.Row="4" Margin="0,2" Text="{x:Static resx:Resources.Album}" Foreground="{StaticResource SecondaryTextColor}" IsVisible="{Binding AlbumShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="0" Margin="0,2" Text="{x:Static resx:Resources.Bitrate}" Foreground="{DynamicResource SecondaryTextColor}"/>
+				<TextBlock Grid.Column="0" Grid.Row="1" Margin="0,2" Text="{x:Static resx:Resources.Disc}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding DiscNumberShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="2" Margin="0,2" Text="{x:Static resx:Resources.Track}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding TrackNumberShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="3" Margin="0,2" Text="{x:Static resx:Resources.Year}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding YearShouldBeVisible}"/>
+				<TextBlock Grid.Column="0" Grid.Row="4" Margin="0,2" Text="{x:Static resx:Resources.Album}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding AlbumShouldBeVisible}"/>
 			
 				<TextBlock Grid.Column="1" Grid.Row="0" Margin="10,2,0,2" Text="{Binding BitrateText}"/>
 				<TextBlock Grid.Column="1" Grid.Row="1" Margin="10,2,0,2" Text="{Binding DiscNumberText}" IsVisible="{Binding DiscNumberShouldBeVisible}"/>

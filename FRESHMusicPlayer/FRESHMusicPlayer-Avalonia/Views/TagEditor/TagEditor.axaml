@@ -45,7 +45,7 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<NativeMenuBar Grid.Row="0"/>
-		<DockPanel Grid.Row="2" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+		<DockPanel Grid.Row="2" Background="{DynamicResource ForegroundColor}" LastChildFill="False">
 			<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.Menu_File_Save}" Margin="10" Command="{Binding SaveCommand}"/>
 			<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.Menu_File_Open}" Margin="10" Command="{Binding OpenCommand}"/>
 		</DockPanel>

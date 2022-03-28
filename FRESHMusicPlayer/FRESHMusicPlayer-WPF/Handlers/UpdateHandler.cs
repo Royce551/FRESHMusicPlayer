@@ -27,7 +27,7 @@ namespace FRESHMusicPlayer.Handlers
             if (!File.Exists(Path.Combine(rootPath, "Update.exe"))) return;
             App.Config.UpdatesLastChecked = DateTime.Now;
             var notification = new Notification();
-
+            
             var updatePath =
 #if !BLUEPRINT
             "https://github.com/Royce551/FRESHMusicPlayer";

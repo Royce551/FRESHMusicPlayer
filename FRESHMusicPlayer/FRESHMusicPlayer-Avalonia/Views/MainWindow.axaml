@@ -160,7 +160,7 @@
 			</Button>
 		</StackPanel>
 		<DockPanel LastChildFill="True" ZIndex="0">
-			<Grid Background="{StaticResource ForegroundColor}" DockPanel.Dock="Bottom" Height="85" Margin="0,10,0,0">
+			<Grid Background="{DynamicResource ForegroundColor}" DockPanel.Dock="Bottom" Height="85" Margin="0,10,0,0">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="1*" />
@@ -179,14 +179,14 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<TextBlock x:Name="TrackTitleTextBlock" Grid.Row="0" Text="{Binding Title}" TextTrimming="CharacterEllipsis" FontSize="21" FontWeight="Bold" PointerPressed="OpenTrackInfo" ContextMenu="{DynamicResource OverflowMenu}"/>
-					<TextBlock x:Name="TrackArtistTextBlock" Grid.Row="1" Text="{Binding Artist}" FontSize="12" Foreground="{StaticResource SecondaryTextColor}"/>
+					<TextBlock x:Name="TrackArtistTextBlock" Grid.Row="1" Text="{Binding Artist}" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}"/>
 					<Grid Grid.Row="2" Margin="0,5,0,0">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="1*" />
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{StaticResource SecondaryTextColor}" Grid.Column="0" FontSize="12" Margin="0,0,2,0"/>
+						<TextBlock x:Name="ProgressIndicator1" Text="{Binding CurrentTime, StringFormat=\{0:mm\\:ss\}}" Foreground="{DynamicResource SecondaryTextColor}" Grid.Column="0" FontSize="12" Margin="0,0,2,0"/>
 						<Slider x:Name="ProgressSlider" Height="50" Grid.Column="1" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Margin="0,-13,0,0"/>
 						<TextBlock x:Name="ProgressIndicator2" Foreground="{Binding PauseAfterCurrentTrack, Converter={StaticResource PauseAfterCurrentTrackToBrushConverter}}" Grid.Column="2" FontSize="12" Margin="2,0,0,0" PointerPressed="ToggleShowRemainingProgress">
 							<TextBlock.Text>

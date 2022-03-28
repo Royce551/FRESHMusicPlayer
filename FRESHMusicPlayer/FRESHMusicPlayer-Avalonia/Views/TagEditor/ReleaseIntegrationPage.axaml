@@ -18,11 +18,11 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 
-		<DockPanel Grid.Row="2" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+		<DockPanel Grid.Row="2" Background="{DynamicResource ForegroundColor}" LastChildFill="False">
 			<Button DockPanel.Dock="Right" Content="OK" Margin="10" Command="{Binding OKCommand}"/>
 		</DockPanel>
 
-		<Grid Background="{StaticResource BackgroundColor}">
+		<Grid Background="{DynamicResource BackgroundColor}">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
@@ -33,7 +33,7 @@
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
-			<Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}" Grid.Row="0" Grid.ColumnSpan="2">
+			<Grid Margin="0,5,0,0" Background="{DynamicResource BackgroundColor}" Grid.Row="0" Grid.ColumnSpan="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
@@ -46,23 +46,23 @@
 					<ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" IsVisible="{Binding ArtistShouldBeVisible}" Text="{x:Static resx:Resources.Artist}" Foreground="{StaticResource SecondaryTextColor}"/>
-				<TextBlock Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" IsVisible="{Binding YearShouldBeVisible}" Text="{x:Static resx:Resources.Year}" Foreground="{StaticResource SecondaryTextColor}"/>
-				<TextBlock Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" IsVisible="{Binding GenreShouldBeVisible}" Text="{x:Static resx:Resources.Genre}" Foreground="{StaticResource SecondaryTextColor}" />
-				<TextBlock Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" IsVisible="{Binding AlbumShouldBeVisible}" Text="{x:Static resx:Resources.Album}" Foreground="{StaticResource SecondaryTextColor}" />
-				<TextBlock Grid.Row="1" Grid.Column="2" Foreground="{StaticResource PrimaryTextColor}" Text="{Binding Artist}" IsVisible="{Binding ArtistShouldBeVisible}" Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
-				<TextBlock Grid.Row="3" Grid.Column="2" Foreground="{StaticResource PrimaryTextColor}" Text="{Binding Year}"   IsVisible="{Binding YearShouldBeVisible}"  Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
-				<TextBlock Grid.Row="4" Grid.Column="2" Foreground="{StaticResource PrimaryTextColor}" Text="{Binding Genre}"  IsVisible="{Binding GenreShouldBeVisible}" Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
-				<TextBlock Grid.Row="5" Grid.Column="2" Foreground="{StaticResource PrimaryTextColor}" Text="{Binding Album}"  IsVisible="{Binding AlbumShouldBeVisible}" Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
+				<TextBlock Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" IsVisible="{Binding ArtistShouldBeVisible}" Text="{x:Static resx:Resources.Artist}" Foreground="{DynamicResource SecondaryTextColor}"/>
+				<TextBlock Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" IsVisible="{Binding YearShouldBeVisible}" Text="{x:Static resx:Resources.Year}" Foreground="{DynamicResource SecondaryTextColor}"/>
+				<TextBlock Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" IsVisible="{Binding GenreShouldBeVisible}" Text="{x:Static resx:Resources.Genre}" Foreground="{DynamicResource SecondaryTextColor}" />
+				<TextBlock Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" IsVisible="{Binding AlbumShouldBeVisible}" Text="{x:Static resx:Resources.Album}" Foreground="{DynamicResource SecondaryTextColor}" />
+				<TextBlock Grid.Row="1" Grid.Column="2" Foreground="{DynamicResource PrimaryTextColor}" Text="{Binding Artist}" IsVisible="{Binding ArtistShouldBeVisible}" Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
+				<TextBlock Grid.Row="3" Grid.Column="2" Foreground="{DynamicResource PrimaryTextColor}" Text="{Binding Year}"   IsVisible="{Binding YearShouldBeVisible}"  Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
+				<TextBlock Grid.Row="4" Grid.Column="2" Foreground="{DynamicResource PrimaryTextColor}" Text="{Binding Genre}"  IsVisible="{Binding GenreShouldBeVisible}" Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
+				<TextBlock Grid.Row="5" Grid.Column="2" Foreground="{DynamicResource PrimaryTextColor}" Text="{Binding Album}"  IsVisible="{Binding AlbumShouldBeVisible}" Margin="2,2,10,2" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
 			</Grid>
-			<ListBox x:Name="IntegrationItemBox" Grid.Row="2" Grid.ColumnSpan="2" Margin="10"  BorderBrush="{x:Null}" FontSize="14" Items="{Binding Entries}" SelectedIndex="{Binding SelectedItem}" Foreground="{StaticResource PrimaryTextColor}"/>
-			<Grid Grid.Row="3" Grid.ColumnSpan="2" Background="{StaticResource BackgroundColor}" Margin="0,0,0,10">
+			<ListBox x:Name="IntegrationItemBox" Grid.Row="2" Grid.ColumnSpan="2" Margin="10"  BorderBrush="{x:Null}" FontSize="14" Items="{Binding Entries}" SelectedIndex="{Binding SelectedItem}" Foreground="{DynamicResource PrimaryTextColor}"/>
+			<Grid Grid.Row="3" Grid.ColumnSpan="2" Background="{DynamicResource BackgroundColor}" Margin="0,0,0,10">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"/>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Text="{Binding URL}" Foreground="{StaticResource Blue}" PointerPressed="OnLinkClicked" FontSize="14" VerticalAlignment="Center" Margin="10,0" Cursor="Hand" TextTrimming="CharacterEllipsis"/>
+				<TextBlock Grid.Column="0" Text="{Binding URL}" Foreground="{DynamicResource Blue}" PointerPressed="OnLinkClicked" FontSize="14" VerticalAlignment="Center" Margin="10,0" Cursor="Hand" TextTrimming="CharacterEllipsis"/>
 			</Grid>
 		</Grid>
 	</Grid>

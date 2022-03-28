@@ -21,7 +21,7 @@
 		<vm:AndValueConverter x:Key="AndValueConverter"/>
 	</Window.Resources>
 	<DockPanel>
-		<DockPanel DockPanel.Dock="Bottom" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+		<DockPanel DockPanel.Dock="Bottom" Background="{DynamicResource ForegroundColor}" LastChildFill="False">
 			<Button DockPanel.Dock="Right" Margin="10" Click="OnOKButtonClick">OK</Button>
 		</DockPanel>
 

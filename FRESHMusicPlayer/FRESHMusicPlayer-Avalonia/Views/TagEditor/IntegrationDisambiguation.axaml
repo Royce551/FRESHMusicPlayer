@@ -18,7 +18,7 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 
-		<DockPanel Grid.Row="2" Background="{StaticResource ForegroundColor}" LastChildFill="False">
+		<DockPanel Grid.Row="2" Background="{DynamicResource ForegroundColor}" LastChildFill="False">
 			<Button DockPanel.Dock="Right" Content="OK" Margin="10" Command="{Binding OKCommand}"/>
 		</DockPanel>
 	

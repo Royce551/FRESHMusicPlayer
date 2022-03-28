@@ -14,7 +14,7 @@
 
 	<Panel>
 		<controls:BlurryImage ZIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding CoverArt}" BlurLevel="10" Stretch="UniformToFill" Margin="-10"/>
-		<Rectangle ZIndex="1" Fill="{StaticResource BackgroundColor}" Opacity="0.55"/>
+		<Rectangle ZIndex="1" Fill="{DynamicResource BackgroundColor}" Opacity="0.55"/>
 		<Grid ZIndex="2" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
