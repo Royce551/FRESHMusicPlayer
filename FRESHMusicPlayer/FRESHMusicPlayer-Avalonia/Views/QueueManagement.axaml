@@ -1,4 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,11 +6,11 @@
         mc:Ignorable="d" Width="500" Height="400" 
 		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
-        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
-        Icon="/Assets/icon.ico" Title="{x:Static resx:Resources.QueueManagement}">
-	<Window.DataContext>
+        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing"
+        Icon="/Assets/icon.ico">
+	<UserControl.DataContext>
 		<vm:QueueManagementViewModel/>
-	</Window.DataContext>
+	</UserControl.DataContext>
 	<Window.Resources>
         <svg:SvgImage x:Key="Play" Source="/Assets/play.svg"/>
 		<svg:SvgImage x:Key="Delete" Source="/Assets/delete.svg"/>
@@ -72,4 +72,4 @@
 			<Button Content="{x:Static resx:Resources.QueueManagement_ClearQueue}" Command="{Binding ClearQueueCommand}" Foreground="Red"/>
 		</StackPanel>
 	</Grid>
-</Window>
+</UserControl>

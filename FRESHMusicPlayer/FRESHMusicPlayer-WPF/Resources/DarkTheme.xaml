@@ -3,10 +3,10 @@
                     xmlns:local="clr-namespace:FRESHMusicPlayer">
     <SolidColorBrush x:Key="PrimaryTextColor" Color="White"/>
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#DADADA"/>
-    <SolidColorBrush x:Key="ControlBoxColor" Color="#2C2F33"/>
-    <SolidColorBrush x:Key="NavBarColor" Color="Black"/>
-    <SolidColorBrush x:Key="ForegroundColor" Color="#2C2F33"/>
-    <SolidColorBrush x:Key="SecondaryColor" Color="#323539"/>
-    <SolidColorBrush x:Key="BackgroundColor" Color="Black"/>
-    <SolidColorBrush x:Key="ControlColor" Color="#40444A"/>
+    <SolidColorBrush x:Key="ControlBoxColor" Color="#282828"/>
+    <SolidColorBrush x:Key="NavBarColor" Color="#282828"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#282828"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#282828"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#282828"/>
+    <SolidColorBrush x:Key="ControlColor" Color="#282828"/>
 </ResourceDictionary>
