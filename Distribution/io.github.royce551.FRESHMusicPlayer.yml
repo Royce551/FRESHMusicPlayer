@@ -21,7 +21,7 @@ modules:
     buildsystem: simple
     build-commands:
       - chmod +x dotnet-install.sh
-      - ./dotnet-install.sh --install-dir /app/opt/dotnet/ --version 5.0.202
+      - ./dotnet-install.sh --install-dir /app/opt/dotnet/ --version 6.0.100
     sources:
       - type: file
         url: https://dot.net/v1/dotnet-install.sh
