@@ -25,7 +25,7 @@ modules:
     sources:
       - type: file
         url: https://dot.net/v1/dotnet-install.sh
-        sha256: d998926533a32537fada686ac41918b67e3e97a169a43c99cfd4100711767145
+        sha256: 760596d2e182e0edf05f4a10bd0fa266086d700fdd96438d2663f28e538912e3
   - name: fmp
     buildsystem: simple
     build-commands:
