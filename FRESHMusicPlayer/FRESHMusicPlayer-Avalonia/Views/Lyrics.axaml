@@ -1,16 +1,16 @@
-<Window xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:controls="clr-namespace:FRESHMusicPlayer.Controls.BlurryImage"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
-        mc:Ignorable="d" Width="500" Height="300" Icon="/Assets/icon.ico" ShowInTaskbar="False"
-        x:Class="FRESHMusicPlayer.Views.Lyrics" WindowStartupLocation="CenterOwner" Closing="OnClosing"
+        mc:Ignorable="d" Width="500" Height="300" Icon="/Assets/icon.ico"
+        x:Class="FRESHMusicPlayer.Views.Lyrics"
         Title="{x:Static resx:Resources.Lyrics}">
-	<Window.DataContext>
+	<UserControl.DataContext>
 		<vm:LyricsViewModel/>
-	</Window.DataContext>
+	</UserControl.DataContext>
 
 	<Panel>
 		<controls:BlurryImage ZIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding CoverArt}" BlurLevel="10" Stretch="UniformToFill" Margin="-10"/>
@@ -28,4 +28,4 @@
 		</Grid>
 		
 	</Panel>
-</Window>
+</UserControl>

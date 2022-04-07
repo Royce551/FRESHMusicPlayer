@@ -44,13 +44,13 @@ namespace FRESHMusicPlayer.ViewModels
                 {
                     Name = playlist.Name,
                     IsSelectedTrackHere = Track is not null && playlist.Tracks.Contains(Track),
-                    ThingName = MainWindow?.SelectedTab switch
-                    {
-                        1 => $"+ {Properties.Resources.Artist}",
-                        2 => $"+ {Properties.Resources.Album}",
-                        _ => null
-                    } ?? null,
-                    ShouldThingBeVisible = MainWindow?.SelectedTab == 1 || MainWindow?.SelectedTab == 2
+                    //ThingName = MainWindow?.SelectedTab switch   TODO: switch to new tabs
+                    //{
+                    //    1 => $"+ {Properties.Resources.Artist}",
+                    //    2 => $"+ {Properties.Resources.Album}",
+                    //    _ => null
+                    //} ?? null,
+                    //ShouldThingBeVisible = MainWindow?.SelectedTab == 1 || MainWindow?.SelectedTab == 2
                 });
             }
         }
@@ -69,15 +69,15 @@ namespace FRESHMusicPlayer.ViewModels
         public async void AddThingToPlaylistCommand(string playlist)
         {
             List<DatabaseTrack> things;
-            if (MainWindow.SelectedTab == 1)
-                things = MainWindow.Library.ReadTracksForArtist(MainWindow.Library.GetFallbackTrack(Track).Artist);
-            else
-                things = MainWindow.Library.ReadTracksForAlbum(MainWindow.Library.GetFallbackTrack(Track).Album);
-            await Task.Run(() =>
-            {
-                foreach (var thing in things)
-                    MainWindow.Library.AddTrackToPlaylist(playlist, thing.Path);
-            });
+            //if (MainWindow.SelectedTab == 1) TODO: switch to new tabs
+            //    things = MainWindow.Library.ReadTracksForArtist(MainWindow.Library.GetFallbackTrack(Track).Artist);
+            //else
+            //    things = MainWindow.Library.ReadTracksForAlbum(MainWindow.Library.GetFallbackTrack(Track).Album);
+            //await Task.Run(() =>
+            //{
+            //    foreach (var thing in things)
+            //        MainWindow.Library.AddTrackToPlaylist(playlist, thing.Path);
+            //});
             Initialize();
         }
 

@@ -29,6 +29,25 @@ using System.Timers;
 
 namespace FRESHMusicPlayer.ViewModels
 {
+    public enum Tab
+    {
+        Tracks,
+        Artists,
+        Albums,
+        Playlists,
+        Fullscreen
+    }
+    public enum Pane
+    {
+        None,
+        Settings,
+        QueueManagement,
+        Search,
+        Notifications,
+        TrackInfo,
+        Lyrics
+    }
+
     public class MainWindowViewModel : ViewModelBase
     {
         public Player Player { get; private set; }
@@ -58,7 +77,6 @@ namespace FRESHMusicPlayer.ViewModels
             var library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
 #endif
             Library = new Library(library);
-            InitializeLibrary();
         }
 
         public const string ProjectName = "FRESHMusicPlayer";
@@ -321,38 +339,131 @@ namespace FRESHMusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref pauseAfterCurrentTrack, value);
         }
 
-#endregion
+        #endregion
+        private Tab selectedTab = Tab.Tracks;
+        public Tab SelectedTab
+        {
+            get => selectedTab;
+            set
+            {
+                selectedTab = value;
+                this.RaisePropertyChanged(nameof(MainContent));
+            }
+        }
+        private Pane selectedPane = Pane.None;
+        public Pane SelectedPane
+        {
+            get => selectedPane;
+            set
+            {
+                selectedPane = value;
+                this.RaisePropertyChanged(nameof(AuxPaneContent));
+            }
+        }
+
+        public UserControl MainContent
+        {
+            get
+            {
+                switch (SelectedTab)
+                {
+                    case Tab.Tracks:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Tracks"
+                            }
+                        };
+                    case Tab.Artists:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Artists"
+                            }
+                        };
+                    case Tab.Albums:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Albums"
+                            }
+                        };
+                    case Tab.Playlists:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Playlists"
+                            }
+                        };
+                    case Tab.Fullscreen:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Fullscreen"
+                            }
+                        };
+                    default:
+                        throw new Exception("???");
+                }
+            }
+        }
+        public UserControl AuxPaneContent
+        {
+            get
+            {
+                switch (SelectedPane)
+                {
+                    case Pane.Settings:
+                        return new Views.Settings();
+                    case Pane.QueueManagement:
+                        return new Views.QueueManagement();
+                    case Pane.Search:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Search"
+                            }
+                        };
+                    case Pane.TrackInfo:
+                        return new TrackInfo();
+                    case Pane.Notifications:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Notifications"
+                            }
+                        };
+                    case Pane.Lyrics:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Lyrics"
+                            }
+                        };
+                    case Pane.None:
+                        return null;
+                    default:
+                        throw new Exception("????");
+                }
+            }
+        }
+
+        private int auxPaneWidth = 220;
+        public int AuxPaneWidth
+        {
+            get => auxPaneWidth;
+            set => this.RaiseAndSetIfChanged(ref auxPaneWidth, value);
+        }
 
 #region Library
-
-        public async void InitializeLibrary()
-        {
-            LoggingHandler.Log("Showing library!");
-            AllTracks?.Clear();
-            CategoryThings?.Clear();
-            switch (SelectedTab)
-            {
-                case 0:
-                    foreach (var track in await Task.Run(() => Library.Read()))
-                        AllTracks.Add(track);
-                    break;
-                case 1:
-                    foreach (var artist in await Task.Run(() => Library.Read("Artist").Select(x => x.Artist).Distinct()))
-                        CategoryThings.Add(artist);
-                    break;
-                case 2:
-                    foreach (var album in await Task.Run(() => Library.Read("Album").Select(x => x.Album).Distinct()))
-                        CategoryThings.Add(album);
-                    break;
-                case 3:
-                    foreach (var playlist in await Task.Run(() => Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToEnumerable()))
-                        CategoryThings.Add(playlist.Name);
-                    break;
-            }
-            UpdateLibraryInfo();
-        }
-        public void UpdateLibraryInfo() => LibraryInfoText = $"{Resources.Tracks}: {AllTracks?.Count} ・ {TimeSpan.FromSeconds(AllTracks.Sum(x => x.Length)):hh\\:mm\\:ss}";
-
         public async void StartThings()
         {
             LoggingHandler.Log("Hi! I'm FMP!\n" +
@@ -387,12 +498,12 @@ namespace FRESHMusicPlayer.ViewModels
                     Player.CurrentTime.Add(TimeSpan.FromSeconds(Program.Config.FilePosition));
                 }
             }
-            await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Program.Config.CurrentTab, DispatcherPriority.ApplicationIdle);
+            //await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Program.Config.CurrentTab, DispatcherPriority.ApplicationIdle);
             // this delays the tab switch until avalonia is ready
             
             HandleIntegrations();
 
-            (GetMainWindow() as MainWindow).RootPanel.Opacity = 1; // this triggers the startup fade
+            //(GetMainWindow() as MainWindow).RootPanel.Opacity = 1; // this triggers the startup fade
             await PerformAutoImport();
         }
 
@@ -422,16 +533,16 @@ namespace FRESHMusicPlayer.ViewModels
 
         private void Notifications_NotificationInvalidate(object sender, EventArgs e)
         {
-            this.RaisePropertyChanged(nameof(VisibleNotifications));
-            this.RaisePropertyChanged(nameof(AreThereAnyNotifications));
-            foreach (Notification box in Notifications.Notifications)
-            {
-                if (box.DisplayAsToast && !box.Read)
-                {
-                    var button = Window.FindControl<Button>("NotificationButton");
-                    button.ContextFlyout.ShowAt(button);
-                }
-            }
+            //this.RaisePropertyChanged(nameof(VisibleNotifications));
+            //this.RaisePropertyChanged(nameof(AreThereAnyNotifications));
+            //foreach (Notification box in Notifications.Notifications)
+            //{
+            //    if (box.DisplayAsToast && !box.Read)
+            //    {
+            //        var button = Window.FindControl<Button>("NotificationButton");
+            //        button.ContextFlyout.ShowAt(button);
+            //    }
+            //}
         }
 
         public async void CloseThings()
@@ -440,7 +551,7 @@ namespace FRESHMusicPlayer.ViewModels
             Library?.Database.Dispose();
             Integrations.Dispose();
             Program.Config.Volume = Volume;
-            Program.Config.CurrentTab = SelectedTab;
+            //Program.Config.CurrentTab = SelectedTab;
             if (Player.FileLoaded)
             {
                 Program.Config.FilePath = Player.FilePath;
@@ -458,408 +569,44 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (Program.Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
                                                                    // effort (and showing the notification)
-            var notification = new Notification()
-            {
-                ContentText = Properties.Resources.Notification_Scanning
-            };
-            Notifications.Add(notification);
-            var filesToImport = new List<string>();
-            var library = Library.Read();
-            await Task.Run(() =>
-            {
-                foreach (var folder in Program.Config.AutoImportPaths)
-                {
-                    var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
-                        .Where(name => name.EndsWith(".mp3")
-                            || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                            || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                            || name.EndsWith(".wma")
-                            || name.EndsWith(".aac")).ToArray();
-                    foreach (var file in files)
-                    {
-                        if (!library.Select(x => x.Path).Contains(file))
-                            filesToImport.Add(file);
-                    }
-                }
-                Library.Import(filesToImport);
-            });
-            Notifications.Remove(notification);
-        }
-
-        private int selectedTab;
-        public int SelectedTab
-        {
-            get => selectedTab;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref selectedTab, value);
-                InitializeLibrary();
-            }
-        }
-
-        public ObservableCollection<DatabaseTrack> AllTracks { get; set; } = new();
-        public ObservableCollection<string> CategoryThings { get; set; } = new();
-
-        private string libraryInfoText;
-        public string LibraryInfoText
-        {
-            get => libraryInfoText;
-            set => this.RaiseAndSetIfChanged(ref libraryInfoText, value);
-        }
-
-        private string artistsSelectedItem;
-        public string ArtistsSelectedItem
-        {
-            get => artistsSelectedItem;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref artistsSelectedItem, value);
-                ShowTracksForArtist(value);
-            }
-        }
-        public async void ShowTracksForArtist(string artist)
-        {
-            if (artist is null) return;
-            AllTracks?.Clear();
-            foreach (var track in await Task.Run(() => Library.ReadTracksForArtist(artist)))
-                AllTracks?.Add(track);
-            UpdateLibraryInfo();
-        }
-
-        private string albumsSelectedItem;
-        public string AlbumsSelectedItem
-        {
-            get => albumsSelectedItem;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref albumsSelectedItem, value);
-                ShowTracksForAlbum(value);
-            }
-        }
-        public async void ShowTracksForAlbum(string album)
-        {
-            if (album is null) return;
-            AllTracks?.Clear();
-            foreach (var track in await Task.Run(() => Library.ReadTracksForAlbum(album)))
-                AllTracks?.Add(track);
-            UpdateLibraryInfo();
-        }
-
-        private string playlistsSelectedItem;
-        public string PlaylistsSelectedItem
-        {
-            get => playlistsSelectedItem;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref playlistsSelectedItem, value);
-                ShowTracksForPlaylist(value);
-            }
-        }
-        public async void ShowTracksForPlaylist(string playlist)
-        {
-            if (playlist is null) return;
-            AllTracks.Clear();
-            foreach (var track in await Task.Run(() => Library.ReadTracksForPlaylist(playlist)))
-                AllTracks.Add(track);
-            UpdateLibraryInfo();
-        }
-
-        public async void PlayCommand(string path)
-        {
-            Player.Queue.Clear();
-            Player.Queue.Add(path);
-            await Player.PlayAsync();
-        }
-        public void EnqueueCommand(string path)
-        {
-            Player.Queue.Add(path);
-        }
-        public void DeleteCommand(string path)
-        {
-            Library.Remove(path);
-            InitializeLibrary();
-        }
-        public void EnqueueAllCommand()
-        {
-            Player.Queue.Add(AllTracks.Select(x => x.Path).ToArray());
-        }
-        public async void PlayAllCommand()
-        {
-            Player.Queue.Clear();
-            Player.Queue.Add(AllTracks.Select(x => x.Path).ToArray());
-            await Player.PlayAsync();
-        }
-
-        // Searching
-        public ObservableCollection<DatabaseTrack> SearchTracks { get; set; } = new();
-        private string searchTerm;
-        public string SearchTerm
-        {
-            get => searchTerm;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref searchTerm, value);
-                PerformSearch(value);
-            }
-        }
-
-        private Queue<string> searchQueries = new();
-        private bool isSearchOperationRunning = false;
-        private async void PerformSearch(string query)
-        {
-            if (string.IsNullOrEmpty(query))
-            {
-                SearchTracks.Clear();
-                return;
-            }
-            searchQueries.Enqueue(query.ToUpper());
-            async Task GetResults()
-            {
-                isSearchOperationRunning = true;
-                var query = searchQueries.Dequeue();
-                SearchTracks.Clear();
-                await Task.Run(() =>
-                {
-                    foreach (var thing in Library.Database.GetCollection<DatabaseTrack>("tracks")
-                    .Query()
-                    .Where(x => x.Title.ToUpper().Contains(query) || x.Artist.ToUpper().Contains(query) || x.Album.ToUpper().Contains(query))
-                    .OrderBy("Title")
-                    .ToList())
-                    {
-                        if (searchQueries.Count > 1) break;
-                        SearchTracks.Add(thing);
-                    }
-                });
-                isSearchOperationRunning = false;
-                if (searchQueries.Count != 0) await GetResults();
-            }
-            if (!isSearchOperationRunning) await GetResults();
-        }
-        public void ClearSearchCommand() => SearchTerm = string.Empty;
-
-        // Import Tab
-        private string filePathOrURL;
-        public string FilePathOrURL
-        {
-            get => filePathOrURL;
-            set => this.RaiseAndSetIfChanged(ref filePathOrURL, value);
-        }
-
-        private List<string> acceptableFilePaths = "wav;aiff;mp3;wma;3g2;3gp;3gp2;3gpp;asf;wmv;aac;adts;avi;m4a;m4a;m4v;mov;mp4;sami;smi;flac".Split(';').ToList();
-        // ripped directly from fmp-wpf 'cause i'm lazy
-        public async void BrowseTracksCommand()
-        {
-            if (await FreedesktopPortal.IsPortalAvailable())
-            {
-                var files = await FreedesktopPortal.OpenFiles(Resources.Import, new Dictionary<string, object>()
-                {
-                    {"multiple", true},
-                    {"accept_label", Resources.Import},
-                    {"filters", new[]
-                    {
-                        (Resources.FileFilter_AudioFiles, acceptableFilePaths.Select(type => (0u, "*." + type)).ToArray()),
-                        (Resources.FileFilter_Other, new[]
-                        {
-                            (0u, "*")
-                        })
-                    }}
-                });
-                if (files.Length != 0) await Task.Run(() => Library.Import(files));
-                return;
-            }
-
-            var dialog = new OpenFileDialog()
-            {
-                Filters = new List<FileDialogFilter>
-                {
-                    new FileDialogFilter()
-                    {
-                        Name = Resources.FileFilter_AudioFiles,
-                        Extensions = acceptableFilePaths
-                    },
-                    new FileDialogFilter()
-                    {
-                        Name = Resources.FileFilter_Other,
-                        Extensions = new List<string>() { "*" }
-                    }
-                },
-                AllowMultiple = true
-            };
-            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                var files = await dialog.ShowAsync(desktop.MainWindow);
-                if (files.Length > 0) await Task.Run(() => Library.Import(files));
-            }
-
-        }
-        public async void BrowsePlaylistFilesCommand()
-        {
-            string[] acceptableFiles = { "xspf", "asx", "wvx", "b4s", "m3u", "m3u8", "pls", "smil", "smi", "zpl" };
-            string[] files = null;
-
-            if (await FreedesktopPortal.IsPortalAvailable())
-            {
-                files = await FreedesktopPortal.OpenFiles(Resources.ImportPlaylistFiles, new Dictionary<string, object>()
-                {
-                    {"multiple", true},
-                    {"accept_label", Resources.ImportPlaylistFiles},
-                    {"filters", new[]
-                    {
-                        (Resources.FileFilter_PlaylistFiles, acceptableFiles.Select(type => (0u, "*." + type)).ToArray()),
-                    }}
-                });
-            }
-
-            if (files == null)
-            {
-                var dialog = new OpenFileDialog()
-                {
-                    Filters = new List<FileDialogFilter>
-                    {
-                        new FileDialogFilter()
-                        {
-                            Name = Resources.FileFilter_PlaylistFiles,
-                            Extensions = acceptableFiles.ToList()
-                        }
-                    }
-                };
-
-                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-                {
-                    files = await dialog.ShowAsync(desktop.MainWindow);
-                }
-            }
-
-            if (files is not { Length: > 0 }) return;
-
-            var reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0]);
-            foreach (var s in reader.FilePaths)
-            {
-                if (!File.Exists(s))
-                {
-                    Notifications.Add(new()
-                    {
-                        ContentText = string.Format(Properties.Resources.Notification_FileInPlaylistMissing,
-                            Path.GetFileName(s)),
-                        DisplayAsToast = true,
-                        IsImportant = true,
-                        Type = NotificationType.Failure
-                    });
-                    continue;
-                }
-            }
-
-            Player.Queue.Add(reader.FilePaths.ToArray());
-            await Task.Run(() => Library.Import(reader.FilePaths.ToArray()));
-            await Player.PlayAsync();
-        }
-        public async void BrowseFoldersCommand()
-        {
-            string directory = null;
-            if (await FreedesktopPortal.IsPortalAvailable())
-            {
-                var result = await FreedesktopPortal.OpenFiles(Resources.ImportFolders, new Dictionary<string, object>()
-                {
-                    {"multiple", true},
-                    {"accept_label", Resources.ImportFolders},
-                    {"directory", true}
-                });
-
-                if (result.Length == 1)
-                {
-                    directory = result[0];
-                }
-                else
-                {
-                    //The dialog was closed
-                    return;
-                }
-            }
-
-            if (directory == null)
-            {
-                var dialog = new OpenFolderDialog()
-                {
-
-                };
-                if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-                {
-                    directory = await dialog.ShowAsync(desktop.MainWindow);
-                }
-            }
-
-            if (directory != null)
-            {
-                var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
-                .Where(name => name.EndsWith(".mp3")
-                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                        || name.EndsWith(".wma")
-                        || name.EndsWith(".aac")).ToArray();
-                Player.Queue.Add(paths);
-                await Task.Run(() => Library.Import(paths));
-                await Player.PlayAsync();
-            }
-        }
-        public async void OpenTrackCommand()
-        {
-            var dialog = new OpenFileDialog()
-            {
-                Filters = new List<FileDialogFilter>
-                {
-                    new FileDialogFilter()
-                    {
-                        Name = "Audio Files",
-                        Extensions = acceptableFilePaths
-                    },
-                    new FileDialogFilter()
-                    {
-                        Name = "Other",
-                        Extensions = new List<string>() { "*" }
-                    }
-                },
-                AllowMultiple = true
-            };
-            var files = await dialog.ShowAsync(Window);
-            if (files.Length > 0)
-            {
-                Player.Queue.Add(files);
-                await Player.PlayAsync();
-            }
-        }
-        public async void ImportFilePathCommand()
-        {
-            if (string.IsNullOrEmpty(FilePathOrURL)) return;
-            Player.Queue.Add(FilePathOrURL);
-            Library.Import(FilePathOrURL);
-            await Player.PlayAsync();
-        }
-
-        public async void GoToArtistCommand()
-        {
-            if (CurrentTrack is null) return;
-            SelectedTab = 1;
-            await Task.Delay(100);
-            ShowTracksForArtist(string.Join(", ", CurrentTrack.Artists));
-        }
-        public async void GoToAlbumCommand()
-        {
-            if (CurrentTrack is null) return;
-            SelectedTab = 2;
-            await Task.Delay(100);
-            ShowTracksForAlbum(CurrentTrack.Album);
+            //var notification = new Notification()
+            //{
+            //    ContentText = Properties.Resources.Notification_Scanning
+            //};
+            //Notifications.Add(notification);
+            //var filesToImport = new List<string>();
+            //var library = Library.Read();
+            //await Task.Run(() =>
+            //{
+            //    foreach (var folder in Program.Config.AutoImportPaths)
+            //    {
+            //        var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+            //            .Where(name => name.EndsWith(".mp3")
+            //                || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+            //                || name.EndsWith(".flac") || name.EndsWith(".aiff")
+            //                || name.EndsWith(".wma")
+            //                || name.EndsWith(".aac")).ToArray();
+            //        foreach (var file in files)
+            //        {
+            //            if (!library.Select(x => x.Path).Contains(file))
+            //                filesToImport.Add(file);
+            //        }
+            //    }
+            //    Library.Import(filesToImport);
+            //});
+            //Notifications.Remove(notification);
         }
 #endregion
 
 #region NavBar
         public void OpenSettingsCommand()
         {
-            new Views.Settings().SetThings(Program.Config, Library).Show(Window);
+            SelectedPane = Pane.Settings;
         }
 
         public void OpenQueueManagementCommand()
         {
-            new QueueManagement().SetStuff(Player, Library, ProgressTimer).Show(Window);
+            SelectedPane = Pane.QueueManagement;
         }
 
         public void OpenPlaylistManagementCommand()
@@ -869,7 +616,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void OpenLyricsCommand()
         {
-            new Lyrics().SetStuff(this).Show(Window);
+            SelectedPane = Pane.Lyrics;
         }
 
         public void OpenTagEditorCommand()

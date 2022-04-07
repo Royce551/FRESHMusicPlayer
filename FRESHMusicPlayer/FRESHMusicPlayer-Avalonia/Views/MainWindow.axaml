@@ -83,84 +83,12 @@
 			</NativeMenuItem>
 		</NativeMenu>
 	</NativeMenu.Menu>
-	<Panel x:Name="RootPanel" DragDrop.AllowDrop="True" Opacity="0">
+	<Panel x:Name="RootPanel" DragDrop.AllowDrop="True" Opacity="1">
 		<StackPanel Background="Transparent" Orientation="Horizontal" ZIndex="1" Height="35" Margin="0,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Right">
-			<Button x:Name="SearchButton" Margin="0,5" Click="OnSearchButtonClick" ToolTip.Tip="{x:Static resx:Resources.Search}">
-				<Button.ContextFlyout>
-					<Flyout ShowMode="Standard" Closed="OnSearchClosed">
-						<DockPanel Width="300" Height="500">
-							<TextBox DockPanel.Dock="Top" Text="{Binding SearchTerm}" Watermark="{x:Static resx:Resources.Search_Prompt}"/>
-							<ListBox Items="{Binding SearchTracks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
-								<ListBox.ItemTemplate>
-									<DataTemplate>
-										<Grid Margin="-5" Height="25" Background="Transparent">
-											<Grid.RowDefinitions>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="Auto"/>
-											</Grid.RowDefinitions>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="1*"/>
-												<ColumnDefinition Width="Auto"/>
-											</Grid.ColumnDefinitions>
-											<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
-											<TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
-											<StackPanel Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
-												<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnPlayButtonClick" VerticalAlignment="Center">
-													<Image Source="{DynamicResource Play}"/>
-												</Button>
-												<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnEnqueueButtonClick" VerticalAlignment="Center">
-													<Image Source="{DynamicResource Enqueue}"/>
-												</Button>
-												<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnDeleteButtonClick" VerticalAlignment="Center">
-													<Image Source="{DynamicResource Delete}"/>
-												</Button>
-											</StackPanel>
-										</Grid>
-									</DataTemplate>
-								</ListBox.ItemTemplate>
-							</ListBox>
-						</DockPanel>
-					</Flyout>
-
-				</Button.ContextFlyout>
-				<Image Source="{DynamicResource Search}"/>
-			</Button>
-			<Button x:Name="NotificationButton" Click="OnShowNotificationButtonClick" Margin="0,5" IsVisible="{Binding AreThereAnyNotifications}" ToolTip.Tip="{x:Static resx:Resources.Notifications}">
-				<Button.ContextFlyout>
-					<Flyout ShowMode="Transient">
-						<DockPanel>
-							<DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="0,0,0,10">
-								<TextBlock DockPanel.Dock="Left" Text="{x:Static resx:Resources.Notifications}" FontSize="16" VerticalAlignment="Center" FontWeight="Bold"/>
-								<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.Settings_ClearAll}" VerticalAlignment="Center" Command="{Binding ClearAllNotificationsCommand}"/>
-							</DockPanel>
-							<ListBox Items="{Binding VisibleNotifications}" MinWidth="300" MaxWidth="300">
-								<ListBox.DataTemplates>
-									<DataTemplate>
-										<StackPanel Background="Transparent" PointerPressed="OnNotificationClick">
-											<TextBlock Text="{Binding ContentText}" TextWrapping="Wrap"/>
-											<Button Click="OnNotificationButtonClick" HorizontalAlignment="Center" IsVisible="{Binding ShouldButtonBeVisible}">
-												<Button.Content>
-													<TextBlock Text="{Binding ButtonText}"/>
-												</Button.Content>
-											</Button>
-										</StackPanel>
-									</DataTemplate>
-								</ListBox.DataTemplates>
-							</ListBox>
-						</DockPanel>
-					</Flyout>
-				</Button.ContextFlyout>
-				<Image Source="{DynamicResource Notification}"/>
-			</Button>
-			<Button Margin="0,5" Command="{Binding OpenQueueManagementCommand}" ToolTip.Tip="{x:Static resx:Resources.QueueManagement}">
-				<Image Source="{DynamicResource Queue}"/>
-			</Button>
-			<Button Margin="0,5" Command="{Binding OpenSettingsCommand}" ToolTip.Tip="{x:Static resx:Resources.Settings}">
-				<Image Source="{DynamicResource Settings}"/>
-			</Button>
+			
 		</StackPanel>
-		<DockPanel LastChildFill="True" ZIndex="0">
-			<Grid Background="{DynamicResource ForegroundColor}" DockPanel.Dock="Bottom" Height="85" Margin="0,10,0,0">
+		<DockPanel ZIndex="0">
+			<Grid Background="{DynamicResource ForegroundColor}" DockPanel.Dock="Bottom" Height="85">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="1*" />
@@ -258,207 +186,35 @@
 				</Grid>
 			</Grid>
 
+			<DockPanel DockPanel.Dock="Top" Height="30" Background="Blue" LastChildFill="False">
+				<TextBlock Text="Tracks" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,10,0"/>
+				<TextBlock Text="Artists" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
+				<TextBlock Text="Albums" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
+				<TextBlock Text="Playlists" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
+				<TextBlock Text="Import" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
 
+				<Button Command="{Binding OpenSettingsCommand}" Margin="0,2,5,2" DockPanel.Dock="Right" ToolTip.Tip="{x:Static resx:Resources.Settings}">
+					<Image Source="{DynamicResource Settings}"/>
+				</Button>
+				<Button Command="{Binding OpenQueueManagementCommand}" Margin="0,2,5,2" DockPanel.Dock="Right" ToolTip.Tip="{x:Static resx:Resources.QueueManagement}">
+					<Image Source="{DynamicResource Queue}"/>
+				</Button>
+				<Button x:Name="SearchButton" DockPanel.Dock="Right" Margin="0,2,5,2" Click="OnSearchButtonClick" ToolTip.Tip="{x:Static resx:Resources.Search}">
+					<Image Source="{DynamicResource Search}"/>
+				</Button>
+				<Button x:Name="NotificationButton" DockPanel.Dock="Right" Margin="10,2,5,2" Click="OnShowNotificationButtonClick" IsVisible="{Binding AreThereAnyNotifications}" ToolTip.Tip="{x:Static resx:Resources.Notifications}">
+					<Image Source="{DynamicResource Notification}"/>
+				</Button>
+			</DockPanel>
 
-			<TabControl DockPanel.Dock="Top" SelectedIndex="{Binding SelectedTab}">
-				<TabItem Header="{x:Static resx:Resources.Tracks}">
-					<DockPanel>
-						<DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0" LastChildFill="False">
-							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
-						</DockPanel>
-						<ListBox Items="{Binding AllTracks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<Grid Margin="-5" Height="25" Background="Transparent">
-										<Grid.RowDefinitions>
-											<RowDefinition Height="Auto"/>
-											<RowDefinition Height="Auto"/>
-										</Grid.RowDefinitions>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="1*"/>
-											<ColumnDefinition Width="Auto"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
-										<TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
-										<StackPanel Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnPlayButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Play}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnEnqueueButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Enqueue}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnDeleteButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Delete}"/>
-											</Button>
-										</StackPanel>
-									</Grid>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-					</DockPanel>
-				</TabItem>
-				<TabItem Header="{x:Static resx:Resources.Artists}" >
-					<DockPanel>
-						<ListBox DockPanel.Dock="Left" Items="{Binding CategoryThings}" Width="222" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" SelectedItem="{Binding ArtistsSelectedItem}" VirtualizationMode="Simple">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<StackPanel Margin="-5">
-										<TextBlock Margin="-5" Text="{Binding}"/>
-									</StackPanel>
-
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
-							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
-						</DockPanel>
-						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<Grid Margin="-5" Height="25" Background="Transparent">
-										<Grid.RowDefinitions>
-											<RowDefinition Height="Auto"/>
-											<RowDefinition Height="Auto"/>
-										</Grid.RowDefinitions>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="1*"/>
-											<ColumnDefinition Width="Auto"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
-										<TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
-										<StackPanel Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnPlayButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Play}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnEnqueueButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Enqueue}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnDeleteButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Delete}"/>
-											</Button>
-										</StackPanel>
-									</Grid>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-					</DockPanel>
-				</TabItem>
-				<TabItem Header="{x:Static resx:Resources.Albums}" >
-					<DockPanel>
-						<ListBox DockPanel.Dock="Left" Items="{Binding CategoryThings}" Width="222" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" SelectedItem="{Binding AlbumsSelectedItem}" VirtualizationMode="Simple">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<StackPanel Margin="-5">
-										<TextBlock Margin="-5" Text="{Binding}"/>
-									</StackPanel>
-
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
-							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
-						</DockPanel>
-						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<Grid Margin="-5" Height="25" Background="Transparent">
-										<Grid.RowDefinitions>
-											<RowDefinition Height="Auto"/>
-											<RowDefinition Height="Auto"/>
-										</Grid.RowDefinitions>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="1*"/>
-											<ColumnDefinition Width="Auto"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
-										<TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
-										<StackPanel Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnPlayButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Play}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnEnqueueButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Enqueue}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnDeleteButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Delete}"/>
-											</Button>
-										</StackPanel>
-									</Grid>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-					</DockPanel>
-				</TabItem>
-				<TabItem Header="{x:Static resx:Resources.Playlists}" >
-					<DockPanel>
-						<ListBox DockPanel.Dock="Left" Items="{Binding CategoryThings}" Width="222" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" SelectedItem="{Binding PlaylistsSelectedItem}" VirtualizationMode="Simple">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<StackPanel Margin="-5">
-										<TextBlock Margin="-5" Text="{Binding}"/>
-									</StackPanel>
-
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-						<DockPanel DockPanel.Dock="Bottom" Margin="10,5,0,0" LastChildFill="False">
-							<TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding LibraryInfoText}"/>
-							<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="{x:Static resx:Resources.Library_PlayAll}" Margin="10,0,0,0"/>
-							<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="{x:Static resx:Resources.Library_EnqueueAll}"/>
-						</DockPanel>
-						<ListBox Items="{Binding AllTracks}" Margin="10,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="AlwaysSelected" VirtualizationMode="Simple">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<Grid Margin="-5" Height="25" Background="Transparent">
-										<Grid.RowDefinitions>
-											<RowDefinition Height="Auto"/>
-											<RowDefinition Height="Auto"/>
-										</Grid.RowDefinitions>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="1*"/>
-											<ColumnDefinition Width="Auto"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" FontSize="15" FontWeight="Bold"/>
-										<TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Artist}" FontSize="10"/>
-										<StackPanel Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center"  Height="38" Margin="0,-27,0,-30" Orientation="Horizontal">
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnPlayButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Play}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnEnqueueButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Enqueue}"/>
-											</Button>
-											<Button IsVisible="{Binding $parent[1].IsPointerOver}" Click="OnDeleteButtonClick" VerticalAlignment="Center">
-												<Image Source="{DynamicResource Delete}"/>
-											</Button>
-										</StackPanel>
-									</Grid>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-					</DockPanel>
-				</TabItem>
-				<TabItem Header="{x:Static resx:Resources.Import}">
-					<StackPanel>
-						<Button Command="{Binding BrowseTracksCommand}" Content="{x:Static resx:Resources.ImportTracks}"/>
-						<Button Command="{Binding BrowsePlaylistFilesCommand}" Content="{x:Static resx:Resources.ImportPlaylistFiles}"/>
-						<Button Command="{Binding BrowseFoldersCommand}" Content="{x:Static resx:Resources.ImportFolders}"/>
-						<StackPanel Orientation="Horizontal">
-							<TextBox Text="{Binding FilePathOrURL}" Watermark="{x:Static resx:Resources.FilePathOrUrl}"/>
-							<Button Command="{Binding ImportFilePathCommand}" Content="{x:Static resx:Resources.Import}"/>
-						</StackPanel>
-						<TextBlock Text="{x:Static resx:Resources.Import_DragDropHint}"/>
-					</StackPanel>
-				</TabItem>
-				<!--<TabItem Header="Native Menubar Debug">
-					<NativeMenuBar/>
-				</TabItem>-->
-			</TabControl>
+			
+			<ContentControl DockPanel.Dock="Right" Background="Green" Content="{Binding AuxPaneContent}" Width="{Binding AuxPaneWidth}">
+				
+			</ContentControl>
+			<ContentControl Background="Red" Content="{Binding MainContent}">
+				
+			</ContentControl>
+			
 		</DockPanel>
 
 		<Panel.Transitions>

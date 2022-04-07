@@ -7,14 +7,11 @@ using FRESHMusicPlayer.ViewModels;
 
 namespace FRESHMusicPlayer.Views
 {
-    public class Settings : Window
+    public class Settings : UserControl
     {
         public Settings()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         public Settings SetThings(ConfigurationFile config, Library library)

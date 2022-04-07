@@ -6,16 +6,13 @@ using System.ComponentModel;
 
 namespace FRESHMusicPlayer.Views
 {
-    public partial class TrackInfo : Window
+    public partial class TrackInfo : UserControl
     {
         private TrackInfoViewModel ViewModel { get => DataContext as TrackInfoViewModel; }
 
         public TrackInfo()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()

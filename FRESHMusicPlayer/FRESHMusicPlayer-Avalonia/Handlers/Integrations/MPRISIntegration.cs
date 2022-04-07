@@ -234,7 +234,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async Task NextAsync() => viewModel.SkipNextCommand();
 
-        public async Task OpenUriAsync() => viewModel.OpenTrackCommand();
+        public async Task OpenUriAsync() => /*viewModel.OpenTrackCommand(); TODO: switch to new tabs*/throw new NotImplementedException();
 
         public async Task PlayPauseAsync() => viewModel.PlayPauseCommand();
 

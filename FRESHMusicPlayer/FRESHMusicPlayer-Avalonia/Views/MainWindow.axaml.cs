@@ -58,36 +58,7 @@ namespace FRESHMusicPlayer.Views
 
         private void ToggleShowRemainingProgress(object sender, PointerPressedEventArgs e) => ViewModel?.ShowRemainingProgressCommand();
 
-        private void ActualOpenTrackInfo()
-        {
-
-            new TrackInfo().SetStuff(ViewModel.Player).Show(this);
-        }
-
-        private void OnPlayButtonClick(object sender, RoutedEventArgs e)    // TODO: figure out why i need this stuff instead
-        {                                                                   // of just using commands
-            var cmd = (Button)sender;
-            if (cmd.DataContext is DatabaseTrack x)
-            {
-                ViewModel?.PlayCommand(x.Path);
-            }
-        }
-        private void OnEnqueueButtonClick(object sender, RoutedEventArgs e)
-        {
-            var cmd = (Button)sender;
-            if (cmd.DataContext is DatabaseTrack x)
-            {
-                ViewModel?.EnqueueCommand(x.Path);
-            }
-        }
-        private void OnDeleteButtonClick(object sender, RoutedEventArgs e)
-        {
-            var cmd = (Button)sender;
-            if (cmd.DataContext is DatabaseTrack x)
-            {
-                ViewModel?.DeleteCommand(x.Path);
-            }
-        }
+        private void ActualOpenTrackInfo() => ViewModel.SelectedPane = Pane.TrackInfo;
 
         private void OnSearchButtonClick(object sender, RoutedEventArgs e) => ShowSearch();
         private void ShowSearch()
@@ -101,7 +72,6 @@ namespace FRESHMusicPlayer.Views
             var button = this.FindControl<Button>("NotificationButton");
             button.ContextFlyout.ShowAt(button);
         }
-        private void OnSearchClosed(object sender, EventArgs e) => ViewModel?.ClearSearchCommand();
 
         private void OnNotificationButtonClick(object sender, RoutedEventArgs e)
         {
@@ -127,40 +97,40 @@ namespace FRESHMusicPlayer.Views
 
         private async void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Source is not TextBox && e.Source is not ListBoxItem)
-                switch (e.Key)
-                {
-                    case Key.Q:
-                        ViewModel.OpenSettingsCommand();
-                        break;
-                    case Key.A:
-                        ViewModel.SelectedTab = 0;
-                        break;
-                    case Key.S:
-                        ViewModel.SelectedTab = 1;
-                        break;
-                    case Key.D:
-                        ViewModel.SelectedTab = 2;
-                        break;
-                    case Key.F:
-                        ViewModel.SelectedTab = 3;
-                        break;
-                    case Key.G:
-                        ViewModel.SelectedTab = 4;
-                        break;
-                    case Key.E:
-                        ShowSearch();
-                        break;
-                    case Key.R:
-                        ActualOpenTrackInfo();
-                        break;
-                    case Key.W:
-                        ViewModel.OpenQueueManagementCommand();
-                        break;
-                    case Key.Space:
-                        ViewModel.PlayPauseCommand();
-                        break;
-                }
+            //if (e.Source is not TextBox && e.Source is not ListBoxItem)
+            //    switch (e.Key)
+            //    {
+            //        case Key.Q:
+            //            ViewModel.OpenSettingsCommand();
+            //            break;
+            //        case Key.A:
+            //            ViewModel.SelectedTab = 0;
+            //            break;
+            //        case Key.S:
+            //            ViewModel.SelectedTab = 1;
+            //            break;
+            //        case Key.D:
+            //            ViewModel.SelectedTab = 2;
+            //            break;
+            //        case Key.F:
+            //            ViewModel.SelectedTab = 3;
+            //            break;
+            //        case Key.G:
+            //            ViewModel.SelectedTab = 4;
+            //            break;
+            //        case Key.E:
+            //            ShowSearch();
+            //            break;
+            //        case Key.R:
+            //            ActualOpenTrackInfo();
+            //            break;
+            //        case Key.W:
+            //            ViewModel.OpenQueueManagementCommand();
+            //            break;
+            //        case Key.Space:
+            //            ViewModel.PlayPauseCommand();
+            //            break;
+            //    }
             switch (e.Key)
             {
                 case Key.OemTilde:

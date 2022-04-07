@@ -9,16 +9,13 @@ using System.Timers;
 
 namespace FRESHMusicPlayer.Views
 {
-    public class QueueManagement : Window
+    public class QueueManagement : UserControl
     {
         private QueueManagementViewModel ViewModel { get => DataContext as QueueManagementViewModel; }
 
         public QueueManagement()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()
