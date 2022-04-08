@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.LogicalTree;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
@@ -16,6 +17,7 @@ namespace FRESHMusicPlayer.Views
         public QueueManagement()
         {
             InitializeComponent();
+            DetachedFromLogicalTree += OnClosing;
         }
 
         private void InitializeComponent()
@@ -50,8 +52,7 @@ namespace FRESHMusicPlayer.Views
                 ViewModel?.RemoveCommand(x.Position);
             }
         }
-
-        private void OnClosing(object sender, CancelEventArgs e)
+        private void OnClosing(object sender, LogicalTreeAttachmentEventArgs e)
         {
             ViewModel?.CloseThings();
         }

@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.LogicalTree;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace FRESHMusicPlayer.Views
         public TrackInfo()
         {
             InitializeComponent();
+            DetachedFromLogicalTree += OnClosing;
         }
 
         private void InitializeComponent()
@@ -27,7 +29,7 @@ namespace FRESHMusicPlayer.Views
             return this;
         }
 
-        private void OnClosing(object sender, CancelEventArgs e)
+        private void OnClosing(object sender, LogicalTreeAttachmentEventArgs e)
         {
             ViewModel?.CloseThings();
         }

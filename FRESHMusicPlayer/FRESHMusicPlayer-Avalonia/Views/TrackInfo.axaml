@@ -5,9 +5,8 @@
 		xmlns:controls="clr-namespace:FRESHMusicPlayer.Controls.BlurryImage"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
-        mc:Ignorable="d" Width="500" Height="300"
-        x:Class="FRESHMusicPlayer.Views.TrackInfo" Closing="OnClosing"
-        Icon="/Assets/icon.ico">
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300" 
+        x:Class="FRESHMusicPlayer.Views.TrackInfo">
 	<UserControl.DataContext>
 		<vm:TrackInfoViewModel/>
 	</UserControl.DataContext>
@@ -25,8 +24,6 @@
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 
-			<CheckBox Grid.ColumnSpan="3" IsChecked="{Binding $parent[Window].Topmost}" Content="{x:Static resx:Resources.PinToTop}"/>
-		
 			<Image Grid.Row="1" Grid.Column="0" Source="{Binding CoverArt}" HorizontalAlignment="Right">
 				</Image>
 

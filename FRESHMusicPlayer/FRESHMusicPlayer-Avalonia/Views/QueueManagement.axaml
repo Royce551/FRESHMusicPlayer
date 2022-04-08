@@ -3,23 +3,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
-        mc:Ignorable="d" Width="500" Height="400" 
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400" 
 		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
-        x:Class="FRESHMusicPlayer.Views.QueueManagement" Closing="OnClosing"
-        Icon="/Assets/icon.ico">
+        x:Class="FRESHMusicPlayer.Views.QueueManagement">
 	<UserControl.DataContext>
 		<vm:QueueManagementViewModel/>
 	</UserControl.DataContext>
-	<Window.Resources>
+	<UserControl.Resources>
         <svg:SvgImage x:Key="Play" Source="/Assets/play.svg"/>
 		<svg:SvgImage x:Key="Delete" Source="/Assets/delete.svg"/>
-	</Window.Resources>
-	<Window.Styles>
+	</UserControl.Resources>
+	<UserControl.Styles>
 		<Style Selector="ListBoxItem">
 			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 		</Style>
-	</Window.Styles>	
+	</UserControl.Styles>	
 	
 	<Grid>
 		<Grid.RowDefinitions>
@@ -28,7 +27,6 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<DockPanel Grid.Column="0" Grid.Row="0" Margin="5,5,5,0">
-			<CheckBox DockPanel.Dock="Left" IsChecked="{Binding $parent[Window].Topmost}" Content="{x:Static resx:Resources.PinToTop}"/>
 			<TextBlock DockPanel.Dock="Right" Text="{Binding TimeRemaining, StringFormat=\{0:hh\\:mm\\:ss\}}" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 			<TextBlock DockPanel.Dock="Right" Text="{x:Static resx:Resources.QueueManagement_TimeRemaining}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 		</DockPanel>

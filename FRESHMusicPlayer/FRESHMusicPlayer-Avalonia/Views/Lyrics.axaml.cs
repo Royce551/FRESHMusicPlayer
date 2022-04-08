@@ -1,19 +1,18 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.LogicalTree;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
 using System.ComponentModel;
 
 namespace FRESHMusicPlayer.Views
 {
-    public partial class Lyrics : Window
+    public partial class Lyrics : UserControl
     {
         public Lyrics()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
+            DetachedFromLogicalTree += OnClosing;
         }
 
         public Lyrics SetStuff(MainWindowViewModel mainWindow)
@@ -24,7 +23,7 @@ namespace FRESHMusicPlayer.Views
             return this;
         }
 
-        private void OnClosing(object sender, CancelEventArgs e)
+        private void OnClosing(object sender, LogicalTreeAttachmentEventArgs e)
         {
             (DataContext as LyricsViewModel)?.Deinitialize();
         }

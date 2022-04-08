@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d"
-		Width="600" Height="400"
-        x:Class="FRESHMusicPlayer.Views.Settings"
-        Icon="/Assets/icon.ico">
+		d:DesignWidth="600" d:DesignHeight="400"
+        x:Class="FRESHMusicPlayer.Views.Settings">
 	
 	<UserControl.DataContext>
 		<vm:SettingsViewModel/>

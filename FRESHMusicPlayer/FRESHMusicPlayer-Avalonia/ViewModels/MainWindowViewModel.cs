@@ -372,7 +372,7 @@ namespace FRESHMusicPlayer.ViewModels
                         {
                             Content = new TextBlock
                             {
-                                Text = "Tracks"
+                                Text = "Tracks Tab"
                             }
                         };
                     case Tab.Artists:
@@ -380,7 +380,7 @@ namespace FRESHMusicPlayer.ViewModels
                         {
                             Content = new TextBlock
                             {
-                                Text = "Artists"
+                                Text = "Artists Tab"
                             }
                         };
                     case Tab.Albums:
@@ -388,7 +388,7 @@ namespace FRESHMusicPlayer.ViewModels
                         {
                             Content = new TextBlock
                             {
-                                Text = "Albums"
+                                Text = "Albums Tab"
                             }
                         };
                     case Tab.Playlists:
@@ -396,7 +396,7 @@ namespace FRESHMusicPlayer.ViewModels
                         {
                             Content = new TextBlock
                             {
-                                Text = "Playlists"
+                                Text = "Playlists Tab"
                             }
                         };
                     case Tab.Fullscreen:
@@ -404,7 +404,7 @@ namespace FRESHMusicPlayer.ViewModels
                         {
                             Content = new TextBlock
                             {
-                                Text = "Fullscreen"
+                                Text = "Fullscreen Page"
                             }
                         };
                     default:
@@ -419,9 +419,9 @@ namespace FRESHMusicPlayer.ViewModels
                 switch (SelectedPane)
                 {
                     case Pane.Settings:
-                        return new Views.Settings();
+                        return new Views.Settings().SetThings(Program.Config, Library);
                     case Pane.QueueManagement:
-                        return new Views.QueueManagement();
+                        return new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer);
                     case Pane.Search:
                         return new UserControl
                         {
@@ -431,7 +431,7 @@ namespace FRESHMusicPlayer.ViewModels
                             }
                         };
                     case Pane.TrackInfo:
-                        return new TrackInfo();
+                        return new TrackInfo().SetStuff(Player);
                     case Pane.Notifications:
                         return new UserControl
                         {
@@ -456,7 +456,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        private int auxPaneWidth = 220;
+        private int auxPaneWidth = 320;
         public int AuxPaneWidth
         {
             get => auxPaneWidth;

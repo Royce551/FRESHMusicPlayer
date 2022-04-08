@@ -5,9 +5,8 @@
 		xmlns:controls="clr-namespace:FRESHMusicPlayer.Controls.BlurryImage"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
-        mc:Ignorable="d" Width="500" Height="300" Icon="/Assets/icon.ico"
-        x:Class="FRESHMusicPlayer.Views.Lyrics"
-        Title="{x:Static resx:Resources.Lyrics}">
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
+        x:Class="FRESHMusicPlayer.Views.Lyrics">
 	<UserControl.DataContext>
 		<vm:LyricsViewModel/>
 	</UserControl.DataContext>
@@ -21,7 +20,6 @@
 				<RowDefinition Height="1*"/>
 			</Grid.RowDefinitions>
 			
-			<CheckBox Grid.ColumnSpan="3" IsChecked="{Binding $parent[Window].Topmost}" Content="{x:Static resx:Resources.PinToTop}"/>
 			<ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
 				<TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
 			</ScrollViewer>

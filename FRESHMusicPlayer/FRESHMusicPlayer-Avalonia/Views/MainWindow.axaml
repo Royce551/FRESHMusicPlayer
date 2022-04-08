@@ -186,7 +186,7 @@
 				</Grid>
 			</Grid>
 
-			<DockPanel DockPanel.Dock="Top" Height="30" Background="Blue" LastChildFill="False">
+			<DockPanel DockPanel.Dock="Top" Height="30" LastChildFill="False">
 				<TextBlock Text="Tracks" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,10,0"/>
 				<TextBlock Text="Artists" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
 				<TextBlock Text="Albums" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
@@ -208,10 +208,10 @@
 			</DockPanel>
 
 			
-			<ContentControl DockPanel.Dock="Right" Background="Green" Content="{Binding AuxPaneContent}" Width="{Binding AuxPaneWidth}">
+			<ContentControl DockPanel.Dock="Right" Background="{DynamicResource SecondaryColor}" Content="{Binding AuxPaneContent}" Width="{Binding AuxPaneWidth}">
 				
 			</ContentControl>
-			<ContentControl Background="Red" Content="{Binding MainContent}">
+			<ContentControl Content="{Binding MainContent}">
 				
 			</ContentControl>
 			
