@@ -187,11 +187,11 @@
 			</Grid>
 
 			<DockPanel DockPanel.Dock="Top" Height="30" LastChildFill="False">
-				<TextBlock Text="Tracks" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,10,0" PointerPressed="OnTracksPressed"/>
-				<TextBlock Text="Artists" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" PointerPressed="OnArtistsPressed"/>
-				<TextBlock Text="Albums" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" PointerPressed="OnAlbumsPressed"/>
-				<TextBlock Text="Playlists" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" PointerPressed="OnPlaylistsPressed"/>
-				<TextBlock Text="Import" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" PointerPressed="OnImportPressed"/>
+				<TextBlock x:Name="TracksHeader" Text="Tracks" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,10,0" Cursor="Hand" PointerPressed="OnTracksPressed" FontWeight="{Binding TracksTabWeight}"/>
+				<TextBlock x:Name="ArtistsHeader" Text="Artists" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" Cursor="Hand" PointerPressed="OnArtistsPressed" FontWeight="{Binding ArtistsTabWeight}"/>
+				<TextBlock x:Name="AlbumsHeader" Text="Albums" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" Cursor="Hand" PointerPressed="OnAlbumsPressed" FontWeight="{Binding AlbumsTabWeight}"/>
+				<TextBlock x:Name="PlaylistsHeader" Text="Playlists" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" Cursor="Hand" PointerPressed="OnPlaylistsPressed" FontWeight="{Binding PlaylistsTabWeight}"/>
+				<TextBlock x:Name="ImportHeader" Text="Import" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" Cursor="Hand" PointerPressed="OnImportPressed" FontWeight="{Binding ImportTabWeight}"/>
 
 				<Button Command="{Binding OpenSettingsCommand}" Margin="0,2,5,2" DockPanel.Dock="Right" ToolTip.Tip="{x:Static resx:Resources.Settings}">
 					<Image Source="{DynamicResource Settings}"/>

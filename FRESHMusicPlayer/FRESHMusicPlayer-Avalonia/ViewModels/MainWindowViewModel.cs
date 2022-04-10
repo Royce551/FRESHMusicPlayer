@@ -341,6 +341,13 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         #endregion
+
+        public FontWeight TracksTabWeight => SelectedTab == Tab.Tracks ? FontWeight.Bold : FontWeight.Regular;
+        public FontWeight ArtistsTabWeight => SelectedTab == Tab.Artists ? FontWeight.Bold : FontWeight.Regular;
+        public FontWeight AlbumsTabWeight => SelectedTab == Tab.Albums ? FontWeight.Bold : FontWeight.Regular;
+        public FontWeight PlaylistsTabWeight => SelectedTab == Tab.Playlists ? FontWeight.Bold : FontWeight.Regular;
+        public FontWeight ImportTabWeight => SelectedTab == Tab.Import ? FontWeight.Bold : FontWeight.Regular;
+
         private Tab selectedTab = Tab.Tracks;
         public Tab SelectedTab
         {
@@ -349,6 +356,11 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 selectedTab = value;
                 this.RaisePropertyChanged(nameof(MainContent));
+                this.RaisePropertyChanged(nameof(TracksTabWeight));
+                this.RaisePropertyChanged(nameof(ArtistsTabWeight));
+                this.RaisePropertyChanged(nameof(AlbumsTabWeight));
+                this.RaisePropertyChanged(nameof(PlaylistsTabWeight));
+                this.RaisePropertyChanged(nameof(ImportTabWeight));
             }
         }
         private Pane selectedPane = Pane.None;
