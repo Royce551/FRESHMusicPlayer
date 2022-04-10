@@ -245,9 +245,9 @@ namespace FRESHMusicPlayer
             }
             if (CurrentPane != Pane.None) await HideAuxilliaryPane(true);
             
-            if (!openleft) DockPanel.SetDock(RightFrameBorder, Dock.Right); else DockPanel.SetDock(RightFrameBorder, Dock.Left);
-            RightFrameBorder.Visibility = Visibility.Visible;
-            RightFrameBorder.Width = width;
+            if (!openleft) DockPanel.SetDock(RightFrame, Dock.Right); else DockPanel.SetDock(RightFrame, Dock.Left);
+            RightFrame.Visibility = Visibility.Visible;
+            RightFrame.Width = width;
             RightFrame.Content = GetPageForPane(pane);
 
             var sb = InterfaceUtils.GetThicknessAnimation(
@@ -257,7 +257,7 @@ namespace FRESHMusicPlayer
                 new PropertyPath(MarginProperty),
                 new ExponentialEase { EasingMode = EasingMode.EaseOut, Exponent = 3 });
 
-            sb.Begin(RightFrameBorder);
+            sb.Begin(RightFrame);
 
             CurrentPane = pane;
         }
@@ -265,13 +265,13 @@ namespace FRESHMusicPlayer
         {
             var sb = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0),
-                DockPanel.GetDock(RightFrameBorder) == Dock.Left ? new Thickness(RightFrameBorder.Width * -1, 0, 0, 0) : new Thickness(0, 0, RightFrameBorder.Width * -1, 0),
+                DockPanel.GetDock(RightFrame) == Dock.Left ? new Thickness(RightFrame.Width * -1, 0, 0, 0) : new Thickness(0, 0, RightFrame.Width * -1, 0),
                 TimeSpan.FromMilliseconds(120),
                 new PropertyPath(MarginProperty),
                 new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
 
-            if (animate) await sb.BeginStoryboardAsync(RightFrameBorder);
-            RightFrameBorder.Visibility = Visibility.Collapsed;
+            if (animate) await sb.BeginStoryboardAsync(RightFrame);
+            RightFrame.Visibility = Visibility.Collapsed;
             RightFrame.Content = null;
             CurrentPane = Pane.None;
         }

@@ -1,22 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     >
-    <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="Contemporary"/>
-    </Style>
     <!--Button-->
     <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="#FF338BC1"/>
+        <Setter Property="Background" Value="{StaticResource ControlColor}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
-        <Setter Property="Padding" Value="20,5"/>
+        <Setter Property="Padding" Value="20,1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid x:Name="grid">
                         <Border x:Name="border" 
-                                CornerRadius="0" 
+                                CornerRadius="2" 
                                 BorderBrush="{TemplateBinding Background}" 
                                 TextElement.Foreground="{TemplateBinding Foreground}" 
                                 BorderThickness="1" 
@@ -206,7 +203,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border  Background="{StaticResource SecondaryColor}" Height="6"/>
+                    <Border  Background="{StaticResource SecondaryColor}" Height="3"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -222,7 +219,7 @@
                         <Border.Background>
                             <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
                                 <GradientStop Color="#FF338BC1" Offset="0"/>
-                                <GradientStop Color="#FF338BC1" Offset="1"/>
+                                <GradientStop Color="#FF69B578" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
                     </Border>
@@ -237,8 +234,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Rectangle x:Name="ThumbEllipse" Height="15" Width="15" Fill="#FF338BC1">
-                        <Rectangle.Triggers>
+                    <Ellipse x:Name="ThumbEllipse" Height="15" Width="15" Fill="#FF338BC1">
+                        <Ellipse.Triggers>
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -267,8 +264,8 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                        </Rectangle.Triggers>
-                    </Rectangle>
+                        </Ellipse.Triggers>
+                    </Ellipse>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -463,9 +460,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border x:Name="TextBorder" CornerRadius="0" Background="{StaticResource ControlColor}" BorderBrush="White" BorderThickness="1, 0, 0, 1">
+                    <Border x:Name="TextBorder" CornerRadius="2" Background="{StaticResource ControlColor}" BorderBrush="{StaticResource ControlColor}" BorderThickness="2">
                         <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="#FF338BC1"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="#FF338BC1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
