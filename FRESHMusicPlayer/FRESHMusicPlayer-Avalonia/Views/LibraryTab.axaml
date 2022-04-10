@@ -1,8 +1,49 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FRESHMusicPlayer.Views.LibraryTab">
-  Welcome to Avalonia!
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
+        x:Class="FRESHMusicPlayer.Views.LibraryTab">
+	<UserControl.DataContext>
+		<vm:LibraryTabViewModel/>
+	</UserControl.DataContext>
+
+	<DockPanel>
+		<ListBox DockPanel.Dock="Left" Background="{DynamicResource SecondaryColor}" Width="{Binding SidebarWidth}" Items="{Binding CategoryItems}">
+			
+		</ListBox>
+
+		<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+			<TextBlock Text="{Binding ContentInfo}" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Center" FontSize="12" Margin="10"/>
+			
+			<Button DockPanel.Dock="Right" Command="{Binding PlayAllCommand}" Content="Play All" Margin="10" FontSize="12"/>
+			<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="Enqueue All" FontSize="12"/>
+		</DockPanel>
+
+		<ListBox Background="{DynamicResource BackgroundColor}" Items="{Binding ContentItems}" VirtualizationMode="Simple">
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+					<Setter Property="Padding" Value="10,2"/>
+					<Setter Property="Margin" Value="0"/>
+					<Setter Property="IsHitTestVisible" Value="False"/>
+				</Style>
+			</ListBox.Styles>
+			<ListBox.DataTemplates>
+				<DataTemplate>
+					<Border CornerRadius="2" BorderBrush="{DynamicResource ForegroundColor}" Background="{DynamicResource ForegroundColor}" BorderThickness="1">
+						<Grid RowDefinitions="1*,Auto" ColumnDefinitions="1*,Auto" Margin="5,2">
+							<TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="16" TextTrimming="CharacterEllipsis"/>
+							<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+								<TextBlock Text="{Binding Artist}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
+								<TextBlock Text="・ " FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
+								<TextBlock Text="{Binding Album}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
+							</StackPanel>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ListBox.DataTemplates>
+		</ListBox>
+	</DockPanel>
 </UserControl>

@@ -381,13 +381,7 @@ namespace FRESHMusicPlayer.ViewModels
                 switch (SelectedTab)
                 {
                     case Tab.Tracks:
-                        return new UserControl
-                        {
-                            Content = new TextBlock
-                            {
-                                Text = "Tracks Tab"
-                            }
-                        };
+                        return new LibraryTab().SetStuff(this, SelectedTab, null);
                     case Tab.Artists:
                         return new UserControl
                         {
@@ -477,7 +471,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        private int auxPaneWidth = 320;
+        private int auxPaneWidth = 0;
         public int AuxPaneWidth
         {
             get => auxPaneWidth;
