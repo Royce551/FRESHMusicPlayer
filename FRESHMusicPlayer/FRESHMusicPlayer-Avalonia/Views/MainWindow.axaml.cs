@@ -90,6 +90,12 @@ namespace FRESHMusicPlayer.Views
             }
         }
 
+        private void OnTracksPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Tracks;
+        private void OnArtistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Artists;
+        private void OnAlbumssPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Albums;
+        private void OnPlaylistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Playlists;
+        private void OnImportPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Import;
+
         private void OnPointerWheelChanged(object sender, PointerWheelEventArgs e)
         {
             ViewModel.Volume += ((float)((e.Delta.Y) / 100) * 3);

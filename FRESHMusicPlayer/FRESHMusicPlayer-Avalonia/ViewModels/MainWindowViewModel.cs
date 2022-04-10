@@ -35,6 +35,7 @@ namespace FRESHMusicPlayer.ViewModels
         Artists,
         Albums,
         Playlists,
+        Import,
         Fullscreen
     }
     public enum Pane
@@ -397,6 +398,14 @@ namespace FRESHMusicPlayer.ViewModels
                             Content = new TextBlock
                             {
                                 Text = "Playlists Tab"
+                            }
+                        };
+                    case Tab.Import:
+                        return new UserControl
+                        {
+                            Content = new TextBlock
+                            {
+                                Text = "Import Tab"
                             }
                         };
                     case Tab.Fullscreen:
