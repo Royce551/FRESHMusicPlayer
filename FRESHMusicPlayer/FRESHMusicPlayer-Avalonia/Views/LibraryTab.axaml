@@ -11,8 +11,13 @@
 	</UserControl.DataContext>
 
 	<DockPanel>
-		<ListBox DockPanel.Dock="Left" Background="{DynamicResource SecondaryColor}" Width="{Binding SidebarWidth}" Items="{Binding CategoryItems}">
-			
+		<ListBox DockPanel.Dock="Left" Background="{DynamicResource SecondaryColor}" Width="{Binding SidebarWidth}" Items="{Binding CategoryItems}" SelectedItem="{Binding SelectedCategory}" VirtualizationMode="Simple">
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+					<Setter Property="Padding" Value="10,1"/>
+					<Setter Property="Margin" Value="0"/>
+				</Style>
+			</ListBox.Styles>
 		</ListBox>
 
 		<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">

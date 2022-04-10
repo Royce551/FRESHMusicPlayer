@@ -383,29 +383,11 @@ namespace FRESHMusicPlayer.ViewModels
                     case Tab.Tracks:
                         return new LibraryTab().SetStuff(this, SelectedTab, null);
                     case Tab.Artists:
-                        return new UserControl
-                        {
-                            Content = new TextBlock
-                            {
-                                Text = "Artists Tab"
-                            }
-                        };
+                        return new LibraryTab().SetStuff(this, SelectedTab, null);
                     case Tab.Albums:
-                        return new UserControl
-                        {
-                            Content = new TextBlock
-                            {
-                                Text = "Albums Tab"
-                            }
-                        };
+                        return new LibraryTab().SetStuff(this, SelectedTab, null);
                     case Tab.Playlists:
-                        return new UserControl
-                        {
-                            Content = new TextBlock
-                            {
-                                Text = "Playlists Tab"
-                            }
-                        };
+                        return new LibraryTab().SetStuff(this, SelectedTab, null);
                     case Tab.Import:
                         return new UserControl
                         {

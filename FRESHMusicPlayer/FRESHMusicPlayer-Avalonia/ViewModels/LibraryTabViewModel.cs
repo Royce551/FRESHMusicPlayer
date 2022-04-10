@@ -13,11 +13,13 @@ namespace FRESHMusicPlayer.ViewModels
     public class LibraryTabViewModel : ViewModelBase
     {
         public MainWindowViewModel MainWindowWm { get; set; }
+        private Tab selectedTab;
 
         public void Initialize(Tab selectedTab, string initialSearch = null)
         {
+            this.selectedTab = selectedTab;
             // TODO: library changed event handling
-            LoadLibrary(selectedTab);
+            LoadLibrary();
             if (initialSearch != null)
             {
                 Thread.Sleep(10);
@@ -49,33 +51,45 @@ namespace FRESHMusicPlayer.ViewModels
             get => selectedCategory;
             set
             {
-                selectedCategory = value;
+                this.RaiseAndSetIfChanged(ref selectedCategory, value);
+                switch (selectedTab)
+                {
+                    case Tab.Artists:
+                        ShowTracksForArtist();
+                        break;
+                    case Tab.Albums:
+                        ShowTracksForAlbum();
+                        break;
+                    case Tab.Playlists:
+                        ShowTracksForPlaylist();
+                        break;
+                }
             }
         }
 
         public ObservableCollection<DatabaseTrack> ContentItems { get; set; } = new();
 
-        public async void LoadLibrary(Tab selectedTab)
+        public void LoadLibrary()
         {
             ContentInfo = null;
             switch (selectedTab)
             {
                 case Tab.Tracks:
-                    await ShowTracks();
+                    ShowTracks();
                     break;
                 case Tab.Artists:
-                    await ShowArtists();
+                    ShowArtists();
                     break;
                 case Tab.Albums:
-                    await ShowAlbums();
+                    ShowAlbums();
                     break;
                 case Tab.Playlists:
-                    await ShowPlaylists();
+                    ShowPlaylists();
                     break;
             }
         }
 
-        public async Task ShowTracks()
+        public void ShowTracks()
         {
             SidebarWidth = 0;
 
@@ -86,19 +100,72 @@ namespace FRESHMusicPlayer.ViewModels
             ContentInfo = $"{Resources.Tracks}: {ContentItems.Count} ・ {lengthString}";
         }
 
-        public async Task ShowArtists()
+        public void ShowArtists()
         {
+            SidebarWidth = 222;
 
+            foreach (var thing in MainWindowWm.Library.Read("Artist"))
+            {
+                if (CategoryItems.Contains(thing.Artist)) continue;
+                CategoryItems.Add(thing.Artist);
+            }
         }
 
-        public async Task ShowAlbums()
+        public void ShowAlbums()
         {
+            SidebarWidth = 222;
 
+            foreach (var thing in MainWindowWm.Library.Read("Album"))
+            {
+                if (CategoryItems.Contains(thing.Album)) continue;
+                CategoryItems.Add(thing.Album);
+            }
         }
 
-        public async Task ShowPlaylists()
+        public void ShowPlaylists()
         {
+            SidebarWidth = 222;
 
+            var playlists = MainWindowWm.Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
+            if (playlists.Count == 0) MainWindowWm.Library.CreatePlaylist("Liked");
+            foreach (var thing in playlists)
+            {
+                if (CategoryItems.Contains(thing.Name)) continue;
+                CategoryItems.Add(thing.Name);
+            }
+        }
+
+        public void ShowTracksForArtist()
+        {
+            ContentItems = new ObservableCollection<DatabaseTrack>(MainWindowWm.Library.ReadTracksForArtist(selectedCategory));
+            this.RaisePropertyChanged(nameof(ContentItems));
+            var lengthTimeSpan = TimeSpan.FromSeconds(ContentItems.Sum(x => x.Length));
+            var lengthString = lengthTimeSpan.Days != 0 ? lengthTimeSpan.ToString(@"d\:hh\:mm\:ss") : lengthTimeSpan.ToString(@"hh\:mm\:ss");
+            ContentInfo = $"{Resources.Tracks}: {ContentItems.Count} ・ {lengthString}";
+        }
+
+        public void ShowTracksForAlbum()
+        {
+            ContentItems = new ObservableCollection<DatabaseTrack>(MainWindowWm.Library.ReadTracksForAlbum(selectedCategory));
+            this.RaisePropertyChanged(nameof(ContentItems));
+            var lengthTimeSpan = TimeSpan.FromSeconds(ContentItems.Sum(x => x.Length));
+            var lengthString = lengthTimeSpan.Days != 0 ? lengthTimeSpan.ToString(@"d\:hh\:mm\:ss") : lengthTimeSpan.ToString(@"hh\:mm\:ss");
+            ContentInfo = $"{Resources.Tracks}: {ContentItems.Count} ・ {lengthString}";
+        }
+
+        public async void ShowTracksForPlaylist()
+        {
+            ContentItems.Clear();
+            List<DatabaseTrack> playlists = null; // this weird oddity can be removed when library api becomes asyncified
+            await Task.Run(() =>
+            {
+                playlists = MainWindowWm.Library.ReadTracksForPlaylist(selectedCategory);
+            });
+            ContentItems = new ObservableCollection<DatabaseTrack>(playlists);
+            this.RaisePropertyChanged(nameof(ContentItems));
+            var lengthTimeSpan = TimeSpan.FromSeconds(ContentItems.Sum(x => x.Length));
+            var lengthString = lengthTimeSpan.Days != 0 ? lengthTimeSpan.ToString(@"d\:hh\:mm\:ss") : lengthTimeSpan.ToString(@"hh\:mm\:ss");
+            ContentInfo = $"{Resources.Tracks}: {ContentItems.Count} ・ {lengthString}";
         }
     }
 }
