@@ -4,12 +4,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 		xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
+		xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
         x:Class="FRESHMusicPlayer.Views.LibraryTab">
 	<UserControl.DataContext>
 		<vm:LibraryTabViewModel/>
 	</UserControl.DataContext>
-
+	<UserControl.Resources>
+		<svg:SvgImage x:Key="Play" Source="/Assets/play.svg"/>
+		<svg:SvgImage x:Key="Enqueue" Source="/Assets/enqueue.svg"/>
+		<svg:SvgImage x:Key="Delete" Source="/Assets/delete.svg"/>
+	</UserControl.Resources>
+	
 	<DockPanel>
 		<ListBox DockPanel.Dock="Left" Background="{DynamicResource SecondaryColor}" Width="{Binding SidebarWidth}" Items="{Binding CategoryItems}" SelectedItem="{Binding SelectedCategory}" VirtualizationMode="Simple">
 			<ListBox.Styles>
@@ -27,23 +33,34 @@
 			<Button DockPanel.Dock="Right" Command="{Binding EnqueueAllCommand}" Content="Enqueue All" FontSize="12"/>
 		</DockPanel>
 
-		<ListBox Background="{DynamicResource BackgroundColor}" Items="{Binding ContentItems}" VirtualizationMode="Simple">
+		<ListBox Background="{DynamicResource BackgroundColor}" Items="{Binding ContentItems}" VirtualizationMode="Simple" SelectionMode="Toggle">
 			<ListBox.Styles>
 				<Style Selector="ListBoxItem">
 					<Setter Property="Padding" Value="10,2"/>
 					<Setter Property="Margin" Value="0"/>
-					<Setter Property="IsHitTestVisible" Value="False"/>
 				</Style>
 			</ListBox.Styles>
 			<ListBox.DataTemplates>
 				<DataTemplate>
 					<Border CornerRadius="2" BorderBrush="{DynamicResource ForegroundColor}" Background="{DynamicResource ForegroundColor}" BorderThickness="1">
-						<Grid RowDefinitions="1*,Auto" ColumnDefinitions="1*,Auto" Margin="5,2">
-							<TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="16" TextTrimming="CharacterEllipsis"/>
-							<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+						<Grid RowDefinitions="1*,Auto" ColumnDefinitions="1*,Auto" Margin="5,0">
+							<TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="16" TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
+							<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,2">
 								<TextBlock Text="{Binding Artist}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
 								<TextBlock Text="・ " FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
 								<TextBlock Text="{Binding Album}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
+							</StackPanel>
+						
+							<StackPanel Grid.RowSpan="2" Grid.Column="1" Orientation="Horizontal">
+								<Button IsVisible="{Binding $parent[2].IsPointerOver}" Click="OnPlayButtonClick" VerticalAlignment="Center" Width="30" Height="30" Margin="0,-5">
+									<Image Source="{DynamicResource Play}"/>
+								</Button>
+								<Button IsVisible="{Binding $parent[2].IsPointerOver}" Click="OnEnqueueButtonClick" VerticalAlignment="Center" Width="30" Height="30" Margin="0,-5">
+									<Image Source="{DynamicResource Enqueue}"/>
+								</Button>
+								<Button IsVisible="{Binding $parent[2].IsPointerOver}" Click="OnDeleteButtonClick" VerticalAlignment="Center" Width="30" Height="30" Margin="0,-5">
+									<Image Source="{DynamicResource Delete}"/>
+								</Button>
 							</StackPanel>
 						</Grid>
 					</Border>

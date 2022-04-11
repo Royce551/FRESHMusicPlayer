@@ -23,8 +23,6 @@
 		<svg:SvgImage x:Key="ShuffleTrue" Source="/Assets/shuffleTrue.svg"/>
 		<svg:SvgImage x:Key="SkipNext" Source="/Assets/skipNext.svg"/>
 		<svg:SvgImage x:Key="SkipPrevious" Source="/Assets/skipPrevious.svg"/>
-		<svg:SvgImage x:Key="Enqueue" Source="/Assets/enqueue.svg"/>
-		<svg:SvgImage x:Key="Delete" Source="/Assets/delete.svg"/>
 		<svg:SvgImage x:Key="Settings" Source="/Assets/settings.svg"/>
 		<svg:SvgImage x:Key="Queue" Source="/Assets/queue.svg"/>
 		<svg:SvgImage x:Key="Notification" Source="/Assets/notification.svg"/>
