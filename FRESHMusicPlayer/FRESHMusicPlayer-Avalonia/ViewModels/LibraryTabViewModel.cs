@@ -167,5 +167,19 @@ namespace FRESHMusicPlayer.ViewModels
             var lengthString = lengthTimeSpan.Days != 0 ? lengthTimeSpan.ToString(@"d\:hh\:mm\:ss") : lengthTimeSpan.ToString(@"hh\:mm\:ss");
             ContentInfo = $"{Resources.Tracks}: {ContentItems.Count} ・ {lengthString}";
         }
+
+        public void EnqueueAllCommand()
+        {
+            string[] tracks = ContentItems.Select(x => x.Path).ToArray();
+            MainWindowWm.Player.Queue.Add(tracks);
+        }
+
+        public async void PlayAllCommand()
+        {
+            MainWindowWm.Player.Queue.Clear();
+            string[] tracks = ContentItems.Select(x => x.Path).ToArray();
+            MainWindowWm.Player.Queue.Add(tracks);
+            await MainWindowWm.Player.PlayAsync();
+        }
     }
 }
