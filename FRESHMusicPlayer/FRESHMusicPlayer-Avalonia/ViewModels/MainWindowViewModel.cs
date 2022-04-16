@@ -73,9 +73,9 @@ namespace FRESHMusicPlayer.ViewModels
             Player = new();
             StartThings();
 #if DEBUG // allow multiple instances of FMP in debug (at the expense of stability with heavy library use)
-            var library = new LiteDatabase($"Filename=\"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2")}\";Connection=shared");
+            var library = new LiteDatabase($"Filename=\"{Path.Combine(App.DataFolderLocation, "database.fdb2")}\";Connection=shared");
 #elif !DEBUG
-            var library = new LiteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "database.fdb2"));
+            var library = new LiteDatabase(Path.Combine(App.DataFolderLocation "database.fdb2"));
 #endif
             Library = new Library(library);
         }
@@ -566,11 +566,11 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (Program.Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
                                                                    // effort (and showing the notification)
-            //var notification = new Notification()
-            //{
-            //    ContentText = Properties.Resources.Notification_Scanning
-            //};
-            //Notifications.Add(notification);
+                                                                   //var notification = new Notification()
+                                                                   //{
+                                                                   //    ContentText = Properties.Resources.Notification_Scanning
+                                                                   //};
+                                                                   //Notifications.Add(notification);
             //var filesToImport = new List<string>();
             //var library = Library.Read();
             //await Task.Run(() =>

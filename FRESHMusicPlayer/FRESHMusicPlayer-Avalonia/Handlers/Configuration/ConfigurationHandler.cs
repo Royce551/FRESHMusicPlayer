@@ -11,9 +11,8 @@ namespace FRESHMusicPlayer.Handlers.Configuration
 
         static ConfigurationHandler()
         {
-            savePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer", "Configuration", "FMP-Avalonia");
+            savePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-Avalonia");
         }
-
 
         public static async Task<ConfigurationFile> Read()
         {

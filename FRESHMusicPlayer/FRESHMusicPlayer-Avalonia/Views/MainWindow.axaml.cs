@@ -1,4 +1,4 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -177,7 +177,9 @@ namespace FRESHMusicPlayer.Views
         }
         private async void OnDragDrop(object sender, DragEventArgs e)
         {
-            ViewModel.Player.Queue.Add(e.Data.GetFileNames().ToArray());
+            var paths = e.Data.GetFileNames().ToArray();
+            ViewModel.Library.Import(paths);
+            ViewModel.Player.Queue.Add(paths);
             await ViewModel.Player.PlayAsync();
         }
     }
