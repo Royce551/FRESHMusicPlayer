@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+		     xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FRESHMusicPlayer.Views.ImportTab">
+	<UserControl.DataContext>
+		<vm:ImportTabViewModel/>
+	</UserControl.DataContext>
+
+	<StackPanel Margin="15" Spacing="10">
+		<TextBlock FontSize="32" FontWeight="Bold" Text="Import"/>
+		<Button Command="{Binding BrowseTracksCommand}" Content="Browse for tracks"/>
+		<Button Command="{Binding BrowsePlaylistsCommand}" Content="Browse for playlist files"/>
+		<Button Command="{Binding BrowseFoldersCommand}" Content="Browse for folders"/>
+		<WrapPanel Orientation="Horizontal">
+			<TextBox Watermark="File path or URL" Text="{Binding FilePath}"/>
+			<Button Margin="10,0,0,0" DockPanel.Dock="Right" Command="{Binding ImportFilePathCommand}" Content="Import"/>
+		</WrapPanel>
+		<TextBlock Text="You can also drag and drop to this page."/>
+	</StackPanel>
+</UserControl>

@@ -75,7 +75,7 @@ namespace FRESHMusicPlayer.ViewModels
 #if DEBUG // allow multiple instances of FMP in debug (at the expense of stability with heavy library use)
             var library = new LiteDatabase($"Filename=\"{Path.Combine(App.DataFolderLocation, "database.fdb2")}\";Connection=shared");
 #elif !DEBUG
-            var library = new LiteDatabase(Path.Combine(App.DataFolderLocation "database.fdb2"));
+            var library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb2"));
 #endif
             Library = new Library(library);
         }
@@ -389,13 +389,7 @@ namespace FRESHMusicPlayer.ViewModels
                     case Tab.Playlists:
                         return new LibraryTab().SetStuff(this, SelectedTab, null);
                     case Tab.Import:
-                        return new UserControl
-                        {
-                            Content = new TextBlock
-                            {
-                                Text = "Import Tab"
-                            }
-                        };
+                        return new ImportTab().SetStuff(this);
                     case Tab.Fullscreen:
                         return new UserControl
                         {

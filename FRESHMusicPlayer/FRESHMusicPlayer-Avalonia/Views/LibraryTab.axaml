@@ -17,7 +17,7 @@
 	</UserControl.Resources>
 	
 	<DockPanel>
-		<ListBox DockPanel.Dock="Left" Background="{DynamicResource SecondaryColor}" Width="{Binding SidebarWidth}" Items="{Binding CategoryItems}" SelectedItem="{Binding SelectedCategory}" VirtualizationMode="Simple">
+		<ListBox DockPanel.Dock="Left" Background="{DynamicResource SecondaryColor}" Width="{Binding SidebarWidth}" Items="{Binding CategoryItems}" VirtualizationMode="Simple" SelectedItem="{Binding SelectedCategory}">
 			<ListBox.Styles>
 				<Style Selector="ListBoxItem">
 					<Setter Property="Padding" Value="10,1"/>
@@ -43,6 +43,20 @@
 			<ListBox.DataTemplates>
 				<DataTemplate>
 					<Border CornerRadius="2" BorderBrush="{DynamicResource ForegroundColor}" Background="{DynamicResource ForegroundColor}" BorderThickness="1">
+						<Border.Styles>
+							<Style Selector="Border">
+							<Style.Animations>
+								<Animation Duration="0:0:.15">
+									<KeyFrame Cue="0%">
+										<Setter Property="Opacity" Value="0.6"/>
+									</KeyFrame>
+									<KeyFrame Cue="100%">
+										<Setter Property="Opacity" Value="1"/>
+									</KeyFrame>
+								</Animation>
+							</Style.Animations>
+						</Style>
+						</Border.Styles>
 						<Grid RowDefinitions="1*,Auto" ColumnDefinitions="1*,Auto" Margin="5,0">
 							<TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="16" TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
 							<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,2">
