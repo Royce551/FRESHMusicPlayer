@@ -19,4 +19,4 @@ mkdir -p $RESOURCES_BUNDLE
 cp Distribution/icon.icns $RESOURCES_BUNDLE
 cp Distribution/Info.plist $APP_BUNDLE/Contents/
 
-codesign --deep -s - $APP_BUNDLE || 
+codesign --deep -s - $APP_BUNDLE || true
