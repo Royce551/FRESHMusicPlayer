@@ -34,5 +34,5 @@ jobs:
     - uses: actions/upload-artifact@v1
       name: "Upload Artifact"
       with:
-        name: "FRESHMusicPlayer.dmg"
+        name: "FRESHMusicPlayer-${{ matrix.arch }}.dmg"
         path: "./FRESHMusicPlayer.dmg"
