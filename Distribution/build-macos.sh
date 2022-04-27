@@ -18,3 +18,5 @@ cp -r "FRESHMusicPlayer/FRESHMusicPlayer-Avalonia/bin/Debug/net"*"/osx-$BUILD_AR
 mkdir -p $RESOURCES_BUNDLE
 cp Distribution/icon.icns $RESOURCES_BUNDLE
 cp Distribution/Info.plist $APP_BUNDLE/Contents/
+
+codesign --deep -s - $APP_BUNDLE
