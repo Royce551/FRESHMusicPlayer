@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd ..
 
 APP_BUNDLE=Distribution/FRESHMusicPlayer.app
@@ -8,7 +10,7 @@ RESOURCES_BUNDLE=$APP_BUNDLE/Contents/Resources
 rm -rf $APP_BUNDLE || true
 
 pushd FRESHMusicPlayer/FRESHMusicPlayer-Avalonia
-dotnet publish -r osx-$BUILD_ARC}
+dotnet publish -r osx-$BUILD_ARCH
 popd
 
 mkdir -p $APP_BUNDLE/Contents/MacOS
