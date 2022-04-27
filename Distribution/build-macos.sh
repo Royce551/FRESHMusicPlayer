@@ -8,11 +8,11 @@ RESOURCES_BUNDLE=$APP_BUNDLE/Contents/Resources
 rm -rf $APP_BUNDLE || true
 
 pushd FRESHMusicPlayer/FRESHMusicPlayer-Avalonia
-dotnet publish -r osx-x64
+dotnet publish -r osx-$BUILD_ARC}
 popd
 
 mkdir -p $APP_BUNDLE/Contents/MacOS
-cp -r "FRESHMusicPlayer/FRESHMusicPlayer-Avalonia/bin/Debug/net5.0/osx-x64/"* $APP_BUNDLE/Contents/MacOS
+cp -r "FRESHMusicPlayer/FRESHMusicPlayer-Avalonia/bin/Debug/net"*"/osx-$BUILD_ARCH/"* $APP_BUNDLE/Contents/MacOS
 mkdir -p $RESOURCES_BUNDLE
 cp Distribution/icon.icns $RESOURCES_BUNDLE
 cp Distribution/Info.plist $APP_BUNDLE/Contents/

@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [macOS-latest]
+        arch: [x64]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
@@ -25,6 +26,8 @@ jobs:
         submodules: 'recursive'
     - name: "Build Project"
       run: ./build-macos.sh
+      env:
+        BUILD_ARCH: ${{ matrix.arch }}
       working-directory: Distribution
     - name: "Create Disk Image"
       run: appdmg Distribution/app-dmg-spec.json ./FRESHMusicPlayer.dmg
