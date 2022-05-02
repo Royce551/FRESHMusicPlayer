@@ -10,22 +10,29 @@ jobs:
     strategy:
       matrix:
         os: [macOS-latest]
+        arch: [x64, arm64]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
     - name: "Install Dependencies"
       run: |
         npm install -g appdmg
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '6.0.x'
     - uses: actions/checkout@v1
       with:
         submodules: 'recursive'
     - name: "Build Project"
       run: ./build-macos.sh
+      env:
+        BUILD_ARCH: ${{ matrix.arch }}
       working-directory: Distribution
     - name: "Create Disk Image"
       run: appdmg Distribution/app-dmg-spec.json ./FRESHMusicPlayer.dmg
     - uses: actions/upload-artifact@v1
       name: "Upload Artifact"
       with:
-        name: "FRESHMusicPlayer.dmg"
+        name: "FRESHMusicPlayer-${{ matrix.arch }}.dmg"
         path: "./FRESHMusicPlayer.dmg"
