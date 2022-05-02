@@ -234,7 +234,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Ellipse x:Name="ThumbEllipse" Height="15" Width="15" Fill="#FF338BC1">
+                    <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#FF338BC1">
                         <Ellipse.Triggers>
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
