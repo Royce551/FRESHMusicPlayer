@@ -74,7 +74,6 @@ namespace FRESHMusicPlayer.Pages.Library
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e)
         {
             library.Remove(FilePath);
-            ((ListBox)Parent).Items.Remove(this);
         }
 
         private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
