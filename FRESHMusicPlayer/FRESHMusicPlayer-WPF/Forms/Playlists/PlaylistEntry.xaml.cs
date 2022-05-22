@@ -123,8 +123,10 @@ namespace FRESHMusicPlayer.Forms.Playlists
                 things = library.ReadTracksForArtist(library.GetFallbackTrack(path).Artist);
             else
                 things = library.ReadTracksForAlbum(library.GetFallbackTrack(path).Album);
+            library.RaiseLibraryChanged = false;
             foreach (var thing in things)
                 library.AddTrackToPlaylist(playlist, thing.Path);
+            library.RaiseLibraryChanged = true;
             CheckIfPlaylistExists();
         }
 

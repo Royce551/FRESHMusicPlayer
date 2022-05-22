@@ -73,7 +73,10 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void DeleteButtonClick(object sender, MouseButtonEventArgs e)
         {
+            library.RaiseLibraryChanged = false;
             library.Remove(FilePath);
+            library.RaiseLibraryChanged = true;
+            ((ListBox)Parent).Items.Remove(this);
         }
 
         private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

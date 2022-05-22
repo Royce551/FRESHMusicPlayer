@@ -107,7 +107,7 @@ namespace FRESHMusicPlayer.Pages.Library
             var x = window.Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
             await Task.Run(() =>
             {
-                if (x.Count == 0) window.Library.CreatePlaylist("Liked");
+                if (x.Count == 0) window.Dispatcher.Invoke(() => window.Library.CreatePlaylist("Liked"));
                 foreach (var thing in x)
                 {
                     if (CategoryPanel.Items.Contains(thing.Name)) continue;

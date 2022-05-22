@@ -18,6 +18,8 @@ namespace FRESHMusicPlayer.Handlers
     {
         public event EventHandler LibraryChanged;
 
+        public bool RaiseLibraryChanged { get; set; } = true; // remove w/ databasev3
+
         private readonly NotificationHandler notificationHandler;
         private readonly Dispatcher dispatcher;
         public GUILibrary(LiteDatabase library, NotificationHandler notificationHandler, Dispatcher dispatcher) : base(library)
@@ -34,7 +36,7 @@ namespace FRESHMusicPlayer.Handlers
             dispatcher.Invoke(() =>
             {
                 notificationHandler.Remove(notification);
-                LibraryChanged?.Invoke(null, EventArgs.Empty);
+                if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
             });
         }
 
@@ -46,7 +48,7 @@ namespace FRESHMusicPlayer.Handlers
             dispatcher.Invoke(() =>
             {
                 notificationHandler.Remove(notification);
-                LibraryChanged?.Invoke(null, EventArgs.Empty);
+                if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
             });
         }
 
@@ -60,45 +62,45 @@ namespace FRESHMusicPlayer.Handlers
                     ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
                     Type = NotificationType.Success
                 });
-                LibraryChanged?.Invoke(null, EventArgs.Empty);
+                if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
             });
         }
 
         public override void AddTrackToPlaylist(string playlist, string path)
         {
             base.AddTrackToPlaylist(playlist, path);
-            LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
         }
 
         public override DatabasePlaylist CreatePlaylist(string playlist, string path = null)
         {
             var newPlaylist = base.CreatePlaylist(playlist, path);
-            LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
             return newPlaylist;
         }
 
         public override void DeletePlaylist(string playlist)
         {
             base.DeletePlaylist(playlist);
-            LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
         }
 
         public override void Import(string path)
         {
             base.Import(path);
-            LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
         }
 
         public override void Remove(string path)
         {
             base.Remove(path);
-            LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
         }
 
         public override void RemoveTrackFromPlaylist(string playlist, string path)
         {
             base.RemoveTrackFromPlaylist(playlist, path);
-            LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
         }
 
         //public List<DatabaseQueue> GetAllQueues() FMP 10.2
