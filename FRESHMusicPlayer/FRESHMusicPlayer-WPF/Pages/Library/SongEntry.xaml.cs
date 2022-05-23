@@ -64,7 +64,8 @@ namespace FRESHMusicPlayer.Pages.Library
                         library.Remove(FilePath);
                         ((ListBox)Parent).Items.Remove(this);
                         return true;
-                    }
+                    },
+                    Type = NotificationType.Failure
                 });
             }
         }

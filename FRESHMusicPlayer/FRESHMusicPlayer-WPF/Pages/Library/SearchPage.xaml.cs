@@ -3,6 +3,7 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -91,5 +92,11 @@ namespace FRESHMusicPlayer.Pages.Library
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) => await window.Dispatcher.InvokeAsync(() => SearchBox.Focus(), DispatcherPriority.ApplicationIdle);
+
+        private void SearchBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return && TracksPanel.Items.Count != 0)
+                window.Player.PlayAsync(TracksPanel.Items.Cast<SongEntry>().First().FilePath);
+        }
     }
 }
