@@ -206,8 +206,22 @@
 			</DockPanel>
 
 			
-			<ContentControl DockPanel.Dock="Right" Background="{DynamicResource SecondaryColor}" Content="{Binding AuxPaneContent}" Width="{Binding AuxPaneWidth}">
-				
+			<ContentControl x:Name="AuxPane" DockPanel.Dock="{Binding AuxPaneDock}" Background="{DynamicResource SecondaryColor}" Content="{Binding AuxPaneContent}" Width="{Binding AuxPaneWidth}" Margin="{Binding AuxPaneMargin}">
+				<ContentControl.Styles>
+					<Style Selector="ContentControl.opened">
+						<Style.Animations>
+							<Animation Duration="0:0:1">
+							<KeyFrame Cue="0%">
+								<Setter Property="Margin" Value="0, 0, -300, 0"/>
+							</KeyFrame>
+							<KeyFrame Cue="100%">
+								<Setter Property="Margin" Value="0, 0, 100, 0"/>
+							</KeyFrame>
+						</Animation>
+						</Style.Animations>
+					</Style>
+					
+				</ContentControl.Styles>
 			</ContentControl>
 			<ContentControl Content="{Binding MainContent}">
 				

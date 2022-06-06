@@ -1,33 +1,18 @@
 ﻿using FRESHMusicPlayer.Backends;
-using FRESHMusicPlayer.Forms;
-using FRESHMusicPlayer.Forms.Playlists;
-using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
-using FRESHMusicPlayer.Pages;
-using FRESHMusicPlayer.Pages.Library;
-using FRESHMusicPlayer.Pages.Lyrics;
-using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer
 {
-    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
