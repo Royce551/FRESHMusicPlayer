@@ -74,12 +74,6 @@ namespace FRESHMusicPlayer
             ProgressTimer.Start(); // resync the progress timer
         }
         private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(Pane.TrackInfo, 235, true);
-        private void TrackTitle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var cm = FindResource("MiscContext") as ContextMenu;
-            cm.PlacementTarget = sender as Button;
-            cm.IsOpen = true;
-        }
         private void TrackContextTagEditor_Click(object sender, RoutedEventArgs e)
         {
             var tracks = new List<string>();
