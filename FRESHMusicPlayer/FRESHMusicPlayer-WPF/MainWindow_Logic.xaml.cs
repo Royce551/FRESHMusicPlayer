@@ -170,7 +170,7 @@ namespace FRESHMusicPlayer
                 PauseAfterCurrentTrack = false;
             }
 
-            LoggingHandler.Log("Changing tracks");
+            LoggingHandler.Log("Changing tracks!");
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {

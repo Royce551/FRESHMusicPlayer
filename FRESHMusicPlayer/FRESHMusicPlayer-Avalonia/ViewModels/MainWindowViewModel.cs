@@ -58,12 +58,12 @@ namespace FRESHMusicPlayer.ViewModels
         public IntegrationHandler Integrations { get; private set; } = new();
         public NotificationHandler Notifications { get; private set; } = new();
 
-        private Window Window
+        private MainWindow Window
         {
             get
             {
                 if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-                    return desktop.MainWindow;
+                    return desktop.MainWindow as MainWindow;
                 else return null;
             }
         }
@@ -407,43 +407,35 @@ namespace FRESHMusicPlayer.ViewModels
         {
             get
             {
-                switch (SelectedPane)
+                return SelectedPane switch // TODO: convert to switch expression
                 {
-                    case Pane.Settings:
-                        return new Views.Settings().SetThings(Program.Config, Library);
-                    case Pane.QueueManagement:
-                        return new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer);
-                    case Pane.Search:
-                        return new UserControl
+                    Pane.Settings => new Views.Settings().SetThings(Program.Config, Library),
+                    Pane.QueueManagement => new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer),
+                    Pane.Search => new UserControl
+                    {
+                        Content = new TextBlock
                         {
-                            Content = new TextBlock
-                            {
-                                Text = "Search"
-                            }
-                        };
-                    case Pane.TrackInfo:
-                        return new TrackInfo().SetStuff(Player);
-                    case Pane.Notifications:
-                        return new UserControl
+                            Text = "Search"
+                        }
+                    },
+                    Pane.TrackInfo => new TrackInfo().SetStuff(Player),
+                    Pane.Notifications => new UserControl
+                    {
+                        Content = new TextBlock
                         {
-                            Content = new TextBlock
-                            {
-                                Text = "Notifications"
-                            }
-                        };
-                    case Pane.Lyrics:
-                        return new UserControl
+                            Text = "Notifications"
+                        }
+                    },
+                    Pane.Lyrics => new UserControl
+                    {
+                        Content = new TextBlock
                         {
-                            Content = new TextBlock
-                            {
-                                Text = "Lyrics"
-                            }
-                        };
-                    case Pane.None:
-                        return null;
-                    default:
-                        throw new Exception("????");
-                }
+                            Text = "Lyrics"
+                        }
+                    },
+                    Pane.None => null,
+                    _ => throw new Exception("????"),
+                };
             }
         }
 
@@ -452,6 +444,36 @@ namespace FRESHMusicPlayer.ViewModels
         {
             get => auxPaneWidth;
             set => this.RaiseAndSetIfChanged(ref auxPaneWidth, value);
+        }
+
+        private Dock auxPaneDock = Dock.Right;
+        public Dock AuxPaneDock
+        {
+            get => auxPaneDock;
+            set => this.RaiseAndSetIfChanged(ref auxPaneDock, value);
+        }
+
+        public void ShowAuxiliaryPane(Pane pane, int width = 235, bool openleft = false)
+        {
+            if (SelectedPane == pane)
+            {
+                HideAuxiliaryPane();
+                return;
+            }
+            
+            if (SelectedPane != Pane.None)
+            {
+                // TODO: put something here
+            }
+
+            if (!openleft) AuxPaneDock = Dock.Right; else AuxPaneDock = Dock.Left;
+            SelectedPane = pane;
+            Window.SetAuxPaneOpened(true);
+        }
+        public void HideAuxiliaryPane()
+        {
+            SelectedPane = Pane.None;
+            Window.SetAuxPaneOpened(false);
         }
 
 #region Library
@@ -592,12 +614,12 @@ namespace FRESHMusicPlayer.ViewModels
 #region NavBar
         public void OpenSettingsCommand()
         {
-            SelectedPane = Pane.Settings;
+            ShowAuxiliaryPane(Pane.Settings, 335);
         }
 
         public void OpenQueueManagementCommand()
         {
-            SelectedPane = Pane.QueueManagement;
+            ShowAuxiliaryPane(Pane.QueueManagement, 335);
         }
 
         public void OpenPlaylistManagementCommand()

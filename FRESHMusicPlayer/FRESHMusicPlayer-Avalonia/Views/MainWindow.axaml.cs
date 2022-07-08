@@ -23,7 +23,7 @@ namespace FRESHMusicPlayer.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
-            DoStuff();
+            //DoStuff();
             RootPanel = this.FindControl<Panel>("RootPanel");
             SetValue(DragDrop.AllowDropProperty, true);
             AddHandler(DragDrop.DragEnterEvent, (s, e) => OnDragEnter(s, e));
@@ -36,9 +36,13 @@ namespace FRESHMusicPlayer.Views
 
         }
 
-        private void DoStuff()
+        public void SetAuxPaneOpened(bool state)
         {
+            var auxPane = this.FindControl<ContentControl>("AuxPane");
+            if (state) auxPane.Classes.Add("opened");
+            else auxPane.Classes.Remove("opened");
         }
+
 
         private void OnClosing(object sender, CancelEventArgs e)
         {

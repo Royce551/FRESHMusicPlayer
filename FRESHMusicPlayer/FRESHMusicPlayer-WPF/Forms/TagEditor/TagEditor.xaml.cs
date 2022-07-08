@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -89,33 +90,36 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             unsavedChanges = false;
         }
 
-        public void SaveChanges(List<string> filePaths)
+        public async Task SaveChanges(List<string> filePaths)
         {
-            foreach (string path in filePaths)
+            await Task.Run(() =>
             {
-                var track = new Track(path)
+                foreach (string path in filePaths)
                 {
-                    Artist = ArtistBox.Text,
-                    Title = TitleBox.Text,
-                    Album = AlbumBox.Text,
-                    Genre = GenreBox.Text,
-                    Year = Convert.ToInt32(YearBox.Text),
-                    AlbumArtist = AlbumArtistBox.Text,
-                    Composer = ComposerBox.Text,
-                    TrackNumber = Convert.ToInt32(TrackNumBox.Text),
-                    DiscNumber = Convert.ToInt32(DiscNumBox.Text),
-                    Lyrics = new LyricsInfo()
-                };
-                track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
-                track.EmbeddedPictures.Clear();
-                foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
-                track.Save();
-                library?.Remove(path); // update library entry, if available
-                library?.Import(path);
-            }
+                    var track = new Track(path)
+                    {
+                        Artist = ArtistBox.Text,
+                        Title = TitleBox.Text,
+                        Album = AlbumBox.Text,
+                        Genre = GenreBox.Text,
+                        Year = Convert.ToInt32(YearBox.Text),
+                        AlbumArtist = AlbumArtistBox.Text,
+                        Composer = ComposerBox.Text,
+                        TrackNumber = Convert.ToInt32(TrackNumBox.Text),
+                        DiscNumber = Convert.ToInt32(DiscNumBox.Text),
+                        Lyrics = new LyricsInfo()
+                    };
+                    track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
+                    track.EmbeddedPictures.Clear();
+                    foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
+                    track.Save();
+                    library?.Remove(path); // update library entry, if available
+                    library?.Import(path);
+                }
+            });
         }
 
-        public void SaveButton()
+        public async Task SaveButton()
         {
             unsavedChanges = false;
             Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
@@ -129,7 +133,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                     return;
                 }
             }
-            SaveChanges(FilePaths);
+            await SaveChanges(FilePaths);
         }
 
         public void ChangeFiles()
@@ -219,7 +223,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             if (selectedIndex <= CoverArtSelector.Items.Count) CoverArtSelector.SelectedIndex = selectedIndex;
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private async void Player_SongChanged(object sender, EventArgs e)
         {
             if (filePathsToSaveInBackground.Count != 0)
             {
@@ -227,13 +231,13 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                 {
                     if (path == player.FilePath) break; // still listening to files that can't be properly saved
                 }
-                SaveChanges(filePathsToSaveInBackground);
+                await SaveChanges(filePathsToSaveInBackground);
                 filePathsToSaveInBackground.Clear();
                 Close();
             }            
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (unsavedChanges == true)
             {
@@ -241,7 +245,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                                           "FRESHMusicPlayer Tag Editor",
                                           MessageBoxButton.YesNoCancel,
                                           MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes) SaveButton();
+                if (result == MessageBoxResult.Yes) await SaveButton();
                 else if (result == MessageBoxResult.Cancel)
                 {
                     e.Cancel = true;
@@ -260,7 +264,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) => SaveButton();
+        private async void Button_Click(object sender, RoutedEventArgs e) => await SaveButton();
 
         private void Button_Click_1(object sender, RoutedEventArgs e) => ChangeFiles();
 
@@ -284,7 +288,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void OpenMenu_MouseDown(object sender, RoutedEventArgs e) => ChangeFiles();
 
-        private void SaveMenuItem(object sender, RoutedEventArgs e) => SaveButton();
+        private async void SaveMenuItem(object sender, RoutedEventArgs e) => await SaveButton();
 
         private void ExitMenuItem(object sender, RoutedEventArgs e) => Close();
 
