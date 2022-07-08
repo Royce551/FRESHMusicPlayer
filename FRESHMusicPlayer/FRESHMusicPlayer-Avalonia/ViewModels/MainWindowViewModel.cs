@@ -51,7 +51,7 @@ namespace FRESHMusicPlayer.ViewModels
 
     public class MainWindowViewModel : ViewModelBase
     {
-        public Player Player { get; private set; }
+        public Player Player { get; private set; } = new Player();
         public Timer ProgressTimer { get; private set; } = new(100);
         public Library Library { get; private set; }
         public IMetadataProvider CurrentTrack { get; private set; }
