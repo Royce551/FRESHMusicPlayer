@@ -39,8 +39,16 @@ namespace FRESHMusicPlayer.Views
         public void SetAuxPaneOpened(bool state)
         {
             var auxPane = this.FindControl<ContentControl>("AuxPane");
-            if (state) auxPane.Classes.Add("opened");
-            else auxPane.Classes.Remove("opened");
+            if (state)
+            {
+                auxPane.Classes.Add("opened");
+                auxPane.Classes.Remove("closed");
+            }
+            else
+            {
+                auxPane.Classes.Add("closed");
+                auxPane.Classes.Remove("opened");
+            }
         }
 
 

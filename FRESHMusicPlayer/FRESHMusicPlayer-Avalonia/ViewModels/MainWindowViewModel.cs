@@ -439,12 +439,12 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        private int auxPaneWidth = 0;
-        public int AuxPaneWidth
-        {
-            get => auxPaneWidth;
-            set => this.RaiseAndSetIfChanged(ref auxPaneWidth, value);
-        }
+        //private int auxPaneWidth = 0;
+        public int AuxPaneWidth => 300;
+        //{
+        //    get => auxPaneWidth;
+        //    set => this.RaiseAndSetIfChanged(ref auxPaneWidth, value);
+        //}
 
         private Dock auxPaneDock = Dock.Right;
         public Dock AuxPaneDock
@@ -453,27 +453,28 @@ namespace FRESHMusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref auxPaneDock, value);
         }
 
-        public void ShowAuxiliaryPane(Pane pane, int width = 235, bool openleft = false)
+        public async void ShowAuxiliaryPane(Pane pane, int width = 235, bool openleft = false)
         {
             if (SelectedPane == pane)
             {
-                HideAuxiliaryPane();
+                await HideAuxiliaryPane();
                 return;
             }
             
             if (SelectedPane != Pane.None)
             {
-                // TODO: put something here
+                await HideAuxiliaryPane();
             }
 
             if (!openleft) AuxPaneDock = Dock.Right; else AuxPaneDock = Dock.Left;
             SelectedPane = pane;
             Window.SetAuxPaneOpened(true);
         }
-        public void HideAuxiliaryPane()
+        public async Task HideAuxiliaryPane()
         {
-            SelectedPane = Pane.None;
             Window.SetAuxPaneOpened(false);
+            await Task.Delay(110);
+            SelectedPane = Pane.None;
         }
 
 #region Library
