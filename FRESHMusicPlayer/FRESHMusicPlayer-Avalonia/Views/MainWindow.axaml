@@ -206,14 +206,11 @@
 			</DockPanel>
 
 			
-			<ContentControl x:Name="AuxPane" DockPanel.Dock="{Binding AuxPaneDock}" Background="{DynamicResource SecondaryColor}" Content="{Binding AuxPaneContent}" Width="300" Margin="0, 0, -300, 0">
+			<ContentControl x:Name="AuxPane" DockPanel.Dock="{Binding AuxPaneDock}" Background="{DynamicResource SecondaryColor}" Content="{Binding AuxPaneContent}" Width="350" Margin="0, 0, -350, 0">
 				<ContentControl.Styles>
 					<Style Selector="ContentControl.opened">
 						<Style.Animations>
 							<Animation Duration="0:0:0.1" FillMode="Forward" Easing="ExponentialEaseOut">
-							<!--<KeyFrame Cue="0%">
-								<Setter Property="Margin" Value="0, 0, -300, 0"/>
-							</KeyFrame>-->
 							<KeyFrame Cue="100%">
 								<Setter Property="Margin" Value="0, 0, 0, 0"/>
 							</KeyFrame>
@@ -223,11 +220,8 @@
 					<Style Selector="ContentControl.closed">
 						<Style.Animations>
 							<Animation Duration="0:0:0.1" FillMode="Forward" Easing="ExponentialEaseIn">
-								<!--<KeyFrame Cue="0%">
-									<Setter Property="Margin" Value="0, 0, 0, 0"/>
-								</KeyFrame>-->
 								<KeyFrame Cue="100%">
-									<Setter Property="Margin" Value="0, 0, -300, 0"/>
+									<Setter Property="Margin" Value="0, 0, -350, 0"/>
 								</KeyFrame>
 							</Animation>
 						</Style.Animations>

@@ -58,7 +58,7 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 var stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine(Properties.Resources.Settings_AutoImport_Info);
-                if (Config.AutoImportPaths is not null)
+                if (Config is not null)
                 {
                     foreach (var path in Config.AutoImportPaths)
                         stringBuilder.AppendLine(path);

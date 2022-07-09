@@ -7,74 +7,64 @@
         mc:Ignorable="d"
 		d:DesignWidth="600" d:DesignHeight="400"
         x:Class="FRESHMusicPlayer.Views.Settings">
-	
+
 	<UserControl.DataContext>
 		<vm:SettingsViewModel/>
 	</UserControl.DataContext>
-			
-	<TabControl TabStripPlacement="Left" SelectedIndex="0">
-		<TabItem Header="{x:Static resx:Resources.Settings_General}">
-			<ScrollViewer>
-			<StackPanel Margin="10,10,0,0">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-					<TextBlock Text="{x:Static resx:Resources.Settings_Language}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-					<ComboBox Items="{Binding AvailableLanguages}" SelectedItem="{Binding Language}">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding Name}"/>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-				<CheckBox Content="{x:Static resx:Resources.Settings_PlaytimeLogging}" IsChecked="{Binding PlaytimeLogging}"/>
-				<CheckBox Content="{x:Static resx:Resources.Settings_ShowTimeInWindow}" IsChecked="{Binding ShowTimeInWindow}"/>
 
-				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_AutoImport}"/>
-				
-				<TextBlock Text="{Binding AutoImportText}"/>
-				<Button Content="{x:Static resx:Resources.Settings_AddFolder}" Command="{Binding AddFolderCommand}"/>
-				<Button Content="{x:Static resx:Resources.Settings_ClearAll}" Command="{Binding ClearAllCommand}"/>
-				
-				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Integrations}"/>
-				
-				<CheckBox Content="{x:Static resx:Resources.Settings_IntegrateDiscordRPC}" IsChecked="{Binding IntegrateDiscordRPC}"/>
-				<CheckBox Content="MPRIS" IsVisible="{Binding IsRunningOnLinux}" IsChecked="{Binding IntegrateMPRIS}"/>
-				<CheckBox Content="{x:Static resx:Resources.Settings_MPRISShowCoverArt}" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
-				<TextBlock Text="{x:Static resx:Resources.Settings_MPRISShowCoverArt_Info}" Margin="20,0,0,0" TextWrapping="Wrap" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
-				
-				<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Updates}" IsVisible="{Binding IsRunningOnMac}"/>
-				
-				<CheckBox Content="{x:Static resx:Resources.Settings_CheckForUpdates}" IsChecked="{Binding CheckForUpdates}" IsVisible="{Binding IsRunningOnMac}"/>
-				
-				<TextBlock Text="{x:Static resx:Resources.Settings_RestartNeeded}" Foreground="{DynamicResource Green}" IsVisible="{Binding IsRestartNeeded}"/>
-				<Button Content="{x:Static resx:Resources.RestartNow}" Foreground="{DynamicResource Green}" Command="{Binding RestartCommand}" IsVisible="{Binding IsRestartNeeded}"/>
+	<ScrollViewer>
+		<StackPanel Margin="20,10,20,0">
+			<TextBlock FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" Text="{x:Static resx:Resources.Settings_General}"/>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+				<TextBlock Text="{x:Static resx:Resources.Settings_Language}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+				<ComboBox Items="{Binding AvailableLanguages}" SelectedItem="{Binding Language}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
 			</StackPanel>
-				</ScrollViewer>
-		</TabItem>
-		<!--<TabItem Header="{x:Static resx:Resources.Settings_Appearance}">
-			
-		</TabItem>-->
-		<TabItem Header="{x:Static resx:Resources.Settings_Maintenance}">
-			<StackPanel>
-				<Button Content="{x:Static resx:Resources.Settings_Reset}" Command="{Binding ResetSettingsCommand}" Margin="0,10,0,0"/>
-				<Button Content="{x:Static resx:Resources.Settings_CleanLibrary}" Command="{Binding CleanLibraryCommand}"/>
-				<Button Content="{x:Static resx:Resources.Settings_NukeLibrary}" Foreground="{DynamicResource Green}" Command="{Binding NukeLibraryCommand}"/>
-			</StackPanel>
-		</TabItem>
-		<TabItem Header="{x:Static resx:Resources.Menu_About}">
-			<StackPanel Margin="10" HorizontalAlignment="Stretch">
-				<Image Source="/Assets/fmplogofull.png" Stretch="UniformToFill" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20"/>
-				<TextBlock Text="{Binding Version}"/>
-				<TextBlock Text="{x:Static resx:Resources.Settings_Credits}"/>
-				<TextBlock Text="{x:Static resx:Resources.Settings_License}" Margin="0,0,0,20"/>
-			
-				<TextBlock Text="{x:Static resx:Resources.Settings_ThankYou}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
-			
-				<Button Content="{x:Static resx:Resources.Settings_Report}" Command="{Binding ReportIssueCommand}"/>
-				<Button Content="{x:Static resx:Resources.Settings_ViewSourceCode}" Command="{Binding ViewSourceCodeCommand}"/>
-				<Button Content="{x:Static resx:Resources.Settings_ViewLicense}" Command="{Binding ViewLicenseCommand}"/>
-				<Button Content="{x:Static resx:Resources.Settings_ViewWebsite}" Command="{Binding ViewWebsiteCommand}"/>
-			</StackPanel>
-		</TabItem>
-	</TabControl>
+			<CheckBox Content="{x:Static resx:Resources.Settings_PlaytimeLogging}" IsChecked="{Binding PlaytimeLogging}"/>
+			<CheckBox Content="{x:Static resx:Resources.Settings_ShowTimeInWindow}" IsChecked="{Binding ShowTimeInWindow}"/>
+
+			<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_AutoImport}"/>
+
+			<TextBlock Text="{Binding AutoImportText}"/>
+			<Button Content="{x:Static resx:Resources.Settings_AddFolder}" Command="{Binding AddFolderCommand}"/>
+			<Button Content="{x:Static resx:Resources.Settings_ClearAll}" Command="{Binding ClearAllCommand}"/>
+
+			<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Integrations}"/>
+
+			<CheckBox Content="{x:Static resx:Resources.Settings_IntegrateDiscordRPC}" IsChecked="{Binding IntegrateDiscordRPC}"/>
+			<CheckBox Content="MPRIS" IsVisible="{Binding IsRunningOnLinux}" IsChecked="{Binding IntegrateMPRIS}"/>
+			<CheckBox Content="{x:Static resx:Resources.Settings_MPRISShowCoverArt}" Margin="20,0,0,0" IsChecked="{Binding MPRISShowCoverArt}" IsVisible="{Binding IsRunningOnLinux}"/>
+			<TextBlock Text="{x:Static resx:Resources.Settings_MPRISShowCoverArt_Info}" Margin="20,0,0,0" TextWrapping="Wrap" Foreground="{DynamicResource ThemeControlLowBrush}" IsVisible="{Binding IsRunningOnLinux}"/>
+
+			<TextBlock FontWeight="Bold" FontSize="18" Text="{x:Static resx:Resources.Settings_Updates}" IsVisible="{Binding IsRunningOnMac}"/>
+
+			<CheckBox Content="{x:Static resx:Resources.Settings_CheckForUpdates}" IsChecked="{Binding CheckForUpdates}" IsVisible="{Binding IsRunningOnMac}"/>
+
+			<TextBlock Text="{x:Static resx:Resources.Settings_RestartNeeded}" Foreground="{DynamicResource Green}" IsVisible="{Binding IsRestartNeeded}"/>
+			<Button Content="{x:Static resx:Resources.RestartNow}" Foreground="{DynamicResource Green}" Command="{Binding RestartCommand}" IsVisible="{Binding IsRestartNeeded}"/>
+			<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="{x:Static resx:Resources.Settings_Maintenance}"/>
+			<Button Content="{x:Static resx:Resources.Settings_Reset}" Command="{Binding ResetSettingsCommand}" Margin="0,10,0,0"/>
+			<Button Content="{x:Static resx:Resources.Settings_CleanLibrary}" Command="{Binding CleanLibraryCommand}"/>
+			<Button Content="{x:Static resx:Resources.Settings_NukeLibrary}" Foreground="{DynamicResource Green}" Command="{Binding NukeLibraryCommand}"/>
+			<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="{x:Static resx:Resources.Menu_About}"/>
+			<Image Source="/Assets/fmplogofull.png" Stretch="UniformToFill" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20"/>
+			<TextBlock Text="{Binding Version}"/>
+			<TextBlock Text="{x:Static resx:Resources.Settings_Credits}"/>
+			<TextBlock Text="{x:Static resx:Resources.Settings_License}" Margin="0,0,0,20"/>
+
+			<TextBlock Text="{x:Static resx:Resources.Settings_ThankYou}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+			<Button Content="{x:Static resx:Resources.Settings_Report}" Command="{Binding ReportIssueCommand}"/>
+			<Button Content="{x:Static resx:Resources.Settings_ViewSourceCode}" Command="{Binding ViewSourceCodeCommand}"/>
+			<Button Content="{x:Static resx:Resources.Settings_ViewLicense}" Command="{Binding ViewLicenseCommand}"/>
+			<Button Content="{x:Static resx:Resources.Settings_ViewWebsite}" Command="{Binding ViewWebsiteCommand}"/>
+		</StackPanel>
+	</ScrollViewer>
+
+
 </UserControl>
