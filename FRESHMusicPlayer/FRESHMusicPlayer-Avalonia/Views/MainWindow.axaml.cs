@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.VisualTree;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
@@ -36,18 +37,38 @@ namespace FRESHMusicPlayer.Views
 
         }
 
-        public void SetAuxPaneOpened(bool state)
+        public void SetAuxPaneOpened(bool state, bool fromLeft = false)
         {
             var auxPane = this.FindControl<ContentControl>("AuxPane");
             if (state)
             {
-                auxPane.Classes.Add("opened");
-                auxPane.Classes.Remove("closed");
+                if (fromLeft)
+                {
+                    DockPanel.SetDock(auxPane, Dock.Left);
+                    auxPane.Classes.Remove("closed");
+                    auxPane.Classes.Add("openedfromleft");
+                    auxPane.Classes.Remove("closedfromleft");
+                }
+                else
+                {
+                    DockPanel.SetDock(auxPane, Dock.Right);
+                    auxPane.Classes.Add("opened");
+                    auxPane.Classes.Remove("closed");
+                }
             }
             else
             {
-                auxPane.Classes.Add("closed");
-                auxPane.Classes.Remove("opened");
+                if (auxPane.Classes.Contains("openedfromleft"))
+                {
+                    auxPane.Classes.Add("closedfromleft");
+                    auxPane.Classes.Remove("openedfromleft");
+                }
+                else
+                {
+                    auxPane.Classes.Add("closed");
+                    auxPane.Classes.Remove("opened");
+                }
+                
             }
         }
 
@@ -64,13 +85,11 @@ namespace FRESHMusicPlayer.Views
 
         private void OpenTrackInfo(object sender, PointerPressedEventArgs e)
         {
-            if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-                ActualOpenTrackInfo();
+            if (e.GetCurrentPoint(sender as IVisual).Properties.IsLeftButtonPressed)
+                ViewModel.ShowAuxiliaryPane(Pane.TrackInfo, openleft: true);    
         }
 
         private void ToggleShowRemainingProgress(object sender, PointerPressedEventArgs e) => ViewModel?.ShowRemainingProgressCommand();
-
-        private void ActualOpenTrackInfo() => ViewModel.SelectedPane = Pane.TrackInfo;
 
         private void OnSearchButtonClick(object sender, RoutedEventArgs e) => ShowSearch();
         private void ShowSearch()

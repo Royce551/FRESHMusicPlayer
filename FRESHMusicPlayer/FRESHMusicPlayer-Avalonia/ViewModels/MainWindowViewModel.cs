@@ -426,13 +426,7 @@ namespace FRESHMusicPlayer.ViewModels
                             Text = "Notifications"
                         }
                     },
-                    Pane.Lyrics => new UserControl
-                    {
-                        Content = new TextBlock
-                        {
-                            Text = "Lyrics"
-                        }
-                    },
+                    Pane.Lyrics => new Lyrics().SetStuff(this),
                     Pane.None => null,
                     _ => throw new Exception("????"),
                 };
@@ -466,9 +460,8 @@ namespace FRESHMusicPlayer.ViewModels
                 await HideAuxiliaryPane();
             }
 
-            if (!openleft) AuxPaneDock = Dock.Right; else AuxPaneDock = Dock.Left;
             SelectedPane = pane;
-            Window.SetAuxPaneOpened(true);
+            if (!openleft) Window.SetAuxPaneOpened(true); else Window.SetAuxPaneOpened(true, true);
         }
         public async Task HideAuxiliaryPane()
         {
@@ -630,7 +623,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void OpenLyricsCommand()
         {
-            SelectedPane = Pane.Lyrics;
+            ShowAuxiliaryPane(Pane.Lyrics, openleft: true);
         }
 
         public void OpenTagEditorCommand()

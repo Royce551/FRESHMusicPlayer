@@ -206,9 +206,10 @@
 			</DockPanel>
 
 			
-			<ContentControl x:Name="AuxPane" DockPanel.Dock="{Binding AuxPaneDock}" Background="{DynamicResource SecondaryColor}" Content="{Binding AuxPaneContent}" Width="350" Margin="0, 0, -350, 0">
+			<ContentControl x:Name="AuxPane" DockPanel.Dock="{Binding AuxPaneDock}" Background="{DynamicResource SecondaryColor}" Content="{Binding AuxPaneContent}" Width="335" Margin="0, 0, -335, 0">
 				<ContentControl.Styles>
 					<Style Selector="ContentControl.opened">
+						<Setter Property="DockPanel.Dock" Value="Right"/>
 						<Style.Animations>
 							<Animation Duration="0:0:0.1" FillMode="Forward" Easing="ExponentialEaseOut">
 							<KeyFrame Cue="100%">
@@ -221,7 +222,27 @@
 						<Style.Animations>
 							<Animation Duration="0:0:0.1" FillMode="Forward" Easing="ExponentialEaseIn">
 								<KeyFrame Cue="100%">
-									<Setter Property="Margin" Value="0, 0, -350, 0"/>
+									<Setter Property="Margin" Value="0, 0, -335, 0"/>
+								</KeyFrame>
+							</Animation>
+						</Style.Animations>
+					</Style>
+					<Style Selector="ContentControl.openedfromleft">
+						<Setter Property="DockPanel.Dock" Value="Left"/>
+						<Style.Animations>
+							<Animation Duration="0:0:0.1" FillMode="Forward" Easing="ExponentialEaseOut">
+								<KeyFrame Cue="100%">
+									<Setter Property="Margin" Value="0, 0, 0, 0"/>
+								</KeyFrame>
+							</Animation>
+						</Style.Animations>
+					</Style>
+					<Style Selector="ContentControl.closedfromleft">
+						<Setter Property="DockPanel.Dock" Value="Left"/>
+						<Style.Animations>
+							<Animation Duration="0:0:0.1" FillMode="Forward" Easing="ExponentialEaseIn">
+								<KeyFrame Cue="100%">
+									<Setter Property="Margin" Value="-335, 0, 0, 0"/>
 								</KeyFrame>
 							</Animation>
 						</Style.Animations>
