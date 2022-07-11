@@ -24,24 +24,50 @@
     <DockPanel>
         <!--Menu-->
         <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
-            <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
+            <Button Content="Tracks" Margin="10,2,0,2" TextBlock.FontSize="14"/>
+            <Button Content="Artists" Margin="10,2,0,2" TextBlock.FontSize="14"/>
+            <Button Content="Albums" Margin="10,2,0,2" TextBlock.FontSize="14"/>
+            <Button Content="Playlists" Margin="10,2,0,2" TextBlock.FontSize="14"/>
+            <Button Content="Import" Margin="10,2,0,2" TextBlock.FontSize="14"/>
+            <TextBlock x:Name="TracksTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
+            <TextBlock x:Name="ArtistsTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
+            <TextBlock x:Name="AlbumsTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="PlaylistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
+            <TextBlock x:Name="PlaylistsTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="PlaylistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
-            <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
+            <TextBlock x:Name="ImportTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
             </TextBlock>
 
-            <Border x:Name="SettingsButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="SettingsButton_Click" Cursor="Hand">
+            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
+                <Viewbox Margin="-1, -1, 0, 1">
+                    <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Viewbox>
+            </Button>
+            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
+                <Viewbox Margin="-2, -2, 0, 2">
+                    <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Viewbox>
+            </Button>
+            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
+                <Viewbox Margin="-2, 0, 0, 1">
+                    <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Viewbox>
+            </Button>
+            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
+                <Viewbox Margin="-2, -1, 0, 1">
+                    <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                </Viewbox>
+            </Button>
+
+            <Border x:Name="SettingsButton" Visibility="Collapsed" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="SettingsButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Border>
-            <Border x:Name="QueueManagementButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="QueueManagementButton_Click" Cursor="Hand">
+            <Border x:Name="QueueManagementButton" Visibility="Collapsed" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="QueueManagementButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
@@ -54,7 +80,7 @@
                     <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Border>
-            <Border x:Name="SearchButton" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" MouseDown="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
+            <Border x:Name="SearchButton" Visibility="Collapsed" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" MouseDown="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
                 <Canvas>
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>

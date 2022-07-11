@@ -21,7 +21,13 @@
 			</Grid.RowDefinitions>
 			
 			<ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-				<TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+				<StackPanel VerticalAlignment="Center">
+					<TextBlock Text="{Binding TextMinus2}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+					<TextBlock Text="{Binding TextMinus1}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+					<TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold"/>
+					<TextBlock Text="{Binding TextPlus1}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+					<TextBlock Text="{Binding TextPlus2}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+				</StackPanel>	
 			</ScrollViewer>
 		</Grid>
 		
