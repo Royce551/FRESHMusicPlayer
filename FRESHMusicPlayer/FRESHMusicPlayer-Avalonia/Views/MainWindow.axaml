@@ -197,7 +197,7 @@
 				<Button Command="{Binding OpenQueueManagementCommand}" Margin="0,2,5,2" DockPanel.Dock="Right" ToolTip.Tip="{x:Static resx:Resources.QueueManagement}">
 					<Image Source="{DynamicResource Queue}"/>
 				</Button>
-				<Button x:Name="SearchButton" DockPanel.Dock="Right" Margin="0,2,5,2" Click="OnSearchButtonClick" ToolTip.Tip="{x:Static resx:Resources.Search}">
+				<Button Command="{Binding OpenSearchCommand}" DockPanel.Dock="Right" Margin="0,2,5,2" ToolTip.Tip="{x:Static resx:Resources.Search}">
 					<Image Source="{DynamicResource Search}"/>
 				</Button>
 				<Button x:Name="NotificationButton" DockPanel.Dock="Right" Margin="10,2,5,2" Click="OnShowNotificationButtonClick" IsVisible="{Binding AreThereAnyNotifications}" ToolTip.Tip="{x:Static resx:Resources.Notifications}">

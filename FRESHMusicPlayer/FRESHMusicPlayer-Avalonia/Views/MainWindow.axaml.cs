@@ -91,12 +91,6 @@ namespace FRESHMusicPlayer.Views
 
         private void ToggleShowRemainingProgress(object sender, PointerPressedEventArgs e) => ViewModel?.ShowRemainingProgressCommand();
 
-        private void OnSearchButtonClick(object sender, RoutedEventArgs e) => ShowSearch();
-        private void ShowSearch()
-        {
-            var button = this.FindControl<Button>("SearchButton");
-            button.ContextFlyout.ShowAt(button);
-        }
 
         private void OnShowNotificationButtonClick(object sender, RoutedEventArgs e)
         {
@@ -134,40 +128,40 @@ namespace FRESHMusicPlayer.Views
 
         private async void OnKeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.Source is not TextBox && e.Source is not ListBoxItem)
-            //    switch (e.Key)
-            //    {
-            //        case Key.Q:
-            //            ViewModel.OpenSettingsCommand();
-            //            break;
-            //        case Key.A:
-            //            ViewModel.SelectedTab = 0;
-            //            break;
-            //        case Key.S:
-            //            ViewModel.SelectedTab = 1;
-            //            break;
-            //        case Key.D:
-            //            ViewModel.SelectedTab = 2;
-            //            break;
-            //        case Key.F:
-            //            ViewModel.SelectedTab = 3;
-            //            break;
-            //        case Key.G:
-            //            ViewModel.SelectedTab = 4;
-            //            break;
-            //        case Key.E:
-            //            ShowSearch();
-            //            break;
-            //        case Key.R:
-            //            ActualOpenTrackInfo();
-            //            break;
-            //        case Key.W:
-            //            ViewModel.OpenQueueManagementCommand();
-            //            break;
-            //        case Key.Space:
-            //            ViewModel.PlayPauseCommand();
-            //            break;
-            //    }
+            if (e.Source is not TextBox && e.Source is not ListBoxItem)
+                switch (e.Key)
+                {
+                    case Key.Q:
+                        ViewModel.OpenSettingsCommand();
+                        break;
+                    case Key.A:
+                        ViewModel.SelectedTab = Tab.Tracks;
+                        break;
+                    case Key.S:
+                        ViewModel.SelectedTab = Tab.Artists;
+                        break;
+                    case Key.D:
+                        ViewModel.SelectedTab = Tab.Albums;
+                        break;
+                    case Key.F:
+                        ViewModel.SelectedTab = Tab.Playlists;
+                        break;
+                    case Key.G:
+                        ViewModel.SelectedTab = Tab.Import;
+                        break;
+                    case Key.E:
+                        ViewModel.OpenSearchCommand();
+                        break;
+                    case Key.R:
+                        ViewModel.ShowAuxiliaryPane(Pane.TrackInfo, openleft: true);
+                        break;
+                    case Key.W:
+                        ViewModel.OpenQueueManagementCommand();
+                        break;
+                    case Key.Space:
+                        ViewModel.PlayPauseCommand();
+                        break;
+                }
             switch (e.Key)
             {
                 case Key.OemTilde:

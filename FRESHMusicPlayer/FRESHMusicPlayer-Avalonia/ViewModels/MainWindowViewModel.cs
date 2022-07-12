@@ -411,13 +411,7 @@ namespace FRESHMusicPlayer.ViewModels
                 {
                     Pane.Settings => new Views.Settings().SetThings(Program.Config, Library),
                     Pane.QueueManagement => new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer),
-                    Pane.Search => new UserControl
-                    {
-                        Content = new TextBlock
-                        {
-                            Text = "Search"
-                        }
-                    },
+                    Pane.Search => new Search().SetStuff(this),
                     Pane.TrackInfo => new TrackInfo().SetStuff(Player),
                     Pane.Notifications => new UserControl
                     {
@@ -432,13 +426,6 @@ namespace FRESHMusicPlayer.ViewModels
                 };
             }
         }
-
-        //private int auxPaneWidth = 0;
-        public int AuxPaneWidth => 300;
-        //{
-        //    get => auxPaneWidth;
-        //    set => this.RaiseAndSetIfChanged(ref auxPaneWidth, value);
-        //}
 
         private Dock auxPaneDock = Dock.Right;
         public Dock AuxPaneDock
@@ -606,25 +593,18 @@ namespace FRESHMusicPlayer.ViewModels
 #endregion
 
 #region NavBar
-        public void OpenSettingsCommand()
-        {
-            ShowAuxiliaryPane(Pane.Settings, 335);
-        }
+        public void OpenSettingsCommand() => ShowAuxiliaryPane(Pane.Settings, 335);
 
-        public void OpenQueueManagementCommand()
-        {
-            ShowAuxiliaryPane(Pane.QueueManagement, 335);
-        }
+        public void OpenQueueManagementCommand() => ShowAuxiliaryPane(Pane.QueueManagement, 335);
 
         public void OpenPlaylistManagementCommand()
         {
             new PlaylistManagement().SetStuff(this, Player.FilePath ?? null).Show(Window);
         }
 
-        public void OpenLyricsCommand()
-        {
-            ShowAuxiliaryPane(Pane.Lyrics, openleft: true);
-        }
+        public void OpenLyricsCommand() => ShowAuxiliaryPane(Pane.Lyrics, openleft: true);
+
+        public void OpenSearchCommand() => ShowAuxiliaryPane(Pane.Search);
 
         public void OpenTagEditorCommand()
         {
