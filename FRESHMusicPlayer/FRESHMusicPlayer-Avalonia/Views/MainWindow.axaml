@@ -136,7 +136,7 @@
 							<ColumnDefinition Width="1*"/>
 							<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
-						<Slider x:Name="VolumeSlider" Grid.Column="0" Maximum="1" Value="{Binding Volume}">
+						<Slider x:Name="VolumeSlider" Grid.Column="0" Maximum="1" Width="104" HorizontalAlignment="Right" Value="{Binding Volume}">
 							<Slider.Transitions>
 								<Transitions>
 									<DoubleTransition Property="Opacity" Duration="0:0:0.25"/>

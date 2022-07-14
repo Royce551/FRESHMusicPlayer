@@ -492,12 +492,13 @@ namespace FRESHMusicPlayer.ViewModels
                     Player.CurrentTime.Add(TimeSpan.FromSeconds(Program.Config.FilePosition));
                 }
             }
-            //await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Program.Config.CurrentTab, DispatcherPriority.ApplicationIdle);
+
+            SelectedTab = Program.Config.CurrentTab;
             // this delays the tab switch until avalonia is ready
-            
+
             HandleIntegrations();
 
-            //(GetMainWindow() as MainWindow).RootPanel.Opacity = 1; // this triggers the startup fade
+            await Dispatcher.UIThread.InvokeAsync(() => (GetMainWindow() as MainWindow).RootPanel.Opacity = 1, DispatcherPriority.ApplicationIdle); // this triggers the startup fade
             await PerformAutoImport();
         }
 
@@ -545,7 +546,7 @@ namespace FRESHMusicPlayer.ViewModels
             Library?.Database.Dispose();
             Integrations.Dispose();
             Program.Config.Volume = Volume;
-            //Program.Config.CurrentTab = SelectedTab;
+            Program.Config.CurrentTab = SelectedTab;
             if (Player.FileLoaded)
             {
                 Program.Config.FilePath = Player.FilePath;

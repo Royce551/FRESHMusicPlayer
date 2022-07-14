@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FRESHMusicPlayer.ViewModels;
+using System.Collections.Generic;
 
 namespace FRESHMusicPlayer.Handlers.Configuration
 {
@@ -51,7 +52,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// <summary>
         /// The last tab FMP was on before closing
         /// </summary>
-        public int CurrentTab { get; set; } = 0;
+        public Tab CurrentTab { get; set; } = Tab.Import;
         /// <summary>
         /// Directories to scan for tracks to import from on startup
         /// </summary>

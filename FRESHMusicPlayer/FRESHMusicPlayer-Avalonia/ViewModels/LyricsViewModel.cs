@@ -1,4 +1,5 @@
 ﻿using ATL;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using FRESHMusicPlayer.Handlers.Lyrics;
 using ReactiveUI;
@@ -48,6 +49,8 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void Update()
         {
+            if (!MainWindow.Player.FileLoaded) return;
+
             var track = new Track(MainWindow.Player.FilePath);
 
             CoverArt = track.EmbeddedPictures.Count <= 0 ? null : new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));
@@ -56,16 +59,22 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 TimedLyrics = new LRCTimedLyricsProvider(MainWindow.Player.FilePath);
                 Text = string.Empty;
+                TextMinus2 = TextMinus1 = TextPlus1 = TextPlus2 = string.Empty;
+                FontWeight = FontWeight.Bold;
             }
             else if (!string.IsNullOrWhiteSpace(track.Lyrics.UnsynchronizedLyrics)) // Embedded untimed lyrics
             {
                 Text = track.Lyrics.UnsynchronizedLyrics;
                 TimedLyrics = null;
+                TextMinus2 = TextMinus1 = TextPlus1 = TextPlus2 = string.Empty;
+                FontWeight = FontWeight.Regular;
             }
             else // No lyrics
             {
                 Text = Properties.Resources.Lyrics_NoLyrics;
                 TimedLyrics = null;
+                TextMinus2 = TextMinus1 = TextPlus1 = TextPlus2 = string.Empty;
+                FontWeight = FontWeight.Regular;
             }
         }
 
@@ -98,6 +107,13 @@ namespace FRESHMusicPlayer.ViewModels
         {
             get => textPlus2;
             set => this.RaiseAndSetIfChanged(ref textPlus2, value);
+        }
+
+        private FontWeight fontWeight = FontWeight.Regular;
+        public FontWeight FontWeight
+        {
+            get => fontWeight;
+            set => this.RaiseAndSetIfChanged(ref fontWeight, value);
         }
 
         private Bitmap coverArt;

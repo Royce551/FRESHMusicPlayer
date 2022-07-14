@@ -4,11 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 		     xmlns:resx ="clr-namespace:FRESHMusicPlayer.Properties"
+			 xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
              x:Class="FRESHMusicPlayer.Views.Search">
 	<UserControl.DataContext>
 		<vm:SearchViewModel/>
 	</UserControl.DataContext>
+	<UserControl.Resources>
+		<svg:SvgImage x:Key="Play" Source="/Assets/play.svg"/>
+		<svg:SvgImage x:Key="Enqueue" Source="/Assets/enqueue.svg"/>
+		<svg:SvgImage x:Key="Delete" Source="/Assets/delete.svg"/>
+	</UserControl.Resources>
 
 	<DockPanel>
 		<TextBox x:Name="SearchBox" DockPanel.Dock="Top" Margin="10,5" Watermark="Type here to search!" Text="{Binding Search}" KeyDown="OnKeyDown"/>

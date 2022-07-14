@@ -128,7 +128,7 @@ namespace FRESHMusicPlayer.Views
 
         private async void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Source is not TextBox && e.Source is not ListBoxItem)
+            if ((e.Source is not TextBox && e.Source is not ListBoxItem) || e.KeyModifiers.HasFlag(KeyModifiers.Control))
                 switch (e.Key)
                 {
                     case Key.Q:
