@@ -1,6 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     >
+    <Style x:Key="KeyboardFocusRing">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="-2" StrokeThickness="2" Stroke="{StaticResource PrimaryTextColor}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <!--Button-->
     <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -8,6 +18,7 @@
         <Setter Property="Background" Value="{StaticResource ControlColor}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="Padding" Value="20,1"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -107,6 +118,7 @@
             Value="Transparent" />
         <Setter Property="Width"
             Value="7" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
@@ -296,6 +308,7 @@
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinHeight" Value="21" />
@@ -351,6 +364,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="BorderBrush" Value="{StaticResource ControlColor}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -481,6 +495,7 @@
     <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
         <Setter Property="Background" Value="{StaticResource ControlColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ControlColor}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -531,6 +546,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
     </Style>
     
     <!--ListBox-->

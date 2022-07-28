@@ -91,8 +91,8 @@
 
                 <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" Style="{StaticResource Subheader}"/>
-                <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}"/>
-                <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"/>
+                <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}" FocusVisualStyle="{StaticResource KeyboardFocusRing}"/>
+                <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"  FocusVisualStyle="{StaticResource KeyboardFocusRing}"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_MAINTENANCE}" Style="{StaticResource Header}"/>
 
