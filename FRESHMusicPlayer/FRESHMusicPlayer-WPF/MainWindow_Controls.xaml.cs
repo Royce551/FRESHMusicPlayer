@@ -21,11 +21,11 @@ namespace FRESHMusicPlayer
     public partial class MainWindow
     {
         // Controls Box
-        private void ShuffleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShuffleMethod();
-        private void RepeatOneButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => RepeatOneMethod();
-        private void PreviousButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PreviousTrackMethod();
-        private void PlayPauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => PlayPauseMethod();
-        private void NextTrackButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => NextTrackMethod();
+        private void ShuffleButton_MouseLeftButtonDown(object sender, RoutedEventArgs e) => ShuffleMethod();
+        private void RepeatOneButton_MouseLeftButtonDown(object sender, RoutedEventArgs e) => RepeatOneMethod();
+        private void PreviousButton_MouseLeftButtonDown(object sender, RoutedEventArgs e) => PreviousTrackMethod();
+        private void PlayPauseButton_MouseLeftButtonDown(object sender, RoutedEventArgs e) => PlayPauseMethod();
+        private void NextTrackButton_MouseLeftButtonDown(object sender, RoutedEventArgs e) => NextTrackMethod();
         private bool isDragging = false;
         private void ProgressBar_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
@@ -73,7 +73,7 @@ namespace FRESHMusicPlayer
             Player.AvoidNextQueue = false;
             ProgressTimer.Start(); // resync the progress timer
         }
-        private void TrackTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(Pane.TrackInfo, 235, true);
+        private void TrackTitle_MouseLeftButtonDown(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.TrackInfo, 235, true);
         private void TrackContextTagEditor_Click(object sender, RoutedEventArgs e)
         {
             var tracks = new List<string>();
@@ -125,7 +125,7 @@ namespace FRESHMusicPlayer
             }
         }
 
-        private void ProgressIndicator2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ProgressIndicator2_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (Player.FileLoaded)
             {
@@ -151,15 +151,15 @@ namespace FRESHMusicPlayer
         }
 
         // NavBar
-        private void TracksTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Tab.Tracks);
-        private void ArtistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Tab.Artists);
-        private void AlbumsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Tab.Albums);
-        private void PlaylistsTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Tab.Playlists);
-        private void ImportTab_MouseDown(object sender, MouseButtonEventArgs e) => ChangeTabs(Tab.Import);
-        private void SettingsButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(Pane.Settings, 335);
-        private void SearchButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(Pane.Search, 335);
-        private void QueueManagementButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(Pane.QueueManagement, 335);
-        private void NotificationButton_Click(object sender, MouseButtonEventArgs e) => ShowAuxilliaryPane(Pane.Notifications);
+        private void TracksTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Tracks);
+        private void ArtistsTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Artists);
+        private void AlbumsTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Albums);
+        private void PlaylistsTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Playlists);
+        private void ImportTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Import);
+        private void SettingsButton_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.Settings, 335);
+        private void SearchButton_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.Search, 335);
+        private void QueueManagementButton_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.QueueManagement, 335);
+        private void NotificationButton_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.Notifications);
 
         private void NotificationHandler_NotificationInvalidate(object sender, EventArgs e)
         {
