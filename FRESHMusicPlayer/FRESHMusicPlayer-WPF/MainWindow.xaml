@@ -40,26 +40,26 @@
                 <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" Foreground="{StaticResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             
-            <Button Style="{StaticResource LinkButton}" x:Name="SettingsButton" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="SettingsButton_Click" Cursor="Hand">
+            <Button Style="{StaticResource LinkButton}" x:Name="SettingsButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="SettingsButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Button>
-            <Button Style="{StaticResource LinkButton}" x:Name="QueueManagementButton" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="QueueManagementButton_Click" Cursor="Hand">
+            <Button Style="{StaticResource LinkButton}" x:Name="QueueManagementButton" ToolTip="{x:Static resx:Resources.QUEUEMANAGEMENT_QUEUEHEADER}" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="QueueManagementButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Button>
             <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
-            <Button Style="{StaticResource LinkButton}" x:Name="NotificationButton" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" Click="NotificationButton_Click" Visibility="Collapsed" Cursor="Hand">
+            <Button Style="{StaticResource LinkButton}" x:Name="NotificationButton" ToolTip="{x:Static resx:Resources.NOTIFICATIONS_TITLE}" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" Click="NotificationButton_Click" Visibility="Collapsed" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
                     <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
             </Button>
-            <Button Style="{StaticResource LinkButton}" x:Name="SearchButton" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" Click="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
+            <Button Style="{StaticResource LinkButton}" x:Name="SearchButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SEARCH}" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" Click="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
                 <Canvas>
                     <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
                 </Canvas>
