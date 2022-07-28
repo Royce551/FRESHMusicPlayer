@@ -115,11 +115,11 @@ namespace FRESHMusicPlayer.Views
             }
         }
 
-        private void OnTracksPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Tracks;
-        private void OnArtistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Artists;
-        private void OnAlbumsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Albums;
-        private void OnPlaylistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Playlists;
-        private void OnImportPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Import;
+        private void OnTracksPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Tracks);
+        private void OnArtistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Artists);
+        private void OnAlbumsPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Albums);
+        private void OnPlaylistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Playlists);
+        private void OnImportPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Import);
 
         private void OnPointerWheelChanged(object sender, PointerWheelEventArgs e)
         {
@@ -135,19 +135,19 @@ namespace FRESHMusicPlayer.Views
                         ViewModel.OpenSettingsCommand();
                         break;
                     case Key.A:
-                        ViewModel.SelectedTab = Tab.Tracks;
+                        ViewModel.ShowTab(Tab.Tracks);
                         break;
                     case Key.S:
-                        ViewModel.SelectedTab = Tab.Artists;
+                        ViewModel.ShowTab(Tab.Artists);
                         break;
                     case Key.D:
-                        ViewModel.SelectedTab = Tab.Albums;
+                        ViewModel.ShowTab(Tab.Albums);
                         break;
                     case Key.F:
-                        ViewModel.SelectedTab = Tab.Playlists;
+                        ViewModel.ShowTab(Tab.Playlists);
                         break;
                     case Key.G:
-                        ViewModel.SelectedTab = Tab.Import;
+                        ViewModel.ShowTab(Tab.Import);
                         break;
                     case Key.E:
                         ViewModel.OpenSearchCommand();

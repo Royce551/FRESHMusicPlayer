@@ -348,21 +348,7 @@ namespace FRESHMusicPlayer.ViewModels
         public FontWeight PlaylistsTabWeight => SelectedTab == Tab.Playlists ? FontWeight.Bold : FontWeight.Regular;
         public FontWeight ImportTabWeight => SelectedTab == Tab.Import ? FontWeight.Bold : FontWeight.Regular;
 
-        private Tab selectedTab = Tab.Tracks;
-        public Tab SelectedTab
-        {
-            get => selectedTab;
-            set
-            {
-                selectedTab = value;
-                this.RaisePropertyChanged(nameof(MainContent));
-                this.RaisePropertyChanged(nameof(TracksTabWeight));
-                this.RaisePropertyChanged(nameof(ArtistsTabWeight));
-                this.RaisePropertyChanged(nameof(AlbumsTabWeight));
-                this.RaisePropertyChanged(nameof(PlaylistsTabWeight));
-                this.RaisePropertyChanged(nameof(ImportTabWeight));
-            }
-        }
+        public Tab SelectedTab { get; private set; } = Tab.Tracks;
         private Pane selectedPane = Pane.None;
         public Pane SelectedPane
         {
@@ -374,35 +360,54 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
+        private UserControl mainContent;
         public UserControl MainContent
         {
-            get
+            get => mainContent;
+            set => this.RaiseAndSetIfChanged(ref mainContent, value);
+        }
+
+        public void ShowTab(Tab tab, string search = null)
+        {
+            SelectedTab = tab;
+            this.RaisePropertyChanged(nameof(MainContent));
+            this.RaisePropertyChanged(nameof(TracksTabWeight));
+            this.RaisePropertyChanged(nameof(ArtistsTabWeight));
+            this.RaisePropertyChanged(nameof(AlbumsTabWeight));
+            this.RaisePropertyChanged(nameof(PlaylistsTabWeight));
+            this.RaisePropertyChanged(nameof(ImportTabWeight));
+
+            switch (SelectedTab)
             {
-                switch (SelectedTab)
-                {
-                    case Tab.Tracks:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Artists:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Albums:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Playlists:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Import:
-                        return new ImportTab().SetStuff(this);
-                    case Tab.Fullscreen:
-                        return new UserControl
+                case Tab.Tracks:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Artists:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Albums:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Playlists:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Import:
+                    MainContent = new ImportTab().SetStuff(this);
+                    break;
+                case Tab.Fullscreen:
+                    MainContent = new UserControl
+                    {
+                        Content = new TextBlock
                         {
-                            Content = new TextBlock
-                            {
-                                Text = "Fullscreen Page"
-                            }
-                        };
-                    default:
-                        throw new Exception("???");
-                }
+                            Text = "Fullscreen Page"
+                        }
+                    };
+                    break;
+                default:
+                    throw new Exception("???");
             }
         }
+
         public UserControl AuxPaneContent
         {
             get
@@ -559,6 +564,10 @@ namespace FRESHMusicPlayer.ViewModels
             await ConfigurationHandler.Write(Program.Config);
             LoggingHandler.Log("Goodbye!");
         }
+
+        public void GoToArtistCommand() => ShowTab(Tab.Artists, Player.Metadata.Artists[0]);
+
+        public void GoToAlbumCommand() => ShowTab(Tab.Albums, Player.Metadata.Album);
 
         public async Task PerformAutoImport()
         {
