@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"  
              d:DesignHeight="40" d:DesignWidth="344" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <Grid x:Name="MainPanel" Background="{StaticResource ForegroundColor}">
         <Grid.RowDefinitions>
@@ -20,8 +20,8 @@
         <Path x:Name="PlayButton" Data="{StaticResource PlayIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,4,31,5" HorizontalAlignment="Right" Width="18.426" Visibility="Collapsed"/>
         <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Visibility="Collapsed"/>
 
-        <Rectangle x:Name="PlayButtonHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,4,31,5" HorizontalAlignment="Right" Width="19" Opacity="0" MouseLeftButtonDown="PlayButtonClick" Cursor="Hand" Visibility="Collapsed"/>
-        <Rectangle x:Name="DeleteButtonHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" MouseLeftButtonDown="DeleteButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+        <Button Style="{StaticResource LinkButton}" x:Name="PlayButtonHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,4,31,5" HorizontalAlignment="Right" Width="19" Opacity="0" Click="PlayButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+        <Button Style="{StaticResource LinkButton}" x:Name="DeleteButtonHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" Click="DeleteButtonClick" Cursor="Hand" Visibility="Collapsed"/>
 
     </Grid>
 

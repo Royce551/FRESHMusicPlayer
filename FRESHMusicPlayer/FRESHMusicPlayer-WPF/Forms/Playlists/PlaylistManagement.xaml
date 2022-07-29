@@ -15,7 +15,7 @@
         <ScrollViewer Grid.Row="0">
             <StackPanel Background="{StaticResource BackgroundColor}" Grid.Row="1">
                 <TextBlock x:Name="EditingHeader" Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="Which playlist do you want to add this track to?" TextWrapping="Wrap" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"/>
-                <ListBox x:Name="PlaylistBox" Background="{StaticResource ForegroundColor}" Margin="15,10,0,0" MinHeight="250" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
+                <ListBox x:Name="PlaylistBox" KeyboardNavigation.TabNavigation="Continue" SelectionChanged="PlaylistBox_SelectionChanged" Background="{StaticResource ForegroundColor}" Margin="15,10,0,0" MinHeight="250" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
                     
                 </ListBox>
                 <Grid Height="30" Margin="15,10,0,10">

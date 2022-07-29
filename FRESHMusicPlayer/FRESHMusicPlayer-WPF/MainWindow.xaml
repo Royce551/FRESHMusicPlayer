@@ -178,7 +178,7 @@
                 </Slider>
             </Grid>
         </Border>
-        <ContentControl x:Name="RightFrame" DockPanel.Dock="Right" Visibility="Collapsed" Width="235" IsTabStop="False" TabIndex="1" KeyboardNavigation.TabNavigation="Local"/>
+        <ContentControl x:Name="RightFrame" IsTabStop="False" DockPanel.Dock="Right" Visibility="Collapsed" Width="235" TabIndex="1" KeyboardNavigation.TabNavigation="Local"/>
 
         <ContentControl x:Name="ContentFrame" IsTabStop="False" TabIndex="0" KeyboardNavigation.TabNavigation="Local"/>
 

@@ -87,5 +87,19 @@ namespace FRESHMusicPlayer.Forms.Playlists
             }
             InitFields();
         }
+
+        private void PlaylistBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                if (item is PlaylistEntry uc)
+                    uc.ShowButtons();
+            }
+            foreach (var item in e.RemovedItems)
+            {
+                if (item is PlaylistEntry uc)
+                    uc.HideButtons();
+            }
+        }
     }
 }

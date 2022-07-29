@@ -82,23 +82,27 @@ namespace FRESHMusicPlayer.Pages
             TitleLabel.Text = Title;
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e) => ShowButtons();
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e) => HideButtons();
+
+        public void ShowButtons()
         {
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Visible;
         }
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        public void HideButtons()
         {
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Collapsed;
         }
 
-        private async void PlayButtonClick(object sender, MouseButtonEventArgs e)
+        private async void PlayButtonClick(object sender, RoutedEventArgs e)
         {
             player.Queue.Position = Index;
             await player.PlayAsync();
         }
 
-        private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => player.Queue.Remove(Index);
+        private void DeleteButtonClick(object sender, RoutedEventArgs e) => player.Queue.Remove(Index);
 
         private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -108,5 +112,6 @@ namespace FRESHMusicPlayer.Pages
                 await player.PlayAsync();
             }
         }
+
     }
 }

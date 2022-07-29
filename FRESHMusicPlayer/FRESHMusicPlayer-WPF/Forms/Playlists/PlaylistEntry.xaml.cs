@@ -52,7 +52,11 @@ namespace FRESHMusicPlayer.Forms.Playlists
             AddButton.IsEnabled = true;
             RemoveButton.IsEnabled = false;
         }
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e) => ShowButtons();
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e) => HideButtons();
+
+        public void ShowButtons()
         {
             MiscButton.Visibility = Visibility.Visible;
             if (trackExists)
@@ -63,7 +67,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
             }
         }
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        public void HideButtons()
         {
             AddButton.Visibility = RemoveButton.Visibility = MiscButton.Visibility = AddThingButton.Visibility = Visibility.Collapsed;
         }

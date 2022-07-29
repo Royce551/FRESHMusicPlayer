@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -187,6 +188,43 @@ namespace FRESHMusicPlayer.Pages
         }
 
         private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void QueueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                if (item is QueueEntry uc)
+                    uc.ShowButtons();
+            }
+            foreach (var item in e.RemovedItems)
+            {
+                if (item is QueueEntry uc)
+                    uc.HideButtons();
+            }
+        }
+
+        private void QueueList_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            if (QueueList.IsKeyboardFocusWithin) return;
+
+            foreach (var item in QueueList.Items)
+            {
+                if (item is QueueEntry uc)
+                    uc.HideButtons();
+            }
+            QueueList.SelectedItem = null;
+        }
+
+
+        private void UserControl_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Visible;
+        }
+
+        private void UserControl_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Collapsed;
         }
