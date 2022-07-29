@@ -46,8 +46,14 @@ namespace FRESHMusicPlayer.Handlers.Notifications
             if (Notification.OnButtonClicked?.Invoke() ?? true) notificationHandler.Remove(Notification);
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e) => CloseButton.Visibility = Visibility.Visible;
+        private void CloseButton_Click(object sender, RoutedEventArgs e) => notificationHandler.Remove(Notification);
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e) => CloseButton.Visibility = Visibility.Collapsed;
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e) => CloseButton.Opacity = 1;
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e) => CloseButton.Opacity = 0;
+
+        private void UserControl_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => CloseButton.Opacity = 1;
+
+        private void UserControl_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) => CloseButton.Opacity = 0;
     }
 }

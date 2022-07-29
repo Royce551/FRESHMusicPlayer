@@ -259,6 +259,7 @@ namespace FRESHMusicPlayer
 
             sb.Begin(RightFrame);
 
+            RightFrame.Focus();
             CurrentPane = pane;
         }
         public async Task HideAuxilliaryPane(bool animate = true)
@@ -291,6 +292,10 @@ namespace FRESHMusicPlayer
                 new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
             navBarStoryboard.Begin(MainBar);
             await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
+
+            ControlsBox.Focusable = true;
+            MainBar.Focusable = true;
+
             IsControlsBoxVisible = true;
         }
         public async void HideControlsBox()
@@ -309,6 +314,10 @@ namespace FRESHMusicPlayer
                 new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
             navBarStoryboard.Begin(MainBar);
             await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
+
+            ControlsBox.Focusable = false;
+            MainBar.Focusable = false;
+
             IsControlsBoxVisible = false;
         }
         public void ChangeTabs(Tab tab, string search = null)
@@ -350,6 +359,7 @@ namespace FRESHMusicPlayer
             }
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
+            ContentFrame.Focus();
         }
 
 

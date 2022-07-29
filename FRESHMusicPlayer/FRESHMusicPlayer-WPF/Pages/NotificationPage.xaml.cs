@@ -38,7 +38,7 @@ namespace FRESHMusicPlayer.Pages
             window.NotificationHandler.NotificationInvalidate -= InvalidateNotifications;
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void TextBlock_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             window.NotificationHandler.ClearAll();
         }

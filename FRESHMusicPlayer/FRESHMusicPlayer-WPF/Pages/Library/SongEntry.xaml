@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FRESHMusicPlayer.Pages.Library"
              xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" KeyboardNavigation.IsTabStop="True"
              d:DesignHeight="40" d:DesignWidth="344" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -44,9 +44,9 @@
             <Path x:Name="QueueButton" Data="{StaticResource AddQueueIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="1" Visibility="Collapsed"/>
             <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Opacity="1" Visibility="Collapsed"/>
 
-            <Rectangle x:Name="PlayHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0" MouseLeftButtonDown="PlayButtonClick" Cursor="Hand" Visibility="Collapsed"/>
-            <Rectangle x:Name="QueueHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0" MouseLeftButtonDown="QueueButtonClick" Cursor="Hand" Visibility="Collapsed"/>
-            <Rectangle x:Name="DeleteHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" MouseLeftButtonDown="DeleteButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+            <Button Style="{StaticResource LinkButton}" AutomationProperties.IsOffscreenBehavior="Onscreen" x:Name="PlayHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0" Click="PlayButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+            <Button Style="{StaticResource LinkButton}" AutomationProperties.IsOffscreenBehavior="Onscreen" x:Name="QueueHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0" Click="QueueButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+            <Button Style="{StaticResource LinkButton}" AutomationProperties.IsOffscreenBehavior="Onscreen" x:Name="DeleteHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" Click="DeleteButtonClick" Cursor="Hand" Visibility="Collapsed"/>
         </Grid>
     </Border>
     

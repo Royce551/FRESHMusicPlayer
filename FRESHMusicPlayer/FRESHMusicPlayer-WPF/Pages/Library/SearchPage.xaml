@@ -47,12 +47,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <ListBox x:Name="TracksPanel"  Grid.Row="1" Background="{StaticResource SecondaryColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource SecondaryColor}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Focusable" Value="False"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
+        <ListBox x:Name="TracksPanel"  Grid.Row="1" Background="{StaticResource SecondaryColor}" KeyboardNavigation.TabNavigation="Continue" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource SecondaryColor}" SelectionChanged="TracksPanel_SelectionChanged" LostKeyboardFocus="TracksPanel_LostKeyboardFocus">
         </ListBox>
         <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Background="{StaticResource SecondaryColor}">
             <Grid.ColumnDefinitions>

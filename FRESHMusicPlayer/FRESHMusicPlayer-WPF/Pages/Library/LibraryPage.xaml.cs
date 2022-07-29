@@ -222,6 +222,30 @@ namespace FRESHMusicPlayer.Pages.Library
             await window.Player.PlayAsync();
         }
 
-        
+        private void TracksPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                if (item is SongEntry uc)
+                    uc.ShowButtons();
+            }
+            foreach (var item in e.RemovedItems)
+            {
+                if (item is SongEntry uc)
+                    uc.HideButtons();
+            }
+        }
+
+        private void TracksPanel_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            if (TracksPanel.IsKeyboardFocusWithin) return;
+
+            foreach (var item in TracksPanel.Items)
+            {
+                if (item is SongEntry uc)
+                    uc.HideButtons();
+            }
+            TracksPanel.SelectedItem = null;
+        }
     }
 }

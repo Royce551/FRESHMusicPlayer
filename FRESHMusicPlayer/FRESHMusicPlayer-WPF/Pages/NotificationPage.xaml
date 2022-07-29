@@ -13,10 +13,13 @@
             <RowDefinition Height="33"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="NotificationList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="False" Background="{StaticResource SecondaryColor}" Grid.Row="1" BorderBrush="{x:Null}">
+        <ListBox x:Name="NotificationList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" KeyboardNavigation.TabNavigation="Local" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="False" Background="{StaticResource SecondaryColor}" Grid.Row="1" BorderBrush="{x:Null}">
         </ListBox>
         <TextBlock TextWrapping="Wrap" Text="{x:Static resx:Resources.NOTIFICATIONS_TITLE}" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Bold" FontSize="18" Margin="5,5,116,5"/>
-        <TextBlock Text="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" Foreground="{StaticResource PrimaryTextColor}" FontSize="10" Margin="0,10,6,8" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" HorizontalAlignment="Right"/>
+        <Button Style="{StaticResource LinkButton}" Margin="0,10,6,8" HorizontalAlignment="Right" Click="TextBlock_MouseLeftButtonDown">
+            <TextBlock Text="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" Foreground="{StaticResource PrimaryTextColor}" FontSize="10"/>
+        </Button>
+        
     </Grid>
 
 </UserControl>

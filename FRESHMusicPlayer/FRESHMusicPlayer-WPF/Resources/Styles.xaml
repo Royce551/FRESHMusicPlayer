@@ -5,7 +5,7 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="-2" StrokeThickness="2" Stroke="{StaticResource PrimaryTextColor}"/>
+                    <Rectangle Margin="0" StrokeThickness="2" IsHitTestVisible="False" Stroke="{StaticResource PrimaryTextColor}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -136,6 +136,7 @@
             Value="Transparent" />
         <Setter Property="Width"
             Value="7" />
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -230,6 +231,7 @@
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="Focusable" Value="false" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
@@ -242,6 +244,7 @@
     <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
@@ -261,6 +264,7 @@
     <Style x:Key="SliderThumb" TargetType="Thumb">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
@@ -571,6 +575,14 @@
     </Style>
     
     <!--ListBox-->
+
+    <Style x:Key="{x:Type ListBox}" TargetType="{x:Type ListBox}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+    </Style>
+
+    <Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+    </Style>
 
     <!--<Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Template">

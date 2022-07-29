@@ -17,12 +17,12 @@
             <ColumnDefinition x:Name="LeftSide" Width="222"/>
             <ColumnDefinition x:Name="RightSide"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="TracksPanel"  Grid.Column="1" Background="{StaticResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}" ScrollViewer.PanningMode="Both">
-            <ListBox.ItemContainerStyle>
+        <ListBox x:Name="TracksPanel" KeyboardNavigation.TabNavigation="Continue" Grid.Column="1" Background="{StaticResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}" ScrollViewer.PanningMode="Both" SelectionChanged="TracksPanel_SelectionChanged" LostKeyboardFocus="TracksPanel_LostKeyboardFocus">
+            <!--<ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>
                 </Style>
-            </ListBox.ItemContainerStyle>
+            </ListBox.ItemContainerStyle>-->
         </ListBox>
 
         <GridSplitter

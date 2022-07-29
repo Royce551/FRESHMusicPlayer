@@ -36,17 +36,21 @@ namespace FRESHMusicPlayer.Pages.Library
             Title = title;
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e) => ShowButtons();
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e) => HideButtons();
+
+        public void ShowButtons()
         {
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Visible;
         }
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        public void HideButtons()
         {
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Collapsed;
         }
 
-        private async void PlayButtonClick(object sender, MouseButtonEventArgs e)
+        private async void PlayButtonClick(object sender, RoutedEventArgs e)
         {
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
@@ -70,9 +74,9 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        private void QueueButtonClick(object sender, MouseButtonEventArgs e) => player.Queue.Add(FilePath);
+        private void QueueButtonClick(object sender, RoutedEventArgs e) => player.Queue.Add(FilePath);
 
-        private void DeleteButtonClick(object sender, MouseButtonEventArgs e)
+        private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
             library.RaiseLibraryChanged = false;
             library.Remove(FilePath);
@@ -135,5 +139,7 @@ namespace FRESHMusicPlayer.Pages.Library
         }
 
         private void OpenInFileExplorer_Click(object sender, RoutedEventArgs e) => Process.Start(Path.GetDirectoryName(FilePath));
+
+        
     }
 }
