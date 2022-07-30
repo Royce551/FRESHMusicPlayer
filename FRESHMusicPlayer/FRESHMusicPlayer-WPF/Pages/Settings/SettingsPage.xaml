@@ -66,6 +66,13 @@
                 <Button x:Name="General_AddFolderButton" Content="{x:Static resx:Resources.SETTINGS_AUTOIMPORT_ADDFOLDER}" TextBlock.FontSize="16" Margin="0,5" Click="General_AddFolderButton_Click"/>
                 <Button x:Name="General_ClearButton" Content="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" TextBlock.FontSize="16" Click="General_ClearButton_Click"/>
 
+                <TextBlock Text="Auto Library" Style="{StaticResource Subheader}"/>
+                <CheckBox x:Name="General_AutoLibraryCheck" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_AutoLibraryChanged" Unchecked="General_AutoLibraryChanged">
+                    <TextBlock FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Text="Automatically organize imported tracks into a folder structure" TextWrapping="Wrap"/>
+                </CheckBox>
+                <TextBlock x:Name="General_AutoLibraryTextBlock" Text="Currently importing to something" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" TextWrapping="Wrap"/>
+                <Button x:Name="General_AutoLibraryChooseButton" TextBlock.FontSize="16" Content="Choose folder" Click="General_AutoLibraryChooseButton_Click"/>
+
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>

@@ -77,6 +77,10 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// FMP was updated.
         /// </summary>
         public string LastRecordedVersion { get; set; }
+
+        public bool AutoLibrary { get; set; } = false;
+
+        public string AutoLibraryPath { get; set; }
     }
 
 }

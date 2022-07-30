@@ -4,6 +4,7 @@ using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,9 @@ namespace FRESHMusicPlayer.Handlers
         {
             var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
+
+            if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
+
             base.Import(tracks);
             dispatcher.Invoke(() =>
             {
@@ -44,6 +48,9 @@ namespace FRESHMusicPlayer.Handlers
         {
             var notification = new Notification { ContentText = $"Importing {tracks.Length} tracks" };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
+
+            if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
+
             base.Import(tracks);
             dispatcher.Invoke(() =>
             {
@@ -88,6 +95,9 @@ namespace FRESHMusicPlayer.Handlers
         public override void Import(string path)
         {
             base.Import(path);
+
+            if (App.Config.AutoLibrary) path = HandleAutoLibrary(new string[] { path })[0];
+
             if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
         }
 
@@ -101,6 +111,22 @@ namespace FRESHMusicPlayer.Handlers
         {
             base.RemoveTrackFromPlaylist(playlist, path);
             if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+        }
+
+        private List<string> HandleAutoLibrary(string[] tracks)
+        {
+            var paths = new List<string>();
+            foreach (var track in tracks)
+            {
+                var metadata = new Track(track);
+                
+                var path = Path.Combine(App.Config.AutoLibraryPath, metadata.Album, metadata.Artist.Split(';')[0]);
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                var fullPath = Path.Combine(path, Path.GetFileName(track));
+                File.Move(track, fullPath);
+                paths.Add(fullPath);
+            }
+            return paths;
         }
 
         //public List<DatabaseQueue> GetAllQueues() FMP 10.2

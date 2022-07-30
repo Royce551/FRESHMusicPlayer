@@ -39,6 +39,7 @@ namespace FRESHMusicPlayer.Pages
             General_TrackingCheck.IsChecked = App.Config.PlaybackTracking;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
+            General_AutoLibraryCheck.IsChecked = App.Config.AutoLibrary;
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
             switch (App.Config.Language) // TODO: investigate making this less ugly
@@ -107,6 +108,10 @@ namespace FRESHMusicPlayer.Pages
             foreach (var path in App.Config.AutoImportPaths)
                 stringBuilder.AppendLine(path);
             General_AutoImportTextBlock.Text = stringBuilder.ToString();
+
+            General_AutoLibraryTextBlock.Text = $"Currently importing to {App.Config.AutoLibraryPath}";
+            UpdateAutoLibraryState(App.Config.AutoLibrary);
+
             pageInitialized = true;
         }
 
@@ -123,6 +128,20 @@ namespace FRESHMusicPlayer.Pages
                 AppRestartNeeded = false;
                 RestartNeededHeader.Visibility = Visibility.Collapsed;
                 RestartNowButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void UpdateAutoLibraryState(bool state)
+        {
+            if (state)
+            {
+                General_AutoLibraryTextBlock.Opacity = 1;
+                General_AutoLibraryChooseButton.IsEnabled = true;
+            }
+            else
+            {
+                General_AutoLibraryTextBlock.Opacity = 0.5f;
+                General_AutoLibraryChooseButton.IsEnabled = false;
             }
         }
 
@@ -143,6 +162,15 @@ namespace FRESHMusicPlayer.Pages
                 App.Config.IntegrateDiscordRPC = (bool)Integration_DiscordRPCCheck.IsChecked;
                 (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
             }        
+        }
+
+        private void General_AutoLibraryChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.AutoLibrary = (bool)General_AutoLibraryCheck.IsChecked;
+            }
+            UpdateAutoLibraryState(App.Config.AutoLibrary);
         }
 
         private void Integration_SMTCChanged(object sender, RoutedEventArgs e)
@@ -282,6 +310,16 @@ namespace FRESHMusicPlayer.Pages
         private void General_ClearButton_Click(object sender, RoutedEventArgs e)
         {
             App.Config.AutoImportPaths.Clear();
+            InitFields();
+        }
+
+        private void General_AutoLibraryChooseButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new WinForms.FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                    App.Config.AutoLibraryPath = dialog.SelectedPath;
+            }
             InitFields();
         }
     }

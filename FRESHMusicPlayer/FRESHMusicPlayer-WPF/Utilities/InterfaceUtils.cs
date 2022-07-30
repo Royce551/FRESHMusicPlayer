@@ -67,21 +67,21 @@ namespace FRESHMusicPlayer.Utilities
                         || name.EndsWith(".flac") || name.EndsWith(".aiff")
                         || name.EndsWith(".wma")
                         || name.EndsWith(".aac")).ToArray();
-                        if (enqueue) player.Queue.Add(paths);
                         if (import) await Task.Run(() => library.Import(paths));
+                        if (enqueue) player.Queue.Add(paths);
                     }
                     else
                     {
-                        if (enqueue) player.Queue.Add(track);
                         if (import) await Task.Run(() => library.Import(track));
+                        if (enqueue) player.Queue.Add(track);
                     }
                 }
 
             }
             else
             {
-                if (enqueue) player.Queue.Add(tracks);
                 if (import) await Task.Run(() => library.Import(tracks));
+                if (enqueue) player.Queue.Add(tracks);
             }
         }
         /// <summary>
