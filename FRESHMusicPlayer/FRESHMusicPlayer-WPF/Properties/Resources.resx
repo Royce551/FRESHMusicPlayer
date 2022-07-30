@@ -127,13 +127,13 @@
     <value>Go to</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value>Mini Player</value>
+    <value>Mini player</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
     <value>Pause after current track</value>
   </data>
   <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
-    <value>Focus Mode</value>
+    <value>Focus mode</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
     <value>Browse for folders</value>
@@ -154,13 +154,13 @@
     <value>Add to playlist</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value>Enqueue All</value>
+    <value>Enqueue all</value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
     <value>Open in File Explorer</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value>Play All</value>
+    <value>Play all</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
     <value>Lyrics</value>
@@ -169,7 +169,7 @@
     <value>No lyrics available</value>
   </data>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
-    <value>Untimed Lyrics</value>
+    <value>Untimed lyrics</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>Albums</value>
@@ -181,10 +181,10 @@
     <value>Import</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>Unknown Artist</value>
+    <value>Unknown artist</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value>Nothing Playing</value>
+    <value>Nothing playing</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
     <value>A playback error occured:
@@ -225,7 +225,7 @@ We'll skip to the next track for you</value>
     <value>Back</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value>Clear All</value>
+    <value>Clear all</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
     <value>Notifications</value>
@@ -259,7 +259,7 @@ Missing File: {0}</value>
     <value>Changelog</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value>Playlist Management</value>
+    <value>Playlist management</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
     <value>Create</value>
@@ -280,19 +280,19 @@ Missing File: {0}</value>
     <value>Rename</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value>Add Playlist</value>
+    <value>Add playlist</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value>Add Track</value>
+    <value>Add track</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value>Clear Queue</value>
+    <value>Clear queue</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
     <value>Queue</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Remaining Time: </value>
+    <value>Remaining time: </value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>About</value>
@@ -310,7 +310,7 @@ Missing File: {0}</value>
     <value>Add Folder</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value>Auto Update Mode</value>
+    <value>Auto update mode</value>
   </data>
   <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
     <value>Clean and update library</value>
@@ -339,7 +339,7 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>You are about to irreversibly clear your library. Are you sure?</value>
   </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value>Playtime Logging</value>
+    <value>Playtime logging</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
     <value>Reset settings to default</value>
@@ -384,10 +384,10 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>Prompt before updating</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value>Tag Editor</value>
+    <value>Tag editor</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>Album Artist</value>
+    <value>Album artist</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
     <value>Artist</value>
@@ -396,16 +396,16 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>The changes will be applied when you play a new track.</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value>Change File...</value>
+    <value>Change file...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
     <value>Composer</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value>Cover Art</value>
+    <value>Cover art</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value>Disc Number</value>
+    <value>Disc number</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
     <value>Editing </value>
@@ -432,7 +432,7 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>Title</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value>Track Number</value>
+    <value>Track number</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
     <value>Album</value>
@@ -453,10 +453,10 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>Not available</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value>Technical Info</value>
+    <value>Technical info</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value>Track Info</value>
+    <value>Track info</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
     <value>Track</value>

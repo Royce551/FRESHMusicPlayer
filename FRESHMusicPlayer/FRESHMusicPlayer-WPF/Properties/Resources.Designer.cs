@@ -88,7 +88,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mini Player.
+        ///   Looks up a localized string similar to Mini player.
         /// </summary>
         public static string CONTROLS_MINIPLAYER {
             get {
@@ -106,7 +106,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Focus Mode.
+        ///   Looks up a localized string similar to Focus mode.
         /// </summary>
         public static string FULLSCREEN_FOCUSMODE {
             get {
@@ -169,7 +169,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enqueue All.
+        ///   Looks up a localized string similar to Enqueue all.
         /// </summary>
         public static string LIBRARY_ENQUEUEALL {
             get {
@@ -187,7 +187,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play All.
+        ///   Looks up a localized string similar to Play all.
         /// </summary>
         public static string LIBRARY_PLAYALL {
             get {
@@ -214,7 +214,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Untimed Lyrics.
+        ///   Looks up a localized string similar to Untimed lyrics.
         /// </summary>
         public static string LYRICS_UNTIMEDLYRICS {
             get {
@@ -250,7 +250,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown Artist.
+        ///   Looks up a localized string similar to Unknown artist.
         /// </summary>
         public static string MAINWINDOW_NOARTIST {
             get {
@@ -259,7 +259,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nothing Playing.
+        ///   Looks up a localized string similar to Nothing playing.
         /// </summary>
         public static string MAINWINDOW_NOTHINGPLAYING {
             get {
@@ -460,7 +460,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear All.
+        ///   Looks up a localized string similar to Clear all.
         /// </summary>
         public static string NOTIFICATIONS_CLEAR_ALL {
             get {
@@ -478,7 +478,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Playlist Management.
+        ///   Looks up a localized string similar to Playlist management.
         /// </summary>
         public static string PLAYLISTMANAGEMENT {
             get {
@@ -541,7 +541,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Playlist.
+        ///   Looks up a localized string similar to Add playlist.
         /// </summary>
         public static string QUEUEMANAGEMENT_ADDPLAYLIST {
             get {
@@ -550,7 +550,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Track.
+        ///   Looks up a localized string similar to Add track.
         /// </summary>
         public static string QUEUEMANAGEMENT_ADDTRACK {
             get {
@@ -559,7 +559,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear Queue.
+        ///   Looks up a localized string similar to Clear queue.
         /// </summary>
         public static string QUEUEMANAGEMENT_CLEARQUEUE {
             get {
@@ -577,7 +577,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remaining Time: .
+        ///   Looks up a localized string similar to Remaining time: .
         /// </summary>
         public static string QUEUEMANAGEMENT_REMAININGTIME {
             get {
@@ -631,7 +631,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto Update Mode.
+        ///   Looks up a localized string similar to Auto update mode.
         /// </summary>
         public static string SETTINGS_AUTOUPDATEMODE {
             get {
@@ -714,7 +714,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Playtime Logging.
+        ///   Looks up a localized string similar to Playtime logging.
         /// </summary>
         public static string SETTINGS_PLAYBACKTRACKING {
             get {
@@ -849,7 +849,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag Editor.
+        ///   Looks up a localized string similar to Tag editor.
         /// </summary>
         public static string TAGEDITOR {
             get {
@@ -858,7 +858,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album Artist.
+        ///   Looks up a localized string similar to Album artist.
         /// </summary>
         public static string TAGEDITOR_ALBUMARTIST {
             get {
@@ -885,7 +885,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change File....
+        ///   Looks up a localized string similar to Change file....
         /// </summary>
         public static string TAGEDITOR_CHANGEFILE {
             get {
@@ -903,7 +903,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cover Art.
+        ///   Looks up a localized string similar to Cover art.
         /// </summary>
         public static string TAGEDITOR_COVERART {
             get {
@@ -912,7 +912,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disc Number.
+        ///   Looks up a localized string similar to Disc number.
         /// </summary>
         public static string TAGEDITOR_DISCNUM {
             get {
@@ -993,7 +993,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track Number.
+        ///   Looks up a localized string similar to Track number.
         /// </summary>
         public static string TAGEDITOR_TRACKNUM {
             get {
@@ -1056,7 +1056,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Technical Info.
+        ///   Looks up a localized string similar to Technical info.
         /// </summary>
         public static string TRACKINFO_TECHNICALINFO {
             get {
@@ -1065,7 +1065,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track Info.
+        ///   Looks up a localized string similar to Track info.
         /// </summary>
         public static string TRACKINFO_TRACKINFO {
             get {
