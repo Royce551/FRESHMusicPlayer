@@ -3,10 +3,19 @@
                     xmlns:local="clr-namespace:FRESHMusicPlayer">
     <SolidColorBrush x:Key="PrimaryTextColor" Color="Black"/>
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#525252"/>
-    <SolidColorBrush x:Key="NavBarColor" Color="#DEE0E3"/>
-    <SolidColorBrush x:Key="ControlBoxColor" Color="#BDC0C7"/>
-    <SolidColorBrush x:Key="BackgroundColor" Color="#DEE0E3"/>
-    <SolidColorBrush x:Key="SecondaryColor" Color="#D3D6D9"/>
-    <SolidColorBrush x:Key="ForegroundColor" Color="#BDC0C7"/>
-    <SolidColorBrush x:Key="ControlColor" Color="#B5B9C0"/>
+    <SolidColorBrush x:Key="NavBarColor" Color="#D6D9DB"/>
+    <SolidColorBrush x:Key="ControlBoxColor" Color="#E3E5E8"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#D6D9DB"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#DEE0E3"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#E3E5E8"/>
+    <SolidColorBrush x:Key="ControlColor" Color="#E9EBEC"/>
+
+    <!--<SolidColorBrush x:Key="PrimaryTextColor" Color="Black"/>
+    <SolidColorBrush x:Key="SecondaryTextColor" Color="#525252"/>
+    <SolidColorBrush x:Key="NavBarColor" Color="#E9EBEC"/>
+    <SolidColorBrush x:Key="ControlBoxColor" Color="#DEE0E3"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#E9EBEC"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#E3E5E8"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#DEE0E3"/>
+    <SolidColorBrush x:Key="ControlColor" Color="#D6D9DB"/>-->
 </ResourceDictionary>

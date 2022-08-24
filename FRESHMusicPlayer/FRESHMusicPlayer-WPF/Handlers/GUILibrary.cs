@@ -120,7 +120,7 @@ namespace FRESHMusicPlayer.Handlers
             {
                 var metadata = new Track(track);
                 
-                var path = Path.Combine(App.Config.AutoLibraryPath, metadata.Album, metadata.Artist.Split(';')[0]);
+                var path = Path.Combine(App.Config.AutoLibraryPath, metadata.Artist.Split(';')[0], metadata.Album);
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                 var fullPath = Path.Combine(path, Path.GetFileName(track));
                 File.Move(track, fullPath);
