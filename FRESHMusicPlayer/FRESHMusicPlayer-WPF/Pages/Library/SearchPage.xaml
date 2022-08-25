@@ -10,11 +10,11 @@
       Loaded="Page_Loaded">
     <UserControl.Resources>
         <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}" x:Key="{x:Type Button}">
-            <Setter Property="BorderBrush" Value="{StaticResource ForegroundColor}"/>
-            <Setter Property="Background" Value="{StaticResource ForegroundColor}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ForegroundColor}"/>
+            <Setter Property="Background" Value="{DynamicResource ForegroundColor}"/>
         </Style>
     </UserControl.Resources>
-    <Grid Background="{StaticResource SecondaryColor}">
+    <Grid Background="{DynamicResource SecondaryColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -23,13 +23,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="RightSide"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="SearchBox" Grid.Row="0" TextWrapping="Wrap" FontSize="14" Margin="10,5" BorderBrush="{StaticResource SecondaryTextColor}" Foreground="{StaticResource PrimaryTextColor}" TextChanged="SearchBox_TextChanged" TabIndex="0" KeyDown="SearchBox_KeyDown">
+        <TextBox x:Name="SearchBox" Grid.Row="0" TextWrapping="Wrap" FontSize="14" Margin="10,5" BorderBrush="{DynamicResource SecondaryTextColor}" Foreground="{DynamicResource PrimaryTextColor}" TextChanged="SearchBox_TextChanged" TabIndex="0" KeyDown="SearchBox_KeyDown">
             <TextBox.Style>
                 <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
                         <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                             <VisualBrush.Visual>
-                                <Label Content="Search" Foreground="{StaticResource PrimaryTextColor}" />
+                                <Label Content="Search" Foreground="{DynamicResource PrimaryTextColor}" />
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Style.Resources>
@@ -38,24 +38,24 @@
                             <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
                         </Trigger>
                         <Trigger Property="Text" Value="{x:Null}">
-                            <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+                            <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+                            <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <ListBox x:Name="TracksPanel"  Grid.Row="1" Background="{StaticResource SecondaryColor}" KeyboardNavigation.TabNavigation="Continue" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource SecondaryColor}" SelectionChanged="TracksPanel_SelectionChanged" LostKeyboardFocus="TracksPanel_LostKeyboardFocus">
+        <ListBox x:Name="TracksPanel"  Grid.Row="1" Background="{DynamicResource SecondaryColor}" KeyboardNavigation.TabNavigation="Continue" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{DynamicResource SecondaryColor}" SelectionChanged="TracksPanel_SelectionChanged" LostKeyboardFocus="TracksPanel_LostKeyboardFocus">
         </ListBox>
-        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Background="{StaticResource SecondaryColor}">
+        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Background="{DynamicResource SecondaryColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="InfoLabel" Text="99 Tracks ・ 10:00:00" Grid.Column="0" Foreground="{StaticResource SecondaryTextColor}" FontSize="12" Margin="10" VerticalAlignment="Center"/>
+            <TextBlock x:Name="InfoLabel" Text="99 Tracks ・ 10:00:00" Grid.Column="0" Foreground="{DynamicResource SecondaryTextColor}" FontSize="12" Margin="10" VerticalAlignment="Center"/>
             <Button x:Name="QueueAllButton" Content="{x:Static resx:Resources.LIBRARY_ENQUEUEALL}" Grid.Column="1" Margin="10,10,0,10" Padding="5,1" Click="QueueAllButton_Click"/>
             <Button x:Name="PlayAllButton" Content="{x:Static resx:Resources.LIBRARY_PLAYALL}" Grid.Column="2" Margin="10" Padding="5,1" Click="PlayAllButton_Click"/>
         </Grid>

@@ -17,9 +17,9 @@
 
         <DockPanel x:Name="TopBar" Panel.ZIndex="4" Background="Transparent" LastChildFill="False" Grid.Row="0" Height="30">
             <Button x:Name="BackButton" DockPanel.Dock="Left" Content="{x:Static resx:Resources.MINIPLAYER_BACK}" Margin="10,5,0,5" Click="BackButton_Click"/>
-            <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="{x:Static resx:Resources.FULLSCREEN_FOCUSMODE}" Foreground="{StaticResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
+            <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="{x:Static resx:Resources.FULLSCREEN_FOCUSMODE}" Foreground="{DynamicResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
         </DockPanel>
-        <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{StaticResource BackgroundColor}"/>
+        <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{DynamicResource BackgroundColor}"/>
 
         <Viewbox Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="25,-5,25,25">
             <Grid Width="700" Height="350">
@@ -41,11 +41,11 @@
                     </Grid.ColumnDefinitions>
                     <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="150" Width="150" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality">
                     </Image>
-                    <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,89,40,-44" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" FontWeight="Bold" FontSize="22" Grid.Column="1" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" Panel.ZIndex="0"/>
-                    <Slider x:Name="ProgressBar" Grid.Column="1" IsEnabled="False" HorizontalAlignment="Stretch" Margin="37,138,45,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="9.8"/>
-                    <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
-                    <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
-                    <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,119,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,89,40,-44" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" FontWeight="Bold" FontSize="22" Grid.Column="1" Foreground="{DynamicResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" Panel.ZIndex="0"/>
+                    <Slider x:Name="ProgressBar" Grid.Column="1" IsEnabled="False" HorizontalAlignment="Stretch" Margin="37,138,45,0" VerticalAlignment="Top" Height="21" Style="{DynamicResource Progress_Slider}" Value="9.8"/>
+                    <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
+                    <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
+                    <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,119,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{DynamicResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
 
                 </Grid>
             </Grid>
@@ -56,6 +56,6 @@
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>
         </Image>
-        <Rectangle x:Name="CoverArtOverlay" Fill="{StaticResource ForegroundColor}" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" Opacity="0.55"/>
+        <Rectangle x:Name="CoverArtOverlay" Fill="{DynamicResource ForegroundColor}" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" Opacity="0.55"/>
     </Grid>
 </UserControl>

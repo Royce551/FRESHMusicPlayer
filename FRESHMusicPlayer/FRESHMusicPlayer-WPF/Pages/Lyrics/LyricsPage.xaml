@@ -10,7 +10,7 @@
       d:DesignHeight="372" d:DesignWidth="235"
       Unloaded="Page_Unloaded">
 
-    <Grid Background="{StaticResource SecondaryColor}">
+    <Grid Background="{DynamicResource SecondaryColor}">
 
         <fmpcontrolslyrics:Lyrics x:Name="Lyrics" Panel.ZIndex="5"/>
 
@@ -19,6 +19,6 @@
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>
         </Image>
-        <Rectangle x:Name="CoverArtOverlay" Fill="{StaticResource ForegroundColor}" Opacity="0.55"/>
+        <Rectangle x:Name="CoverArtOverlay" Fill="{DynamicResource ForegroundColor}" Opacity="0.55"/>
     </Grid>
 </UserControl>

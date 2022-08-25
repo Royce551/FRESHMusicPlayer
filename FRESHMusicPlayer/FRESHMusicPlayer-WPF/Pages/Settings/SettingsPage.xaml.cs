@@ -258,7 +258,8 @@ namespace FRESHMusicPlayer.Pages
                         App.Config.Theme = Skin.Dark;
                         break;
                 }
-                SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);
+                //SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);
+                (Application.Current as App).ChangeSkin(App.Config.Theme);
             }
         }
 

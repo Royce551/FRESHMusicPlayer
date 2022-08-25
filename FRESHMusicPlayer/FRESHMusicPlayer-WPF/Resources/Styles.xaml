@@ -5,7 +5,7 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="0" StrokeThickness="2" IsHitTestVisible="False" Stroke="{StaticResource PrimaryTextColor}"/>
+                    <Rectangle Margin="0" StrokeThickness="2" IsHitTestVisible="False" Stroke="{DynamicResource PrimaryTextColor}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -33,8 +33,8 @@
     <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="{StaticResource ControlColor}"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="Background" Value="{DynamicResource ControlColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         <Setter Property="Padding" Value="20,1"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
@@ -107,7 +107,7 @@
                             Width="Auto"
                             Height="Auto"
                             Margin="0,1,0,1"
-                            Background="{StaticResource ForegroundColor}"/>
+                            Background="{DynamicResource ForegroundColor}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Tag"
@@ -131,7 +131,7 @@
         <Setter Property="Stylus.IsFlicksEnabled"
             Value="True" />
         <Setter Property="Foreground"
-            Value="{StaticResource ControlColor}" />
+            Value="{DynamicResource ControlColor}" />
         <Setter Property="Background"
             Value="Transparent" />
         <Setter Property="Width"
@@ -235,7 +235,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border  Background="{StaticResource SecondaryColor}" Height="3"/>
+                    <Border  Background="{DynamicResource SecondaryColor}" Height="3"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -350,17 +350,17 @@
                   x:Name="Border" 
                   Grid.ColumnSpan="2"
                   CornerRadius="2" Padding="5"
-                  Background="{StaticResource ControlColor}"/>
+                  Background="{DynamicResource ControlColor}"/>
             <Border 
                 x:Name="Border2"
                   Grid.Column="0"
                   CornerRadius="2" 
                   Margin="1" 
-                  Background="{StaticResource ControlColor}" />
+                  Background="{DynamicResource ControlColor}" />
             <Path 
                   x:Name="Arrow"
                   Grid.Column="1"     
-                  Fill="{StaticResource PrimaryTextColor}"
+                  Fill="{DynamicResource PrimaryTextColor}"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
@@ -384,8 +384,8 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ControlColor}"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -403,7 +403,7 @@
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                             Margin="3,3,23,3"
-                            TextBlock.Foreground="{StaticResource PrimaryTextColor}"
+                            TextBlock.Foreground="{DynamicResource PrimaryTextColor}"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left" />
                         <TextBox x:Name="PART_EditableTextBox"
@@ -413,7 +413,7 @@
                             VerticalAlignment="Center" 
                             Margin="3,3,23,3"
                             Focusable="True" 
-                            Background="{StaticResource ControlColor}"
+                            Background="{DynamicResource ControlColor}"
                             Foreground="Green"
                             Visibility="Hidden"
                             IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -431,7 +431,7 @@
                               MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                 <Border 
                                 x:Name="DropDownBorder"
-                                Background="{StaticResource ControlColor}"/>
+                                Background="{DynamicResource ControlColor}"/>
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
@@ -467,7 +467,7 @@
 
     <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -496,7 +496,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border x:Name="TextBorder" CornerRadius="2" Background="{StaticResource ControlColor}" BorderBrush="{StaticResource ControlColor}" BorderThickness="2">
+                    <Border x:Name="TextBorder" CornerRadius="2" Background="{DynamicResource ControlColor}" BorderBrush="{DynamicResource ControlColor}" BorderThickness="2">
                         <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -515,8 +515,8 @@
     <!--CheckBox-->
 
     <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
-        <Setter Property="Background" Value="{StaticResource ControlColor}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ControlColor}"/>
+        <Setter Property="Background" Value="{DynamicResource ControlColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlColor}"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -534,7 +534,7 @@
                             RenderTransformOrigin="0.5,0.5"
                             SnapsToDevicePixels="True" Padding="2">
                             <Viewbox x:Name="Check" Stretch="UniformToFill" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-10,0,0">
-                                <Path Fill="{StaticResource PrimaryTextColor}" Data="M 17.939453 5.439453 L 7.5 15.888672 L 2.060547 10.439453 L 2.939453 9.560547 L 7.5 14.111328 L 17.060547 4.560547 Z"/>
+                                <Path Fill="{DynamicResource PrimaryTextColor}" Data="M 17.939453 5.439453 L 7.5 15.888672 L 2.060547 10.439453 L 2.939453 9.560547 L 7.5 14.111328 L 17.060547 4.560547 Z"/>
                             </Viewbox>
                             <Border.RenderTransform>
                                 <ScaleTransform x:Name="ScaleTransform"/>

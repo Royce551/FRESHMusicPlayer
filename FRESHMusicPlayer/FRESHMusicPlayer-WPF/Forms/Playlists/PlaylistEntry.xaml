@@ -14,7 +14,7 @@
             <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT_EXPORT}" Click="ExportButton_Click"/>
         </ContextMenu>
     </UserControl.Resources>
-    <Grid x:Name="MainPanel" Background="{StaticResource ForegroundColor}" MinHeight="35">
+    <Grid x:Name="MainPanel" Background="{DynamicResource ForegroundColor}" MinHeight="35">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="Auto"/>
@@ -22,7 +22,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="TitleLabel" Grid.Column="0" Margin="5,0,0,0" Text="TextBlock" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+        <TextBlock x:Name="TitleLabel" Grid.Column="0" Margin="5,0,0,0" Text="TextBlock" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
         <Button Grid.Column="2" x:Name="AddButton" Content="+" VerticalAlignment="Center" Margin="5,0,5,0" FontSize="15" Padding="10,2" Click="AddButton_Click" Visibility="Collapsed" FontWeight="Bold"/>
         <Button Grid.Column="1" x:Name="RemoveButton" Content="-" VerticalAlignment="Center" Margin="5,0,5,0" FontSize="15" Padding="10,2,10,2" Click="RemoveButton_Click" Visibility="Collapsed" FontWeight="Bold"/>
         <Button Grid.Column="3" x:Name="AddThingButton" VerticalAlignment="Center" Margin="5,0,5,0" FontSize="15" Padding="10,2,10,2" Visibility="Collapsed" FontWeight="Bold" Click="AddThingButton_Click"/>

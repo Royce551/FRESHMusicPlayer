@@ -10,7 +10,7 @@
       d:DesignHeight="372" d:DesignWidth="235"
       Unloaded="Page_Unloaded">
 
-    <Grid Background="{StaticResource SecondaryColor}">
+    <Grid Background="{DynamicResource SecondaryColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
@@ -23,6 +23,6 @@
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>
         </Image>
-        <Rectangle x:Name="CoverArtOverlay" Fill="{StaticResource ForegroundColor}" Grid.Row="0" Grid.RowSpan="12" Grid.ColumnSpan="2" Opacity="0.55" MouseRightButtonDown="Rectangle_MouseRightButtonDown"/>
+        <Rectangle x:Name="CoverArtOverlay" Fill="{DynamicResource ForegroundColor}" Grid.Row="0" Grid.RowSpan="12" Grid.ColumnSpan="2" Opacity="0.55" MouseRightButtonDown="Rectangle_MouseRightButtonDown"/>
     </Grid>
 </UserControl>

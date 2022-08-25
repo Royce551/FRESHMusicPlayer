@@ -10,7 +10,7 @@
       Unloaded="Page_Unloaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="Subheader">
-            <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="0,5,0,5"/>
             <Setter Property="Margin" Value="-10,0,0,0"/>
@@ -21,23 +21,23 @@
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
-    <Grid Background="{StaticResource SecondaryColor}"> 
+    <Grid Background="{DynamicResource SecondaryColor}"> 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Background="{StaticResource ForegroundColor}" Height="Auto" Grid.Row="1">
+        <Grid Background="{DynamicResource ForegroundColor}" Height="Auto" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="RestartNeededHeader" Grid.Row="0" Foreground="{StaticResource PrimaryTextColor}" Text="{x:Static resx:Resources.SETTINGS_RESTART_NEEDED_PROMPT}" TextWrapping="Wrap" Margin="5" FontSize="14" TextAlignment="Center" Visibility="Collapsed"/>
+            <TextBlock x:Name="RestartNeededHeader" Grid.Row="0" Foreground="{DynamicResource PrimaryTextColor}" Text="{x:Static resx:Resources.SETTINGS_RESTART_NEEDED_PROMPT}" TextWrapping="Wrap" Margin="5" FontSize="14" TextAlignment="Center" Visibility="Collapsed"/>
             <Button x:Name="RestartNowButton" Grid.Row="1" Margin="0,0,0,5" HorizontalAlignment="Center" Padding="10,5,10,5" Visibility="Collapsed" Click="RestartNowButton_Click" Content="{x:Static resx:Resources.SETTINGS_RESTART_NOW}"/>
         </Grid>
         <ScrollViewer Grid.Row="0" PanningMode="Both">
-            <StackPanel Background="{StaticResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
-                <TextBlock Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_SUBHEADER}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
+            <StackPanel Background="{DynamicResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
+                <TextBlock Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_SUBHEADER}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_GENERAL}" Style="{StaticResource Header}"/>
 
@@ -46,7 +46,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_LANGUAGE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_LANGUAGE}" Foreground="{DynamicResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_LanguageCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="General_LanguageCombo_SelectionChanged">
                         <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_AUTO}"/>
                         <ComboBoxItem Content="English"/>
@@ -59,23 +59,23 @@
                         <ComboBoxItem Content="Arabic (Saudi Arabia)"/>
                     </ComboBox>
                 </Grid>
-                <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
+                <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged"/>
 
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_AUTOIMPORT}" Style="{StaticResource Subheader}"/>
-                <TextBlock x:Name="General_AutoImportTextBlock" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_AUTOIMPORT}" Style="{DynamicResource Subheader}"/>
+                <TextBlock x:Name="General_AutoImportTextBlock" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}"/>
                 <Button x:Name="General_AddFolderButton" Content="{x:Static resx:Resources.SETTINGS_AUTOIMPORT_ADDFOLDER}" TextBlock.FontSize="16" Margin="0,5" Click="General_AddFolderButton_Click"/>
                 <Button x:Name="General_ClearButton" Content="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" TextBlock.FontSize="16" Click="General_ClearButton_Click"/>
 
                 <TextBlock Text="Auto Library" Style="{StaticResource Subheader}"/>
-                <CheckBox x:Name="General_AutoLibraryCheck" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_AutoLibraryChanged" Unchecked="General_AutoLibraryChanged">
-                    <TextBlock FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Text="Automatically organize imported tracks into a folder structure" TextWrapping="Wrap"/>
+                <CheckBox x:Name="General_AutoLibraryCheck" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_AutoLibraryChanged" Unchecked="General_AutoLibraryChanged">
+                    <TextBlock FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Text="Automatically organize imported tracks into a folder structure" TextWrapping="Wrap"/>
                 </CheckBox>
-                <TextBlock x:Name="General_AutoLibraryTextBlock" Text="Currently importing to something" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" TextWrapping="Wrap"/>
+                <TextBlock x:Name="General_AutoLibraryTextBlock" Text="Currently importing to something" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" TextWrapping="Wrap"/>
                 <Button x:Name="General_AutoLibraryChooseButton" TextBlock.FontSize="16" Content="Choose folder" Click="General_AutoLibraryChooseButton_Click"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
-                <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
-                <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
+                <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
+                <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
  
                 <TextBlock x:Name="UpdateHeader" Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 
@@ -84,22 +84,22 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="UpdateModeHeader" Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_AUTOUPDATEMODE}" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock x:Name="UpdateModeHeader" Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_AUTOUPDATEMODE}" Foreground="{DynamicResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="General_UpdateModeCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="General_UpdateModeCombo_SelectionChanged">
                         <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_PROMPT}"/>
                         <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_MANUAL}"/>
                         <ComboBoxItem Content="{x:Static resx:Resources.SETTINGS_UPDATES_AUTO}"/>
                     </ComboBox>
                 </Grid>
-                <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <Button x:Name="Updates_CheckUpdatesButton" Content="{x:Static resx:Resources.SETTINGS_UPDATESCHECKNOW}" TextBlock.FontSize="16" Margin="0,0,0,5" Click="Updates_CheckUpdatesButton_Click"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_APPEARANCE}" Style="{StaticResource Header}"/>
 
-                <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
+                <CheckBox x:Name="General_ProgressCheck" Content="{x:Static resx:Resources.SETTINGS_TIMEWINDOWTITLE}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProgressChanged" Unchecked="General_ProgressChanged"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" Style="{StaticResource Subheader}"/>
-                <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}" FocusVisualStyle="{StaticResource KeyboardFocusRing}"/>
-                <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"  FocusVisualStyle="{StaticResource KeyboardFocusRing}"/>
+                <RadioButton x:Name="Appearance_ThemeLightRadio" GroupName="theme" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}" FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>
+                <RadioButton x:Name="Appearance_ThemeDarkRadio" GroupName="theme" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" IsChecked="True" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"  FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_MAINTENANCE}" Style="{StaticResource Header}"/>
 
@@ -109,8 +109,8 @@
                 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_ABOUT}" Style="{StaticResource Header}"/>
 
-                <TextBlock x:Name="FMPVersionLabel" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
-                <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{StaticResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>
+                <TextBlock x:Name="FMPVersionLabel" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_CREDITS}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5" TextWrapping="Wrap"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" WindowStartupLocation="Manual"
-        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel" Activated="Window_Activated" Deactivated="Window_Deactivated">
+        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{DynamicResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel" Activated="Window_Activated" Deactivated="Window_Deactivated">
     <Window.Resources>
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
@@ -23,52 +23,52 @@
     </Window.Resources>
     <DockPanel>
         <!--Menu-->
-        <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
+        <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{DynamicResource NavBarColor}" >
             <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="TracksTab_MouseDown">
-                <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" Foreground="{StaticResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="ArtistsTab_MouseDown">
-                <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" Foreground="{StaticResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="AlbumsTab_MouseDown">
-                <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" Foreground="{StaticResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="PlaylistsTab_MouseDown">
-                <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" Foreground="{StaticResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,0,0" Click="ImportTab_MouseDown">
-                <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" Foreground="{StaticResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             
             <Button TabIndex="904" Style="{StaticResource LinkButton}" x:Name="SettingsButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="SettingsButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
-                    <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                    <Path Data="{StaticResource SettingsIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
                 </Canvas>
             </Button>
             <Button TabIndex="903" Style="{StaticResource LinkButton}" x:Name="QueueManagementButton" ToolTip="{x:Static resx:Resources.QUEUEMANAGEMENT_QUEUEHEADER}" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="QueueManagementButton_Click" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
-                    <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                    <Path Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
                 </Canvas>
             </Button>
-            <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
+            <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
             <Button TabIndex="902" Style="{StaticResource LinkButton}" x:Name="NotificationButton" ToolTip="{x:Static resx:Resources.NOTIFICATIONS_TITLE}" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" Click="NotificationButton_Click" Visibility="Collapsed" Cursor="Hand">
                 <!---some manual corrections were applied to keep the icons visually correct-->
                 <Canvas>
-                    <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                    <Path Data="{StaticResource NotificationIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
                 </Canvas>
             </Button>
             <Button TabIndex="901" Style="{StaticResource LinkButton}" x:Name="SearchButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SEARCH}" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" Click="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
                 <Canvas>
-                    <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
+                    <Path Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
                 </Canvas>
             </Button>
 
         </DockPanel>
         <!--Controls Box-->
-        <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{StaticResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5">
-            <Grid x:Name="ControlsBox" DockPanel.Dock="Bottom" Background="{StaticResource ControlBoxColor}" Margin="0,0,0,-2" Drop="ControlsBox_Drop">
+        <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{DynamicResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5">
+            <Grid x:Name="ControlsBox" DockPanel.Dock="Bottom" Background="{DynamicResource ControlBoxColor}" Margin="0,0,0,-2" Drop="ControlsBox_Drop">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
@@ -85,21 +85,21 @@
                     </Image>
                 </Button>
                 <Button TabIndex="1006" Style="{StaticResource LinkButton}" HorizontalAlignment="Stretch" Margin="5,5,40,0" VerticalAlignment="Top" Grid.Column="1" Height="30" Click="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}" Grid.ColumnSpan="2" Panel.ZIndex="0">
-                    <TextBlock x:Name="TitleLabel"  TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}"  FontWeight="Bold" FontSize="22" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis"  Cursor="Hand"  />
+                    <TextBlock x:Name="TitleLabel"  TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}"  FontWeight="Bold" FontSize="22" Foreground="{DynamicResource PrimaryTextColor}" TextTrimming="CharacterEllipsis"  Cursor="Hand"  />
                 </Button>
                 <Slider x:Name="ProgressBar" Grid.Column="1" SmallChange="1" LargeChange="30" HorizontalAlignment="Stretch" Margin="37,54,45,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="9.8" Thumb.DragStarted="ProgressBar_DragStarted" Thumb.DragCompleted="ProgressBar_DragCompleted" ValueChanged="ProgressBar_ValueChanged" IsMoveToPointEnabled="True" MouseLeftButtonUp="ProgressBar_MouseLeftButtonUp" Cursor="Hand"/>
-                <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
+                <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
                 <Button TabIndex="1007" Style="{StaticResource LinkButton}" Grid.Column="1" Margin="0,0,0,13" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="40" Click="ProgressIndicator2_MouseLeftButtonDown">
-                    <TextBlock x:Name="ProgressIndicator2"  TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}"/>
+                    <TextBlock x:Name="ProgressIndicator2"  TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}"/>
                 </Button>
-                <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{DynamicResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
 
-                <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
-                <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,142.505,15" Width="20" HorizontalAlignment="Right"/>
-                <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
-                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatAllIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,55,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
-                <Path x:Name="PreviousTrackButton" Data="{StaticResource PreviousIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,47.803,182.505,15.997" Width="25.612" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown"/>
-                <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1"/>
+                <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
+                <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,142.505,15" Width="20" HorizontalAlignment="Right"/>
+                <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
+                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatAllIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,55,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
+                <Path x:Name="PreviousTrackButton" Data="{StaticResource PreviousIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,47.803,182.505,15.997" Width="25.612" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown"/>
+                <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1"/>
 
                 <!--Hitboxes for the above paths-->
                 <Button TabIndex="1003" Style="{StaticResource LinkButton}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,55,15" Width="23" HorizontalAlignment="Right" Click="RepeatOneButton_MouseLeftButtonDown" Cursor="Hand"/>
