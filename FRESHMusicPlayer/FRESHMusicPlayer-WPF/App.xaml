@@ -10,6 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="IconsDictionary" Source="pack://application:,,,/Resources/Icons.xaml" />
                 <ResourceDictionary x:Name="StylesDictionary" Source="pack://application:,,,/Resources/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Resources/DarkTheme.xaml"/>
                 <local1:SkinResourceDictionary LightSource="pack://application:,,,/Resources/LightTheme.xaml" DarkSource="pack://application:,,,/Resources/DarkTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
