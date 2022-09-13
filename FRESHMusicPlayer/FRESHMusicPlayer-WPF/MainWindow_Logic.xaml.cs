@@ -81,46 +81,51 @@ namespace FRESHMusicPlayer
                 ProgressTimer.Start(); // to resync the progress timer
             }
         }
-        public void ShuffleMethod()
+
+        public void UpdateControlsBoxColors()
         {
-            if (Player.Queue.Shuffle)
+            if (Player.Queue.RepeatMode == RepeatMode.RepeatOne)
             {
-                Player.Queue.Shuffle = false;
-                ShuffleButton.Fill = (Brush)FindResource("PrimaryTextColor");
-            }
-            else
-            {
-                Player.Queue.Shuffle = true;
-                ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
-            }
-        }
-        public void RepeatOneMethod()
-        {
-            if (Player.Queue.RepeatMode == RepeatMode.None)
-            {
-                Player.Queue.RepeatMode = RepeatMode.RepeatAll;
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatAllIcon");
-                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                RepeatOneButton.Fill = (Brush)FindResource("AccentGradientColor");
             }
             else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
-                Player.Queue.RepeatMode = RepeatMode.RepeatOne;
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatOneIcon");
-                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                RepeatOneButton.Fill = (Brush)FindResource("AccentGradientColor");
             }
             else
             {
-                Player.Queue.RepeatMode = RepeatMode.None;
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatAllIcon");
                 RepeatOneButton.Fill = (Brush)FindResource("PrimaryTextColor");
             }
+
+            if (PauseAfterCurrentTrack) ProgressIndicator2.Foreground = new SolidColorBrush(Color.FromRgb(212, 70, 63));
+            else ProgressIndicator2.Foreground = (Brush)FindResource("SecondaryTextColor");
+
+            if (!Player.Queue.Shuffle) ShuffleButton.Fill = (Brush)FindResource("PrimaryTextColor");
+            else ShuffleButton.Fill = ShuffleButton.Fill = (Brush)FindResource("AccentGradientColor");
+        }
+
+        public void ShuffleMethod()
+        {
+            if (Player.Queue.Shuffle) Player.Queue.Shuffle = false;
+            else Player.Queue.Shuffle = true;
+            UpdateControlsBoxColors();
+        }
+        public void RepeatOneMethod()
+        {
+            if (Player.Queue.RepeatMode == RepeatMode.None) Player.Queue.RepeatMode = RepeatMode.RepeatAll;
+            else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll) Player.Queue.RepeatMode = RepeatMode.RepeatOne;
+            else Player.Queue.RepeatMode = RepeatMode.None;
+            UpdateControlsBoxColors();
         }
         public void UpdatePlayButtonState()
         {
             if (!Player.Paused) PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
             else PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
-            if (PauseAfterCurrentTrack) ProgressIndicator2.Foreground = new SolidColorBrush(Color.FromRgb(212, 70, 63));
-            else ProgressIndicator2.Foreground = (Brush)FindResource("SecondaryTextColor");
+
+            UpdateControlsBoxColors();
         }
         private void Player_SongStopped(object sender, EventArgs e)
         {

@@ -75,8 +75,8 @@
                             </BeginStoryboard>
                         </EventTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#FF338BC1"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FF338BC1"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource AccentColor}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource AccentColor}"/>
 
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -120,7 +120,7 @@
                                 Value="6" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="CornerScrollBarRectangle" Value="#FF338BC1"/>
+                            <Setter Property="Background" TargetName="CornerScrollBarRectangle" Value="{DynamicResource AccentColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -248,13 +248,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border SnapsToDevicePixels="True" Height="3">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
-                                <GradientStop Color="#FF338BC1" Offset="0"/>
-                                <GradientStop Color="#FF69B578" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
+                    <Border SnapsToDevicePixels="True" Height="3" Background="{DynamicResource AccentGradientColor}">
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -268,7 +262,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="#FF338BC1">
+                    <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="{DynamicResource AccentColor}">
                         <Ellipse.Triggers>
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
@@ -368,8 +362,8 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" TargetName="Border" Value="#FF338BC1"/>
-                <Setter Property="Background" TargetName="Border2" Value="#FF338BC1"/>
+                <Setter Property="Background" TargetName="Border" Value="{DynamicResource AccentColor}"/>
+                <Setter Property="Background" TargetName="Border2" Value="{DynamicResource AccentColor}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -480,7 +474,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="#FF338BC1"/>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColor}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="#888888"/>
@@ -501,10 +495,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="#FF338BC1"/>
+                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="{DynamicResource AccentColor}"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
-                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="#FF338BC1"/>
+                            <Setter TargetName="TextBorder" Property="BorderBrush" Value="{DynamicResource AccentColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -548,7 +542,7 @@
                             <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Grid" Property="BorderBrush" Value="#FF338BC1"/>
+                            <Setter TargetName="Grid" Property="BorderBrush" Value="{DynamicResource AccentColor}"/>
                         </Trigger>
                         <EventTrigger RoutedEvent="Click">
                             <BeginStoryboard>

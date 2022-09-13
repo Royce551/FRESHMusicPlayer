@@ -9,4 +9,10 @@
     <SolidColorBrush x:Key="SecondaryColor" Color="#323539"/>
     <SolidColorBrush x:Key="BackgroundColor" Color="Black"/>
     <SolidColorBrush x:Key="ControlColor" Color="#40444A"/>
+
+    <SolidColorBrush x:Key="AccentColor" Color="#FF338BC1"/>
+    <LinearGradientBrush x:Key="AccentGradientColor" EndPoint="0,0.5" StartPoint="1, 0.5">
+        <GradientStop Color="#FF338BC1" Offset="0"/>
+        <GradientStop Color="#FF69B578" Offset="1"/>
+    </LinearGradientBrush>
 </ResourceDictionary>

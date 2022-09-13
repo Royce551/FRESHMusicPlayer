@@ -10,6 +10,11 @@
     <SolidColorBrush x:Key="ForegroundColor" Color="#E3E5E8"/>
     <SolidColorBrush x:Key="ControlColor" Color="#E9EBEC"/>
 
+    <SolidColorBrush x:Key="AccentColor" Color="#FF338BC1"/>
+    <LinearGradientBrush x:Key="AccentGradientColor" EndPoint="0,0.5" StartPoint="1, 0.5">
+        <GradientStop Color="#FF338BC1" Offset="0"/>
+        <GradientStop Color="#FF69B578" Offset="1"/>
+    </LinearGradientBrush>
     <!--<SolidColorBrush x:Key="PrimaryTextColor" Color="Black"/>
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#525252"/>
     <SolidColorBrush x:Key="NavBarColor" Color="#E9EBEC"/>
