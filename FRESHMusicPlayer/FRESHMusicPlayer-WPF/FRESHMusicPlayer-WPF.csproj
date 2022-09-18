@@ -193,6 +193,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\SkinResourceDictionary.cs" />
+    <Compile Include="Utilities\ColorQuantization\KCluster.cs" />
+    <Compile Include="Utilities\ColorQuantization\KMeansClusteringCalculator.cs" />
     <Compile Include="Utilities\InterfaceUtils.cs" />
     <Page Include="Controls\Lyrics\Lyrics.xaml">
       <SubType>Designer</SubType>

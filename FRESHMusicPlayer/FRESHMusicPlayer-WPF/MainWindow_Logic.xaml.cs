@@ -20,6 +20,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using WinForms = System.Windows.Forms;
+using Drawing = System.Drawing;
+using FRESHMusicPlayer.Utilities.ColorQuantization;
 
 namespace FRESHMusicPlayer
 {
@@ -175,6 +177,8 @@ namespace FRESHMusicPlayer
                 PauseAfterCurrentTrack = false;
             }
 
+            HandleAccentCoverArt();
+
             LoggingHandler.Log("Changing tracks!");
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
@@ -188,6 +192,33 @@ namespace FRESHMusicPlayer
                 Type = NotificationType.Failure
             });
             await Player.NextAsync();
+        }
+
+        public void HandleAccentCoverArt()
+        {
+            if (App.Config.AccentColor != Handlers.Configuration.AccentColor.CoverArt) return;
+
+            if (Player.Metadata.CoverArt is null) return;
+            using (var bitmap = new Drawing.Bitmap(new MemoryStream(Player.Metadata.CoverArt)))
+            {
+                using (var resized = new Drawing.Bitmap(bitmap, 25, 25))
+                {
+                    var colors = new List<Drawing.Color>(resized.Width * resized.Height);
+                    for (int x = 0; x < resized.Width; x++)
+                    {
+                        for (int y = 0; y < resized.Height; y++)
+                        {
+                            colors.Add(resized.GetPixel(x, y));
+                        }
+                    }
+
+                    var clustering = new KMeansClusteringCalculator();
+                    var dominantColors = clustering.Calculate(2, colors, 5.0d);
+
+                    (Application.Current as App).ApplyAccentColor(dominantColors[0].R, dominantColors[0].G, dominantColors[0].B, dominantColors[1].R, dominantColors[1].G, dominantColors[1].B);
+                    UpdateControlsBoxColors();
+                }
+            }
         }
 
 

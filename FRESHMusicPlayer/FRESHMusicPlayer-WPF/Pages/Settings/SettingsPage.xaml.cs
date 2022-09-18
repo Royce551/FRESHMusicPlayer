@@ -257,9 +257,50 @@ namespace FRESHMusicPlayer.Pages
                     case "Appearance_ThemeDarkRadio":
                         App.Config.Theme = Skin.Dark;
                         break;
+                    case "Appearance_ThemeClassicRadio":
+                        App.Config.Theme = Skin.Dark;
+                        break;
+                    case "Appearance_ThemeSystemRadio":
+                        App.Config.Theme = Skin.Dark;
+                        break;
                 }
                 (Application.Current as App).ChangeSkin(App.Config.Theme);
                 window.UpdateControlsBoxColors();
+            }
+        }
+
+        private void Appearance_AccentColorCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                switch (Appearance_AccentColorCombo.SelectedIndex)
+                {
+                    case (int)AccentColor.System:
+                        App.Config.AccentColor = AccentColor.System;
+                        break;
+                    case (int)AccentColor.Blue:
+                        App.Config.AccentColor = AccentColor.Blue;
+                        break;
+                    case (int)AccentColor.Green:
+                        App.Config.AccentColor = AccentColor.Green;
+                        break;
+                    case (int)AccentColor.Red:
+                        App.Config.AccentColor = AccentColor.Red;
+                        break;
+                    case (int)AccentColor.Purple:
+                        App.Config.AccentColor = AccentColor.Purple;
+                        break;
+                    case (int)AccentColor.Pink:
+                        App.Config.AccentColor = AccentColor.Pink;
+                        break;
+                    case (int)AccentColor.ClassicBlue:
+                        App.Config.AccentColor = AccentColor.ClassicBlue;
+                        break;
+                    case (int)AccentColor.CoverArt:
+                        App.Config.AccentColor = AccentColor.CoverArt;
+                        break;
+                }
+                (Application.Current as App).ChangeAccentColor(App.Config.AccentColor);
             }
         }
 

@@ -7,12 +7,13 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using FRESHMusicPlayer.Handlers;
+using System.Windows.Media;
 
 namespace FRESHMusicPlayer
 {
     public enum Skin
     {
-        Light, Dark, Classic
+        Light, Dark, Classic, System
     }
     /// <summary>
     /// Interaction logic for App.xaml
@@ -38,6 +39,7 @@ namespace FRESHMusicPlayer
             player = new Player { Volume = Config.Volume };
             if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
             ChangeSkin(Config.Theme);
+            ChangeAccentColor(Config.AccentColor);
 
             LoggingHandler.Log("Handling command line args...");
 
@@ -63,6 +65,61 @@ namespace FRESHMusicPlayer
                 else
                     dict.Source = dict.Source;
             }
+        }
+
+        public void ChangeAccentColor(AccentColor accentColor)
+        {
+            byte r1, g1, b1, r2, g2, b2;
+            r1 = g1 = b1 = r2 = g2 = b2 = default;
+            switch (accentColor)
+            {
+                case AccentColor.System:
+                    
+                case AccentColor.Blue:
+                    r1 = 51; g1 = 139; b1 = 193;
+                    r2 = 105; g2 = 181; b2 = 120;
+                    break;
+                case AccentColor.Green:
+                    r1 = 105; g1 = 181; b1 = 120;
+                    r2 = 51; g2 = 139; b2 = 193;
+                    break;
+                case AccentColor.Red:
+                    r1 = 213; g1 = 70; b1 = 63;
+                    r2 = 233; g2 = 119; b2 = 195;
+                    break;
+                case AccentColor.Purple:
+                    r1 = 193; g1 = 96; b1 = 195;
+                    r2 = 0; g2 = 162; b2 = 195;
+                    break;
+                case AccentColor.Pink:
+                    r1 = 248; g1 = 104; b1 = 200;
+                    r2 = 248; g2 = 195; b2 = 114;
+                    break;
+                case AccentColor.ClassicBlue:
+                    r1 = 4; g1 = 160; b1 = 219;
+                    r2 = 119; g2 = 209; b2 = 137;
+                    break;
+                case AccentColor.CoverArt:
+                    if (currentWindow is MainWindow window)
+                        window.HandleAccentCoverArt();
+                    break;
+            }
+
+            ApplyAccentColor(r1, g1, b1, r2, g2, b2);
+        }
+
+        public void ApplyAccentColor(byte r1, byte g1, byte b1, byte r2, byte g2, byte b2)
+        {
+            var accent = FindResource("AccentColor") as SolidColorBrush;
+            var accent2 = accent.Clone();
+
+            accent2.Color = Color.FromRgb(r1, g1, b1);
+            var gradient = FindResource("AccentGradientColor") as LinearGradientBrush;
+            var gradient2 = gradient.Clone();
+            gradient2.GradientStops[0].Color = Color.FromRgb(r1, g1, b1);
+            gradient2.GradientStops[1].Color = Color.FromRgb(r2, g2, b2);
+            Current.Resources["AccentColor"] = accent2;
+            Current.Resources["AccentGradientColor"] = gradient2;
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
