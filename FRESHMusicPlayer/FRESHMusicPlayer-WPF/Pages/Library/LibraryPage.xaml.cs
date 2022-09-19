@@ -2,6 +2,7 @@
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -121,11 +122,41 @@ namespace FRESHMusicPlayer.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in window.Library.ReadTracksForArtist(selectedItem))
+                var albums = new List<string>();
+                var tracks = window.Library.ReadTracksForArtist(selectedItem);
+
+                foreach (var thing in tracks)
                 {
-                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
-                    length += thing.Length;
+                    if (!albums.Contains(thing.Album)) albums.Add(thing.Album);
                 }
+
+                if (albums.Count <= 1)
+                {
+                    foreach (var thing in tracks)
+                    {
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                        length += thing.Length;
+                    }
+                }
+                else
+                {
+                    albums.Sort();
+                    foreach (var album in albums)
+                    {
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new DiscHeader(album)));
+                        foreach (var thing in tracks.Where(x => x.Album == album))
+                        {
+                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                            length += thing.Length;
+                        }
+                    }
+                }
+
+                //foreach (var thing in window.Library.ReadTracksForArtist(selectedItem))
+                //{
+                //    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                //    length += thing.Length;
+                //}
             });
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
@@ -136,11 +167,36 @@ namespace FRESHMusicPlayer.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in window.Library.ReadTracksForAlbum(selectedItem))
+                var discs = new List<int>();
+                var tracks = window.Library.ReadTracksForAlbum(selectedItem);
+                var tracksAsATLTracks = tracks.Select(x => new ATL.Track(x.Path));
+
+                foreach (var thing in tracksAsATLTracks)
                 {
-                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
-                    length += thing.Length;
+                    if (!discs.Contains(thing.DiscNumber)) discs.Add(thing.DiscNumber);
                 }
+
+                if (discs.Count <= 1)
+                {
+                    foreach (var thing in tracksAsATLTracks)
+                    {
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
+                        length += thing.Duration;
+                    }
+                }
+                else
+                {
+                    foreach (var disc in discs)
+                    {
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new DiscHeader($"Disc {disc}")));
+                        foreach (var thing in tracksAsATLTracks.Where(x => x.DiscNumber == disc))
+                        {
+                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
+                            length += thing.Duration;
+                        }
+                    }
+                }
+                
             });
             InfoLabel.Visibility = Visibility.Visible;
             InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
