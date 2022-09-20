@@ -120,6 +120,9 @@ namespace FRESHMusicPlayer
             gradient2.GradientStops[1].Color = Color.FromRgb(r2, g2, b2);
             Current.Resources["AccentColor"] = accent2;
             Current.Resources["AccentGradientColor"] = gradient2;
+
+            if (currentWindow is MainWindow window)
+                window.UpdateControlsBoxColors();
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

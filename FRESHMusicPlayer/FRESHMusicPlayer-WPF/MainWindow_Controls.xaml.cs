@@ -236,25 +236,6 @@ namespace FRESHMusicPlayer
                     Process.Start("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
                     break;
                 case Key.F2:
-                    var accent = FindResource("AccentColor") as SolidColorBrush;
-                    var accent2 = accent.Clone();
-                    var random = new Random();
-                    var r1 = (byte)random.Next(1, 256);
-                    var g1 = (byte)random.Next(1, 256);
-                    var b1 = (byte)random.Next(1, 256);
-
-                    var r2 = (byte)random.Next(1, 256);
-                    var g2 = (byte)random.Next(1, 256);
-                    var b2 = (byte)random.Next(1, 256);
-
-                    accent2.Color = Color.FromRgb(r1, g1, b1);
-                    var gradient = FindResource("AccentGradientColor") as LinearGradientBrush;
-                    var gradient2 = gradient.Clone();
-                    gradient2.GradientStops[0].Color = Color.FromRgb(r1, g1, b1);
-                    gradient2.GradientStops[1].Color = Color.FromRgb(r2, g2, b2);
-                    Application.Current.Resources["AccentColor"] = accent2;
-                    Application.Current.Resources["AccentGradientColor"] = gradient2;
-                    UpdateControlsBoxColors();
                     break;
                 case Key.F11:
                     if (CurrentTab != Tab.Fullscreen) ChangeTabs(Tab.Fullscreen);

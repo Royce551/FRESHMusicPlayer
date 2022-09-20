@@ -80,6 +80,36 @@ namespace FRESHMusicPlayer.Pages
                 case Skin.Dark:
                     Appearance_ThemeDarkRadio.IsChecked = true;
                     break;
+                case Skin.Classic:
+                    Appearance_ThemeClassicRadio.IsChecked = true;
+                    break;
+                case Skin.System:
+                    Appearance_ThemeSystemRadio.IsChecked = true;
+                    break;
+            }
+            switch (App.Config.AccentColor)
+            {
+                case AccentColor.System:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.System;
+                    break;
+                case AccentColor.Blue:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Blue;
+                    break;
+                case AccentColor.Green:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Green;
+                    break;
+                case AccentColor.Red:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Red;
+                    break;
+                case AccentColor.Purple:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Purple;
+                    break;
+                case AccentColor.Pink:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Pink;
+                    break;
+                case AccentColor.CoverArt:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.CoverArt;
+                    break;
             }
 #if UPDATER
             switch (App.Config.UpdateMode)

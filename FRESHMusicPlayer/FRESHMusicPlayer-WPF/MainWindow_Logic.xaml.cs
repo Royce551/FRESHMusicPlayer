@@ -216,7 +216,6 @@ namespace FRESHMusicPlayer
                     var dominantColors = clustering.Calculate(2, colors, 5.0d);
 
                     (Application.Current as App).ApplyAccentColor(dominantColors[0].R, dominantColors[0].G, dominantColors[0].B, dominantColors[1].R, dominantColors[1].G, dominantColors[1].B);
-                    UpdateControlsBoxColors();
                 }
             }
         }
