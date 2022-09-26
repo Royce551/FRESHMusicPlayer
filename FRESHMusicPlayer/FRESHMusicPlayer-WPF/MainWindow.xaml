@@ -37,7 +37,7 @@
                 <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,0,0" Click="ImportTab_MouseDown">
-                <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="Home" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
             </Button>
             
             <Button TabIndex="904" Style="{StaticResource LinkButton}" x:Name="SettingsButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="SettingsButton_Click" Cursor="Hand">

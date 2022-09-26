@@ -3,12 +3,12 @@
                     xmlns:local="clr-namespace:FRESHMusicPlayer">
     <SolidColorBrush x:Key="PrimaryTextColor" Color="Black"/>
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#525252"/>
-    <SolidColorBrush x:Key="NavBarColor" Color="#D6D9DB"/>
-    <SolidColorBrush x:Key="ControlBoxColor" Color="#E3E5E8"/>
-    <SolidColorBrush x:Key="BackgroundColor" Color="#D6D9DB"/>
-    <SolidColorBrush x:Key="SecondaryColor" Color="#DEE0E3"/>
-    <SolidColorBrush x:Key="ForegroundColor" Color="#E3E5E8"/>
-    <SolidColorBrush x:Key="ControlColor" Color="#E9EBEC"/>
+    <SolidColorBrush x:Key="NavBarColor" Color="#DDDFE3"/>
+    <SolidColorBrush x:Key="ControlBoxColor" Color="#F4F4F6"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#DDDFE3"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#E9EAED"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#F4F4F6"/>
+    <SolidColorBrush x:Key="ControlColor" Color="#FFFFFF"/>
 
     <SolidColorBrush x:Key="AccentColor" Color="#FF338BC1"/>
     <LinearGradientBrush x:Key="AccentGradientColor" EndPoint="0,0.5" StartPoint="1, 0.5">
