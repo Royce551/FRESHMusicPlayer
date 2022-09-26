@@ -161,11 +161,15 @@ namespace FRESHMusicPlayer.Pages
             {
                 CoverArtOverlay.Opacity = 1;
                 CoverArtOverlay.Fill = (Brush)FindResource("BackgroundColor");
+                ProgressBar.Visibility = ProgressIndicator1.Visibility = ProgressIndicator2.Visibility = InfoThing.Visibility = Visibility.Hidden;
+                MainViewBox.Stretch = Stretch.None;
             }
             else
             {
                 CoverArtOverlay.Opacity = 0.55;
                 CoverArtOverlay.Fill = (Brush)FindResource("ForegroundColor");
+                ProgressBar.Visibility = ProgressIndicator1.Visibility = ProgressIndicator2.Visibility = InfoThing.Visibility = Visibility.Visible;
+                MainViewBox.Stretch = Stretch.Uniform;
             }
         }
     }
