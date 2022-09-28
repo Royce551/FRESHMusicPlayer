@@ -262,18 +262,23 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Ellipse x:Name="ThumbEllipse" Height="10" Width="10" Fill="{DynamicResource AccentColor}">
+                    <Ellipse x:Name="ThumbEllipse" Height="5" Width="5" Fill="{DynamicResource AccentColor}" RenderTransformOrigin="0.5, 0.5">
+                        <Ellipse.RenderTransform>
+                            <ScaleTransform x:Name="ScaleTransform" ScaleX="2" ScaleY="2"/>
+                        </Ellipse.RenderTransform>
                         <Ellipse.Triggers>
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
-                                                     Storyboard.TargetProperty="Width"
-                                                     To="17" Duration="0:0:.15"
+                                                    Storyboard.TargetName="ScaleTransform"
+                                                     Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                                                     To="3" Duration="0:0:.15"
                                                      />
                                         <DoubleAnimation
-                                                     Storyboard.TargetProperty="Height"
-                                                     To="17" Duration="0:0:.15"
+                                                    Storyboard.TargetName="ScaleTransform"
+                                                     Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+                                                     To="3" Duration="0:0:.15"
                                                      />
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -282,12 +287,14 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation 
-                                                     Storyboard.TargetProperty="Width"
-                                                     To="10" Duration="0:0:.15"
+                                            Storyboard.TargetName="ScaleTransform"
+                                                     Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                                                     To="2" Duration="0:0:.15"
                                                      />
-                                        <DoubleAnimation 
-                                                     Storyboard.TargetProperty="Height"
-                                                     To="10" Duration="0:0:.15"
+                                        <DoubleAnimation
+                                                    Storyboard.TargetName="ScaleTransform"
+                                                     Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+                                                     To="2" Duration="0:0:.15"
                                                      />
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -306,16 +313,17 @@
                 <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Track Grid.Row="1" x:Name="PART_Track"   >
+            <Track Grid.Row="1" x:Name="PART_Track" >
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderRepeatButton1}" Margin="0,0,-1,0" Command="Slider.DecreaseLarge" />
                 </Track.DecreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb Style="{StaticResource SliderThumb}"  />
-                </Track.Thumb>
+                
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderRepeatButton}" Margin="-1,0,0,0" Command="Slider.IncreaseLarge" />
                 </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource SliderThumb}"/>
+                </Track.Thumb>
             </Track>
         </Grid>
     </ControlTemplate>
@@ -580,7 +588,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Border x:Name="myBorder"
-                                    Padding="5,2,0,2"
+                                    Padding="2,2,2,2"
                                     CornerRadius="2"
                                     SnapsToDevicePixels="true">
                         <ContentPresenter />

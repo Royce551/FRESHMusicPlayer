@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"  
-             d:DesignHeight="40" d:DesignWidth="344" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
-    <Grid x:Name="MainPanel" Background="{DynamicResource ForegroundColor}">
+             d:DesignHeight="30" d:DesignWidth="344" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
+    <Grid x:Name="MainPanel" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
@@ -14,8 +14,8 @@
             <ColumnDefinition/>
             <ColumnDefinition x:Name="ButtonColumn" Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="TitleLabel" Grid.Column="1" Margin="5,0,0,13" Text="TextBlock" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
-        <TextBlock x:Name="ArtistAlbumLabel" Margin="5,24,0,2" Text="TextBlock" Foreground="{DynamicResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis" Grid.Column="1"/>
+        <TextBlock x:Name="TitleLabel" Grid.Column="1" Margin="5,0,0,10" Foreground="{DynamicResource PrimaryTextColor}" FontSize="12"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
+        <TextBlock x:Name="ArtistAlbumLabel" Margin="5,15,0,2" Foreground="{DynamicResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis" Grid.Column="1"/>
         <TextBlock x:Name="PositionLabel" Text="" Grid.Column="0" Margin="5,0,0,0" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold" VerticalAlignment="Center" FontSize="15"/>
         <Path x:Name="PlayButton" Data="{StaticResource PlayIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,4,31,5" HorizontalAlignment="Right" Width="18.426" Visibility="Collapsed"/>
         <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Visibility="Collapsed"/>

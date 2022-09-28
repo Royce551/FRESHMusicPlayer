@@ -213,9 +213,9 @@ namespace FRESHMusicPlayer
                     }
 
                     var clustering = new KMeansClusteringCalculator();
-                    var dominantColors = clustering.Calculate(2, colors, 5.0d);
+                    var dominantColors = clustering.Calculate(3, colors, 5.0d);
 
-                    (Application.Current as App).ApplyAccentColor(dominantColors[0].R, dominantColors[0].G, dominantColors[0].B, dominantColors[1].R, dominantColors[1].G, dominantColors[1].B);
+                    (Application.Current as App).ApplyAccentColor(dominantColors[1].R, dominantColors[1].G, dominantColors[1].B, dominantColors[2].R, dominantColors[2].G, dominantColors[2].B);
                 }
             }
         }
