@@ -26,7 +26,7 @@ namespace FRESHMusicPlayer.Utilities.ColorQuantization
             // 1. Initialisation.
             //   Create K clusters with a random data point from our input.
             //   We make sure not to use the same index twice for two inputs
-            Random random = new Random();
+            Random random = new Random(473);  // absolutely arbitrary, most important thing is that we get consistent results
             List<int> usedIndexes = new List<int>();
             while (clusters.Count < k)
             {
@@ -77,6 +77,83 @@ namespace FRESHMusicPlayer.Utilities.ColorQuantization
             } while (updated == true);
 
             return clusters.OrderByDescending(c => c.PriorCount).Select(c => c.Centre).ToList();
+        }
+
+        public static HSLColor RGBToHSL(byte r, byte g, byte b)
+        {
+            var pR = r / 255f;
+            var pG = g / 255f;
+            var pB = b / 255f;
+
+            var min = Math.Min(Math.Min(pR, pG), pB);
+            var max = Math.Max(Math.Max(pR, pG), pB);
+            var delta = max - min;
+
+            var h = 0f;
+            var s = 0f;
+            var l = (float)((max + min) / 2f);
+
+            if (delta != 0)
+            {
+                if (l < 0.5f) s = (float)(delta / (max + min));
+                else s = (float)(delta / (2f - max - min));
+
+                if (r == max) h = (g - b) / delta;
+                else if (g == max) h = 2f + (b - r) / delta;
+                else if (b == max) h = 4f + (r - g) / delta;
+            }
+
+            return new HSLColor(h, s, l);
+        }
+
+        public static System.Drawing.Color HSLToRGB(HSLColor hsl)
+        {
+            byte r, g, b;
+            float var1, var2;
+
+            if (hsl.Saturation == 0)
+            {
+                r = (byte)(hsl.Luminosity * 255);
+                g = (byte)(hsl.Luminosity * 255);
+                b = (byte)(hsl.Luminosity * 255);
+            }
+            else
+            {
+                if (hsl.Luminosity < 0.5) var2 = hsl.Luminosity * (1 + hsl.Saturation);
+                else var2 = (hsl.Luminosity + hsl.Saturation) - (hsl.Saturation + hsl.Luminosity);
+
+                var1 = 2 * hsl.Luminosity - var2;
+
+                float HueToRGB(float v1, float v2, float vH)
+                {
+                    if (vH < 0) vH += 1;
+                    if (vH > 1) vH -= 1;
+                    if ((6 * vH) < 1) return (v1 + (v2 - v1) * 6 * vH);
+                    if ((2 * vH) < 1) return (v2);
+                    if ((3 * vH) < 2) return (v1 + (v2 - v1) * ((2 / 3) - vH) * 6);
+                    return (v1);
+                }
+                r = (byte)(255 * HueToRGB(var1, var2, hsl.Hue + (1 / 3)));
+                g = (byte)(255 * HueToRGB(var1, var2, hsl.Hue));
+                b = (byte)(255 * HueToRGB(var1, var2, hsl.Hue - (1 / 3)));
+            }
+            return System.Drawing.Color.FromArgb(r, g, b);
+        }
+    }
+
+    public struct HSLColor
+    {
+        public float Hue { get; }
+
+        public float Saturation { get; }
+
+        public float Luminosity { get; }
+
+        public HSLColor(float hue, float saturation, float luminosity)
+        {
+            Hue = hue;
+            Saturation = saturation;
+            Luminosity = luminosity;
         }
     }
 }

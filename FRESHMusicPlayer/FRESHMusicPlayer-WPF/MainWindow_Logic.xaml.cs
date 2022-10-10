@@ -215,6 +215,13 @@ namespace FRESHMusicPlayer
                     var clustering = new KMeansClusteringCalculator();
                     var dominantColors = clustering.Calculate(3, colors, 5.0d);
 
+                    //var secondDominant = dominantColors[2];
+                    //NotificationHandler.Add(new Notification { ContentText = secondDominant.ToString() });
+                    //var test1 = KMeansClusteringCalculator.RGBToHSL(secondDominant.R, secondDominant.G, secondDominant.B);
+                    //NotificationHandler.Add(new Notification { ContentText = $"{test1.Hue} {test1.Saturation} {test1.Luminosity}" });
+                    //var test2 = KMeansClusteringCalculator.HSLToRGB(test1);
+                    //NotificationHandler.Add(new Notification { ContentText = test2.ToString() });
+
                     (Application.Current as App).ApplyAccentColor(dominantColors[1].R, dominantColors[1].G, dominantColors[1].B, dominantColors[2].R, dominantColors[2].G, dominantColors[2].B);
                 }
             }

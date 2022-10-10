@@ -331,6 +331,7 @@ namespace FRESHMusicPlayer.Pages
                         break;
                 }
                 (Application.Current as App).ChangeAccentColor(App.Config.AccentColor);
+                window.HandleAccentCoverArt();
             }
         }
 
