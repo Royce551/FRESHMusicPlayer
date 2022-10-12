@@ -273,12 +273,12 @@
                                         <DoubleAnimation
                                                     Storyboard.TargetName="ScaleTransform"
                                                      Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                                                     To="3" Duration="0:0:.15"
+                                                     To="4" Duration="0:0:.15"
                                                      />
                                         <DoubleAnimation
                                                     Storyboard.TargetName="ScaleTransform"
                                                      Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
-                                                     To="3" Duration="0:0:.15"
+                                                     To="4" Duration="0:0:.15"
                                                      />
                                     </Storyboard>
                                 </BeginStoryboard>

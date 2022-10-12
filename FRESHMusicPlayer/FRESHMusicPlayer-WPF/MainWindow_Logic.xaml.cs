@@ -22,6 +22,7 @@ using System.Windows.Media.Imaging;
 using WinForms = System.Windows.Forms;
 using Drawing = System.Drawing;
 using FRESHMusicPlayer.Utilities.ColorQuantization;
+using FRESHMusicPlayer.Backends;
 
 namespace FRESHMusicPlayer
 {
@@ -80,18 +81,20 @@ namespace FRESHMusicPlayer
             else
             {
                 Player.CurrentTime = TimeSpan.FromSeconds(0);
+                await AnimateSeekBarAsync(0);
                 ProgressTimer.Start(); // to resync the progress timer
+
             }
         }
 
         public void UpdateControlsBoxColors()
         {
-            if (Player.Queue.RepeatMode == RepeatMode.RepeatOne)
+            if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatAllIcon");
                 RepeatOneButton.Fill = (Brush)FindResource("AccentGradientColor");
             }
-            else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
+            else if (Player.Queue.RepeatMode == RepeatMode.RepeatOne)
             {
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatOneIcon");
                 RepeatOneButton.Fill = (Brush)FindResource("AccentGradientColor");
@@ -129,16 +132,38 @@ namespace FRESHMusicPlayer
 
             UpdateControlsBoxColors();
         }
-        private void Player_SongStopped(object sender, EventArgs e)
+        private void Player_SongStopped(object sender, PlaybackStoppedEventArgs e)
         {
-            Title = WindowName;
-            TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             ProgressTimer.Stop();
-            CoverArtBox.Source = null;
-            SetIntegrations(PlaybackStatus.Stopped);
-            SetCoverArtVisibility(false);
+            
+            if (e.IsEndOfPlayback)
+            {
+                Title = WindowName;
+                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+                CoverArtBox.Source = null;
+                SetIntegrations(PlaybackStatus.Stopped);
+                SetCoverArtVisibility(false);
+            }
+            else
+            {
+                Title = $"Loading... | {WindowName}";
+                TitleLabel.Text = "Loading...";
+                ArtistLabel.Text = "Loading...";
+                CoverArtBox.Source = null;
+            }
 
             LoggingHandler.Log("Stopping!");
+        }
+
+        private async Task AnimateSeekBarAsync(double toValue)
+        {
+            var sb = new Storyboard();
+            sb.FillBehavior = FillBehavior.Stop;
+            var doubleAnimation = new DoubleAnimation(toValue, TimeSpan.FromMilliseconds(500));
+            doubleAnimation.EasingFunction = new ExponentialEase { Exponent = 8, EasingMode = EasingMode.EaseInOut };
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(Slider.ValueProperty));
+            sb.Children.Add(doubleAnimation);
+            await sb.BeginStoryboardAsync(ProgressBar);
         }
 
         private bool InFullscreen => WindowStyle != WindowStyle.SingleBorderWindow;
@@ -148,14 +173,14 @@ namespace FRESHMusicPlayer
             if (!InFullscreen) Mouse.OverrideCursor = Cursors.AppStarting;
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private async void Player_SongChanged(object sender, EventArgs e)
         {
             if (!InFullscreen) Mouse.OverrideCursor = null;
             CurrentTrack = Player.Metadata;
             Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {WindowName}";
             TitleLabel.Text = CurrentTrack.Title;
             ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
-            ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
+            
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
             SetIntegrations(PlaybackStatus.Playing);
@@ -180,13 +205,22 @@ namespace FRESHMusicPlayer
             HandleAccentCoverArt();
 
             LoggingHandler.Log("Changing tracks!");
+
+            await AnimateSeekBarAsync(0);
+            ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
             if (!InFullscreen) Mouse.OverrideCursor = null;
+            var message = new StringBuilder();
+            foreach (var problem in e.Problems)
+            {
+                message.AppendLine($"{problem.Key}: {problem.Value}");
+            }
+
             NotificationHandler.Add(new Notification
             {
-                ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
+                ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, message.ToString()),
                 IsImportant = true,
                 DisplayAsToast = true,
                 Type = NotificationType.Failure
@@ -198,7 +232,7 @@ namespace FRESHMusicPlayer
         {
             if (App.Config.AccentColor != Handlers.Configuration.AccentColor.CoverArt) return;
 
-            if (Player.Metadata.CoverArt is null) return;
+            if (Player.Metadata?.CoverArt is null) return;
             using (var bitmap = new Drawing.Bitmap(new MemoryStream(Player.Metadata.CoverArt)))
             {
                 using (var resized = new Drawing.Bitmap(bitmap, 25, 25))
@@ -237,7 +271,8 @@ namespace FRESHMusicPlayer
 
         public void SetCoverArtVisibility(bool mode)
         {
-            if (!mode) CoverArtArea.Width = new GridLength(5);
+            if (!mode) 
+                CoverArtArea.Width = new GridLength(5);
             else CoverArtArea.Width = new GridLength(75);
         }
         public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false)

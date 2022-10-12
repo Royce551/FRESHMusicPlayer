@@ -78,9 +78,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void PlayNextContext_Click(object sender, RoutedEventArgs e)
         {
-            player.Queue.Queue.Insert(player.Queue.Position, FilePath);
-            player.Queue.Shuffle = true;
-            player.Queue.Shuffle = false;
+            player.Queue.PlayNext(FilePath);
         }
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
