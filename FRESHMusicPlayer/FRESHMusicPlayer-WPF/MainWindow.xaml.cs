@@ -122,6 +122,7 @@ namespace FRESHMusicPlayer
             sb.Children.Add(doubleAnimation);
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
+            sb.Begin(ControlsBoxBorder);
             await new UpdateHandler(NotificationHandler).UpdateApp();
             await PerformAutoImport();
         }

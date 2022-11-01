@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="FRESHMusicPlayer.Pages.Library.LibraryHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FRESHMusicPlayer.Pages.Library"
+             mc:Ignorable="d" d:DesignWidth="344" Background="Transparent" MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave" MouseLeftButtonUp="Border_MouseLeftButtonUp">
+    <Border BorderThickness="0,0,0,1" Background="Transparent" BorderBrush="{DynamicResource SecondaryTextColor}">
+        <DockPanel>
+            <Button x:Name="PlayAllButton" DockPanel.Dock="Right" Content="Play all" Margin="2" Visibility="Collapsed" Click="PlayAllButton_Click"/>
+            <Button x:Name="EnqueueAllButton" DockPanel.Dock="Right" Content="Enqueue all" Margin="2" Visibility="Collapsed" Click="EnqueueAllButton_Click"/>
+
+            <TextBlock x:Name="HeaderText" Text="Disc 1" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" Margin="5,10,0,2" VerticalAlignment="Bottom"/>
+        </DockPanel>
+        
+    </Border>
+</UserControl>

@@ -143,8 +143,9 @@ namespace FRESHMusicPlayer.Pages.Library
                     albums.Sort();
                     foreach (var album in albums)
                     {
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new DiscHeader(album)));
-                        foreach (var thing in tracks.Where(x => x.Album == album))
+                        var tracksInAlbum = tracks.Where(x => x.Album == album);
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, album, tracksInAlbum.Select(x => x.Path).ToList())));
+                        foreach (var thing in tracksInAlbum)
                         {
                             window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
                             length += thing.Length;
@@ -188,8 +189,9 @@ namespace FRESHMusicPlayer.Pages.Library
                 {
                     foreach (var disc in discs)
                     {
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new DiscHeader($"Disc {disc}")));
-                        foreach (var thing in tracksAsATLTracks.Where(x => x.DiscNumber == disc))
+                        var tracksInDisc = tracksAsATLTracks.Where(x => x.DiscNumber == disc);
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, $"Disc {disc}", tracksInDisc.Select(x => x.Path).ToList())));
+                        foreach (var thing in tracksInDisc)
                         {
                             window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
                             length += thing.Duration;
