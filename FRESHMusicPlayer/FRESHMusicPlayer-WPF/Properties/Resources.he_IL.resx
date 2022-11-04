@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="IMPORT_MANUALENTRY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LIBRARY_PLAYALL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_IMPORT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_SEARCH" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_TRACKS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MENUBAR_EXIT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MENUBAR_FILE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MENUBAR_OPEN" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MENUBAR_SAVE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MINIPLAYER_BACK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_ABOUT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_APPEARANCE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_INTEGRATION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_SUBHEADER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THEME" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THEME_DARK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_UPDATES" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_ARTIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_COVERART" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_SAVE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_TITLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_ALBUM" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_BITRATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_GENRE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_YEAR" xml:space="preserve">
+    <value></value>
+  </data>
+</root>
