@@ -59,34 +59,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value></value>
+    <value>אופסי! משהו השתבש. ננסה להמשיך. אם זה ממשיך לקרות, אנא דווח על כך פה: https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
-    <value></value>
+    <value>פתח יומן לאיתור באגים</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
-    <value></value>
+    <value>עבור אל</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value></value>
+    <value>מיני נגן</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
-    <value></value>
+    <value>השהה לאחר השיר הנוכחי</value>
   </data>
   <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
-    <value></value>
+    <value>מצב מיקוד</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value></value>
+    <value>אתר תיקיות</value>
   </data>
   <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>אתר קבצי רשימת השמעה</value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>אתר שירים</value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>ניתן גם לגרור ולשחרר שירים לדף הזה.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value></value>
