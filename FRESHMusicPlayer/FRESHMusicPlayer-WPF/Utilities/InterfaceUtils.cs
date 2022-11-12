@@ -105,7 +105,7 @@ namespace FRESHMusicPlayer.Utilities
             var sb = new Storyboard();
             var thicknessAnimation = new ThicknessAnimation(from, to, duration);
             if (easingFunction != null) thicknessAnimation.EasingFunction = easingFunction;
-            Storyboard.SetTargetProperty(thicknessAnimation, path);
+            Storyboard.SetTargetProperty(thicknessAnimation, path);Storyboard.SetDesiredFrameRate(thicknessAnimation, 120);
             sb.Children.Add(thicknessAnimation);
             return sb;
         }
