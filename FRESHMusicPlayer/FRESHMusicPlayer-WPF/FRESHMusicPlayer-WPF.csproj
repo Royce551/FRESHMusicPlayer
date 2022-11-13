@@ -153,6 +153,7 @@
     <Compile Include="Handlers\GUILibrary.cs" />
     <Compile Include="Handlers\Integrations\DiscordIntegration.cs" />
     <Compile Include="Handlers\Integrations\IPlaybackIntegration.cs" />
+    <Compile Include="Handlers\Integrations\LastFM\LastFMIntegration.cs" />
     <Compile Include="Handlers\Integrations\SMTCIntegration.cs" />
     <Compile Include="Handlers\LoggingHandler.cs" />
     <Compile Include="Handlers\Notifications\Notification.cs" />

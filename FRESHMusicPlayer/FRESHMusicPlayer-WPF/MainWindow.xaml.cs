@@ -38,6 +38,7 @@ namespace FRESHMusicPlayer
         public WinForms.Timer ProgressTimer;
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
+        private IPlaybackIntegration lastFMIntegration;
         public MainWindow(Player player, string[] initialFile = null)
         {
             LoggingHandler.Log("Starting main window...");

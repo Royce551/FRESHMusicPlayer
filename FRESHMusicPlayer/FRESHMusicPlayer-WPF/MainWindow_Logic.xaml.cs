@@ -23,6 +23,7 @@ using WinForms = System.Windows.Forms;
 using Drawing = System.Drawing;
 using FRESHMusicPlayer.Utilities.ColorQuantization;
 using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Handlers.Integrations.LastFM;
 
 namespace FRESHMusicPlayer
 {
@@ -150,6 +151,7 @@ namespace FRESHMusicPlayer
                 TitleLabel.Text = "Loading...";
                 ArtistLabel.Text = "Loading...";
                 CoverArtBox.Source = null;
+                SetIntegrations(PlaybackStatus.Changing);
             }
 
             LoggingHandler.Log("Stopping!");
@@ -512,6 +514,7 @@ namespace FRESHMusicPlayer
 
         public void UpdateIntegrations()
         {
+            lastFMIntegration = new LastFMIntegration(this);
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 smtcIntegration = new SMTCIntegration(this);
@@ -526,6 +529,7 @@ namespace FRESHMusicPlayer
         }
         public void SetIntegrations(PlaybackStatus status)
         {
+            lastFMIntegration?.Update(CurrentTrack, status);
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 smtcIntegration?.Update(CurrentTrack, status);
