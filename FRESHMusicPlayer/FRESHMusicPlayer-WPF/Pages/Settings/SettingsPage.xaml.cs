@@ -126,9 +126,9 @@ namespace FRESHMusicPlayer.Pages
             }
 #else
             UpdateHeader.Visibility =
-            UpdateModeGrid.Visibility = 
-            UpdateModeHeader.Visibility = 
-            General_UpdateModeCombo.Visibility = 
+            UpdateModeGrid.Visibility =
+            UpdateModeHeader.Visibility =
+            General_UpdateModeCombo.Visibility =
             Updates_LastCheckedLabel.Visibility =
             Updates_CheckUpdatesButton.Visibility =
             Visibility.Collapsed;
