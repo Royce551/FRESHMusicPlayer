@@ -9,7 +9,7 @@
       d:DesignHeight="372" d:DesignWidth="694"
       DragEnter="Page_DragEnter" Drop="Page_Drop" AllowDrop="True">
 
-    <ScrollViewer Background="{DynamicResource BackgroundColor}">
+    <ScrollViewer Background="{DynamicResource BackgroundColor}" Margin="0,25,0,84">
         <StackPanel Margin="10" Width="300" HorizontalAlignment="Left">
             <TextBlock Text="History" Foreground="{DynamicResource PrimaryTextColor}" FontSize="20" FontWeight="Bold"/>
             <TextBlock Text="lol pretend there's stuff here" Margin="0,40,0,40" Foreground="{DynamicResource PrimaryTextColor}"/>

@@ -26,10 +26,12 @@ namespace FRESHMusicPlayer
         public GUILibrary Library;
         public IMetadataProvider CurrentTrack;
 
-#if !BLUEPRINT
+#if !BLUEPRINT && !DEBUG
         public const string WindowName = "FRESHMusicPlayer";
-#else
+#elif BLUEPRINT
         public const string WindowName = "FRESHMusicPlayer Blueprint (possibly unstable!)";
+#elif DEBUG
+        public const string WindowName = "FRESHMusicPlayer Debug (definitely unstable!)";
 #endif
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
@@ -104,18 +106,18 @@ namespace FRESHMusicPlayer
             };
             LoggingHandler.Log("Ready to go!");
 
-            if (initialFile != null)
-            {
-                Player.Queue.Add(initialFile);
-                await Player.PlayAsync();
-            }
+            //if (initialFile != null)
+            //{
+            //    Player.Queue.Add(initialFile);
+            //    await Player.PlayAsync();
+            //}
         }
 
         private async void Window_SourceInitialized(object sender, EventArgs e)
         {
             UpdateIntegrations();
             ProcessSettings(true);
-            if (!Player.FileLoaded) HandlePersistence();
+            //if (!Player.FileLoaded) HandlePersistence();
             var sb = new Storyboard();
             var doubleAnimation = new DoubleAnimation(0f, 1f, TimeSpan.FromSeconds(1));
             doubleAnimation.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut };

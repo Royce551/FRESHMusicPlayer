@@ -8,6 +8,9 @@ using System.Reflection;
 using System.Windows;
 using FRESHMusicPlayer.Handlers;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
+using WinForms = System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer
 {
@@ -32,7 +35,7 @@ namespace FRESHMusicPlayer
 
         private Window currentWindow;
         private Player player;
-        void App_Startup(object sender, StartupEventArgs e )
+        async void App_Startup(object sender, StartupEventArgs e )
         {
             LoggingHandler.Log("Handling configuration...");
             Config = ConfigurationHandler.Read();
@@ -43,13 +46,65 @@ namespace FRESHMusicPlayer
 
             LoggingHandler.Log("Handling command line args...");
 
+            string[] initialFiles = null;
             if (e.Args.Length > 0)
             {
-                var args = e.Args.Where(x => x.Contains('.'));
-                if (e.Args.Contains("--tageditor")) currentWindow = new TagEditor(args.ToList(), player);
-                else currentWindow = new MainWindow(player, args.ToArray());
+                initialFiles = e.Args.Where(x => x.Contains('.')).ToArray();
+
+                if (initialFiles.Contains("--tageditor")) currentWindow = new TagEditor(initialFiles.ToList(), player);
             }
-            else currentWindow = new MainWindow(player);
+
+            currentWindow = new MainWindow(player);
+
+            var persistenceFilePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
+            var startTime = TimeSpan.FromSeconds(0);
+            if (File.Exists(persistenceFilePath))
+            {
+                var fields = File.ReadAllText(persistenceFilePath).Split(';');
+
+                var top = double.Parse(fields[2]);
+                var left = double.Parse(fields[3]);
+                var height = double.Parse(fields[4]);
+                var width = double.Parse(fields[5]);
+                var rect = new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height);
+                if (WinForms.Screen.AllScreens.Any(y => y.WorkingArea.IntersectsWith(rect)))
+                {
+                    currentWindow.Top = top;
+                    currentWindow.Left = left;
+                    currentWindow.Height = height;
+                    currentWindow.Width = width;
+                }
+                if (fields[0] != string.Empty)
+                {
+                    initialFiles = new string[] { fields[0] };
+                    startTime = TimeSpan.FromSeconds(int.Parse(fields[1]));
+                }
+            }
+
+            if (initialFiles != null)
+            {
+                player.Queue.Add(initialFiles);
+                await player.PlayAsync();
+                player.CurrentTime = startTime;
+                if (currentWindow is MainWindow mainWindow)
+                {
+                    mainWindow.PlayPauseMethod();
+                    mainWindow.ProgressTick();
+                }
+            }
+            //if (e.Args.Length > 0)
+            //{
+            //    var args = e.Args.Where(x => x.Contains('.'));
+            //    if (e.Args.Contains("--tageditor")) currentWindow = new TagEditor(args.ToList(), player);
+            //    else
+            //    {
+            //        player.Queue.Add(initialFiles);
+            //        await player.PlayAsync();
+
+            //        currentWindow = new MainWindow(player, args.ToArray());
+            //    }
+            //}
+            //else currentWindow = new MainWindow(player);
             currentWindow.Show();
         }
         public static Skin CurrentSkin { get; set; } = Skin.Dark;

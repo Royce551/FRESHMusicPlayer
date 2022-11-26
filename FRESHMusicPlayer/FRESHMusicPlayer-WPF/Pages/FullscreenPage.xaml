@@ -15,7 +15,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel x:Name="TopBar" Panel.ZIndex="4" Background="Transparent" LastChildFill="False" Grid.Row="0" Height="30">
+        <DockPanel x:Name="TopBar" Panel.ZIndex="4" Background="Transparent" LastChildFill="False" Grid.Row="0" Height="30" Margin="0,25,0,0">
             <Button x:Name="BackButton" DockPanel.Dock="Left" Content="{x:Static resx:Resources.MINIPLAYER_BACK}" Margin="10,5,0,5" Click="BackButton_Click"/>
             <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="{x:Static resx:Resources.FULLSCREEN_FOCUSMODE}" Foreground="{DynamicResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
         </DockPanel>

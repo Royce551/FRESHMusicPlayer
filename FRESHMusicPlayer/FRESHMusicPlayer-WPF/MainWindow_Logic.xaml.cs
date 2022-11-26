@@ -470,34 +470,34 @@ namespace FRESHMusicPlayer
 
            App.Config.LastRecordedVersion = version;
         }
-        public async void HandlePersistence()
-        {
-            var persistenceFilePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
-            if (File.Exists(persistenceFilePath) && !Player.IsLoading && !Player.FileLoaded /*if a track is already loading or playing then it's probs being opened*/)
-            {
-                var fields = File.ReadAllText(persistenceFilePath).Split(';');
+        //public async void HandlePersistence()
+        //{
+        //    var persistenceFilePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
+        //    if (File.Exists(persistenceFilePath) && !Player.IsLoading && !Player.FileLoaded /*if a track is already loading or playing then it's probs being opened*/)
+        //    {
+        //        var fields = File.ReadAllText(persistenceFilePath).Split(';');
 
-                var top = double.Parse(fields[2]);
-                var left = double.Parse(fields[3]);
-                var height = double.Parse(fields[4]);
-                var width = double.Parse(fields[5]);
-                var rect = new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height);
-                if (WinForms.Screen.AllScreens.Any(y => y.WorkingArea.IntersectsWith(rect)))
-                {
-                    Top = top;
-                    Left = left;
-                    Height = height;
-                    Width = width;
-                }
-                if (fields[0] != string.Empty)
-                {
-                    await Player.PlayAsync(fields[0]);
-                    Player.CurrentTime = TimeSpan.FromSeconds(int.Parse(fields[1]));
-                    PlayPauseMethod();
-                    ProgressTick();
-                }
-            }
-        }
+        //        var top = double.Parse(fields[2]);
+        //        var left = double.Parse(fields[3]);
+        //        var height = double.Parse(fields[4]);
+        //        var width = double.Parse(fields[5]);
+        //        var rect = new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height);
+        //        if (WinForms.Screen.AllScreens.Any(y => y.WorkingArea.IntersectsWith(rect)))
+        //        {
+        //            Top = top;
+        //            Left = left;
+        //            Height = height;
+        //            Width = width;
+        //        }
+        //        if (fields[0] != string.Empty)
+        //        {
+        //            await Player.PlayAsync(fields[0]);
+        //            Player.CurrentTime = TimeSpan.FromSeconds(int.Parse(fields[1]));
+        //            PlayPauseMethod();
+        //            ProgressTick();
+        //        }
+        //    }
+        //}
         public void WritePersistence()
         {
             if (Player.FileLoaded) // TODO: make this less shitty

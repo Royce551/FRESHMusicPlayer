@@ -63,7 +63,7 @@ namespace FRESHMusicPlayer
             Player.Volume = (float)(VolumeBar.Value / 100);
         }
         private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
-        private void ProgressTick()
+        public void ProgressTick()
         {
             var time = Player.CurrentTime;
             ProgressIndicator1.Text = time.ToString(@"mm\:ss");
