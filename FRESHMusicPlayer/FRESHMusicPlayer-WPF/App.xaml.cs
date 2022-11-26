@@ -92,19 +92,6 @@ namespace FRESHMusicPlayer
                     mainWindow.ProgressTick();
                 }
             }
-            //if (e.Args.Length > 0)
-            //{
-            //    var args = e.Args.Where(x => x.Contains('.'));
-            //    if (e.Args.Contains("--tageditor")) currentWindow = new TagEditor(args.ToList(), player);
-            //    else
-            //    {
-            //        player.Queue.Add(initialFiles);
-            //        await player.PlayAsync();
-
-            //        currentWindow = new MainWindow(player, args.ToArray());
-            //    }
-            //}
-            //else currentWindow = new MainWindow(player);
             currentWindow.Show();
         }
         public static Skin CurrentSkin { get; set; } = Skin.Dark;

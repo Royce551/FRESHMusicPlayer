@@ -60,7 +60,7 @@ namespace FRESHMusicPlayer
             Initialize(initialFile);
         }
 
-        public async void Initialize(string[] initialFile)
+        public void Initialize(string[] initialFile)
         {
             LoggingHandler.Log("Reading library...");
 
