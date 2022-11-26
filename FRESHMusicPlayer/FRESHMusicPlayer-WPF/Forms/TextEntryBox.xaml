@@ -17,6 +17,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="Label" Foreground="{DynamicResource PrimaryTextColor}" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="10,10,10,0" FontSize="14"/>
         <TextBox x:Name="Box" Grid.Row="1" Background="{DynamicResource BackgroundColor}" Foreground="{DynamicResource PrimaryTextColor}" BorderBrush="{DynamicResource SecondaryTextColor}" Margin="5,0,5,5" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <PasswordBox x:Name="PasswordBox" Grid.Row="1" Foreground="{DynamicResource PrimaryTextColor}" BorderBrush="{DynamicResource SecondaryTextColor}" Margin="5,0,5,5" FontSize="14" VerticalAlignment="Center" Visibility="Collapsed"/>
         <Button x:Name="OKButton" Grid.Row="1" Grid.Column="2" Margin="10,5,10,10" Click="OKButton_Click" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center">OK</Button>
     </Grid>
 </Window>

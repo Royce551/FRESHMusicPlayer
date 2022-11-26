@@ -96,6 +96,10 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public bool AutoLibrary { get; set; } = false;
 
         public string AutoLibraryPath { get; set; }
+
+        public bool IntegrateLastFM { get; set; } = true;
+        public bool SyncLikedLastFMTracks { get; set; } = false;
+        public bool GeneratePlaylistsFromLastFM { get; set; } = false;
     }
 
 }

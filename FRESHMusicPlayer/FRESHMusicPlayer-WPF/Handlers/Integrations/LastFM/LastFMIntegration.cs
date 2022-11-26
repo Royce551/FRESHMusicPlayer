@@ -38,7 +38,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations.LastFM
             if (File.Exists(sessionKeyPath)) sessionKey = File.ReadAllText(sessionKeyPath);
             else
             {
-                var userDialog = new Forms.FMPTextEntryBox("LastFM username or password");
+                var userDialog = new Forms.FMPTextEntryBox("LastFM username or email");
                 userDialog.ShowDialog();
 
                 string username;
@@ -48,7 +48,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations.LastFM
                 }
                 else return;
 
-                var passwordDialog = new Forms.FMPTextEntryBox("LastFM password");
+                var passwordDialog = new Forms.FMPTextEntryBox("LastFM password", isPassword: true);
                 passwordDialog.ShowDialog();
                 string password;
                 if (passwordDialog.OK)
@@ -61,10 +61,12 @@ namespace FRESHMusicPlayer.Handlers.Integrations.LastFM
                 var presig = $"api_key{apiKey}methodauth.getMobileSessionpassword{password}username{username}{secret}";
                 var response = await httpClient.PostAsync($"{request}&api_sig={EncodeSignature(presig)}&format=json", null);
                 response.EnsureSuccessStatusCode();
-                MessageBox.Show(await response.Content.ReadAsStringAsync());
+
                 var json = JObject.Parse(await response.Content.ReadAsStringAsync());
                 sessionKey = json?.SelectToken("session.key").ToString();
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "lastfmsession.txt"), sessionKey);
+
+                window.NotificationHandler.Add(new Notifications.Notification { ContentText = $"Successfully logged in to LastFM as {json?.SelectToken("session.name")}!", Type = Notifications.NotificationType.Success});
             }
         }
 
@@ -97,7 +99,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations.LastFM
 
                     var updateNowPlayingRequest = $"https://www.audioscrobbler.com/2.0/?method=track.updateNowPlaying&artist={track.Artists[0]}&track={track.Title}&album={track.Album}&api_key={apiKey}&sk={sessionKey}";
                     var updateNowPlayingSignature = $"album{track.Album}api_key{apiKey}artist{track.Artists[0]}methodtrack.updateNowPlayingsk{sessionKey}track{track.Title}{secret}";
-                    var updateNowPlayingResponse = await httpClient.PostAsync($"{updateNowPlayingRequest}&api_sig={EncodeSignature(updateNowPlayingSignature)}&format=json", null);
+                    await httpClient.PostAsync($"{updateNowPlayingRequest}&api_sig={EncodeSignature(updateNowPlayingSignature)}&format=json", null);
                     break;
                 case PlaybackStatus.Changing:
                 case PlaybackStatus.Stopped:
@@ -108,7 +110,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations.LastFM
                     var scrobbleRequest = $"https://www.audioscrobbler.com/2.0/?method=track.scrobble&artist={lastTrackListenedTo.Artists[0]}&track={lastTrackListenedTo.Title}&timestamp={timeStamp}&album={lastTrackListenedTo.Album}&api_key={apiKey}&sk={sessionKey}";
                     var scrobbleSignature = $"album{lastTrackListenedTo.Album}api_key{apiKey}artist{lastTrackListenedTo.Artists[0]}methodtrack.scrobblesk{sessionKey}timestamp{timeStamp}track{lastTrackListenedTo.Title}{secret}";
                     var scrobbleResponse = await httpClient.PostAsync($"{scrobbleRequest}&api_sig={EncodeSignature(scrobbleSignature)}&format=json", null);
-                    window.NotificationHandler.Add(new Notifications.Notification { ContentText = "Scrobbled!" });
+                    if (!scrobbleResponse.IsSuccessStatusCode)
+                        window.NotificationHandler.Add(new Notifications.Notification { ContentText = "An error occured trying to scrobble your last track", Type = Notifications.NotificationType.Failure });
                     break;
             }
         }

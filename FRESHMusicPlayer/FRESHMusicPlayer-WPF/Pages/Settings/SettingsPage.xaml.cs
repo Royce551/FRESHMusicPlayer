@@ -40,6 +40,11 @@ namespace FRESHMusicPlayer.Pages
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
             General_AutoLibraryCheck.IsChecked = App.Config.AutoLibrary;
+
+            Integration_LastFMCheck.IsChecked = App.Config.IntegrateLastFM;
+            Integration_LastFMSyncLikedCheck.IsChecked = App.Config.SyncLikedLastFMTracks;
+            Integration_LastFMSyncPlaylistsCheck.IsChecked = App.Config.GeneratePlaylistsFromLastFM;
+
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
             switch (App.Config.Language) // TODO: investigate making this less ugly
@@ -217,6 +222,42 @@ namespace FRESHMusicPlayer.Pages
             {
                 App.Config.PlaybackTracking = (bool)General_TrackingCheck.IsChecked;
                 (Application.Current.MainWindow as MainWindow)?.ProcessSettings();
+            }
+        }
+
+        private void Integration_LastFMChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                if ((bool)Integration_LastFMCheck.IsChecked)
+                {
+                    App.Config.IntegrateLastFM = true;
+                }
+                else
+                {
+                    var result = MessageBox.Show("Are you sure you want to log out of LastFM?", "FRESHMusicPlayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        App.Config.IntegrateLastFM = false;
+                        File.Delete(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "lastfmsession.txt"));
+                    }
+                    else Integration_LastFMCheck.IsChecked = true;
+                }
+                (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
+            }
+        }
+        private void Integration_LastFMSyncLikedChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.SyncLikedLastFMTracks = (bool)Integration_LastFMSyncLikedCheck.IsChecked;
+            }
+        }
+        private void Integration_LastFMSyncPlaylistsChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.GeneratePlaylistsFromLastFM = (bool)Integration_LastFMSyncPlaylistsCheck.IsChecked;
             }
         }
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

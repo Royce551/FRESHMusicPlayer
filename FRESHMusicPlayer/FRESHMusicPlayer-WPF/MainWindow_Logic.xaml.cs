@@ -487,7 +487,8 @@ namespace FRESHMusicPlayer
 
         public void UpdateIntegrations()
         {
-            lastFMIntegration = new LastFMIntegration(this);
+            if (App.Config.IntegrateLastFM) lastFMIntegration = new LastFMIntegration(this);
+            else lastFMIntegration = null;
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 smtcIntegration = new SMTCIntegration(this);
@@ -502,7 +503,7 @@ namespace FRESHMusicPlayer
         }
         public void SetIntegrations(PlaybackStatus status)
         {
-            lastFMIntegration?.Update(CurrentTrack, status);
+            if (App.Config.IntegrateLastFM) lastFMIntegration?.Update(CurrentTrack, status);
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 smtcIntegration?.Update(CurrentTrack, status);
