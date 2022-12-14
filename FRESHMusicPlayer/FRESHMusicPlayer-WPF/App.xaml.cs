@@ -51,7 +51,11 @@ namespace FRESHMusicPlayer
             {
                 initialFiles = e.Args.Where(x => x.Contains('.')).ToArray();
 
-                if (initialFiles.Contains("--tageditor")) currentWindow = new TagEditor(initialFiles.ToList(), player);
+                if (initialFiles.Contains("--tageditor"))
+                {
+                    currentWindow = new TagEditor(initialFiles.ToList(), player);
+                    return;
+                }
             }
 
             currentWindow = new MainWindow(player);

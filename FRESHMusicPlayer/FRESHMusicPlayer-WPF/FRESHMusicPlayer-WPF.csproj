@@ -153,7 +153,7 @@
     <Compile Include="Handlers\GUILibrary.cs" />
     <Compile Include="Handlers\Integrations\DiscordIntegration.cs" />
     <Compile Include="Handlers\Integrations\IPlaybackIntegration.cs" />
-    <Compile Include="Handlers\Integrations\LastFM\LastFMIntegration.cs" />
+    <Compile Include="Handlers\Integrations\LastFMIntegration.cs" />
     <Compile Include="Handlers\Integrations\SMTCIntegration.cs" />
     <Compile Include="Handlers\LoggingHandler.cs" />
     <Compile Include="Handlers\Notifications\Notification.cs" />
@@ -186,6 +186,9 @@
     </Compile>
     <Compile Include="Pages\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SoundSettingsPage.xaml.cs">
+      <DependentUpon>SoundSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TrackInfoPage.xaml.cs">
       <DependentUpon>TrackInfoPage.xaml</DependentUpon>
@@ -305,6 +308,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Settings\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SoundSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -429,19 +436,19 @@
     <Content Include="FRESHMusicPlayer.Core.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'ReleasePackageUpdater'">
+  <!--<Target Name="AfterBuild" Condition=" '$(Configuration)' == 'ReleasePackageUpdater'">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
     </GetAssemblyIdentity>
     <Exec Command="nuget pack FMPRelease.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
-    <Exec Command="squirrel --releasify $(OutDir)MyApp.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg" />
+    <Exec Command="squirrel releasify $(OutDir)MyApp.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg" />
   </Target>
   <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'BlueprintPackageUpdater'">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
     </GetAssemblyIdentity>
     <Exec Command="nuget pack FMPBlueprintRelease.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Blueprint -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
-    <Exec Command="squirrel --releasify $(OutDir)FRESHMusicPlayerBlueprint.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=BlueprintReleases" />
-  </Target>
+    <Exec Command="squirrel releasify $(OutDir)FRESHMusicPlayerBlueprint.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg releaseDir=BlueprintReleases" />
+  </Target>-->
   <!--<Import Project="..\packages\squirrel.windows.1.9.1\build\squirrel.windows.targets" Condition="Exists('..\packages\squirrel.windows.1.9.1\build\squirrel.windows.targets')" />-->
 </Project>

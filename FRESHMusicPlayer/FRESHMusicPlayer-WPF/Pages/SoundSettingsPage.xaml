@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="FRESHMusicPlayer.Pages.SoundSettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FRESHMusicPlayer.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="335"
+      Background="{DynamicResource SecondaryColor}">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <StackPanel Margin="20,0,0,0">
+        <TextBlock Text="Sound Settings" FontSize="24" FontWeight="Bold" Margin="-10,5,0,0"/>
+
+        <TextBlock Text="Equalizer" FontSize="16" FontWeight="Bold" Margin="-10,5,0,0"/>
+        <StackPanel Orientation="Horizontal" Height="200" Margin="0,10,0,0">
+            <DockPanel Margin="0,0,15,0">
+                <TextBlock DockPanel.Dock="Bottom" Text="-12dB" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}" Margin="0,0,0,15"/>
+                <TextBlock DockPanel.Dock="Bottom" Text="+12dB" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Bottom" Text="60Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Slider x:Name="EQBand1" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand1_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+            </DockPanel>
+            <DockPanel Margin="10,0,0,0">
+                <TextBlock DockPanel.Dock="Bottom" Text="150Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Slider x:Name="EQBand2" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand2_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+            </DockPanel>
+            <DockPanel Margin="10,0,0,0">
+                <TextBlock DockPanel.Dock="Bottom" Text="400Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Slider x:Name="EQBand3"  Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand3_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+            </DockPanel>
+            <DockPanel Margin="10,0,0,0">
+                <TextBlock DockPanel.Dock="Bottom" Text="1kHz" HorizontalAlignment="Center"  Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Slider x:Name="EQBand4" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand4_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+            </DockPanel>
+            <DockPanel Margin="10,0,0,0">
+                <TextBlock DockPanel.Dock="Bottom" Text="2.4kHz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Slider x:Name="EQBand5" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand5_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+            </DockPanel>
+            <DockPanel Margin="10,0,0,0">
+                <TextBlock DockPanel.Dock="Bottom" Text="15kHz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Slider x:Name="EQBand6" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand6_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+            </DockPanel>
+        </StackPanel>
+        
+        <TextBlock Text="Speed" FontSize="16" FontWeight="Bold" Margin="-10,5,0,0"/>
+    </StackPanel>
+</UserControl>

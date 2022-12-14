@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
 
-namespace FRESHMusicPlayer.Handlers.Integrations.LastFM
+namespace FRESHMusicPlayer.Handlers.Integrations
 {
     class LastFMIntegration : IPlaybackIntegration
     {
-        private HttpClient httpClient;
+        private readonly HttpClient httpClient;
         private const string apiKey = "8491d888bf27f181e9ed45d370067d9a";
         private const string secret = "77caff321db877b5167167d5dfa24664";
 

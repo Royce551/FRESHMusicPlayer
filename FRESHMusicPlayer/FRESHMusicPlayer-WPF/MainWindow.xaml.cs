@@ -141,5 +141,10 @@ namespace FRESHMusicPlayer
             watcher.Dispose();
             WritePersistence();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAuxilliaryPane(Pane.SoundSettings, 335, true);
+        }
     }
 }

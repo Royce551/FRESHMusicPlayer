@@ -5,6 +5,7 @@ using FRESHMusicPlayer.Pages;
 using FRESHMusicPlayer.Pages.Library;
 using FRESHMusicPlayer.Pages.Lyrics;
 using FRESHMusicPlayer.Utilities;
+using FRESHMusicPlayer.Utilities.ColorQuantization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,11 +20,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using WinForms = System.Windows.Forms;
 using Drawing = System.Drawing;
-using FRESHMusicPlayer.Utilities.ColorQuantization;
-using FRESHMusicPlayer.Backends;
-using FRESHMusicPlayer.Handlers.Integrations.LastFM;
 
 namespace FRESHMusicPlayer
 {
@@ -45,7 +42,8 @@ namespace FRESHMusicPlayer
         Search,
         Notifications,
         TrackInfo,
-        Lyrics
+        Lyrics,
+        SoundSettings
     }
 
     // Code for the "shell" parts of the main window, player, and systemwide logic
@@ -297,6 +295,8 @@ namespace FRESHMusicPlayer
                         return new TrackInfoPage(this);
                     case Pane.Lyrics:
                         return new LyricsPage(this);
+                    case Pane.SoundSettings:
+                        return new SoundSettingsPage(this);
                     default:
                         return null;
                 }
