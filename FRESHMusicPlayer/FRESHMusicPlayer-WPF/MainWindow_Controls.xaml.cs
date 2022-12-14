@@ -193,31 +193,31 @@ namespace FRESHMusicPlayer
             if (!(e.OriginalSource is TextBox || e.OriginalSource is ListBoxItem) || Keyboard.IsKeyDown(Key.LeftCtrl))
                 switch (e.Key)
                 {
-                    case Key.Q:
+                    case Key.O:
                         ShowAuxilliaryPane(Pane.Settings, 335);
                         break;
-                    case Key.A:
+                    case Key.D1:
                         ChangeTabs(Tab.Tracks);
                         break;
-                    case Key.S:
+                    case Key.D2:
                         ChangeTabs(Tab.Artists);
                         break;
-                    case Key.D:
+                    case Key.D3:
                         ChangeTabs(Tab.Albums);
                         break;
-                    case Key.F:
+                    case Key.D4:
                         ChangeTabs(Tab.Playlists);
                         break;
-                    case Key.G:
+                    case Key.D5:
                         ChangeTabs(Tab.Import);
                         break;
-                    case Key.E:
+                    case Key.F:
                         ShowAuxilliaryPane(Pane.Search, 335);
                         break;
                     case Key.R:
                         ShowAuxilliaryPane(Pane.TrackInfo, 235, true);
                         break;
-                    case Key.W:
+                    case Key.Q:
                         ShowAuxilliaryPane(Pane.QueueManagement, 335);
                         break;
                     case Key.Space:
