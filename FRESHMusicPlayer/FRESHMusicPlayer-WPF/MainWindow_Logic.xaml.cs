@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Handlers;
+﻿using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Pages;
@@ -184,6 +185,7 @@ namespace FRESHMusicPlayer
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
             else ProgressIndicator2.Text = "∞";
             SetIntegrations(PlaybackStatus.Playing);
+            UpdateEqualizer();
             UpdatePlayButtonState();
             if (CurrentTrack.CoverArt is null)
             {
@@ -226,6 +228,26 @@ namespace FRESHMusicPlayer
                 Type = NotificationType.Failure
             });
             await Player.NextAsync();
+        }
+
+        public void UpdateEqualizer()
+        {
+            if (Player.CurrentBackend is ISupportEqualization equalizableBackend)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    equalizableBackend.EqualizerBands = new List<EqualizerBand>()
+                {
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 60, Gain = App.Config.EQBand1 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 150, Gain = App.Config.EQBand2},
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 400, Gain = App.Config.EQBand3 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 1000, Gain = App.Config.EQBand4 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 2400, Gain = App.Config.EQBand5 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 15000, Gain = App.Config.EQBand6 },
+                };
+                    equalizableBackend.UpdateEqualizer();
+                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            }
         }
 
         public void HandleAccentCoverArt()

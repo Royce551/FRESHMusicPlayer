@@ -100,6 +100,13 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public bool IntegrateLastFM { get; set; } = false;
         public bool SyncLikedLastFMTracks { get; set; } = false;
         public bool GeneratePlaylistsFromLastFM { get; set; } = false;
+
+        public float EQBand1 { get; set; } = 0;
+        public float EQBand2 { get; set; } = 0;
+        public float EQBand3 { get; set; } = 0;
+        public float EQBand4 { get; set; } = 0;
+        public float EQBand5 { get; set; } = 0;
+        public float EQBand6 { get; set; } = 0;
     }
 
 }
