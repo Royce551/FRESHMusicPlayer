@@ -89,10 +89,10 @@
     <value>ניתן גם לגרור ולשחרר שירים לדף הזה.</value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value></value>
+    <value>כתובת קובץ או אתר</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>הוסף לרשימת השמעה</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
     <value></value>
