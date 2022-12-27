@@ -9,7 +9,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Unloaded="Page_Unloaded" MouseMove="Page_MouseMove">
 
-    <Grid>
+    <Grid ClipToBounds="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
@@ -21,7 +21,7 @@
         </DockPanel>
         <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{DynamicResource BackgroundColor}"/>
 
-        <Viewbox x:Name="MainViewBox" Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="25,-5,25,25">
+        <Viewbox x:Name="MainViewBox" Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="70,-5,70,70">
             <Grid Width="700" Height="350">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -51,7 +51,7 @@
             </Grid>
         </Viewbox>
 
-        <Image x:Name="BackgroundCoverArtBox" HorizontalAlignment="Stretch" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="0" >
+        <Image x:Name="BackgroundCoverArtBox" HorizontalAlignment="Stretch" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="-30" >
             <Image.Effect>
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>

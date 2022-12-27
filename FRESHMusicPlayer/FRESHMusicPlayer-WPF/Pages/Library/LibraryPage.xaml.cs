@@ -70,7 +70,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 int i = 0;
                 foreach (var thing in window.Library.Read())
                 {
-                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                     if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                     i++;
@@ -134,7 +134,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 {
                     foreach (var thing in tracks)
                     {
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                         length += thing.Length;
                     }
                 }
@@ -147,7 +147,7 @@ namespace FRESHMusicPlayer.Pages.Library
                         window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, album, tracksInAlbum.Select(x => x.Path).ToList())));
                         foreach (var thing in tracksInAlbum)
                         {
-                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                             length += thing.Length;
                         }
                     }
@@ -181,7 +181,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 {
                     foreach (var thing in tracksAsATLTracks)
                     {
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window, window.NotificationHandler, window.Library)));
                         length += thing.Duration;
                     }
                 }
@@ -193,7 +193,7 @@ namespace FRESHMusicPlayer.Pages.Library
                         window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, $"Disc {disc}", tracksInDisc.Select(x => x.Path).ToList())));
                         foreach (var thing in tracksInDisc)
                         {
-                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window.Player, window.NotificationHandler, window.Library)));
+                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window, window.NotificationHandler, window.Library)));
                             length += thing.Duration;
                         }
                     }
@@ -211,7 +211,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 foreach (var thing in window.Library.ReadTracksForPlaylist(selectedItem))
                 {
-                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });

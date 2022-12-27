@@ -178,7 +178,7 @@ namespace FRESHMusicPlayer
         {
             if (!InFullscreen) Mouse.OverrideCursor = null;
             CurrentTrack = Player.Metadata;
-            Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {WindowName}";
+            Title = $"{CurrentTrack.Title} • {string.Join(", ", CurrentTrack.Artists)} - {WindowName}";
             TitleLabel.Text = CurrentTrack.Title;
             ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
             
@@ -270,13 +270,6 @@ namespace FRESHMusicPlayer
 
                     var clustering = new KMeansClusteringCalculator();
                     var dominantColors = clustering.Calculate(3, colors, 5.0d);
-
-                    //var secondDominant = dominantColors[2];
-                    //NotificationHandler.Add(new Notification { ContentText = secondDominant.ToString() });
-                    //var test1 = KMeansClusteringCalculator.RGBToHSL(secondDominant.R, secondDominant.G, secondDominant.B);
-                    //NotificationHandler.Add(new Notification { ContentText = $"{test1.Hue} {test1.Saturation} {test1.Luminosity}" });
-                    //var test2 = KMeansClusteringCalculator.HSLToRGB(test1);
-                    //NotificationHandler.Add(new Notification { ContentText = test2.ToString() });
 
                     (Application.Current as App).ApplyAccentColor(dominantColors[1].R, dominantColors[1].G, dominantColors[1].B, dominantColors[2].R, dominantColors[2].G, dominantColors[2].B);
                 }
@@ -382,15 +375,15 @@ namespace FRESHMusicPlayer
             var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0, -25, 0, 0),
                 new Thickness(0),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 1 });
             var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0, 0, 0, -84),
                 new Thickness(0),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 1 });
             navBarStoryboard.Begin(MainBar);
             await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
 
@@ -404,15 +397,15 @@ namespace FRESHMusicPlayer
             var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0),
                 new Thickness(0, -25, 0, 0),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 3 });
             var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0),
                 new Thickness(0, 0, 0, -84),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 3 });
             navBarStoryboard.Begin(MainBar);
             await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
 

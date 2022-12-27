@@ -21,17 +21,21 @@ namespace FRESHMusicPlayer.Pages.Library
         public string FilePath;
         public string Title;
 
-        private Player player;
+        private string artist;
+        private string album;
+        private MainWindow window;
         private NotificationHandler notificationHandler;
         private GUILibrary library;
-        public SongEntry(string filePath, string artist, string album, string title, Player player, NotificationHandler notificationHandler, GUILibrary library)
+        public SongEntry(string filePath, string artist, string album, string title, MainWindow window, NotificationHandler notificationHandler, GUILibrary library)
         {
-            this.player = player;
+            this.window = window;
             this.notificationHandler = notificationHandler;
             this.library = library;
             InitializeComponent();
             FilePath = filePath;
             ArtistAlbumLabel.Text = $"{artist} ・ {album}";
+            this.artist = artist;
+            this.album = album;
             TitleLabel.Text = title;
             Title = title;
         }
@@ -54,8 +58,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
-                if (player.FileLoaded) player.Queue.Clear();
-                await player.PlayAsync(FilePath);
+                if (window.Player.FileLoaded) window.Player.Queue.Clear();
+                await window.Player.PlayAsync(FilePath);
             }
             else
             {
@@ -74,11 +78,11 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        private void QueueButtonClick(object sender, RoutedEventArgs e) => player.Queue.Add(FilePath);
+        private void QueueButtonClick(object sender, RoutedEventArgs e) => window.Player.Queue.Add(FilePath);
 
         private void PlayNextContext_Click(object sender, RoutedEventArgs e)
         {
-            player.Queue.PlayNext(FilePath);
+            window.Player.Queue.PlayNext(FilePath);
         }
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
@@ -93,8 +97,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             if (e.ClickCount == 2)
             {
-                if (player.FileLoaded) player.Queue.Clear();
-                await player.PlayAsync(FilePath);
+                if (window.Player.FileLoaded) window.Player.Queue.Clear();
+                await window.Player.PlayAsync(FilePath);
             }
         }
 
@@ -145,6 +149,8 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void OpenInFileExplorer_Click(object sender, RoutedEventArgs e) => Process.Start(Path.GetDirectoryName(FilePath));
 
-        
+        private void GoToArtistContext_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Artists, artist);
+
+        private void GoToAlbumContext_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Albums, album);
     }
 }

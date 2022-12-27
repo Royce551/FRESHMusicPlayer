@@ -54,7 +54,7 @@ namespace FRESHMusicPlayer.Pages.Library
                         .ToList())
                     {
                         if (searchqueries.Count > 1) break; // optimization for typing quickly
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window.Player, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                         length += thing.Length;
                         if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                         i++;

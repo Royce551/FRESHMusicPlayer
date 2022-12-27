@@ -10,7 +10,7 @@
       d:DesignHeight="372" d:DesignWidth="235"
       Unloaded="Page_Unloaded">
 
-    <Grid Background="{DynamicResource SecondaryColor}">
+    <Grid Background="{DynamicResource SecondaryColor}" ClipToBounds="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
@@ -18,7 +18,7 @@
 
         <fmpcontrols:TrackInfo x:Name="TrackInfo" Grid.Row="1" Panel.ZIndex="5"/>
 
-        <Image x:Name="CoverArtBox" Grid.Row="0" Grid.RowSpan="12" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="0" >
+        <Image x:Name="CoverArtBox" Grid.Row="0" Grid.RowSpan="12" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="-30" >
             <Image.Effect>
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>

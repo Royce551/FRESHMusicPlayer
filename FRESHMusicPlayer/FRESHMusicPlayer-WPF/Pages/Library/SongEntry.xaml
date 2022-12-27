@@ -38,8 +38,8 @@
                         <!--will be replaced with generated context menu by code behind-->
                     </MenuItem>
                     <MenuItem Header="Go to">
-                        <MenuItem Header="Artist"/>
-                        <MenuItem Header="Album"/>
+                        <MenuItem x:Name="GoToArtistContext" Header="Artist" Click="GoToArtistContext_Click"/>
+                        <MenuItem x:Name="GoToAlbumContext" Header="Album" Click="GoToAlbumContext_Click"/>
                     </MenuItem>
                     <MenuItem Header="{x:Static resx:Resources.LIBRARY_OPEN_FILEEXPLORER}" Click="OpenInFileExplorer_Click"/>
                 </ContextMenu>
