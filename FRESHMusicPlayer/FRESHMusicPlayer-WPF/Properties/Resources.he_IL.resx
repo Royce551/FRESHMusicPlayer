@@ -110,38 +110,39 @@
     <value>אין מילים זמינות</value>
   </data>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
-    <value>מילים ללא זמן
-</value>
+    <value>מילים ללא זמן</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>אלבומים</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value></value>
+    <value>אמנים</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value></value>
+    <value>יבא</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value></value>
+    <value>אמן לא ידוע</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value></value>
+    <value>שום דבר לא מנגן</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value></value>
+    <value>אירעה שגיאה:
+{0}
+נדלג לשיר הבא בשבילך</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
-    <value></value>
+    <value>רשימות השמעה</value>
   </data>
   <data name="MAINWINDOW_SEARCH" xml:space="preserve">
-    <value></value>
+    <value>חפש</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value></value>
+    <value>הגדרות</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>שירים</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
     <value></value>
@@ -162,13 +163,13 @@
     <value></value>
   </data>
   <data name="MINIPLAYER_BACK" xml:space="preserve">
-    <value></value>
+    <value>הקודם</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value></value>
+    <value>נקה הכל</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value></value>
+    <value>הודעות</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
     <value></value>
@@ -180,10 +181,10 @@
     <value></value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
-    <value></value>
+    <value>מתקין עדכון...</value>
   </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
-    <value></value>
+    <value>סורק שירים חדשים...</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
     <value></value>
@@ -195,210 +196,213 @@
     <value></value>
   </data>
   <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
-    <value></value>
+    <value>יומן רישום שינויים</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value></value>
+    <value>ניהול רשימת השמעה</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
-    <value></value>
+    <value>צור</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
-    <value></value>
+    <value>מחק</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
-    <value></value>
+    <value>יצא</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
-    <value></value>
+    <value>מה ברצונך לעשות עם "{0}"?</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
-    <value></value>
+    <value>"{0}" אינו שם רשימת השמעה חוקי.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
-    <value></value>
+    <value>שנה שם</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value></value>
+    <value>הוסף רשימת השמעה</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value></value>
+    <value>הוסף שיר</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value></value>
+    <value>נקה תור</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value></value>
+    <value>תור</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value></value>
+    <value>זמן נותר:</value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
-    <value></value>
+    <value>אודות</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
-    <value></value>
+    <value>מראה</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
-    <value></value>
+    <value>ייבוא אוטומטי</value>
   </data>
   <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>FMP ייבא רצועות חדשות מתיקיות אלה:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
-    <value></value>
+    <value>הוסף תיקיה</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value></value>
+    <value>מצב עדכון אוטומטי</value>
   </data>
   <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
-    <value></value>
+    <value>נקה ועדכן את הספרייה</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value></value>
+    <value>מאת Squid Grill (ותורמים אחרים)
+תרגום לעברית מאת Martysh12
+מורשה תחת GPL v3
+תודה על השימוש ב-FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
-    <value></value>
+    <value>כללי</value>
   </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
-    <value></value>
+    <value>שילוב</value>
   </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
-    <value></value>
+    <value>שפה</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
-    <value></value>
+    <value>תחזוקה</value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
-    <value></value>
+    <value>השמד את הספרייה</value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
-    <value></value>
+    <value>אתה עומד לנקות את הספרייה שלך באופן בלתי-הפיך. האם אתה בטוח?</value>
   </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
     <value></value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value></value>
+    <value>אפס את ההגדרות לברירת המחדל</value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>FMP צריך להתחיל מחדש כדי להחל את שינוייך.</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
-    <value></value>
+    <value>הפעל מחדש כעת</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value></value>
+    <value>ערוך את ההתנהגות של FMP</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value></value>
+    <value>ערכת נושא</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value></value>
+    <value>כהה</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value></value>
+    <value>בהיר</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
-    <value></value>
+    <value>הצג זמן במקום כותרת בכותרת החלון</value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value></value>
+    <value>עדכונים</value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value></value>
+    <value>בדוק אם קיימים עדכונים כעת</value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
-    <value></value>
+    <value>{0} נבדק לאחרונה</value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value></value>
+    <value>אוטומטי</value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
-    <value></value>
+    <value>ידני</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>הצג בקשה לאישור לפני עדכון</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value></value>
+    <value>עורך תגים</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value></value>
+    <value>אמן האלבום</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value></value>
+    <value>אמן</value>
   </data>
   <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
-    <value></value>
+    <value>שינויים אלה יוחלו כאשר ינגן שיר חדש</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value></value>
+    <value>שנה קובץ...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value></value>
+    <value>מלחין</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value></value>
+    <value>תמונת עטיפה</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value></value>
+    <value>מספר דיסק</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
-    <value></value>
+    <value>עריכה</value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
-    <value></value>
+    <value>ישנן מספר תוצאות עבור אלבום זה. איזה מהם אתה רוצה?</value>
   </data>
   <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
-    <value></value>
+    <value>אין תמונת עטיפה</value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value></value>
+    <value>אינך מחובר לאינטרנט :(</value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
-    <value></value>
+    <value>לא נמצאו תוצאות בשביל אלבום זה :(</value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>שמור</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value></value>
+    <value>האם לשמור שנויים ל-{0}?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value></value>
+    <value>כותרת</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value></value>
+    <value>מספר שיר</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>אלבום</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value></value>
+    <value>פרטי אלבום</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value></value>
+    <value>קצב סיביות</value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value></value>
+    <value>דיסק</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value></value>
+    <value>סגנון</value>
   </data>
   <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
-    <value></value>
+    <value>לא זמין</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value></value>
+    <value>פרטים טכניים</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value></value>
+    <value>פרטי שיר</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value></value>
+    <value>שיר</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value></value>
+    <value>שנה</value>
   </data>
 </root>
