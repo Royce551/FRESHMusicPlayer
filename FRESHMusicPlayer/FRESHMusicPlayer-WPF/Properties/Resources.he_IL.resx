@@ -95,25 +95,26 @@
     <value>הוסף לרשימת השמעה</value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value></value>
+    <value>הכנס כולם לתור</value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
-    <value></value>
+    <value>פתח בסייר קבצים</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value></value>
+    <value>נגן הכל</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
-    <value></value>
+    <value>מילים</value>
   </data>
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
-    <value></value>
+    <value>אין מילים זמינות</value>
   </data>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
-    <value></value>
+    <value>מילים ללא זמן
+</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value></value>
+    <value>אלבומים</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
     <value></value>
