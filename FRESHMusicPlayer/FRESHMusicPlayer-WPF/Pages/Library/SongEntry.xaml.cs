@@ -10,6 +10,7 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Handlers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -47,11 +48,19 @@ namespace FRESHMusicPlayer.Pages.Library
         public void ShowButtons()
         {
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Visible;
+            TitleLabel.Foreground = TitleLabel.TryFindResource("PrimaryTextColorOverAccent") as Brush;
+            ArtistAlbumLabel.Foreground = ArtistAlbumLabel.TryFindResource("SecondaryTextColorOverAccent") as Brush;
+            PlayButton.Fill = PlayButton.TryFindResource("PrimaryTextColorOverAccent") as Brush;
+            QueueButton.Fill = PlayButton.TryFindResource("PrimaryTextColorOverAccent") as Brush;
         }
 
         public void HideButtons()
         {
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Collapsed;
+            TitleLabel.Foreground = TitleLabel.TryFindResource("PrimaryTextColor") as Brush;
+            ArtistAlbumLabel.Foreground = ArtistAlbumLabel.TryFindResource("SecondaryTextColor") as Brush;
+            PlayButton.Fill = PlayButton.TryFindResource("PrimaryTextColor") as Brush;
+            QueueButton.Fill = PlayButton.TryFindResource("PrimaryTextColor") as Brush;
         }
 
         private async void PlayButtonClick(object sender, RoutedEventArgs e)

@@ -252,9 +252,13 @@ namespace FRESHMusicPlayer
 
         public void HandleAccentCoverArt()
         {
+            if (!Player.FileLoaded || Player.Metadata.CoverArt is null)
+            {
+                (Application.Current as App).ChangeAccentColor(Handlers.Configuration.AccentColor.System);
+                return;
+            }
             if (App.Config.AccentColor != Handlers.Configuration.AccentColor.CoverArt) return;
 
-            if (Player.Metadata?.CoverArt is null) return;
             using (var bitmap = new Drawing.Bitmap(new MemoryStream(Player.Metadata.CoverArt)))
             {
                 using (var resized = new Drawing.Bitmap(bitmap, 25, 25))

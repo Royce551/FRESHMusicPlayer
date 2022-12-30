@@ -77,7 +77,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" TargetName="border" Value="{DynamicResource AccentColor}"/>
                             <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource AccentColor}"/>
-
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
@@ -372,6 +372,7 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" TargetName="Border" Value="{DynamicResource AccentColor}"/>
                 <Setter Property="Background" TargetName="Border2" Value="{DynamicResource AccentColor}"/>
+                <Setter Property="Fill" TargetName="Arrow" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -401,13 +402,14 @@
                             IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
                             ClickMode="Press">
                         </ToggleButton>
-                        <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                        <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                             Margin="3,3,23,3"
                             TextBlock.Foreground="{DynamicResource PrimaryTextColor}"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Left" />
+                            HorizontalAlignment="Left">
+                        </ContentPresenter>
                         <TextBox x:Name="PART_EditableTextBox"
                             Style="{x:Null}" 
                             Template="{StaticResource ComboBoxTextBox}" 
@@ -441,6 +443,9 @@
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger SourceName="ToggleButton" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
+                        </Trigger>
                         <Trigger Property="HasItems" Value="false">
                             <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
                         </Trigger>
@@ -454,7 +459,7 @@
                             <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
                             <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
                         </Trigger>
-                        <Trigger Property="IsEditable"  Value="true">
+                        <Trigger Property="IsEditable" Value="true">
                             <Setter Property="IsTabStop" Value="false"/>
                             <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
@@ -483,6 +488,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="true">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColor}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="#888888"/>
@@ -616,9 +622,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="myBorder" Property="Background" Value="{DynamicResource AccentColor}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="myBorder" Property="Background" Value="{DynamicResource AccentColor}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

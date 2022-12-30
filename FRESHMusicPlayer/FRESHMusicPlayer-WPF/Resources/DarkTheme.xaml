@@ -15,4 +15,6 @@
         <GradientStop Color="#FF338BC1" Offset="0"/>
         <GradientStop Color="#FF69B578" Offset="1"/>
     </LinearGradientBrush>
+    <SolidColorBrush x:Key="PrimaryTextColorOverAccent" Color="White"/>
+    <SolidColorBrush x:Key="SecondaryTextColorOverAccent" Color="#DADADA"/>
 </ResourceDictionary>

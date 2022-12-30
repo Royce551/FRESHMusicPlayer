@@ -181,7 +181,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 {
                     foreach (var thing in tracksAsATLTracks)
                     {
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                         length += thing.Duration;
                     }
                 }
@@ -193,7 +193,7 @@ namespace FRESHMusicPlayer.Pages.Library
                         window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, $"Disc {disc}", tracksInDisc.Select(x => x.Path).ToList())));
                         foreach (var thing in tracksInDisc)
                         {
-                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window, window.NotificationHandler, window.Library)));
+                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                             length += thing.Duration;
                         }
                     }

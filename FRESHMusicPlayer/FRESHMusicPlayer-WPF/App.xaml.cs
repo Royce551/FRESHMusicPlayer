@@ -60,7 +60,7 @@ namespace FRESHMusicPlayer
 
             currentWindow = new MainWindow(player);
 
-            var persistenceFilePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
+            var persistenceFilePath = Path.Combine(DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
             var startTime = TimeSpan.FromSeconds(0);
             if (File.Exists(persistenceFilePath))
             {
@@ -97,6 +97,7 @@ namespace FRESHMusicPlayer
                 }
             }
             currentWindow.Show();
+            
         }
         public static Skin CurrentSkin { get; set; } = Skin.Dark;
         public void ChangeSkin(Skin newSkin)
@@ -166,6 +167,17 @@ namespace FRESHMusicPlayer
             gradient2.GradientStops[1].Color = Color.FromRgb(r2, g2, b2);
             Current.Resources["AccentColor"] = accent2;
             Current.Resources["AccentGradientColor"] = gradient2;
+
+            if (accent2.Color.R * 0.2126 + accent2.Color.G * 0.7152 + accent2.Color.B * 0.0722 < 255 / 2)
+            {
+                Current.Resources["PrimaryTextColorOverAccent"] = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                Current.Resources["SecondaryTextColorOverAccent"] = new SolidColorBrush(Color.FromRgb(218, 218, 218));
+            }
+            else
+            {
+                Current.Resources["PrimaryTextColorOverAccent"] = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+                Current.Resources["SecondaryTextColorOverAccent"] = new SolidColorBrush(Color.FromRgb(82, 82, 82));
+            }
 
             if (currentWindow is MainWindow window)
                 window.UpdateControlsBoxColors();
