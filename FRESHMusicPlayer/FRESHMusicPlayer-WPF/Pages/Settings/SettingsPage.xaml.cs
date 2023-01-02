@@ -404,11 +404,11 @@ namespace FRESHMusicPlayer.Pages
 
         private async void Maintenence_UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                var tracks = window.Library.Read().Select(x => x.Path).Distinct();
+                var tracks = window.Library.GetAllTracks().Select(x => x.Path).Distinct();
                 Dispatcher.Invoke(() => window.Library.Nuke(false));
-                window.Library.Import(tracks.ToArray());
+                await window.Library.ImportAsync(tracks.ToArray());
             });
         }
 

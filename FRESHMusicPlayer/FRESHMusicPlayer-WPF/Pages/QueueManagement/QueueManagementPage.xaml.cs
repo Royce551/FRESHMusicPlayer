@@ -61,7 +61,7 @@ namespace FRESHMusicPlayer.Pages
                 var nextLength = 0; // length of the tracks that come after the current
                 int number = 1;
                 SetControlEnabled(false);
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     
                     if (!list.SequenceEqual(lastQueue)) // has the contents of the queue changed, or just the positions?
@@ -80,11 +80,11 @@ namespace FRESHMusicPlayer.Pages
                         for (int i = 0; i < QueueList.Items.Count; i++)
                         {
                             var entry = QueueList.Items[i] as QueueEntry;
-                            var correspondingQueueEntry = window.Library.GetFallbackTrack(window.Player.Queue.Queue[i]);
+                            var correspondingQueueEntry = await window.Library.GetFallbackTrackAsync(window.Player.Queue.Queue[i]);
 
                             Dispatcher.Invoke(() =>
                             {
-                                entry.Artist = correspondingQueueEntry.Artist;
+                                entry.Artists = correspondingQueueEntry.Artists;
                                 entry.Album = correspondingQueueEntry.Album;
                                 entry.Title = correspondingQueueEntry.Title;
                                 entry.Index = i;

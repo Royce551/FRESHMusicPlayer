@@ -34,29 +34,29 @@ namespace FRESHMusicPlayer.Handlers
 
         private void Player_SongChanged(object sender, EventArgs e)
         {
-            try
-            {
-                var trackingEntry = new TrackingEntry
-                {
-                    DatePlayed = DateTime.Now,
-                    Track = new DatabaseTrack
-                    {
-                        Path = window.Player.FilePath,
-                        Artist = string.Join(", ", window.CurrentTrack.Artists),
-                        Title = window.CurrentTrack.Title,
-                        Album = window.CurrentTrack.Album,
-                        TrackNumber = window.CurrentTrack.TrackNumber,
-                        Length = (int)window.Player.TotalTime.TotalSeconds
-                    }
-                };
-                TrackingFile.Entries.Add(trackingEntry);
-                LoggingHandler.Log("Playtime Logging: Entry created!");
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log($"Playtime Logging: Exception was thrown - {ex}");
-                // ignored
-            }
+            //try
+            //{
+            //    var trackingEntry = new TrackingEntry
+            //    {
+            //        DatePlayed = DateTime.Now,
+            //        Track = new DatabaseTrack
+            //        {
+            //            Path = window.Player.FilePath,
+            //            Artist = string.Join(", ", window.CurrentTrack.Artists),
+            //            Title = window.CurrentTrack.Title,
+            //            Album = window.CurrentTrack.Album,
+            //            TrackNumber = window.CurrentTrack.TrackNumber,
+            //            Length = (int)window.Player.TotalTime.TotalSeconds
+            //        }
+            //    };
+            //    TrackingFile.Entries.Add(trackingEntry);
+            //    LoggingHandler.Log("Playtime Logging: Entry created!");
+            //}
+            //catch (Exception ex)
+            //{
+            //    LoggingHandler.Log($"Playtime Logging: Exception was thrown - {ex}");
+            //    // ignored
+            //}
         }
         private TrackingFile Read()
         {

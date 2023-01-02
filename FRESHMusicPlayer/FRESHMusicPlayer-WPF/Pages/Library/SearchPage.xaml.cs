@@ -49,12 +49,12 @@ namespace FRESHMusicPlayer.Pages.Library
                     int i = 0;
                     foreach (var thing in window.Library.Database.GetCollection<DatabaseTrack>("tracks")
                         .Query()
-                        .Where(x => x.Title.ToUpper().Contains(searchterm) || x.Artist.ToUpper().Contains(searchterm) || x.Album.ToUpper().Contains(searchterm))
+                        .Where(x => x.Title.ToUpper().Contains(searchterm) || x.Artists.Select(y => y.ToUpper()).Contains(searchterm) || x.Album.ToUpper().Contains(searchterm))
                         .OrderBy("Title")
                         .ToList())
                     {
                         if (searchqueries.Count > 1) break; // optimization for typing quickly
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                         length += thing.Length;
                         if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                         i++;

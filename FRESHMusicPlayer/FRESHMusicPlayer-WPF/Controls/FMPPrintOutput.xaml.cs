@@ -29,9 +29,9 @@ namespace FRESHMusicPlayer
             AlbumName.Text = window.CurrentTrack.Album;
             TracksPanel.Items.Clear();
             int length = 0;
-            foreach (var thing in window.Library.ReadTracksForAlbum(album))
+            foreach (var thing in window.Library.GetTracksForAlbum(album))
             {
-                TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window, window.NotificationHandler, window.Library));
+                TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, $"{thing.TrackNumber} - {thing.Title}", window, window.NotificationHandler, window.Library));
                 length += thing.Length;
             }
             AlbumInfo.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";

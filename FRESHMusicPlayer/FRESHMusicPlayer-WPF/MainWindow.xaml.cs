@@ -68,9 +68,9 @@ namespace FRESHMusicPlayer
             try
             {
 #if DEBUG // allow multiple instances of FMP in debug (at the expense of stability with heavy library use)
-                library = new LiteDatabase($"Filename=\"{Path.Combine(App.DataFolderLocation, "database.fdb2")}\";Connection=shared");
+                library = new LiteDatabase($"Filename=\"{Path.Combine(App.DataFolderLocation, "database.fdb3")}\";Connection=shared");
 #else
-                library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb2"));
+                library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb3"));
 #endif
                 Library = new GUILibrary(library, NotificationHandler, Dispatcher);
             }

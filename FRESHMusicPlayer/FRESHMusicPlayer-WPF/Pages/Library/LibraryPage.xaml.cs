@@ -68,9 +68,9 @@ namespace FRESHMusicPlayer.Pages.Library
             await Task.Run(() =>
             {
                 int i = 0;
-                foreach (var thing in window.Library.Read())
+                foreach (var thing in window.Library.GetAllTracks())
                 {
-                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                     if (i % 25 == 0) Thread.Sleep(1); // Apply a slight delay once in a while to let the UI catch up
                     i++;
@@ -85,10 +85,13 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                foreach (var thing in window.Library.Read("Artist"))
+                foreach (var thing in window.Library.GetAllTracks("Artist"))
                 {
-                    if (CategoryPanel.Items.Contains(thing.Artist)) continue;
-                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Artist));
+                    foreach (var artist in thing.Artists)
+                    {
+                        if (CategoryPanel.Items.Contains(artist)) continue;
+                        window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(artist));
+                    }
                 }
             });
         }
@@ -96,7 +99,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                foreach (var thing in window.Library.Read("Album"))
+                foreach (var thing in window.Library.GetAllTracks("Album"))
                 {
                     if (CategoryPanel.Items.Contains(thing.Album)) continue;
                     window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
@@ -105,10 +108,10 @@ namespace FRESHMusicPlayer.Pages.Library
         }
         public async Task ShowPlaylists()
         {
-            var x = window.Library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToList();
-            await Task.Run(() =>
+            var x = window.Library.Database.GetCollection<DatabasePlaylist>("Playlists").Query().OrderBy("Name").ToList();
+            await Task.Run(async () =>
             {
-                if (x.Count == 0) window.Dispatcher.Invoke(() => window.Library.CreatePlaylist("Liked"));
+                if (x.Count == 0) await window.Library.CreatePlaylistAsync("Liked", true);
                 foreach (var thing in x)
                 {
                     if (CategoryPanel.Items.Contains(thing.Name)) continue;
@@ -123,7 +126,7 @@ namespace FRESHMusicPlayer.Pages.Library
             await Task.Run(() =>
             {
                 var albums = new List<string>();
-                var tracks = window.Library.ReadTracksForArtist(selectedItem);
+                var tracks = window.Library.GetTracksForArtist(selectedItem);
 
                 foreach (var thing in tracks)
                 {
@@ -134,7 +137,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 {
                     foreach (var thing in tracks)
                     {
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                         length += thing.Length;
                     }
                 }
@@ -147,7 +150,7 @@ namespace FRESHMusicPlayer.Pages.Library
                         window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, album, tracksInAlbum.Select(x => x.Path).ToList())));
                         foreach (var thing in tracksInAlbum)
                         {
-                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
+                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                             length += thing.Length;
                         }
                     }
@@ -169,32 +172,31 @@ namespace FRESHMusicPlayer.Pages.Library
             await Task.Run(() =>
             {
                 var discs = new List<int>();
-                var tracks = window.Library.ReadTracksForAlbum(selectedItem);
-                var tracksAsATLTracks = tracks.Select(x => new ATL.Track(x.Path));
+                var tracks = window.Library.GetTracksForAlbum(selectedItem);
 
-                foreach (var thing in tracksAsATLTracks)
+                foreach (var thing in tracks)
                 {
                     if (!discs.Contains(thing.DiscNumber)) discs.Add(thing.DiscNumber);
                 }
 
                 if (discs.Count <= 1)
                 {
-                    foreach (var thing in tracksAsATLTracks)
+                    foreach (var thing in tracks)
                     {
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
-                        length += thing.Duration;
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
+                        length += thing.Length;
                     }
                 }
                 else
                 {
                     foreach (var disc in discs)
                     {
-                        var tracksInDisc = tracksAsATLTracks.Where(x => x.DiscNumber == disc);
+                        var tracksInDisc = tracks.Where(x => x.DiscNumber == disc);
                         window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, $"Disc {disc}", tracksInDisc.Select(x => x.Path).ToList())));
                         foreach (var thing in tracksInDisc)
                         {
-                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
-                            length += thing.Duration;
+                            window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
+                            length += thing.Length;
                         }
                     }
                 }
@@ -209,9 +211,9 @@ namespace FRESHMusicPlayer.Pages.Library
             int length = 0;
             await Task.Run(() =>
             {
-                foreach (var thing in window.Library.ReadTracksForPlaylist(selectedItem))
+                foreach (var thing in window.Library.GetTracksForPlaylist(selectedItem))
                 {
-                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artist, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
+                    window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                     length += thing.Length;
                 }
             });

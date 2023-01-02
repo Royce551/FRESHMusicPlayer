@@ -29,14 +29,14 @@ namespace FRESHMusicPlayer.Handlers
             this.dispatcher = dispatcher;
         }
 
-        public override void Import(List<string> tracks)
+        public override async Task ImportAsync(List<string> tracks)
         {
             var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
 
             if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
 
-            base.Import(tracks);
+            await base.ImportAsync(tracks);
             dispatcher.Invoke(() =>
             {
                 notificationHandler.Remove(notification);
@@ -44,14 +44,14 @@ namespace FRESHMusicPlayer.Handlers
             });
         }
 
-        public override void Import(string[] tracks)
+        public override async Task ImportAsync(string[] tracks)
         {
             var notification = new Notification { ContentText = $"Importing {tracks.Length} tracks" };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
 
             if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
 
-            base.Import(tracks);
+            await base.ImportAsync(tracks);
             dispatcher.Invoke(() =>
             {
                 notificationHandler.Remove(notification);
@@ -73,15 +73,28 @@ namespace FRESHMusicPlayer.Handlers
             });
         }
 
-        public override void AddTrackToPlaylist(string playlist, string path)
+        public override async Task ProcessDatabaseMetadataAsync()
         {
-            base.AddTrackToPlaylist(playlist, path);
-            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            var notification = new Notification { ContentText = "Processing library changes...\n\nNewly added tracks may not appear in the artists or albums tabs until processing is complete.", Type = NotificationType.Information };
+            dispatcher.Invoke(() => notificationHandler.Add(notification));
+
+            await base.ProcessDatabaseMetadataAsync();
+
+            dispatcher.Invoke(() =>
+            {
+                notificationHandler.Remove(notification);
+                if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            });
         }
 
-        public override DatabasePlaylist CreatePlaylist(string playlist, string path = null)
+        public override async Task AddTrackToPlaylistAsync(string playlist, string path, bool isSystemPlaylist = false)
         {
-            var newPlaylist = base.CreatePlaylist(playlist, path);
+            await base.AddTrackToPlaylistAsync(playlist, path, isSystemPlaylist);
+            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+        }
+        public override async Task<DatabasePlaylist> CreatePlaylistAsync(string playlist, bool isSystemPlaylist, string path = null)
+        {
+            var newPlaylist = await base.CreatePlaylistAsync(playlist, isSystemPlaylist, path);
             if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
             return newPlaylist;
         }
@@ -92,9 +105,9 @@ namespace FRESHMusicPlayer.Handlers
             if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
         }
 
-        public override void Import(string path)
+        public override async Task ImportAsync(string path)
         {
-            base.Import(path);
+            await base.ImportAsync(path);
 
             if (App.Config.AutoLibrary) path = HandleAutoLibrary(new string[] { path })[0];
 

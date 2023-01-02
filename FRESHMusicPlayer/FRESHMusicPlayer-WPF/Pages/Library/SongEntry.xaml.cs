@@ -22,20 +22,20 @@ namespace FRESHMusicPlayer.Pages.Library
         public string FilePath;
         public string Title;
 
-        private string artist;
+        private string[] artists;
         private string album;
         private MainWindow window;
         private NotificationHandler notificationHandler;
         private GUILibrary library;
-        public SongEntry(string filePath, string artist, string album, string title, MainWindow window, NotificationHandler notificationHandler, GUILibrary library)
+        public SongEntry(string filePath, string[] artists, string album, string title, MainWindow window, NotificationHandler notificationHandler, GUILibrary library)
         {
             this.window = window;
             this.notificationHandler = notificationHandler;
             this.library = library;
             InitializeComponent();
             FilePath = filePath;
-            ArtistAlbumLabel.Text = $"{artist} ・ {album}";
-            this.artist = artist;
+            ArtistAlbumLabel.Text = $"{string.Join(", ", artists)} ・ {album}";
+            this.artists = artists;
             this.album = album;
             TitleLabel.Text = title;
             Title = title;
@@ -116,7 +116,7 @@ namespace FRESHMusicPlayer.Pages.Library
             
         }
 
-        private async void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
+        private void MainPanel_ContextMenuOpening(object sender, RoutedEventArgs e)
         {
             MiscContext.Items.Clear();
             var playlists = library.Database.GetCollection<DatabasePlaylist>("playlists").Query().OrderBy("Name").ToEnumerable();
@@ -125,7 +125,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 List<DatabaseTrack> tracks;
                 try
                 {
-                    tracks = await Task.Run(() => library.ReadTracksForPlaylist(playlist.Name));
+                    tracks = library.GetTracksForPlaylist(playlist.Name);
                 }
                 catch
                 {
@@ -138,10 +138,10 @@ namespace FRESHMusicPlayer.Pages.Library
                     IsCheckable = true
                 };
                 item.IsChecked = trackIsInPlaylist;
-                item.Click += (object sende, RoutedEventArgs ee) =>
+                item.Click += async (object sende, RoutedEventArgs ee) =>
                 {
                     if (trackIsInPlaylist) library.RemoveTrackFromPlaylist((string)item.Header, FilePath);
-                    else library.AddTrackToPlaylist((string)item.Header, FilePath);
+                    else await library.AddTrackToPlaylistAsync((string)item.Header, FilePath);
                 };
                 MiscContext.Items.Add(item);
             }
@@ -158,7 +158,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void OpenInFileExplorer_Click(object sender, RoutedEventArgs e) => Process.Start(Path.GetDirectoryName(FilePath));
 
-        private void GoToArtistContext_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Artists, artist);
+        private void GoToArtistContext_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Artists, artists[0]);
 
         private void GoToAlbumContext_Click(object sender, RoutedEventArgs e) => window.ChangeTabs(Tab.Albums, album);
     }

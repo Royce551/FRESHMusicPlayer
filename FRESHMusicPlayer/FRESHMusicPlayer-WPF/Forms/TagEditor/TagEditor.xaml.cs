@@ -92,7 +92,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         public async Task SaveChanges(List<string> filePaths)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 foreach (string path in filePaths)
                 {
@@ -114,7 +114,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
                     foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
                     track.Save();
                     library?.Remove(path); // update library entry, if available
-                    library?.Import(path);
+                    await library?.ImportAsync(path);
                 }
             });
         }

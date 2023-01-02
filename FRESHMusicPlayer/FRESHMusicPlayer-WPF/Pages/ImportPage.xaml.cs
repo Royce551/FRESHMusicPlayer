@@ -33,7 +33,7 @@ namespace FRESHMusicPlayer.Pages
             if (dialog.ShowDialog() == true)
             {
                 window.Player.Queue.Add(dialog.FileName);
-                await Task.Run(() => window.Library.Import(dialog.FileName));
+                await window.Library.ImportAsync(dialog.FileName);
                 await window.Player.PlayAsync();
             }
         }
@@ -61,7 +61,7 @@ namespace FRESHMusicPlayer.Pages
                     }
                 }
                 window.Player.Queue.Add(reader.FilePaths.ToArray());
-                await Task.Run(() => window.Library.Import(reader.FilePaths.ToArray()));
+                await window.Library.ImportAsync(reader.FilePaths.ToArray());
                 await window.Player.PlayAsync();
             }
         }
@@ -80,7 +80,7 @@ namespace FRESHMusicPlayer.Pages
                         || name.EndsWith(".wma")
                         || name.EndsWith(".aac")).ToArray();
                     window.Player.Queue.Add(paths);
-                    await Task.Run(() => window.Library.Import(paths));
+                    await window.Library.ImportAsync(paths);
                     await window.Player.PlayAsync();
                 }
             }
@@ -100,7 +100,7 @@ namespace FRESHMusicPlayer.Pages
         {
             if (string.IsNullOrEmpty(FilePathBox.Text)) return;
             window.Player.Queue.Add(FilePathBox.Text);
-            window.Library.Import(FilePathBox.Text);
+            await window.Library.ImportAsync(FilePathBox.Text);
             await window.Player.PlayAsync();
         }
     }

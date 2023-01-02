@@ -9,13 +9,13 @@ namespace FRESHMusicPlayer.Pages
     /// </summary>
     public partial class QueueEntry : UserControl
     {
-        private string artist;
-        public string Artist
+        private string[] artists;
+        public string[] Artists
         {
-            get => artist;
+            get => artists;
             set
             {
-                artist = value;
+                artists = value;
                 UpdateMetadata();
             }
         }
@@ -45,11 +45,11 @@ namespace FRESHMusicPlayer.Pages
         public int Length;
 
         private readonly Player player;
-        public QueueEntry(string artist, string album, string title, string position, int index, int length, Player player)
+        public QueueEntry(string[] artists, string album, string title, string position, int index, int length, Player player)
         {
             this.player = player;
             InitializeComponent();
-            Artist = artist;
+            Artists = artists;
             Album = album;
             Title = title;
             
@@ -78,7 +78,7 @@ namespace FRESHMusicPlayer.Pages
 
         public void UpdateMetadata()
         {
-            ArtistAlbumLabel.Text = $"{Artist} ・ {Album}";
+            ArtistAlbumLabel.Text = $"{string.Join(", ", Artists)} ・ {Album}";
             TitleLabel.Text = Title;
         }
 

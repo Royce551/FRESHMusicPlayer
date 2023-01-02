@@ -45,7 +45,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
 
         private void OKButton_Click(object sender, RoutedEventArgs e) => Close();
 
-        private void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
+        private async void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new FMPTextEntryBox("Playlist Name");
             dialog.ShowDialog();
@@ -56,13 +56,13 @@ namespace FRESHMusicPlayer.Forms.Playlists
                     MessageBox.Show(string.Format(Properties.Resources.PLAYLISTMANAGEMENT_INVALIDNAME, dialog.Response));
                 else
                 {
-                    library.CreatePlaylist(dialog.Response, track);
+                    await library.CreatePlaylistAsync(dialog.Response, false, track);
                     InitFields();
                 }
             }
         }
 
-        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        private async void ImportButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "Playlist Files|*.xspf;*.asx;*.wax;*.wvx;*.b4s;*.m3u;*.m3u8;*.pls;*.smil;*.smi;*.zpl;";
@@ -82,7 +82,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
                         });
                         continue;
                     }
-                    library.AddTrackToPlaylist(Path.GetFileNameWithoutExtension(dialog.FileName), s);
+                    await library.AddTrackToPlaylistAsync(Path.GetFileNameWithoutExtension(dialog.FileName), s);
                 }
             }
             InitFields();

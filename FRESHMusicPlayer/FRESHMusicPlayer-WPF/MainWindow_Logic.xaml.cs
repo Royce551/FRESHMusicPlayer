@@ -539,8 +539,8 @@ namespace FRESHMusicPlayer
             var notification = new Notification { ContentText = Properties.Resources.NOTIFICATION_SCANNING };
             NotificationHandler.Add(notification);
             var filesToImport = new List<string>();
-            var library = Library.Read();
-            await Task.Run(() =>
+            var library = Library.GetAllTracks();
+            await Task.Run(async () =>
             {
                 foreach (var folder in App.Config.AutoImportPaths)
                 {
@@ -556,7 +556,7 @@ namespace FRESHMusicPlayer
                             filesToImport.Add(file);
                     }
                 }
-                Library.Import(filesToImport);
+                await Library.ImportAsync(filesToImport);
             });
             NotificationHandler.Remove(notification);
         }

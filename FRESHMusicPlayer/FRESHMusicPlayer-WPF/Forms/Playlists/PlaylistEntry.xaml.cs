@@ -40,7 +40,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
         }
         private async void CheckIfPlaylistExists()
         {
-            foreach (var thing in await Task.Run(() => library.ReadTracksForPlaylist(playlist)))
+            foreach (var thing in await Task.Run(() => library.GetTracksForPlaylist(playlist)))
             {
                 if (thing.Path == path)
                 {
@@ -91,9 +91,9 @@ namespace FRESHMusicPlayer.Forms.Playlists
             CheckIfPlaylistExists();
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            library.AddTrackToPlaylist(playlist, path);
+            await library.AddTrackToPlaylistAsync(playlist, path);
             CheckIfPlaylistExists();
         }
 
@@ -105,7 +105,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
-            var tracks = library.ReadTracksForPlaylist(playlist);
+            var tracks = library.GetTracksForPlaylist(playlist);
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "M3U UTF-8 Playlist|*.m3u8|Other|*";
             if (saveFileDialog.ShowDialog() == true)
@@ -120,16 +120,16 @@ namespace FRESHMusicPlayer.Forms.Playlists
             }
         }
 
-        private void AddThingButton_Click(object sender, RoutedEventArgs e)
+        private async void AddThingButton_Click(object sender, RoutedEventArgs e)
         {
             List<DatabaseTrack> things;
             if (selectedMenu == Tab.Artists)
-                things = library.ReadTracksForArtist(library.GetFallbackTrack(path).Artist);
+                things = library.GetTracksForArtist((await library.GetFallbackTrackAsync(path)).Artists[0]);
             else
-                things = library.ReadTracksForAlbum(library.GetFallbackTrack(path).Album);
+                things = library.GetTracksForAlbum((await library.GetFallbackTrackAsync(path)).Album);
             library.RaiseLibraryChanged = false;
             foreach (var thing in things)
-                library.AddTrackToPlaylist(playlist, thing.Path);
+                library.AddTrackToPlaylistAsync(playlist, thing.Path);
             library.RaiseLibraryChanged = true;
             CheckIfPlaylistExists();
         }
