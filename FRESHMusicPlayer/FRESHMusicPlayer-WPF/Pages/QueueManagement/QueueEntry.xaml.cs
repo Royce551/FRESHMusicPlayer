@@ -78,7 +78,7 @@ namespace FRESHMusicPlayer.Pages
 
         public void UpdateMetadata()
         {
-            ArtistAlbumLabel.Text = $"{string.Join(", ", Artists)} ・ {Album}";
+            ArtistAlbumLabel.Text = $"{(Artists is null ? string.Empty : string.Join(", ", Artists))} ・ {Album}";
             TitleLabel.Text = Title;
         }
 

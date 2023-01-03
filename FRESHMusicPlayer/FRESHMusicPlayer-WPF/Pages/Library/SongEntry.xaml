@@ -21,6 +21,7 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Border x:Name="MainPanel" CornerRadius="2" Background="Transparent" BorderThickness="1">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="7*"/>

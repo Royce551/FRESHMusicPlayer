@@ -6,6 +6,7 @@ using FRESHMusicPlayer.Handlers.Notifications;
 using LiteDB;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Animation;
 using WinForms = System.Windows.Forms;
@@ -64,6 +65,8 @@ namespace FRESHMusicPlayer
         {
             LoggingHandler.Log("Reading library...");
 
+            var shouldLibraryBeUpgraded = File.Exists(Path.Combine(App.DataFolderLocation, "database.fdb2")) && !File.Exists(Path.Combine(App.DataFolderLocation, "database.fdb3"));
+
             LiteDatabase library;
             try
             {
@@ -106,11 +109,37 @@ namespace FRESHMusicPlayer
             };
             LoggingHandler.Log("Ready to go!");
 
+            if (shouldLibraryBeUpgraded) MigrateLibrary();
             //if (initialFile != null)
             //{
             //    Player.Queue.Add(initialFile);
             //    await Player.PlayAsync();
             //}
+        }
+
+        private async void MigrateLibrary()
+        {
+            var oldLibraryConnection = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb2"));
+            var oldTracks = oldLibraryConnection.GetCollection<OldDatabaseTrack>("tracks").Query().ToArray();
+            var oldTrackPaths = oldTracks.Select(x => x.Path).ToArray();
+
+            await Library.ImportAsync(oldTrackPaths);
+
+            var oldPlaylists = oldLibraryConnection.GetCollection<OldDatabasePlaylist>("playlists").Query().ToArray();
+            foreach (var playlist in oldPlaylists)
+            {
+                await Library.CreatePlaylistAsync(playlist.Name, playlist.Name == "Liked" ? true : false);
+                foreach (var track in playlist.Tracks)
+                {
+                    await Library.AddTrackToPlaylistAsync(playlist.Name, track);
+                }
+            }
+
+            NotificationHandler.Notifications.Add(new Notification 
+            { 
+                ContentText = "Your library has been upgraded. If anything looks off, please report it at https://github.com/royce551/freshmusicplayer/issues.",
+                Type = NotificationType.Success
+            });
         }
 
         private async void Window_SourceInitialized(object sender, EventArgs e)

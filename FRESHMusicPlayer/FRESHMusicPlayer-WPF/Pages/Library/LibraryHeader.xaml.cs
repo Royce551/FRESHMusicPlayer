@@ -35,11 +35,17 @@ namespace FRESHMusicPlayer.Pages.Library
         private void ShowButtons()
         {
             EnqueueAllButton.Visibility = PlayAllButton.Visibility = Visibility.Visible;
+
+            HeaderText.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
+            Border.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
         }
 
         private void HideButtons()
         {
             EnqueueAllButton.Visibility = PlayAllButton.Visibility = Visibility.Collapsed;
+
+            HeaderText.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
+            Border.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
         }
 
         private void Border_MouseEnter(object sender, MouseEventArgs e) => ShowButtons();

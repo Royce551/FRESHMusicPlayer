@@ -48,19 +48,20 @@ namespace FRESHMusicPlayer.Pages.Library
         public void ShowButtons()
         {
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Visible;
-            TitleLabel.Foreground = TitleLabel.TryFindResource("PrimaryTextColorOverAccent") as Brush;
-            ArtistAlbumLabel.Foreground = ArtistAlbumLabel.TryFindResource("SecondaryTextColorOverAccent") as Brush;
-            PlayButton.Fill = PlayButton.TryFindResource("PrimaryTextColorOverAccent") as Brush;
-            QueueButton.Fill = PlayButton.TryFindResource("PrimaryTextColorOverAccent") as Brush;
+
+            TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
+            PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
+            QueueButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
         }
 
         public void HideButtons()
         {
             PlayButton.Visibility = QueueButton.Visibility = DeleteButton.Visibility = PlayHitbox.Visibility = QueueHitbox.Visibility = DeleteHitbox.Visibility = Visibility.Collapsed;
-            TitleLabel.Foreground = TitleLabel.TryFindResource("PrimaryTextColor") as Brush;
-            ArtistAlbumLabel.Foreground = ArtistAlbumLabel.TryFindResource("SecondaryTextColor") as Brush;
-            PlayButton.Fill = PlayButton.TryFindResource("PrimaryTextColor") as Brush;
-            QueueButton.Fill = PlayButton.TryFindResource("PrimaryTextColor") as Brush;
+            TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
+            PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColor");
+            QueueButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColor");
         }
 
         private async void PlayButtonClick(object sender, RoutedEventArgs e)
