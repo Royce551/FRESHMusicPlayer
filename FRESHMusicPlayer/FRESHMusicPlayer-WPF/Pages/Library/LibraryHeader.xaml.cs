@@ -36,7 +36,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             EnqueueAllButton.Visibility = PlayAllButton.Visibility = Visibility.Visible;
 
-            HeaderText.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
+            HeaderText.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
             Border.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
         }
 
@@ -44,7 +44,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             EnqueueAllButton.Visibility = PlayAllButton.Visibility = Visibility.Collapsed;
 
-            HeaderText.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
+            HeaderText.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
             Border.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
         }
 

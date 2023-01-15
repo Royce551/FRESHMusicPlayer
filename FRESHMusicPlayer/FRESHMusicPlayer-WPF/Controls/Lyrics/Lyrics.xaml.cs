@@ -40,19 +40,27 @@ namespace FRESHMusicPlayer.Controls.Lyrics
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (!window.Player.FileLoaded) return;
-            if (window.Player.CurrentBackend.CurrentTime < TimedLyrics.Lines.Keys.First()) return;
             var currentLines = TimedLyrics.Lines.Where(x => x.Key < window.Player.CurrentBackend.CurrentTime).ToList();
             var previousLines = TimedLyrics.Lines.Where(x => x.Key > window.Player.CurrentBackend.CurrentTime).Reverse().ToList();
+            if (previousLines.Count != 0)
+            {
+                LyricsBoxPlus1.Text = previousLines.Count - 1 >= 0 && previousLines.Count - 1 < previousLines.Count ? previousLines[previousLines.Count - 1].Value : string.Empty;
+                LyricsBoxPlus2.Text = previousLines.Count - 2 >= 0 && previousLines.Count - 2 < previousLines.Count ? previousLines[previousLines.Count - 2].Value : string.Empty;
+            }
+            else
+            {
+                LyricsBoxPlus1.Text = string.Empty;
+                LyricsBoxPlus2.Text = string.Empty;
+            }
             if (currentLines.Count != 0)
             {
                 var closest = currentLines.Last();
                 LyricsBox.Text = closest.Value;
-                LyricsBoxPlus1.Text = previousLines.Count - 1 >= 0 && previousLines.Count - 1 < previousLines.Count ? previousLines[previousLines.Count - 1].Value : string.Empty;
-                LyricsBoxPlus2.Text = previousLines.Count - 2 >= 0 && previousLines.Count - 2 < previousLines.Count ? previousLines[previousLines.Count - 2].Value : string.Empty;
+                
                 LyricsBoxMinus1.Text = currentLines.Count - 2 >= 0 && currentLines.Count - 3 < currentLines.Count ? currentLines[currentLines.Count - 2].Value : string.Empty;
                 LyricsBoxMinus2.Text = currentLines.Count - 3 >= 0 && currentLines.Count - 3 < currentLines.Count ? currentLines[currentLines.Count - 3].Value : string.Empty;
-            }
         }
+    }
 
         public bool HandleLyrics()
         {

@@ -77,9 +77,9 @@
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
-                <CheckBox x:Name="Integration_LastFMCheck" Content="LastFM" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Checked="Integration_LastFMChanged" Unchecked="Integration_LastFMChanged"/>
+                <CheckBox x:Name="Integration_LastFMCheck" Content="last.fm" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Checked="Integration_LastFMChanged" Unchecked="Integration_LastFMChanged"/>
                 <CheckBox x:Name="Integration_LastFMSyncLikedCheck" Content="Sync liked tracks" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,5,0,5" Checked="Integration_LastFMSyncLikedChanged" Unchecked="Integration_LastFMSyncLikedChanged"/>
-                <CheckBox x:Name="Integration_LastFMSyncPlaylistsCheck" Content="Generate playlists from LastFM data" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,5" Checked="Integration_LastFMSyncPlaylistsChanged" Unchecked="Integration_LastFMSyncPlaylistsChanged"/>
+                <CheckBox x:Name="Integration_LastFMSyncPlaylistsCheck" Content="Generate playlists from last.fm data" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,5" Checked="Integration_LastFMSyncPlaylistsChanged" Unchecked="Integration_LastFMSyncPlaylistsChanged"/>
 
                 <TextBlock x:Name="UpdateHeader" Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 

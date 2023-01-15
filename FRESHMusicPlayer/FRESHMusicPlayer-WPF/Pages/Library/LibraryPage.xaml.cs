@@ -29,6 +29,7 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 Thread.Sleep(10);
                 CategoryPanel.SelectedItem = search;
+                CategoryPanel.ScrollIntoView(search);
             }
         }
 
