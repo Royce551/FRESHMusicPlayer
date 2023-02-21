@@ -418,7 +418,11 @@ namespace FRESHMusicPlayer
 
             IsControlsBoxVisible = false;
         }
-        public void ChangeTabs(Tab tab, string search = null)
+
+        private List<(Tab tab, string search)> backLog = new List<(Tab tab, string search)>();
+        private List<(Tab tab, string search)> forwardLog = new List<(Tab tab, string search)>();
+
+        public void ChangeTabs(Tab tab, string search = null, bool isNavigating = false)
         {
             LoggingHandler.Log($"Changing tabs -> {tab}");
 
@@ -455,11 +459,39 @@ namespace FRESHMusicPlayer
                     tabLabel = null;
                     break;
             }
+
+            if (!isNavigating)
+            {
+                backLog.Add((tab, search));
+                forwardLog.Clear();
+            }
+            //if (backLog.Count > 5) backLog.Remove(backLog.Last());
+           
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
             ContentFrame.Focus();
         }
 
+        public void NavigateBack()
+        {
+            if (backLog.Count <= 1) return;
+
+            var entry = backLog[backLog.Count - 2];
+            forwardLog.Add(backLog[backLog.Count - 1]);
+            ChangeTabs(entry.tab, entry.search, true);
+            backLog.RemoveAt(backLog.Count - 1);
+
+            
+
+        }
+        public void NavigateForward()
+        {
+            if (forwardLog.Count <= 0) return;
+
+            var entry = forwardLog[forwardLog.Count - 1];
+            ChangeTabs(entry.tab, entry.search, true);
+            forwardLog.RemoveAt(forwardLog.Count - 1);
+        }
 
         // Systemwide logic
 

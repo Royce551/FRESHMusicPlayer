@@ -17,6 +17,8 @@ namespace FRESHMusicPlayer.Pages.Library
     /// </summary>
     public partial class LibraryPage : UserControl
     {
+        public string SelectedItem => CategoryPanel.SelectedItem as string;
+
         private readonly MainWindow window;
         public LibraryPage(MainWindow window, string search = null)
         {

@@ -175,5 +175,18 @@ namespace FRESHMusicPlayer
         {
             ShowAuxilliaryPane(Pane.SoundSettings, 335, true);
         }
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            switch (e.ChangedButton)
+            {
+                case System.Windows.Input.MouseButton.XButton1:
+                    NavigateBack();
+                    break;
+                case System.Windows.Input.MouseButton.XButton2:
+                    NavigateForward();
+                    break;
+            }
+        }
     }
 }
