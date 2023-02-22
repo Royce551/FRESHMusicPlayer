@@ -35,7 +35,7 @@
             <TextBlock x:Name="RestartNeededHeader" Grid.Row="0" Foreground="{DynamicResource PrimaryTextColor}" Text="{x:Static resx:Resources.SETTINGS_RESTART_NEEDED_PROMPT}" TextWrapping="Wrap" Margin="5" FontSize="14" TextAlignment="Center" Visibility="Collapsed"/>
             <Button x:Name="RestartNowButton" Grid.Row="1" Margin="0,0,0,5" HorizontalAlignment="Center" Padding="10,5,10,5" Visibility="Collapsed" Click="RestartNowButton_Click" Content="{x:Static resx:Resources.SETTINGS_RESTART_NOW}"/>
         </Grid>
-        <ScrollViewer Grid.Row="0" PanningMode="Both">
+        <ScrollViewer Grid.Row="0" PanningMode="Both" Margin="0,25,0,0">
             <StackPanel Background="{DynamicResource SecondaryColor}" Grid.Row="0" Margin="20,0,0,0">
                 <TextBlock Text="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="24" FontWeight="Bold" Padding="0,5,0,0" Margin="-10,0,0,0"/>
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_SUBHEADER}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14" FontWeight="Regular" Padding="0,0,0,5" Margin="-10,0,0,0"/>

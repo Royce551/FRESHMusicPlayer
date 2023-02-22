@@ -5,10 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages"
       xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
-      mc:Ignorable="d" 
+      mc:Ignorable="d" Background="{DynamicResource SecondaryColor}"
       d:DesignHeight="372" d:DesignWidth="235"
       Unloaded="Page_Unloaded">
-    <Grid Background="{DynamicResource SecondaryColor}">
+    <Grid Margin="0,25,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="33"/>
             <RowDefinition/>

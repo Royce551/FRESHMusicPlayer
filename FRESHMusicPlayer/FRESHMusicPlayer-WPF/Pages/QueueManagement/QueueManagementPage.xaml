@@ -6,9 +6,9 @@
       xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="372" d:DesignWidth="235"
+      d:DesignHeight="372" d:DesignWidth="235" Background="{DynamicResource SecondaryColor}"
       Unloaded="Page_Unloaded" AllowDrop="True" Drop="Page_Drop" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
-    <Grid Background="{DynamicResource SecondaryColor}">
+    <Grid  Margin="0,25,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>

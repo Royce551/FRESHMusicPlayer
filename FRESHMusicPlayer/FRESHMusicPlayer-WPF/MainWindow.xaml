@@ -180,12 +180,12 @@
                 </Grid>
             </Border>
         </DockPanel>
-        <DockPanel Panel.ZIndex="0" Margin="0,25,0,84">
+        <DockPanel Panel.ZIndex="0" Margin="0,0,0,84">
             <!--Menu-->
             
-            <ContentControl x:Name="RightFrame" IsTabStop="False" DockPanel.Dock="Right" Visibility="Collapsed" Width="235" TabIndex="1" KeyboardNavigation.TabNavigation="Local"/>
+            <ContentControl x:Name="RightFrame" Margin="0,0,0,0" IsTabStop="False" DockPanel.Dock="Right" Visibility="Collapsed" Width="235" TabIndex="1" KeyboardNavigation.TabNavigation="Local"/>
 
-            <ContentControl x:Name="ContentFrame" Margin="0,-25,0,-84" IsTabStop="False" TabIndex="0" KeyboardNavigation.TabNavigation="Local"/>
+            <ContentControl x:Name="ContentFrame" Margin="0,0,0,-84" IsTabStop="False" TabIndex="0" KeyboardNavigation.TabNavigation="Local"/>
 
 
         </DockPanel>
