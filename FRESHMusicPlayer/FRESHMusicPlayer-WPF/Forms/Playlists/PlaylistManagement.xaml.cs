@@ -6,13 +6,14 @@ using Microsoft.Win32;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace FRESHMusicPlayer.Forms.Playlists
 {
     /// <summary>
     /// Interaction logic for PlaylistManagement.xaml
     /// </summary>
-    public partial class PlaylistManagement : Window
+    public partial class PlaylistManagement : UserControl
     {
         private readonly string track;
 
@@ -42,8 +43,6 @@ namespace FRESHMusicPlayer.Forms.Playlists
                 }
             });
         }
-
-        private void OKButton_Click(object sender, RoutedEventArgs e) => Close();
 
         private async void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
         {

@@ -90,10 +90,11 @@ namespace FRESHMusicPlayer
             string track;
             if (Player.FileLoaded) track = Player.FilePath;
             else track = null;
-            var playlistManagement = new PlaylistManagement(Library, NotificationHandler, CurrentTab, track);
-            playlistManagement.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            playlistManagement.Owner = this;
-            playlistManagement.Show();
+            //var playlistManagement = new PlaylistManagement(Library, NotificationHandler, CurrentTab, track);
+            //playlistManagement.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //playlistManagement.Owner = this;
+            //playlistManagement.Show();
+            ShowAuxilliaryPane(Pane.PlaylistManagement, 335, openleft: true, args: track);
         }
         private void TrackContextMiniplayer_Click(object sender, RoutedEventArgs e)
         {

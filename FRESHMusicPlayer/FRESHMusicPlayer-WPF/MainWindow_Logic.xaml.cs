@@ -1,4 +1,5 @@
 ﻿using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
@@ -44,7 +45,8 @@ namespace FRESHMusicPlayer
         Notifications,
         TrackInfo,
         Lyrics,
-        SoundSettings
+        SoundSettings,
+        PlaylistManagement
     }
 
     // Code for the "shell" parts of the main window, player, and systemwide logic
@@ -294,7 +296,7 @@ namespace FRESHMusicPlayer
                 CoverArtArea.Width = new GridLength(5);
             else CoverArtArea.Width = new GridLength(75);
         }
-        public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false)
+        public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false, string args = null)
         {
             LoggingHandler.Log($"Showing pane --> {pane}");
 
@@ -316,6 +318,8 @@ namespace FRESHMusicPlayer
                         return new LyricsPage(this);
                     case Pane.SoundSettings:
                         return new SoundSettingsPage(this);
+                    case Pane.PlaylistManagement:
+                        return new PlaylistManagement(Library, NotificationHandler, CurrentTab, args);
                     default:
                         return null;
                 }
