@@ -18,11 +18,12 @@
         <TextBlock Text="Sound Settings" FontSize="18" FontWeight="Bold" Margin="-10,5,0,0"/>
 
         <TextBlock Text="Equalizer" FontSize="16" FontWeight="Bold" Margin="-10,5,0,0"/>
-        <WrapPanel Orientation="Horizontal" Margin="0,10,0,0">
+        <DockPanel Margin="0,10,0,0" LastChildFill="False">
             <Button x:Name="EQPresetBassBoostButton" Content="Bass boost" Click="EQPresetBassBoostButton_Click"/>
             <Button x:Name="EQPresetTrebleBoostButton" Margin="10,0,0,0" Content="Treble boost" Click="EQPresetTrebleBoostButton_Click"/>
-        </WrapPanel>
-        
+            <Button x:Name="EQResetButton" Content="Reset" Click="EQResetButton_Click" DockPanel.Dock="Right" Margin="0,0,10,0"/>
+        </DockPanel>
+
         <StackPanel Orientation="Horizontal" Height="200" Margin="0,10,0,0">
             <DockPanel Margin="0,0,15,0">
                 <TextBlock DockPanel.Dock="Bottom" Text="-12dB" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}" Margin="0,0,0,15"/>
@@ -53,7 +54,6 @@
                 <Slider x:Name="EQBand6" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand6_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
             </DockPanel>
         </StackPanel>
-        <Button x:Name="EQResetButton" Content="Reset" Margin="0,10,10,0" HorizontalAlignment="Right" Click="EQResetButton_Click"/> 
 
         <TextBlock Text="Speed" FontSize="16" FontWeight="Bold" Margin="-10,5,0,0"/>
     </StackPanel>

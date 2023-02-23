@@ -1,4 +1,5 @@
 ﻿using ATL.Playlist;
+using FRESHMusicPlayer.Forms;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace FRESHMusicPlayer.Forms.Playlists
+namespace FRESHMusicPlayer.Pages.Playlists
 {
     /// <summary>
     /// Interaction logic for PlaylistManagement.xaml

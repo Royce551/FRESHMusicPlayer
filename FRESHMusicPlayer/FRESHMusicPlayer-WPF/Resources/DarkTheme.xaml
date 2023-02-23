@@ -4,7 +4,7 @@
     <SolidColorBrush x:Key="PrimaryTextColor" Color="White"/>
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#DADADA"/>
     <SolidColorBrush x:Key="ControlBoxColor" Color="#272A30"/>
-    <SolidColorBrush x:Key="NavBarColor" Color="Transparent"/>
+    <SolidColorBrush x:Key="NavBarColor" Color="#272A30"/>
     <SolidColorBrush x:Key="ForegroundColor" Color="#272A30"/>
     <SolidColorBrush x:Key="SecondaryColor" Color="#1E2024"/>
     <SolidColorBrush x:Key="BackgroundColor" Color="#17191C"/>

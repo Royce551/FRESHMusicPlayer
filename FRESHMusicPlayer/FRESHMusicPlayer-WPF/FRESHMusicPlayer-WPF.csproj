@@ -127,10 +127,10 @@
     <Compile Include="Forms\MiniPlayer.xaml.cs">
       <DependentUpon>MiniPlayer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Playlists\PlaylistEntry.xaml.cs">
+    <Compile Include="Pages\Playlists\PlaylistEntry.xaml.cs">
       <DependentUpon>PlaylistEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Playlists\PlaylistManagement.xaml.cs">
+    <Compile Include="Pages\Playlists\PlaylistManagement.xaml.cs">
       <DependentUpon>PlaylistManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\TagEditor\Integrations\DiscogsIntegration.cs" />
@@ -223,11 +223,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\Playlists\PlaylistEntry.xaml">
+    <Page Include="Pages\Playlists\PlaylistEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\Playlists\PlaylistManagement.xaml">
+    <Page Include="Pages\Playlists\PlaylistManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

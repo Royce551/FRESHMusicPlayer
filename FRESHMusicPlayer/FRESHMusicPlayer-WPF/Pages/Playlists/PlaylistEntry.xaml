@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="FRESHMusicPlayer.Forms.Playlists.PlaylistEntry"
+﻿<UserControl x:Class="FRESHMusicPlayer.Pages.Playlists.PlaylistEntry"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
-             xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.Playlists"
+             xmlns:local="clr-namespace:FRESHMusicPlayer.Pages.Playlists"
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="344" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
     <UserControl.Resources>

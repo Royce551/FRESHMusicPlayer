@@ -1,5 +1,4 @@
 ﻿using FRESHMusicPlayer.Forms;
-using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Forms.TagEditor;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;

@@ -235,7 +235,7 @@ namespace FRESHMusicPlayer.Pages
                 }
                 else
                 {
-                    var result = MessageBox.Show("Are you sure you want to log out of LastFM?", "FRESHMusicPlayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var result = MessageBox.Show("Are you sure you want to log out of last.fm", "FRESHMusicPlayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {
                         App.Config.IntegrateLastFM = false;

@@ -1,4 +1,5 @@
 ﻿using ATL.Playlist;
+using FRESHMusicPlayer.Forms;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Utilities;
 using Microsoft.Win32;
@@ -8,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace FRESHMusicPlayer.Forms.Playlists
+namespace FRESHMusicPlayer.Pages.Playlists
 {
     /// <summary>
     /// Interaction logic for PlaylistEntry.xaml

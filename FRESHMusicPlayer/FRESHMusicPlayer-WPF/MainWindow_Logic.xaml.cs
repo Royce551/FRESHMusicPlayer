@@ -1,11 +1,11 @@
 ﻿using FRESHMusicPlayer.Backends;
-using FRESHMusicPlayer.Forms.Playlists;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Pages;
 using FRESHMusicPlayer.Pages.Library;
 using FRESHMusicPlayer.Pages.Lyrics;
+using FRESHMusicPlayer.Pages.Playlists;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Utilities.ColorQuantization;
 using System;
