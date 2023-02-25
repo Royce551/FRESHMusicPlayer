@@ -423,7 +423,7 @@ namespace FRESHMusicPlayer
             IsControlsBoxVisible = false;
         }
 
-        private List<(Tab tab, string search)> backLog = new List<(Tab tab, string search)>();
+        public List<(Tab tab, string search)> BackLog = new List<(Tab tab, string search)>();
         private List<(Tab tab, string search)> forwardLog = new List<(Tab tab, string search)>();
 
         public void ChangeTabs(Tab tab, string search = null, bool isNavigating = false)
@@ -466,7 +466,7 @@ namespace FRESHMusicPlayer
 
             if (!isNavigating)
             {
-                backLog.Add((tab, search));
+                BackLog.Add((tab, search));
                 forwardLog.Clear();
             }
             //if (backLog.Count > 5) backLog.Remove(backLog.Last());
@@ -478,16 +478,14 @@ namespace FRESHMusicPlayer
 
         public void NavigateBack()
         {
-            if (backLog.Count <= 1) return;
+            if (BackLog.Count <= 1) return;
 
-            var entry = backLog[backLog.Count - 2];
-            forwardLog.Add(backLog[backLog.Count - 1]);
+            var entry = BackLog[BackLog.Count - 2];
+            forwardLog.Add(BackLog[BackLog.Count - 1]);
             ChangeTabs(entry.tab, entry.search, true);
-            backLog.RemoveAt(backLog.Count - 1);
-
-            
-
+            BackLog.RemoveAt(BackLog.Count - 1);
         }
+
         public void NavigateForward()
         {
             if (forwardLog.Count <= 0) return;

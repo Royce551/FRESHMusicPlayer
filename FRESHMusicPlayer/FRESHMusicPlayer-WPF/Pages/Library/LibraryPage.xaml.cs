@@ -126,6 +126,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             TracksPanel.Items.Clear();
             int length = 0;
+            window.BackLog.Add((Tab.Artists, selectedItem));
             await Task.Run(() =>
             {
                 var albums = new List<string>();
@@ -172,6 +173,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             TracksPanel.Items.Clear();
             int length = 0;
+            window.BackLog.Add((Tab.Albums, selectedItem));
             await Task.Run(() =>
             {
                 var discs = new List<int>();
@@ -212,6 +214,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             TracksPanel.Items.Clear();
             int length = 0;
+            window.BackLog.Add((Tab.Playlists, selectedItem));
             await Task.Run(() =>
             {
                 foreach (var thing in window.Library.GetTracksForPlaylist(selectedItem))
