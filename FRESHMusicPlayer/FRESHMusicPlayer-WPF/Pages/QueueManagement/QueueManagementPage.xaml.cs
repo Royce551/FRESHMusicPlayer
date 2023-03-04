@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -24,6 +25,7 @@ namespace FRESHMusicPlayer.Pages
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
         private int currentIndex = 0;
         private List<string> lastQueue = new List<string>();
+        private WinForms.Timer timer = new WinForms.Timer { Interval = 100, Enabled = true };
 
         private readonly MainWindow window;
         public QueueManagement(MainWindow window)
@@ -33,11 +35,13 @@ namespace FRESHMusicPlayer.Pages
             PopulateList();
             window.Player.Queue.QueueChanged += Player_QueueChanged;
             window.Player.SongStopped += Player_SongStopped;
-            window.ProgressTimer.Tick += ProgressTimer_Tick;
+            timer.Tick += Timer_Tick;
         }
 
-        private void ProgressTimer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
+            if (!window.Player.FileLoaded) return;
+
             var remainingTime = new TimeSpan();
             var queueAsQueueEntries = QueueList.Items.Cast<QueueEntry>().ToList();
 
@@ -48,8 +52,7 @@ namespace FRESHMusicPlayer.Pages
                 if (i != (queueAsQueueEntries.Count - 1)) remainingTime += TimeSpan.FromSeconds(track.Length);
             }
             remainingTime += (window.Player.TotalTime - window.Player.CurrentTime);
-            var lengthString = remainingTime.Days != 0 ? remainingTime.ToString(@"d\:hh\:mm\:ss") : remainingTime.ToString(@"hh\:mm\:ss");
-            RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + lengthString;
+            RemainingTimeLabel.Text = $"Ends at {DateTime.Now + remainingTime:t}";
         }
 
         public void PopulateList()
@@ -133,7 +136,7 @@ namespace FRESHMusicPlayer.Pages
         {
             window.Player.Queue.QueueChanged -= Player_QueueChanged;
             window.Player.SongStopped -= Player_SongStopped;
-            window.ProgressTimer.Tick -= ProgressTimer_Tick;
+            timer.Tick -= Timer_Tick;
             QueueList.Items.Clear();
         }
 

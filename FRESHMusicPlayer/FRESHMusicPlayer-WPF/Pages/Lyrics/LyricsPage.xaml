@@ -14,7 +14,7 @@
 
         <fmpcontrolslyrics:Lyrics x:Name="Lyrics" Panel.ZIndex="5"/>
 
-        <Image x:Name="CoverArtBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="0" >
+        <Image x:Name="CoverArtBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="-30">
             <Image.Effect>
                 <BlurEffect Radius="30" KernelType="Gaussian"/>
             </Image.Effect>

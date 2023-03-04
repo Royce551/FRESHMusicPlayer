@@ -54,7 +54,5 @@
                 <Slider x:Name="EQBand6" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand6_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
             </DockPanel>
         </StackPanel>
-
-        <TextBlock Text="Speed" FontSize="16" FontWeight="Bold" Margin="-10,5,0,0"/>
     </StackPanel>
 </UserControl>

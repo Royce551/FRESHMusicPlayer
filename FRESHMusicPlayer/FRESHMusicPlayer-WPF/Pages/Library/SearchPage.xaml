@@ -55,7 +55,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="InfoLabel" Text="99 Tracks ・ 10:00:00" Grid.Column="0" Foreground="{DynamicResource SecondaryTextColor}" FontSize="12" Margin="10" VerticalAlignment="Center"/>
+            <TextBlock x:Name="InfoLabel" Grid.Column="0" Foreground="{DynamicResource SecondaryTextColor}" FontSize="12" Margin="10" VerticalAlignment="Center"/>
             <Button x:Name="QueueAllButton" Content="{x:Static resx:Resources.LIBRARY_ENQUEUEALL}" Grid.Column="1" Margin="10,10,0,10" Padding="5,1" Click="QueueAllButton_Click"/>
             <Button x:Name="PlayAllButton" Content="{x:Static resx:Resources.LIBRARY_PLAYALL}" Grid.Column="2" Margin="10" Padding="5,1" Click="PlayAllButton_Click"/>
         </Grid>
