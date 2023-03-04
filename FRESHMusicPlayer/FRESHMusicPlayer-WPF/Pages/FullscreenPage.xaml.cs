@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using FRESHMusicPlayer.Controls.Lyrics;
 using FRESHMusicPlayer.Controls;
 using WinForms = System.Windows.Forms;
+using FRESHMusicPlayer.Utilities;
+using System.Windows.Media.Animation;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -51,8 +53,24 @@ namespace FRESHMusicPlayer.Pages
             ProgressBar.Value = time.TotalSeconds;
         }
 
+        private RenderTargetBitmap previousContentBitmap = null;
+
+        private void Player_SongStopped(object sender, PlaybackStoppedEventArgs e)
+        {
+            previousContentBitmap = RenderBitmap(ContentGrid);
+
+            if (e.IsEndOfPlayback)
+            {
+                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+                CoverArtBox.Source = null;
+                SetCoverArtVisibility(false);
+            }
+        }
+
         private void Player_SongChanged(object sender, EventArgs e)
         {
+            AnimateNewTrack();
+
             var currentTrack = window.Player.Metadata;
             TitleLabel.Text = currentTrack.Title;
             ArtistLabel.Text = string.Join(", ", currentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", currentTrack.Artists);
@@ -80,19 +98,51 @@ namespace FRESHMusicPlayer.Pages
             {
                 InfoThing.Content = null;
             }
+
+        }
+
+        private async void AnimateNewTrack()
+        {
+            if (ContentGrid.ActualHeight <= 0 || ContentGrid.ActualWidth <= 0) return;
+
+            TransitionRectangle.Source = previousContentBitmap;
+            ContentGrid.RenderTransform = new TranslateTransform(ContentGrid.ActualWidth * 2, 0);
+            var x = InterfaceUtils.GetDoubleAnimation(
+                ContentGrid.ActualWidth * 2,
+                0,
+                TimeSpan.FromMilliseconds(1000),
+                new PropertyPath("(Grid.RenderTransform).(TranslateTransform.X)"),
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 7 });
+            await x.BeginStoryboardAsync(ContentGrid);
+            TransitionRectangle.Source = null;
+
+        }
+
+        private RenderTargetBitmap RenderBitmap(FrameworkElement element)
+        {
+            var topLeft = 0;
+            var topRight = 0;
+            var width = (int)element.ActualWidth;
+            var height = (int)element.ActualHeight;
+            var dpiX = 96; // the DPI at 100% scale; things will break in high DPI if this adapts to the DPI
+            var dpiY = 96; // TODO: investigate why
+
+            var pixelFormat = PixelFormats.Default;
+            var elementBrush = new VisualBrush(element);
+            var visual = new DrawingVisual();
+            var drawingContext = visual.RenderOpen();
+
+            drawingContext.DrawRectangle(elementBrush, null, new Rect(topLeft, topRight, width, height));
+            drawingContext.Close();
+            var bitmap = new RenderTargetBitmap(width, height, dpiX, dpiY, pixelFormat);
+            bitmap.Render(visual);
+            return bitmap;
         }
 
         public void SetCoverArtVisibility(bool mode)
         {
             if (!mode) CoverArtArea.Width = new GridLength(5);
             else CoverArtArea.Width = new GridLength(155);
-        }
-
-        private void Player_SongStopped(object sender, EventArgs e)
-        {
-            TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
-            CoverArtBox.Source = null;
-            SetCoverArtVisibility(false);
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

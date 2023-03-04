@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using WinForms = System.Windows.Forms;
 

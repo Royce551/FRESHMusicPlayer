@@ -92,10 +92,11 @@ namespace FRESHMusicPlayer.Utilities
         /// <param name="duration">How long the animation will run</param>
         /// <param name="path">The property to animate</param>
         /// <returns>A storyboard ready to begin</returns>
-        public static Storyboard GetDoubleAnimation(double from, double to, TimeSpan duration, PropertyPath path)
+        public static Storyboard GetDoubleAnimation(double from, double to, TimeSpan duration, PropertyPath path, IEasingFunction easingFunction = null)
         {
             var sb = new Storyboard();
             var doubleAnimation = new DoubleAnimation(from, to, duration);
+            if (easingFunction != null) doubleAnimation.EasingFunction = easingFunction;
             Storyboard.SetTargetProperty(doubleAnimation, path);
             sb.Children.Add(doubleAnimation);
             return sb;

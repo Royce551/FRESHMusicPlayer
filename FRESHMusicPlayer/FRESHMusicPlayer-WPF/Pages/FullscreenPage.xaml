@@ -9,53 +9,63 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Unloaded="Page_Unloaded" MouseMove="Page_MouseMove">
 
-    <Grid ClipToBounds="True">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
+    <Grid>
+        <Grid x:Name="ContentGrid" ClipToBounds="True" Grid.Row="0" Panel.ZIndex="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
-        <DockPanel x:Name="TopBar" Panel.ZIndex="4" Background="Transparent" LastChildFill="False" Grid.Row="0" Height="30" Margin="0,25,0,0">
-            <Button x:Name="BackButton" DockPanel.Dock="Left" Content="{x:Static resx:Resources.MINIPLAYER_BACK}" Margin="10,5,0,5" Click="BackButton_Click"/>
-            <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="{x:Static resx:Resources.FULLSCREEN_FOCUSMODE}" Foreground="{DynamicResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
-        </DockPanel>
-        <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{DynamicResource BackgroundColor}"/>
+            <DockPanel x:Name="TopBar" Panel.ZIndex="4" Background="Transparent" LastChildFill="False" Grid.Row="0" Height="30" Margin="0,25,0,0">
+                <Button x:Name="BackButton" DockPanel.Dock="Left" Content="{x:Static resx:Resources.MINIPLAYER_BACK}" Margin="10,5,0,5" Click="BackButton_Click"/>
+                <CheckBox x:Name="FocusModeCheckBox" Margin="0,5,10,5" DockPanel.Dock="Right" Content="{x:Static resx:Resources.FULLSCREEN_FOCUSMODE}" Foreground="{DynamicResource PrimaryTextColor}" VerticalContentAlignment="Center" Checked="FocusMode_Changed" Unchecked="FocusMode_Changed"/>
+            </DockPanel>
+            <Rectangle x:Name="TopBarOverlay" Panel.ZIndex="3" Opacity="0.55" Grid.Row="0" Fill="{DynamicResource BackgroundColor}"/>
 
-        <Viewbox x:Name="MainViewBox" Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="70,-5,70,70">
-            <Grid Width="700" Height="350">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                
-                <ContentControl x:Name="InfoThing" Grid.Row="0" Grid.Column="1" Width="300" HorizontalAlignment="Right"/>
 
-                <Grid Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
+
+            <Viewbox x:Name="MainViewBox" Stretch="Uniform" Panel.ZIndex="2" Grid.Row="1" Margin="70,-5,70,70">
+                <Grid Width="700" Height="350">
+                    <Grid.Effect>
+                        <DropShadowEffect Opacity="0.35" ShadowDepth="3"/>
+                    </Grid.Effect>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="150" Width="150" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality">
-                    </Image>
-                    <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,89,40,-44" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" FontWeight="Bold" FontSize="22" Grid.Column="1" Foreground="{DynamicResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" Panel.ZIndex="0"/>
-                    <Slider x:Name="ProgressBar" Grid.Column="1" IsEnabled="False" HorizontalAlignment="Stretch" Margin="37,138,45,0" VerticalAlignment="Top" Height="21" Style="{DynamicResource Progress_Slider}" Value="9.8"/>
-                    <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
-                    <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
-                    <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,119,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{DynamicResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
+                    <ContentControl x:Name="InfoThing" Grid.Row="0" Grid.Column="1" Width="300" HorizontalAlignment="Right"/>
+
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="150" Width="150" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality">
+                        </Image>
+                        <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,89,40,-44" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" FontWeight="Bold" FontSize="22" Grid.Column="1" Foreground="{DynamicResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" Panel.ZIndex="0"/>
+                        <Slider x:Name="ProgressBar" Grid.Column="1" IsEnabled="False" HorizontalAlignment="Stretch" Margin="37,138,45,0" VerticalAlignment="Top" Height="21" Style="{DynamicResource Progress_Slider}" Value="9.8"/>
+                        <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
+                        <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,140,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
+                        <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,119,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{DynamicResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
+
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Viewbox>
+            </Viewbox>
 
-        <Image x:Name="BackgroundCoverArtBox" HorizontalAlignment="Stretch" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="-30" >
-            <Image.Effect>
-                <BlurEffect Radius="30" KernelType="Gaussian"/>
-            </Image.Effect>
-        </Image>
-        <Rectangle x:Name="CoverArtOverlay" Fill="{DynamicResource ForegroundColor}" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" Opacity="0.55"/>
+
+
+            <Image x:Name="BackgroundCoverArtBox" HorizontalAlignment="Stretch" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="-30" >
+                <Image.Effect>
+                    <BlurEffect Radius="30" KernelType="Gaussian"/>
+                </Image.Effect>
+            </Image>
+            <Rectangle x:Name="CoverArtOverlay" Fill="{DynamicResource ForegroundColor}" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="0" Opacity="0.55"/>
+        </Grid>
+        <Image x:Name="TransitionRectangle" Panel.ZIndex="1" Grid.RowSpan="2" Grid.Row="0"/>
     </Grid>
 </UserControl>
