@@ -172,9 +172,9 @@ namespace FRESHMusicPlayer.Pages
             MoveHandler();
 
             if (isMouseMoving) return;
-            if (!IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
+            if (window.IsMouseOver && !IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
             controlDismissTimer.Stop();
-            window.HideControlsBox();
+            if (window.IsControlsBoxVisible) window.HideControlsBox();
             
             Mouse.OverrideCursor = Cursors.None;
             TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;

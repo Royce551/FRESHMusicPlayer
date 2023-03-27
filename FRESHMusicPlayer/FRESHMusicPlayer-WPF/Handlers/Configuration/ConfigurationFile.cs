@@ -24,7 +24,6 @@ namespace FRESHMusicPlayer.Handlers.Configuration
 
     public enum AccentColor
     {
-        System,
         Blue,
         Green,
         Red,
@@ -72,7 +71,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// </summary>
         public Skin Theme { get; set; } = Skin.Dark;
 
-        public AccentColor AccentColor { get; set; } = AccentColor.System;
+        public AccentColor AccentColor { get; set; } = AccentColor.Blue;
 
         /// <summary>
         /// The volume that FMP was set to before closing

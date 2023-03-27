@@ -62,7 +62,7 @@ namespace FRESHMusicPlayer
             Initialize(initialFile);
         }
 
-        public void Initialize(string[] initialFile)
+        public async void Initialize(string[] initialFile)
         {
             LoggingHandler.Log("Reading library...");
 
@@ -111,11 +111,8 @@ namespace FRESHMusicPlayer
             LoggingHandler.Log("Ready to go!");
 
             if (shouldLibraryBeUpgraded) MigrateLibrary();
-            //if (initialFile != null)
-            //{
-            //    Player.Queue.Add(initialFile);
-            //    await Player.PlayAsync();
-            //}
+
+            await Library.ProcessDatabaseMetadataAsync();
         }
 
         private async void MigrateLibrary()

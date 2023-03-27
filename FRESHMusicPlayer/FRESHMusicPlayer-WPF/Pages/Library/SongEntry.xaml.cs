@@ -10,6 +10,7 @@ using FRESHMusicPlayer.Handlers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Media;
+using Microsoft.Win32;
 
 namespace FRESHMusicPlayer.Pages.Library
 {
@@ -26,6 +27,7 @@ namespace FRESHMusicPlayer.Pages.Library
         private MainWindow window;
         private NotificationHandler notificationHandler;
         private GUILibrary library;
+        private bool isMissing = false;
         public SongEntry(string filePath, string[] artists, string album, string title, MainWindow window, NotificationHandler notificationHandler, GUILibrary library)
         {
             this.window = window;
@@ -38,6 +40,13 @@ namespace FRESHMusicPlayer.Pages.Library
             this.album = album;
             TitleLabel.Text = title;
             Title = title;
+
+            if (!FilePath.StartsWith("http") && !File.Exists(FilePath))
+            {
+                isMissing = true;
+                TitleLabel.Foreground = new SolidColorBrush(Color.FromRgb(213, 70, 63));
+                ArtistAlbumLabel.Foreground = new SolidColorBrush(Color.FromRgb(213, 70, 63));
+            }
         }
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e) => ShowButtons();
@@ -52,6 +61,7 @@ namespace FRESHMusicPlayer.Pages.Library
             ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
             PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
             QueueButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
+
         }
 
         public void HideButtons()
@@ -61,6 +71,12 @@ namespace FRESHMusicPlayer.Pages.Library
             ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
             PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColor");
             QueueButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColor");
+
+            if (isMissing)
+            {
+                TitleLabel.Foreground = new SolidColorBrush(Color.FromRgb(213, 70, 63));
+                ArtistAlbumLabel.Foreground = new SolidColorBrush(Color.FromRgb(213, 70, 63));
+            }
         }
 
         private async void PlayButtonClick(object sender, RoutedEventArgs e)
@@ -75,14 +91,26 @@ namespace FRESHMusicPlayer.Pages.Library
                 notificationHandler.Add(new Handlers.Notifications.Notification
                 {
                     ContentText = string.Format(Properties.Resources.NOTIFICATION_FILEGONE, FilePath),
-                    ButtonText = "Remove from library",
+                    ButtonText = "Locate file",
                     OnButtonClicked = () =>
                     {
-                        library.Remove(FilePath);
-                        ((ListBox)Parent).Items.Remove(this);
-                        return true;
+                        var dialog = new OpenFileDialog();
+                        dialog.Filter = "Audio Files|*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac|Other|*";
+                        if (Directory.Exists(Path.GetDirectoryName(FilePath))) dialog.InitialDirectory = Path.GetDirectoryName(FilePath);
+                        if (dialog.ShowDialog() == true)
+                        {
+                            var track = window.Library.GetAllTracks().Find(x => x.Path == FilePath);
+                            track.Path = dialog.FileName;
+                            window.Library.Database.GetCollection<DatabaseTrack>(GUILibrary.TracksCollectionName).Update(track);
+
+                            window.Library.TriggerUpdate();
+                            window.Player.PlayAsync(dialog.FileName);
+                            return true;
+                        }
+                        else return false;
                     },
-                    Type = NotificationType.Failure
+                    Type = NotificationType.Failure,
+                    DisplayAsToast = true
                 });
             }
         }

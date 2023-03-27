@@ -238,7 +238,7 @@ We'll skip to the next track for you</value>
 Missing File: {0}</value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value>The file you tried to play, "{0}", doesn't seem to exist.</value>
+    <value>The file you tried to play has gone missing. Let us know where it went, or remove it from your library.</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>Installing update...</value>

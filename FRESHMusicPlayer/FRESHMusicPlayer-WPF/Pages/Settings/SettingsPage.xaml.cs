@@ -42,8 +42,8 @@ namespace FRESHMusicPlayer.Pages
             General_AutoLibraryCheck.IsChecked = App.Config.AutoLibrary;
 
             Integration_LastFMCheck.IsChecked = App.Config.IntegrateLastFM;
-            Integration_LastFMSyncLikedCheck.IsChecked = App.Config.SyncLikedLastFMTracks;
-            Integration_LastFMSyncPlaylistsCheck.IsChecked = App.Config.GeneratePlaylistsFromLastFM;
+            //Integration_LastFMSyncLikedCheck.IsChecked = App.Config.SyncLikedLastFMTracks;
+            //Integration_LastFMSyncPlaylistsCheck.IsChecked = App.Config.GeneratePlaylistsFromLastFM;
 
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
@@ -85,18 +85,15 @@ namespace FRESHMusicPlayer.Pages
                 case Skin.Dark:
                     Appearance_ThemeDarkRadio.IsChecked = true;
                     break;
-                case Skin.Classic:
-                    Appearance_ThemeClassicRadio.IsChecked = true;
-                    break;
-                case Skin.System:
-                    Appearance_ThemeSystemRadio.IsChecked = true;
-                    break;
+                //case Skin.Classic:
+                //    Appearance_ThemeClassicRadio.IsChecked = true;
+                //    break;
+                //case Skin.System:
+                //    Appearance_ThemeSystemRadio.IsChecked = true;
+                //    break;
             }
             switch (App.Config.AccentColor)
             {
-                case AccentColor.System:
-                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.System;
-                    break;
                 case AccentColor.Blue:
                     Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Blue;
                     break;
@@ -246,20 +243,20 @@ namespace FRESHMusicPlayer.Pages
                 (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
             }
         }
-        private void Integration_LastFMSyncLikedChanged(object sender, RoutedEventArgs e)
-        {
-            if (pageInitialized)
-            {
-                App.Config.SyncLikedLastFMTracks = (bool)Integration_LastFMSyncLikedCheck.IsChecked;
-            }
-        }
-        private void Integration_LastFMSyncPlaylistsChanged(object sender, RoutedEventArgs e)
-        {
-            if (pageInitialized)
-            {
-                App.Config.GeneratePlaylistsFromLastFM = (bool)Integration_LastFMSyncPlaylistsCheck.IsChecked;
-            }
-        }
+        //private void Integration_LastFMSyncLikedChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (pageInitialized)
+        //    {
+        //        App.Config.SyncLikedLastFMTracks = (bool)Integration_LastFMSyncLikedCheck.IsChecked;
+        //    }
+        //}
+        //private void Integration_LastFMSyncPlaylistsChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (pageInitialized)
+        //    {
+        //        App.Config.GeneratePlaylistsFromLastFM = (bool)Integration_LastFMSyncPlaylistsCheck.IsChecked;
+        //    }
+        //}
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pageInitialized)
@@ -346,9 +343,6 @@ namespace FRESHMusicPlayer.Pages
             {
                 switch (Appearance_AccentColorCombo.SelectedIndex)
                 {
-                    case (int)AccentColor.System:
-                        App.Config.AccentColor = AccentColor.System;
-                        break;
                     case (int)AccentColor.Blue:
                         App.Config.AccentColor = AccentColor.Blue;
                         break;

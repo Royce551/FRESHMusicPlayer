@@ -212,6 +212,8 @@ namespace FRESHMusicPlayer
 
             await AnimateSeekBarAsync(0);
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
+
+            Library.Update(Player.FilePath, CurrentTrack);
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
@@ -256,7 +258,7 @@ namespace FRESHMusicPlayer
         {
             if (!Player.FileLoaded || Player.Metadata.CoverArt is null)
             {
-                (Application.Current as App).ChangeAccentColor(Handlers.Configuration.AccentColor.System);
+                (Application.Current as App).ChangeAccentColor(Handlers.Configuration.AccentColor.Blue);
                 return;
             }
             if (App.Config.AccentColor != Handlers.Configuration.AccentColor.CoverArt) return;

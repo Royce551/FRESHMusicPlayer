@@ -13,7 +13,7 @@
             <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
     </UserControl.Resources>
-    
+
     <StackPanel Margin="20,25,0,0">
         <TextBlock Text="Sound Settings" FontSize="18" FontWeight="Bold" Margin="-10,5,0,0"/>
 
@@ -31,27 +31,27 @@
             </DockPanel>
             <DockPanel>
                 <TextBlock DockPanel.Dock="Bottom" Text="60Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <Slider x:Name="EQBand1" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand1_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+                <Slider x:Name="EQBand1" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand1_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
             </DockPanel>
             <DockPanel Margin="10,0,0,0">
                 <TextBlock DockPanel.Dock="Bottom" Text="150Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <Slider x:Name="EQBand2" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand2_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+                <Slider x:Name="EQBand2" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand2_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
             </DockPanel>
             <DockPanel Margin="10,0,0,0">
                 <TextBlock DockPanel.Dock="Bottom" Text="400Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <Slider x:Name="EQBand3"  Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand3_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+                <Slider x:Name="EQBand3"  Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand3_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
             </DockPanel>
             <DockPanel Margin="10,0,0,0">
                 <TextBlock DockPanel.Dock="Bottom" Text="1kHz" HorizontalAlignment="Center"  Foreground="{DynamicResource SecondaryTextColor}"/>
-                <Slider x:Name="EQBand4" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand4_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+                <Slider x:Name="EQBand4" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand4_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
             </DockPanel>
             <DockPanel Margin="10,0,0,0">
                 <TextBlock DockPanel.Dock="Bottom" Text="2.4kHz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <Slider x:Name="EQBand5" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand5_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+                <Slider x:Name="EQBand5" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand5_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
             </DockPanel>
             <DockPanel Margin="10,0,0,0">
                 <TextBlock DockPanel.Dock="Bottom" Text="15kHz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <Slider x:Name="EQBand6" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand6_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight"/>
+                <Slider x:Name="EQBand6" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand6_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
             </DockPanel>
         </StackPanel>
     </StackPanel>

@@ -306,28 +306,113 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="Slider"  TargetType="Slider">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Track Grid.Row="1" x:Name="PART_Track" >
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderRepeatButton1}" Margin="0,0,-1,0" Command="Slider.DecreaseLarge" />
-                </Track.DecreaseRepeatButton>
-                
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderRepeatButton}" Margin="-1,0,0,0" Command="Slider.IncreaseLarge" />
-                </Track.IncreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb Style="{StaticResource SliderThumb}"/>
-                </Track.Thumb>
-            </Track>
-        </Grid>
-    </ControlTemplate>
+    <Style x:Key="NSliderRepeatButton" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border  Background="{DynamicResource ControlColor}" Width="3"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
+    <Style x:Key="NSliderRepeatButton1" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border SnapsToDevicePixels="True" Width="3">
+                        <Border.Style>
+                            <Style>
+                                <Setter Property="Border.Background" Value="{DynamicResource PrimaryTextColor}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Slider},Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Border.Background" Value="{DynamicResource AccentColor}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NSliderThumb" TargetType="Thumb">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Ellipse x:Name="ThumbEllipse" Height="7" Width="7" RenderTransformOrigin="0.5, 0.5" Fill="{DynamicResource ControlColor}" StrokeThickness="1.5">
+                        <Ellipse.RenderTransform>
+                            <ScaleTransform x:Name="ScaleTransform" ScaleX="2" ScaleY="2"/>
+                        </Ellipse.RenderTransform>
+                        <Ellipse.Style>
+                            <Style>
+                                <Setter Property="Ellipse.Stroke" Value="{DynamicResource PrimaryTextColor}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Slider},Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Ellipse.Stroke" Value="{DynamicResource AccentColor}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+                    </Ellipse>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NormalSlider" TargetType="Slider">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Slider">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="1*" MinHeight="{TemplateBinding MinHeight}" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Track Grid.Column="0" Grid.Row="1" x:Name="PART_Track" >
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource NSliderRepeatButton1}" Margin="0,0,-1,0" Command="Slider.DecreaseLarge" />
+                                    </Track.DecreaseRepeatButton>
+
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource NSliderRepeatButton}" Margin="-1,0,0,0" Command="Slider.IncreaseLarge" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource NSliderThumb}"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style x:Key="Progress_Slider" TargetType="Slider">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -335,13 +420,37 @@
         <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="MinHeight" Value="21" />
-                <Setter Property="MinWidth" Value="104" />
-                <Setter Property="Template" Value="{StaticResource Slider}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Slider">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="1*" MinWidth="{TemplateBinding MinWidth}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Track Grid.Column="1" x:Name="PART_Track" >
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource SliderRepeatButton1}" Margin="0,0,-1,0" Command="Slider.DecreaseLarge" />
+                                    </Track.DecreaseRepeatButton>
+
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource SliderRepeatButton}" Margin="-1,0,0,0" Command="Slider.IncreaseLarge" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource SliderThumb}"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
-<!--Combo Box-->
+
+    
+    <!--Combo Box-->
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -597,11 +706,37 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
+ 
+    <!--Radio Button-->
+    <Style TargetType="{x:Type RadioButton}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <BulletDecorator>
+                        <BulletDecorator.Bullet>
+                            <Grid>
+                                <Ellipse x:Name="RadioOverlay" Width="20" Height="20" Fill="{DynamicResource AccentColor}" Margin="0,0,0,5" Visibility="Hidden"/>
+                                <Ellipse x:Name="Radio" Width="16" Height="16" Fill="{DynamicResource ControlColor}" Stroke="{DynamicResource ControlColor}" StrokeThickness="2" Margin="0,0,0,5"/>
+                            </Grid>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Margin="3,1,0,0" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14">
+                        <ContentPresenter />
+                        </TextBlock>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Radio" Property="Stroke" Value="{DynamicResource PrimaryTextColor}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="RadioOverlay" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
-    
+
     <!--ListBox-->
 
     <Style x:Key="{x:Type ListBox}" TargetType="{x:Type ListBox}">

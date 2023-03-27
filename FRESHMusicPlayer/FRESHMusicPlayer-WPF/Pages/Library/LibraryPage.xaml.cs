@@ -88,13 +88,11 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                foreach (var thing in window.Library.GetAllTracks("Artist"))
+                var distinctiveArtists = window.Library.GetAllTracks().SelectMany(x => x.Artists).Distinct().ToList();
+                distinctiveArtists.Sort();
+                foreach (var thing in distinctiveArtists)
                 {
-                    foreach (var artist in thing.Artists)
-                    {
-                        if (CategoryPanel.Items.Contains(artist)) continue;
-                        window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(artist));
-                    }
+                    window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing));
                 }
             });
         }

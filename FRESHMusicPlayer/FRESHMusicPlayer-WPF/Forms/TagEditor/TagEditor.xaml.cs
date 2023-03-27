@@ -1,4 +1,5 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
 using FRESHMusicPlayer.Handlers;
 using Microsoft.Win32;
@@ -92,31 +93,28 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         public async Task SaveChanges(List<string> filePaths)
         {
-            await Task.Run(async () =>
+            foreach (string path in filePaths)
             {
-                foreach (string path in filePaths)
+                var track = new Track(path)
                 {
-                    var track = new Track(path)
-                    {
-                        Artist = ArtistBox.Text,
-                        Title = TitleBox.Text,
-                        Album = AlbumBox.Text,
-                        Genre = GenreBox.Text,
-                        Year = Convert.ToInt32(YearBox.Text),
-                        AlbumArtist = AlbumArtistBox.Text,
-                        Composer = ComposerBox.Text,
-                        TrackNumber = Convert.ToInt32(TrackNumBox.Text),
-                        DiscNumber = Convert.ToInt32(DiscNumBox.Text),
-                        Lyrics = new LyricsInfo()
-                    };
-                    track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
-                    track.EmbeddedPictures.Clear();
-                    foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
-                    track.Save();
-                    library?.Remove(path); // update library entry, if available
-                    await library?.ImportAsync(path);
-                }
-            });
+                    Artist = ArtistBox.Text,
+                    Title = TitleBox.Text,
+                    Album = AlbumBox.Text,
+                    Genre = GenreBox.Text,
+                    Year = Convert.ToInt32(YearBox.Text),
+                    AlbumArtist = AlbumArtistBox.Text,
+                    Composer = ComposerBox.Text,
+                    TrackNumber = Convert.ToInt32(TrackNumBox.Text),
+                    DiscNumber = Convert.ToInt32(DiscNumBox.Text),
+                    Lyrics = new LyricsInfo()
+                };
+                track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
+                track.EmbeddedPictures.Clear();
+                foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
+                await Task.Run(() => track.Save());
+                library?.Update(path, new FileMetadataProvider(path));
+            }
+           
         }
 
         public async Task SaveButton()

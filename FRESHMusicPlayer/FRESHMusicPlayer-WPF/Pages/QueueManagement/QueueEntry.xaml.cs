@@ -89,11 +89,19 @@ namespace FRESHMusicPlayer.Pages
         public void ShowButtons()
         {
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Visible;
+            TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
+            PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryextColorOverAccent");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
+            PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
         }
 
         public void HideButtons()
         {
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Collapsed;
+            TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
+            PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
+            PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColor");
         }
 
         private async void PlayButtonClick(object sender, RoutedEventArgs e)

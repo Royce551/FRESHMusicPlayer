@@ -78,8 +78,8 @@
                 <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
                 <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
                 <CheckBox x:Name="Integration_LastFMCheck" Content="last.fm" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Checked="Integration_LastFMChanged" Unchecked="Integration_LastFMChanged"/>
-                <CheckBox x:Name="Integration_LastFMSyncLikedCheck" Content="Sync liked tracks" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,5,0,5" Checked="Integration_LastFMSyncLikedChanged" Unchecked="Integration_LastFMSyncLikedChanged"/>
-                <CheckBox x:Name="Integration_LastFMSyncPlaylistsCheck" Content="Generate playlists from last.fm data" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,5" Checked="Integration_LastFMSyncPlaylistsChanged" Unchecked="Integration_LastFMSyncPlaylistsChanged"/>
+                <!--<CheckBox x:Name="Integration_LastFMSyncLikedCheck" Content="Sync liked tracks" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,5,0,5" Checked="Integration_LastFMSyncLikedChanged" Unchecked="Integration_LastFMSyncLikedChanged"/>
+                <CheckBox x:Name="Integration_LastFMSyncPlaylistsCheck" Content="Generate playlists from last.fm data" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,5" Checked="Integration_LastFMSyncPlaylistsChanged" Unchecked="Integration_LastFMSyncPlaylistsChanged"/>-->
 
                 <TextBlock x:Name="UpdateHeader" Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 
@@ -104,8 +104,8 @@
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" Style="{StaticResource Subheader}"/>
                 <RadioButton x:Name="Appearance_ThemeLightRadio" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_LIGHT}" FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>
                 <RadioButton x:Name="Appearance_ThemeDarkRadio" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="{x:Static resx:Resources.SETTINGS_THEME_DARK}"  FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>
-                <RadioButton x:Name="Appearance_ThemeClassicRadio" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="Colorful" FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>
-                <RadioButton x:Name="Appearance_ThemeSystemRadio" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="Use system color theme" FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>
+                <!--<RadioButton x:Name="Appearance_ThemeClassicRadio" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="Colorful" FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>
+                <RadioButton x:Name="Appearance_ThemeSystemRadio" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Checked="Appearance_ThemeChanged" Unchecked="Appearance_ThemeChanged" Content="Use system color theme" FocusVisualStyle="{DynamicResource KeyboardFocusRing}"/>-->
                 <TextBlock Text="Colors" Style="{StaticResource Subheader}"/>
                 <Grid Height="30" Margin="0,0,0,5" >
                     <Grid.ColumnDefinitions>
@@ -114,7 +114,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Accent color" Foreground="{DynamicResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="Appearance_AccentColorCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="Appearance_AccentColorCombo_SelectionChanged">
-                        <ComboBoxItem Content="System accent color"/>
+                        <!--<ComboBoxItem Content="System accent color"/>-->
                         <ComboBoxItem Content="Blue"/>
                         <ComboBoxItem Content="Green"/>
                         <ComboBoxItem Content="Red"/>

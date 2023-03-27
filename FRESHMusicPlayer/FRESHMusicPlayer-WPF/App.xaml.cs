@@ -120,8 +120,6 @@ namespace FRESHMusicPlayer
             r1 = g1 = b1 = r2 = g2 = b2 = default;
             switch (accentColor)
             {
-                case AccentColor.System:
-                    
                 case AccentColor.Blue:
                     r1 = 51; g1 = 139; b1 = 193;
                     r2 = 105; g2 = 181; b2 = 120;
@@ -149,6 +147,11 @@ namespace FRESHMusicPlayer
                 case AccentColor.CoverArt:
                     if (currentWindow is MainWindow window)
                         window.HandleAccentCoverArt();
+                    else
+                    {
+                        r1 = 51; g1 = 139; b1 = 193;
+                        r2 = 105; g2 = 181; b2 = 120;
+                    }
                     break;
             }
 

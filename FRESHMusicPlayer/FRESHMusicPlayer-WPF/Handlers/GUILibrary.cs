@@ -29,6 +29,8 @@ namespace FRESHMusicPlayer.Handlers
             this.dispatcher = dispatcher;
         }
 
+        public void TriggerUpdate() => LibraryChanged?.Invoke(null, EventArgs.Empty);
+
         public override async Task ImportAsync(List<string> tracks)
         {
             var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
