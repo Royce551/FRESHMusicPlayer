@@ -124,9 +124,9 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            library.RaiseLibraryChanged = false;
+            library.RaiseLibraryChangedEvents = false;
             library.Remove(FilePath);
-            library.RaiseLibraryChanged = true;
+            library.RaiseLibraryChangedEvents = true;
             ((ListBox)Parent).Items.Remove(this);
         }
 

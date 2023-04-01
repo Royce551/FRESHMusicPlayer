@@ -23,7 +23,12 @@ namespace FRESHMusicPlayer.Pages.Library
         public LibraryPage(MainWindow window, string search = null)
         {
             this.window = window;
-            window.Library.LibraryChanged += Library_LibraryChanged;
+            window.Library.OtherLibraryUpdateOcccured += Library_LibraryChanged;
+            window.Library.TracksAdded += Library_TracksAdded;
+            window.Library.TracksRemoved += Library_TracksRemoved;
+            window.Library.TracksUpdated += Library_TracksUpdated;
+            window.Library.PlaylistAdded += Library_PlaylistAdded;
+            window.Library.PlaylistRemoved += Library_PlaylistRemoved;
             InitializeComponent();
             LoadLibrary();
             CategoryPanel.Focus();
@@ -33,6 +38,49 @@ namespace FRESHMusicPlayer.Pages.Library
                 CategoryPanel.SelectedItem = search;
                 CategoryPanel.ScrollIntoView(search);
             }
+        }
+
+        private void Library_PlaylistRemoved(object sender, string e)
+        {
+            if (window.CurrentTab == Tab.Playlists) CategoryPanel.Items.Remove(e);
+        }
+
+        private void Library_PlaylistAdded(object sender, string e)
+        {
+            if (window.CurrentTab == Tab.Playlists) AddItemToCategoryPanelSorted(e);
+        }
+
+        private async void Library_TracksUpdated(object sender, IEnumerable<string> e)
+        {
+            foreach (var track in e)
+            {
+                var dbTrack = await window.Library.GetFallbackTrackAsync(track);
+                foreach (var artist in dbTrack.Artists)
+                {
+                    if (!CategoryPanel.Items.Contains(artist)) AddItemToCategoryPanelSorted(artist);
+
+                    if ((string)CategoryPanel.SelectedItem == artist) await ShowTracksforArtist(artist);
+                }
+
+            }
+        }
+
+        private void Library_TracksRemoved(object sender, IEnumerable<string> e)
+        {
+        
+        }
+
+        private async void Library_TracksAdded(object sender, IEnumerable<string> e)
+        {
+            
+        }
+
+        private void AddItemToCategoryPanelSorted(string item)
+        {
+            var items = CategoryPanel.Items.Cast<string>().ToList();
+            var index = items.BinarySearch(item);
+            if (index < 0) index = ~index;
+            CategoryPanel.Items.Insert(index, item);
         }
 
         private void Library_LibraryChanged(object sender, EventArgs e)
@@ -251,7 +299,7 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            window.Library.LibraryChanged -= Library_LibraryChanged;
+            window.Library.OtherLibraryUpdateOcccured -= Library_LibraryChanged;
             CategoryPanel.Items.Clear();
             TracksPanel.Items.Clear();
         }

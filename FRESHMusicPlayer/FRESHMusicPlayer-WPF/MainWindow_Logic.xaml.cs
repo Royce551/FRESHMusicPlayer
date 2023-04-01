@@ -213,7 +213,7 @@ namespace FRESHMusicPlayer
             await AnimateSeekBarAsync(0);
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
 
-            Library.Update(Player.FilePath, CurrentTrack);
+            //Library.Update(Player.FilePath, CurrentTrack);
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {

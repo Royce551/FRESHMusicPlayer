@@ -41,7 +41,7 @@ namespace FRESHMusicPlayer.Pages.Playlists
         }
         private async void CheckIfPlaylistExists()
         {
-            foreach (var thing in await Task.Run(() => library.GetTracksForPlaylist(playlist)))
+            foreach (var thing in library.GetTracksForPlaylist(playlist))
             {
                 if (thing.Path == path)
                 {
@@ -128,10 +128,10 @@ namespace FRESHMusicPlayer.Pages.Playlists
                 things = library.GetTracksForArtist((await library.GetFallbackTrackAsync(path)).Artists[0]);
             else
                 things = library.GetTracksForAlbum((await library.GetFallbackTrackAsync(path)).Album);
-            library.RaiseLibraryChanged = false;
+            library.RaiseLibraryChangedEvents = false;
             foreach (var thing in things)
                 library.AddTrackToPlaylistAsync(playlist, thing.Path);
-            library.RaiseLibraryChanged = true;
+            library.RaiseLibraryChangedEvents = true;
             CheckIfPlaylistExists();
         }
 
