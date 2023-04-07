@@ -80,12 +80,16 @@ namespace FRESHMusicPlayer.Handlers
             });
         }
 
-        public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync()
+        public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
-            var notification = new Notification { ContentText = "Processing library changes...\n\nNewly added tracks may not appear in the artists or albums tabs until processing is complete.", Type = NotificationType.Information };
+            var notification = new Notification { ContentText = "Processing library changes...\n\nNewly added tracks may not appear in the artists or albums tabs until processing is complete", Type = NotificationType.Information };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
 
-            var updatedTracks = await base.ProcessDatabaseMetadataAsync();
+            var updatedTracks = await base.ProcessDatabaseMetadataAsync(p =>
+            {
+                notification.ContentText = $"Processing library changes...\n{p} tracks remaining\n\nNewly added tracks may not appear in the artists or albums tabs until processing is complete";
+                dispatcher.Invoke(() => notificationHandler.Update(notification));
+            });
 
             dispatcher.Invoke(() =>
             {
