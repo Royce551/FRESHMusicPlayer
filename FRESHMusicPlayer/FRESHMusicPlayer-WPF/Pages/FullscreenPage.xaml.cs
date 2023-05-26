@@ -15,9 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FRESHMusicPlayer.Controls.Lyrics;
 using FRESHMusicPlayer.Controls;
-using WinForms = System.Windows.Forms;
 using FRESHMusicPlayer.Utilities;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -151,6 +151,7 @@ namespace FRESHMusicPlayer.Pages
             window.Player.SongChanged -= Player_SongChanged;
             window.ProgressTimer.Tick -= ProgressTimer_Tick;
             controlDismissTimer.Tick -= ControlDismissTimer_Tick;
+            controlDismissTimer.Stop();
             Mouse.OverrideCursor = null;
 
             window.WindowState = WindowState.Normal;
@@ -161,7 +162,7 @@ namespace FRESHMusicPlayer.Pages
             else window.ChangeTabs(Tab.Import);
         }
 
-        private readonly WinForms.Timer controlDismissTimer = new WinForms.Timer { Interval = 2000, Enabled = true };
+        private readonly DispatcherTimer controlDismissTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(2000), IsEnabled = true };
 
         private Point lastMouseMovePosition;
         private bool isMouseMoving = false;
@@ -189,7 +190,7 @@ namespace FRESHMusicPlayer.Pages
                 if (Math.Abs(position.X - lastMouseMovePosition.X) > SystemParameters.MinimumHorizontalDragDistance ||
                     Math.Abs(position.Y - lastMouseMovePosition.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    if (!controlDismissTimer.Enabled)
+                    if (!controlDismissTimer.IsEnabled)
                     {
                         if (!window.IsControlsBoxVisible) window.ShowControlsBox();
                         controlDismissTimer.Start();

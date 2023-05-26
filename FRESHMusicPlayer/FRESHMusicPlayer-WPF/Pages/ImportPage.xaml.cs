@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using WinForms = System.Windows.Forms;
+using Ookii.Dialogs.Wpf;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -68,10 +68,11 @@ namespace FRESHMusicPlayer.Pages
 
         private async void BrowseFoldersButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new WinForms.FolderBrowserDialog()) 
+            var dialog = new VistaFolderBrowserDialog();
+            if (dialog.ShowDialog() == true)
             {
                 dialog.Description = "Note: This doesn't import everything FMP actually supports. If you need to import more obscure file formats, try drag and drop.";
-                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                if (dialog.ShowDialog() == true)
                 {
                     string[] paths = Directory.EnumerateFiles(dialog.SelectedPath, "*", SearchOption.AllDirectories)
                     .Where(name => name.EndsWith(".mp3")

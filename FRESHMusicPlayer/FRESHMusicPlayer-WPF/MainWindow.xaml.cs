@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
-using WinForms = System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer
 {
@@ -41,7 +41,7 @@ namespace FRESHMusicPlayer
         public bool PauseAfterCurrentTrack = false;
 
         private FileSystemWatcher watcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
-        public WinForms.Timer ProgressTimer;
+        public DispatcherTimer ProgressTimer;
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
         private IPlaybackIntegration lastFMIntegration;
@@ -55,9 +55,9 @@ namespace FRESHMusicPlayer
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
-            ProgressTimer = new WinForms.Timer
+            ProgressTimer = new DispatcherTimer
             {
-                Interval = 100
+                Interval = TimeSpan.FromMilliseconds(100)
             };
             ProgressTimer.Tick += ProgressTimer_Tick;
 
@@ -186,7 +186,7 @@ namespace FRESHMusicPlayer
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Library.Database?.Dispose();
-            ProgressTimer.Dispose();
+            ProgressTimer.Stop();
             watcher.Dispose();
             WritePersistence();
         }
