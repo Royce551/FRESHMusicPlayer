@@ -8,10 +8,10 @@
     <authors>Squid Grill</authors>
     <description>A music player</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <copyright>2020</copyright>
+    <copyright>2023</copyright>
     <dependencies />
   </metadata>
   <files>
-    <file src="*.*" target="lib\net45\" exclude="*.pdb;*.nupkg;*.vshost.*;database.json"/>
+    <file src="**\*.*" target="lib\net45\"/>
   </files>
 </package>
