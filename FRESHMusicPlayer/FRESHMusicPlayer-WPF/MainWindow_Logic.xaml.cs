@@ -148,9 +148,9 @@ namespace FRESHMusicPlayer
             }
             else
             {
-                Title = $"Loading... | {WindowName}";
-                TitleLabel.Text = "Loading...";
-                ArtistLabel.Text = "Loading...";
+                Title = $"{Properties.Resources.LOADING} | {WindowName}";
+                TitleLabel.Text = Properties.Resources.LOADING;
+                ArtistLabel.Text = Properties.Resources.LOADING;
                 CoverArtBox.Source = null;
                 SetIntegrations(PlaybackStatus.Changing);
             }

@@ -119,7 +119,15 @@ namespace FRESHMusicPlayer.Pages.Library
             await Task.Run(() =>
             {
                 int i = 0;
-                foreach (var thing in window.Library.GetAllTracks())
+                var tracks = window.Library.GetAllTracks();
+
+                if (tracks.Count <= 0)
+                {
+                    window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Visible);
+                    return;
+                }
+
+                foreach (var thing in tracks)
                 {
                     window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));
                     length += thing.Length;
@@ -136,7 +144,15 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                var distinctiveArtists = window.Library.GetAllTracks().SelectMany(x => x.Artists).Distinct().ToList();
+                var tracks = window.Library.GetAllTracks();
+
+                if (tracks.Count <= 0)
+                {
+                    window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Visible);
+                    return;
+                }
+
+                var distinctiveArtists = tracks.SelectMany(x => x.Artists).Distinct().ToList();
                 distinctiveArtists.Sort();
                 foreach (var thing in distinctiveArtists)
                 {
@@ -148,7 +164,15 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             await Task.Run(() =>
             {
-                foreach (var thing in window.Library.GetAllTracks("Album"))
+                var tracks = window.Library.GetAllTracks("Album");
+
+                if (tracks.Count <= 0)
+                {
+                    window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Visible);
+                    return;
+                }
+
+                foreach (var thing in tracks)
                 {
                     if (CategoryPanel.Items.Contains(thing.Album)) continue;
                     window.Dispatcher.Invoke(() => CategoryPanel.Items.Add(thing.Album));
@@ -160,7 +184,7 @@ namespace FRESHMusicPlayer.Pages.Library
             var x = window.Library.Database.GetCollection<DatabasePlaylist>("Playlists").Query().OrderBy("Name").ToList();
             await Task.Run(async () =>
             {
-                if (x.Count == 0) await window.Library.CreatePlaylistAsync("Liked", true);
+                if (x.Count == 0) await window.Dispatcher.Invoke(async () => await window.Library.CreatePlaylistAsync("Liked", true));
                 foreach (var thing in x)
                 {
                     if (CategoryPanel.Items.Contains(thing.Name)) continue;

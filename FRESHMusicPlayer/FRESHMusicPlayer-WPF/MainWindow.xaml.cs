@@ -132,12 +132,6 @@ namespace FRESHMusicPlayer
                     await Library.AddTrackToPlaylistAsync(playlist.Name, track);
                 }
             }
-
-            NotificationHandler.Notifications.Add(new Notification 
-            { 
-                ContentText = "Your library has been upgraded. If anything looks off, please report it at https://github.com/royce551/freshmusicplayer/issues.",
-                Type = NotificationType.Success
-            });
         }
 
         private async void Window_SourceInitialized(object sender, EventArgs e)

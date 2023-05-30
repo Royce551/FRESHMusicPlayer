@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ACCENTCOLOR_BLUE" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="ACCENTCOLOR_CLASSICBLUE" xml:space="preserve">
+    <value>Classic Blue</value>
+  </data>
+  <data name="ACCENTCOLOR_GREEN" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="ACCENTCOLOR_MATCHCOVER" xml:space="preserve">
+    <value>Match cover art</value>
+  </data>
+  <data name="ACCENTCOLOR_PINK" xml:space="preserve">
+    <value>Pink</value>
+  </data>
+  <data name="ACCENTCOLOR_PURPLE" xml:space="preserve">
+    <value>Purple</value>
+  </data>
+  <data name="ACCENTCOLOR_RED" xml:space="preserve">
+    <value>Red</value>
+  </data>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
     <value>Oopsies! Something went wrong. We'll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
@@ -153,6 +174,9 @@
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>Add to playlist</value>
   </data>
+  <data name="LIBRARY_EMPTY" xml:space="preserve">
+    <value>Your library is empty. To get started, drag and drop some files, or set an Auto Import folder or two in the settings.</value>
+  </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
     <value>Enqueue all</value>
   </data>
@@ -161,6 +185,9 @@
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
     <value>Play all</value>
+  </data>
+  <data name="LOADING" xml:space="preserve">
+    <value>Loading...</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
     <value>Lyrics</value>
@@ -176,6 +203,9 @@
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
     <value>Artists</value>
+  </data>
+  <data name="MAINWINDOW_HOME" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
     <value>Import</value>
@@ -243,6 +273,12 @@ Missing File: {0}</value>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>Installing update...</value>
   </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY" xml:space="preserve">
+    <value>Processing library changes...
+{0} tracks remaining
+
+Newly added tracks might not appear in the artists or albums tabs until processing is complete</value>
+  </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
     <value>Scanning for new tracks...</value>
   </data>
@@ -292,10 +328,16 @@ Missing File: {0}</value>
     <value>Queue</value>
   </data>
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Remaining time: </value>
+    <value>Ends at {0}</value>
+  </data>
+  <data name="RESET" xml:space="preserve">
+    <value>Reset</value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="SETTINGS_ACCENTCOLOR" xml:space="preserve">
+    <value>Accent color</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
     <value>Appearance</value>
@@ -307,7 +349,7 @@ Missing File: {0}</value>
     <value>FMP will import new tracks from these folders:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
-    <value>Add Folder</value>
+    <value>Add folder</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
     <value>Auto update mode</value>
@@ -326,8 +368,17 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
     <value>Integration</value>
   </data>
+  <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
+    <value>Discord Rich Presence</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
+    <value>System Transport Controls</value>
+  </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
+    <value>Are you sure you want to log out of last.fm?</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
     <value>Maintenance</value>
@@ -382,6 +433,21 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
     <value>Prompt before updating</value>
+  </data>
+  <data name="SOUNDSETTINGS" xml:space="preserve">
+    <value>Sound settings</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ" xml:space="preserve">
+    <value>Equalizer</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_BASSBOOST" xml:space="preserve">
+    <value>Bass boost</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_TREBLEBOOST" xml:space="preserve">
+    <value>Treble boost</value>
+  </data>
+  <data name="SOUNDSETTINGS_HEADER" xml:space="preserve">
+    <value>Sound Settings</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
     <value>Tag editor</value>

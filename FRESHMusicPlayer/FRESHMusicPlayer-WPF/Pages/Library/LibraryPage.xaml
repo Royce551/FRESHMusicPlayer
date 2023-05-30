@@ -17,12 +17,16 @@
             <ColumnDefinition x:Name="LeftSide" Width="222"/>
             <ColumnDefinition x:Name="RightSide"/>
         </Grid.ColumnDefinitions>
+    
+        <TextBlock x:Name="LibraryEmptyTextBlock" Visibility="Collapsed" Grid.Column="1" Panel.ZIndex="2" Text="{x:Static resx:Resources.LIBRARY_EMPTY}" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,35,10,0"/>
+      
         <ListBox x:Name="TracksPanel" TabIndex="2" KeyboardNavigation.TabNavigation="Continue" Grid.Column="1" Background="{DynamicResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0,25,0,0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{DynamicResource BackgroundColor}" ScrollViewer.PanningMode="Both" SelectionChanged="TracksPanel_SelectionChanged" LostKeyboardFocus="TracksPanel_LostKeyboardFocus">
             <!--<ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>
                 </Style>
             </ListBox.ItemContainerStyle>-->
+            
         </ListBox>
 
         <GridSplitter

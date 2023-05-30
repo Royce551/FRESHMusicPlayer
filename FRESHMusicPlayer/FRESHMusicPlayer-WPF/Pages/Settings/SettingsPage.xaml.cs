@@ -39,7 +39,7 @@ namespace FRESHMusicPlayer.Pages
             General_TrackingCheck.IsChecked = App.Config.PlaybackTracking;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
-            General_AutoLibraryCheck.IsChecked = App.Config.AutoLibrary;
+            //General_AutoLibraryCheck.IsChecked = App.Config.AutoLibrary;
 
             Integration_LastFMCheck.IsChecked = App.Config.IntegrateLastFM;
             //Integration_LastFMSyncLikedCheck.IsChecked = App.Config.SyncLikedLastFMTracks;
@@ -141,8 +141,8 @@ namespace FRESHMusicPlayer.Pages
                 stringBuilder.AppendLine(path);
             General_AutoImportTextBlock.Text = stringBuilder.ToString();
 
-            General_AutoLibraryTextBlock.Text = $"Currently importing to {App.Config.AutoLibraryPath}";
-            UpdateAutoLibraryState(App.Config.AutoLibrary);
+            //General_AutoLibraryTextBlock.Text = $"Currently importing to {App.Config.AutoLibraryPath}";
+            //UpdateAutoLibraryState(App.Config.AutoLibrary);
 
             pageInitialized = true;
         }
@@ -163,19 +163,19 @@ namespace FRESHMusicPlayer.Pages
             }
         }
 
-        private void UpdateAutoLibraryState(bool state)
-        {
-            if (state)
-            {
-                General_AutoLibraryTextBlock.Opacity = 1;
-                General_AutoLibraryChooseButton.IsEnabled = true;
-            }
-            else
-            {
-                General_AutoLibraryTextBlock.Opacity = 0.5f;
-                General_AutoLibraryChooseButton.IsEnabled = false;
-            }
-        }
+        //private void UpdateAutoLibraryState(bool state)
+        //{
+        //    if (state)
+        //    {
+        //        General_AutoLibraryTextBlock.Opacity = 1;
+        //        General_AutoLibraryChooseButton.IsEnabled = true;
+        //    }
+        //    else
+        //    {
+        //        General_AutoLibraryTextBlock.Opacity = 0.5f;
+        //        General_AutoLibraryChooseButton.IsEnabled = false;
+        //    }
+        //}
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -196,14 +196,14 @@ namespace FRESHMusicPlayer.Pages
             }        
         }
 
-        private void General_AutoLibraryChanged(object sender, RoutedEventArgs e)
-        {
-            if (pageInitialized)
-            {
-                App.Config.AutoLibrary = (bool)General_AutoLibraryCheck.IsChecked;
-            }
-            UpdateAutoLibraryState(App.Config.AutoLibrary);
-        }
+        //private void General_AutoLibraryChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (pageInitialized)
+        //    {
+        //        App.Config.AutoLibrary = (bool)General_AutoLibraryCheck.IsChecked;
+        //    }
+        //    UpdateAutoLibraryState(App.Config.AutoLibrary);
+        //}
 
         private void Integration_SMTCChanged(object sender, RoutedEventArgs e)
         {
@@ -232,7 +232,7 @@ namespace FRESHMusicPlayer.Pages
                 }
                 else
                 {
-                    var result = MessageBox.Show("Are you sure you want to log out of last.fm", "FRESHMusicPlayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var result = MessageBox.Show(Properties.Resources.SETTINGS_LASTFMLOGOUT_WARNING, "FRESHMusicPlayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {
                         App.Config.IntegrateLastFM = false;
@@ -406,7 +406,7 @@ namespace FRESHMusicPlayer.Pages
             });
         }
 
-        private void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
+        private async void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
         {
             using (var dialog = new WinForms.FolderBrowserDialog())
             {
@@ -414,6 +414,7 @@ namespace FRESHMusicPlayer.Pages
                     App.Config.AutoImportPaths.Add(dialog.SelectedPath);
             }
             InitFields();
+            await window.PerformAutoImport();
         }
         private void General_ClearButton_Click(object sender, RoutedEventArgs e)
         {

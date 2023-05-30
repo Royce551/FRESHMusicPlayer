@@ -38,32 +38,16 @@ namespace FRESHMusicPlayer.Handlers
 
         public override async Task ImportAsync(List<string> tracks)
         {
-            var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
-            dispatcher.Invoke(() => notificationHandler.Add(notification));
-
             if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
 
             await base.ImportAsync(tracks);
-            dispatcher.Invoke(() =>
-            {
-                notificationHandler.Remove(notification);
-                if (RaiseLibraryChangedEvents) TracksAdded?.Invoke(null, tracks);
-            });
         }
 
         public override async Task ImportAsync(string[] tracks)
         {
-            var notification = new Notification { ContentText = $"Importing {tracks.Length} tracks" };
-            dispatcher.Invoke(() => notificationHandler.Add(notification));
-
             if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
 
             await base.ImportAsync(tracks);
-            dispatcher.Invoke(() =>
-            {
-                notificationHandler.Remove(notification);
-                if (RaiseLibraryChangedEvents) TracksAdded?.Invoke(null, tracks);
-            });
         }
 
         public override void Nuke(bool nukePlaylists = true)
@@ -82,12 +66,16 @@ namespace FRESHMusicPlayer.Handlers
 
         public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
-            var notification = new Notification { ContentText = "Processing library changes...\n\nNewly added tracks may not appear in the artists or albums tabs until processing is complete", Type = NotificationType.Information };
+            var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"), Type = NotificationType.Information };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
 
+            var startTime = DateTime.Now;
+            int? tracksToProcess = null;
             var updatedTracks = await base.ProcessDatabaseMetadataAsync(p =>
             {
-                notification.ContentText = $"Processing library changes...\n{p} tracks remaining\n\nNewly added tracks may not appear in the artists or albums tabs until processing is complete";
+                if (tracksToProcess is null) tracksToProcess = p;
+
+                notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, p);
                 dispatcher.Invoke(() => notificationHandler.Update(notification));
             });
 

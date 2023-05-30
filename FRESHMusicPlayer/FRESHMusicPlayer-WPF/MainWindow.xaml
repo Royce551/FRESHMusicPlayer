@@ -10,7 +10,7 @@
         <ContextMenu x:Key="MiscContext">
             <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
             <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Click="TrackContentPlaylistManagement_Click"/>
-            <MenuItem Header="Sound settings" Click="MenuItem_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.SOUNDSETTINGS}" Click="MenuItem_Click"/>
             <MenuItem Header="{x:Static resx:Resources.MENUBAR_OPEN}" Click="TrackContextOpenFile_Click"/>
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_GOTO}">
                 <MenuItem Header="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Click="TrackContextArtist_Click"/>
@@ -38,7 +38,7 @@
                     <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
                 </Button>
                 <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,0,0" Click="ImportTab_MouseDown">
-                    <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="Home" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                    <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_HOME}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
                 </Button>
 
                 <Button TabIndex="904" Style="{StaticResource LinkButton}" x:Name="SettingsButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="SettingsButton_Click" Cursor="Hand">

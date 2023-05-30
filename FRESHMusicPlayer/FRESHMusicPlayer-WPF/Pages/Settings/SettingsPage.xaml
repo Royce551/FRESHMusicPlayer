@@ -67,16 +67,16 @@
                 <Button x:Name="General_AddFolderButton" Content="{x:Static resx:Resources.SETTINGS_AUTOIMPORT_ADDFOLDER}" TextBlock.FontSize="16" Margin="0,5" Click="General_AddFolderButton_Click"/>
                 <Button x:Name="General_ClearButton" Content="{x:Static resx:Resources.NOTIFICATIONS_CLEAR_ALL}" TextBlock.FontSize="16" Click="General_ClearButton_Click"/>
 
-                <TextBlock Text="Auto Library" Style="{StaticResource Subheader}"/>
+                <!--<TextBlock Text="Auto Library" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="General_AutoLibraryCheck" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_AutoLibraryChanged" Unchecked="General_AutoLibraryChanged">
                     <TextBlock FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Text="Automatically organize imported tracks into a folder structure" TextWrapping="Wrap"/>
                 </CheckBox>
                 <TextBlock x:Name="General_AutoLibraryTextBlock" Text="Currently importing to something" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" TextWrapping="Wrap"/>
-                <Button x:Name="General_AutoLibraryChooseButton" TextBlock.FontSize="16" Content="Choose folder" Click="General_AutoLibraryChooseButton_Click"/>
+                <Button x:Name="General_AutoLibraryChooseButton" TextBlock.FontSize="16" Content="Choose folder" Click="General_AutoLibraryChooseButton_Click"/>-->
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_INTEGRATION}" Style="{StaticResource Subheader}"/>
-                <CheckBox x:Name="Integration_DiscordRPCCheck" Content="Discord Rich Presence" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
-                <CheckBox x:Name="Integration_SMTCCheck" Content="System Transport Controls" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
+                <CheckBox x:Name="Integration_DiscordRPCCheck" Content="{x:Static resx:Resources.SETTINGS_INTEGRATION_DISCORD}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_DiscordRPCChanged" Unchecked="General_DiscordRPCChanged"/>
+                <CheckBox x:Name="Integration_SMTCCheck" Content="{x:Static resx:Resources.SETTINGS_INTEGRATION_SMTC}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="Integration_SMTCChanged" Unchecked="Integration_SMTCChanged"/>
                 <CheckBox x:Name="Integration_LastFMCheck" Content="last.fm" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Checked="Integration_LastFMChanged" Unchecked="Integration_LastFMChanged"/>
                 <!--<CheckBox x:Name="Integration_LastFMSyncLikedCheck" Content="Sync liked tracks" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,5,0,5" Checked="Integration_LastFMSyncLikedChanged" Unchecked="Integration_LastFMSyncLikedChanged"/>
                 <CheckBox x:Name="Integration_LastFMSyncPlaylistsCheck" Content="Generate playlists from last.fm data" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,5" Checked="Integration_LastFMSyncPlaylistsChanged" Unchecked="Integration_LastFMSyncPlaylistsChanged"/>-->
@@ -112,16 +112,16 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Accent color" Foreground="{DynamicResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Column="0" Text="{x:Static resx:Resources.SETTINGS_ACCENTCOLOR}" Foreground="{DynamicResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="14"/>
                     <ComboBox x:Name="Appearance_AccentColorCombo" Grid.Column="1" Foreground="Black" BorderThickness="0" Margin="4" SelectionChanged="Appearance_AccentColorCombo_SelectionChanged">
                         <!--<ComboBoxItem Content="System accent color"/>-->
-                        <ComboBoxItem Content="Blue"/>
-                        <ComboBoxItem Content="Green"/>
-                        <ComboBoxItem Content="Red"/>
-                        <ComboBoxItem Content="Purple"/>
-                        <ComboBoxItem Content="Pink"/>
-                        <ComboBoxItem Content="Classic Blue"/>
-                        <ComboBoxItem Content="Match cover art"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.ACCENTCOLOR_BLUE}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.ACCENTCOLOR_GREEN}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.ACCENTCOLOR_RED}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.ACCENTCOLOR_PURPLE}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.ACCENTCOLOR_PINK}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.ACCENTCOLOR_CLASSICBLUE}"/>
+                        <ComboBoxItem Content="{x:Static resx:Resources.ACCENTCOLOR_MATCHCOVER}"/>
                     </ComboBox>
                 </Grid>
 
