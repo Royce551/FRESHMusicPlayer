@@ -12,6 +12,8 @@ using System.Windows.Media.Media3D;
 using WinForms = System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using System.Threading;
+using System.Globalization;
 
 namespace FRESHMusicPlayer
 {
@@ -41,7 +43,7 @@ namespace FRESHMusicPlayer
             LoggingHandler.Log("Handling configuration...");
             Config = ConfigurationHandler.Read();
             player = new Player { Volume = Config.Volume };
-            if (Config.Language != "automatic") System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Config.Language);
+            if (Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(Config.Language);
 
             ChangeSkin(Config.Theme);
             ChangeAccentColor(Config.AccentColor);
@@ -64,7 +66,6 @@ namespace FRESHMusicPlayer
 
             if (System.Threading.Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
                 currentWindow.FlowDirection = FlowDirection.RightToLeft;
-
             var persistenceFilePath = Path.Combine(DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
             var startTime = TimeSpan.FromSeconds(0);
             if (File.Exists(persistenceFilePath))

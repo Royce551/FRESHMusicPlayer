@@ -11,10 +11,12 @@ using FRESHMusicPlayer.Utilities.ColorQuantization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -302,6 +304,8 @@ namespace FRESHMusicPlayer
         {
             LoggingHandler.Log($"Showing pane --> {pane}");
 
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
+
             UserControl GetPageForPane(Pane panex)
             {
                 switch (panex)
@@ -365,6 +369,8 @@ namespace FRESHMusicPlayer
 
             RightFrame.Focus();
             CurrentPane = pane;
+
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
         }
         public async Task HideAuxilliaryPane(bool animate = true)
         {
@@ -432,6 +438,8 @@ namespace FRESHMusicPlayer
         {
             LoggingHandler.Log($"Changing tabs -> {tab}");
 
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
+
             var previousMenu = CurrentTab;
             CurrentTab = tab;
             TextBlock tabLabel;
@@ -476,6 +484,8 @@ namespace FRESHMusicPlayer
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
             ContentFrame.Focus();
+
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
         }
 
         public void NavigateBack()
