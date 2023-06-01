@@ -58,6 +58,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ACCENTCOLOR_BLUE" xml:space="preserve">
+    <value>כחול</value>
+  </data>
+  <data name="ACCENTCOLOR_CLASSICBLUE" xml:space="preserve">
+    <value>כחול קלאסי</value>
+  </data>
+  <data name="ACCENTCOLOR_GREEN" xml:space="preserve">
+    <value>ירוק</value>
+  </data>
+  <data name="ACCENTCOLOR_MATCHCOVER" xml:space="preserve">
+    <value>התאם לתמונת עטיפה</value>
+  </data>
+  <data name="ACCENTCOLOR_PINK" xml:space="preserve">
+    <value>ורוד</value>
+  </data>
+  <data name="ACCENTCOLOR_PURPLE" xml:space="preserve">
+    <value>סגול</value>
+  </data>
+  <data name="ACCENTCOLOR_RED" xml:space="preserve">
+    <value>אדום</value>
+  </data>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
     <value>אופסי! משהו השתבש. ננסה להמשיך. אם זה ממשיך לקרות, אנא דווח על כך פה: https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
@@ -94,6 +115,9 @@
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>הוסף לרשימת השמעה</value>
   </data>
+  <data name="LIBRARY_EMPTY" xml:space="preserve">
+    <value>הספרייה שלך ריקה. כדי להתחיל לשמוע מוזיקה, שחרר כמה קבצים לפה או הגדר תיקיית ייבוא אוטומטי בהגדרות.</value>
+  </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
     <value>הכנס כולם לתור</value>
   </data>
@@ -102,6 +126,9 @@
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
     <value>נגן הכל</value>
+  </data>
+  <data name="LOADING" xml:space="preserve">
+    <value>טוען...</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
     <value>מילים</value>
@@ -117,6 +144,9 @@
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
     <value>אמנים</value>
+  </data>
+  <data name="MAINWINDOW_HOME" xml:space="preserve">
+    <value>בית</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
     <value>יבא</value>
@@ -145,19 +175,19 @@
     <value>שירים</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
-    <value></value>
+    <value>_יציאה</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
-    <value></value>
+    <value>_קובץ</value>
   </data>
   <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
-    <value></value>
+    <value>_חלון חדש</value>
   </data>
   <data name="MENUBAR_OPEN" xml:space="preserve">
-    <value></value>
+    <value>_פתח</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>_שמור</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
     <value></value>
@@ -182,6 +212,9 @@
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>מתקין עדכון...</value>
+  </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY" xml:space="preserve">
+    <value></value>
   </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
     <value>סורק שירים חדשים...</value>
@@ -234,8 +267,14 @@
   <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
     <value>זמן נותר:</value>
   </data>
+  <data name="RESET" xml:space="preserve">
+    <value></value>
+  </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>אודות</value>
+  </data>
+  <data name="SETTINGS_ACCENTCOLOR" xml:space="preserve">
+    <value></value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
     <value>מראה</value>
@@ -267,8 +306,17 @@
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
     <value>שילוב</value>
   </data>
+  <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
+    <value></value>
+  </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
     <value>שפה</value>
+  </data>
+  <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
+    <value></value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
     <value>תחזוקה</value>
@@ -292,7 +340,7 @@
     <value>הפעל מחדש כעת</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value>ערוך את ההתנהגות של FMP</value>
+    <value>ערוך את ההגדרות של FMP</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
     <value>ערכת נושא</value>
@@ -323,6 +371,21 @@
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
     <value>הצג בקשה לאישור לפני עדכון</value>
+  </data>
+  <data name="SOUNDSETTINGS" xml:space="preserve">
+    <value>הגדרות צליל</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ" xml:space="preserve">
+    <value>אקולייזר</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_BASSBOOST" xml:space="preserve">
+    <value>הגברת בס</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_TREBLEBOOST" xml:space="preserve">
+    <value>הגברת טרבל</value>
+  </data>
+  <data name="SOUNDSETTINGS_HEADER" xml:space="preserve">
+    <value>הגדרות צליל</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
     <value>עורך תגים</value>
