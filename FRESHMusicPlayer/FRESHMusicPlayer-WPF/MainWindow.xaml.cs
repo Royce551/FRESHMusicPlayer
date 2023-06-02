@@ -7,7 +7,9 @@ using LiteDB;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using WinForms = System.Windows.Forms;
@@ -66,6 +68,8 @@ namespace FRESHMusicPlayer
         {
             LoggingHandler.Log("Reading library...");
 
+            HandleRightToLeftLayoutIfNeeded();
+
             var shouldLibraryBeUpgraded = File.Exists(Path.Combine(App.DataFolderLocation, "database.fdb2")) && !File.Exists(Path.Combine(App.DataFolderLocation, "database.fdb3"));
 
             LiteDatabase library;
@@ -113,6 +117,30 @@ namespace FRESHMusicPlayer
             if (shouldLibraryBeUpgraded) MigrateLibrary();
 
             await Library.ProcessDatabaseMetadataAsync();
+        }
+
+        private void HandleRightToLeftLayoutIfNeeded()
+        {
+            if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
+            {
+                VolumeBar.FlowDirection = FlowDirection.RightToLeft;
+                TitleLabel.FlowDirection = FlowDirection.RightToLeft;
+                ArtistLabel.FlowDirection = FlowDirection.RightToLeft;
+                CoverArtBoxContainer.FlowDirection = FlowDirection.RightToLeft;
+                ArtistLabel.FlowDirection = FlowDirection.RightToLeft;
+                VolumeAreaContainer.FlowDirection = FlowDirection.RightToLeft;
+
+                RightContentContainer.SetValue(Grid.ColumnProperty, 0);
+                CoverArtBoxContainer.SetValue(Grid.ColumnProperty, 2);
+                CenterColumnContents.SetValue(Grid.ColumnProperty, 1);
+
+                LeftArea.Width = new GridLength(223);
+                CenterArea.Width = new GridLength(1, GridUnitType.Star);
+                RightArea.Width = GridLength.Auto;
+
+                CenterColumnContents.Margin = new Thickness(10, 0, 10, 0);
+                CoverArtBoxContainer.Margin = new Thickness(0, 10, 10, 0);
+            }
         }
 
         private async void MigrateLibrary()

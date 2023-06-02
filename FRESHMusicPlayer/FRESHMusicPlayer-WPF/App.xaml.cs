@@ -64,7 +64,7 @@ namespace FRESHMusicPlayer
 
             currentWindow = new MainWindow(player);
 
-            if (System.Threading.Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
+            if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
                 currentWindow.FlowDirection = FlowDirection.RightToLeft;
             var persistenceFilePath = Path.Combine(DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
             var startTime = TimeSpan.FromSeconds(0);

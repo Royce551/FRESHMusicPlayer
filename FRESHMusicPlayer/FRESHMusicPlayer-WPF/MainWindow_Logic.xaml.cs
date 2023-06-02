@@ -296,14 +296,14 @@ namespace FRESHMusicPlayer
 
         public void SetCoverArtVisibility(bool mode)
         {
-            if (!mode) 
-                CoverArtArea.Width = new GridLength(5);
-            else CoverArtArea.Width = new GridLength(75);
+            if (!mode)
+                CoverArtBoxContainer.Visibility = Visibility.Collapsed;
+            else CoverArtBoxContainer.Visibility = Visibility.Visible;
         }
         public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false, string args = null)
         {
             LoggingHandler.Log($"Showing pane --> {pane}");
-
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
             if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
 
             UserControl GetPageForPane(Pane panex)
@@ -369,7 +369,7 @@ namespace FRESHMusicPlayer
 
             RightFrame.Focus();
             CurrentPane = pane;
-
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
             if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
         }
         public async Task HideAuxilliaryPane(bool animate = true)
@@ -437,7 +437,7 @@ namespace FRESHMusicPlayer
         public void ChangeTabs(Tab tab, string search = null, bool isNavigating = false)
         {
             LoggingHandler.Log($"Changing tabs -> {tab}");
-
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
             if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
 
             var previousMenu = CurrentTab;
@@ -484,7 +484,7 @@ namespace FRESHMusicPlayer
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
             tabLabel.FontWeight = FontWeights.Bold;
             ContentFrame.Focus();
-
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
             if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
         }
 

@@ -76,6 +76,9 @@ namespace FRESHMusicPlayer.Pages
                 case "ar":
                     General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Arabic;
                     break;
+                case "he":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Hebrew;
+                    break;
             }
             switch (App.Config.Theme)
             {
@@ -290,6 +293,9 @@ namespace FRESHMusicPlayer.Pages
                     case (int)LanguageCombo.Arabic:
                         App.Config.Language = "ar";
                         break;
+                    case (int)LanguageCombo.Hebrew:
+                        App.Config.Language = "he";
+                        break;
                 }
                 SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
             }
@@ -442,7 +448,8 @@ namespace FRESHMusicPlayer.Pages
         Turkish,
         Dutch,
         Danish,
-        Arabic
+        Arabic,
+        Hebrew
     }
     public enum UpdateCombo
     {
