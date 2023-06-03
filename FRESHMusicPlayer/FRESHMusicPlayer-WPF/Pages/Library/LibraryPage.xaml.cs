@@ -267,7 +267,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     foreach (var disc in discs)
                     {
                         var tracksInDisc = tracks.Where(x => x.DiscNumber == disc);
-                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, $"Disc {disc}", tracksInDisc.Select(x => x.Path).ToList())));
+                        window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, string.Format(Properties.Resources.LIBRARY_DISCHEADER, disc), tracksInDisc.Select(x => x.Path).ToList())));
                         foreach (var thing in tracksInDisc)
                         {
                             window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new SongEntry(thing.Path, thing.Artists, thing.Album, thing.Title, window, window.NotificationHandler, window.Library)));

@@ -32,15 +32,15 @@
             </Grid.ColumnDefinitions>
             <Grid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="PlayNextContext" Header="Play next" Click="PlayNextContext_Click"/>
+                    <MenuItem x:Name="PlayNextContext" Header="{x:Static resx:Resources.LIBRARY_PLAYNEXT}" Click="PlayNextContext_Click"/>
                     <Separator/>
                     <MenuItem x:Name="MiscContext" Header="{x:Static resx:Resources.LIBRARY_ADD_TO_PLAYLIST}" Click="ContextMenu_Click" SubmenuOpened="MainPanel_ContextMenuOpening">
                         <MenuItem/>
                         <!--will be replaced with generated context menu by code behind-->
                     </MenuItem>
-                    <MenuItem Header="Go to">
-                        <MenuItem x:Name="GoToArtistContext" Header="Artist" Click="GoToArtistContext_Click"/>
-                        <MenuItem x:Name="GoToAlbumContext" Header="Album" Click="GoToAlbumContext_Click"/>
+                    <MenuItem Header="{x:Static resx:Resources.CONTROLS_GOTO}">
+                        <MenuItem x:Name="GoToArtistContext" Header="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Click="GoToArtistContext_Click"/>
+                        <MenuItem x:Name="GoToAlbumContext" Header="{x:Static resx:Resources.TRACKINFO_ALBUM}" Click="GoToAlbumContext_Click"/>
                     </MenuItem>
                     <MenuItem Header="{x:Static resx:Resources.LIBRARY_OPEN_FILEEXPLORER}" Click="OpenInFileExplorer_Click"/>
                 </ContextMenu>

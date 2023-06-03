@@ -24,7 +24,7 @@
 
         <DockPanel Grid.ColumnSpan="3" LastChildFill="False" Margin="5" Height="25">
             <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" TextWrapping="Wrap" Text="{x:Static resx:Resources.QUEUEMANAGEMENT_QUEUEHEADER}" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold" FontSize="18"/>
-            <TextBlock x:Name="RemainingTimeLabel" VerticalAlignment="Center" Text="{x:Static resx:Resources.QUEUEMANAGEMENT_REMAININGTIME}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="12" DockPanel.Dock="Right" Grid.ColumnSpan="3"/>
+            <TextBlock x:Name="RemainingTimeLabel" VerticalAlignment="Center" Text="{x:Static resx:Resources.QUEUEMANAGEMENT_ENDSAT}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="12" DockPanel.Dock="Right" Grid.ColumnSpan="3"/>
             <!--<Button x:Name="NextQueueButton" DockPanel.Dock="Right" Content=">" Click="NextQueueButton_Click"/>
             <TextBlock x:Name="CurrentQueueIndicator" DockPanel.Dock="Right" Text="0/10" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Margin="10,0"/>
             <Button x:Name="PreviousQueueButton" DockPanel.Dock="Right" Content="&lt;" Click="PreviousQueueButton_Click"/>-->

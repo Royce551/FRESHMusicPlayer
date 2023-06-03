@@ -38,7 +38,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             if (File.Exists(sessionKeyPath)) sessionKey = File.ReadAllText(sessionKeyPath);
             else
             {
-                var userDialog = new Forms.FMPTextEntryBox("LastFM username or email");
+                var userDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_USERNAME);
                 userDialog.ShowDialog();
 
                 string username;
@@ -48,7 +48,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 }
                 else return;
 
-                var passwordDialog = new Forms.FMPTextEntryBox("LastFM password", isPassword: true);
+                var passwordDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_PASSWORD, isPassword: true);
                 passwordDialog.ShowDialog();
                 string password;
                 if (passwordDialog.OK)
@@ -66,7 +66,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 sessionKey = json?.SelectToken("session.key").ToString();
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "lastfmsession.txt"), sessionKey);
 
-                window.NotificationHandler.Add(new Notifications.Notification { ContentText = $"Successfully logged in to LastFM as {json?.SelectToken("session.name")}!", Type = Notifications.NotificationType.Success});
+                window.NotificationHandler.Add(new Notifications.Notification { ContentText = string.Format(Properties.Resources.LASTFM_LOGIN_SUCCESSFUL, json?.SelectToken("session.name")), Type = Notifications.NotificationType.Success});
             }
         }
 
@@ -111,7 +111,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     var scrobbleSignature = $"album{lastTrackListenedTo.Album}api_key{apiKey}artist{lastTrackListenedTo.Artists[0]}methodtrack.scrobblesk{sessionKey}timestamp{timeStamp}track{lastTrackListenedTo.Title}{secret}";
                     var scrobbleResponse = await httpClient.PostAsync($"{scrobbleRequest}&api_sig={EncodeSignature(scrobbleSignature)}&format=json", null);
                     if (!scrobbleResponse.IsSuccessStatusCode)
-                        window.NotificationHandler.Add(new Notifications.Notification { ContentText = "An error occured trying to scrobble your last track", Type = Notifications.NotificationType.Failure });
+                        window.NotificationHandler.Add(new Notifications.Notification { ContentText = string.Format(Properties.Resources.LASTFM_SCROBBLE_FAILED, $"{string.Join(", ", track.Artists)} - {track.Title}"), Type = Notifications.NotificationType.Failure });
                     break;
             }
         }

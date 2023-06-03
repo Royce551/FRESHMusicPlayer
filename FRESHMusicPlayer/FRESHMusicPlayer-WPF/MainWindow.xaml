@@ -38,7 +38,7 @@
                     <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
                 </Button>
                 <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,0,0" Click="ImportTab_MouseDown">
-                    <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_HOME}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                    <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
                 </Button>
 
                 <Button TabIndex="904" Style="{StaticResource LinkButton}" x:Name="SettingsButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="SettingsButton_Click" Cursor="Hand">
@@ -74,7 +74,7 @@
                         <ColumnDefinition x:Name="CenterArea"/>
                         <ColumnDefinition x:Name="RightArea" Width="223"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="CoverArtBoxContainer" TabIndex="1005" Grid.Column="0" Style="{StaticResource LinkButton}" Margin="10,10,0,0" Height="64" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}" >
+                    <Button x:Name="CoverArtBoxContainer" TabIndex="1005" Grid.Column="0" Style="{StaticResource LinkButton}" Margin="10,10,0,0" Height="64" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}" Visibility="Collapsed">
                         <Image x:Name="CoverArtBox" RenderOptions.BitmapScalingMode="HighQuality" ToolTipOpening="CoverArtBox_ToolTipOpening" ToolTipClosing="CoverArtBox_ToolTipClosing" ToolTipService.ShowDuration="12000">
                             <Image.ToolTip>
                                 <ToolTip>

@@ -52,7 +52,7 @@ namespace FRESHMusicPlayer.Pages
                 if (i != (queueAsQueueEntries.Count - 1)) remainingTime += TimeSpan.FromSeconds(track.Length);
             }
             remainingTime += (window.Player.TotalTime - window.Player.CurrentTime);
-            RemainingTimeLabel.Text = string.Format(Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME, (DateTime.Now + remainingTime).ToString("t"));
+            RemainingTimeLabel.Text = string.Format(Properties.Resources.QUEUEMANAGEMENT_ENDSAT, (DateTime.Now + remainingTime).ToString("t"));
         }
 
         public void PopulateList()

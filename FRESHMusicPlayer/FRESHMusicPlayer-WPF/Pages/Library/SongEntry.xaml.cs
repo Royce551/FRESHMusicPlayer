@@ -91,7 +91,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 notificationHandler.Add(new Handlers.Notifications.Notification
                 {
                     ContentText = string.Format(Properties.Resources.NOTIFICATION_FILEGONE, FilePath),
-                    ButtonText = "Locate file",
+                    ButtonText = Properties.Resources.NOTIFICATION_FILEGONE_LOCATEFILE,
                     OnButtonClicked = () =>
                     {
                         var dialog = new OpenFileDialog();

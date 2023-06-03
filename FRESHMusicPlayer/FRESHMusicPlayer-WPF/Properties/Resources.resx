@@ -171,8 +171,23 @@
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>File path or URL</value>
   </data>
+  <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
+    <value>Successfully logged in to last.fm as {0}!</value>
+  </data>
+  <data name="LASTFM_PASSWORD" xml:space="preserve">
+    <value>last.fm password</value>
+  </data>
+  <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
+    <value>An error occured trying to scrobble {0}</value>
+  </data>
+  <data name="LASTFM_USERNAME" xml:space="preserve">
+    <value>last.fm username or email</value>
+  </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>Add to playlist</value>
+  </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value>Disc {0}</value>
   </data>
   <data name="LIBRARY_EMPTY" xml:space="preserve">
     <value>Your library is empty. To get started, drag and drop some files, or set an Auto Import folder or two in the settings.</value>
@@ -185,6 +200,9 @@
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
     <value>Play all</value>
+  </data>
+  <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
+    <value>Play next</value>
   </data>
   <data name="LOADING" xml:space="preserve">
     <value>Loading...</value>
@@ -270,6 +288,9 @@ Missing File: {0}</value>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
     <value>The file you tried to play has gone missing. Let us know where it went, or remove it from your library.</value>
   </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
+    <value>Locate file</value>
+  </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>Installing update...</value>
   </data>
@@ -324,11 +345,11 @@ Newly added tracks might not appear in the artists or albums tabs until processi
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
     <value>Clear queue</value>
   </data>
+  <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
+    <value>Ends at {0}</value>
+  </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
     <value>Queue</value>
-  </data>
-  <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Ends at {0}</value>
   </data>
   <data name="RESET" xml:space="preserve">
     <value>Reset</value>

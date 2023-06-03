@@ -223,11 +223,56 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Successfully logged in to last.fm as {0}!.
+        /// </summary>
+        public static string LASTFM_LOGIN_SUCCESSFUL {
+            get {
+                return ResourceManager.GetString("LASTFM_LOGIN_SUCCESSFUL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to last.fm password.
+        /// </summary>
+        public static string LASTFM_PASSWORD {
+            get {
+                return ResourceManager.GetString("LASTFM_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured trying to scrobble {0}.
+        /// </summary>
+        public static string LASTFM_SCROBBLE_FAILED {
+            get {
+                return ResourceManager.GetString("LASTFM_SCROBBLE_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to last.fm username or email.
+        /// </summary>
+        public static string LASTFM_USERNAME {
+            get {
+                return ResourceManager.GetString("LASTFM_USERNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to playlist.
         /// </summary>
         public static string LIBRARY_ADD_TO_PLAYLIST {
             get {
                 return ResourceManager.GetString("LIBRARY_ADD_TO_PLAYLIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc {0}.
+        /// </summary>
+        public static string LIBRARY_DISCHEADER {
+            get {
+                return ResourceManager.GetString("LIBRARY_DISCHEADER", resourceCulture);
             }
         }
         
@@ -264,6 +309,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string LIBRARY_PLAYALL {
             get {
                 return ResourceManager.GetString("LIBRARY_PLAYALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play next.
+        /// </summary>
+        public static string LIBRARY_PLAYNEXT {
+            get {
+                return ResourceManager.GetString("LIBRARY_PLAYNEXT", resourceCulture);
             }
         }
         
@@ -496,6 +550,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Locate file.
+        /// </summary>
+        public static string NOTIFICATION_FILEGONE_LOCATEFILE {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_FILEGONE_LOCATEFILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing update....
         /// </summary>
         public static string NOTIFICATION_INSTALLINGUPDATE {
@@ -670,20 +733,20 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ends at {0}.
+        /// </summary>
+        public static string QUEUEMANAGEMENT_ENDSAT {
+            get {
+                return ResourceManager.GetString("QUEUEMANAGEMENT_ENDSAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Queue.
         /// </summary>
         public static string QUEUEMANAGEMENT_QUEUEHEADER {
             get {
                 return ResourceManager.GetString("QUEUEMANAGEMENT_QUEUEHEADER", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ends at {0}.
-        /// </summary>
-        public static string QUEUEMANAGEMENT_REMAININGTIME {
-            get {
-                return ResourceManager.GetString("QUEUEMANAGEMENT_REMAININGTIME", resourceCulture);
             }
         }
         
