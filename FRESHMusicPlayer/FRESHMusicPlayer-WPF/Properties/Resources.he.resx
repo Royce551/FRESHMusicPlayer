@@ -112,8 +112,23 @@
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>כתובת קובץ או אתר</value>
   </data>
+  <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LASTFM_PASSWORD" xml:space="preserve">
+    <value>סיסמת last.fm</value>
+  </data>
+  <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
+    <value>אירעה שגיאה בניסיון לסקרבל את {0}</value>
+  </data>
+  <data name="LASTFM_USERNAME" xml:space="preserve">
+    <value>שם משתמש/דוא"ל last.fm</value>
+  </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>הוסף לרשימת השמעה</value>
+  </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value>תקליטור {0}</value>
   </data>
   <data name="LIBRARY_EMPTY" xml:space="preserve">
     <value>הספרייה שלך ריקה. כדי להתחיל לשמוע מוזיקה, שחרר כמה קבצים לפה או הגדר תיקיית ייבוא אוטומטי בהגדרות.</value>
@@ -126,6 +141,9 @@
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
     <value>נגן הכל</value>
+  </data>
+  <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
+    <value>נגן הבא</value>
   </data>
   <data name="LOADING" xml:space="preserve">
     <value>טוען...</value>
@@ -210,6 +228,9 @@
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
     <value></value>
   </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
+    <value>איתור קובץ</value>
+  </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>מתקין עדכון...</value>
   </data>
@@ -220,7 +241,7 @@
     <value>סורק שירים חדשים...</value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
-    <value></value>
+    <value>אירעה שגיאה בעת עדכון: {0}</value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
     <value></value>
@@ -261,20 +282,20 @@
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
     <value>נקה תור</value>
   </data>
+  <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
+    <value></value>
+  </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
     <value>תור</value>
   </data>
-  <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>זמן נותר:</value>
-  </data>
   <data name="RESET" xml:space="preserve">
-    <value></value>
+    <value>איפוס</value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>אודות</value>
   </data>
   <data name="SETTINGS_ACCENTCOLOR" xml:space="preserve">
-    <value></value>
+    <value>צבע הדגשה</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
     <value>מראה</value>
