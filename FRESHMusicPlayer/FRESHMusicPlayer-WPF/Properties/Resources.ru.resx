@@ -269,7 +269,7 @@
     <value></value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
-    <value></value>
+    <value>Переименовать</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
     <value></value>
@@ -278,16 +278,16 @@
     <value>Добавить трэк</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value></value>
+    <value>Очистить очередь</value>
   </data>
   <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
-    <value></value>
+    <value>Заканчивается в {0}</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value></value>
+    <value>Очередь</value>
   </data>
   <data name="RESET" xml:space="preserve">
-    <value></value>
+    <value>Перезагрузить</value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>О</value>
@@ -317,25 +317,25 @@
     <value></value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
-    <value>Главный</value>
+    <value>Главная</value>
   </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
-    <value></value>
+    <value>Интеграция</value>
   </data>
   <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
-    <value></value>
+    <value>Discord Rich Presence</value>
   </data>
   <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
-    <value></value>
+    <value>System Transport Controls</value>
   </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
-    <value></value>
+    <value>Язык</value>
   </data>
   <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
     <value></value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
-    <value></value>
+    <value>Обслуживание</value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
     <value></value>
@@ -353,37 +353,37 @@
     <value></value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
-    <value></value>
+    <value>Перезагрузить сейчас</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value></value>
+    <value>Изменить поведение FMP</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value></value>
+    <value>Тема</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value></value>
+    <value>Тёмный</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value></value>
+    <value>Светлый</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
     <value></value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value></value>
+    <value>Обновления</value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value></value>
+    <value>Проверить наличие обновлений сейчас</value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
-    <value></value>
+    <value>Последняя проверка в {0}</value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value></value>
+    <value>Автоматические</value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
-    <value></value>
+    <value>Ручные</value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
     <value></value>
@@ -422,7 +422,7 @@
     <value></value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value></value>
+    <value>Обложка</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
     <value></value>
@@ -434,7 +434,7 @@
     <value></value>
   </data>
   <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
-    <value></value>
+    <value>Нет обложки</value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
     <value></value>
@@ -443,45 +443,45 @@
     <value></value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>Сохранить</value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value></value>
+    <value>Сохранить изменения в {0}?</value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Название</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value></value>
+    <value>Номер трэка</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>Альбом</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value></value>
+    <value>Информация о альбоме</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value></value>
+    <value>Битрейт</value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Диск</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value></value>
+    <value>Жанр</value>
   </data>
   <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
-    <value></value>
+    <value>Недоступно</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value></value>
+    <value>Техническая информация</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value></value>
+    <value>Информация о трэке</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Трэк</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value></value>
+    <value>Год</value>
   </data>
 </root>
