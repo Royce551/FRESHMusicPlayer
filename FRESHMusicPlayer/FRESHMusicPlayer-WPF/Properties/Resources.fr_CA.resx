@@ -83,7 +83,7 @@
     <value></value>
   </data>
   <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
-    <value></value>
+    <value>Ouvrir le registre de déboguer</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
     <value>Aller à</value>
@@ -92,7 +92,7 @@
     <value></value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
-    <value></value>
+    <value>Pauser après le chanson jouant</value>
   </data>
   <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
     <value></value>
@@ -104,7 +104,7 @@
     <value></value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Chercher pour des chansons</value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
     <value></value>
@@ -113,16 +113,16 @@
     <value></value>
   </data>
   <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
-    <value></value>
+    <value>Vous êtes connecté à last.fm comme {0}!</value>
   </data>
   <data name="LASTFM_PASSWORD" xml:space="preserve">
-    <value></value>
+    <value>mot de passe de last.fm</value>
   </data>
   <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
     <value></value>
   </data>
   <data name="LASTFM_USERNAME" xml:space="preserve">
-    <value></value>
+    <value>nom d'utilisateur ou adresse de courriel pour last.fm </value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value></value>
@@ -137,19 +137,19 @@
     <value></value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
-    <value></value>
+    <value>Ouvrir en File Explorer</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value></value>
+    <value>Jouer Toute</value>
   </data>
   <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
-    <value></value>
+    <value>Jouer la prochaine</value>
   </data>
   <data name="LOADING" xml:space="preserve">
     <value></value>
   </data>
   <data name="LYRICS" xml:space="preserve">
-    <value></value>
+    <value>Paroles</value>
   </data>
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
     <value></value>
@@ -158,10 +158,10 @@
     <value></value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value></value>
+    <value>Albums</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value></value>
+    <value>Artistes</value>
   </data>
   <data name="MAINWINDOW_HOME" xml:space="preserve">
     <value></value>
@@ -170,10 +170,10 @@
     <value></value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value></value>
+    <value>Artiste inconnu</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value></value>
+    <value>Rien est en train de jouer</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
     <value></value>
@@ -182,40 +182,40 @@
     <value></value>
   </data>
   <data name="MAINWINDOW_SEARCH" xml:space="preserve">
-    <value></value>
+    <value>Chercher</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value></value>
+    <value>Paramètres</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value></value>
+    <value>Chansons</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
-    <value></value>
+    <value>_Quitter</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
-    <value></value>
+    <value>_Fichier</value>
   </data>
   <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
     <value></value>
   </data>
   <data name="MENUBAR_OPEN" xml:space="preserve">
-    <value></value>
+    <value>_Ouvrir</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
-    <value></value>
+    <value>_Sauveguarder</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
     <value></value>
   </data>
   <data name="MINIPLAYER_BACK" xml:space="preserve">
-    <value></value>
+    <value>Retourner</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value></value>
+    <value>Effacer tout</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Notifications</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
     <value></value>
@@ -227,7 +227,7 @@
     <value></value>
   </data>
   <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
-    <value></value>
+    <value>Trouver le fichier</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value></value>
@@ -245,7 +245,7 @@
     <value></value>
   </data>
   <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
-    <value></value>
+    <value>Vous êtes maintenant sur FRESHMusicPlayer {0}!</value>
   </data>
   <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
     <value></value>
@@ -257,7 +257,7 @@
     <value>Créér</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
-    <value></value>
+    <value>Supprimer</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
     <value></value>
@@ -275,7 +275,7 @@
     <value></value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value></value>
+    <value>Ajouter un chanson</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
     <value></value>
@@ -302,7 +302,7 @@
     <value></value>
   </data>
   <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>FRESHMusicPlayer va importer des nouvelles chansons de les dossiers suivent:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
     <value></value>
@@ -334,7 +334,7 @@ Merci pour utiliser FRESHMusicPlayer!!! 💕</value>
     <value>Langue</value>
   </data>
   <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
-    <value></value>
+    <value>Êtes-vous certain que vous voulez déconnecter de last.fm?</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
     <value></value>
@@ -361,28 +361,28 @@ Merci pour utiliser FRESHMusicPlayer!!! 💕</value>
     <value></value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value></value>
+    <value>Thème</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value></value>
+    <value>Noir</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value></value>
+    <value>Pâle</value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
     <value></value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value></value>
+    <value>Mise à jours</value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value></value>
+    <value>Chercher pour des nouvelles mise à jours</value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
     <value></value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value></value>
+    <value>Automatique</value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
     <value></value>
@@ -409,7 +409,7 @@ Merci pour utiliser FRESHMusicPlayer!!! 💕</value>
     <value></value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value></value>
+    <value>Artiste d'album</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
     <value>Artiste</value>
@@ -421,25 +421,25 @@ Merci pour utiliser FRESHMusicPlayer!!! 💕</value>
     <value></value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value></value>
+    <value>Compositeur</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
     <value></value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value></value>
+    <value>Numéro de disque</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
     <value></value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
-    <value></value>
+    <value>Il y a plusieurs résultats pour cet album. Lequel voulez-vous?</value>
   </data>
   <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
     <value></value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value></value>
+    <value>Vous n'êtes pas connecté à l'internet </value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
     <value></value>
@@ -454,19 +454,19 @@ Merci pour utiliser FRESHMusicPlayer!!! 💕</value>
     <value>Titre</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value></value>
+    <value>Numéro de chanson</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>Album</value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value></value>
+    <value>Info d'album</value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
     <value></value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Disque</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
     <value>Genre</value>
@@ -478,10 +478,10 @@ Merci pour utiliser FRESHMusicPlayer!!! 💕</value>
     <value></value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value></value>
+    <value>Info du chanson</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value></value>
+    <value>Chanson</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
     <value></value>
