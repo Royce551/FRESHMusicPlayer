@@ -59,438 +59,429 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ACCENTCOLOR_BLUE" xml:space="preserve">
-    <value>כחול</value>
+    <value>Синий</value>
   </data>
   <data name="ACCENTCOLOR_CLASSICBLUE" xml:space="preserve">
-    <value>כחול קלאסי</value>
+    <value>Классический Синий</value>
   </data>
   <data name="ACCENTCOLOR_GREEN" xml:space="preserve">
-    <value>ירוק</value>
+    <value>Зелёный</value>
   </data>
   <data name="ACCENTCOLOR_MATCHCOVER" xml:space="preserve">
-    <value>התאם לתמונת עטיפה</value>
+    <value>Подобрать к обложке</value>
   </data>
   <data name="ACCENTCOLOR_PINK" xml:space="preserve">
-    <value>ורוד</value>
+    <value>Розовый</value>
   </data>
   <data name="ACCENTCOLOR_PURPLE" xml:space="preserve">
-    <value>סגול</value>
+    <value>Фиолетовый</value>
   </data>
   <data name="ACCENTCOLOR_RED" xml:space="preserve">
-    <value>אדום</value>
+    <value>Красный</value>
   </data>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>אופסי! משהו השתבש. ננסה להמשיך. אם זה ממשיך לקרות, אנא דווח על כך פה: https://github.com/royce551/freshmusicplayer/issues.</value>
+    <value>Упс! Что-то пошло не так. Мы попробуем продолжить работу. Если это повторяется, сообщите об этом в https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
-    <value>פתח יומן לאיתור באגים</value>
+    <value>Открыть журнал отладки</value>
   </data>
   <data name="CONTROLS_GOTO" xml:space="preserve">
-    <value>עבור אל</value>
+    <value>Идти к</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value>מיני נגן</value>
+    <value>Мини-проигрыватель</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
-    <value>השהה לאחר השיר הנוכחי</value>
+    <value>Приостановить после текущего трека</value>
   </data>
   <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
-    <value>מצב מיקוד</value>
+    <value>Режим фокуса</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
-    <value>אתר תיקיות</value>
+    <value></value>
   </data>
   <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
-    <value>אתר קבצי רשימת השמעה</value>
+    <value></value>
   </data>
   <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
-    <value>אתר שירים</value>
+    <value></value>
   </data>
   <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
-    <value>ניתן גם לגרור ולשחרר שירים לדף הזה.</value>
+    <value></value>
   </data>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
-    <value>כתובת קובץ או אתר</value>
+    <value></value>
   </data>
   <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
-    <value>נכנס ל-last.fm בתור {0} בהצלחה!</value>
+    <value></value>
   </data>
   <data name="LASTFM_PASSWORD" xml:space="preserve">
-    <value>סיסמת last.fm</value>
+    <value></value>
   </data>
   <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
-    <value>אירעה שגיאה בניסיון לסקרבל את {0}</value>
+    <value></value>
   </data>
   <data name="LASTFM_USERNAME" xml:space="preserve">
-    <value>שם משתמש/דוא"ל last.fm</value>
+    <value></value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
-    <value>הוסף לרשימת השמעה</value>
+    <value></value>
   </data>
   <data name="LIBRARY_DISCHEADER" xml:space="preserve">
-    <value>תקליטור {0}</value>
+    <value>Диск {0}</value>
   </data>
   <data name="LIBRARY_EMPTY" xml:space="preserve">
-    <value>הספרייה שלך ריקה. כדי להתחיל לשמוע מוזיקה, שחרר כמה קבצים לפה או הגדר תיקיית ייבוא אוטומטי בהגדרות.</value>
+    <value></value>
   </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value>הכנס כולם לתור</value>
+    <value></value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
-    <value>פתח בסייר קבצים</value>
+    <value></value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value>נגן הכל</value>
+    <value>Воспроизвести всё</value>
   </data>
   <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
-    <value>נגן הבא</value>
+    <value>Воспроизвести следующее</value>
   </data>
   <data name="LOADING" xml:space="preserve">
-    <value>טוען...</value>
+    <value>Загрузка...</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
-    <value>מילים</value>
+    <value>Текст песни</value>
   </data>
   <data name="LYRICS_NOLYRICS" xml:space="preserve">
-    <value>אין מילים זמינות</value>
+    <value>Нет доступных текстов</value>
   </data>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
-    <value>מילים ללא זמן</value>
+    <value>Вневременный текст песни</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
-    <value>אלבומים</value>
+    <value>Альбомы</value>
   </data>
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
-    <value>אמנים</value>
+    <value>Артисты</value>
   </data>
   <data name="MAINWINDOW_HOME" xml:space="preserve">
-    <value>בית</value>
+    <value>Главная</value>
   </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
-    <value>יבא</value>
+    <value>Импорт</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>אמן לא ידוע</value>
+    <value></value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value>שום דבר לא מנגן</value>
+    <value></value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value>אירעה שגיאה:
-{0}
-נדלג לשיר הבא בשבילך</value>
+    <value></value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
-    <value>רשימות השמעה</value>
+    <value></value>
   </data>
   <data name="MAINWINDOW_SEARCH" xml:space="preserve">
-    <value>חפש</value>
+    <value>Искать</value>
   </data>
   <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
-    <value>הגדרות</value>
+    <value>Настройки</value>
   </data>
   <data name="MAINWINDOW_TRACKS" xml:space="preserve">
-    <value>שירים</value>
+    <value>Трэки</value>
   </data>
   <data name="MENUBAR_EXIT" xml:space="preserve">
-    <value>_יציאה</value>
+    <value>_Выйти</value>
   </data>
   <data name="MENUBAR_FILE" xml:space="preserve">
-    <value>_קובץ</value>
+    <value>_Файл</value>
   </data>
   <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
-    <value>_חלון חדש</value>
+    <value></value>
   </data>
   <data name="MENUBAR_OPEN" xml:space="preserve">
-    <value>_פתח</value>
+    <value>_Открыть</value>
   </data>
   <data name="MENUBAR_SAVE" xml:space="preserve">
-    <value>_שמור</value>
+    <value>_Сохранить</value>
   </data>
   <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
-    <value>_מקור טאגים</value>
+    <value></value>
   </data>
   <data name="MINIPLAYER_BACK" xml:space="preserve">
-    <value>הקודם</value>
+    <value>Назад</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value>נקה הכל</value>
+    <value></value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
-    <value>הודעות</value>
+    <value>Уведомления</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
-    <value>ספרייתך נוקתה בהצלחה</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
-    <value>לא ניתן לייבא את קובץ הפלייליסט הזה מכיוון שלא נמצאו אחד או יותר מהשירים.
-קובץ חסר: {0}</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value>הקובץ שניסית להפעיל נעלם. הודע ל-FMP לאן הוא נעלם, או הסר אותו מהספרייה שלך.</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
-    <value>איתור קובץ</value>
+    <value>Найти файл</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
-    <value>מתקין עדכון...</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_PROCESSINGLIBRARY" xml:space="preserve">
-    <value>מעבד שינויים בספרייה...
-נותרו {0} שירים
-
-ייתכן שרצועות חדשות שנוספו לא יופיעו בכרטיסיות האמנים או האלבומים עד להשלמת העיבוד</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
-    <value>סורק שירים חדשים...</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
-    <value>אירעה שגיאה בעת עדכון: {0}</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
-    <value>יש עדכון! הפעל מחדש את FMP כדי להחיל את העדכון.</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
-    <value>אתה עכשיו משתמש ב-FRESHMusicPlayer גרסה {0}!</value>
+    <value></value>
   </data>
   <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
-    <value>יומן רישום שינויים</value>
+    <value></value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value>ניהול רשימת השמעה</value>
+    <value></value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
-    <value>צור</value>
+    <value>Создать</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
-    <value>מחק</value>
+    <value>Удалить</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
-    <value>יצא</value>
+    <value>Экспорт</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
-    <value>מה ברצונך לעשות עם "{0}"?</value>
+    <value></value>
   </data>
   <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
-    <value>"{0}" אינו שם רשימת השמעה חוקי.</value>
+    <value></value>
   </data>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
-    <value>שנה שם</value>
+    <value></value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value>הוסף רשימת השמעה</value>
+    <value></value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value>הוסף שיר</value>
+    <value>Добавить трэк</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value>נקה תור</value>
+    <value></value>
   </data>
   <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
-    <value>מסתיים ב-{0}</value>
+    <value></value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
-    <value>תור</value>
+    <value></value>
   </data>
   <data name="RESET" xml:space="preserve">
-    <value>איפוס</value>
+    <value></value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
-    <value>אודות</value>
+    <value>О</value>
   </data>
   <data name="SETTINGS_ACCENTCOLOR" xml:space="preserve">
-    <value>צבע הדגשה</value>
+    <value>Акцентный цвет</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
-    <value>מראה</value>
+    <value>Внешний вид</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
-    <value>ייבוא אוטומטי</value>
+    <value>Автоматический импорт</value>
   </data>
   <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
-    <value>FMP ייבא רצועות חדשות מתיקיות אלה:</value>
+    <value></value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
-    <value>הוסף תיקיה</value>
+    <value>Добавить папку</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value>מצב עדכון אוטומטי</value>
+    <value>Режим автоматического обновления</value>
   </data>
   <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
-    <value>נקה ועדכן את הספרייה</value>
+    <value></value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value>מאת Squid Grill (ותורמים אחרים)
-תרגום לעברית מאת Martysh12
-מורשה תחת GPL v3
-תודה על השימוש ב-FRESHMusicPlayer! ♥</value>
+    <value></value>
   </data>
   <data name="SETTINGS_GENERAL" xml:space="preserve">
-    <value>כללי</value>
+    <value>Главный</value>
   </data>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
-    <value>שילוב</value>
+    <value></value>
   </data>
   <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
-    <value>Discord Rich Presence</value>
+    <value></value>
   </data>
   <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
-    <value>System Transport Controls</value>
+    <value></value>
   </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
-    <value>שפה</value>
+    <value></value>
   </data>
   <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
-    <value>האם אתה בטוח שאתה רוצה להתנתק מ-last.fm?</value>
+    <value></value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
-    <value>תחזוקה</value>
+    <value></value>
   </data>
   <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
-    <value>השמד את הספרייה</value>
+    <value></value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
-    <value>אתה עומד לנקות את הספרייה שלך באופן בלתי-הפיך. האם אתה בטוח?</value>
+    <value></value>
   </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value>רישום זמן ניגון</value>
+    <value></value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value>אפס את ההגדרות לברירת המחדל</value>
+    <value></value>
   </data>
   <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
-    <value>FMP צריך להתחיל מחדש כדי להחל את שינוייך.</value>
+    <value></value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
-    <value>הפעל מחדש כעת</value>
+    <value></value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
-    <value>ערוך את ההגדרות של FMP</value>
+    <value></value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value>ערכת נושא</value>
+    <value></value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value>כהה</value>
+    <value></value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value>בהיר</value>
+    <value></value>
   </data>
   <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
-    <value>הצג זמן במקום כותרת בכותרת החלון</value>
+    <value></value>
   </data>
   <data name="SETTINGS_UPDATES" xml:space="preserve">
-    <value>עדכונים</value>
+    <value></value>
   </data>
   <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
-    <value>בדוק אם קיימים עדכונים כעת</value>
+    <value></value>
   </data>
   <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
-    <value>{0} נבדק לאחרונה</value>
+    <value></value>
   </data>
   <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
-    <value>אוטומטי</value>
+    <value></value>
   </data>
   <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
-    <value>ידני</value>
+    <value></value>
   </data>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
-    <value>הצג בקשה לאישור לפני עדכון</value>
+    <value></value>
   </data>
   <data name="SOUNDSETTINGS" xml:space="preserve">
-    <value>הגדרות צליל</value>
+    <value></value>
   </data>
   <data name="SOUNDSETTINGS_EQ" xml:space="preserve">
-    <value>אקולייזר</value>
+    <value></value>
   </data>
   <data name="SOUNDSETTINGS_EQ_BASSBOOST" xml:space="preserve">
-    <value>הגברת בס</value>
+    <value></value>
   </data>
   <data name="SOUNDSETTINGS_EQ_TREBLEBOOST" xml:space="preserve">
-    <value>הגברת טרבל</value>
+    <value></value>
   </data>
   <data name="SOUNDSETTINGS_HEADER" xml:space="preserve">
-    <value>הגדרות צליל</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value>עורך תגים</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>אמן האלבום</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
-    <value>אמן</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
-    <value>שינויים אלה יוחלו כאשר ינגן שיר חדש</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value>שנה קובץ...</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
-    <value>מלחין</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value>תמונת עטיפה</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value>מספר דיסק</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
-    <value>עריכה</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
-    <value>ישנן מספר תוצאות עבור אלבום זה. איזה מהם אתה רוצה?</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
-    <value>אין תמונת עטיפה</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value>אינך מחובר לאינטרנט :(</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
-    <value>לא נמצאו תוצאות בשביל אלבום זה :(</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_SAVE" xml:space="preserve">
-    <value>שמור</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
-    <value>האם לשמור שנויים ל-{0}?</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_TITLE" xml:space="preserve">
-    <value>כותרת</value>
+    <value></value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value>מספר שיר</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value>אלבום</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
-    <value>פרטי אלבום</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_BITRATE" xml:space="preserve">
-    <value>קצב סיביות</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
-    <value>דיסק</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value>סגנון</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
-    <value>לא זמין</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value>פרטים טכניים</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value>פרטי שיר</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
-    <value>שיר</value>
+    <value></value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value>שנה</value>
+    <value></value>
   </data>
 </root>
