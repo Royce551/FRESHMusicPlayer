@@ -122,7 +122,7 @@
     <value></value>
   </data>
   <data name="LASTFM_USERNAME" xml:space="preserve">
-    <value>nom d'utilisateur ou adresse de courriel pour last.fm </value>
+    <value>nom d'utilisateur ou adresse de courriel pour last.fm</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value></value>
@@ -248,7 +248,7 @@
     <value>Vous êtes maintenant sur FRESHMusicPlayer {0}!</value>
   </data>
   <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
-    <value></value>
+    <value>Journal des changements</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
     <value></value>
@@ -263,7 +263,7 @@
     <value></value>
   </data>
   <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
-    <value></value>
+    <value>Que voulez-vous faire avec « {0} » ?</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
     <value></value>
@@ -281,7 +281,7 @@
     <value></value>
   </data>
   <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
-    <value></value>
+    <value>Fini à {0}</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
     <value></value>
@@ -302,7 +302,7 @@
     <value></value>
   </data>
   <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
-    <value>FRESHMusicPlayer va importer des nouvelles chansons de les dossiers suivent:</value>
+    <value>FRESHMusicPlayer va importer des nouvelles chansons de les dossiers suivants:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
     <value></value>
@@ -439,7 +439,7 @@ Merci pour utiliser FRESHMusicPlayer!!! 💕</value>
     <value></value>
   </data>
   <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
-    <value>Vous n'êtes pas connecté à l'internet </value>
+    <value>Vous n'êtes pas connecté à l'internet</value>
   </data>
   <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
     <value></value>
