@@ -80,7 +80,8 @@
     <value>אדום</value>
   </data>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
-    <value>אופסי! משהו השתבש. ננסה להמשיך. אם זה ממשיך לקרות, אנא דווח על כך פה: https://github.com/royce551/freshmusicplayer/issues.</value>
+    <value>אופסי! משהו השתבש. ננסה להמשיך. אם זה ממשיך לקרות, אנא דווח על כך פה: 
+https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
     <value>פתח יומן לאיתור באגים</value>
