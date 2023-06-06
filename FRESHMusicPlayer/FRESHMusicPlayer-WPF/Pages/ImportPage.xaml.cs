@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Ookii.Dialogs.Wpf;
+using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -68,18 +68,19 @@ namespace FRESHMusicPlayer.Pages
 
         private async void BrowseFoldersButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new VistaFolderBrowserDialog();
-            if (dialog.ShowDialog() == true)
+            using (var dialog = new WinForms.FolderBrowserDialog())
             {
                 dialog.Description = "Note: This doesn't import everything FMP actually supports. If you need to import more obscure file formats, try drag and drop.";
-                if (dialog.ShowDialog() == true)
+                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
                 {
-                    string[] paths = Directory.EnumerateFiles(dialog.SelectedPath, "*", SearchOption.AllDirectories)
-                    .Where(name => name.EndsWith(".mp3")
-                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                        || name.EndsWith(".wma")
-                        || name.EndsWith(".aac")).ToArray();
+                    string[] paths = await Task.Run(
+                        () => Directory.EnumerateFiles(dialog.SelectedPath, "*", SearchOption.AllDirectories)
+                                .Where(name => name.EndsWith(".mp3")
+                                || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                                || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                                || name.EndsWith(".wma")
+                                || name.EndsWith(".aac"))
+                                .ToArray());
                     window.Player.Queue.Add(paths);
                     await window.Library.ImportAsync(paths);
                     await window.Player.PlayAsync();
