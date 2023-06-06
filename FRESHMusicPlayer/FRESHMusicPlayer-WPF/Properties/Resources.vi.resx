@@ -112,8 +112,23 @@
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>Đường dẫn hoặc URL</value>
   </data>
+  <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
+    <value>Đã đăng nhập vào last.fm thành {0}!</value>
+  </data>
+  <data name="LASTFM_PASSWORD" xml:space="preserve">
+    <value>Mật khẩu last.fm</value>
+  </data>
+  <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
+    <value>Đã xảy ra lỗi đang cố scrobble {0}</value>
+  </data>
+  <data name="LASTFM_USERNAME" xml:space="preserve">
+    <value>Tên người dùng hoặc email last.fm</value>
+  </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>Thêm vào danh sách phát</value>
+  </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value>Đĩa {0}</value>
   </data>
   <data name="LIBRARY_EMPTY" xml:space="preserve">
     <value>Thư viện của bạn đã trống. Để bắt đầu, hãy kéo vào tệp nhạc nào, hoặc đặt thư mục tự động quét trong cài đặt.</value>
@@ -126,6 +141,9 @@
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
     <value>Phát tất cả</value>
+  </data>
+  <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
+    <value>Phát sau đây</value>
   </data>
   <data name="LOADING" xml:space="preserve">
     <value>Đang tải...</value>
@@ -211,6 +229,9 @@ Tệp không thể tìm: {0}</value>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
     <value>Có vẻ như tệp bạn cố gắng phát, "{0}", không tôn tại.</value>
   </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
+    <value>Tìm kiếm tệp</value>
+  </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>Đăng cài bản cập nhật...</value>
   </data>
@@ -265,11 +286,11 @@ Các bài mới thêm vào có thể không hiện trong vùng Nghệ Sĩ va Đ�
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
     <value>Xóa hàng chờ</value>
   </data>
+  <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
+    <value>Kết thúc lúc {0}</value>
+  </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
     <value>Hàng chờ</value>
-  </data>
-  <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Thời gian còn lại: </value>
   </data>
   <data name="RESET" xml:space="preserve">
     <value>Đặt lại</value>
@@ -310,7 +331,7 @@ Cảm ơn bạn sử dụng FRESHMusicPlayer! ♥</value>
     <value>Hội nhập</value>
   </data>
   <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
-    <value></value>
+    <value>Discord Rich Presence</value>
   </data>
   <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
     <value>Điều khiển hệ thống</value>
