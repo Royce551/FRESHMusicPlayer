@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Ookii.Dialogs.Wpf;
+using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -413,10 +413,11 @@ namespace FRESHMusicPlayer.Pages
 
         private async void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new VistaFolderBrowserDialog();
-            if (dialog.ShowDialog() == true)
-                App.Config.AutoImportPaths.Add(dialog.SelectedPath);
-
+            using (var dialog = new WinForms.FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                    App.Config.AutoImportPaths.Add(dialog.SelectedPath);
+            }
             InitFields();
             await window.PerformAutoImport();
         }
@@ -428,10 +429,11 @@ namespace FRESHMusicPlayer.Pages
 
         private void General_AutoLibraryChooseButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new VistaFolderBrowserDialog();
-            if (dialog.ShowDialog() == true)
-                App.Config.AutoLibraryPath = dialog.SelectedPath;
-
+            using (var dialog = new WinForms.FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                    App.Config.AutoLibraryPath = dialog.SelectedPath;
+            }
             InitFields();
         }
     }
