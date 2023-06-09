@@ -111,19 +111,19 @@ namespace FRESHMusicPlayer.Handlers
 
             if (App.Config.AutoLibrary) path = HandleAutoLibrary(new string[] { path })[0];
 
-            if (RaiseLibraryChangedEvents) TracksAdded?.Invoke(null, new string[] { path });
+            TracksAdded?.Invoke(null, new string[] { path });
         }
 
         public override void Remove(string path)
         {
             base.Remove(path);
-            if (RaiseLibraryChangedEvents) TracksRemoved?.Invoke(null, new string[] { path });
+            TracksRemoved?.Invoke(null, new string[] { path });
         }
 
         public override void RemoveTrackFromPlaylist(string playlist, string path)
         {
             base.RemoveTrackFromPlaylist(playlist, path);
-            if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, new string[] { path });
+            TracksUpdated?.Invoke(null, new string[] { path });
         }
 
         private List<string> HandleAutoLibrary(string[] tracks)

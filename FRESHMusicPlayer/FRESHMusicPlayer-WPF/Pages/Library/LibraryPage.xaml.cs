@@ -52,27 +52,44 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private async void Library_TracksUpdated(object sender, IEnumerable<string> e)
         {
+            LibraryEmptyTextBlock.Visibility = Visibility.Collapsed;
+
+            window.NotificationHandler.Add(new Notification { ContentText = "Tracks updated" });
             foreach (var track in e)
             {
                 var dbTrack = await window.Library.GetFallbackTrackAsync(track);
-                foreach (var artist in dbTrack.Artists)
+                switch (window.CurrentTab)
                 {
-                    if (!CategoryPanel.Items.Contains(artist)) AddItemToCategoryPanelSorted(artist);
+                    case Tab.Artists:
+                        foreach (var artist in dbTrack.Artists)
+                        {
+                            if (!CategoryPanel.Items.Contains(artist)) AddItemToCategoryPanelSorted(artist);
 
-                    if ((string)CategoryPanel.SelectedItem == artist) await ShowTracksforArtist(artist);
+                            if ((string)CategoryPanel.SelectedItem == artist) await ShowTracksforArtist(artist);
+                        }
+                        break;
+                    case Tab.Albums:
+                        var album = dbTrack.Album;
+
+                        if (!CategoryPanel.Items.Contains(album)) AddItemToCategoryPanelSorted(album);
+
+                        if ((string)CategoryPanel.SelectedItem == album) await ShowTracksforAlbum(album);
+                        break;
                 }
 
             }
+            if (window.CurrentTab == Tab.Tracks)
+                await ShowTracks(); // TODO: this is not really ideal, would be nice to dynamically add tracks to the pane
         }
 
         private void Library_TracksRemoved(object sender, IEnumerable<string> e)
         {
-        
+            window.NotificationHandler.Add(new Notification { ContentText = "Tracks removed" });
         }
 
         private async void Library_TracksAdded(object sender, IEnumerable<string> e)
         {
-            
+            window.NotificationHandler.Add(new Notification { ContentText = "Tracks added" });
         }
 
         private void AddItemToCategoryPanelSorted(string item)
@@ -126,6 +143,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Visible);
                     return;
                 }
+                window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Collapsed);
 
                 foreach (var thing in tracks)
                 {
@@ -151,6 +169,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Visible);
                     return;
                 }
+                window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Collapsed);
 
                 var distinctiveArtists = tracks.SelectMany(x => x.Artists).Distinct().ToList();
                 distinctiveArtists.Sort();
@@ -171,6 +190,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Visible);
                     return;
                 }
+                window.Dispatcher.Invoke(() => LibraryEmptyTextBlock.Visibility = Visibility.Collapsed);
 
                 foreach (var thing in tracks)
                 {
