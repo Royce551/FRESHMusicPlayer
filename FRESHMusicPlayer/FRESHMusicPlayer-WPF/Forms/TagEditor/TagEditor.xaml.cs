@@ -35,7 +35,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             this.player = player ?? new Player();
             this.library = library;
             InitializeComponent();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/11.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/12.0.0 (https://github.com/Royce551/FRESHMusicPlayer)");
             FilePaths = filePaths;
             player.SongChanged += Player_SongChanged;
             InitFields();

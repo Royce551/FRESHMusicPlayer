@@ -54,7 +54,6 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             LibraryEmptyTextBlock.Visibility = Visibility.Collapsed;
 
-            window.NotificationHandler.Add(new Notification { ContentText = "Tracks updated" });
             foreach (var track in e)
             {
                 var dbTrack = await window.Library.GetFallbackTrackAsync(track);
@@ -84,12 +83,10 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void Library_TracksRemoved(object sender, IEnumerable<string> e)
         {
-            window.NotificationHandler.Add(new Notification { ContentText = "Tracks removed" });
         }
 
         private async void Library_TracksAdded(object sender, IEnumerable<string> e)
         {
-            window.NotificationHandler.Add(new Notification { ContentText = "Tracks added" });
         }
 
         private void AddItemToCategoryPanelSorted(string item)
