@@ -393,7 +393,6 @@ namespace FRESHMusicPlayer.Pages
         private void RestartNowButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-            WinForms.Application.Restart();
         }
 
         private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e)

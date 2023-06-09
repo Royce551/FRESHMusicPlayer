@@ -68,17 +68,19 @@ namespace FRESHMusicPlayer.Pages
 
         private async void BrowseFoldersButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new WinForms.FolderBrowserDialog()) 
+            using (var dialog = new WinForms.FolderBrowserDialog())
             {
                 dialog.Description = "Note: This doesn't import everything FMP actually supports. If you need to import more obscure file formats, try drag and drop.";
                 if (dialog.ShowDialog() == WinForms.DialogResult.OK)
                 {
-                    string[] paths = Directory.EnumerateFiles(dialog.SelectedPath, "*", SearchOption.AllDirectories)
-                    .Where(name => name.EndsWith(".mp3")
-                        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                        || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                        || name.EndsWith(".wma")
-                        || name.EndsWith(".aac")).ToArray();
+                    string[] paths = await Task.Run(
+                        () => Directory.EnumerateFiles(dialog.SelectedPath, "*", SearchOption.AllDirectories)
+                                .Where(name => name.EndsWith(".mp3")
+                                || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+                                || name.EndsWith(".flac") || name.EndsWith(".aiff")
+                                || name.EndsWith(".wma")
+                                || name.EndsWith(".aac"))
+                                .ToArray());
                     window.Player.Queue.Add(paths);
                     await window.Library.ImportAsync(paths);
                     await window.Player.PlayAsync();

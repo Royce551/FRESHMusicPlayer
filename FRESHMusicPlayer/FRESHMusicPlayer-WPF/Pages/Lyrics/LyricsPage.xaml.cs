@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer.Pages.Lyrics
 {

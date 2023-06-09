@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using WinForms = System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Controls.Lyrics
 {
@@ -24,13 +24,13 @@ namespace FRESHMusicPlayer.Controls.Lyrics
     public partial class Lyrics : UserControl
     {
         public ITimedLyricsProvider TimedLyrics;
-        public WinForms.Timer Timer;
+        public DispatcherTimer Timer;
 
         private MainWindow window;
 
         public Lyrics()
         {
-            Timer = new WinForms.Timer { Interval = 100 };
+            Timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
             Timer.Tick += Timer_Tick;
             InitializeComponent();
         }
@@ -98,6 +98,6 @@ namespace FRESHMusicPlayer.Controls.Lyrics
             }
         }
 
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e) => Timer.Dispose();
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e) => Timer.Stop();
     }
 }

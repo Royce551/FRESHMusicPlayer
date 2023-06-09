@@ -35,7 +35,7 @@ namespace FRESHMusicPlayer.ViewModels
                 AcceptButtonLabel = Resources.Import
             };
             var files = await dialog.ShowAsync(GetMainWindow());
-            if (files.Length > 0 && files is not null) await Task.Run(() => Window.Library.Import(files));
+            if (files?.Length > 0) await Task.Run(() => Window.Library.Import(files));
         }
 
         public async void BrowsePlaylistsCommand()

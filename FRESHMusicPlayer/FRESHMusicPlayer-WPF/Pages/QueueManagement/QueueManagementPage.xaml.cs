@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WinForms = System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -25,7 +25,7 @@ namespace FRESHMusicPlayer.Pages
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
         private int currentIndex = 0;
         private List<string> lastQueue = new List<string>();
-        private WinForms.Timer timer = new WinForms.Timer { Interval = 100, Enabled = true };
+        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100), IsEnabled = true };
 
         private readonly MainWindow window;
         public QueueManagement(MainWindow window)
@@ -137,6 +137,7 @@ namespace FRESHMusicPlayer.Pages
             window.Player.Queue.QueueChanged -= Player_QueueChanged;
             window.Player.SongStopped -= Player_SongStopped;
             timer.Tick -= Timer_Tick;
+            timer.Stop();
             QueueList.Items.Clear();
         }
 

@@ -13,6 +13,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WinForms = System.Windows.Forms;
 
 namespace FRESHMusicPlayer.Forms
@@ -22,7 +23,7 @@ namespace FRESHMusicPlayer.Forms
     /// </summary>
     public partial class MiniPlayer : Window
     {
-        private WinForms.Timer progressTimer = new WinForms.Timer { Interval = 1000 };
+        private DispatcherTimer progressTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
         private readonly MainWindow window;
         public MiniPlayer(MainWindow window) // TODO: there's a lot of code copied from the main window here, maybe more stuff could be shared?
         {
@@ -73,7 +74,7 @@ namespace FRESHMusicPlayer.Forms
         {
             window.Player.SongChanged -= Player_SongChanged;
             window.Player.SongStopped -= Player_SongStopped;
-            progressTimer.Dispose();
+            progressTimer.Stop();
             Close();
         }
 

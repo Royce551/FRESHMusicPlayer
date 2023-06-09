@@ -292,12 +292,12 @@ namespace FRESHMusicPlayer
 
         private void Window_Activated(object sender, EventArgs e)
         {
-            ProgressTimer.Interval = 100;
+            ProgressTimer.Interval = TimeSpan.FromMilliseconds(100);
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            ProgressTimer.Interval = 1000;
+            ProgressTimer.Interval = TimeSpan.FromMilliseconds(1000);
         }
     }
 }
