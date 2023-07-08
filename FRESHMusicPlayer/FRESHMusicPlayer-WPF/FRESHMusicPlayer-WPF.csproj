@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
+    <PropertyGroup Condition="('$(Configuration)' == 'ReleasePackageUpdater' Or '$(Configuration)' == 'BlueprintPackageUpdater')">
       <NuspecFile>FMP$(Configuration.Replace('PackageUpdater', '')).nuspec</NuspecFile>
       <NuspecBasePath>$(OutDir)</NuspecBasePath>
       <NuspecProperties>version=$(PackageVersion)</NuspecProperties>
@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Resource Include="icon.ico" />
-    <None Remove="FRESHMusicPlayer.Core.dll" />
   </ItemGroup>
   
   <ItemGroup>
