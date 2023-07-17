@@ -55,14 +55,14 @@ namespace FRESHMusicPlayer
             {
                 initialFiles = e.Args.Where(x => x.Contains('.')).ToArray();
 
-                if (initialFiles.Contains("--tageditor"))
+                if (e.Args.Contains("--tageditor"))
                 {
                     currentWindow = new TagEditor(initialFiles.ToList(), player);
                     return;
                 }
             }
 
-            currentWindow = new MainWindow(player);
+            currentWindow = new MainWindow(player, initialFiles);
 
             if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
                 currentWindow.FlowDirection = FlowDirection.RightToLeft;
