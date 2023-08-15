@@ -7,6 +7,7 @@ using LiteDB;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +29,7 @@ namespace FRESHMusicPlayer
         public Player Player;
         public NotificationHandler NotificationHandler = new NotificationHandler();
         public GUILibrary Library;
+        public HttpClient HttpClient;
         public IMetadataProvider CurrentTrack;
 
 #if !BLUEPRINT && !DEBUG
@@ -45,7 +47,7 @@ namespace FRESHMusicPlayer
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
         private IPlaybackIntegration lastFMIntegration;
-        public MainWindow(Player player, string[] initialFile = null)
+        public MainWindow(Player player, HttpClient httpClient, string[] initialFile = null)
         {
             LoggingHandler.Log("Starting main window...");
             Player = player;
@@ -60,6 +62,7 @@ namespace FRESHMusicPlayer
                 Interval = TimeSpan.FromMilliseconds(100)
             };
             ProgressTimer.Tick += ProgressTimer_Tick;
+            HttpClient = httpClient;
 
             Initialize(initialFile);
         }

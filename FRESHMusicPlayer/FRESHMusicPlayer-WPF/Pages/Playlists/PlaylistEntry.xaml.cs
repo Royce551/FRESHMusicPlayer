@@ -39,7 +39,7 @@ namespace FRESHMusicPlayer.Pages.Playlists
             this.path = path;
             CheckIfPlaylistExists();
         }
-        private async void CheckIfPlaylistExists()
+        private void CheckIfPlaylistExists()
         {
             foreach (var thing in library.GetTracksForPlaylist(playlist))
             {
@@ -130,7 +130,7 @@ namespace FRESHMusicPlayer.Pages.Playlists
                 things = library.GetTracksForAlbum((await library.GetFallbackTrackAsync(path)).Album);
             library.RaiseLibraryChangedEvents = false;
             foreach (var thing in things)
-                library.AddTrackToPlaylistAsync(playlist, thing.Path);
+                await library.AddTrackToPlaylistAsync(playlist, thing.Path);
             library.RaiseLibraryChangedEvents = true;
             CheckIfPlaylistExists();
         }

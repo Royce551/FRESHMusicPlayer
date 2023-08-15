@@ -281,6 +281,12 @@ namespace FRESHMusicPlayer
                     var clustering = new KMeansClusteringCalculator();
                     var dominantColors = clustering.Calculate(3, colors, 5.0d);
 
+                    if (dominantColors[1] == Drawing.Color.FromArgb(0, 0, 0, 0))
+                    {
+                        dominantColors[1] = dominantColors[0];
+                    }
+                    if (dominantColors[2] == Drawing.Color.FromArgb(0, 0, 0, 0)) dominantColors[2] = dominantColors[1];
+
                     (Application.Current as App).ApplyAccentColor(dominantColors[1].R, dominantColors[1].G, dominantColors[1].B, dominantColors[2].R, dominantColors[2].G, dominantColors[2].B);
                 }
             }
@@ -559,7 +565,7 @@ namespace FRESHMusicPlayer
                 smtcIntegration = new SMTCIntegration(this);
             }
             else smtcIntegration = null;
-            if (App.Config.IntegrateDiscordRPC) discordIntegration = new DiscordIntegration();
+            if (App.Config.IntegrateDiscordRPC) discordIntegration = new DiscordIntegration(HttpClient);
             else
             {
                 discordIntegration?.Close();

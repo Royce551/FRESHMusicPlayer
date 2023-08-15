@@ -79,7 +79,7 @@ namespace FRESHMusicPlayer
             var tracks = new List<string>();
             if (Player.FileLoaded) tracks.Add(Player.FilePath); // if playing, edit the file the user is playing
             else tracks = Player.Queue.Queue;
-            var tagEditor = new TagEditor(tracks, Player, Library);
+            var tagEditor = new TagEditor(tracks, HttpClient, Player, Library);
             tagEditor.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             tagEditor.Owner = this;
             tagEditor.Show();

@@ -1,21 +1,30 @@
 ﻿using ATL;
 using DiscordRPC;
 using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Forms.TagEditor.Integrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Handlers.Integrations
 {
     public class DiscordIntegration : IPlaybackIntegration
     {
         private DiscordRpcClient client;
+        private string largeImageKey = "icon";
+        private HttpClient httpClient;
+        private string lastAlbum;
 
-        public DiscordIntegration()
+        public DiscordIntegration(HttpClient httpClient)
         {
             LoggingHandler.Log("Starting Discord integration");
+
+            this.httpClient = httpClient;
 
             client = new DiscordRpcClient("656678380283887626");
             client.Initialize();
@@ -25,7 +34,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             };
         }
 
-        public void Update(IMetadataProvider track, PlaybackStatus status)
+        public async void Update(IMetadataProvider track, PlaybackStatus status)
         {
             string activity = string.Empty;
             string state = string.Empty;
@@ -40,20 +49,51 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     state = "Paused";
                     break;
                 case PlaybackStatus.Stopped:
-                    activity = "idle";
-                    state = "Idle";
-                    break;
+                    client.ClearPresence();
+                    return;
             }
+        
+            var updateTimeStamp = Timestamps.Now; 
+
+            if (track.Album != lastAlbum)
+            {
+                await Task.Run(() =>
+                {
+                    var integration = new MusicBrainzIntegration(httpClient);
+                    var results = integration.Search($"album:{track.Album} AND artist:{track.Artists[0]}");
+                    if (!integration.Worked)
+                    {
+                        largeImageKey = "icon";
+                        return;
+                    }
+
+                    var matchingAlbum = results.FirstOrDefault();
+                    if (matchingAlbum == default)
+                    {
+                        var results2 = integration.Search($"{track.Album} {string.Join(", ", track.Artists)}");
+                        matchingAlbum = results2.FirstOrDefault();
+                        if (matchingAlbum == default)
+                        {
+                            largeImageKey = "icon";
+                            return;
+                        }
+                    }
+                    largeImageKey = $@"https://coverartarchive.org/release/{matchingAlbum.Id}/front";
+                    lastAlbum = track.Album;
+                });
+            } 
+
             client?.SetPresence(new RichPresence
             {
                 Details = TruncateBytes(track.Title, 120),
                 State = TruncateBytes(state, 120),
                 Assets = new Assets
                 {
-                    LargeImageKey = "icon",
+                    LargeImageKey = largeImageKey,
+                    LargeImageText = TruncateBytes(track.Album, 120),
                     SmallImageKey = activity
                 },
-                Timestamps = Timestamps.Now
+                Timestamps = updateTimeStamp,
             });
         }
 

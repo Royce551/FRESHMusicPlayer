@@ -25,10 +25,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         {
             this.window = window;
 
-            httpClient = new HttpClient();
-            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/12.0.0 (https://github.com/Royce551/FRESHMusicPlayer)");
-
+            httpClient = window.HttpClient;
             Initialize();
         }
 

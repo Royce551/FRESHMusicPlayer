@@ -26,16 +26,16 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         private readonly List<string> Displayfilepaths = new List<string>();
         private readonly List<PictureInfo> CoverArts = new List<PictureInfo>();
         private bool unsavedChanges = false;
-        private readonly HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient;
 
         private readonly Player player;
         private readonly GUILibrary library;
-        public TagEditor(List<string> filePaths, Player player = null, GUILibrary library = null)
+        public TagEditor(List<string> filePaths, HttpClient httpClient, Player player = null, GUILibrary library = null)
         {
             this.player = player ?? new Player();
             this.library = library;
+            this.httpClient = httpClient;
             InitializeComponent();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/12.0.0 (https://github.com/Royce551/FRESHMusicPlayer)");
             FilePaths = filePaths;
             player.SongChanged += Player_SongChanged;
             InitFields();
@@ -280,7 +280,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
 
         private void NewWindowItem_MouseDown(object sender, RoutedEventArgs e)
         {
-            var tagEditor = new TagEditor(FilePaths, player, library);
+            var tagEditor = new TagEditor(FilePaths, httpClient, player, library);
             tagEditor.Show();
         }
 

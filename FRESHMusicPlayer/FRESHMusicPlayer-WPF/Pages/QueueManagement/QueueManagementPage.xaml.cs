@@ -67,7 +67,7 @@ namespace FRESHMusicPlayer.Pages
                 await Task.Run(async () =>
                 {
                     
-                    if (!list.SequenceEqual(lastQueue)) // has the contents of the queue changed, or just the positions?
+                    if (!list.ToList().SequenceEqual(lastQueue.ToList())) // has the contents of the queue changed, or just the positions?
                     {                                   // yes; refresh list
                         var difference = QueueList.Items.Count - window.Player.Queue.Queue.Count;
                         while (difference > 0)

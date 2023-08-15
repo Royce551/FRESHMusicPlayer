@@ -54,38 +54,46 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             LibraryEmptyTextBlock.Visibility = Visibility.Collapsed;
 
-            foreach (var track in e)
+            await Task.Run(async () =>
             {
-                var dbTrack = await window.Library.GetFallbackTrackAsync(track);
-                switch (window.CurrentTab)
+                foreach (var track in e)
                 {
-                    case Tab.Artists:
-                        foreach (var artist in dbTrack.Artists)
-                        {
-                            if (!CategoryPanel.Items.Contains(artist)) AddItemToCategoryPanelSorted(artist);
+                    var dbTrack = await window.Library.GetFallbackTrackAsync(track);
+                    switch (window.CurrentTab)
+                    {
+                        case Tab.Artists:
+                            foreach (var artist in dbTrack.Artists)
+                            {
+                                if (!CategoryPanel.Items.Contains(artist)) Dispatcher.Invoke(() => AddItemToCategoryPanelSorted(artist));
 
-                            if ((string)CategoryPanel.SelectedItem == artist) await ShowTracksforArtist(artist);
-                        }
-                        break;
-                    case Tab.Albums:
-                        var album = dbTrack.Album;
+                                await Dispatcher.Invoke(async () => { if ((string)CategoryPanel.SelectedItem == artist) await ShowTracksforArtist(artist); });
+                            }
+                            break;
+                        case Tab.Albums:
+                            var album = dbTrack.Album;
 
-                        if (!CategoryPanel.Items.Contains(album)) AddItemToCategoryPanelSorted(album);
+                            if (!CategoryPanel.Items.Contains(album)) Dispatcher.Invoke(() => AddItemToCategoryPanelSorted(album));
 
-                        if ((string)CategoryPanel.SelectedItem == album) await ShowTracksforAlbum(album);
-                        break;
+                            await Dispatcher.Invoke(async () => { if ((string)CategoryPanel.SelectedItem == album) await ShowTracksforAlbum(album); });
+                            break;
+                    }
+
                 }
 
-            }
-            if (window.CurrentTab == Tab.Tracks)
-                await ShowTracks(); // TODO: this is not really ideal, would be nice to dynamically add tracks to the pane
+                await Dispatcher.Invoke(async () =>
+                {
+                    if (window.CurrentTab == Tab.Tracks)
+                        await ShowTracks(); // TODO: this is not really ideal, would be nice to dynamically add tracks to the pane});
+
+                });
+            });
         }
 
         private void Library_TracksRemoved(object sender, IEnumerable<string> e)
         {
         }
 
-        private async void Library_TracksAdded(object sender, IEnumerable<string> e)
+        private void Library_TracksAdded(object sender, IEnumerable<string> e)
         {
         }
 
@@ -281,6 +289,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 }
                 else
                 {
+                    discs.Sort();
                     foreach (var disc in discs)
                     {
                         var tracksInDisc = tracks.Where(x => x.DiscNumber == disc);

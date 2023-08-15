@@ -40,7 +40,35 @@
                       Foreground="{x:Null}"
               Grid.RowSpan="2" Margin="0,0,0,0"
               />
-        <ListBox x:Name="CategoryPanel" TabIndex="0" Margin="5,25,5,84" Background="{DynamicResource SecondaryColor}" Foreground="{DynamicResource PrimaryTextColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0" ScrollViewer.PanningMode="Both"/>
+        <ListBox x:Name="CategoryPanel" TabIndex="0" Margin="5,25,5,84" Background="{DynamicResource SecondaryColor}" Foreground="{DynamicResource PrimaryTextColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0" ScrollViewer.PanningMode="Both">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="myBorder"
+                                    Padding="2,6"
+                                    CornerRadius="2"
+                                    SnapsToDevicePixels="true">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter TargetName="myBorder" Property="Background" Value="{DynamicResource AccentColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="myBorder" Property="Background" Value="{DynamicResource AccentColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
 
         <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Height="130" Background="{DynamicResource BackgroundColor}">
             <Grid.ColumnDefinitions>

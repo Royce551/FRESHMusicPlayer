@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Threading;
 using System.Globalization;
+using System.Net.Http;
 
 namespace FRESHMusicPlayer
 {
@@ -50,6 +51,10 @@ namespace FRESHMusicPlayer
 
             LoggingHandler.Log("Handling command line args...");
 
+            var httpClient = new HttpClient();
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/12.0.0 ( https://github.com/Royce551/FRESHMusicPlayer )");
+
             string[] initialFiles = null;
             if (e.Args.Length > 0)
             {
@@ -57,12 +62,12 @@ namespace FRESHMusicPlayer
 
                 if (e.Args.Contains("--tageditor"))
                 {
-                    currentWindow = new TagEditor(initialFiles.ToList(), player);
+                    currentWindow = new TagEditor(initialFiles.ToList(), httpClient, player);
                     return;
                 }
             }
 
-            currentWindow = new MainWindow(player, initialFiles);
+            currentWindow = new MainWindow(player, httpClient, initialFiles);
 
             if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
                 currentWindow.FlowDirection = FlowDirection.RightToLeft;
