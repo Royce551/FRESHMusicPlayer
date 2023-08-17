@@ -262,7 +262,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 //}
             });
             InfoLabel.Visibility = Visibility.Visible;
-            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
+            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.OfType<SongEntry>().Count()} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         public async Task ShowTracksforAlbum(string selectedItem)
         {
@@ -304,7 +304,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 
             });
             InfoLabel.Visibility = Visibility.Visible;
-            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.Count} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
+            InfoLabel.Text = $"{Properties.Resources.MAINWINDOW_TRACKS}: {TracksPanel.Items.OfType<SongEntry>().Count()} ・ {new TimeSpan(0, 0, 0, length):hh\\:mm\\:ss}";
         }
         public async Task ShowTracksforPlaylist(string selectedItem)
         {

@@ -47,6 +47,7 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         /// The task the notification is associated with failed - red border
         /// </summary>
         Failure,
+        Progress,
         /// <summary>
         /// A generic notification
         /// </summary>

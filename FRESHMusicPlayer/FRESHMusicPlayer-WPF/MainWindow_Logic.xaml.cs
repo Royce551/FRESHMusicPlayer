@@ -588,7 +588,7 @@ namespace FRESHMusicPlayer
         {
             if (App.Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
                                                                // effort (and showing the notification)
-            var notification = new Notification { ContentText = Properties.Resources.NOTIFICATION_SCANNING };
+            var notification = new Notification { ContentText = Properties.Resources.NOTIFICATION_SCANNING, Type = NotificationType.Progress };
             NotificationHandler.Add(notification);
             var filesToImport = new List<string>();
             var library = Library.GetAllTracks();

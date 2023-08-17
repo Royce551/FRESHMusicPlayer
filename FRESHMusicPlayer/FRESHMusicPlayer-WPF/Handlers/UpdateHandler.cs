@@ -26,7 +26,10 @@ namespace FRESHMusicPlayer.Handlers
             // Updater not present, probably standalone
             if (!File.Exists(Path.Combine(rootPath, "Update.exe"))) return;
             App.Config.UpdatesLastChecked = DateTime.Now;
-            var notification = new Notification();
+            var notification = new Notification
+            {
+                Type = NotificationType.Progress
+            };
             
             var updatePath =
 #if !BLUEPRINT
