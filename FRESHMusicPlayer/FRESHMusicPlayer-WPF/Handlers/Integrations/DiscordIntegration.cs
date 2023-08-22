@@ -59,6 +59,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             {
                 await Task.Run(() =>
                 {
+                    LoggingHandler.Log($"Discord: Searching for cover art for {track.Album}");
+
                     var integration = new MusicBrainzIntegration(httpClient);
                     var results = integration.Search($"album:{track.Album} AND artist:{track.Artists[0]}");
                     if (!integration.Worked)
@@ -70,6 +72,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     var matchingAlbum = results.FirstOrDefault();
                     if (matchingAlbum == default)
                     {
+                        LoggingHandler.Log("Discord: Using alternative search method to find this album");
+
                         var results2 = integration.Search($"{track.Album} {string.Join(", ", track.Artists)}");
                         matchingAlbum = results2.FirstOrDefault();
                         if (matchingAlbum == default)
@@ -78,6 +82,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                             return;
                         }
                     }
+
+                    LoggingHandler.Log($@"Discord: Cover art found: https://coverartarchive.org/release/{matchingAlbum.Id}/front");
+
                     largeImageKey = $@"https://coverartarchive.org/release/{matchingAlbum.Id}/front";
                     lastAlbum = track.Album;
                 });

@@ -52,7 +52,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             updater.MusicProperties.AlbumTrackCount = (uint)track.TrackTotal;
             if (track.CoverArt != null)
             {
-                var decoder = await BitmapDecoder.CreateAsync(new MemoryStream(track.CoverArt).AsRandomAccessStream());
+                var decoder = await BitmapDecoder.CreateAsync(new MemoryStream(track.CoverArt, 0, track.CoverArt.Length, true, true).AsRandomAccessStream());
                 var transcodedImage = new InMemoryRandomAccessStream();
 
                 BitmapEncoder encoder = await BitmapEncoder.CreateForTranscodingAsync(transcodedImage, decoder);

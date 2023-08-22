@@ -65,6 +65,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
                 window.NotificationHandler.Add(new Notifications.Notification { ContentText = string.Format(Properties.Resources.LASTFM_LOGIN_SUCCESSFUL, json?.SelectToken("session.name")), Type = Notifications.NotificationType.Success});
             }
+
+            LoggingHandler.Log($"Logging in to last.fm as {sessionKey}");
         }
 
         private string EncodeSignature(string input)
@@ -97,6 +99,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     var updateNowPlayingRequest = $"https://www.audioscrobbler.com/2.0/?method=track.updateNowPlaying&artist={track.Artists[0]}&track={track.Title}&album={track.Album}&api_key={apiKey}&sk={sessionKey}";
                     var updateNowPlayingSignature = $"album{track.Album}api_key{apiKey}artist{track.Artists[0]}methodtrack.updateNowPlayingsk{sessionKey}track{track.Title}{secret}";
                     await httpClient.PostAsync($"{updateNowPlayingRequest}&api_sig={EncodeSignature(updateNowPlayingSignature)}&format=json", null);
+
+                    LoggingHandler.Log($"last.fm: updateNowPlaying, request: {updateNowPlayingRequest}");
+
                     break;
                 case PlaybackStatus.Changing:
                 case PlaybackStatus.Stopped:
@@ -107,6 +112,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     var scrobbleRequest = $"https://www.audioscrobbler.com/2.0/?method=track.scrobble&artist={lastTrackListenedTo.Artists[0]}&track={lastTrackListenedTo.Title}&timestamp={timeStamp}&album={lastTrackListenedTo.Album}&api_key={apiKey}&sk={sessionKey}";
                     var scrobbleSignature = $"album{lastTrackListenedTo.Album}api_key{apiKey}artist{lastTrackListenedTo.Artists[0]}methodtrack.scrobblesk{sessionKey}timestamp{timeStamp}track{lastTrackListenedTo.Title}{secret}";
                     var scrobbleResponse = await httpClient.PostAsync($"{scrobbleRequest}&api_sig={EncodeSignature(scrobbleSignature)}&format=json", null);
+
+                    LoggingHandler.Log($"last.fm: scrobbling recently played track, request: {scrobbleRequest}");
+
                     if (!scrobbleResponse.IsSuccessStatusCode)
                         window.NotificationHandler.Add(new Notifications.Notification { ContentText = string.Format(Properties.Resources.LASTFM_SCROBBLE_FAILED, $"{string.Join(", ", track.Artists)} - {track.Title}"), Type = Notifications.NotificationType.Failure });
                     break;
