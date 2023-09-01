@@ -42,7 +42,7 @@ namespace FRESHMusicPlayer
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
 
-        private FileSystemWatcher watcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
+        private FileSystemWatcher singleInstanceFileWatcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
         public DispatcherTimer ProgressTimer;
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
@@ -92,10 +92,10 @@ namespace FRESHMusicPlayer
                 return; // stop initial files from trying to load
             }
 
-            watcher.Filter = "instance";
-            watcher.IncludeSubdirectories = false;
-            watcher.EnableRaisingEvents = true;
-            watcher.Changed += (object sender, FileSystemEventArgs args) =>
+            singleInstanceFileWatcher.Filter = "instance";
+            singleInstanceFileWatcher.IncludeSubdirectories = false;
+            singleInstanceFileWatcher.EnableRaisingEvents = true;
+            singleInstanceFileWatcher.Changed += (object sender, FileSystemEventArgs args) =>
             {
                 Dispatcher.Invoke(async () =>
                 {
@@ -190,7 +190,7 @@ namespace FRESHMusicPlayer
             ConfigurationHandler.Write(App.Config);
             Library.Database?.Dispose();
             ProgressTimer.Stop();
-            watcher.Dispose();
+            singleInstanceFileWatcher.Dispose();
             WritePersistence();
         }
 

@@ -83,9 +83,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                         }
                     }
 
-                    LoggingHandler.Log($@"Discord: Cover art found: https://coverartarchive.org/release/{matchingAlbum.Id}/front");
+                    LoggingHandler.Log($@"Discord: Cover art found: https://coverartarchive.org/release/{matchingAlbum.Id}/front-250");
 
-                    largeImageKey = $@"https://coverartarchive.org/release/{matchingAlbum.Id}/front";
+                    largeImageKey = $@"https://coverartarchive.org/release/{matchingAlbum.Id}/front-250";
                     lastAlbum = track.Album;
                 });
             } 

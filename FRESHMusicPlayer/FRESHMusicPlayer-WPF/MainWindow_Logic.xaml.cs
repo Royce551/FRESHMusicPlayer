@@ -24,6 +24,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 using Drawing = System.Drawing;
 
 namespace FRESHMusicPlayer
@@ -584,6 +585,15 @@ namespace FRESHMusicPlayer
                 discordIntegration?.Update(CurrentTrack, status);
             }
         }
+
+        private List<FileSystemWatcher> autoImportFileWatches = new List<FileSystemWatcher>();
+
+        private bool CheckIfFileEndsWithAutoImportableFileExtension(string name) => name.EndsWith(".mp3")
+        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+        || name.EndsWith(".flac") || name.EndsWith(".aiff")
+        || name.EndsWith(".wma")
+        || name.EndsWith(".aac");
+
         public async Task PerformAutoImport()
         {
             if (App.Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
@@ -597,11 +607,7 @@ namespace FRESHMusicPlayer
                 foreach (var folder in App.Config.AutoImportPaths)
                 {
                     var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
-                        .Where(name => name.EndsWith(".mp3")
-                            || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                            || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                            || name.EndsWith(".wma")
-                            || name.EndsWith(".aac")).ToArray();
+                        .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
                     foreach (var file in files)
                     {
                         if (!library.Select(x => x.Path).Contains(file))
@@ -611,6 +617,84 @@ namespace FRESHMusicPlayer
                 await Library.ImportAsync(filesToImport);
             });
             NotificationHandler.Remove(notification);
+
+            foreach (var folder in App.Config.AutoImportPaths)
+                AddAutoImportFileWatcher(folder);
+        }
+
+        public void AddAutoImportFileWatcher(string folder)
+        {
+            LoggingHandler.Log($"Auto Import: Added watcher for {folder}");
+
+            var autoImportPathWatcher = new FileSystemWatcher(folder);
+            autoImportPathWatcher.IncludeSubdirectories = true;
+            autoImportPathWatcher.EnableRaisingEvents = true;
+            autoImportPathWatcher.Created += async (s, e) =>
+            {
+                LoggingHandler.Log($"Auto Import: {e.FullPath} was created, importing...");
+
+                var attributes = File.GetAttributes(e.FullPath);
+                if (attributes.HasFlag(FileAttributes.Directory))
+                {
+                    var filesToImport = new List<string>();
+                    var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                                .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
+                    foreach (var file in files)
+                    {
+                        if (!Library.GetAllTracks().Select(x => x.Path).Contains(file))
+                            filesToImport.Add(file);
+                    }
+                    await Library.ImportAsync(filesToImport);
+                }
+                else
+                {
+                    if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && !Library.GetAllTracks().Select(x => x.Path).Contains(e.FullPath))
+                    {
+                        await Library.ImportAsync(e.FullPath);
+                    }
+                }
+            };
+            //autoImportPathWatcher.Deleted += (s, e) =>
+            //{
+            //    LoggingHandler.Log($"Auto Import: {e.FullPath} was removed, removing...");
+
+            //    var attributes = File.GetAttributes(e.FullPath);
+            //    if (attributes.HasFlag(FileAttributes.Directory))
+            //    {
+            //        var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+            //                    .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
+            //        foreach (var file in files)
+            //        {
+            //            if (Library.GetAllTracks().Select(x => x.Path).Contains(file))
+            //                Library.Remove(file);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && Library.GetAllTracks().Select(x => e.FullPath).Contains(e.FullPath))
+            //            Library.Remove(e.FullPath);
+            //    }
+            //};
+            //autoImportPathWatcher.Renamed += async (s, e) =>
+            //{
+            //    LoggingHandler.Log($"Auto Import: {e.FullPath} was changed, importing...");
+
+            //    if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && !Library.GetAllTracks().Select(x => e.FullPath).Contains(e.FullPath))
+            //        await Library.ImportAsync(e.FullPath);
+            //};
+
+            autoImportFileWatches.Add(autoImportPathWatcher);
+        }
+
+        public void ClearAllAutoImportFileWatchers()
+        {
+            LoggingHandler.Log("Auto Import: Clearing all watchers");
+
+            foreach (var watcher in autoImportFileWatches)
+            {
+                watcher.Dispose();
+                autoImportFileWatches.Remove(watcher);
+            }
         }
     }
 }

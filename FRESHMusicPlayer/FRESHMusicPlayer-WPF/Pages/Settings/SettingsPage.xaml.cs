@@ -416,7 +416,10 @@ namespace FRESHMusicPlayer.Pages
             using (var dialog = new WinForms.FolderBrowserDialog())
             {
                 if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                {
                     App.Config.AutoImportPaths.Add(dialog.SelectedPath);
+                    window.AddAutoImportFileWatcher(dialog.SelectedPath);
+                }
             }
             InitFields();
             await window.PerformAutoImport();
@@ -424,6 +427,7 @@ namespace FRESHMusicPlayer.Pages
         private void General_ClearButton_Click(object sender, RoutedEventArgs e)
         {
             App.Config.AutoImportPaths.Clear();
+            window.ClearAllAutoImportFileWatchers();
             InitFields();
         }
 

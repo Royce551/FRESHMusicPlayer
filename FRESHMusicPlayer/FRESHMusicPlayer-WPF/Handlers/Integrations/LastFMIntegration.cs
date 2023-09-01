@@ -35,29 +35,47 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             if (File.Exists(sessionKeyPath)) sessionKey = File.ReadAllText(sessionKeyPath);
             else
             {
-                var userDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_USERNAME);
-                userDialog.ShowDialog();
-
-                string username;
-                if (userDialog.OK)
+                HttpResponseMessage response;
+                do
                 {
-                    username = userDialog.Response;
-                }
-                else return;
+                    var userDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_USERNAME);
+                    userDialog.ShowDialog();
 
-                var passwordDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_PASSWORD, isPassword: true);
-                passwordDialog.ShowDialog();
-                string password;
-                if (passwordDialog.OK)
-                {
-                    password = passwordDialog.Response;
-                }
-                else return;
+                    string username;
+                    if (userDialog.OK)
+                    {
+                        username = userDialog.Response;
+                    }
+                    else return;
 
-                var request = $"https://ws.audioscrobbler.com/2.0/?method=auth.getMobileSession&api_key={apiKey}&password={password}&username={username}";
-                var presig = $"api_key{apiKey}methodauth.getMobileSessionpassword{password}username{username}{secret}";
-                var response = await httpClient.PostAsync($"{request}&api_sig={EncodeSignature(presig)}&format=json", null);
-                response.EnsureSuccessStatusCode();
+                    var passwordDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_PASSWORD, isPassword: true);
+                    passwordDialog.ShowDialog();
+                    string password;
+                    if (passwordDialog.OK)
+                    {
+                        password = passwordDialog.Response;
+                    }
+                    else return;
+
+                    var request = $"https://ws.audioscrobbler.com/2.0/?method=auth.getMobileSession&api_key={apiKey}";
+                    var presig = $"api_key{apiKey}methodauth.getMobileSessionpassword{password}username{username}{secret}";
+                    response = await httpClient.PostAsync($"{request}&api_sig={EncodeSignature(presig)}&format=json", new FormUrlEncodedContent(new Dictionary<string, string>()
+                    {
+                        { "username", username },
+                        { "password", password },
+                    }));
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var result = MessageBox.Show("Failed to log in. Check that your password is correct, and try again.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        if (result == MessageBoxResult.Cancel)
+                        {
+                            App.Config.IntegrateLastFM = false;
+                            return;
+                        }
+                    }
+                }
+                while (!response.IsSuccessStatusCode);
 
                 var json = JObject.Parse(await response.Content.ReadAsStringAsync());
                 sessionKey = json?.SelectToken("session.key").ToString();
@@ -96,9 +114,14 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     lastTrackListenedTo = track;
                     timeListeningStarted = DateTime.UtcNow;
 
-                    var updateNowPlayingRequest = $"https://www.audioscrobbler.com/2.0/?method=track.updateNowPlaying&artist={track.Artists[0]}&track={track.Title}&album={track.Album}&api_key={apiKey}&sk={sessionKey}";
+                    var updateNowPlayingRequest = $"https://www.audioscrobbler.com/2.0/?method=track.updateNowPlaying&api_key={apiKey}&sk={sessionKey}";
                     var updateNowPlayingSignature = $"album{track.Album}api_key{apiKey}artist{track.Artists[0]}methodtrack.updateNowPlayingsk{sessionKey}track{track.Title}{secret}";
-                    await httpClient.PostAsync($"{updateNowPlayingRequest}&api_sig={EncodeSignature(updateNowPlayingSignature)}&format=json", null);
+                    await httpClient.PostAsync($"{updateNowPlayingRequest}&api_sig={EncodeSignature(updateNowPlayingSignature)}&format=json", new FormUrlEncodedContent(new Dictionary<string, string>()
+                    {
+                        { "artist", track.Artists[0] },
+                        { "track", track.Title },
+                        { "album", track.Album }
+                    }));
 
                     LoggingHandler.Log($"last.fm: updateNowPlaying, request: {updateNowPlayingRequest}");
 
@@ -109,9 +132,15 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                         break;
 
                     var timeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                    var scrobbleRequest = $"https://www.audioscrobbler.com/2.0/?method=track.scrobble&artist={lastTrackListenedTo.Artists[0]}&track={lastTrackListenedTo.Title}&timestamp={timeStamp}&album={lastTrackListenedTo.Album}&api_key={apiKey}&sk={sessionKey}";
+                    var scrobbleRequest = $"https://www.audioscrobbler.com/2.0/?method=track.scrobble&api_key={apiKey}&sk={sessionKey}";
                     var scrobbleSignature = $"album{lastTrackListenedTo.Album}api_key{apiKey}artist{lastTrackListenedTo.Artists[0]}methodtrack.scrobblesk{sessionKey}timestamp{timeStamp}track{lastTrackListenedTo.Title}{secret}";
-                    var scrobbleResponse = await httpClient.PostAsync($"{scrobbleRequest}&api_sig={EncodeSignature(scrobbleSignature)}&format=json", null);
+                    var scrobbleResponse = await httpClient.PostAsync($"{scrobbleRequest}&api_sig={EncodeSignature(scrobbleSignature)}&format=json", new FormUrlEncodedContent(new Dictionary<string, string>()
+                    {
+                        { "artist", lastTrackListenedTo.Artists[0] },
+                        { "track", lastTrackListenedTo.Title },
+                        { "timestamp", timeStamp.ToString() },
+                        { "album", lastTrackListenedTo.Album },
+                    }));
 
                     LoggingHandler.Log($"last.fm: scrobbling recently played track, request: {scrobbleRequest}");
 

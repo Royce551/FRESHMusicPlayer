@@ -40,6 +40,7 @@ namespace FRESHMusicPlayer.Handlers
         {
             if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
 
+            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
         }
 
@@ -47,6 +48,7 @@ namespace FRESHMusicPlayer.Handlers
         {
             if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
 
+            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
         }
 
@@ -68,6 +70,8 @@ namespace FRESHMusicPlayer.Handlers
         {
             var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"), Type = NotificationType.Progress };
             dispatcher.Invoke(() => notificationHandler.Add(notification));
+
+            LoggingHandler.Log("Processing library metadata...");
 
             var startTime = DateTime.Now;
             int? tracksToProcess = null;
@@ -107,11 +111,10 @@ namespace FRESHMusicPlayer.Handlers
 
         public override async Task ImportAsync(string path)
         {
-            await base.ImportAsync(path);
-
             if (App.Config.AutoLibrary) path = HandleAutoLibrary(new string[] { path })[0];
 
-            TracksAdded?.Invoke(null, new string[] { path });
+            LoggingHandler.Log($"Importing {path}");
+            await base.ImportAsync(path);
         }
 
         public override void Remove(string path)

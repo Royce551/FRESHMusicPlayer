@@ -245,7 +245,7 @@ namespace FRESHMusicPlayer.Pages.Library
                     albums.Sort();
                     foreach (var album in albums)
                     {
-                        var tracksInAlbum = tracks.Where(x => x.Album == album);
+                        var tracksInAlbum = tracks.Where(x => x.Album == album).OrderBy(x => x.TrackNumber);
                         window.Dispatcher.Invoke(() => TracksPanel.Items.Add(new LibraryHeader(window, album, tracksInAlbum.Select(x => x.Path).ToList())));
                         foreach (var thing in tracksInAlbum)
                         {
