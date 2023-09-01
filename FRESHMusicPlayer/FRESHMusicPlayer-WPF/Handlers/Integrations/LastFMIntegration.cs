@@ -67,7 +67,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
                     if (!response.IsSuccessStatusCode)
                     {
-                        var result = MessageBox.Show("Failed to log in. Check that your password is correct, and try again.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        var result = MessageBox.Show("Failed to log in. Check that your credentials are correct, and click OK try again.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Error);
+
                         if (result == MessageBoxResult.Cancel)
                         {
                             App.Config.IntegrateLastFM = false;
