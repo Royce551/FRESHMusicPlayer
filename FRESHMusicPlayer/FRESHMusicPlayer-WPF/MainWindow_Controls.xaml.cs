@@ -269,6 +269,20 @@ namespace FRESHMusicPlayer
                             return false;
                         }
                     });
+                    NotificationHandler.Add(new Notification
+                    {
+                        ButtonText = "Reimport all tracks",
+                        OnButtonClicked = () =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                var tracks = Library.GetAllTracks().Select(x => x.Path).Distinct();
+                                Dispatcher.Invoke(() => Library.Nuke(false));
+                                await Library.ImportAsync(tracks.ToArray());
+                            });
+                            return false;
+                        }
+                    });
                     break;
             }
         }

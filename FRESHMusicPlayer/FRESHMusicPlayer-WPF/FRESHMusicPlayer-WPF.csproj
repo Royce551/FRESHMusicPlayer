@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Configurations>Debug;Release;Blueprint;BlueprintPackageUpdater;ReleasePackageUpdater</Configurations>
+    <Platforms>AnyCPU;ARM64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>

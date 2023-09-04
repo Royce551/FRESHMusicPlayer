@@ -299,7 +299,7 @@ namespace FRESHMusicPlayer
         public Tab CurrentTab = Tab.Tracks;
         public Pane CurrentPane = Pane.None;
 
-        public bool IsControlsBoxVisible { get; private set; } = false;
+        public bool IsControlsBoxVisible { get; private set; } = true;
 
         public void SetCoverArtVisibility(bool mode)
         {
@@ -654,34 +654,6 @@ namespace FRESHMusicPlayer
                     }
                 }
             };
-            //autoImportPathWatcher.Deleted += (s, e) =>
-            //{
-            //    LoggingHandler.Log($"Auto Import: {e.FullPath} was removed, removing...");
-
-            //    var attributes = File.GetAttributes(e.FullPath);
-            //    if (attributes.HasFlag(FileAttributes.Directory))
-            //    {
-            //        var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
-            //                    .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
-            //        foreach (var file in files)
-            //        {
-            //            if (Library.GetAllTracks().Select(x => x.Path).Contains(file))
-            //                Library.Remove(file);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && Library.GetAllTracks().Select(x => e.FullPath).Contains(e.FullPath))
-            //            Library.Remove(e.FullPath);
-            //    }
-            //};
-            //autoImportPathWatcher.Renamed += async (s, e) =>
-            //{
-            //    LoggingHandler.Log($"Auto Import: {e.FullPath} was changed, importing...");
-
-            //    if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && !Library.GetAllTracks().Select(x => e.FullPath).Contains(e.FullPath))
-            //        await Library.ImportAsync(e.FullPath);
-            //};
 
             autoImportFileWatches.Add(autoImportPathWatcher);
         }
@@ -691,10 +663,9 @@ namespace FRESHMusicPlayer
             LoggingHandler.Log("Auto Import: Clearing all watchers");
 
             foreach (var watcher in autoImportFileWatches)
-            {
                 watcher.Dispose();
-                autoImportFileWatches.Remove(watcher);
-            }
+
+            autoImportFileWatches.Clear();
         }
     }
 }

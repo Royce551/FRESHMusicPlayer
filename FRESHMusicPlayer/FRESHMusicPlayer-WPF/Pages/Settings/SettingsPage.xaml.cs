@@ -403,12 +403,27 @@ namespace FRESHMusicPlayer.Pages
 
         private async void Maintenence_UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            await Task.Run(async () =>
+
+            var tracks = window.Library.GetAllTracks().Select(x => x.Path);
+            var tracksWithoutDuplicates = tracks.Distinct();
+
+            var tracksToRemove = tracks.Except(tracksWithoutDuplicates);
+            foreach (var track in tracksToRemove)
+                window.Library.Remove(track);
+
+            var remainingTracks = window.Library.GetAllTracks();
+            foreach (var track in remainingTracks)
+                if (!track.Path.StartsWith("http") && !File.Exists(track.Path))
+                    window.Library.Remove(track.Path);
+
+            var remainingTracks2 = window.Library.GetAllTracks();
+            foreach (var track in remainingTracks2)
             {
-                var tracks = window.Library.GetAllTracks().Select(x => x.Path).Distinct();
-                Dispatcher.Invoke(() => window.Library.Nuke(false));
-                await window.Library.ImportAsync(tracks.ToArray());
-            });
+                track.HasBeenProcessed = false;
+                window.Library.Database.GetCollection<DatabaseTrack>(GUILibrary.TracksCollectionName).Update(track);
+            }
+
+            await window.Library.ProcessDatabaseMetadataAsync();
         }
 
         private async void General_AddFolderButton_Click(object sender, RoutedEventArgs e)

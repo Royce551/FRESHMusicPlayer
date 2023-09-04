@@ -174,9 +174,10 @@ namespace FRESHMusicPlayer.Pages
 
             if (isMouseMoving) return;
             if (window.IsMouseOver && !IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
+            if (!window.IsControlsBoxVisible) return;
+
             controlDismissTimer.Stop();
-            if (window.IsControlsBoxVisible) window.HideControlsBox();
-            
+            window.HideControlsBox();
             Mouse.OverrideCursor = Cursors.None;
             TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;
             await window.HideAuxilliaryPane();
@@ -190,12 +191,12 @@ namespace FRESHMusicPlayer.Pages
                 if (Math.Abs(position.X - lastMouseMovePosition.X) > SystemParameters.MinimumHorizontalDragDistance ||
                     Math.Abs(position.Y - lastMouseMovePosition.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    if (!controlDismissTimer.IsEnabled)
+                    if (!controlDismissTimer.IsEnabled && !window.IsControlsBoxVisible)
                     {
-                        if (!window.IsControlsBoxVisible) window.ShowControlsBox();
-                        controlDismissTimer.Start();
+                        window.ShowControlsBox();
                         Mouse.OverrideCursor = null;
                         TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Visible;
+                        controlDismissTimer.Start();     
                     }
                     isMouseMoving = true;
                 }
