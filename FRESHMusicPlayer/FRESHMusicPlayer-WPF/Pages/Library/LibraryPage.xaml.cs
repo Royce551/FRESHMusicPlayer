@@ -373,14 +373,14 @@ namespace FRESHMusicPlayer.Pages.Library
         private void QueueAllButton_Click(object sender, RoutedEventArgs e)
         {
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            window.Player.Queue.Add(tracks);
+            window.AddToQueueAndHandleAutoQueue(tracks);
         }
 
         private async void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
             window.Player.Queue.Clear();
             string[] tracks = TracksPanel.Items.OfType<SongEntry>().Select(x => x.FilePath).ToArray(); // avoids firing queue changed event too much
-            window.Player.Queue.Add(tracks);
+            window.AddToQueueAndHandleAutoQueue(tracks);
             await window.Player.PlayAsync();
         }
 

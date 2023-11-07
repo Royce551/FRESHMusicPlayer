@@ -54,13 +54,13 @@ namespace FRESHMusicPlayer.Pages.Library
 
         private void EnqueueAllButton_Click(object sender, RoutedEventArgs e)
         {
-            window.Player.Queue.Add(containedFilePaths.ToArray());
+            window.AddToQueueAndHandleAutoQueue(containedFilePaths.ToArray());
         }
 
         private async void PlayAllButton_Click(object sender, RoutedEventArgs e)
         {
             window.Player.Queue.Clear();
-            window.Player.Queue.Add(containedFilePaths.ToArray());
+            window.AddToQueueAndHandleAutoQueue(containedFilePaths.ToArray());
             await window.Player.PlayAsync();
         }
 

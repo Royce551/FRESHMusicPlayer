@@ -4,6 +4,7 @@ using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
 using LiteDB;
+using SharpCompress.Common;
 using System;
 using System.IO;
 using System.Linq;
@@ -66,6 +67,8 @@ namespace FRESHMusicPlayer
 
             Initialize(initialFile);
         }
+
+       
 
         public async void Initialize(string[] initialFile)
         {
@@ -210,6 +213,22 @@ namespace FRESHMusicPlayer
                     NavigateForward();
                     break;
             }
+        }
+
+        public bool AutoQueueIsQueued = false;
+
+        public void AddToQueueAndHandleAutoQueue(string filePath)
+        {
+            if (AutoQueueIsQueued) Player.Queue.Clear();
+            AutoQueueIsQueued = false;
+            Player.Queue.Add(filePath);
+        }
+
+        public void AddToQueueAndHandleAutoQueue(string[] filePaths)
+        {
+            if (AutoQueueIsQueued) Player.Queue.Clear();
+            AutoQueueIsQueued = false;
+            Player.Queue.Add(filePaths);
         }
     }
 }

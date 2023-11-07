@@ -113,7 +113,18 @@ namespace FRESHMusicPlayer.Pages
                     lastQueue = Dispatcher.Invoke(() => QueueList.Items.Cast<QueueEntry>().Select(x => window.Player.Queue.Queue[x.Index]).ToList());
                 });
 
-                if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
+                if (QueueList.Items.Count > 0)
+                {
+                    try
+                    {
+                        if (currentIndex <= QueueList.Items.Count)
+                            (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
+                    }
+                    catch
+                    {
+
+                    }
+                }
                 SetControlEnabled(true);
                 taskIsRunning = false;
                 if (displayqueue.Count != 0) GetResults();
@@ -147,7 +158,7 @@ namespace FRESHMusicPlayer.Pages
             dialog.Filter = "Audio Files|*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac|Other|*";
             if (dialog.ShowDialog() == true)
             {
-                window.Player.Queue.Add(dialog.FileName);
+                window.AddToQueueAndHandleAutoQueue(dialog.FileName);
             }
         }
 
@@ -171,7 +182,7 @@ namespace FRESHMusicPlayer.Pages
                         });
                         continue;
                     }
-                    window.Player.Queue.Add(s);
+                    window.AddToQueueAndHandleAutoQueue(s);
                 }
             }
         }

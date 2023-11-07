@@ -28,6 +28,7 @@ namespace FRESHMusicPlayer.Pages.Library
         private NotificationHandler notificationHandler;
         private GUILibrary library;
         private bool isMissing = false;
+        private int index;
         public SongEntry(string filePath, string[] artists, string album, string title, MainWindow window, NotificationHandler notificationHandler, GUILibrary library)
         {
             this.window = window;
@@ -84,7 +85,16 @@ namespace FRESHMusicPlayer.Pages.Library
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
                 if (window.Player.FileLoaded) window.Player.Queue.Clear();
-                await window.Player.PlayAsync(FilePath);
+
+                var listBox = Parent as ListBox;
+                var listTracks = listBox.Items.OfType<SongEntry>();
+                var thisTrackIndex = listTracks.ToList().FindIndex(x => x == this);
+
+                window.AddToQueueAndHandleAutoQueue(listTracks.Select(x => x.FilePath).ToArray());
+                window.Player.Queue.Position = thisTrackIndex;
+                await window.Player.PlayAsync();
+
+                window.AutoQueueIsQueued = true;
             }
             else
             {
@@ -115,7 +125,7 @@ namespace FRESHMusicPlayer.Pages.Library
             }
         }
 
-        private void QueueButtonClick(object sender, RoutedEventArgs e) => window.Player.Queue.Add(FilePath);
+        private void QueueButtonClick(object sender, RoutedEventArgs e) => window.AddToQueueAndHandleAutoQueue(FilePath);
 
         private void PlayNextContext_Click(object sender, RoutedEventArgs e)
         {

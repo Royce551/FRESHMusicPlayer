@@ -78,7 +78,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             foreach (SongEntry entry in TracksPanel.Items)
             {
-                window.Player.Queue.Add(entry.FilePath);
+                window.AddToQueueAndHandleAutoQueue(entry.FilePath);
             }
         }
 
@@ -86,7 +86,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             foreach (SongEntry entry in TracksPanel.Items)
             {
-                window.Player.Queue.Add(entry.FilePath);
+                window.AddToQueueAndHandleAutoQueue(entry.FilePath);
             }
             await window.Player.PlayAsync();
         }
