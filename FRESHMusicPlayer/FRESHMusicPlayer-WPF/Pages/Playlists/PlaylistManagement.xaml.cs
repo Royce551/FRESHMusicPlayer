@@ -69,6 +69,21 @@ namespace FRESHMusicPlayer.Pages.Playlists
             if (dialog.ShowDialog() == true)
             {
                 IPlaylistIO reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(dialog.FileName);
+
+                //bool tracksNotInTheLibraryArePresent = false;
+                //foreach (string x in reader.FilePaths)
+                //{
+                //    var track = library.Database.GetCollection<DatabaseTrack>(GUILibrary.TracksCollectionName).FindOne(y => y.Path == x);
+                //    if (track is null)
+                //        tracksNotInTheLibraryArePresent = true;
+                //}
+                //if (tracksNotInTheLibraryArePresent)
+                //{
+                //    var result = MessageBox.Show("The tracks in this playlist that are not in the library need to be imported before the playlist can be imported.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                //    if (result != MessageBoxResult.OK)
+                //        return;
+                //}
+
                 foreach (string s in reader.FilePaths)
                 {
                     if (!File.Exists(s))

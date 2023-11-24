@@ -44,7 +44,7 @@ namespace FRESHMusicPlayer.Pages
             Integration_LastFMCheck.IsChecked = App.Config.IntegrateLastFM;
             //Integration_LastFMSyncLikedCheck.IsChecked = App.Config.SyncLikedLastFMTracks;
             //Integration_LastFMSyncPlaylistsCheck.IsChecked = App.Config.GeneratePlaylistsFromLastFM;
-
+            General_AutoQueueCheck.IsChecked = App.Config.AutoQueue;
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
             switch (App.Config.Language) // TODO: investigate making this less ugly
@@ -221,6 +221,15 @@ namespace FRESHMusicPlayer.Pages
             if (pageInitialized)
             {
                 App.Config.PlaybackTracking = (bool)General_TrackingCheck.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.ProcessSettings();
+            }
+        }
+
+        private void General_AutoQueueChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.AutoQueue = (bool)General_AutoQueueCheck.IsChecked;
                 (Application.Current.MainWindow as MainWindow)?.ProcessSettings();
             }
         }

@@ -106,6 +106,8 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public float EQBand4 { get; set; } = 0;
         public float EQBand5 { get; set; } = 0;
         public float EQBand6 { get; set; } = 0;
+
+        public bool AutoQueue { get; set; } = true;
     }
 
 }

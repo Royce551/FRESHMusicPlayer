@@ -530,6 +530,9 @@ namespace FRESHMusicPlayer
                 TrackingHandler = null;
             }
 
+            if (!App.Config.AutoQueue)
+                AutoQueueIsQueued = false;
+
             var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
             if (version != App.Config.LastRecordedVersion && App.Config.LastRecordedVersion != null)
                 NotificationHandler.Add(new Notification

@@ -86,15 +86,28 @@ namespace FRESHMusicPlayer.Pages.Library
             {
                 if (window.Player.FileLoaded) window.Player.Queue.Clear();
 
-                var listBox = Parent as ListBox;
-                var listTracks = listBox.Items.OfType<SongEntry>();
-                var thisTrackIndex = listTracks.ToList().FindIndex(x => x == this);
+                if (App.Config.AutoQueue)
+                {
+                    var shuffle = window.Player.Queue.Shuffle;
 
-                window.AddToQueueAndHandleAutoQueue(listTracks.Select(x => x.FilePath).ToArray());
-                window.Player.Queue.Position = thisTrackIndex;
+                    if (shuffle)
+                        window.Player.Queue.Shuffle = false;
+
+                    var listBox = Parent as ListBox;
+                    var listTracks = listBox.Items.OfType<SongEntry>();
+                    var thisTrackIndex = listTracks.ToList().FindIndex(x => x == this);
+
+                    window.AddToQueueAndHandleAutoQueue(listTracks.Select(x => x.FilePath).ToArray());
+                    window.Player.Queue.Position = thisTrackIndex;
+
+                    if (shuffle)
+                        window.Player.Queue.Shuffle = true;
+                }
+                else window.AddToQueueAndHandleAutoQueue(FilePath);
+
                 await window.Player.PlayAsync();
 
-                window.AutoQueueIsQueued = true;
+                if (App.Config.AutoQueue) window.AutoQueueIsQueued = true;
             }
             else
             {
