@@ -39,32 +39,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 HttpResponseMessage authResponse;
                 do
                 {
-                    //var userDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_USERNAME);
-                    //userDialog.ShowDialog();
-
-                    //string username;
-                    //if (userDialog.OK)
-                    //{
-                    //    username = userDialog.Response;
-                    //}
-                    //else return;
-
-                    //var passwordDialog = new Forms.FMPTextEntryBox(Properties.Resources.LASTFM_PASSWORD, isPassword: true);
-                    //passwordDialog.ShowDialog();
-                    //string password;
-                    //if (passwordDialog.OK)
-                    //{
-                    //    password = passwordDialog.Response;
-                    //}
-                    //else return;
-
-                    //var request = $"https://ws.audioscrobbler.com/2.0/?method=auth.getMobileSession&api_key={apiKey}";
-                    //var presig = $"api_key{apiKey}methodauth.getMobileSessionpassword{password}username{username}{secret}";
-                    //response = await httpClient.PostAsync($"{request}&api_sig={EncodeSignature(presig)}&format=json", new FormUrlEncodedContent(new Dictionary<string, string>()
-                    //{
-                    //    { "username", username },
-                    //    { "password", password },
-                    //}));
 
                     var authenticationTokenRequest = $"https://ws.audioscrobbler.com/2.0/?method=auth.gettoken&api_key={apiKey}&format=json";
                     var presig = $"api_key{apiKey}methodauth.gettoken";
@@ -88,16 +62,16 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     {
                         { "token", token }
                     }));
-                    //if (!response.IsSuccessStatusCode)
-                    //{
-                    //    var result = MessageBox.Show("Failed to log in. Check that your credentials are correct, and click OK try again.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                    if (!authResponse.IsSuccessStatusCode)
+                    {
+                        var result2 = MessageBox.Show("Failed to log in. Check that your credentials are correct, and click OK try again.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Error);
 
-                    //    if (result == MessageBoxResult.Cancel)
-                    //    {
-                    //        App.Config.IntegrateLastFM = false;
-                    //        return;
-                    //    }
-                    //}
+                        if (result2 == MessageBoxResult.Cancel)
+                        {
+                            App.Config.IntegrateLastFM = false;
+                            return;
+                        }
+                    }
                 }
                 while (!authResponse.IsSuccessStatusCode);
 
@@ -132,6 +106,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
         public async void Update(IMetadataProvider track, PlaybackStatus status)
         {
+            if (string.Join(", ", track.Artists) == string.Empty || track.Album == string.Empty) return;
+
             switch (status)
             {
                 case PlaybackStatus.Playing:
@@ -154,6 +130,8 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                 case PlaybackStatus.Stopped:
                     if (lastTrackListenedTo == null || lastTrackListenedTo.Length < 30 || (DateTime.UtcNow - timeListeningStarted) < TimeSpan.FromSeconds(lastTrackListenedTo.Length / 2))
                         break;
+
+                    if (App.Config.LastFMPaused) break;
 
                     var timeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                     var scrobbleRequest = $"https://www.audioscrobbler.com/2.0/?method=track.scrobble&api_key={apiKey}&sk={sessionKey}";

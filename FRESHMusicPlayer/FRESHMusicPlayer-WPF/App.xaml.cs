@@ -69,6 +69,8 @@ namespace FRESHMusicPlayer
 
             currentWindow = new MainWindow(player, httpClient, initialFiles);
 
+            int initialIndex = 0;
+
             if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
                 currentWindow.FlowDirection = FlowDirection.RightToLeft;
             var persistenceFilePath = Path.Combine(DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
@@ -91,7 +93,12 @@ namespace FRESHMusicPlayer
                 }
                 if (fields[0] != string.Empty)
                 {
-                    initialFiles = new string[] { fields[0] };
+                    if (fields.Count() > 6)
+                    { // new persistence file format from 12.2 or later
+                        initialFiles = fields[6].Split('\n');
+                        initialIndex = int.Parse(fields[7]);
+                    } // old persistence file format
+                    else initialFiles = new string[] { fields[0] };
                     startTime = TimeSpan.FromSeconds(int.Parse(fields[1]));
                 }
             }
@@ -99,6 +106,7 @@ namespace FRESHMusicPlayer
             if (initialFiles != null)
             {
                 player.Queue.Add(initialFiles);
+                player.Queue.Position = initialIndex;
                 await player.PlayAsync();
                 player.CurrentTime = startTime;
                 if (currentWindow is MainWindow mainWindow)

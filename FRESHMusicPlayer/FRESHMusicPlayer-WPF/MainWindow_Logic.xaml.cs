@@ -551,12 +551,12 @@ namespace FRESHMusicPlayer
             if (Player.FileLoaded) // TODO: make this less shitty
             {
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
-                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width}");
+                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width};{string.Join("\n", Player.Queue.Queue)};{Player.Queue.Position - 1}");
             }
             else
             {
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
-                    $";;{Top};{Left};{Height};{Width}");
+                    $";;{Top};{Left};{Height};{Width};;");
             }
         }
 

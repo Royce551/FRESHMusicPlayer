@@ -38,19 +38,19 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         {
             string activity = string.Empty;
             string state = string.Empty;
+            bool showPresence = false;
+
             switch (status)
             {
                 case PlaybackStatus.Playing:
+                    showPresence = true;
                     activity = "play";
                     state = $"by {string.Join(", ", track.Artists)}";
                     break;
                 case PlaybackStatus.Paused:
-                    activity = "pause";
-                    state = "Paused";
-                    break;
                 case PlaybackStatus.Stopped:
-                    client.ClearPresence();
-                    return;
+                    showPresence = false;
+                    break;
             }
         
             var updateTimeStamp = Timestamps.Now; 
@@ -88,20 +88,24 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     largeImageKey = $@"https://coverartarchive.org/release/{matchingAlbum.Id}/front-250";
                     lastAlbum = track.Album;
                 });
-            } 
+            }
 
-            client?.SetPresence(new RichPresence
+            if (showPresence)
             {
-                Details = TruncateBytes(track.Title, 120),
-                State = TruncateBytes(state, 120),
-                Assets = new Assets
+                client?.SetPresence(new RichPresence
                 {
-                    LargeImageKey = largeImageKey,
-                    LargeImageText = TruncateBytes(track.Album, 120),
-                    SmallImageKey = activity
-                },
-                Timestamps = updateTimeStamp,
-            });
+                    Details = TruncateBytes(track.Title, 120),
+                    State = TruncateBytes(state, 120),
+                    Assets = new Assets
+                    {
+                        LargeImageKey = largeImageKey,
+                        LargeImageText = TruncateBytes(track.Album, 120),
+                        SmallImageKey = activity
+                    },
+                    Timestamps = updateTimeStamp,
+                });
+            }
+            else client?.ClearPresence();
         }
 
         public void Close()

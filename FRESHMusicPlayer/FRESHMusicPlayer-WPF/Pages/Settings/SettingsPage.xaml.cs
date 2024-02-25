@@ -255,6 +255,14 @@ namespace FRESHMusicPlayer.Pages
                 (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
             }
         }
+
+        private void Integration_LastFMPausedChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.LastFMPaused = (bool)Integration_LastFMPauseCheck.IsChecked;
+            }
+        }
         //private void Integration_LastFMSyncLikedChanged(object sender, RoutedEventArgs e)
         //{
         //    if (pageInitialized)
