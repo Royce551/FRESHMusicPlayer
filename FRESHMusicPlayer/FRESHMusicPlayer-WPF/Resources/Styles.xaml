@@ -315,7 +315,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border  Background="{DynamicResource ControlColor}" Width="3"/>
+                    <Border  Background="{DynamicResource ControlColor}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -328,7 +328,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border SnapsToDevicePixels="True" Width="3">
+                    <Border SnapsToDevicePixels="True">
                         <Border.Style>
                             <Style>
                                 <Setter Property="Border.Background" Value="{DynamicResource PrimaryTextColor}"/>
@@ -395,11 +395,42 @@
                                 </Grid.ColumnDefinitions>
                                 <Track Grid.Column="0" Grid.Row="1" x:Name="PART_Track" >
                                     <Track.DecreaseRepeatButton>
-                                        <RepeatButton Style="{StaticResource NSliderRepeatButton1}" Margin="0,0,-1,0" Command="Slider.DecreaseLarge" />
+                                        <RepeatButton Style="{StaticResource NSliderRepeatButton1}" Width="3" Margin="0,0,-1,0" Command="Slider.DecreaseLarge" />
                                     </Track.DecreaseRepeatButton>
 
                                     <Track.IncreaseRepeatButton>
-                                        <RepeatButton Style="{StaticResource NSliderRepeatButton}" Margin="-1,0,0,0" Command="Slider.IncreaseLarge" />
+                                        <RepeatButton Style="{StaticResource NSliderRepeatButton}" Width="3" Margin="-1,0,0,0" Command="Slider.IncreaseLarge" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource NSliderThumb}"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Slider">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="1*" MinWidth="{TemplateBinding MinWidth}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Track Grid.Column="1" Grid.Row="0" x:Name="PART_Track" >
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource NSliderRepeatButton1}" Height="3" Margin="0,0,-1,0" Command="Slider.DecreaseLarge" />
+                                    </Track.DecreaseRepeatButton>
+
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource NSliderRepeatButton}" Height="3" Margin="-1,0,0,0" Command="Slider.IncreaseLarge" />
                                     </Track.IncreaseRepeatButton>
                                     <Track.Thumb>
                                         <Thumb Style="{StaticResource NSliderThumb}"/>

@@ -45,6 +45,12 @@ namespace FRESHMusicPlayer.Pages
             //Integration_LastFMSyncLikedCheck.IsChecked = App.Config.SyncLikedLastFMTracks;
             //Integration_LastFMSyncPlaylistsCheck.IsChecked = App.Config.GeneratePlaylistsFromLastFM;
             General_AutoQueueCheck.IsChecked = App.Config.AutoQueue;
+
+            General_UseReplayGain.IsChecked = App.Config.UseReplayGain;
+            General_ReplayGainByTrack.IsChecked = App.Config.PerformReplayGainByTrack;
+            General_ReplayGainByAlbum.IsChecked = App.Config.PerformReplayGainByAlbum;
+            General_ReplayGainPreAmp.Value = App.Config.ReplayGainPreAmp;
+
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
             switch (App.Config.Language) // TODO: investigate making this less ugly
@@ -263,20 +269,41 @@ namespace FRESHMusicPlayer.Pages
                 App.Config.LastFMPaused = (bool)Integration_LastFMPauseCheck.IsChecked;
             }
         }
-        //private void Integration_LastFMSyncLikedChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if (pageInitialized)
-        //    {
-        //        App.Config.SyncLikedLastFMTracks = (bool)Integration_LastFMSyncLikedCheck.IsChecked;
-        //    }
-        //}
-        //private void Integration_LastFMSyncPlaylistsChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if (pageInitialized)
-        //    {
-        //        App.Config.GeneratePlaylistsFromLastFM = (bool)Integration_LastFMSyncPlaylistsCheck.IsChecked;
-        //    }
-        //}
+
+        private void General_UseReplayGainChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.UseReplayGain = (bool)General_UseReplayGain.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+            }
+        }
+        private void General_ReplayGainByTrackChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.PerformReplayGainByTrack = (bool)General_ReplayGainByTrack.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+            }
+        }
+        private void General_ReplayGainByAlbumChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.PerformReplayGainByAlbum = (bool)General_ReplayGainByAlbum.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+            }
+        }
+
+        private void General_ReplayGainPreAmp_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.ReplayGainPreAmp = (float)General_ReplayGainPreAmp.Value;
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+            }
+        }
+
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pageInitialized)
@@ -472,6 +499,8 @@ namespace FRESHMusicPlayer.Pages
             }
             InitFields();
         }
+
+        
     }
     public enum LanguageCombo
     {

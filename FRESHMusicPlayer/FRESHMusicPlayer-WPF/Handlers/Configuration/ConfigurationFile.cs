@@ -108,6 +108,12 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public float EQBand6 { get; set; } = 0;
 
         public bool AutoQueue { get; set; } = true;
+
+        public bool UseReplayGain { get; set; } = true;
+        public bool PerformReplayGainByTrack { get; set; } = false;
+        public bool PerformReplayGainByAlbum { get; set; } = true;
+
+        public float ReplayGainPreAmp { get; set; } = 0f;
     }
 
 }

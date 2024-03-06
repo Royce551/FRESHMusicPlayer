@@ -59,7 +59,7 @@ namespace FRESHMusicPlayer
         }
         private void VolumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Player.Volume = (float)(VolumeBar.Value / 100);
+            Player.Volume = (float)(VolumeBar.Value / 100) * replayGainAdjustment;
         }
         private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
         public void ProgressTick()

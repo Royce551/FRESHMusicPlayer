@@ -191,6 +191,7 @@ namespace FRESHMusicPlayer
             else ProgressIndicator2.Text = "∞";
             SetIntegrations(PlaybackStatus.Playing);
             UpdateEqualizer();
+            UpdateReplayGain();
             UpdatePlayButtonState();
             if (CurrentTrack.CoverArt is null)
             {
@@ -255,6 +256,61 @@ namespace FRESHMusicPlayer
                     equalizableBackend.UpdateEqualizer();
                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
             }
+        }
+
+        private float replayGainAdjustment = 0;
+
+        public void UpdateReplayGain()
+        {
+            if (!App.Config.UseReplayGain)
+            {
+                replayGainAdjustment = 1;
+                return;
+            }
+           
+            if (CurrentTrack is FileMetadataProvider file)
+            {
+                replayGainAdjustment = 1;
+
+                float albumGain = 0;
+                float albumPeak = 1;
+                bool albumGainIsPresent = false;
+
+                float trackGain = 0;
+                float trackPeak = 1;
+                bool trackGainIsPresent = false;
+
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
+                {
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_gain"].Replace("dB", string.Empty).Trim(), out albumGain);
+                    albumGainIsPresent = true;
+                }
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
+                {
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_gain"].Replace("dB", string.Empty).Trim(), out trackGain);
+                    trackGainIsPresent = true;
+                }
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_peak"].Trim(), out albumPeak);
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_peak"].Trim(), out trackPeak);
+
+                float decibelsToAdjust = 0;
+                float peak = 0;
+                if (App.Config.PerformReplayGainByTrack)
+                {
+                    decibelsToAdjust = trackGainIsPresent ? trackGain : albumGain;
+                    peak = trackPeak;
+                }
+                else if (App.Config.PerformReplayGainByAlbum)
+                {
+                    decibelsToAdjust = albumGainIsPresent ? albumGain : trackGain;
+                    peak = albumPeak;
+                }
+                replayGainAdjustment = Math.Min((float)Math.Pow(10, (decibelsToAdjust + App.Config.ReplayGainPreAmp) / 20), (1 / peak));
+                LoggingHandler.Log($"ReplayGain: Specified adjustment is {decibelsToAdjust}dB. Applying adjustment of {replayGainAdjustment}");
+            }
+            Player.Volume = ((float)VolumeBar.Value / 100) * replayGainAdjustment;
         }
 
         public void HandleAccentCoverArt()
