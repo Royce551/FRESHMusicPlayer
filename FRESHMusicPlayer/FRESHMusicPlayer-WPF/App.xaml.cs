@@ -15,6 +15,8 @@ using System.Windows.Markup;
 using System.Threading;
 using System.Globalization;
 using System.Net.Http;
+using ATL.Logging;
+using System.Diagnostics;
 
 namespace FRESHMusicPlayer
 {
@@ -37,10 +39,12 @@ namespace FRESHMusicPlayer
             }
         }
 
+        private ATLLogger atlLogger;
         private Window currentWindow;
         private Player player;
         async void App_Startup(object sender, StartupEventArgs e )
         {
+            atlLogger = new ATLLogger();
             LoggingHandler.Log("Handling configuration...");
             Config = ConfigurationHandler.Read();
             player = new Player { Volume = Config.Volume };
@@ -246,6 +250,22 @@ namespace FRESHMusicPlayer
             }
             LoggingHandler.Log($"There was an unhandled exception:\n{e.Exception}");
             e.Handled = true;
+        }
+    }
+
+    public class ATLLogger : ILogDevice
+    {
+        private Log log = new Log();
+
+        public ATLLogger()
+        {
+            LogDelegator.SetLog(ref log);
+            log.Register(this);
+        }
+
+        public void DoLog(Log.LogItem anItem)
+        {
+            Debug.WriteLine($"ATL: {anItem.Level}, {anItem.Location} - {anItem.Message}");
         }
     }
 }

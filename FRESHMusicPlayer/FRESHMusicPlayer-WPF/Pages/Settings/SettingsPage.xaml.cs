@@ -50,6 +50,7 @@ namespace FRESHMusicPlayer.Pages
             General_ReplayGainByTrack.IsChecked = App.Config.PerformReplayGainByTrack;
             General_ReplayGainByAlbum.IsChecked = App.Config.PerformReplayGainByAlbum;
             General_ReplayGainPreAmp.Value = App.Config.ReplayGainPreAmp;
+            General_ProcessReplayGainAfterImporting.IsChecked = App.Config.ProcessReplayGainAfterImporting;
 
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
@@ -304,6 +305,15 @@ namespace FRESHMusicPlayer.Pages
             }
         }
 
+        private void General_ProcessReplayGainAfterImporting_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.ProcessReplayGainAfterImporting = (bool)General_ProcessReplayGainAfterImporting.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+            }
+        }
+
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pageInitialized)
@@ -500,7 +510,8 @@ namespace FRESHMusicPlayer.Pages
             InitFields();
         }
 
-        
+        private void General_AddReplayGainData_Click(object sender, RoutedEventArgs e) => window.ScanLibraryForReplayGain();
+
     }
     public enum LanguageCombo
     {

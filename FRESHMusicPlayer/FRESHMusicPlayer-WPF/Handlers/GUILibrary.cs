@@ -26,11 +26,11 @@ namespace FRESHMusicPlayer.Handlers
 
         public bool RaiseLibraryChangedEvents { get; set; } = true;
 
-        private readonly NotificationHandler notificationHandler;
+        private readonly MainWindow window;
         private readonly Dispatcher dispatcher;
-        public GUILibrary(LiteDatabase library, NotificationHandler notificationHandler, Dispatcher dispatcher) : base(library)
+        public GUILibrary(LiteDatabase library, MainWindow window, Dispatcher dispatcher) : base(library)
         {
-            this.notificationHandler = notificationHandler;
+            this.window = window;
             this.dispatcher = dispatcher;
         }
 
@@ -57,7 +57,7 @@ namespace FRESHMusicPlayer.Handlers
             base.Nuke(nukePlaylists);
             dispatcher.Invoke(() =>
             {
-                notificationHandler.Add(new Notification
+                window.NotificationHandler.Add(new Notification
                 {
                     ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
                     Type = NotificationType.Success
@@ -69,7 +69,7 @@ namespace FRESHMusicPlayer.Handlers
         public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
             var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"), Type = NotificationType.Progress };
-            dispatcher.Invoke(() => notificationHandler.Add(notification));
+            dispatcher.Invoke(() => window.NotificationHandler.Add(notification));
 
             LoggingHandler.Log("Processing library metadata...");
 
@@ -80,14 +80,17 @@ namespace FRESHMusicPlayer.Handlers
                 if (tracksToProcess is null) tracksToProcess = p;
 
                 notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, p);
-                dispatcher.Invoke(() => notificationHandler.Update(notification));
+                dispatcher.Invoke(() => window.NotificationHandler.Update(notification));
             });
 
             dispatcher.Invoke(() =>
             {
-                notificationHandler.Remove(notification);
+                window.NotificationHandler.Remove(notification);
                 if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, updatedTracks.Select(x => x.Path));
             });
+
+            if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
+
             return updatedTracks;
         }
 

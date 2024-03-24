@@ -91,8 +91,7 @@
                 <RadioButton x:Name="General_ReplayGainByTrack" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Content="Normalize by track" GroupName="RGNormalization" Checked="General_ReplayGainByTrackChanged" Unchecked="General_ReplayGainByTrackChanged"/>
                 <RadioButton x:Name="General_ReplayGainByAlbum" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Margin="0,0,0,10" Content="Normalize by album" GroupName="RGNormalization" Checked="General_ReplayGainByAlbumChanged" Unchecked="General_ReplayGainByAlbumChanged"/>
 
-               
-                <DockPanel LastChildFill="True">
+                <DockPanel LastChildFill="True" Margin="0,0,0,20">
                     <Slider x:Name="General_ReplayGainPreAmp" DockPanel.Dock="Bottom" Orientation="Horizontal" Style="{StaticResource NormalSlider}" Minimum="-15" Maximum="15" SmallChange="0.1" LargeChange="1" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" ValueChanged="General_ReplayGainPreAmp_ValueChanged"/>
                     <DockPanel DockPanel.Dock="Bottom">
                         <TextBlock DockPanel.Dock="Right" Text="+15dB" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryTextColor}"/>
@@ -100,6 +99,9 @@
                     </DockPanel>
                     <TextBlock Text="Pre-amplication for tracks with ReplayGain (values above 0 may reduce dynamics)" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,10" FontSize="14" />
                 </DockPanel>
+
+                <Button x:Name="General_AddReplayGainData" Content="Add ReplayGain data to library" TextBlock.FontSize="16" Margin="0,0,0,5" Click="General_AddReplayGainData_Click"/>
+                <CheckBox x:Name="General_ProcessReplayGainAfterImporting" Content="Add ReplayGain to library after importing" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,15" Checked="General_ProcessReplayGainAfterImporting_ValueChanged" Unchecked="General_ProcessReplayGainAfterImporting_ValueChanged"/>
 
                 <TextBlock x:Name="UpdateHeader" Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 

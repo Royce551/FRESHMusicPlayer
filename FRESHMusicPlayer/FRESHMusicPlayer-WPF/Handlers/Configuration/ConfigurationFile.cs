@@ -114,6 +114,8 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         public bool PerformReplayGainByAlbum { get; set; } = true;
 
         public float ReplayGainPreAmp { get; set; } = 0f;
+
+        public bool ProcessReplayGainAfterImporting { get; set; } = false;
     }
 
 }

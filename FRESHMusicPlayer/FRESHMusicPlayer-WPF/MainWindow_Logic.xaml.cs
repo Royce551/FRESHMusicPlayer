@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Backends;
+﻿using ATL;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
@@ -8,6 +9,7 @@ using FRESHMusicPlayer.Pages.Lyrics;
 using FRESHMusicPlayer.Pages.Playlists;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Utilities.ColorQuantization;
+using NReplayGain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -308,7 +310,7 @@ namespace FRESHMusicPlayer
                     peak = albumPeak;
                 }
                 replayGainAdjustment = Math.Min((float)Math.Pow(10, (decibelsToAdjust + App.Config.ReplayGainPreAmp) / 20), (1 / peak));
-                LoggingHandler.Log($"ReplayGain: Specified adjustment is {decibelsToAdjust}dB. Applying adjustment of {replayGainAdjustment}");
+                LoggingHandler.Log($"ReplayGain: Specified adjustment is {decibelsToAdjust}dB and peak is {peak}. Applying adjustment of {replayGainAdjustment}");
             }
             Player.Volume = ((float)VolumeBar.Value / 100) * replayGainAdjustment;
         }
@@ -681,6 +683,121 @@ namespace FRESHMusicPlayer
                 AddAutoImportFileWatcher(folder);
         }
 
+        public async void ScanLibraryForReplayGain(bool forceScanAll = false)
+        {
+            var library = Library.GetAllTracks();
+
+            var albums = new List<string>();
+            foreach (var track in library)
+                if (!albums.Contains(track.Album)) albums.Add(track.Album);
+
+            var tracksToAdd = library.Count;
+
+            var notification = new Notification { ContentText = $"Adding ReplayGain data to tracks...\n\n{tracksToAdd} tracks remaining", Type = NotificationType.Progress };
+            NotificationHandler.Add(notification);
+
+            await Task.Run(() =>
+            {
+                var tracksToWrite = new List<Track>();
+
+                Parallel.ForEach(albums, (album =>
+                {
+                    var tracks = Library.GetTracksForAlbum(album);
+
+                    bool allTracksInAlbumHaveData = true;
+                    foreach (var track in tracks)
+                    {
+                        var atlTrack = new Track(track.Path);
+                        if (!
+                        (atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain") || 
+                        atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain") ||
+                        atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak") || 
+                        atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak")))
+                        {
+                            allTracksInAlbumHaveData = false;
+                            break;
+                        }
+                    }
+                    if (allTracksInAlbumHaveData && !forceScanAll)
+                    {
+                        tracksToAdd -= tracks.Count;
+                        return;
+                    }
+
+                    var trackGains = new Dictionary<string, TrackGain>();
+                    foreach (var track in tracks)
+                    {
+                        try
+                        {
+                            Debug.WriteLine($"Processing {track.Path}");
+                            var trackGain = ReplayGainUtils.CalculateReplayGainDataForTrack(track.Path);
+                            trackGains.Add(track.Path, trackGain);
+                        }
+                        catch
+                        {
+                            Dispatcher.Invoke(() =>
+                        {
+                            NotificationHandler.Add(new Notification { ContentText = $"ReplayGain data couldn't be added to {track.Path}, likely because it's already open. Close it and then press the rescan button in the settings.", Type = NotificationType.Failure });
+                        });
+                        }
+
+                        tracksToAdd--;
+                        notification.ContentText = $"Adding ReplayGain data to tracks...\n\n{tracksToAdd} tracks remaining";
+                        Dispatcher.Invoke(() => NotificationHandler.Update(notification));
+                    }
+
+                    var albumGain = new AlbumGain();
+                    foreach (var track in trackGains)
+                    {
+                        albumGain.AppendTrackData(track.Value);
+                    }
+
+                    foreach (var track in trackGains)
+                    {
+                        var atlTrack = new Track(track.Key);
+
+                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
+                            atlTrack.AdditionalFields.Add("replaygain_track_gain", $"{track.Value.GetGain()} dB");
+                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
+                            atlTrack.AdditionalFields.Add("replaygain_album_gain", $"{albumGain.GetGain()} dB");
+
+                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
+                            atlTrack.AdditionalFields.Add("replaygain_track_peak", $"{track.Value.GetPeak()}");
+                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
+                            atlTrack.AdditionalFields.Add("replaygain_album_peak", $"{albumGain.GetPeak()}");
+
+                        tracksToWrite.Add(atlTrack);
+
+                        track.Value.Dispose();
+                    }
+                }));
+
+                notification.ContentText = $"Writing ReplayGain data to the library...";
+                Dispatcher.Invoke(() => NotificationHandler.Update(notification));
+
+                foreach (var track in tracksToWrite)
+                {
+                    Debug.WriteLine($"Beginning to write metadata for {track.Path}");
+
+                    try
+                    {
+                        track.Save();
+                    }
+                    catch
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            NotificationHandler.Add(new Notification { ContentText = $"ReplayGain data couldn't be added to {track.Path}, likely because it's already open. Close it and then press the rescan button in the settings.", Type = NotificationType.Failure });
+                        });
+                    }
+
+                    Debug.WriteLine("Saved!");
+                }
+            });
+
+            NotificationHandler.Remove(notification);
+        }
+
         public void AddAutoImportFileWatcher(string folder)
         {
             LoggingHandler.Log($"Auto Import: Added watcher for {folder}");
@@ -726,5 +843,7 @@ namespace FRESHMusicPlayer
 
             autoImportFileWatches.Clear();
         }
+
+       
     }
 }

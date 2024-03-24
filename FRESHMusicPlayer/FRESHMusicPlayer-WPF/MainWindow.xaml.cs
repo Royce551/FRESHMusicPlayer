@@ -86,7 +86,7 @@ namespace FRESHMusicPlayer
 #else
                 library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb3"));
 #endif
-                Library = new GUILibrary(library, NotificationHandler, Dispatcher);
+                Library = new GUILibrary(library, this, Dispatcher);
             }
             catch (IOException) // library is *probably* being used by another FMP, write initial files, hopefully existing FMP will pick them up
             {
