@@ -24,7 +24,7 @@
     </Window.Resources>
     <Grid>
         <DockPanel Panel.ZIndex="1" LastChildFill="False">
-            <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{DynamicResource NavBarColor}">
+            <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{DynamicResource NavBarColor}" LastChildFill="False">
                 <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="TracksTab_MouseDown">
                     <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
                 </Button>
@@ -53,6 +53,13 @@
                         <Path Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
                     </Canvas>
                 </Button>
+                
+                <Button TabIndex="901" Style="{StaticResource LinkButton}" x:Name="SearchButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SEARCH}" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" Click="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
+                    <Canvas>
+                        <Path Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
+                    </Canvas>
+                </Button>
+
                 <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
                 <Button TabIndex="902" Style="{StaticResource LinkButton}" x:Name="NotificationButton" ToolTip="{x:Static resx:Resources.NOTIFICATIONS_TITLE}" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" Click="NotificationButton_Click" Visibility="Collapsed" Cursor="Hand">
                     <!---some manual corrections were applied to keep the icons visually correct-->
@@ -60,11 +67,29 @@
                         <Path Data="{StaticResource NotificationIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
                     </Canvas>
                 </Button>
-                <Button TabIndex="901" Style="{StaticResource LinkButton}" x:Name="SearchButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SEARCH}" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" Click="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
-                    <Canvas>
-                        <Path Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
-                    </Canvas>
-                </Button>
+                <TextBlock x:Name="StatusLabel" Visibility="Collapsed" DockPanel.Dock="Right" Margin="0,0,5,0" Text="Processing library changes..." Foreground="{DynamicResource PrimaryTextColor}" FontSize="12" VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <Trigger Property="TextBlock.Visibility" Value="Visible">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Name="StatusLabelAnimation">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                Storyboard.TargetProperty="Opacity"
+                                                From="1.0" To="0.6" Duration="0:0:2.5"
+                                                AutoReverse="True" RepeatBehavior="Forever"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <RemoveStoryboard BeginStoryboardName="StatusLabelAnimation"/>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </DockPanel>
             <!--Controls Box-->
             <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{DynamicResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5" FlowDirection="LeftToRight">

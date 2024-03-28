@@ -693,7 +693,7 @@ namespace FRESHMusicPlayer
 
             var tracksToAdd = library.Count;
 
-            var notification = new Notification { ContentText = $"Adding ReplayGain data to tracks...\n\n{tracksToAdd} tracks remaining", Type = NotificationType.Progress };
+            var notification = new Notification { ContentText = $"Adding ReplayGain data to tracks...\n\n{tracksToAdd} tracks remaining", StatusBarText = "Adding ReplayGain data to tracks...", Type = NotificationType.Progress };
             NotificationHandler.Add(notification);
 
             await Task.Run(() =>

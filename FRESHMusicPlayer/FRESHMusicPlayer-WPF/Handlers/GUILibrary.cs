@@ -68,7 +68,12 @@ namespace FRESHMusicPlayer.Handlers
 
         public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
-            var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"), Type = NotificationType.Progress };
+            var notification = new Notification 
+            { 
+                ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"), 
+                StatusBarText = "Processing library changes...",
+                Type = NotificationType.Progress 
+            };
             dispatcher.Invoke(() => window.NotificationHandler.Add(notification));
 
             LoggingHandler.Log("Processing library metadata...");

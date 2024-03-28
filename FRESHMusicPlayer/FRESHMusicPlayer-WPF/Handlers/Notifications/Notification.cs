@@ -25,6 +25,10 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         /// </summary>
         public string ButtonText { get; set; } = string.Empty;
         /// <summary>
+        /// The text to show in the status bar, if any
+        /// </summary>
+        public string StatusBarText { get; set; } = null;
+        /// <summary>
         /// The type of notification
         /// </summary>
         public NotificationType Type { get; set; } = NotificationType.Generic;

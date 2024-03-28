@@ -175,6 +175,19 @@ namespace FRESHMusicPlayer
                 NotificationButton.Visibility = Visibility.Collapsed;
                 NotificationCounterLabel.Visibility = Visibility.Collapsed;
             }
+
+            var statusNotification = NotificationHandler.Notifications.FirstOrDefault(x => !string.IsNullOrEmpty(x.StatusBarText));
+            if (statusNotification != default)
+            {
+                StatusLabel.Visibility = Visibility.Visible;
+                StatusLabel.Text = statusNotification.StatusBarText;
+            }
+            else
+            {
+                StatusLabel.Visibility = Visibility.Collapsed;
+                StatusLabel.Text = string.Empty;
+            }
+
             foreach (Notification box in NotificationHandler.Notifications)
             {
                 if (box.DisplayAsToast && !box.Read)
@@ -263,6 +276,7 @@ namespace FRESHMusicPlayer
                     NotificationHandler.Add(new Notification
                     {
                         ButtonText = "Make FMP topmost",
+                        StatusBarText = "Testing!!!",
                         OnButtonClicked = () =>
                         {
                             Topmost = !Topmost;
