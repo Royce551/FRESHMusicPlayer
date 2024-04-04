@@ -47,7 +47,10 @@ namespace FRESHMusicPlayer.Pages
             General_AutoQueueCheck.IsChecked = App.Config.AutoQueue;
 
             General_UseReplayGain.IsChecked = App.Config.UseReplayGain;
-            General_ReplayGainByTrack.IsChecked = App.Config.PerformReplayGainByTrack;
+
+            if (App.Config.PerformReplayGainByTrack) General_ReplayGainByTrack.IsChecked = true;
+            else General_ReplayGainByAlbum.IsChecked = true;
+
             General_ReplayGainByAlbum.IsChecked = App.Config.PerformReplayGainByAlbum;
             General_ReplayGainPreAmp.Value = App.Config.ReplayGainPreAmp;
             General_ProcessReplayGainAfterImporting.IsChecked = App.Config.ProcessReplayGainAfterImporting;
@@ -279,22 +282,6 @@ namespace FRESHMusicPlayer.Pages
                 (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
             }
         }
-        private void General_ReplayGainByTrackChanged(object sender, RoutedEventArgs e)
-        {
-            if (pageInitialized)
-            {
-                App.Config.PerformReplayGainByTrack = (bool)General_ReplayGainByTrack.IsChecked;
-                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
-            }
-        }
-        private void General_ReplayGainByAlbumChanged(object sender, RoutedEventArgs e)
-        {
-            if (pageInitialized)
-            {
-                App.Config.PerformReplayGainByAlbum = (bool)General_ReplayGainByAlbum.IsChecked;
-                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
-            }
-        }
 
         private void General_ReplayGainPreAmp_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -310,7 +297,27 @@ namespace FRESHMusicPlayer.Pages
             if (pageInitialized)
             {
                 App.Config.ProcessReplayGainAfterImporting = (bool)General_ProcessReplayGainAfterImporting.IsChecked;
+            }
+        }
+
+        private void General_ReplayGainByChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                var radioButton = (RadioButton)sender;
+                switch (radioButton.Name)
+                {
+                    case "General_ReplayGainByTrack":
+                        App.Config.PerformReplayGainByTrack = true;
+                        App.Config.PerformReplayGainByAlbum = false;
+                        break;
+                    case "General_ReplayGainByAlbum":
+                        App.Config.PerformReplayGainByTrack = false;
+                        App.Config.PerformReplayGainByAlbum = true;
+                        break;
+                }
                 (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+                window.UpdateControlsBoxColors();
             }
         }
 
