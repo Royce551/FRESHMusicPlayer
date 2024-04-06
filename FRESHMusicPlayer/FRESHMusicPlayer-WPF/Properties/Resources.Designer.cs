@@ -998,6 +998,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Playback.
+        /// </summary>
+        public static string SETTINGS_PLAYBACK {
+            get {
+                return ResourceManager.GetString("SETTINGS_PLAYBACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Playtime logging.
         /// </summary>
         public static string SETTINGS_PLAYBACKTRACKING {

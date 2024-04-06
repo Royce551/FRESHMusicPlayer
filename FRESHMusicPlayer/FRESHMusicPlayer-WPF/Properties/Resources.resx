@@ -436,6 +436,9 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
     <value>You are about to irreversibly clear your library. Are you sure?</value>
   </data>
+  <data name="SETTINGS_PLAYBACK" xml:space="preserve">
+    <value>Playback</value>
+  </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
     <value>Playtime logging</value>
   </data>

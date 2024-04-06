@@ -105,7 +105,7 @@
                 <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <Button x:Name="Updates_CheckUpdatesButton" Content="{x:Static resx:Resources.SETTINGS_UPDATESCHECKNOW}" TextBlock.FontSize="16" Margin="0,0,0,5" Click="Updates_CheckUpdatesButton_Click"/>
 
-                <TextBlock Text="Playback" Style="{StaticResource Header}"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_PLAYBACK}" Style="{StaticResource Header}"/>
                 <TextBlock Text="ReplayGain" Style="{StaticResource Subheader}"/>
                 <CheckBox x:Name="General_UseReplayGain" Content="{x:Static resx:Resources.SETTINGS_REPLAYGAIN_ENABLE}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,15" Checked="General_UseReplayGainChanged" Unchecked="General_UseReplayGainChanged"/>
 
