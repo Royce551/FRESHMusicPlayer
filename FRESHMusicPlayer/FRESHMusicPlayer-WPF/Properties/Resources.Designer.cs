@@ -618,6 +618,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Processing library changes....
+        /// </summary>
+        public static string NOTIFICATION_PROCESSINGLIBRARY_HEADER {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_PROCESSINGLIBRARY_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scanning for new tracks....
         /// </summary>
         public static string NOTIFICATION_SCANNING {

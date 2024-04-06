@@ -71,7 +71,7 @@ namespace FRESHMusicPlayer.Handlers
             var notification = new Notification 
             { 
                 ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"), 
-                StatusBarText = "Processing library changes...",
+                StatusBarText = Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY_HEADER,
                 Type = NotificationType.Progress 
             };
             dispatcher.Invoke(() => window.NotificationHandler.Add(notification));

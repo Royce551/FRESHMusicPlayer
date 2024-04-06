@@ -314,6 +314,9 @@ Missing File: {0}</value>
 
 Newly added tracks might not appear in the artists or albums tabs until processing is complete</value>
   </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY_HEADER" xml:space="preserve">
+    <value>Processing library changes...</value>
+  </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
     <value>Scanning for new tracks...</value>
   </data>
