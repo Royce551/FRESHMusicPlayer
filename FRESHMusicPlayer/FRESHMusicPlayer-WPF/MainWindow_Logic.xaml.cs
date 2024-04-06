@@ -388,8 +388,6 @@ namespace FRESHMusicPlayer
                         return new TrackInfoPage(this);
                     case Pane.Lyrics:
                         return new LyricsPage(this);
-                    case Pane.SoundSettings:
-                        return new SoundSettingsPage(this);
                     case Pane.PlaylistManagement:
                         return new PlaylistManagement(Library, NotificationHandler, CurrentTab, args);
                     default:
@@ -694,7 +692,7 @@ namespace FRESHMusicPlayer
 
             var tracksToAdd = library.Count;
 
-            var notification = new Notification { ContentText = $"Adding ReplayGain data to tracks...\n\n{tracksToAdd} tracks remaining", StatusBarText = "Adding ReplayGain data to tracks...", Type = NotificationType.Progress };
+            var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd), StatusBarText = Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN_HEADER, Type = NotificationType.Progress };
             NotificationHandler.Add(notification);
 
             await Task.Run(() =>
@@ -738,12 +736,12 @@ namespace FRESHMusicPlayer
                         {
                             Dispatcher.Invoke(() =>
                         {
-                            NotificationHandler.Add(new Notification { ContentText = $"ReplayGain data couldn't be added to {track.Path}, likely because it's already open. Close it and then press the rescan button in the settings.", Type = NotificationType.Failure });
+                            NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure, DisplayAsToast = true });
                         });
                         }
 
                         tracksToAdd--;
-                        notification.ContentText = $"Adding ReplayGain data to tracks...\n\n{tracksToAdd} tracks remaining";
+                        notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd);
                         Dispatcher.Invoke(() => NotificationHandler.Update(notification));
                     }
 
@@ -773,7 +771,8 @@ namespace FRESHMusicPlayer
                     }
                 }));
 
-                notification.ContentText = $"Writing ReplayGain data to the library...";
+                notification.ContentText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
+                notification.StatusBarText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
                 Dispatcher.Invoke(() => NotificationHandler.Update(notification));
 
                 foreach (var track in tracksToWrite)
@@ -788,7 +787,7 @@ namespace FRESHMusicPlayer
                     {
                         Dispatcher.Invoke(() =>
                         {
-                            NotificationHandler.Add(new Notification { ContentText = $"ReplayGain data couldn't be added to {track.Path}, likely because it's already open. Close it and then press the rescan button in the settings.", Type = NotificationType.Failure });
+                            NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure });
                         });
                     }
 

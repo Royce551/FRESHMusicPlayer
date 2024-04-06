@@ -65,8 +65,8 @@
                     </ComboBox>
                 </Grid>
                 <CheckBox x:Name="General_TrackingCheck" Content="{x:Static resx:Resources.SETTINGS_PLAYBACKTRACKING}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Checked="General_TrackingChanged" Unchecked="General_TrackingChanged" Margin="0,0,0,5"/>
-                <CheckBox x:Name="General_AutoQueueCheck" Content="Auto queue" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,2" Checked="General_AutoQueueChanged" Unchecked="General_AutoQueueChanged"/>
-                <TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <CheckBox x:Name="General_AutoQueueCheck" Content="{x:Static resx:Resources.SETTINGS_AUTOQUEUE}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,2" Checked="General_AutoQueueChanged" Unchecked="General_AutoQueueChanged"/>
+                <TextBlock Text="{x:Static resx:Resources.SETTINGS_AUTOQUEUE_SUBTEXT}" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextColor}"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_AUTOIMPORT}" Style="{DynamicResource Subheader}"/>
                 <TextBlock x:Name="General_AutoImportTextBlock" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}"/>
@@ -86,7 +86,7 @@
                 <CheckBox x:Name="Integration_LastFMCheck" Content="last.fm" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="Integration_LastFMChanged" Unchecked="Integration_LastFMChanged"/>
                 <!--<CheckBox x:Name="Integration_LastFMSyncLikedCheck" Content="Sync liked tracks" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,5,0,5" Checked="Integration_LastFMSyncLikedChanged" Unchecked="Integration_LastFMSyncLikedChanged"/>
                 <CheckBox x:Name="Integration_LastFMSyncPlaylistsCheck" Content="Generate playlists from last.fm data" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,5" Checked="Integration_LastFMSyncPlaylistsChanged" Unchecked="Integration_LastFMSyncPlaylistsChanged"/>-->
-                <CheckBox x:Name="Integration_LastFMPauseCheck" Content="Pause scrobbling for now" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,0" Checked="Integration_LastFMPausedChanged" Unchecked="Integration_LastFMPausedChanged"/>
+                <CheckBox x:Name="Integration_LastFMPauseCheck" Content="{x:Static resx:Resources.SETTINGS_LASTFM_PAUSESCROBBLING}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,0" Checked="Integration_LastFMPausedChanged" Unchecked="Integration_LastFMPausedChanged"/>
 
                 <TextBlock x:Name="UpdateHeader" Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 
@@ -107,10 +107,10 @@
 
                 <TextBlock Text="Playback" Style="{StaticResource Header}"/>
                 <TextBlock Text="ReplayGain" Style="{StaticResource Subheader}"/>
-                <CheckBox x:Name="General_UseReplayGain" Content="Use ReplayGain loudness normalization" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,15" Checked="General_UseReplayGainChanged" Unchecked="General_UseReplayGainChanged"/>
+                <CheckBox x:Name="General_UseReplayGain" Content="{x:Static resx:Resources.SETTINGS_REPLAYGAIN_ENABLE}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,15" Checked="General_UseReplayGainChanged" Unchecked="General_UseReplayGainChanged"/>
 
-                <RadioButton x:Name="General_ReplayGainByTrack" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Content="Normalize by track" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
-                <RadioButton x:Name="General_ReplayGainByAlbum" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Margin="0,0,0,10" Content="Normalize by album" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
+                <RadioButton x:Name="General_ReplayGainByTrack" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Content="{x:Static resx:Resources.SETTINGS_REPLAYGAIN_BYTRACK}" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
+                <RadioButton x:Name="General_ReplayGainByAlbum" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Margin="0,0,0,10" Content="{x:Static resx:Resources.SETTINGS_REPLAYGAIN_BYALBUM}" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
 
                 <DockPanel LastChildFill="True" Margin="0,0,0,20">
                     <Slider x:Name="General_ReplayGainPreAmp" DockPanel.Dock="Bottom" Orientation="Horizontal" Style="{StaticResource NormalSlider}" Minimum="-15" Maximum="15" SmallChange="0.1" LargeChange="1" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" ValueChanged="General_ReplayGainPreAmp_ValueChanged"/>
@@ -118,11 +118,11 @@
                         <TextBlock DockPanel.Dock="Right" Text="+15dB" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryTextColor}"/>
                         <TextBlock DockPanel.Dock="Left" Text="-15dB" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryTextColor}"/>
                     </DockPanel>
-                    <TextBlock Text="Pre-amplication for tracks with ReplayGain (values above 0 may reduce dynamics)" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,10" FontSize="14" />
+                    <TextBlock Text="{x:Static resx:Resources.SETTINGS_REPLAYGAIN_PREAMP}" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,10" FontSize="14" />
                 </DockPanel>
 
-                <Button x:Name="General_AddReplayGainData" Content="Add ReplayGain data to library" TextBlock.FontSize="16" Margin="0,0,0,5" Click="General_AddReplayGainData_Click"/>
-                <CheckBox x:Name="General_ProcessReplayGainAfterImporting" Content="Add ReplayGain to library after importing" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProcessReplayGainAfterImporting_ValueChanged" Unchecked="General_ProcessReplayGainAfterImporting_ValueChanged"/>
+                <Button x:Name="General_AddReplayGainData" Content="{x:Static resx:Resources.SETTINGS_REPLAYGAIN_ADD}" TextBlock.FontSize="16" Margin="0,0,0,5" Click="General_AddReplayGainData_Click"/>
+                <CheckBox x:Name="General_ProcessReplayGainAfterImporting" Content="{x:Static resx:Resources.SETTINGS_REPLAYGAIN_AUTOADD}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProcessReplayGainAfterImporting_ValueChanged" Unchecked="General_ProcessReplayGainAfterImporting_ValueChanged"/>
 
                 <TextBlock Text="{x:Static resx:Resources.SOUNDSETTINGS_EQ}" FontSize="16" FontWeight="Bold" Margin="-10,5,0,0"/>
                 <DockPanel Margin="0,10,0,0" LastChildFill="False">

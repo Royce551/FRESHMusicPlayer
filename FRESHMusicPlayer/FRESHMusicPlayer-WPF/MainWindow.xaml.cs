@@ -197,11 +197,6 @@ namespace FRESHMusicPlayer
             WritePersistence();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            ShowAuxilliaryPane(Pane.SoundSettings, 335, true);
-        }
-
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             switch (e.ChangedButton)
@@ -230,5 +225,7 @@ namespace FRESHMusicPlayer
             AutoQueueIsQueued = false;
             Player.Queue.Add(filePaths);
         }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Fullscreen);
     }
 }

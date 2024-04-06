@@ -276,7 +276,6 @@ namespace FRESHMusicPlayer
                     NotificationHandler.Add(new Notification
                     {
                         ButtonText = "Make FMP topmost",
-                        StatusBarText = "Testing!!!",
                         OnButtonClicked = () =>
                         {
                             Topmost = !Topmost;

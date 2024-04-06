@@ -169,6 +169,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fullscreen.
+        /// </summary>
+        public static string FULLSCREEN {
+            get {
+                return ResourceManager.GetString("FULLSCREEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Focus mode.
         /// </summary>
         public static string FULLSCREEN_FOCUSMODE {
@@ -223,6 +232,24 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to log in. Check that you granted FRESHMusicPlayer access, and press OK to try again..
+        /// </summary>
+        public static string LASTFM_AUTHENTICATIONFAILED {
+            get {
+                return ResourceManager.GetString("LASTFM_AUTHENTICATIONFAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complete last.fm authentication on the browser window that just opened. Once you&apos;re done, press OK..
+        /// </summary>
+        public static string LASTFM_AUTHENTICATIONPROMPT {
+            get {
+                return ResourceManager.GetString("LASTFM_AUTHENTICATIONPROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully logged in to last.fm as {0}!.
         /// </summary>
         public static string LASTFM_LOGIN_SUCCESSFUL {
@@ -232,29 +259,11 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to last.fm password.
-        /// </summary>
-        public static string LASTFM_PASSWORD {
-            get {
-                return ResourceManager.GetString("LASTFM_PASSWORD", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to An error occured trying to scrobble {0}.
         /// </summary>
         public static string LASTFM_SCROBBLE_FAILED {
             get {
                 return ResourceManager.GetString("LASTFM_SCROBBLE_FAILED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to last.fm username or email.
-        /// </summary>
-        public static string LASTFM_USERNAME {
-            get {
-                return ResourceManager.GetString("LASTFM_USERNAME", resourceCulture);
             }
         }
         
@@ -522,6 +531,35 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Processing ReplayGain data for library...
+        ///
+        ///{0} tracks remaining.
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAIN {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing ReplayGain data for library....
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAIN_HEADER {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAIN_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReplayGain data couldn&apos;t be added to {0}. This might be because it&apos;s already open. Close it and then press the rescan button in the settings..
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAINERROR {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAINERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully cleared your library!.
         /// </summary>
         public static string NOTIFICATION_CLEARSUCCESS {
@@ -621,6 +659,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string NOTIFICATION_UPTODATE_CHANGELOG {
             get {
                 return ResourceManager.GetString("NOTIFICATION_UPTODATE_CHANGELOG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing ReplayGain data to library....
+        /// </summary>
+        public static string NOTIFICATION_WRITINGREPLAYGAIN {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_WRITINGREPLAYGAIN", resourceCulture);
             }
         }
         
@@ -814,6 +861,24 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto queue.
+        /// </summary>
+        public static string SETTINGS_AUTOQUEUE {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOQUEUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them.
+        /// </summary>
+        public static string SETTINGS_AUTOQUEUE_SUBTEXT {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOQUEUE_SUBTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto update mode.
         /// </summary>
         public static string SETTINGS_AUTOUPDATEMODE {
@@ -888,6 +953,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pause scrobbling for now.
+        /// </summary>
+        public static string SETTINGS_LASTFM_PAUSESCROBBLING {
+            get {
+                return ResourceManager.GetString("SETTINGS_LASTFM_PAUSESCROBBLING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to log out of last.fm?.
         /// </summary>
         public static string SETTINGS_LASTFMLOGOUT_WARNING {
@@ -929,6 +1003,60 @@ namespace FRESHMusicPlayer.Properties {
         public static string SETTINGS_PLAYBACKTRACKING {
             get {
                 return ResourceManager.GetString("SETTINGS_PLAYBACKTRACKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add ReplayGain data to library.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_ADD {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_ADD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add ReplayGain data to library after imports.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_AUTOADD {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_AUTOADD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize by album.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_BYALBUM {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_BYALBUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize by track.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_BYTRACK {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_BYTRACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use ReplayGain loudness normalization.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_ENABLE {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_ENABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pre-amplification for tracks with ReplayGain (values above 0 may reduce dynamics).
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_PREAMP {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_PREAMP", resourceCulture);
             }
         }
         
@@ -1059,15 +1187,6 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sound settings.
-        /// </summary>
-        public static string SOUNDSETTINGS {
-            get {
-                return ResourceManager.GetString("SOUNDSETTINGS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Equalizer.
         /// </summary>
         public static string SOUNDSETTINGS_EQ {
@@ -1091,15 +1210,6 @@ namespace FRESHMusicPlayer.Properties {
         public static string SOUNDSETTINGS_EQ_TREBLEBOOST {
             get {
                 return ResourceManager.GetString("SOUNDSETTINGS_EQ_TREBLEBOOST", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sound Settings.
-        /// </summary>
-        public static string SOUNDSETTINGS_HEADER {
-            get {
-                return ResourceManager.GetString("SOUNDSETTINGS_HEADER", resourceCulture);
             }
         }
         

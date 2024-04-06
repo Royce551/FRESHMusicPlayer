@@ -46,6 +46,7 @@ namespace FRESHMusicPlayer.Handlers
                 if (updateInfo.ReleasesToApply.Count == 0) return; // No updates to apply, don't bother
 
                 notification.ContentText = Properties.Resources.NOTIFICATION_INSTALLINGUPDATE;
+                notification.StatusBarText = Properties.Resources.NOTIFICATION_INSTALLINGUPDATE;
                 notificationHandler.Add(notification);
 
                 await mgr.DownloadReleases(updateInfo.ReleasesToApply);
@@ -53,6 +54,7 @@ namespace FRESHMusicPlayer.Handlers
                 if (App.Config.UpdateMode == UpdateMode.Prompt)
                 {
                     notification.ContentText = Properties.Resources.NOTIFICATION_UPDATEREADY;
+                    notification.StatusBarText = Properties.Resources.NOTIFICATION_UPDATEREADY;
                     notification.ButtonText = Properties.Resources.SETTINGS_RESTART_NOW;
                     notification.Type = NotificationType.Success;
                     notification.OnButtonClicked = () =>

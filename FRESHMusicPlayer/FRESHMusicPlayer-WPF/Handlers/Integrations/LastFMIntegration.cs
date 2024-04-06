@@ -1,4 +1,5 @@
 ﻿using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Properties;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
                     Process.Start($"http://www.last.fm/api/auth?api_key={apiKey}&token={token}");
 
-                    var result = MessageBox.Show("Complete last.fm authentication on the browser window that just opened. Once you're done, press OK.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                    var result = MessageBox.Show(Properties.Resources.LASTFM_AUTHENTICATIONPROMPT, MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Cancel)
                     {
                         App.Config.IntegrateLastFM = false;
@@ -64,7 +65,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     }));
                     if (!authResponse.IsSuccessStatusCode)
                     {
-                        var result2 = MessageBox.Show("Failed to log in. Check that your credentials are correct, and click OK try again.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        var result2 = MessageBox.Show(Properties.Resources.LASTFM_AUTHENTICATIONFAILED, MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Error);
 
                         if (result2 == MessageBoxResult.Cancel)
                         {
