@@ -217,6 +217,7 @@ namespace FRESHMusicPlayer
             LoggingHandler.Log("Changing tracks!");
 
             await AnimateSeekBarAsync(0);
+            ProgressTick();
             ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
 
             //Library.Update(Player.FilePath, CurrentTrack);

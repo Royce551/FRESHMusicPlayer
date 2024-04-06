@@ -119,6 +119,9 @@
                                 Property="Height"
                                 Value="6" />
                         </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=IsMouseOver}" Value="True">
+                            <Setter Property="Background" TargetName="CornerScrollBarRectangle" Value="{DynamicResource ControlColor}"/>
+                        </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" TargetName="CornerScrollBarRectangle" Value="{DynamicResource AccentColor}"/>
                         </Trigger>

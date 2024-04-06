@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Handlers;
+﻿using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
@@ -54,6 +55,13 @@ namespace FRESHMusicPlayer.Pages
             General_ReplayGainByAlbum.IsChecked = App.Config.PerformReplayGainByAlbum;
             General_ReplayGainPreAmp.Value = App.Config.ReplayGainPreAmp;
             General_ProcessReplayGainAfterImporting.IsChecked = App.Config.ProcessReplayGainAfterImporting;
+
+            EQBand1.Value = App.Config.EQBand1;
+            EQBand2.Value = App.Config.EQBand2;
+            EQBand3.Value = App.Config.EQBand3;
+            EQBand4.Value = App.Config.EQBand4;
+            EQBand5.Value = App.Config.EQBand5;
+            EQBand6.Value = App.Config.EQBand6;
 
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
@@ -379,6 +387,59 @@ namespace FRESHMusicPlayer.Pages
                 }
             }
         }
+
+        private void UpdateEQValues()
+        {
+            if (window.Player.CurrentBackend is ISupportEqualization equalizableBackend)
+            {
+                App.Config.EQBand1 = (float)EQBand1.Value;
+                App.Config.EQBand2 = (float)EQBand2.Value;
+                App.Config.EQBand3 = (float)EQBand3.Value;
+                App.Config.EQBand4 = (float)EQBand4.Value;
+                App.Config.EQBand5 = (float)EQBand5.Value;
+                App.Config.EQBand6 = (float)EQBand6.Value;
+                window.UpdateEqualizer();
+            }
+        }
+        private void EQBand_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (pageInitialized) UpdateEQValues();
+        }
+
+        private void EQResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            EQBand1.Value = 0;
+            EQBand2.Value = 0;
+            EQBand3.Value = 0;
+            EQBand4.Value = 0;
+            EQBand5.Value = 0;
+            EQBand6.Value = 0;
+            UpdateEQValues();
+        }
+
+        private void EQPresetBassBoostButton_Click(object sender, RoutedEventArgs e)
+        {
+            EQBand1.Value = 3.5;
+            EQBand2.Value = 3;
+            EQBand3.Value = 1;
+            EQBand4.Value = 0;
+            EQBand5.Value = 0;
+            EQBand6.Value = 0;
+            UpdateEQValues();
+        }
+
+        private void EQPresetTrebleBoostButton_Click(object sender, RoutedEventArgs e)
+        {
+            EQBand1.Value = 0;
+            EQBand2.Value = 0;
+            EQBand3.Value = 0;
+            EQBand4.Value = 1;
+            EQBand5.Value = 1.5;
+            EQBand6.Value = 3;
+            UpdateEQValues();
+        }
+
+
         private void Appearance_ThemeChanged(object sender, RoutedEventArgs e)
         {
             if (pageInitialized)

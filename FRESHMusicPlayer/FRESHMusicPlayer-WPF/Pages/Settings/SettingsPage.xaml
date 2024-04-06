@@ -6,7 +6,7 @@
       xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
       xmlns:local="clr-namespace:FRESHMusicPlayer.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="1072" d:DesignWidth="335"
+      d:DesignHeight="1500" d:DesignWidth="335"
       Unloaded="Page_Unloaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="Subheader">
@@ -20,6 +20,9 @@
             <Setter Property="FontSize" Value="18"/>
             
             <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
     </UserControl.Resources>
     <Grid Background="{DynamicResource SecondaryColor}"> 
@@ -85,24 +88,6 @@
                 <CheckBox x:Name="Integration_LastFMSyncPlaylistsCheck" Content="Generate playlists from last.fm data" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,5" Checked="Integration_LastFMSyncPlaylistsChanged" Unchecked="Integration_LastFMSyncPlaylistsChanged"/>-->
                 <CheckBox x:Name="Integration_LastFMPauseCheck" Content="Pause scrobbling for now" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="10,0,0,0" Checked="Integration_LastFMPausedChanged" Unchecked="Integration_LastFMPausedChanged"/>
 
-                <TextBlock Text="ReplayGain" Style="{StaticResource Subheader}"/>
-                <CheckBox x:Name="General_UseReplayGain" Content="Use ReplayGain loudness normalization" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,15" Checked="General_UseReplayGainChanged" Unchecked="General_UseReplayGainChanged"/>
-
-                <RadioButton x:Name="General_ReplayGainByTrack" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Content="Normalize by track" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
-                <RadioButton x:Name="General_ReplayGainByAlbum" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Margin="0,0,0,10" Content="Normalize by album" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
-
-                <DockPanel LastChildFill="True" Margin="0,0,0,20">
-                    <Slider x:Name="General_ReplayGainPreAmp" DockPanel.Dock="Bottom" Orientation="Horizontal" Style="{StaticResource NormalSlider}" Minimum="-15" Maximum="15" SmallChange="0.1" LargeChange="1" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" ValueChanged="General_ReplayGainPreAmp_ValueChanged"/>
-                    <DockPanel DockPanel.Dock="Bottom">
-                        <TextBlock DockPanel.Dock="Right" Text="+15dB" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryTextColor}"/>
-                        <TextBlock DockPanel.Dock="Left" Text="-15dB" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryTextColor}"/>
-                    </DockPanel>
-                    <TextBlock Text="Pre-amplication for tracks with ReplayGain (values above 0 may reduce dynamics)" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,10" FontSize="14" />
-                </DockPanel>
-
-                <Button x:Name="General_AddReplayGainData" Content="Add ReplayGain data to library" TextBlock.FontSize="16" Margin="0,0,0,5" Click="General_AddReplayGainData_Click"/>
-                <CheckBox x:Name="General_ProcessReplayGainAfterImporting" Content="Add ReplayGain to library after importing" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,15" Checked="General_ProcessReplayGainAfterImporting_ValueChanged" Unchecked="General_ProcessReplayGainAfterImporting_ValueChanged"/>
-
                 <TextBlock x:Name="UpdateHeader" Text="{x:Static resx:Resources.SETTINGS_UPDATES}" Style="{StaticResource Subheader}"/>
 
                 <Grid x:Name="UpdateModeGrid" Height="30" Margin="0,0,0,5" >
@@ -119,6 +104,63 @@
                 </Grid>
                 <TextBlock x:Name="Updates_LastCheckedLabel" Text="Last checked" Foreground="{DynamicResource PrimaryTextColor}" FontSize="14" Padding="0,0,0,5"/>
                 <Button x:Name="Updates_CheckUpdatesButton" Content="{x:Static resx:Resources.SETTINGS_UPDATESCHECKNOW}" TextBlock.FontSize="16" Margin="0,0,0,5" Click="Updates_CheckUpdatesButton_Click"/>
+
+                <TextBlock Text="Playback" Style="{StaticResource Header}"/>
+                <TextBlock Text="ReplayGain" Style="{StaticResource Subheader}"/>
+                <CheckBox x:Name="General_UseReplayGain" Content="Use ReplayGain loudness normalization" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,15" Checked="General_UseReplayGainChanged" Unchecked="General_UseReplayGainChanged"/>
+
+                <RadioButton x:Name="General_ReplayGainByTrack" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Content="Normalize by track" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
+                <RadioButton x:Name="General_ReplayGainByAlbum" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Padding="0,0,0,5" Margin="0,0,0,10" Content="Normalize by album" GroupName="RGNormalization" Checked="General_ReplayGainByChanged" Unchecked="General_ReplayGainByChanged"/>
+
+                <DockPanel LastChildFill="True" Margin="0,0,0,20">
+                    <Slider x:Name="General_ReplayGainPreAmp" DockPanel.Dock="Bottom" Orientation="Horizontal" Style="{StaticResource NormalSlider}" Minimum="-15" Maximum="15" SmallChange="0.1" LargeChange="1" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" ValueChanged="General_ReplayGainPreAmp_ValueChanged"/>
+                    <DockPanel DockPanel.Dock="Bottom">
+                        <TextBlock DockPanel.Dock="Right" Text="+15dB" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryTextColor}"/>
+                        <TextBlock DockPanel.Dock="Left" Text="-15dB" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryTextColor}"/>
+                    </DockPanel>
+                    <TextBlock Text="Pre-amplication for tracks with ReplayGain (values above 0 may reduce dynamics)" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,10" FontSize="14" />
+                </DockPanel>
+
+                <Button x:Name="General_AddReplayGainData" Content="Add ReplayGain data to library" TextBlock.FontSize="16" Margin="0,0,0,5" Click="General_AddReplayGainData_Click"/>
+                <CheckBox x:Name="General_ProcessReplayGainAfterImporting" Content="Add ReplayGain to library after importing" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" Margin="0,0,0,5" Checked="General_ProcessReplayGainAfterImporting_ValueChanged" Unchecked="General_ProcessReplayGainAfterImporting_ValueChanged"/>
+
+                <TextBlock Text="{x:Static resx:Resources.SOUNDSETTINGS_EQ}" FontSize="16" FontWeight="Bold" Margin="-10,5,0,0"/>
+                <DockPanel Margin="0,10,0,0" LastChildFill="False">
+                    <Button x:Name="EQPresetBassBoostButton" Content="{x:Static resx:Resources.SOUNDSETTINGS_EQ_BASSBOOST}" Click="EQPresetBassBoostButton_Click"/>
+                    <Button x:Name="EQPresetTrebleBoostButton" Margin="10,0,0,0" Content="{x:Static resx:Resources.SOUNDSETTINGS_EQ_TREBLEBOOST}" Click="EQPresetTrebleBoostButton_Click"/>
+                    <Button x:Name="EQResetButton" Content="{x:Static resx:Resources.RESET}" Click="EQResetButton_Click" DockPanel.Dock="Right" Margin="0,0,10,0"/>
+                </DockPanel>
+
+                <StackPanel Orientation="Horizontal" Height="200" Margin="0,10,0,10" FlowDirection="LeftToRight">
+                    <DockPanel Margin="0,0,15,0">
+                        <TextBlock DockPanel.Dock="Bottom" Text="-12dB" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}" Margin="0,0,0,15"/>
+                        <TextBlock DockPanel.Dock="Bottom" Text="+12dB" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Bottom" Text="60Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                        <Slider x:Name="EQBand1" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
+                    </DockPanel>
+                    <DockPanel Margin="10,0,0,0">
+                        <TextBlock DockPanel.Dock="Bottom" Text="150Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                        <Slider x:Name="EQBand2" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
+                    </DockPanel>
+                    <DockPanel Margin="10,0,0,0">
+                        <TextBlock DockPanel.Dock="Bottom" Text="400Hz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                        <Slider x:Name="EQBand3"  Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
+                    </DockPanel>
+                    <DockPanel Margin="10,0,0,0">
+                        <TextBlock DockPanel.Dock="Bottom" Text="1kHz" HorizontalAlignment="Center"  Foreground="{DynamicResource SecondaryTextColor}"/>
+                        <Slider x:Name="EQBand4" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
+                    </DockPanel>
+                    <DockPanel Margin="10,0,0,0">
+                        <TextBlock DockPanel.Dock="Bottom" Text="2.4kHz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                        <Slider x:Name="EQBand5" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
+                    </DockPanel>
+                    <DockPanel Margin="10,0,0,0">
+                        <TextBlock DockPanel.Dock="Bottom" Text="15kHz" HorizontalAlignment="Center" Foreground="{DynamicResource SecondaryTextColor}"/>
+                        <Slider x:Name="EQBand6" Orientation="Vertical" Width="18" Minimum="-12" Maximum="12" ValueChanged="EQBand_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPlacement="BottomRight" Style="{StaticResource NormalSlider}"/>
+                    </DockPanel>
+                </StackPanel>
 
                 <TextBlock Text="{x:Static resx:Resources.SETTINGS_APPEARANCE}" Style="{StaticResource Header}"/>
 
