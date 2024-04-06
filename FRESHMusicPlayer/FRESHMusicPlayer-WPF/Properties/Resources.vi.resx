@@ -255,6 +255,9 @@ Tệp không thể tìm: {0}</value>
 
 Các bài mới thêm vào có thể không hiện trong vùng Nghệ Sĩ va Đĩa đến khi sau việc xử lý hoàn thành</value>
   </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY_HEADER" xml:space="preserve">
+    <value>Đang xử lý thay đổi trong thư viện...</value>
+  </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
     <value>Đang quét cho bài hát mới...</value>
   </data>
