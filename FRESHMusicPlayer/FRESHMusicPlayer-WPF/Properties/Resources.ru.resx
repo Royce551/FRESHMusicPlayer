@@ -176,10 +176,12 @@
     <value>Неизвестный артист</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value></value>
+    <value>Ничего не воспроизводится</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
-    <value></value>
+    <value>Произошла ошибка при воспроизведении:
+{0}
+Мы перейдем к следующему треку</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
     <value>Плейлисты</value>
