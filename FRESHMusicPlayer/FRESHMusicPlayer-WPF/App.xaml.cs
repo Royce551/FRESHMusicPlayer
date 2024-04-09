@@ -209,17 +209,17 @@ namespace FRESHMusicPlayer
                 window.UpdateControlsBoxColors();
         }
 
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        public static void HandleUnhandledException(Exception e, Window currentWindow)
         {
             string logPath = Path.Combine(DataFolderLocation, "Logs");
             string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-            File.WriteAllText(logPath + fileName, 
+            File.WriteAllText(logPath + fileName,
                 $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}\n" +
                 $"{System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}\n" +
                 $"{Environment.OSVersion.VersionString}\n" +
-                $"{e.Exception}");
-            var message = string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Exception.Message.ToString(), logPath + fileName);
+                $"{e}");
+            var message = string.Format(FRESHMusicPlayer.Properties.Resources.APPLICATION_CRITICALERROR, e.Message.ToString(), logPath + fileName);
             if (currentWindow is MainWindow maybeWindow)
             {
                 try
@@ -248,7 +248,12 @@ namespace FRESHMusicPlayer
             {
                 MessageBox.Show(message);
             }
-            LoggingHandler.Log($"There was an unhandled exception:\n{e.Exception}");
+            LoggingHandler.Log($"There was an unhandled exception:\n{e}");
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            HandleUnhandledException(e.Exception, currentWindow);
             e.Handled = true;
         }
     }

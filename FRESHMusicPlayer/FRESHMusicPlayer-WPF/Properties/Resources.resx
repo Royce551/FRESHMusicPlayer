@@ -287,7 +287,7 @@ We'll skip to the next track for you</value>
 {0} tracks remaining</value>
   </data>
   <data name="NOTIFICATION_ADDINGREPLAYGAINERROR" xml:space="preserve">
-    <value>ReplayGain data couldn't be added to {0}. This might be because it's already open. Close it and then press the rescan button in the settings.</value>
+    <value>ReplayGain data couldn't be added to {0}. If the file is already open, close it and then press the rescan button in settings.</value>
   </data>
   <data name="NOTIFICATION_ADDINGREPLAYGAIN_HEADER" xml:space="preserve">
     <value>Processing ReplayGain data for library...</value>

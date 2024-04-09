@@ -183,44 +183,52 @@ namespace FRESHMusicPlayer
 
         private async void Player_SongChanged(object sender, EventArgs e)
         {
-            if (!InFullscreen) Mouse.OverrideCursor = null;
-            CurrentTrack = Player.Metadata;
-            Title = $"{CurrentTrack.Title} • {string.Join(", ", CurrentTrack.Artists)} - {WindowName}";
-            TitleLabel.Text = CurrentTrack.Title;
-            ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
-            
-            if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
-            else ProgressIndicator2.Text = "∞";
-            SetIntegrations(PlaybackStatus.Playing);
-            UpdateEqualizer();
-            UpdateReplayGain();
-            UpdatePlayButtonState();
-            if (CurrentTrack.CoverArt is null)
+            try
             {
-                CoverArtBox.Source = null;
-                SetCoverArtVisibility(false);
+                if (!InFullscreen) Mouse.OverrideCursor = null;
+                CurrentTrack = Player.Metadata;
+                Title = $"{CurrentTrack.Title} • {string.Join(", ", CurrentTrack.Artists)} - {WindowName}";
+                TitleLabel.Text = CurrentTrack.Title;
+                ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
+
+                if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+                else ProgressIndicator2.Text = "∞";
+                SetIntegrations(PlaybackStatus.Playing);
+                UpdateEqualizer();
+                UpdateReplayGain();
+                UpdatePlayButtonState();
+                if (CurrentTrack.CoverArt is null)
+                {
+                    CoverArtBox.Source = null;
+                    SetCoverArtVisibility(false);
+                }
+                else
+                {
+                    CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
+                    SetCoverArtVisibility(true);
+                }
+                ProgressTimer.Start();
+                if (PauseAfterCurrentTrack && !Player.Paused)
+                {
+                    PlayPauseMethod();
+                    PauseAfterCurrentTrack = false;
+                }
+
+                HandleAccentCoverArt();
+
+                LoggingHandler.Log("Changing tracks!");
+
+                await AnimateSeekBarAsync(0);
+                ProgressTick();
+                ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
+
+                Library.Update(Player.FilePath, CurrentTrack);
             }
-            else
+            catch (Exception ex)
             {
-                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
-                SetCoverArtVisibility(true);
+                // If an actual unhandled exception occurs at this time, FMP Core will get stuck in the loading state, so let's handle it
+                App.HandleUnhandledException(ex, this);
             }
-            ProgressTimer.Start();
-            if (PauseAfterCurrentTrack && !Player.Paused)
-            {
-                PlayPauseMethod();
-                PauseAfterCurrentTrack = false;
-            }
-
-            HandleAccentCoverArt();
-
-            LoggingHandler.Log("Changing tracks!");
-
-            await AnimateSeekBarAsync(0);
-            ProgressTick();
-            ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
-
-            //Library.Update(Player.FilePath, CurrentTrack);
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {

@@ -551,7 +551,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ReplayGain data couldn&apos;t be added to {0}. This might be because it&apos;s already open. Close it and then press the rescan button in the settings..
+        ///   Looks up a localized string similar to ReplayGain data couldn&apos;t be added to {0}. If the file is already open, close it and then press the rescan button in settings..
         /// </summary>
         public static string NOTIFICATION_ADDINGREPLAYGAINERROR {
             get {
