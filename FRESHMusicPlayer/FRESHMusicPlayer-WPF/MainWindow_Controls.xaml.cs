@@ -152,11 +152,34 @@ namespace FRESHMusicPlayer
         }
 
         // NavBar
-        private void TracksTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Tracks);
-        private void ArtistsTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Artists);
-        private void AlbumsTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Albums);
-        private void PlaylistsTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Playlists);
-        private void ImportTab_MouseDown(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Import);
+        private void TracksTab_MouseDown(object sender, RoutedEventArgs e)
+        { 
+            if (CurrentTab == Tab.Fullscreen) ShowAuxilliaryPane(Pane.FullscreenTab, 750, true, null, Tab.Tracks);
+            else ChangeTabs(Tab.Tracks);
+        }
+        private void ArtistsTab_MouseDown(object sender, RoutedEventArgs e)
+        {
+            if (CurrentTab == Tab.Fullscreen) ShowAuxilliaryPane(Pane.FullscreenTab, 750, true, null, Tab.Artists);
+            else ChangeTabs(Tab.Artists);
+        }
+        private void AlbumsTab_MouseDown(object sender, RoutedEventArgs e) {
+            if (CurrentTab == Tab.Fullscreen)
+                ShowAuxilliaryPane(Pane.FullscreenTab, 750, true, null, Tab.Albums);
+            else
+                ChangeTabs(Tab.Albums);
+        }
+        private void PlaylistsTab_MouseDown(object sender, RoutedEventArgs e) {
+            if (CurrentTab == Tab.Fullscreen)
+                ShowAuxilliaryPane(Pane.FullscreenTab, 750, true, null, Tab.Playlists);
+            else
+                ChangeTabs(Tab.Playlists);
+        }
+        private void ImportTab_MouseDown(object sender, RoutedEventArgs e) {
+            if (CurrentTab == Tab.Fullscreen)
+                ShowAuxilliaryPane(Pane.FullscreenTab, 750, true, null, Tab.Import);
+            else
+                ChangeTabs(Tab.Import);
+        }
         private void SettingsButton_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.Settings, 335);
         private void SearchButton_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.Search, 335);
         private void QueueManagementButton_Click(object sender, RoutedEventArgs e) => ShowAuxilliaryPane(Pane.QueueManagement, 335);
@@ -324,7 +347,7 @@ namespace FRESHMusicPlayer
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            ProgressTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            if (CurrentTab != Tab.Fullscreen) ProgressTimer.Interval = TimeSpan.FromMilliseconds(1000);
         }
     }
 }

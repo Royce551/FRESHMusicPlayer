@@ -212,7 +212,7 @@ namespace FRESHMusicPlayer
         public static void HandleUnhandledException(Exception e, Window currentWindow)
         {
             string logPath = Path.Combine(DataFolderLocation, "Logs");
-            string fileName = $"\\{DateTime.Now:M.d.yyyy hh mm tt}.txt";
+            string fileName = $"\\{DateTime.Now:s}.txt".Replace(':', '-');
             if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
             File.WriteAllText(logPath + fileName,
                 $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}\n" +

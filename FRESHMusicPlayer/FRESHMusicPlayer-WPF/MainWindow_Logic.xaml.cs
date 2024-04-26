@@ -50,8 +50,8 @@ namespace FRESHMusicPlayer
         Notifications,
         TrackInfo,
         Lyrics,
-        SoundSettings,
-        PlaylistManagement
+        PlaylistManagement,
+        FullscreenTab
     }
 
     // Code for the "shell" parts of the main window, player, and systemwide logic
@@ -374,7 +374,7 @@ namespace FRESHMusicPlayer
                 CoverArtBoxContainer.Visibility = Visibility.Collapsed;
             else CoverArtBoxContainer.Visibility = Visibility.Visible;
         }
-        public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false, string args = null)
+        public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false, string args = null, Tab fullscreenTab = Tab.Other)
         {
             LoggingHandler.Log($"Showing pane --> {pane}");
             // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
@@ -398,6 +398,21 @@ namespace FRESHMusicPlayer
                         return new LyricsPage(this);
                     case Pane.PlaylistManagement:
                         return new PlaylistManagement(Library, NotificationHandler, CurrentTab, args);
+                    case Pane.FullscreenTab:
+                        switch (fullscreenTab)
+                        {
+                            case Tab.Tracks:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Artists:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Albums:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Playlists:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Import:
+                                return new ImportPage(this);
+                        }
+                        return null;
                     default:
                         return null;
                 }
@@ -418,7 +433,7 @@ namespace FRESHMusicPlayer
                 return;
             }
 
-            if (CurrentPane == pane)
+            if (CurrentPane == pane && CurrentPane != Pane.FullscreenTab)
             {
                 await HideAuxilliaryPane();
                 return;
@@ -518,19 +533,19 @@ namespace FRESHMusicPlayer
             switch (CurrentTab)
             {
                 case Tab.Tracks:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Tracks);
                     tabLabel = TracksTab;
                     break;
                 case Tab.Artists:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Artists);
                     tabLabel = ArtistsTab;
                     break;
                 case Tab.Albums:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Albums);
                     tabLabel = AlbumsTab;
                     break;
                 case Tab.Playlists:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Playlists);
                     tabLabel = PlaylistsTab;
                     break;
                 case Tab.Import:
@@ -539,7 +554,7 @@ namespace FRESHMusicPlayer
                     break;
                 case Tab.Fullscreen:
                     ContentFrame.Content = new FullscreenPage(this, previousMenu);
-                    tabLabel = ImportTab;
+                    tabLabel = null;
                     break;
                 default:
                     tabLabel = null;
@@ -554,7 +569,7 @@ namespace FRESHMusicPlayer
             //if (backLog.Count > 5) backLog.Remove(backLog.Last());
            
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
-            tabLabel.FontWeight = FontWeights.Bold;
+            if (tabLabel != null) tabLabel.FontWeight = FontWeights.Bold;
             ContentFrame.Focus();
             // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
             if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
@@ -692,118 +707,122 @@ namespace FRESHMusicPlayer
 
         public async void ScanLibraryForReplayGain(bool forceScanAll = false)
         {
-            var library = Library.GetAllTracks();
-
-            var albums = new List<string>();
-            foreach (var track in library)
-                if (!albums.Contains(track.Album)) albums.Add(track.Album);
-
-            var tracksToAdd = library.Count;
-
-            var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd), StatusBarText = Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN_HEADER, Type = NotificationType.Progress };
-            NotificationHandler.Add(notification);
-
-            await Task.Run(() =>
+            await Dispatcher.Invoke(async () =>
             {
-                var tracksToWrite = new List<Track>();
+                var library = Library.GetAllTracks();
 
-                Parallel.ForEach(albums, (album =>
+                var albums = new List<string>();
+                foreach (var track in library)
+                    if (!albums.Contains(track.Album)) albums.Add(track.Album);
+
+                var tracksToAdd = library.Count;
+
+                var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd), StatusBarText = Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN_HEADER, Type = NotificationType.Progress };
+                NotificationHandler.Add(notification);
+
+                await Task.Run(() =>
                 {
-                    var tracks = Library.GetTracksForAlbum(album);
+                    var tracksToWrite = new List<Track>();
 
-                    bool allTracksInAlbumHaveData = true;
-                    foreach (var track in tracks)
+                    Parallel.ForEach(albums, (album =>
                     {
-                        var atlTrack = new Track(track.Path);
-                        if (!
-                        (atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain") || 
-                        atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain") ||
-                        atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak") || 
-                        atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak")))
+                        var tracks = Library.GetTracksForAlbum(album);
+
+                        bool allTracksInAlbumHaveData = true;
+                        foreach (var track in tracks)
                         {
-                            allTracksInAlbumHaveData = false;
-                            break;
+                            var atlTrack = new Track(track.Path);
+                            if (!
+                            (atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain") ||
+                            atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain") ||
+                            atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak") ||
+                            atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak")))
+                            {
+                                allTracksInAlbumHaveData = false;
+                                break;
+                            }
                         }
-                    }
-                    if (allTracksInAlbumHaveData && !forceScanAll)
-                    {
-                        tracksToAdd -= tracks.Count;
-                        return;
-                    }
+                        if (allTracksInAlbumHaveData && !forceScanAll)
+                        {
+                            tracksToAdd -= tracks.Count;
+                            return;
+                        }
 
-                    var trackGains = new Dictionary<string, TrackGain>();
-                    foreach (var track in tracks)
+                        var trackGains = new Dictionary<string, TrackGain>();
+                        foreach (var track in tracks)
+                        {
+                            try
+                            {
+                                Debug.WriteLine($"Processing {track.Path}");
+                                var trackGain = ReplayGainUtils.CalculateReplayGainDataForTrack(track.Path);
+                                trackGains.Add(track.Path, trackGain);
+                            }
+                            catch
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure, DisplayAsToast = true });
+                                });
+                            }
+
+                            tracksToAdd--;
+                            notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd);
+                            Dispatcher.Invoke(() => NotificationHandler.Update(notification));
+                        }
+
+                        var albumGain = new AlbumGain();
+                        foreach (var track in trackGains)
+                        {
+                            albumGain.AppendTrackData(track.Value);
+                        }
+
+                        foreach (var track in trackGains)
+                        {
+                            var atlTrack = new Track(track.Key);
+
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
+                                atlTrack.AdditionalFields.Add("replaygain_track_gain", $"{track.Value.GetGain()} dB");
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
+                                atlTrack.AdditionalFields.Add("replaygain_album_gain", $"{albumGain.GetGain()} dB");
+
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
+                                atlTrack.AdditionalFields.Add("replaygain_track_peak", $"{track.Value.GetPeak()}");
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
+                                atlTrack.AdditionalFields.Add("replaygain_album_peak", $"{albumGain.GetPeak()}");
+
+                            tracksToWrite.Add(atlTrack);
+
+                            track.Value.Dispose();
+                        }
+                    }));
+
+                    notification.ContentText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
+                    notification.StatusBarText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
+                    Dispatcher.Invoke(() => NotificationHandler.Update(notification));
+
+                    foreach (var track in tracksToWrite)
                     {
+                        Debug.WriteLine($"Beginning to write metadata for {track.Path}");
+
                         try
                         {
-                            Debug.WriteLine($"Processing {track.Path}");
-                            var trackGain = ReplayGainUtils.CalculateReplayGainDataForTrack(track.Path);
-                            trackGains.Add(track.Path, trackGain);
+                            track.Save();
                         }
                         catch
                         {
                             Dispatcher.Invoke(() =>
-                        {
-                            NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure, DisplayAsToast = true });
-                        });
+                            {
+                                NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure });
+                            });
                         }
 
-                        tracksToAdd--;
-                        notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd);
-                        Dispatcher.Invoke(() => NotificationHandler.Update(notification));
+                        Debug.WriteLine("Saved!");
                     }
+                });
 
-                    var albumGain = new AlbumGain();
-                    foreach (var track in trackGains)
-                    {
-                        albumGain.AppendTrackData(track.Value);
-                    }
-
-                    foreach (var track in trackGains)
-                    {
-                        var atlTrack = new Track(track.Key);
-
-                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
-                            atlTrack.AdditionalFields.Add("replaygain_track_gain", $"{track.Value.GetGain()} dB");
-                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
-                            atlTrack.AdditionalFields.Add("replaygain_album_gain", $"{albumGain.GetGain()} dB");
-
-                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
-                            atlTrack.AdditionalFields.Add("replaygain_track_peak", $"{track.Value.GetPeak()}");
-                        if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
-                            atlTrack.AdditionalFields.Add("replaygain_album_peak", $"{albumGain.GetPeak()}");
-
-                        tracksToWrite.Add(atlTrack);
-
-                        track.Value.Dispose();
-                    }
-                }));
-
-                notification.ContentText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
-                notification.StatusBarText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
-                Dispatcher.Invoke(() => NotificationHandler.Update(notification));
-
-                foreach (var track in tracksToWrite)
-                {
-                    Debug.WriteLine($"Beginning to write metadata for {track.Path}");
-
-                    try
-                    {
-                        track.Save();
-                    }
-                    catch
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure });
-                        });
-                    }
-
-                    Debug.WriteLine("Saved!");
-                }
+                NotificationHandler.Remove(notification);
             });
-
-            NotificationHandler.Remove(notification);
+            
         }
 
         public void AddAutoImportFileWatcher(string folder)

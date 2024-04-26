@@ -19,10 +19,13 @@ namespace FRESHMusicPlayer.Pages.Library
     {
         public string SelectedItem => CategoryPanel.SelectedItem as string;
 
+        private Tab tabCategory;
+
         private readonly MainWindow window;
-        public LibraryPage(MainWindow window, string search = null)
+        public LibraryPage(MainWindow window, string search = null, Tab tabCategory = Tab.Other)
         {
             this.window = window;
+            this.tabCategory = tabCategory;
             window.Library.OtherLibraryUpdateOcccured += Library_LibraryChanged;
             window.Library.TracksAdded += Library_TracksAdded;
             window.Library.TracksRemoved += Library_TracksRemoved;
@@ -59,7 +62,7 @@ namespace FRESHMusicPlayer.Pages.Library
                 foreach (var track in e)
                 {
                     var dbTrack = await window.Library.GetFallbackTrackAsync(track);
-                    switch (window.CurrentTab)
+                    switch (tabCategory)
                     {
                         case Tab.Artists:
                             foreach (var artist in dbTrack.Artists)
@@ -115,10 +118,12 @@ namespace FRESHMusicPlayer.Pages.Library
 
         public async void LoadLibrary() // TODO: figure out how to make this not async void
         {
+            if (tabCategory == Tab.Other) tabCategory = window.CurrentTab;
+
             TracksPanel.Items.Clear();
             CategoryPanel.Items.Clear();
             InfoLabel.Visibility = Visibility.Hidden;
-            switch (window.CurrentTab) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
+            switch (tabCategory) // all of this stuff is here so that i can avoid copying and pasting the same page thrice, maybe there's a better way?
             {
                 case Tab.Tracks:
                     await ShowTracks();
@@ -326,8 +331,8 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             var selectedItem = (string)CategoryPanel.SelectedItem;
             if (selectedItem == null) return;
-            if (window.CurrentTab == Tab.Artists) await ShowTracksforArtist(selectedItem);
-            else if (window.CurrentTab == Tab.Playlists) await ShowTracksforPlaylist(selectedItem);
+            if (tabCategory == Tab.Artists) await ShowTracksforArtist(selectedItem);
+            else if (tabCategory == Tab.Playlists) await ShowTracksforPlaylist(selectedItem);
             else await ShowTracksforAlbum(selectedItem);
         }
         //private void MainWindow_TabChanged(object sender, string e)

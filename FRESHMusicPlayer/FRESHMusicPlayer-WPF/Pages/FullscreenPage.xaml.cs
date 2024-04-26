@@ -41,7 +41,8 @@ namespace FRESHMusicPlayer.Pages
             MoveHandler();
             window.WindowStyle = WindowStyle.None;
             window.WindowState = WindowState.Maximized;
-            window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Collapsed;
+            ProgressTimer_Tick(null, EventArgs.Empty);
+            //window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Collapsed;
         }
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
@@ -157,7 +158,9 @@ namespace FRESHMusicPlayer.Pages
             window.WindowState = WindowState.Normal;
             window.WindowStyle = WindowStyle.SingleBorderWindow;
             window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Visible;
+            window.TracksTab.FontWeight = window.ArtistsTab.FontWeight = window.AlbumsTab.FontWeight = window.PlaylistsTab.FontWeight = window.ImportTab.FontWeight = FontWeights.Bold;
             if (!window.IsControlsBoxVisible) window.ShowControlsBox();
+            if (window.CurrentPane == Pane.FullscreenTab) window.HideAuxilliaryPane();
             if (previousMenu != Tab.Fullscreen) window.ChangeTabs(previousMenu);
             else window.ChangeTabs(Tab.Import);
         }
