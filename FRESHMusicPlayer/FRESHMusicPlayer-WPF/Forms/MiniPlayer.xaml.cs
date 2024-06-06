@@ -1,8 +1,10 @@
 ﻿using FRESHMusicPlayer.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +30,9 @@ namespace FRESHMusicPlayer.Forms
         public MiniPlayer(MainWindow window) // TODO: there's a lot of code copied from the main window here, maybe more stuff could be shared?
         {
             this.window = window;
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
+            if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
+                FlowDirection = FlowDirection.RightToLeft;
             InitializeComponent();
             window.Player.SongChanged += Player_SongChanged;
             window.Player.SongStopped += Player_SongStopped;
@@ -35,6 +40,7 @@ namespace FRESHMusicPlayer.Forms
             if (window.Player.FileLoaded) Player_SongChanged(null, EventArgs.Empty); // call our own song changed because a song is probably already playing at this point
             UpdateControlsState();
             VolumeSlider.Value = window.VolumeBar.Value;
+            
         }
 
         private void ProgressTimer_Tick(object sender, EventArgs e) => ProgressTick();
@@ -106,12 +112,12 @@ namespace FRESHMusicPlayer.Forms
             if (window.Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
                 RepeatButtonData.Data = (Geometry)FindResource("RepeatAllIcon");
-                RepeatButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                RepeatButtonData.Fill = (Brush)FindResource("AccentGradientColor");
             }
             else if (window.Player.Queue.RepeatMode == RepeatMode.RepeatOne)
             {
                 RepeatButtonData.Data = (Geometry)FindResource("RepeatOneIcon");
-                RepeatButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                RepeatButtonData.Fill = (Brush)FindResource("AccentGradientColor");
             }
             else
             {
@@ -119,7 +125,7 @@ namespace FRESHMusicPlayer.Forms
                 RepeatButtonData.Fill = (Brush)FindResource("PrimaryTextColor");
             }
 
-            if (window.Player.Queue.Shuffle) ShuffleButtonData.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+            if (window.Player.Queue.Shuffle) ShuffleButtonData.Fill = (Brush)FindResource("AccentGradientColor");
             else ShuffleButtonData.Fill = (Brush)FindResource("PrimaryTextColor");
 
             if (!window.Player.Paused) PlayPauseButtonData.Data = (Geometry)FindResource("PauseIcon");
@@ -149,7 +155,7 @@ namespace FRESHMusicPlayer.Forms
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            window.Player.Volume = (float)(VolumeSlider.Value / 100);
+            //window.Player.Volume = (float)(VolumeSlider.Value / 100);
             window.VolumeBar.Value = VolumeSlider.Value;
         }
 

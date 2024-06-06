@@ -3,6 +3,7 @@ using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using SharpCompress.Common;
 using System;
@@ -130,7 +131,7 @@ namespace FRESHMusicPlayer
             if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
             {
                 VolumeBar.FlowDirection = FlowDirection.RightToLeft;
-                TitleLabel.FlowDirection = FlowDirection.RightToLeft;
+                TitleRowContainer.FlowDirection = FlowDirection.RightToLeft;
                 ArtistLabel.FlowDirection = FlowDirection.RightToLeft;
                 CoverArtBoxContainer.FlowDirection = FlowDirection.RightToLeft;
                 ArtistLabel.FlowDirection = FlowDirection.RightToLeft;

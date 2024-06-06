@@ -16,10 +16,10 @@
                     <Path Data="{StaticResource VolumeIcon}" Fill="{DynamicResource PrimaryTextColor}" MouseLeftButtonDown="PreviousButtonData_MouseLeftButtonDown"/>
                 </Canvas>
             </Border>
-            <Slider x:Name="VolumeSlider" Style="{StaticResource Progress_Slider}" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,10,0" Maximum="100" ValueChanged="VolumeSlider_ValueChanged"/>
+            <Slider x:Name="VolumeSlider" Style="{StaticResource Progress_Slider}" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,10,0" Maximum="100" Width="104" ValueChanged="VolumeSlider_ValueChanged"/>
             <Button x:Name="FullscreenButton" DockPanel.Dock="Left" Content="{x:Static resx:Resources.MINIPLAYER_BACK}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Click="FullscreenButton_Click"/>
         </DockPanel>
-        <Grid x:Name="ContentGrid" DockPanel.Dock="Bottom" Background="{DynamicResource ForegroundColor}" Height="25" VerticalAlignment="Bottom" MouseDown="ContentGrid_MouseDown">
+        <Grid x:Name="ContentGrid" FlowDirection="LeftToRight" DockPanel.Dock="Bottom" Background="{DynamicResource ForegroundColor}" Height="25" VerticalAlignment="Bottom" MouseDown="ContentGrid_MouseDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="1*"/>

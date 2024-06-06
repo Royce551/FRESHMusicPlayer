@@ -57,37 +57,48 @@ namespace FRESHMusicPlayer.Handlers.Integrations
 
             if (track.Album != lastAlbum)
             {
-                await Task.Run(() =>
+                if (track is FileMetadataProvider atlTrack && atlTrack.ATLTrack.AdditionalFields.ContainsKey("MusicBrainz Album Id"))
                 {
-                    LoggingHandler.Log($"Discord: Searching for cover art for {track.Album}");
+                    LoggingHandler.Log($@"Discord: MusicBrainz MDID provided in file tags: using https://coverartarchive.org/release/{atlTrack.ATLTrack.AdditionalFields["MusicBrainz Album Id"]}/front-250");
 
-                    var integration = new MusicBrainzIntegration(httpClient);
-                    var results = integration.Search($"album:{track.Album} AND artist:{track.Artists[0]}");
-                    if (!integration.Worked)
+                    largeImageKey = $@"https://coverartarchive.org/release/{atlTrack.ATLTrack.AdditionalFields["MusicBrainz Album Id"]}/front-250";
+                    lastAlbum = track.Album;
+                }
+                else
+                {
+                    await Task.Run(() =>
                     {
-                        largeImageKey = "icon";
-                        return;
-                    }
+                        LoggingHandler.Log($"Discord: Searching for cover art for {track.Album}");
 
-                    var matchingAlbum = results.FirstOrDefault();
-                    if (matchingAlbum == default)
-                    {
-                        LoggingHandler.Log("Discord: Using alternative search method to find this album");
-
-                        var results2 = integration.Search($"{track.Album} {string.Join(", ", track.Artists)}");
-                        matchingAlbum = results2.FirstOrDefault();
-                        if (matchingAlbum == default)
+                        var integration = new MusicBrainzIntegration(httpClient);
+                        var results = integration.Search($"album:{track.Album} AND artist:{track.Artists[0]}");
+                        if (!integration.Worked)
                         {
                             largeImageKey = "icon";
                             return;
                         }
-                    }
 
-                    LoggingHandler.Log($@"Discord: Cover art found: https://coverartarchive.org/release/{matchingAlbum.Id}/front-250");
+                        var matchingAlbum = results.FirstOrDefault();
+                        if (matchingAlbum == default)
+                        {
+                            LoggingHandler.Log("Discord: Using alternative search method to find this album");
 
-                    largeImageKey = $@"https://coverartarchive.org/release/{matchingAlbum.Id}/front-250";
-                    lastAlbum = track.Album;
-                });
+                            var results2 = integration.Search($"{track.Album} {string.Join(", ", track.Artists)}");
+                            matchingAlbum = results2.FirstOrDefault();
+                            if (matchingAlbum == default)
+                            {
+                                largeImageKey = "icon";
+                                return;
+                            }
+                        }
+
+                        LoggingHandler.Log($@"Discord: Cover art found: https://coverartarchive.org/release/{matchingAlbum.Id}/front-250");
+
+                        largeImageKey = $@"https://coverartarchive.org/release/{matchingAlbum.Id}/front-250";
+                        lastAlbum = track.Album;
+                    });
+                }
+               
             }
 
             if (showPresence)
@@ -100,7 +111,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     {
                         LargeImageKey = largeImageKey,
                         LargeImageText = TruncateBytes(track.Album, 120),
-                        SmallImageKey = activity
                     },
                     Timestamps = updateTimeStamp,
                 });

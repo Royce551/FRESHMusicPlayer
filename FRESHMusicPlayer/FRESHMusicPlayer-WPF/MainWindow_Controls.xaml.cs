@@ -349,5 +349,22 @@ namespace FRESHMusicPlayer
         {
             if (CurrentTab != Tab.Fullscreen) ProgressTimer.Interval = TimeSpan.FromMilliseconds(1000);
         }
+
+        private void ControlsBoxBorder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            OpenContextMenuButton.Opacity = 1;
+        }
+
+        private void ControlsBoxBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            OpenContextMenuButton.Opacity = 0;
+        }
+
+        private void OpenContextMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            var cm = FindResource("MiscContext") as ContextMenu;
+            cm.PlacementTarget = sender as Button;
+            cm.IsOpen = true;
+        }
     }
 }

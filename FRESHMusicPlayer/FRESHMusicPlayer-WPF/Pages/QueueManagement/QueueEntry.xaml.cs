@@ -91,7 +91,7 @@ namespace FRESHMusicPlayer.Pages
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Visible;
             TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
             PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryextColorOverAccent");
-            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
             PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
         }
 
@@ -100,7 +100,7 @@ namespace FRESHMusicPlayer.Pages
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Collapsed;
             TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
             PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
-            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
             PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColor");
         }
 

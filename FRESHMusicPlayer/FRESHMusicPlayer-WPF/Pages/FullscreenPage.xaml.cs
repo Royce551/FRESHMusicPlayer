@@ -32,6 +32,7 @@ namespace FRESHMusicPlayer.Pages
         {
             this.window = window;
             this.previousMenu = previousMenu;
+
             InitializeComponent();
             window.Player.SongStopped += Player_SongStopped;
             window.Player.SongChanged += Player_SongChanged;
