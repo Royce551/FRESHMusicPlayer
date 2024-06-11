@@ -95,6 +95,9 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
     <value>השהה לאחר השיר הנוכחי</value>
   </data>
+  <data name="FULLSCREEN" xml:space="preserve">
+    <value>מסך מלא</value>
+  </data>
   <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
     <value>מצב מיקוד</value>
   </data>
@@ -113,17 +116,17 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>כתובת קובץ או אתר</value>
   </data>
+  <data name="LASTFM_AUTHENTICATIONFAILED" xml:space="preserve">
+    <value>לא ניתן להיכנס. וודא שהענקת גישה ל-FRESHMusicPlayer ונסה שוב.</value>
+  </data>
+  <data name="LASTFM_AUTHENTICATIONPROMPT" xml:space="preserve">
+    <value>השלם אימות last.fm בחלון הדפדפן שנפתח הרגע. לאחר שתסיים, לחץ "אישור".</value>
+  </data>
   <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
     <value>נכנס ל-last.fm בתור {0} בהצלחה!</value>
   </data>
-  <data name="LASTFM_PASSWORD" xml:space="preserve">
-    <value>סיסמת last.fm</value>
-  </data>
   <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
     <value>אירעה שגיאה בניסיון לסקרבל את {0}</value>
-  </data>
-  <data name="LASTFM_USERNAME" xml:space="preserve">
-    <value>שם משתמש/דוא"ל last.fm</value>
   </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>הוסף לרשימת השמעה</value>
@@ -220,6 +223,17 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
     <value>הודעות</value>
   </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN" xml:space="preserve">
+    <value>מעבד נתוני ReplayGain עבור ספרייה...
+
+נותרו {0} שירים</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAINERROR" xml:space="preserve">
+    <value>לא ניתן להוסיף נתוני ReplayGain ל-{0}. יכול להיות שזה בגלל שהוא כבר פתוח. סגור אותו ולחץ על כפתור הסריקה מחדש בהגדרות.</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN_HEADER" xml:space="preserve">
+    <value>מעבד נתוני ReplayGain עבור ספרייה...</value>
+  </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
     <value>ספרייתך נוקתה בהצלחה</value>
   </data>
@@ -242,6 +256,9 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
 
 ייתכן שרצועות חדשות שנוספו לא יופיעו בכרטיסיות האמנים או האלבומים עד להשלמת העיבוד</value>
   </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY_HEADER" xml:space="preserve">
+    <value>מעבד שינויים בספרייה...</value>
+  </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
     <value>סורק שירים חדשים...</value>
   </data>
@@ -256,6 +273,9 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
     <value>יומן רישום שינויים</value>
+  </data>
+  <data name="NOTIFICATION_WRITINGREPLAYGAIN" xml:space="preserve">
+    <value>מוסיף נתוני ReplayGain לספרייה...</value>
   </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
     <value>ניהול רשימת השמעה</value>
@@ -314,6 +334,12 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
     <value>הוסף תיקיה</value>
   </data>
+  <data name="SETTINGS_AUTOQUEUE" xml:space="preserve">
+    <value>תור אוטומטי</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE_SUBTEXT" xml:space="preserve">
+    <value>מציב באופן אוטומטי את שאר השירים של האמן, האלבום או רשימת ההשמעה בעת הפעלת אחת מהן</value>
+  </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
     <value>מצב עדכון אוטומטי</value>
   </data>
@@ -344,6 +370,9 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
     <value>האם אתה בטוח שאתה רוצה להתנתק מ-last.fm?</value>
   </data>
+  <data name="SETTINGS_LASTFM_PAUSESCROBBLING" xml:space="preserve">
+    <value>השהה סקרבול לעת עתה</value>
+  </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
     <value>תחזוקה</value>
   </data>
@@ -353,8 +382,29 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
     <value>אתה עומד לנקות את הספרייה שלך באופן בלתי-הפיך. האם אתה בטוח?</value>
   </data>
+  <data name="SETTINGS_PLAYBACK" xml:space="preserve">
+    <value>השמעה</value>
+  </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
     <value>רישום זמן ניגון</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ADD" xml:space="preserve">
+    <value>הוסף נתוני ReplayGain לספרייה</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_AUTOADD" xml:space="preserve">
+    <value>הוסף נתוני ReplayGain לספרייה אחרי ייבוא</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYALBUM" xml:space="preserve">
+    <value>נרמל לפי אלבום</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYTRACK" xml:space="preserve">
+    <value>נרמל לפי שיר</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
+    <value>השתמש בנורמליזציה של עוצמת הקול של ReplayGain</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP" xml:space="preserve">
+    <value>הגברה מוקדמת לשירים עם ReplayGain (ערכים מעל 0 עשויים להפחית את הדינמיקה)</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
     <value>אפס את ההגדרות לברירת המחדל</value>
@@ -398,9 +448,6 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
     <value>הצג בקשה לאישור לפני עדכון</value>
   </data>
-  <data name="SOUNDSETTINGS" xml:space="preserve">
-    <value>הגדרות צליל</value>
-  </data>
   <data name="SOUNDSETTINGS_EQ" xml:space="preserve">
     <value>אקולייזר</value>
   </data>
@@ -409,9 +456,6 @@ https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="SOUNDSETTINGS_EQ_TREBLEBOOST" xml:space="preserve">
     <value>הגברת טרבל</value>
-  </data>
-  <data name="SOUNDSETTINGS_HEADER" xml:space="preserve">
-    <value>הגדרות צליל</value>
   </data>
   <data name="TAGEDITOR" xml:space="preserve">
     <value>עורך תגים</value>
