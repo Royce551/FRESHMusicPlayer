@@ -99,7 +99,7 @@
                         <ColumnDefinition x:Name="CenterArea"/>
                         <ColumnDefinition x:Name="RightArea" Width="223"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="CoverArtBoxContainer" TabIndex="1005" Grid.Column="0" Style="{StaticResource LinkButton}" Margin="10,10,0,0" Height="64" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}" Visibility="Collapsed">
+                    <Button x:Name="CoverArtBoxContainer" TabIndex="1005" Grid.Column="0" Style="{StaticResource LinkButton}" Margin="-70,10,0,0" Height="64" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}">
                         <Image x:Name="CoverArtBox" RenderOptions.BitmapScalingMode="HighQuality" ToolTipOpening="CoverArtBox_ToolTipOpening" ToolTipClosing="CoverArtBox_ToolTipClosing" ToolTipService.ShowDuration="12000">
                             <Image.ToolTip>
                                 <ToolTip>

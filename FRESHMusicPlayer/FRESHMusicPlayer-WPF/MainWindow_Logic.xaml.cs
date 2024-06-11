@@ -139,17 +139,20 @@ namespace FRESHMusicPlayer
 
             UpdateControlsBoxColors();
         }
-        private void Player_SongStopped(object sender, PlaybackStoppedEventArgs e)
+        private async void Player_SongStopped(object sender, PlaybackStoppedEventArgs e)
         {
             ProgressTimer.Stop();
             
             if (e.IsEndOfPlayback)
             {
                 Title = WindowName;
-                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
-                CoverArtBox.Source = null;
                 SetIntegrations(PlaybackStatus.Stopped);
                 SetCoverArtVisibility(false);
+                await AnimateSeekBarAsync(0);
+                ProgressBar.Value = 0;
+                ProgressIndicator1.Text = ProgressIndicator2.Text = "00:00";
+                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+                CoverArtBox.Source = null;
             }
             else
             {
@@ -167,7 +170,7 @@ namespace FRESHMusicPlayer
         {
             var sb = new Storyboard();
             sb.FillBehavior = FillBehavior.Stop;
-            var doubleAnimation = new DoubleAnimation(toValue, TimeSpan.FromMilliseconds(500));
+            var doubleAnimation = new DoubleAnimation(toValue, TimeSpan.FromMilliseconds(750));
             doubleAnimation.EasingFunction = new ExponentialEase { Exponent = 8, EasingMode = EasingMode.EaseInOut };
             Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(Slider.ValueProperty));
             sb.Children.Add(doubleAnimation);
@@ -368,11 +371,27 @@ namespace FRESHMusicPlayer
 
         public bool IsControlsBoxVisible { get; private set; } = true;
 
+        private bool coverArtIsVisible = false;
         public void SetCoverArtVisibility(bool mode)
         {
-            if (!mode)
-                CoverArtBoxContainer.Visibility = Visibility.Collapsed;
-            else CoverArtBoxContainer.Visibility = Visibility.Visible;
+            if (mode && !coverArtIsVisible && CurrentPane != Pane.TrackInfo)
+            {
+                InterfaceUtils.GetThicknessAnimation(new Thickness(-70, 10, 0, 0),
+                                                     new Thickness(10, 10, 0, 0),
+                                                     TimeSpan.FromMilliseconds(200),
+                                                     new PropertyPath(MarginProperty),
+                                                     new ExponentialEase { EasingMode = EasingMode.EaseOut, Exponent = 3 }).Begin(CoverArtBoxContainer);
+                coverArtIsVisible = true;
+            }
+            else if (!mode && coverArtIsVisible)
+            {
+                InterfaceUtils.GetThicknessAnimation(new Thickness(10, 10, 0, 0),
+                                                     new Thickness(-70, 10, 0, 0),
+                                                     TimeSpan.FromMilliseconds(200),
+                                                     new PropertyPath(MarginProperty),
+                                                     new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 }).Begin(CoverArtBoxContainer);
+                coverArtIsVisible = false;
+            }
         }
         public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false, string args = null, Tab fullscreenTab = Tab.Other)
         {
