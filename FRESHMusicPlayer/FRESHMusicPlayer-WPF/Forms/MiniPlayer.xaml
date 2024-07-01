@@ -10,7 +10,7 @@
         WindowStyle="None" Background="Transparent" AllowsTransparency="True" Topmost="True" ResizeMode="CanMinimize" LocationChanged="Window_LocationChanged"
         Title="MiniPlayer" Height="55" Width="500">
     <DockPanel x:Name="BackgroundDockPanel" Background="Transparent" MouseEnter="DockPanel_MouseEnter" MouseLeave="DockPanel_MouseLeave">
-        <DockPanel x:Name="TitlebarDockPanel" DockPanel.Dock="Top" Background="{DynamicResource ForegroundColor}" Height="30" LastChildFill="False" MouseDown="TitlebarDockPanel_MouseDown" Opacity="100">
+        <DockPanel x:Name="TitlebarDockPanel" DockPanel.Dock="Top" Background="{DynamicResource ForegroundColor}" Height="30" LastChildFill="False" MouseDown="TitlebarDockPanel_MouseDown" Opacity="100" MouseWheel="TitlebarDockPanel_MouseWheel">
             <Border Background="Transparent" DockPanel.Dock="Right" Width="20" Grid.Column="3" Margin="0,-3.5,10,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Cursor="Hand">
                 <Canvas>
                     <Path Data="{StaticResource VolumeIcon}" Fill="{DynamicResource PrimaryTextColor}" MouseLeftButtonDown="PreviousButtonData_MouseLeftButtonDown"/>

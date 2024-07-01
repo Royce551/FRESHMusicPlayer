@@ -54,6 +54,7 @@ namespace FRESHMusicPlayer.Forms
                     = $"-{TimeSpan.FromSeconds(time.TotalSeconds - Math.Floor(window.Player.CurrentBackend.TotalTime.TotalSeconds)):mm\\:ss}";
             if (App.Config.ShowTimeInWindow) Title = $"{time:mm\\:ss}/{window.Player.CurrentBackend.TotalTime:mm\\:ss} | {MainWindow.WindowName}";
             if (!isDragging) ProgressSlider.Value = time.TotalSeconds;
+            Title = window.Title;
             window.Player.AvoidNextQueue = false;
         }
  
@@ -61,6 +62,7 @@ namespace FRESHMusicPlayer.Forms
         {
             ArtistTextBlock.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             TitleTextBlock.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+            Title = window.Title;
             progressTimer.Stop();
         }
 
@@ -70,6 +72,7 @@ namespace FRESHMusicPlayer.Forms
             TitleTextBlock.Text = window.CurrentTrack.Title;
 
             ProgressSlider.Maximum = window.Player.CurrentBackend.TotalTime.TotalSeconds;
+            Title = window.Title;
             progressTimer.Start();
         }
 
@@ -155,7 +158,6 @@ namespace FRESHMusicPlayer.Forms
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            //window.Player.Volume = (float)(VolumeSlider.Value / 100);
             window.VolumeBar.Value = VolumeSlider.Value;
         }
 
@@ -174,6 +176,11 @@ namespace FRESHMusicPlayer.Forms
                 DockPanel.SetDock(ContentGrid, Dock.Bottom);
                 DockPanel.SetDock(TitlebarDockPanel, Dock.Top);
             }
+        }
+
+        private void TitlebarDockPanel_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            VolumeSlider.Value += e.Delta / 100 * 3;
         }
     }
 }

@@ -90,7 +90,7 @@ namespace FRESHMusicPlayer.Pages
         {
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Visible;
             TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
-            PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryextColorOverAccent");
+            PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
             ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
             PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
         }

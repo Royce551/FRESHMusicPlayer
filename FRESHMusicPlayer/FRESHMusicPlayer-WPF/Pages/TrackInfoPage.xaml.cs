@@ -32,8 +32,10 @@ namespace FRESHMusicPlayer.Pages
 
         private void Player_SongStopped(object sender, PlaybackStoppedEventArgs e)
         {
+            if (!e.IsEndOfPlayback) return;
+
             TrackInfo.Visibility = Visibility.Collapsed;
-            CoverArtBox.Source = ForegroundCoverArtBox.Source = null;
+            CoverArtBox.Source = ForegroundCoverArtBox.Source = CoverArtBoxToolTip.Source = null;
         }
 
         public void PopulateFields()
@@ -44,13 +46,13 @@ namespace FRESHMusicPlayer.Pages
             if (track.CoverArt is null)
             {
                 ForegroundCoverArtBox.Visibility = Visibility.Collapsed;
-                CoverArtBox.Source = ForegroundCoverArtBox.Source = null;
+                CoverArtBox.Source = ForegroundCoverArtBox.Source = CoverArtBoxToolTip.Source = null;
                 CoverArtOverlay.Visibility = Visibility.Hidden;
             }
             else
             {
                 ForegroundCoverArtBox.Visibility = Visibility.Visible;
-                CoverArtBox.Source = ForegroundCoverArtBox.Source = BitmapFrame.Create(new MemoryStream(track.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                CoverArtBox.Source = ForegroundCoverArtBox.Source = CoverArtBoxToolTip.Source = BitmapFrame.Create(new MemoryStream(track.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 CoverArtOverlay.Visibility = Visibility.Visible;
             }
 

@@ -44,6 +44,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public async void Update(IMetadataProvider track, PlaybackStatus status)
         {
             smtc.PlaybackStatus = (MediaPlaybackStatus)status;
+
+            if (status == PlaybackStatus.Changing) return;
+
             var updater = smtc.DisplayUpdater;
             updater.Type = MediaPlaybackType.Music;
             updater.MusicProperties.Artist = string.Join(", ", track.Artists);
@@ -70,7 +73,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public void Close()
         {
             LoggingHandler.Log("Closing SMTC integration");
-            // nothing needs to be done
         }
 
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)

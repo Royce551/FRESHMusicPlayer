@@ -225,7 +225,8 @@ namespace FRESHMusicPlayer
                 ProgressTick();
                 ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
 
-                Library.Update(Player.FilePath, CurrentTrack);
+                if (Library.Database.GetCollection<DatabaseTrack>("Tracks").FindOne((DatabaseTrack x) => x.Path == Player.FilePath) != null)
+                    Library.Update(Player.FilePath, CurrentTrack);
             }
             catch (Exception ex)
             {
@@ -650,12 +651,12 @@ namespace FRESHMusicPlayer
             if (Player.FileLoaded) // TODO: make this less shitty
             {
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
-                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width};{string.Join("\n", Player.Queue.Queue)};{Player.Queue.Position - 1}");
+                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width};{string.Join("\n", Player.Queue.Queue)};{Player.Queue.Position - 1};{AutoQueueIsQueued}");
             }
             else
             {
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
-                    $";;{Top};{Left};{Height};{Width};;");
+                    $";;{Top};{Left};{Height};{Width};;;{AutoQueueIsQueued}");
             }
         }
 
@@ -716,7 +717,7 @@ namespace FRESHMusicPlayer
                             filesToImport.Add(file);
                     }
                 }
-                await Library.ImportAsync(filesToImport);
+                if (filesToImport.Count > 0) await Library.ImportAsync(filesToImport);
             });
             NotificationHandler.Remove(notification);
 

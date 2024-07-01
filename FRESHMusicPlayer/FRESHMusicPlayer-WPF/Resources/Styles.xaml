@@ -711,7 +711,7 @@
                                 <ScaleTransform x:Name="ScaleTransform"/>
                             </Border.RenderTransform>
                         </Border>
-                        <ContentPresenter Grid.Column="1" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Text="{TemplateBinding Content}"/>
                     </Grid>
 
                     <ControlTemplate.Triggers>

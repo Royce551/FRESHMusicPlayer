@@ -34,14 +34,22 @@ namespace FRESHMusicPlayer.Pages
             InitializeComponent();
             PopulateList();
             window.Player.Queue.QueueChanged += Player_QueueChanged;
+            window.Player.SongChanged += Player_SongChanged;
             window.Player.SongStopped += Player_SongStopped;
             timer.Tick += Timer_Tick;
         }
 
+        private void Player_SongChanged(object sender, EventArgs e) => PopulateList();
+
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (!window.Player.FileLoaded) return;
+            if (!window.Player.FileLoaded || window.Player.Paused || window.Player.Queue.RepeatMode != RepeatMode.None)
+            {
+                RemainingTimeLabel.Visibility = Visibility.Hidden;
+                return;
+            }
 
+            RemainingTimeLabel.Visibility = Visibility.Visible;
             var remainingTime = new TimeSpan();
             var queueAsQueueEntries = QueueList.Items.Cast<QueueEntry>().ToList();
 
@@ -204,7 +212,7 @@ namespace FRESHMusicPlayer.Pages
 
         private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Collapsed;
+            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Hidden;
         }
 
         private void QueueList_SelectionChanged(object sender, SelectionChangedEventArgs e)

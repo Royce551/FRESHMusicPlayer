@@ -42,6 +42,8 @@ namespace FRESHMusicPlayer.Handlers
 
             LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
+
+            if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
         }
 
         public override async Task ImportAsync(string[] tracks)
@@ -50,6 +52,8 @@ namespace FRESHMusicPlayer.Handlers
 
             LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
+
+            if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
         }
 
         public override void Nuke(bool nukePlaylists = true)
@@ -93,8 +97,6 @@ namespace FRESHMusicPlayer.Handlers
                 window.NotificationHandler.Remove(notification);
                 if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, updatedTracks.Select(x => x.Path));
             });
-
-            if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
 
             return updatedTracks;
         }

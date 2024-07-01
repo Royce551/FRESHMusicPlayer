@@ -87,7 +87,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             }
             if (iterations <= 5) EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths);
             else EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths.Take(5)) + " + " + (Displayfilepaths.Count - 4);
-            Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
+            Title = $"{string.Join(", ", Displayfilepaths)} - FRESHMusicPlayer Tag Editor";
             unsavedChanges = false;
         }
 
@@ -120,7 +120,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         public async Task SaveButton()
         {
             unsavedChanges = false;
-            Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
+            Title = $"{string.Join(", ", Displayfilepaths)} - FRESHMusicPlayer Tag Editor";
             foreach (string path in FilePaths)
             {
                 if (path != player.FilePath) continue; // We're good
@@ -273,7 +273,7 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             if (state)
             {
                 unsavedChanges = true;
-                Title = $"*{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
+                Title = $"*{string.Join(", ", Displayfilepaths)} - FRESHMusicPlayer Tag Editor";
             }
             else unsavedChanges = false;
         }

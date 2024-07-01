@@ -84,7 +84,7 @@ namespace FRESHMusicPlayer.Pages.Library
         {
             if (FilePath.StartsWith("http") || File.Exists(FilePath))
             {
-                if (window.Player.FileLoaded) window.Player.Queue.Clear();
+                window.Player.Queue.Clear();
 
                 if (App.Config.AutoQueue)
                 {
@@ -103,7 +103,10 @@ namespace FRESHMusicPlayer.Pages.Library
                     if (shuffle)
                         window.Player.Queue.Shuffle = true;
                 }
-                else window.AddToQueueAndHandleAutoQueue(FilePath);
+                else
+                {
+                    window.AddToQueueAndHandleAutoQueue(FilePath);
+                }
 
                 await window.Player.PlayAsync();
 

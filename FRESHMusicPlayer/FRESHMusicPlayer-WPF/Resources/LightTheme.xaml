@@ -8,7 +8,7 @@
     <SolidColorBrush x:Key="BackgroundColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="SecondaryColor" Color="#f2f2f2"/>
     <SolidColorBrush x:Key="ForegroundColor" Color="#e6e6e6"/>
-    <SolidColorBrush x:Key="ControlColor" Color="#A1A1A1"/>
+    <SolidColorBrush x:Key="ControlColor" Color="#cccccc"/>
 
     <SolidColorBrush x:Key="AccentColor" Color="#FF338BC1"/>
     <LinearGradientBrush x:Key="AccentGradientColor" EndPoint="0,0.5" StartPoint="1, 0.5">

@@ -19,7 +19,13 @@
 
         <fmpcontrols:TrackInfo x:Name="TrackInfo" Grid.Row="1" Panel.ZIndex="5" Visibility="Hidden"/>
 
-        <Image x:Name="ForegroundCoverArtBox" Grid.Row="2" Panel.ZIndex="5" RenderOptions.BitmapScalingMode="HighQuality" Width="220" Height="220" Margin="10,0,10,10" Stretch="Uniform"/>
+        <Image x:Name="ForegroundCoverArtBox" Grid.Row="2" Panel.ZIndex="5" RenderOptions.BitmapScalingMode="HighQuality" Width="220" Height="220" Margin="10,0,10,10" Stretch="Uniform">
+            <Image.ToolTip>
+                <ToolTip>
+                    <Image x:Name="CoverArtBoxToolTip" Width="500" Height="500" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </ToolTip>
+            </Image.ToolTip>
+        </Image>
 
         <Image x:Name="CoverArtBox" Grid.Row="0" Grid.RowSpan="12" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderOptions.BitmapScalingMode="LowQuality" Panel.ZIndex="0" Stretch="UniformToFill" Margin="-30" >
             <Image.Effect>

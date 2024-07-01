@@ -101,6 +101,8 @@ namespace FRESHMusicPlayer
                     { // new persistence file format from 12.2 or later
                         initialFiles = fields[6].Split('\n');
                         initialIndex = int.Parse(fields[7]);
+                        if (currentWindow is MainWindow mainWindow)
+                            mainWindow.AutoQueueIsQueued = bool.Parse(fields[8]);
                     } // old persistence file format
                     else initialFiles = new string[] { fields[0] };
                     startTime = TimeSpan.FromSeconds(int.Parse(fields[1]));
