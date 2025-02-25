@@ -25,6 +25,20 @@
             <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
         </ContextMenu>
     </Window.Resources>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo>
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfoCollection>
+                    <ThumbButtonInfo
+                         ImageSource="Resources/previous_icon.png" Click="ThumbButtonInfo_Click_1"/>
+                    <ThumbButtonInfo
+                        ImageSource="Resources/play_icon.png" Click="ThumbButtonInfo_Click"/>
+                    <ThumbButtonInfo
+                        ImageSource="Resources/next_icon.png" Click="ThumbButtonInfo_Click_2"/>
+                </ThumbButtonInfoCollection>
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
     <Grid>
         <DockPanel Panel.ZIndex="1" LastChildFill="False">
             <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{DynamicResource NavBarColor}" LastChildFill="False">

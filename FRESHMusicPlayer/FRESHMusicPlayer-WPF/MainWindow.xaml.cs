@@ -188,6 +188,7 @@ namespace FRESHMusicPlayer
         
         private void Window_Closed(object sender, EventArgs e)
         {
+            Player.Pause(); // closing lastfm integration can take a bit
             App.Config.Volume = (int)VolumeBar.Value;
             App.Config.CurrentMenu = CurrentTab;
             TrackingHandler?.Close();
@@ -196,6 +197,8 @@ namespace FRESHMusicPlayer
             ProgressTimer.Stop();
             singleInstanceFileWatcher.Dispose();
             WritePersistence();
+            discordIntegration?.Close();
+            lastFMIntegration?.Close();
         }
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -228,5 +231,11 @@ namespace FRESHMusicPlayer
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Fullscreen);
+
+        private void ThumbButtonInfo_Click(object sender, EventArgs e) => PlayPauseMethod();
+
+        private void ThumbButtonInfo_Click_1(object sender, EventArgs e) => PreviousTrackMethod();
+
+        private void ThumbButtonInfo_Click_2(object sender, EventArgs e) => NextTrackMethod();
     }
 }

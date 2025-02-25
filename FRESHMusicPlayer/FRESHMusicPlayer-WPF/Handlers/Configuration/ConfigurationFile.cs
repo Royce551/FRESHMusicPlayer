@@ -42,6 +42,8 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// Whether to show the current time in the window's title
         /// </summary>
         public bool ShowTimeInWindow { get; set; } = false;
+
+        public bool ShowProgressInTaskbar { get; set; } = false;
         /// <summary>
         /// Whether to integrate with Discord Rich Presence
         /// </summary>
@@ -71,7 +73,7 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// </summary>
         public Skin Theme { get; set; } = Skin.Dark;
 
-        public AccentColor AccentColor { get; set; } = AccentColor.Blue;
+        public AccentColor AccentColor { get; set; } = AccentColor.CoverArt;
 
         /// <summary>
         /// The volume that FMP was set to before closing

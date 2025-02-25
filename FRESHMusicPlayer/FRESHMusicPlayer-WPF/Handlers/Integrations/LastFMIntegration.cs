@@ -115,7 +115,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     lastTrackListenedTo = track;
                     timeListeningStarted = DateTime.UtcNow;
 
-                    var updateNowPlayingRequest = $"https://www.audioscrobbler.com/2.0/?method=track.updateNowPlaying&api_key={apiKey}&sk={sessionKey}";
+                    var updateNowPlayingRequest = $"https://ws.audioscrobbler.com/2.0/?method=track.updateNowPlaying&api_key={apiKey}&sk={sessionKey}";
                     var updateNowPlayingSignature = $"album{track.Album}api_key{apiKey}artist{track.Artists[0]}methodtrack.updateNowPlayingsk{sessionKey}track{track.Title}{secret}";
                     try
                     {
@@ -135,17 +135,24 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                     break;
                 case PlaybackStatus.Changing:
                 case PlaybackStatus.Stopped:
-                    if (lastTrackListenedTo == null || lastTrackListenedTo.Length < 30 || (DateTime.UtcNow - timeListeningStarted) < TimeSpan.FromSeconds(lastTrackListenedTo.Length / 2))
-                        break;
+                    _ = ScrobbleAsync();
+                    break;
+            }
+        }
 
-                    if (App.Config.LastFMPaused) break;
+        private async Task ScrobbleAsync()
+        {
+            if (lastTrackListenedTo == null || lastTrackListenedTo.Length < 30 || (DateTime.UtcNow - timeListeningStarted) < TimeSpan.FromSeconds(lastTrackListenedTo.Length / 2))
+                return;
 
-                    var timeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                    var scrobbleRequest = $"https://www.audioscrobbler.com/2.0/?method=track.scrobble&api_key={apiKey}&sk={sessionKey}";
-                    var scrobbleSignature = $"album{lastTrackListenedTo.Album}api_key{apiKey}artist{lastTrackListenedTo.Artists[0]}methodtrack.scrobblesk{sessionKey}timestamp{timeStamp}track{lastTrackListenedTo.Title}{secret}";
-                    try
-                    {
-                        var scrobbleResponse = await httpClient.PostAsync($"{scrobbleRequest}&api_sig={EncodeSignature(scrobbleSignature)}&format=json", new FormUrlEncodedContent(new Dictionary<string, string>()
+            if (App.Config.LastFMPaused) return;
+
+            var timeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            var scrobbleRequest = $"https://ws.audioscrobbler.com/2.0/?method=track.scrobble&api_key={apiKey}&sk={sessionKey}";
+            var scrobbleSignature = $"album{lastTrackListenedTo.Album}api_key{apiKey}artist{lastTrackListenedTo.Artists[0]}methodtrack.scrobblesk{sessionKey}timestamp{timeStamp}track{lastTrackListenedTo.Title}{secret}";
+            try
+            {
+                var scrobbleResponse = await httpClient.PostAsync($"{scrobbleRequest}&api_sig={EncodeSignature(scrobbleSignature)}&format=json", new FormUrlEncodedContent(new Dictionary<string, string>()
                         {
                             { "artist", lastTrackListenedTo.Artists[0] },
                             { "track", lastTrackListenedTo.Title },
@@ -153,23 +160,19 @@ namespace FRESHMusicPlayer.Handlers.Integrations
                             { "album", lastTrackListenedTo.Album },
                         }));
 
-                        LoggingHandler.Log($"last.fm: scrobbling recently played track, request: {scrobbleRequest}");
+                LoggingHandler.Log($"last.fm: scrobbling recently played track, request: {scrobbleRequest}");
 
-                        if (!scrobbleResponse.IsSuccessStatusCode)
-                            window.NotificationHandler.Add(new Notifications.Notification { ContentText = string.Format(Properties.Resources.LASTFM_SCROBBLE_FAILED, $"{string.Join(", ", track.Artists)} - {track.Title}"), Type = Notifications.NotificationType.Failure });
-                    }
-                    catch (HttpRequestException)
-                    {
-                        // ignored
-                    }
-                    break;
+                if (!scrobbleResponse.IsSuccessStatusCode)
+                    window.NotificationHandler.Add(new Notifications.Notification { ContentText = string.Format(Properties.Resources.LASTFM_SCROBBLE_FAILED, $"{string.Join(", ", lastTrackListenedTo.Artists)} - {lastTrackListenedTo.Title}"), Type = Notifications.NotificationType.Failure });
             }
+            catch (HttpRequestException)
+            {
+                // ignored
+            }
+
         }
 
-        public void Close()
-        {
-            
-        }
+        public void Close() => ScrobbleAsync().Wait(10000);
 
        
     }

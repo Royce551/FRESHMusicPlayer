@@ -28,7 +28,16 @@
   </Target>
 
   <ItemGroup>
+    <None Remove="Resources\next_icon.png" />
+    <None Remove="Resources\play_icon.png" />
+    <None Remove="Resources\previous_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="icon.ico" />
+    <Resource Include="Resources\next_icon.png" />
+    <Resource Include="Resources\play_icon.png" />
+    <Resource Include="Resources\previous_icon.png" />
   </ItemGroup>
   
   <ItemGroup>

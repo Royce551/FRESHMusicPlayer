@@ -66,12 +66,17 @@ namespace FRESHMusicPlayer
                 Player.Resume();
                 SetIntegrations(PlaybackStatus.Playing);
                 ProgressTimer.Start();
+
+                Title = $"{CurrentTrack.Title} • {string.Join(", ", CurrentTrack.Artists)} - {WindowName}";
             }
             else
             {
                 Player.Pause();
                 SetIntegrations(PlaybackStatus.Paused);
                 ProgressTimer.Stop();
+
+                Title = WindowName;
+                if (App.Config.ShowProgressInTaskbar) TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
             }
             UpdatePlayButtonState();
         }
@@ -153,10 +158,12 @@ namespace FRESHMusicPlayer
                 ProgressIndicator1.Text = ProgressIndicator2.Text = "00:00";
                 TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
                 CoverArtBox.Source = null;
+
+                if (App.Config.ShowProgressInTaskbar) TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
             }
             else
             {
-                Title = $"{Properties.Resources.LOADING} | {WindowName}";
+                Title = $"{Properties.Resources.LOADING} - {WindowName}";
                 TitleLabel.Text = Properties.Resources.LOADING;
                 ArtistLabel.Text = Properties.Resources.LOADING;
                 CoverArtBox.Source = null;
@@ -663,7 +670,11 @@ namespace FRESHMusicPlayer
         public void UpdateIntegrations()
         {
             if (App.Config.IntegrateLastFM) lastFMIntegration = new LastFMIntegration(this);
-            else lastFMIntegration = null;
+            else
+            {
+                lastFMIntegration?.Close();
+                lastFMIntegration = null;
+            }
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 smtcIntegration = new SMTCIntegration(this);

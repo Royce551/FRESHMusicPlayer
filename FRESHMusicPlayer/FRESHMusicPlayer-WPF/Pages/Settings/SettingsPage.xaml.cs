@@ -56,13 +56,15 @@ namespace FRESHMusicPlayer.Pages
             General_ReplayGainPreAmp.Value = App.Config.ReplayGainPreAmp;
             General_ProcessReplayGainAfterImporting.IsChecked = App.Config.ProcessReplayGainAfterImporting;
 
+            Integration_LastFMPauseCheck.IsChecked = App.Config.LastFMPaused;
+            Appearance_TaskbarProgressCheck.IsChecked = App.Config.ShowProgressInTaskbar;
+
             EQBand1.Value = App.Config.EQBand1;
             EQBand2.Value = App.Config.EQBand2;
             EQBand3.Value = App.Config.EQBand3;
             EQBand4.Value = App.Config.EQBand4;
             EQBand5.Value = App.Config.EQBand5;
             EQBand6.Value = App.Config.EQBand6;
-
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
             switch (App.Config.Language) // TODO: investigate making this less ugly
@@ -468,6 +470,14 @@ namespace FRESHMusicPlayer.Pages
                 }
                 (Application.Current as App).ChangeSkin(App.Config.Theme);
                 window.UpdateControlsBoxColors();
+            }
+        }
+
+        private void Appearance_TaskbarProgressCheckChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.ShowProgressInTaskbar = (bool)Appearance_TaskbarProgressCheck.IsChecked;
             }
         }
 

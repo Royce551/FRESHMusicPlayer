@@ -531,6 +531,16 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap next_icon {
+            get {
+                object obj = ResourceManager.GetObject("next_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Processing ReplayGain data for library...
         ///
         ///{0} tracks remaining.
@@ -699,6 +709,16 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap play_icon {
+            get {
+                object obj = ResourceManager.GetObject("play_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Playlist management.
         /// </summary>
         public static string PLAYLISTMANAGEMENT {
@@ -758,6 +778,16 @@ namespace FRESHMusicPlayer.Properties {
         public static string PLAYLISTMANAGEMENT_RENAME {
             get {
                 return ResourceManager.GetString("PLAYLISTMANAGEMENT_RENAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap previous_icon {
+            get {
+                object obj = ResourceManager.GetObject("previous_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1102,6 +1132,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string SETTINGS_RESTART_NOW {
             get {
                 return ResourceManager.GetString("SETTINGS_RESTART_NOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show track progress in taskbar.
+        /// </summary>
+        public static string SETTINGS_SHOWPROGRESSINTASKBAR {
+            get {
+                return ResourceManager.GetString("SETTINGS_SHOWPROGRESSINTASKBAR", resourceCulture);
             }
         }
         
