@@ -14,8 +14,8 @@
     <RootNamespace>FRESHMusicPlayer</RootNamespace>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>12.2.0.0</Version>
-    <InformationalVersion>FRESHMusicPlayer Ver. 12.2</InformationalVersion>
+    <Version>12.3.0.0</Version>
+    <InformationalVersion>FRESHMusicPlayer Ver. 12.3</InformationalVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
