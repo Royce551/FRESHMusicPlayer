@@ -44,6 +44,9 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public async void Update(IMetadataProvider track, PlaybackStatus status)
         {
             smtc.PlaybackStatus = (MediaPlaybackStatus)status;
+
+            if (status == PlaybackStatus.Changing) return;
+
             var updater = smtc.DisplayUpdater;
             updater.Type = MediaPlaybackType.Music;
             updater.MusicProperties.Artist = string.Join(", ", track.Artists);
@@ -52,7 +55,7 @@ namespace FRESHMusicPlayer.Handlers.Integrations
             updater.MusicProperties.AlbumTrackCount = (uint)track.TrackTotal;
             if (track.CoverArt != null)
             {
-                var decoder = await BitmapDecoder.CreateAsync(new MemoryStream(track.CoverArt).AsRandomAccessStream());
+                var decoder = await BitmapDecoder.CreateAsync(new MemoryStream(track.CoverArt, 0, track.CoverArt.Length, true, true).AsRandomAccessStream());
                 var transcodedImage = new InMemoryRandomAccessStream();
 
                 BitmapEncoder encoder = await BitmapEncoder.CreateForTranscodingAsync(transcodedImage, decoder);
@@ -70,7 +73,6 @@ namespace FRESHMusicPlayer.Handlers.Integrations
         public void Close()
         {
             LoggingHandler.Log("Closing SMTC integration");
-            // nothing needs to be done
         }
 
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)

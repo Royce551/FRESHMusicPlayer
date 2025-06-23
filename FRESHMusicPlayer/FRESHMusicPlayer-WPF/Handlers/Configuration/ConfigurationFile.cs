@@ -21,6 +21,17 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// </summary>
         Manual
     }
+
+    public enum AccentColor
+    {
+        Blue,
+        Green,
+        Red,
+        Purple,
+        Pink,
+        ClassicBlue,
+        CoverArt
+    }
     public class ConfigurationFile
     {
         /// <summary>
@@ -31,6 +42,8 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// Whether to show the current time in the window's title
         /// </summary>
         public bool ShowTimeInWindow { get; set; } = false;
+
+        public bool ShowProgressInTaskbar { get; set; } = false;
         /// <summary>
         /// Whether to integrate with Discord Rich Presence
         /// </summary>
@@ -59,6 +72,9 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// The current theme to use
         /// </summary>
         public Skin Theme { get; set; } = Skin.Dark;
+
+        public AccentColor AccentColor { get; set; } = AccentColor.CoverArt;
+
         /// <summary>
         /// The volume that FMP was set to before closing
         /// </summary>
@@ -77,6 +93,31 @@ namespace FRESHMusicPlayer.Handlers.Configuration
         /// FMP was updated.
         /// </summary>
         public string LastRecordedVersion { get; set; }
+
+        public bool AutoLibrary { get; set; } = false;
+
+        public string AutoLibraryPath { get; set; }
+
+        public bool IntegrateLastFM { get; set; } = false;
+
+        public bool LastFMPaused { get; set; } = false;
+
+        public float EQBand1 { get; set; } = 0;
+        public float EQBand2 { get; set; } = 0;
+        public float EQBand3 { get; set; } = 0;
+        public float EQBand4 { get; set; } = 0;
+        public float EQBand5 { get; set; } = 0;
+        public float EQBand6 { get; set; } = 0;
+
+        public bool AutoQueue { get; set; } = true;
+
+        public bool UseReplayGain { get; set; } = true;
+        public bool PerformReplayGainByTrack { get; set; } = false;
+        public bool PerformReplayGainByAlbum { get; set; } = true;
+
+        public float ReplayGainPreAmp { get; set; } = 0f;
+
+        public bool ProcessReplayGainAfterImporting { get; set; } = false;
     }
 
 }

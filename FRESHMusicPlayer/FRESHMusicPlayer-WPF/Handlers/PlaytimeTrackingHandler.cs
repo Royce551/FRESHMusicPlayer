@@ -42,7 +42,7 @@ namespace FRESHMusicPlayer.Handlers
                     Track = new DatabaseTrack
                     {
                         Path = window.Player.FilePath,
-                        Artist = string.Join(", ", window.CurrentTrack.Artists),
+                        Artists = window.CurrentTrack.Artists,
                         Title = window.CurrentTrack.Title,
                         Album = window.CurrentTrack.Album,
                         TrackNumber = window.CurrentTrack.TrackNumber,

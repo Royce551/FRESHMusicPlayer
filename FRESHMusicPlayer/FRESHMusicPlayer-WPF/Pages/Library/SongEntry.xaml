@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FRESHMusicPlayer.Pages.Library"
              xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
-             mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="344" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
+             mc:Ignorable="d" KeyboardNavigation.IsTabStop="True"
+             d:DesignHeight="30" d:DesignWidth="344" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard>
@@ -20,7 +20,8 @@
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
-    <Border x:Name="MainPanel" CornerRadius="2" BorderBrush="{StaticResource ForegroundColor}" Background="{StaticResource ForegroundColor}" BorderThickness="1">
+    <Border x:Name="MainPanel" CornerRadius="2" Background="Transparent" BorderThickness="1">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="7*"/>
@@ -31,22 +32,28 @@
             </Grid.ColumnDefinitions>
             <Grid.ContextMenu>
                 <ContextMenu>
+                    <MenuItem x:Name="PlayNextContext" Header="{x:Static resx:Resources.LIBRARY_PLAYNEXT}" Click="PlayNextContext_Click"/>
+                    <Separator/>
                     <MenuItem x:Name="MiscContext" Header="{x:Static resx:Resources.LIBRARY_ADD_TO_PLAYLIST}" Click="ContextMenu_Click" SubmenuOpened="MainPanel_ContextMenuOpening">
                         <MenuItem/>
                         <!--will be replaced with generated context menu by code behind-->
                     </MenuItem>
+                    <MenuItem Header="{x:Static resx:Resources.CONTROLS_GOTO}">
+                        <MenuItem x:Name="GoToArtistContext" Header="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Click="GoToArtistContext_Click"/>
+                        <MenuItem x:Name="GoToAlbumContext" Header="{x:Static resx:Resources.TRACKINFO_ALBUM}" Click="GoToAlbumContext_Click"/>
+                    </MenuItem>
                     <MenuItem Header="{x:Static resx:Resources.LIBRARY_OPEN_FILEEXPLORER}" Click="OpenInFileExplorer_Click"/>
                 </ContextMenu>
             </Grid.ContextMenu>
-            <TextBlock x:Name="TitleLabel" Grid.Column="0" Margin="5,0,0,13" Text="TextBlock" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"  Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
-            <TextBlock x:Name="ArtistAlbumLabel" Margin="5,24,0,2" Text="TextBlock" Foreground="{StaticResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis" Grid.Column="0"/>
-            <Path x:Name="PlayButton" Data="{StaticResource PlayIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="1" Visibility="Collapsed"/>
-            <Path x:Name="QueueButton" Data="{StaticResource AddQueueIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="1" Visibility="Collapsed"/>
-            <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Opacity="1" Visibility="Collapsed"/>
+            <TextBlock x:Name="TitleLabel" Grid.Column="0" Margin="5,0,0,10" Text="TextBlock" Foreground="{DynamicResource PrimaryTextColor}" FontSize="12" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis"/>
+            <TextBlock x:Name="ArtistAlbumLabel" Margin="5,15,0,2" Text="TextBlock" Foreground="{DynamicResource SecondaryTextColor}" FontSize="9" Grid.ColumnSpan="1" TextTrimming="CharacterEllipsis" Grid.Column="0"/>
+            <Path x:Name="PlayButton" Data="{StaticResource PlayIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="1" Visibility="Collapsed" FlowDirection="LeftToRight"/>
+            <Path x:Name="QueueButton" Data="{StaticResource AddQueueIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="1" Visibility="Collapsed" FlowDirection="LeftToRight"/>
+            <Path x:Name="DeleteButton" Data="{StaticResource DeleteIcon}" Stretch="Uniform" Fill="#FFD5463F" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,6.457,10.923,6.578" HorizontalAlignment="Right" Width="10.211" Opacity="1" Visibility="Collapsed" FlowDirection="LeftToRight"/>
 
-            <Rectangle x:Name="PlayHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0" MouseLeftButtonDown="PlayButtonClick" Cursor="Hand" Visibility="Collapsed"/>
-            <Rectangle x:Name="QueueHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0" MouseLeftButtonDown="QueueButtonClick" Cursor="Hand" Visibility="Collapsed"/>
-            <Rectangle x:Name="DeleteHitbox" Fill="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" MouseLeftButtonDown="DeleteButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+            <Button Style="{StaticResource LinkButton}" AutomationProperties.IsOffscreenBehavior="Onscreen" x:Name="PlayHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="10,3.65,49.574,4.745" HorizontalAlignment="Right" Width="18.426" Opacity="0" Click="PlayButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+            <Button Style="{StaticResource LinkButton}" AutomationProperties.IsOffscreenBehavior="Onscreen" x:Name="QueueHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,7.087,30.384,6.561" HorizontalAlignment="Right" Width="12.101" Opacity="0" Click="QueueButtonClick" Cursor="Hand" Visibility="Collapsed"/>
+            <Button Style="{StaticResource LinkButton}" AutomationProperties.IsOffscreenBehavior="Onscreen" x:Name="DeleteHitbox" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,12,11,5" HorizontalAlignment="Right" Width="10" Opacity="0" Click="DeleteButtonClick" Cursor="Hand" Visibility="Collapsed"/>
         </Grid>
     </Border>
     

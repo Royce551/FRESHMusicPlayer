@@ -8,11 +8,11 @@
              d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded">
     <ScrollViewer x:Name="LyricsScrollViewer" PanningMode="Both" Panel.ZIndex="1" VerticalAlignment="Center" Foreground="{x:Null}">
         <StackPanel>
-            <TextBlock x:Name="LyricsBoxMinus2" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
-            <TextBlock x:Name="LyricsBoxMinus1" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
-            <TextBlock x:Name="LyricsBox" Foreground="{StaticResource PrimaryTextColor}" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"/>
-            <TextBlock x:Name="LyricsBoxPlus1" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
-            <TextBlock x:Name="LyricsBoxPlus2" Foreground="{StaticResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+            <TextBlock x:Name="LyricsBoxMinus2" Foreground="{DynamicResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+            <TextBlock x:Name="LyricsBoxMinus1" Foreground="{DynamicResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+            <TextBlock x:Name="LyricsBox" Foreground="{DynamicResource PrimaryTextColor}" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"/>
+            <TextBlock x:Name="LyricsBoxPlus1" Foreground="{DynamicResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+            <TextBlock x:Name="LyricsBoxPlus2" Foreground="{DynamicResource SecondaryTextColor}" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

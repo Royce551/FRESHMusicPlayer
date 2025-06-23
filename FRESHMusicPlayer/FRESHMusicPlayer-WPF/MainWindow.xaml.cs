@@ -3,12 +3,19 @@ using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
+using FRESHMusicPlayer.Utilities;
 using LiteDB;
+using SharpCompress.Common;
 using System;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media.Animation;
-using WinForms = System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer
 {
@@ -24,21 +31,25 @@ namespace FRESHMusicPlayer
         public Player Player;
         public NotificationHandler NotificationHandler = new NotificationHandler();
         public GUILibrary Library;
+        public HttpClient HttpClient;
         public IMetadataProvider CurrentTrack;
 
-#if !BLUEPRINT
+#if !BLUEPRINT && !DEBUG
         public const string WindowName = "FRESHMusicPlayer";
-#else
+#elif BLUEPRINT
         public const string WindowName = "FRESHMusicPlayer Blueprint (possibly unstable!)";
+#elif DEBUG
+        public const string WindowName = "FRESHMusicPlayer Debug (definitely unstable!)";
 #endif
         public PlaytimeTrackingHandler TrackingHandler;
         public bool PauseAfterCurrentTrack = false;
 
-        private FileSystemWatcher watcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
-        public WinForms.Timer ProgressTimer;
+        private FileSystemWatcher singleInstanceFileWatcher = new FileSystemWatcher(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer"));
+        public DispatcherTimer ProgressTimer;
         private IPlaybackIntegration smtcIntegration; // might be worth making some kind of manager for these, but i'm lazy so -\_(:/)_/-
         private IPlaybackIntegration discordIntegration;
-        public MainWindow(Player player, string[] initialFile = null)
+        private IPlaybackIntegration lastFMIntegration;
+        public MainWindow(Player player, HttpClient httpClient, string[] initialFile = null)
         {
             LoggingHandler.Log("Starting main window...");
             Player = player;
@@ -48,28 +59,35 @@ namespace FRESHMusicPlayer
             Player.SongStopped += Player_SongStopped;
             Player.SongException += Player_SongException;
             NotificationHandler.NotificationInvalidate += NotificationHandler_NotificationInvalidate;
-            ProgressTimer = new WinForms.Timer
+            ProgressTimer = new DispatcherTimer
             {
-                Interval = 100
+                Interval = TimeSpan.FromMilliseconds(100)
             };
             ProgressTimer.Tick += ProgressTimer_Tick;
+            HttpClient = httpClient;
 
             Initialize(initialFile);
         }
+
+       
 
         public async void Initialize(string[] initialFile)
         {
             LoggingHandler.Log("Reading library...");
 
+            HandleRightToLeftLayoutIfNeeded();
+
+            var shouldLibraryBeUpgraded = File.Exists(Path.Combine(App.DataFolderLocation, "database.fdb2")) && !File.Exists(Path.Combine(App.DataFolderLocation, "database.fdb3"));
+
             LiteDatabase library;
             try
             {
 #if DEBUG // allow multiple instances of FMP in debug (at the expense of stability with heavy library use)
-                library = new LiteDatabase($"Filename=\"{Path.Combine(App.DataFolderLocation, "database.fdb2")}\";Connection=shared");
+                library = new LiteDatabase($"Filename=\"{Path.Combine(App.DataFolderLocation, "database.fdb3")}\";Connection=shared");
 #else
-                library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb2"));
+                library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb3"));
 #endif
-                Library = new GUILibrary(library, NotificationHandler, Dispatcher);
+                Library = new GUILibrary(library, this, Dispatcher);
             }
             catch (IOException) // library is *probably* being used by another FMP, write initial files, hopefully existing FMP will pick them up
             {
@@ -78,10 +96,10 @@ namespace FRESHMusicPlayer
                 return; // stop initial files from trying to load
             }
 
-            watcher.Filter = "instance";
-            watcher.IncludeSubdirectories = false;
-            watcher.EnableRaisingEvents = true;
-            watcher.Changed += (object sender, FileSystemEventArgs args) =>
+            singleInstanceFileWatcher.Filter = "instance";
+            singleInstanceFileWatcher.IncludeSubdirectories = false;
+            singleInstanceFileWatcher.EnableRaisingEvents = true;
+            singleInstanceFileWatcher.Changed += (object sender, FileSystemEventArgs args) =>
             {
                 Dispatcher.Invoke(async () =>
                 {
@@ -103,10 +121,51 @@ namespace FRESHMusicPlayer
             };
             LoggingHandler.Log("Ready to go!");
 
-            if (initialFile != null)
+            if (shouldLibraryBeUpgraded) MigrateLibrary();
+
+            await Library.ProcessDatabaseMetadataAsync();
+        }
+
+        private void HandleRightToLeftLayoutIfNeeded()
+        {
+            if (Thread.CurrentThread.CurrentUICulture.TextInfo.IsRightToLeft)
             {
-                Player.Queue.Add(initialFile);
-                await Player.PlayAsync();
+                VolumeBar.FlowDirection = FlowDirection.RightToLeft;
+                TitleRowContainer.FlowDirection = FlowDirection.RightToLeft;
+                ArtistLabel.FlowDirection = FlowDirection.RightToLeft;
+                CoverArtBoxContainer.FlowDirection = FlowDirection.RightToLeft;
+                ArtistLabel.FlowDirection = FlowDirection.RightToLeft;
+                VolumeAreaContainer.FlowDirection = FlowDirection.RightToLeft;
+
+                RightContentContainer.SetValue(Grid.ColumnProperty, 0);
+                CoverArtBoxContainer.SetValue(Grid.ColumnProperty, 2);
+                CenterColumnContents.SetValue(Grid.ColumnProperty, 1);
+
+                LeftArea.Width = new GridLength(223);
+                CenterArea.Width = new GridLength(1, GridUnitType.Star);
+                RightArea.Width = GridLength.Auto;
+
+                CenterColumnContents.Margin = new Thickness(10, 0, 10, 0);
+                CoverArtBoxContainer.Margin = new Thickness(0, 10, 10, 0);
+            }
+        }
+
+        private async void MigrateLibrary()
+        {
+            var oldLibraryConnection = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb2"));
+            var oldTracks = oldLibraryConnection.GetCollection<OldDatabaseTrack>("tracks").Query().ToArray();
+            var oldTrackPaths = oldTracks.Select(x => x.Path).ToArray();
+
+            await Library.ImportAsync(oldTrackPaths);
+
+            var oldPlaylists = oldLibraryConnection.GetCollection<OldDatabasePlaylist>("playlists").Query().ToArray();
+            foreach (var playlist in oldPlaylists)
+            {
+                await Library.CreatePlaylistAsync(playlist.Name, playlist.Name == "Liked" ? true : false);
+                foreach (var track in playlist.Tracks)
+                {
+                    await Library.AddTrackToPlaylistAsync(playlist.Name, track);
+                }
             }
         }
 
@@ -114,7 +173,7 @@ namespace FRESHMusicPlayer
         {
             UpdateIntegrations();
             ProcessSettings(true);
-            if (!Player.FileLoaded) HandlePersistence();
+            //if (!Player.FileLoaded) HandlePersistence();
             var sb = new Storyboard();
             var doubleAnimation = new DoubleAnimation(0f, 1f, TimeSpan.FromSeconds(1));
             doubleAnimation.EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut };
@@ -122,20 +181,61 @@ namespace FRESHMusicPlayer
             sb.Children.Add(doubleAnimation);
             sb.Begin(ContentFrame);
             sb.Begin(MainBar);
+            sb.Begin(ControlsBoxBorder);
             await new UpdateHandler(NotificationHandler).UpdateApp();
             await PerformAutoImport();
         }
         
         private void Window_Closed(object sender, EventArgs e)
         {
+            Player.Pause(); // closing lastfm integration can take a bit
             App.Config.Volume = (int)VolumeBar.Value;
             App.Config.CurrentMenu = CurrentTab;
             TrackingHandler?.Close();
             ConfigurationHandler.Write(App.Config);
             Library.Database?.Dispose();
-            ProgressTimer.Dispose();
-            watcher.Dispose();
+            ProgressTimer.Stop();
+            singleInstanceFileWatcher.Dispose();
             WritePersistence();
+            discordIntegration?.Close();
+            lastFMIntegration?.Close();
         }
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            switch (e.ChangedButton)
+            {
+                case System.Windows.Input.MouseButton.XButton1:
+                    NavigateBack();
+                    break;
+                case System.Windows.Input.MouseButton.XButton2:
+                    NavigateForward();
+                    break;
+            }
+        }
+
+        public bool AutoQueueIsQueued = false;
+
+        public void AddToQueueAndHandleAutoQueue(string filePath)
+        {
+            if (AutoQueueIsQueued) Player.Queue.Clear();
+            AutoQueueIsQueued = false;
+            Player.Queue.Add(filePath);
+        }
+
+        public void AddToQueueAndHandleAutoQueue(string[] filePaths)
+        {
+            if (AutoQueueIsQueued) Player.Queue.Clear();
+            AutoQueueIsQueued = false;
+            Player.Queue.Add(filePaths);
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e) => ChangeTabs(Tab.Fullscreen);
+
+        private void ThumbButtonInfo_Click(object sender, EventArgs e) => PlayPauseMethod();
+
+        private void ThumbButtonInfo_Click_1(object sender, EventArgs e) => PreviousTrackMethod();
+
+        private void ThumbButtonInfo_Click_2(object sender, EventArgs e) => NextTrackMethod();
     }
 }

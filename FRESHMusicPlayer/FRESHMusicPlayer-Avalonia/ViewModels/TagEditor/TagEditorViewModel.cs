@@ -231,11 +231,11 @@ namespace FRESHMusicPlayer.ViewModels.TagEditor
                 CoverArt = null;
                 return;
             }
-            var currentCoverImage = Drawing.Image.Identify(new MemoryStream(currentCover.PictureData), out var coverFormat);
+            var currentCoverImage = Drawing.Image.Identify(new MemoryStream(currentCover.PictureData));
             CoverArt = new Bitmap(new MemoryStream(currentCover.PictureData));
             CoverArtLabel =
                 $"{currentCoverImage.Width}x{currentCoverImage.Height}\n" +
-                $"{coverFormat.Name} Image\n" +
+                $"{currentCoverImage.Metadata.DecodedImageFormat.Name} Image\n" +
                 $"{currentCover.PicType}";
         }
         public void UpdateCoverArtSelector()

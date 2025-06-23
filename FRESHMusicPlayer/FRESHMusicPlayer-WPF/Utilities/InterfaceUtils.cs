@@ -67,21 +67,21 @@ namespace FRESHMusicPlayer.Utilities
                         || name.EndsWith(".flac") || name.EndsWith(".aiff")
                         || name.EndsWith(".wma")
                         || name.EndsWith(".aac")).ToArray();
+                        if (import) await library.ImportAsync(paths);
                         if (enqueue) player.Queue.Add(paths);
-                        if (import) await Task.Run(() => library.Import(paths));
                     }
                     else
                     {
+                        if (import) await library.ImportAsync(track);
                         if (enqueue) player.Queue.Add(track);
-                        if (import) await Task.Run(() => library.Import(track));
                     }
                 }
 
             }
             else
             {
+                if (import) await library.ImportAsync(tracks);
                 if (enqueue) player.Queue.Add(tracks);
-                if (import) await Task.Run(() => library.Import(tracks));
             }
         }
         /// <summary>
@@ -92,10 +92,11 @@ namespace FRESHMusicPlayer.Utilities
         /// <param name="duration">How long the animation will run</param>
         /// <param name="path">The property to animate</param>
         /// <returns>A storyboard ready to begin</returns>
-        public static Storyboard GetDoubleAnimation(double from, double to, TimeSpan duration, PropertyPath path)
+        public static Storyboard GetDoubleAnimation(double from, double to, TimeSpan duration, PropertyPath path, IEasingFunction easingFunction = null)
         {
             var sb = new Storyboard();
             var doubleAnimation = new DoubleAnimation(from, to, duration);
+            if (easingFunction != null) doubleAnimation.EasingFunction = easingFunction;
             Storyboard.SetTargetProperty(doubleAnimation, path);
             sb.Children.Add(doubleAnimation);
             return sb;
@@ -105,7 +106,7 @@ namespace FRESHMusicPlayer.Utilities
             var sb = new Storyboard();
             var thicknessAnimation = new ThicknessAnimation(from, to, duration);
             if (easingFunction != null) thicknessAnimation.EasingFunction = easingFunction;
-            Storyboard.SetTargetProperty(thicknessAnimation, path);
+            Storyboard.SetTargetProperty(thicknessAnimation, path);Storyboard.SetDesiredFrameRate(thicknessAnimation, 120);
             sb.Children.Add(thicknessAnimation);
             return sb;
         }

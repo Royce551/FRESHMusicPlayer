@@ -15,7 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FRESHMusicPlayer.Controls.Lyrics;
 using FRESHMusicPlayer.Controls;
-using WinForms = System.Windows.Forms;
+using FRESHMusicPlayer.Utilities;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -30,6 +32,7 @@ namespace FRESHMusicPlayer.Pages
         {
             this.window = window;
             this.previousMenu = previousMenu;
+
             InitializeComponent();
             window.Player.SongStopped += Player_SongStopped;
             window.Player.SongChanged += Player_SongChanged;
@@ -39,7 +42,8 @@ namespace FRESHMusicPlayer.Pages
             MoveHandler();
             window.WindowStyle = WindowStyle.None;
             window.WindowState = WindowState.Maximized;
-            window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Collapsed;
+            ProgressTimer_Tick(null, EventArgs.Empty);
+            //window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Collapsed;
         }
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
@@ -51,8 +55,24 @@ namespace FRESHMusicPlayer.Pages
             ProgressBar.Value = time.TotalSeconds;
         }
 
+        private RenderTargetBitmap previousContentBitmap = null;
+
+        private void Player_SongStopped(object sender, PlaybackStoppedEventArgs e)
+        {
+            previousContentBitmap = RenderBitmap(ContentGrid);
+
+            if (e.IsEndOfPlayback)
+            {
+                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+                CoverArtBox.Source = null;
+                SetCoverArtVisibility(false);
+            }
+        }
+
         private void Player_SongChanged(object sender, EventArgs e)
         {
+            AnimateNewTrack();
+
             var currentTrack = window.Player.Metadata;
             TitleLabel.Text = currentTrack.Title;
             ArtistLabel.Text = string.Join(", ", currentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", currentTrack.Artists);
@@ -80,6 +100,45 @@ namespace FRESHMusicPlayer.Pages
             {
                 InfoThing.Content = null;
             }
+
+        }
+
+        private async void AnimateNewTrack()
+        {
+            if (ContentGrid.ActualHeight <= 0 || ContentGrid.ActualWidth <= 0) return;
+
+            TransitionRectangle.Source = previousContentBitmap;
+            ContentGrid.RenderTransform = new TranslateTransform(ContentGrid.ActualWidth * 2, 0);
+            var x = InterfaceUtils.GetDoubleAnimation(
+                ContentGrid.ActualWidth * 2,
+                0,
+                TimeSpan.FromMilliseconds(1000),
+                new PropertyPath("(Grid.RenderTransform).(TranslateTransform.X)"),
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 7 });
+            await x.BeginStoryboardAsync(ContentGrid);
+            TransitionRectangle.Source = null;
+
+        }
+
+        private RenderTargetBitmap RenderBitmap(FrameworkElement element)
+        {
+            var topLeft = 0;
+            var topRight = 0;
+            var width = (int)element.ActualWidth;
+            var height = (int)element.ActualHeight;
+            var dpiX = 96; // the DPI at 100% scale; things will break in high DPI if this adapts to the DPI
+            var dpiY = 96; // TODO: investigate why
+
+            var pixelFormat = PixelFormats.Default;
+            var elementBrush = new VisualBrush(element);
+            var visual = new DrawingVisual();
+            var drawingContext = visual.RenderOpen();
+
+            drawingContext.DrawRectangle(elementBrush, null, new Rect(topLeft, topRight, width, height));
+            drawingContext.Close();
+            var bitmap = new RenderTargetBitmap(width, height, dpiX, dpiY, pixelFormat);
+            bitmap.Render(visual);
+            return bitmap;
         }
 
         public void SetCoverArtVisibility(bool mode)
@@ -88,30 +147,26 @@ namespace FRESHMusicPlayer.Pages
             else CoverArtArea.Width = new GridLength(155);
         }
 
-        private void Player_SongStopped(object sender, EventArgs e)
-        {
-            TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
-            CoverArtBox.Source = null;
-            SetCoverArtVisibility(false);
-        }
-
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             window.Player.SongStopped -= Player_SongStopped;
             window.Player.SongChanged -= Player_SongChanged;
             window.ProgressTimer.Tick -= ProgressTimer_Tick;
             controlDismissTimer.Tick -= ControlDismissTimer_Tick;
+            controlDismissTimer.Stop();
             Mouse.OverrideCursor = null;
 
             window.WindowState = WindowState.Normal;
             window.WindowStyle = WindowStyle.SingleBorderWindow;
             window.TracksTab.Visibility = window.ArtistsTab.Visibility = window.AlbumsTab.Visibility = window.PlaylistsTab.Visibility = window.ImportTab.Visibility = Visibility.Visible;
+            window.TracksTab.FontWeight = window.ArtistsTab.FontWeight = window.AlbumsTab.FontWeight = window.PlaylistsTab.FontWeight = window.ImportTab.FontWeight = FontWeights.Bold;
             if (!window.IsControlsBoxVisible) window.ShowControlsBox();
+            if (window.CurrentPane == Pane.FullscreenTab) window.HideAuxilliaryPane();
             if (previousMenu != Tab.Fullscreen) window.ChangeTabs(previousMenu);
             else window.ChangeTabs(Tab.Import);
         }
 
-        private readonly WinForms.Timer controlDismissTimer = new WinForms.Timer { Interval = 2000, Enabled = true };
+        private readonly DispatcherTimer controlDismissTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(2000), IsEnabled = true };
 
         private Point lastMouseMovePosition;
         private bool isMouseMoving = false;
@@ -122,10 +177,11 @@ namespace FRESHMusicPlayer.Pages
             MoveHandler();
 
             if (isMouseMoving) return;
-            if (!IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
+            if (window.IsMouseOver && !IsMouseOver || FocusModeCheckBox.IsMouseOver || BackButton.IsMouseOver) return; // cursor is probably over controls, don't hide yet
+            if (!window.IsControlsBoxVisible) return;
+
             controlDismissTimer.Stop();
             window.HideControlsBox();
-            
             Mouse.OverrideCursor = Cursors.None;
             TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Hidden;
             await window.HideAuxilliaryPane();
@@ -139,12 +195,12 @@ namespace FRESHMusicPlayer.Pages
                 if (Math.Abs(position.X - lastMouseMovePosition.X) > SystemParameters.MinimumHorizontalDragDistance ||
                     Math.Abs(position.Y - lastMouseMovePosition.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    if (!controlDismissTimer.Enabled)
+                    if (!controlDismissTimer.IsEnabled && !window.IsControlsBoxVisible)
                     {
-                        if (!window.IsControlsBoxVisible) window.ShowControlsBox();
-                        controlDismissTimer.Start();
+                        window.ShowControlsBox();
                         Mouse.OverrideCursor = null;
                         TopBar.Visibility = TopBarOverlay.Visibility = Visibility.Visible;
+                        controlDismissTimer.Start();     
                     }
                     isMouseMoving = true;
                 }
@@ -161,11 +217,15 @@ namespace FRESHMusicPlayer.Pages
             {
                 CoverArtOverlay.Opacity = 1;
                 CoverArtOverlay.Fill = (Brush)FindResource("BackgroundColor");
+                ProgressBar.Visibility = ProgressIndicator1.Visibility = ProgressIndicator2.Visibility = InfoThing.Visibility = Visibility.Hidden;
+                MainViewBox.Stretch = Stretch.None;
             }
             else
             {
                 CoverArtOverlay.Opacity = 0.55;
                 CoverArtOverlay.Fill = (Brush)FindResource("ForegroundColor");
+                ProgressBar.Visibility = ProgressIndicator1.Visibility = ProgressIndicator2.Visibility = InfoThing.Visibility = Visibility.Visible;
+                MainViewBox.Stretch = Stretch.Uniform;
             }
         }
     }

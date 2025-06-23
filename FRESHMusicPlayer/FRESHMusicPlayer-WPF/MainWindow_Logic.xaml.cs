@@ -1,17 +1,24 @@
-﻿using FRESHMusicPlayer.Handlers;
+﻿using ATL;
+using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Integrations;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Pages;
 using FRESHMusicPlayer.Pages.Library;
 using FRESHMusicPlayer.Pages.Lyrics;
+using FRESHMusicPlayer.Pages.Playlists;
 using FRESHMusicPlayer.Utilities;
+using FRESHMusicPlayer.Utilities.ColorQuantization;
+using NReplayGain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,7 +26,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using WinForms = System.Windows.Forms;
+using System.Xml.Linq;
+using Drawing = System.Drawing;
 
 namespace FRESHMusicPlayer
 {
@@ -41,7 +49,9 @@ namespace FRESHMusicPlayer
         Search,
         Notifications,
         TrackInfo,
-        Lyrics
+        Lyrics,
+        PlaylistManagement,
+        FullscreenTab
     }
 
     // Code for the "shell" parts of the main window, player, and systemwide logic
@@ -56,12 +66,17 @@ namespace FRESHMusicPlayer
                 Player.Resume();
                 SetIntegrations(PlaybackStatus.Playing);
                 ProgressTimer.Start();
+
+                Title = $"{CurrentTrack.Title} • {string.Join(", ", CurrentTrack.Artists)} - {WindowName}";
             }
             else
             {
                 Player.Pause();
                 SetIntegrations(PlaybackStatus.Paused);
                 ProgressTimer.Stop();
+
+                Title = WindowName;
+                if (App.Config.ShowProgressInTaskbar) TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
             }
             UpdatePlayButtonState();
         }
@@ -78,60 +93,95 @@ namespace FRESHMusicPlayer
             else
             {
                 Player.CurrentTime = TimeSpan.FromSeconds(0);
+                await AnimateSeekBarAsync(0);
                 ProgressTimer.Start(); // to resync the progress timer
+
             }
         }
-        public void ShuffleMethod()
+
+        public void UpdateControlsBoxColors()
         {
-            if (Player.Queue.Shuffle)
+            if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
             {
-                Player.Queue.Shuffle = false;
-                ShuffleButton.Fill = (Brush)FindResource("PrimaryTextColor");
-            }
-            else
-            {
-                Player.Queue.Shuffle = true;
-                ShuffleButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
-            }
-        }
-        public void RepeatOneMethod()
-        {
-            if (Player.Queue.RepeatMode == RepeatMode.None)
-            {
-                Player.Queue.RepeatMode = RepeatMode.RepeatAll;
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatAllIcon");
-                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                RepeatOneButton.Fill = (Brush)FindResource("AccentGradientColor");
             }
-            else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll)
+            else if (Player.Queue.RepeatMode == RepeatMode.RepeatOne)
             {
-                Player.Queue.RepeatMode = RepeatMode.RepeatOne;
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatOneIcon");
-                RepeatOneButton.Fill = new LinearGradientBrush(Color.FromRgb(105, 181, 120), Color.FromRgb(51, 139, 193), 0);
+                RepeatOneButton.Fill = (Brush)FindResource("AccentGradientColor");
             }
             else
             {
-                Player.Queue.RepeatMode = RepeatMode.None;
                 RepeatOneButton.Data = (Geometry)FindResource("RepeatAllIcon");
                 RepeatOneButton.Fill = (Brush)FindResource("PrimaryTextColor");
             }
+
+            if (PauseAfterCurrentTrack) ProgressIndicator2.Foreground = new SolidColorBrush(Color.FromRgb(212, 70, 63));
+            else ProgressIndicator2.Foreground = (Brush)FindResource("SecondaryTextColor");
+
+            if (!Player.Queue.Shuffle) ShuffleButton.Fill = (Brush)FindResource("PrimaryTextColor");
+            else ShuffleButton.Fill = ShuffleButton.Fill = (Brush)FindResource("AccentGradientColor");
+        }
+
+        public void ShuffleMethod()
+        {
+            if (Player.Queue.Shuffle) Player.Queue.Shuffle = false;
+            else Player.Queue.Shuffle = true;
+            UpdateControlsBoxColors();
+        }
+        public void RepeatOneMethod()
+        {
+            if (Player.Queue.RepeatMode == RepeatMode.None) Player.Queue.RepeatMode = RepeatMode.RepeatAll;
+            else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll) Player.Queue.RepeatMode = RepeatMode.RepeatOne;
+            else Player.Queue.RepeatMode = RepeatMode.None;
+            UpdateControlsBoxColors();
         }
         public void UpdatePlayButtonState()
         {
             if (!Player.Paused) PlayPauseButton.Data = (Geometry)FindResource("PauseIcon");
             else PlayPauseButton.Data = (Geometry)FindResource("PlayIcon");
-            if (PauseAfterCurrentTrack) ProgressIndicator2.Foreground = new SolidColorBrush(Color.FromRgb(212, 70, 63));
-            else ProgressIndicator2.Foreground = (Brush)FindResource("SecondaryTextColor");
+
+            UpdateControlsBoxColors();
         }
-        private void Player_SongStopped(object sender, EventArgs e)
+        private async void Player_SongStopped(object sender, PlaybackStoppedEventArgs e)
         {
-            Title = WindowName;
-            TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             ProgressTimer.Stop();
-            CoverArtBox.Source = null;
-            SetIntegrations(PlaybackStatus.Stopped);
-            SetCoverArtVisibility(false);
+            
+            if (e.IsEndOfPlayback)
+            {
+                Title = WindowName;
+                SetIntegrations(PlaybackStatus.Stopped);
+                SetCoverArtVisibility(false);
+                await AnimateSeekBarAsync(0);
+                ProgressBar.Value = 0;
+                ProgressIndicator1.Text = ProgressIndicator2.Text = "00:00";
+                TitleLabel.Text = ArtistLabel.Text = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
+                CoverArtBox.Source = null;
+
+                if (App.Config.ShowProgressInTaskbar) TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+            }
+            else
+            {
+                Title = $"{Properties.Resources.LOADING} - {WindowName}";
+                TitleLabel.Text = Properties.Resources.LOADING;
+                ArtistLabel.Text = Properties.Resources.LOADING;
+                CoverArtBox.Source = null;
+                SetIntegrations(PlaybackStatus.Changing);
+            }
 
             LoggingHandler.Log("Stopping!");
+        }
+
+        private async Task AnimateSeekBarAsync(double toValue)
+        {
+            var sb = new Storyboard();
+            sb.FillBehavior = FillBehavior.Stop;
+            var doubleAnimation = new DoubleAnimation(toValue, TimeSpan.FromMilliseconds(750));
+            doubleAnimation.EasingFunction = new ExponentialEase { Exponent = 8, EasingMode = EasingMode.EaseInOut };
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(Slider.ValueProperty));
+            sb.Children.Add(doubleAnimation);
+            await sb.BeginStoryboardAsync(ProgressBar);
         }
 
         private bool InFullscreen => WindowStyle != WindowStyle.SingleBorderWindow;
@@ -141,48 +191,184 @@ namespace FRESHMusicPlayer
             if (!InFullscreen) Mouse.OverrideCursor = Cursors.AppStarting;
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private async void Player_SongChanged(object sender, EventArgs e)
         {
-            if (!InFullscreen) Mouse.OverrideCursor = null;
-            CurrentTrack = Player.Metadata;
-            Title = $"{string.Join(", ", CurrentTrack.Artists)} - {CurrentTrack.Title} | {WindowName}";
-            TitleLabel.Text = CurrentTrack.Title;
-            ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
-            ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
-            if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
-            else ProgressIndicator2.Text = "∞";
-            SetIntegrations(PlaybackStatus.Playing);
-            UpdatePlayButtonState();
-            if (CurrentTrack.CoverArt is null)
+            try
             {
-                CoverArtBox.Source = null;
-                SetCoverArtVisibility(false);
-            }
-            else
-            {
-                CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
-                SetCoverArtVisibility(true);
-            }
-            ProgressTimer.Start();
-            if (PauseAfterCurrentTrack && !Player.Paused)
-            {
-                PlayPauseMethod();
-                PauseAfterCurrentTrack = false;
-            }
+                if (!InFullscreen) Mouse.OverrideCursor = null;
+                CurrentTrack = Player.Metadata;
+                Title = $"{CurrentTrack.Title} • {string.Join(", ", CurrentTrack.Artists)} - {WindowName}";
+                TitleLabel.Text = CurrentTrack.Title;
+                ArtistLabel.Text = string.Join(", ", CurrentTrack.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", CurrentTrack.Artists);
 
-            LoggingHandler.Log("Changing tracks!");
+                if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2.Text = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+                else ProgressIndicator2.Text = "∞";
+                SetIntegrations(PlaybackStatus.Playing);
+                UpdateEqualizer();
+                UpdateReplayGain();
+                UpdatePlayButtonState();
+                if (CurrentTrack.CoverArt is null)
+                {
+                    CoverArtBox.Source = null;
+                    SetCoverArtVisibility(false);
+                }
+                else
+                {
+                    CoverArtBox.Source = BitmapFrame.Create(new MemoryStream(CurrentTrack.CoverArt), BitmapCreateOptions.None, BitmapCacheOption.None);
+                    SetCoverArtVisibility(true);
+                }
+                ProgressTimer.Start();
+                if (PauseAfterCurrentTrack && !Player.Paused)
+                {
+                    PlayPauseMethod();
+                    PauseAfterCurrentTrack = false;
+                }
+
+                HandleAccentCoverArt();
+
+                LoggingHandler.Log("Changing tracks!");
+
+                await AnimateSeekBarAsync(0);
+                ProgressTick();
+                ProgressBar.Maximum = Player.CurrentBackend.TotalTime.TotalSeconds;
+
+                if (Library.Database.GetCollection<DatabaseTrack>("Tracks").FindOne((DatabaseTrack x) => x.Path == Player.FilePath) != null)
+                    Library.Update(Player.FilePath, CurrentTrack);
+            }
+            catch (Exception ex)
+            {
+                // If an actual unhandled exception occurs at this time, FMP Core will get stuck in the loading state, so let's handle it
+                App.HandleUnhandledException(ex, this);
+            }
         }
         private async void Player_SongException(object sender, PlaybackExceptionEventArgs e)
         {
             if (!InFullscreen) Mouse.OverrideCursor = null;
+            var message = new StringBuilder();
+            foreach (var problem in e.Problems)
+            {
+                message.AppendLine($"{problem.Key}: {problem.Value}");
+            }
+
             NotificationHandler.Add(new Notification
             {
-                ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, e.Details),
+                ContentText = string.Format(Properties.Resources.MAINWINDOW_PLAYBACK_ERROR_DETAILS, message.ToString()),
                 IsImportant = true,
                 DisplayAsToast = true,
                 Type = NotificationType.Failure
             });
             await Player.NextAsync();
+        }
+
+        public void UpdateEqualizer()
+        {
+            if (Player.CurrentBackend is ISupportEqualization equalizableBackend)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    equalizableBackend.EqualizerBands = new List<EqualizerBand>()
+                {
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 60, Gain = App.Config.EQBand1 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 150, Gain = App.Config.EQBand2},
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 400, Gain = App.Config.EQBand3 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 1000, Gain = App.Config.EQBand4 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 2400, Gain = App.Config.EQBand5 },
+                    new EqualizerBand { Bandwidth = 0.8f, Frequency = 15000, Gain = App.Config.EQBand6 },
+                };
+                    equalizableBackend.UpdateEqualizer();
+                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            }
+        }
+
+        private float replayGainAdjustment = 0;
+
+        public void UpdateReplayGain()
+        {
+            if (!App.Config.UseReplayGain)
+            {
+                replayGainAdjustment = 1;
+                return;
+            }
+           
+            if (CurrentTrack is FileMetadataProvider file)
+            {
+                replayGainAdjustment = 1;
+
+                float albumGain = 0;
+                float albumPeak = 1;
+                bool albumGainIsPresent = false;
+
+                float trackGain = 0;
+                float trackPeak = 1;
+                bool trackGainIsPresent = false;
+
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
+                {
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_gain"].Replace("dB", string.Empty).Trim(), out albumGain);
+                    albumGainIsPresent = true;
+                }
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
+                {
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_gain"].Replace("dB", string.Empty).Trim(), out trackGain);
+                    trackGainIsPresent = true;
+                }
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_peak"].Trim(), out albumPeak);
+                if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
+                    float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_peak"].Trim(), out trackPeak);
+
+                float decibelsToAdjust = 0;
+                float peak = 0;
+                if (App.Config.PerformReplayGainByTrack)
+                {
+                    decibelsToAdjust = trackGainIsPresent ? trackGain : albumGain;
+                    peak = trackPeak;
+                }
+                else if (App.Config.PerformReplayGainByAlbum)
+                {
+                    decibelsToAdjust = albumGainIsPresent ? albumGain : trackGain;
+                    peak = albumPeak;
+                }
+                replayGainAdjustment = Math.Min((float)Math.Pow(10, (decibelsToAdjust + App.Config.ReplayGainPreAmp) / 20), (1 / peak));
+                LoggingHandler.Log($"ReplayGain: Specified adjustment is {decibelsToAdjust}dB and peak is {peak}. Applying adjustment of {replayGainAdjustment}");
+            }
+            Player.Volume = ((float)VolumeBar.Value / 100) * replayGainAdjustment;
+        }
+
+        public void HandleAccentCoverArt()
+        {
+            if (!Player.FileLoaded || Player.Metadata.CoverArt is null)
+            {
+                (Application.Current as App).ChangeAccentColor(Handlers.Configuration.AccentColor.Blue);
+                return;
+            }
+            if (App.Config.AccentColor != Handlers.Configuration.AccentColor.CoverArt) return;
+
+            using (var bitmap = new Drawing.Bitmap(new MemoryStream(Player.Metadata.CoverArt)))
+            {
+                using (var resized = new Drawing.Bitmap(bitmap, 25, 25))
+                {
+                    var colors = new List<Drawing.Color>(resized.Width * resized.Height);
+                    for (int x = 0; x < resized.Width; x++)
+                    {
+                        for (int y = 0; y < resized.Height; y++)
+                        {
+                            colors.Add(resized.GetPixel(x, y));
+                        }
+                    }
+
+                    var clustering = new KMeansClusteringCalculator();
+                    var dominantColors = clustering.Calculate(3, colors, 5.0d);
+
+                    if (dominantColors[1] == Drawing.Color.FromArgb(0, 0, 0, 0))
+                    {
+                        dominantColors[1] = dominantColors[0];
+                    }
+                    if (dominantColors[2] == Drawing.Color.FromArgb(0, 0, 0, 0)) dominantColors[2] = dominantColors[1];
+
+                    (Application.Current as App).ApplyAccentColor(dominantColors[1].R, dominantColors[1].G, dominantColors[1].B, dominantColors[2].R, dominantColors[2].G, dominantColors[2].B);
+                }
+            }
         }
 
 
@@ -191,16 +377,35 @@ namespace FRESHMusicPlayer
         public Tab CurrentTab = Tab.Tracks;
         public Pane CurrentPane = Pane.None;
 
-        public bool IsControlsBoxVisible { get; private set; } = false;
+        public bool IsControlsBoxVisible { get; private set; } = true;
 
+        private bool coverArtIsVisible = false;
         public void SetCoverArtVisibility(bool mode)
         {
-            if (!mode) CoverArtArea.Width = new GridLength(5);
-            else CoverArtArea.Width = new GridLength(75);
+            if (mode && !coverArtIsVisible && CurrentPane != Pane.TrackInfo)
+            {
+                InterfaceUtils.GetThicknessAnimation(new Thickness(-70, 10, 0, 0),
+                                                     new Thickness(10, 10, 0, 0),
+                                                     TimeSpan.FromMilliseconds(200),
+                                                     new PropertyPath(MarginProperty),
+                                                     new ExponentialEase { EasingMode = EasingMode.EaseOut, Exponent = 3 }).Begin(CoverArtBoxContainer);
+                coverArtIsVisible = true;
+            }
+            else if (!mode && coverArtIsVisible)
+            {
+                InterfaceUtils.GetThicknessAnimation(new Thickness(10, 10, 0, 0),
+                                                     new Thickness(-70, 10, 0, 0),
+                                                     TimeSpan.FromMilliseconds(200),
+                                                     new PropertyPath(MarginProperty),
+                                                     new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 }).Begin(CoverArtBoxContainer);
+                coverArtIsVisible = false;
+            }
         }
-        public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false)
+        public async void ShowAuxilliaryPane(Pane pane, int width = 235, bool openleft = false, string args = null, Tab fullscreenTab = Tab.Other)
         {
             LoggingHandler.Log($"Showing pane --> {pane}");
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
 
             UserControl GetPageForPane(Pane panex)
             {
@@ -218,6 +423,23 @@ namespace FRESHMusicPlayer
                         return new TrackInfoPage(this);
                     case Pane.Lyrics:
                         return new LyricsPage(this);
+                    case Pane.PlaylistManagement:
+                        return new PlaylistManagement(Library, NotificationHandler, CurrentTab, args);
+                    case Pane.FullscreenTab:
+                        switch (fullscreenTab)
+                        {
+                            case Tab.Tracks:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Artists:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Albums:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Playlists:
+                                return new LibraryPage(this, args, fullscreenTab);
+                            case Tab.Import:
+                                return new ImportPage(this);
+                        }
+                        return null;
                     default:
                         return null;
                 }
@@ -238,7 +460,7 @@ namespace FRESHMusicPlayer
                 return;
             }
 
-            if (CurrentPane == pane)
+            if (CurrentPane == pane && CurrentPane != Pane.FullscreenTab)
             {
                 await HideAuxilliaryPane();
                 return;
@@ -259,7 +481,10 @@ namespace FRESHMusicPlayer
 
             sb.Begin(RightFrame);
 
+            RightFrame.Focus();
             CurrentPane = pane;
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
         }
         public async Task HideAuxilliaryPane(bool animate = true)
         {
@@ -280,17 +505,21 @@ namespace FRESHMusicPlayer
             var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0, -25, 0, 0),
                 new Thickness(0),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 1 });
             var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0, 0, 0, -84),
                 new Thickness(0),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 1 });
             navBarStoryboard.Begin(MainBar);
             await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
+
+            ControlsBox.Focusable = true;
+            MainBar.Focusable = true;
+
             IsControlsBoxVisible = true;
         }
         public async void HideControlsBox()
@@ -298,22 +527,32 @@ namespace FRESHMusicPlayer
             var navBarStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0),
                 new Thickness(0, -25, 0, 0),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 3 });
             var controlsBoxStoryboard = InterfaceUtils.GetThicknessAnimation(
                 new Thickness(0),
                 new Thickness(0, 0, 0, -84),
-                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(400),
                 new PropertyPath(MarginProperty),
-                new ExponentialEase { EasingMode = EasingMode.EaseIn, Exponent = 3 });
+                new ExponentialEase { EasingMode = EasingMode.EaseInOut, Exponent = 3 });
             navBarStoryboard.Begin(MainBar);
             await controlsBoxStoryboard.BeginStoryboardAsync(ControlsBoxBorder);
+
+            ControlsBox.Focusable = false;
+            MainBar.Focusable = false;
+
             IsControlsBoxVisible = false;
         }
-        public void ChangeTabs(Tab tab, string search = null)
+
+        public List<(Tab tab, string search)> BackLog = new List<(Tab tab, string search)>();
+        private List<(Tab tab, string search)> forwardLog = new List<(Tab tab, string search)>();
+
+        public void ChangeTabs(Tab tab, string search = null, bool isNavigating = false)
         {
             LoggingHandler.Log($"Changing tabs -> {tab}");
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
 
             var previousMenu = CurrentTab;
             CurrentTab = tab;
@@ -321,19 +560,19 @@ namespace FRESHMusicPlayer
             switch (CurrentTab)
             {
                 case Tab.Tracks:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Tracks);
                     tabLabel = TracksTab;
                     break;
                 case Tab.Artists:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Artists);
                     tabLabel = ArtistsTab;
                     break;
                 case Tab.Albums:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Albums);
                     tabLabel = AlbumsTab;
                     break;
                 case Tab.Playlists:
-                    ContentFrame.Content = new LibraryPage(this, search);
+                    ContentFrame.Content = new LibraryPage(this, search, Tab.Playlists);
                     tabLabel = PlaylistsTab;
                     break;
                 case Tab.Import:
@@ -342,16 +581,45 @@ namespace FRESHMusicPlayer
                     break;
                 case Tab.Fullscreen:
                     ContentFrame.Content = new FullscreenPage(this, previousMenu);
-                    tabLabel = ImportTab;
+                    tabLabel = null;
                     break;
                 default:
                     tabLabel = null;
                     break;
             }
+
+            if (!isNavigating)
+            {
+                BackLog.Add((tab, search));
+                forwardLog.Clear();
+            }
+            //if (backLog.Count > 5) backLog.Remove(backLog.Last());
+           
             TracksTab.FontWeight = ArtistsTab.FontWeight = AlbumsTab.FontWeight = PlaylistsTab.FontWeight = ImportTab.FontWeight = FontWeights.Normal;
-            tabLabel.FontWeight = FontWeights.Bold;
+            if (tabLabel != null) tabLabel.FontWeight = FontWeights.Bold;
+            ContentFrame.Focus();
+            // HACK: the following should not be needed at all, investigate what is causing the UI culture to be changed back
+            if (App.Config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new CultureInfo(App.Config.Language);
         }
 
+        public void NavigateBack()
+        {
+            if (BackLog.Count <= 1) return;
+
+            var entry = BackLog[BackLog.Count - 2];
+            forwardLog.Add(BackLog[BackLog.Count - 1]);
+            ChangeTabs(entry.tab, entry.search, true);
+            BackLog.RemoveAt(BackLog.Count - 1);
+        }
+
+        public void NavigateForward()
+        {
+            if (forwardLog.Count <= 0) return;
+
+            var entry = forwardLog[forwardLog.Count - 1];
+            ChangeTabs(entry.tab, entry.search, true);
+            forwardLog.RemoveAt(forwardLog.Count - 1);
+        }
 
         // Systemwide logic
 
@@ -369,6 +637,9 @@ namespace FRESHMusicPlayer
                 TrackingHandler = null;
             }
 
+            if (!App.Config.AutoQueue)
+                AutoQueueIsQueued = false;
+
             var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
             if (version != App.Config.LastRecordedVersion && App.Config.LastRecordedVersion != null)
                 NotificationHandler.Add(new Notification
@@ -381,56 +652,35 @@ namespace FRESHMusicPlayer
 
            App.Config.LastRecordedVersion = version;
         }
-        public async void HandlePersistence()
-        {
-            var persistenceFilePath = Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence");
-            if (File.Exists(persistenceFilePath) && !Player.IsLoading && !Player.FileLoaded /*if a track is already loading or playing then it's probs being opened*/)
-            {
-                var fields = File.ReadAllText(persistenceFilePath).Split(';');
 
-                var top = double.Parse(fields[2]);
-                var left = double.Parse(fields[3]);
-                var height = double.Parse(fields[4]);
-                var width = double.Parse(fields[5]);
-                var rect = new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height);
-                if (WinForms.Screen.AllScreens.Any(y => y.WorkingArea.IntersectsWith(rect)))
-                {
-                    Top = top;
-                    Left = left;
-                    Height = height;
-                    Width = width;
-                }
-                if (fields[0] != string.Empty)
-                {
-                    await Player.PlayAsync(fields[0]);
-                    Player.CurrentTime = TimeSpan.FromSeconds(int.Parse(fields[1]));
-                    PlayPauseMethod();
-                    ProgressTick();
-                }
-            }
-        }
         public void WritePersistence()
         {
             if (Player.FileLoaded) // TODO: make this less shitty
             {
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
-                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width}");
+                    $"{Player.FilePath};{(int)Player.CurrentBackend.CurrentTime.TotalSeconds};{Top};{Left};{Height};{Width};{string.Join("\n", Player.Queue.Queue)};{Player.Queue.Position - 1};{AutoQueueIsQueued}");
             }
             else
             {
                 File.WriteAllText(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "persistence"),
-                    $";;{Top};{Left};{Height};{Width}");
+                    $";;{Top};{Left};{Height};{Width};;;{AutoQueueIsQueued}");
             }
         }
 
         public void UpdateIntegrations()
         {
+            if (App.Config.IntegrateLastFM) lastFMIntegration = new LastFMIntegration(this);
+            else
+            {
+                lastFMIntegration?.Close();
+                lastFMIntegration = null;
+            }
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 smtcIntegration = new SMTCIntegration(this);
             }
             else smtcIntegration = null;
-            if (App.Config.IntegrateDiscordRPC) discordIntegration = new DiscordIntegration();
+            if (App.Config.IntegrateDiscordRPC) discordIntegration = new DiscordIntegration(HttpClient);
             else
             {
                 discordIntegration?.Close();
@@ -439,6 +689,7 @@ namespace FRESHMusicPlayer
         }
         public void SetIntegrations(PlaybackStatus status)
         {
+            if (App.Config.IntegrateLastFM) lastFMIntegration?.Update(CurrentTrack, status);
             if (Environment.OSVersion.Version.Major >= 10 && App.Config.IntegrateSMTC)
             {
                 smtcIntegration?.Update(CurrentTrack, status);
@@ -448,33 +699,209 @@ namespace FRESHMusicPlayer
                 discordIntegration?.Update(CurrentTrack, status);
             }
         }
+
+        private List<FileSystemWatcher> autoImportFileWatches = new List<FileSystemWatcher>();
+
+        private bool CheckIfFileEndsWithAutoImportableFileExtension(string name) => name.EndsWith(".mp3")
+        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+        || name.EndsWith(".flac") || name.EndsWith(".aiff")
+        || name.EndsWith(".wma")
+        || name.EndsWith(".aac");
+
         public async Task PerformAutoImport()
         {
             if (App.Config.AutoImportPaths.Count <= 0) return; // not really needed but prevents going through unneeded
                                                                // effort (and showing the notification)
-            var notification = new Notification { ContentText = Properties.Resources.NOTIFICATION_SCANNING };
+            var notification = new Notification { ContentText = Properties.Resources.NOTIFICATION_SCANNING, Type = NotificationType.Progress };
             NotificationHandler.Add(notification);
             var filesToImport = new List<string>();
-            var library = Library.Read();
-            await Task.Run(() =>
+            var library = Library.GetAllTracks();
+            await Task.Run(async () =>
             {
                 foreach (var folder in App.Config.AutoImportPaths)
                 {
                     var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
-                        .Where(name => name.EndsWith(".mp3")
-                            || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
-                            || name.EndsWith(".flac") || name.EndsWith(".aiff")
-                            || name.EndsWith(".wma")
-                            || name.EndsWith(".aac")).ToArray();
+                        .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
                     foreach (var file in files)
                     {
                         if (!library.Select(x => x.Path).Contains(file))
                             filesToImport.Add(file);
                     }
                 }
-                Library.Import(filesToImport);
+                if (filesToImport.Count > 0) await Library.ImportAsync(filesToImport);
             });
             NotificationHandler.Remove(notification);
+
+            foreach (var folder in App.Config.AutoImportPaths)
+                AddAutoImportFileWatcher(folder);
         }
+
+        public async void ScanLibraryForReplayGain(bool forceScanAll = false)
+        {
+            await Dispatcher.Invoke(async () =>
+            {
+                var library = Library.GetAllTracks();
+
+                var albums = new List<string>();
+                foreach (var track in library)
+                    if (!albums.Contains(track.Album)) albums.Add(track.Album);
+
+                var tracksToAdd = library.Count;
+
+                var notification = new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd), StatusBarText = Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN_HEADER, Type = NotificationType.Progress };
+                NotificationHandler.Add(notification);
+
+                await Task.Run(() =>
+                {
+                    var tracksToWrite = new List<Track>();
+
+                    Parallel.ForEach(albums, (album =>
+                    {
+                        var tracks = Library.GetTracksForAlbum(album);
+
+                        bool allTracksInAlbumHaveData = true;
+                        foreach (var track in tracks)
+                        {
+                            var atlTrack = new Track(track.Path);
+                            if (!
+                            (atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain") ||
+                            atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain") ||
+                            atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak") ||
+                            atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak")))
+                            {
+                                allTracksInAlbumHaveData = false;
+                                break;
+                            }
+                        }
+                        if (allTracksInAlbumHaveData && !forceScanAll)
+                        {
+                            tracksToAdd -= tracks.Count;
+                            return;
+                        }
+
+                        var trackGains = new Dictionary<string, TrackGain>();
+                        foreach (var track in tracks)
+                        {
+                            try
+                            {
+                                Debug.WriteLine($"Processing {track.Path}");
+                                var trackGain = ReplayGainUtils.CalculateReplayGainDataForTrack(track.Path);
+                                trackGains.Add(track.Path, trackGain);
+                            }
+                            catch
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure, DisplayAsToast = true });
+                                });
+                            }
+
+                            tracksToAdd--;
+                            notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksToAdd);
+                            Dispatcher.Invoke(() => NotificationHandler.Update(notification));
+                        }
+
+                        var albumGain = new AlbumGain();
+                        foreach (var track in trackGains)
+                        {
+                            albumGain.AppendTrackData(track.Value);
+                        }
+
+                        foreach (var track in trackGains)
+                        {
+                            var atlTrack = new Track(track.Key);
+
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
+                                atlTrack.AdditionalFields.Add("replaygain_track_gain", $"{track.Value.GetGain()} dB");
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
+                                atlTrack.AdditionalFields.Add("replaygain_album_gain", $"{albumGain.GetGain()} dB");
+
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
+                                atlTrack.AdditionalFields.Add("replaygain_track_peak", $"{track.Value.GetPeak()}");
+                            if (!atlTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
+                                atlTrack.AdditionalFields.Add("replaygain_album_peak", $"{albumGain.GetPeak()}");
+
+                            tracksToWrite.Add(atlTrack);
+
+                            track.Value.Dispose();
+                        }
+                    }));
+
+                    notification.ContentText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
+                    notification.StatusBarText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
+                    Dispatcher.Invoke(() => NotificationHandler.Update(notification));
+
+                    foreach (var track in tracksToWrite)
+                    {
+                        Debug.WriteLine($"Beginning to write metadata for {track.Path}");
+
+                        try
+                        {
+                            track.Save();
+                        }
+                        catch
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                NotificationHandler.Add(new Notification { ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path), Type = NotificationType.Failure });
+                            });
+                        }
+
+                        Debug.WriteLine("Saved!");
+                    }
+                });
+
+                NotificationHandler.Remove(notification);
+            });
+            
+        }
+
+        public void AddAutoImportFileWatcher(string folder)
+        {
+            LoggingHandler.Log($"Auto Import: Added watcher for {folder}");
+
+            var autoImportPathWatcher = new FileSystemWatcher(folder);
+            autoImportPathWatcher.IncludeSubdirectories = true;
+            autoImportPathWatcher.EnableRaisingEvents = true;
+            autoImportPathWatcher.Created += async (s, e) =>
+            {
+                LoggingHandler.Log($"Auto Import: {e.FullPath} was created, importing...");
+
+                var attributes = File.GetAttributes(e.FullPath);
+                if (attributes.HasFlag(FileAttributes.Directory))
+                {
+                    var filesToImport = new List<string>();
+                    var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                                .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
+                    foreach (var file in files)
+                    {
+                        if (!Library.GetAllTracks().Select(x => x.Path).Contains(file))
+                            filesToImport.Add(file);
+                    }
+                    await Library.ImportAsync(filesToImport);
+                }
+                else
+                {
+                    if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && !Library.GetAllTracks().Select(x => x.Path).Contains(e.FullPath))
+                    {
+                        await Library.ImportAsync(e.FullPath);
+                    }
+                }
+            };
+
+            autoImportFileWatches.Add(autoImportPathWatcher);
+        }
+
+        public void ClearAllAutoImportFileWatchers()
+        {
+            LoggingHandler.Log("Auto Import: Clearing all watchers");
+
+            foreach (var watcher in autoImportFileWatches)
+                watcher.Dispose();
+
+            autoImportFileWatches.Clear();
+        }
+
+       
     }
 }

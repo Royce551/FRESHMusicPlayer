@@ -39,7 +39,9 @@ namespace FRESHMusicPlayer.Controls
             InterfaceUtils.SetField(DiscBox, DiscNumberLabel, track.DiscNumber.ToString() == "0" ? null : track.DiscNumber.ToString());
             if (track.DiscTotal > 0) DiscBox.Text += "/" + track.DiscTotal;
 
-            if (track is FileMetadataProvider file) BitrateBox.Text = file.ATLTrack.Bitrate + "kbps " + (file.ATLTrack.SampleRate / 1000) + "kHz";
+            if (track is FileMetadataProvider file)
+                BitrateBox.Text = $"{file.ATLTrack.Bitrate}kbps {file.ATLTrack.SampleRate / 1000}kHz {(file.ATLTrack.CodecFamily == 0 ? "(Lossy) " : "(Lossless)")} " +
+                    $"{(file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain") ? "RG" : string.Empty)}";
             else BitrateBox.Text = Properties.Resources.TRACKINFO_NOTAVAILABLE;
         }
     }

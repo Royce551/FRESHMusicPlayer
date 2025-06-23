@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FRESHMusicPlayer.Handlers.Notifications
 {
@@ -38,7 +39,7 @@ namespace FRESHMusicPlayer.Handlers.Notifications
         }
         public void ClearAll()
         {
-            Notifications.Clear();
+            Notifications.RemoveAll(x => x.Type != NotificationType.Progress);
             NotificationInvalidate?.Invoke(null, EventArgs.Empty);
         }
         

@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="372" d:DesignWidth="694"
       Unloaded="Page_Unloaded" DragEnter="Page_DragEnter" Drop="Page_Drop" AllowDrop="True" Loaded="Page_Loaded">
-    <Grid Background="{StaticResource BackgroundColor}">
+    <Grid Background="{DynamicResource SecondaryColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="23*"/>
             <RowDefinition x:Name="DetailsPane" Height="Auto"/>
@@ -17,26 +17,60 @@
             <ColumnDefinition x:Name="LeftSide" Width="222"/>
             <ColumnDefinition x:Name="RightSide"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="TracksPanel"  Grid.Column="1" Background="{StaticResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}" ScrollViewer.PanningMode="Both">
-            <ListBox.ItemContainerStyle>
+    
+        <TextBlock x:Name="LibraryEmptyTextBlock" Visibility="Collapsed" Grid.Column="1" Panel.ZIndex="2" Text="{x:Static resx:Resources.LIBRARY_EMPTY}" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,35,10,0"/>
+      
+        <ListBox x:Name="TracksPanel" TabIndex="2" KeyboardNavigation.TabNavigation="Continue" Grid.Column="1" Background="{DynamicResource BackgroundColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0,25,0,0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{DynamicResource BackgroundColor}" ScrollViewer.PanningMode="Both" SelectionChanged="TracksPanel_SelectionChanged" LostKeyboardFocus="TracksPanel_LostKeyboardFocus">
+            <!--<ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>
                 </Style>
-            </ListBox.ItemContainerStyle>
+            </ListBox.ItemContainerStyle>-->
+            
         </ListBox>
 
         <GridSplitter
+              TabIndex="1"
               HorizontalAlignment="Right"
               VerticalAlignment="Stretch"
-              Background="{StaticResource SecondaryColor}" 
+              Background="{DynamicResource SecondaryColor}" 
+              FocusVisualStyle="{StaticResource KeyboardFocusRing}"       
               ShowsPreview="True"
               Width="5"
                       Foreground="{x:Null}"
               Grid.RowSpan="2" Margin="0,0,0,0"
               />
-        <ListBox x:Name="CategoryPanel" Margin="0,0,5,0" Background="{StaticResource SecondaryColor}" Foreground="{StaticResource PrimaryTextColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0" ScrollViewer.PanningMode="Both"/>
+        <ListBox x:Name="CategoryPanel" TabIndex="0" Margin="5,25,5,84" Background="{DynamicResource SecondaryColor}" Foreground="{DynamicResource PrimaryTextColor}" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{x:Null}" SelectionChanged="CategoryPanel_SelectionChanged" BorderThickness="0" ScrollViewer.PanningMode="Both">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="myBorder"
+                                    Padding="2,6"
+                                    CornerRadius="2"
+                                    SnapsToDevicePixels="true">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter TargetName="myBorder" Property="Background" Value="{DynamicResource AccentColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="myBorder" Property="Background" Value="{DynamicResource AccentColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorOverAccent}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
 
-        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Height="45" Background="{StaticResource BackgroundColor}">
+        <Grid x:Name="InfoPanel" Grid.Column="1" Grid.Row="2" Margin="0" Height="130" Background="{DynamicResource BackgroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -63,9 +97,9 @@
             </DockPanel>-->
 
 
-            <TextBlock x:Name="InfoLabel" Text="99 Tracks ・ 10:00:00" Grid.Column="0" Foreground="{StaticResource SecondaryTextColor}" Grid.Row="2" FontSize="12" Margin="10" VerticalAlignment="Center"/>
-            <Button x:Name="QueueAllButton" Content="{x:Static resx:Resources.LIBRARY_ENQUEUEALL}" Grid.Column="1" Grid.Row="2" Margin="10,10,0,10" Padding="5,1" Click="QueueAllButton_Click"/>
-            <Button x:Name="PlayAllButton" Content="{x:Static resx:Resources.LIBRARY_PLAYALL}" Grid.Column="2" Grid.Row="2" Margin="10" Padding="5,1" Click="PlayAllButton_Click"/>
+            <TextBlock x:Name="InfoLabel" Text="99 Tracks ・ 10:00:00" Grid.Column="0" Foreground="{DynamicResource SecondaryTextColor}" Grid.Row="2" FontSize="12" Margin="10,10,10,94" VerticalAlignment="Center"/>
+            <Button x:Name="QueueAllButton" TabIndex="3" Content="{x:Static resx:Resources.LIBRARY_ENQUEUEALL}" Grid.Column="1" Grid.Row="2" Margin="10,10,0,94" Padding="5,1" Click="QueueAllButton_Click"/>
+            <Button x:Name="PlayAllButton" TabIndex="4" Content="{x:Static resx:Resources.LIBRARY_PLAYALL}" Grid.Column="2" Grid.Row="2" Margin="10,10,10,94" Padding="5,1" Click="PlayAllButton_Click"/>
         </Grid>
        
 

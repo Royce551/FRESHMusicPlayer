@@ -1,4 +1,5 @@
-﻿using FRESHMusicPlayer.Handlers;
+﻿using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Configuration;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
@@ -39,6 +40,31 @@ namespace FRESHMusicPlayer.Pages
             General_TrackingCheck.IsChecked = App.Config.PlaybackTracking;
             Integration_DiscordRPCCheck.IsChecked = App.Config.IntegrateDiscordRPC;
             Integration_SMTCCheck.IsChecked = App.Config.IntegrateSMTC;
+            //General_AutoLibraryCheck.IsChecked = App.Config.AutoLibrary;
+
+            Integration_LastFMCheck.IsChecked = App.Config.IntegrateLastFM;
+            //Integration_LastFMSyncLikedCheck.IsChecked = App.Config.SyncLikedLastFMTracks;
+            //Integration_LastFMSyncPlaylistsCheck.IsChecked = App.Config.GeneratePlaylistsFromLastFM;
+            General_AutoQueueCheck.IsChecked = App.Config.AutoQueue;
+
+            General_UseReplayGain.IsChecked = App.Config.UseReplayGain;
+
+            if (App.Config.PerformReplayGainByTrack) General_ReplayGainByTrack.IsChecked = true;
+            else General_ReplayGainByAlbum.IsChecked = true;
+
+            General_ReplayGainByAlbum.IsChecked = App.Config.PerformReplayGainByAlbum;
+            General_ReplayGainPreAmp.Value = App.Config.ReplayGainPreAmp;
+            General_ProcessReplayGainAfterImporting.IsChecked = App.Config.ProcessReplayGainAfterImporting;
+
+            Integration_LastFMPauseCheck.IsChecked = App.Config.LastFMPaused;
+            Appearance_TaskbarProgressCheck.IsChecked = App.Config.ShowProgressInTaskbar;
+
+            EQBand1.Value = App.Config.EQBand1;
+            EQBand2.Value = App.Config.EQBand2;
+            EQBand3.Value = App.Config.EQBand3;
+            EQBand4.Value = App.Config.EQBand4;
+            EQBand5.Value = App.Config.EQBand5;
+            EQBand6.Value = App.Config.EQBand6;
             Updates_LastCheckedLabel.Text = string.Format(Properties.Resources.SETTINGS_UPDATESLASTCHECKED, App.Config.UpdatesLastChecked);
             FMPVersionLabel.Text = $"FRESHMusicPlayer {Assembly.GetEntryAssembly().GetName().Version}";
             switch (App.Config.Language) // TODO: investigate making this less ugly
@@ -70,6 +96,12 @@ namespace FRESHMusicPlayer.Pages
                 case "ar":
                     General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Arabic;
                     break;
+                case "he":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Hebrew;
+                    break;
+                case "ru":
+                    General_LanguageCombo.SelectedIndex = (int)LanguageCombo.Russian;
+                    break;
             }
             switch (App.Config.Theme)
             {
@@ -78,6 +110,33 @@ namespace FRESHMusicPlayer.Pages
                     break;
                 case Skin.Dark:
                     Appearance_ThemeDarkRadio.IsChecked = true;
+                    break;
+                //case Skin.Classic:
+                //    Appearance_ThemeClassicRadio.IsChecked = true;
+                //    break;
+                //case Skin.System:
+                //    Appearance_ThemeSystemRadio.IsChecked = true;
+                //    break;
+            }
+            switch (App.Config.AccentColor)
+            {
+                case AccentColor.Blue:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Blue;
+                    break;
+                case AccentColor.Green:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Green;
+                    break;
+                case AccentColor.Red:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Red;
+                    break;
+                case AccentColor.Purple:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Purple;
+                    break;
+                case AccentColor.Pink:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.Pink;
+                    break;
+                case AccentColor.CoverArt:
+                    Appearance_AccentColorCombo.SelectedIndex = (int)AccentColor.CoverArt;
                     break;
             }
 #if UPDATER
@@ -95,9 +154,9 @@ namespace FRESHMusicPlayer.Pages
             }
 #else
             UpdateHeader.Visibility =
-            UpdateModeGrid.Visibility = 
-            UpdateModeHeader.Visibility = 
-            General_UpdateModeCombo.Visibility = 
+            UpdateModeGrid.Visibility =
+            UpdateModeHeader.Visibility =
+            General_UpdateModeCombo.Visibility =
             Updates_LastCheckedLabel.Visibility =
             Updates_CheckUpdatesButton.Visibility =
             Visibility.Collapsed;
@@ -107,6 +166,10 @@ namespace FRESHMusicPlayer.Pages
             foreach (var path in App.Config.AutoImportPaths)
                 stringBuilder.AppendLine(path);
             General_AutoImportTextBlock.Text = stringBuilder.ToString();
+
+            //General_AutoLibraryTextBlock.Text = $"Currently importing to {App.Config.AutoLibraryPath}";
+            //UpdateAutoLibraryState(App.Config.AutoLibrary);
+
             pageInitialized = true;
         }
 
@@ -125,6 +188,20 @@ namespace FRESHMusicPlayer.Pages
                 RestartNowButton.Visibility = Visibility.Collapsed;
             }
         }
+
+        //private void UpdateAutoLibraryState(bool state)
+        //{
+        //    if (state)
+        //    {
+        //        General_AutoLibraryTextBlock.Opacity = 1;
+        //        General_AutoLibraryChooseButton.IsEnabled = true;
+        //    }
+        //    else
+        //    {
+        //        General_AutoLibraryTextBlock.Opacity = 0.5f;
+        //        General_AutoLibraryChooseButton.IsEnabled = false;
+        //    }
+        //}
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -145,6 +222,15 @@ namespace FRESHMusicPlayer.Pages
             }        
         }
 
+        //private void General_AutoLibraryChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (pageInitialized)
+        //    {
+        //        App.Config.AutoLibrary = (bool)General_AutoLibraryCheck.IsChecked;
+        //    }
+        //    UpdateAutoLibraryState(App.Config.AutoLibrary);
+        //}
+
         private void Integration_SMTCChanged(object sender, RoutedEventArgs e)
         {
             if (pageInitialized)
@@ -161,6 +247,93 @@ namespace FRESHMusicPlayer.Pages
                 (Application.Current.MainWindow as MainWindow)?.ProcessSettings();
             }
         }
+
+        private void General_AutoQueueChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.AutoQueue = (bool)General_AutoQueueCheck.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.ProcessSettings();
+            }
+        }
+
+        private void Integration_LastFMChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                if ((bool)Integration_LastFMCheck.IsChecked)
+                {
+                    App.Config.IntegrateLastFM = true;
+                }
+                else
+                {
+                    var result = MessageBox.Show(Properties.Resources.SETTINGS_LASTFMLOGOUT_WARNING, "FRESHMusicPlayer", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        App.Config.IntegrateLastFM = false;
+                        File.Delete(Path.Combine(App.DataFolderLocation, "Configuration", "FMP-WPF", "lastfmsession.txt"));
+                    }
+                    else Integration_LastFMCheck.IsChecked = true;
+                }
+                (Application.Current.MainWindow as MainWindow)?.UpdateIntegrations();
+            }
+        }
+
+        private void Integration_LastFMPausedChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.LastFMPaused = (bool)Integration_LastFMPauseCheck.IsChecked;
+            }
+        }
+
+        private void General_UseReplayGainChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.UseReplayGain = (bool)General_UseReplayGain.IsChecked;
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+            }
+        }
+
+        private void General_ReplayGainPreAmp_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.ReplayGainPreAmp = (float)General_ReplayGainPreAmp.Value;
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+            }
+        }
+
+        private void General_ProcessReplayGainAfterImporting_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.ProcessReplayGainAfterImporting = (bool)General_ProcessReplayGainAfterImporting.IsChecked;
+            }
+        }
+
+        private void General_ReplayGainByChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                var radioButton = (RadioButton)sender;
+                switch (radioButton.Name)
+                {
+                    case "General_ReplayGainByTrack":
+                        App.Config.PerformReplayGainByTrack = true;
+                        App.Config.PerformReplayGainByAlbum = false;
+                        break;
+                    case "General_ReplayGainByAlbum":
+                        App.Config.PerformReplayGainByTrack = false;
+                        App.Config.PerformReplayGainByAlbum = true;
+                        break;
+                }
+                (Application.Current.MainWindow as MainWindow)?.UpdateReplayGain();
+                window.UpdateControlsBoxColors();
+            }
+        }
+
         private void General_LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pageInitialized)
@@ -194,6 +367,12 @@ namespace FRESHMusicPlayer.Pages
                     case (int)LanguageCombo.Arabic:
                         App.Config.Language = "ar";
                         break;
+                    case (int)LanguageCombo.Hebrew:
+                        App.Config.Language = "he";
+                        break;
+                    case (int)LanguageCombo.Russian:
+                        App.Config.Language = "ru";
+                        break;
                 }
                 SetAppRestartNeeded(App.Config.Language != workingConfig.Language);
             }
@@ -216,6 +395,59 @@ namespace FRESHMusicPlayer.Pages
                 }
             }
         }
+
+        private void UpdateEQValues()
+        {
+            if (window.Player.CurrentBackend is ISupportEqualization equalizableBackend)
+            {
+                App.Config.EQBand1 = (float)EQBand1.Value;
+                App.Config.EQBand2 = (float)EQBand2.Value;
+                App.Config.EQBand3 = (float)EQBand3.Value;
+                App.Config.EQBand4 = (float)EQBand4.Value;
+                App.Config.EQBand5 = (float)EQBand5.Value;
+                App.Config.EQBand6 = (float)EQBand6.Value;
+                window.UpdateEqualizer();
+            }
+        }
+        private void EQBand_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (pageInitialized) UpdateEQValues();
+        }
+
+        private void EQResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            EQBand1.Value = 0;
+            EQBand2.Value = 0;
+            EQBand3.Value = 0;
+            EQBand4.Value = 0;
+            EQBand5.Value = 0;
+            EQBand6.Value = 0;
+            UpdateEQValues();
+        }
+
+        private void EQPresetBassBoostButton_Click(object sender, RoutedEventArgs e)
+        {
+            EQBand1.Value = 3.5;
+            EQBand2.Value = 3;
+            EQBand3.Value = 1;
+            EQBand4.Value = 0;
+            EQBand5.Value = 0;
+            EQBand6.Value = 0;
+            UpdateEQValues();
+        }
+
+        private void EQPresetTrebleBoostButton_Click(object sender, RoutedEventArgs e)
+        {
+            EQBand1.Value = 0;
+            EQBand2.Value = 0;
+            EQBand3.Value = 0;
+            EQBand4.Value = 1;
+            EQBand5.Value = 1.5;
+            EQBand6.Value = 3;
+            UpdateEQValues();
+        }
+
+
         private void Appearance_ThemeChanged(object sender, RoutedEventArgs e)
         {
             if (pageInitialized)
@@ -229,8 +461,56 @@ namespace FRESHMusicPlayer.Pages
                     case "Appearance_ThemeDarkRadio":
                         App.Config.Theme = Skin.Dark;
                         break;
+                    case "Appearance_ThemeClassicRadio":
+                        App.Config.Theme = Skin.Dark;
+                        break;
+                    case "Appearance_ThemeSystemRadio":
+                        App.Config.Theme = Skin.Dark;
+                        break;
                 }
-                SetAppRestartNeeded(App.Config.Theme != workingConfig.Theme);
+                (Application.Current as App).ChangeSkin(App.Config.Theme);
+                window.UpdateControlsBoxColors();
+            }
+        }
+
+        private void Appearance_TaskbarProgressCheckChanged(object sender, RoutedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                App.Config.ShowProgressInTaskbar = (bool)Appearance_TaskbarProgressCheck.IsChecked;
+            }
+        }
+
+        private void Appearance_AccentColorCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (pageInitialized)
+            {
+                switch (Appearance_AccentColorCombo.SelectedIndex)
+                {
+                    case (int)AccentColor.Blue:
+                        App.Config.AccentColor = AccentColor.Blue;
+                        break;
+                    case (int)AccentColor.Green:
+                        App.Config.AccentColor = AccentColor.Green;
+                        break;
+                    case (int)AccentColor.Red:
+                        App.Config.AccentColor = AccentColor.Red;
+                        break;
+                    case (int)AccentColor.Purple:
+                        App.Config.AccentColor = AccentColor.Purple;
+                        break;
+                    case (int)AccentColor.Pink:
+                        App.Config.AccentColor = AccentColor.Pink;
+                        break;
+                    case (int)AccentColor.ClassicBlue:
+                        App.Config.AccentColor = AccentColor.ClassicBlue;
+                        break;
+                    case (int)AccentColor.CoverArt:
+                        App.Config.AccentColor = AccentColor.CoverArt;
+                        break;
+                }
+                (Application.Current as App).ChangeAccentColor(App.Config.AccentColor);
+                window.HandleAccentCoverArt();
             }
         }
 
@@ -251,7 +531,6 @@ namespace FRESHMusicPlayer.Pages
         private void RestartNowButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-            WinForms.Application.Restart();
         }
 
         private async void Updates_CheckUpdatesButton_Click(object sender, RoutedEventArgs e)
@@ -262,28 +541,61 @@ namespace FRESHMusicPlayer.Pages
 
         private async void Maintenence_UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            await Task.Run(() =>
+
+            var tracks = window.Library.GetAllTracks().Select(x => x.Path);
+            var tracksWithoutDuplicates = tracks.Distinct();
+
+            var tracksToRemove = tracks.Except(tracksWithoutDuplicates);
+            foreach (var track in tracksToRemove)
+                window.Library.Remove(track);
+
+            var remainingTracks = window.Library.GetAllTracks();
+            foreach (var track in remainingTracks)
+                if (!track.Path.StartsWith("http") && !File.Exists(track.Path))
+                    window.Library.Remove(track.Path);
+
+            var remainingTracks2 = window.Library.GetAllTracks();
+            foreach (var track in remainingTracks2)
             {
-                var tracks = window.Library.Read().Select(x => x.Path).Distinct();
-                Dispatcher.Invoke(() => window.Library.Nuke(false));
-                window.Library.Import(tracks.ToArray());
-            });
+                track.HasBeenProcessed = false;
+                window.Library.Database.GetCollection<DatabaseTrack>(GUILibrary.TracksCollectionName).Update(track);
+            }
+
+            await window.Library.ProcessDatabaseMetadataAsync();
         }
 
-        private void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
+        private async void General_AddFolderButton_Click(object sender, RoutedEventArgs e)
         {
             using (var dialog = new WinForms.FolderBrowserDialog())
             {
                 if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                {
                     App.Config.AutoImportPaths.Add(dialog.SelectedPath);
+                    window.AddAutoImportFileWatcher(dialog.SelectedPath);
+                }
             }
             InitFields();
+            await window.PerformAutoImport();
         }
         private void General_ClearButton_Click(object sender, RoutedEventArgs e)
         {
             App.Config.AutoImportPaths.Clear();
+            window.ClearAllAutoImportFileWatchers();
             InitFields();
         }
+
+        private void General_AutoLibraryChooseButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new WinForms.FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+                    App.Config.AutoLibraryPath = dialog.SelectedPath;
+            }
+            InitFields();
+        }
+
+        private void General_AddReplayGainData_Click(object sender, RoutedEventArgs e) => window.ScanLibraryForReplayGain();
+
     }
     public enum LanguageCombo
     {
@@ -295,7 +607,9 @@ namespace FRESHMusicPlayer.Pages
         Turkish,
         Dutch,
         Danish,
-        Arabic
+        Arabic,
+        Hebrew,
+        Russian
     }
     public enum UpdateCombo
     {

@@ -3,10 +3,18 @@
                     xmlns:local="clr-namespace:FRESHMusicPlayer">
     <SolidColorBrush x:Key="PrimaryTextColor" Color="Black"/>
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#525252"/>
-    <SolidColorBrush x:Key="NavBarColor" Color="#DEE0E3"/>
-    <SolidColorBrush x:Key="ControlBoxColor" Color="#BDC0C7"/>
-    <SolidColorBrush x:Key="BackgroundColor" Color="#DEE0E3"/>
-    <SolidColorBrush x:Key="SecondaryColor" Color="#D3D6D9"/>
-    <SolidColorBrush x:Key="ForegroundColor" Color="#BDC0C7"/>
-    <SolidColorBrush x:Key="ControlColor" Color="#B5B9C0"/>
+    <SolidColorBrush x:Key="NavBarColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="ControlBoxColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#f2f2f2"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#e6e6e6"/>
+    <SolidColorBrush x:Key="ControlColor" Color="#cccccc"/>
+
+    <SolidColorBrush x:Key="AccentColor" Color="#FF338BC1"/>
+    <LinearGradientBrush x:Key="AccentGradientColor" EndPoint="0,0.5" StartPoint="1, 0.5">
+        <GradientStop Color="#FF338BC1" Offset="0"/>
+        <GradientStop Color="#FF69B578" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="PrimaryTextColorOverAccent" Color="Black"/>
+    <SolidColorBrush x:Key="SecondaryTextColorOverAccent" Color="#DADADA"/>
 </ResourceDictionary>

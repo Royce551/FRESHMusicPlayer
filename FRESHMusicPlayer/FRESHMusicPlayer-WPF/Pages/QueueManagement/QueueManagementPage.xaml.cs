@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace FRESHMusicPlayer.Pages
 {
@@ -23,6 +25,7 @@ namespace FRESHMusicPlayer.Pages
         private readonly Queue<List<string>> displayqueue = new Queue<List<string>>();
         private int currentIndex = 0;
         private List<string> lastQueue = new List<string>();
+        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100), IsEnabled = true };
 
         private readonly MainWindow window;
         public QueueManagement(MainWindow window)
@@ -31,12 +34,22 @@ namespace FRESHMusicPlayer.Pages
             InitializeComponent();
             PopulateList();
             window.Player.Queue.QueueChanged += Player_QueueChanged;
+            window.Player.SongChanged += Player_SongChanged;
             window.Player.SongStopped += Player_SongStopped;
-            window.ProgressTimer.Tick += ProgressTimer_Tick;
+            timer.Tick += Timer_Tick;
         }
 
-        private void ProgressTimer_Tick(object sender, EventArgs e)
+        private void Player_SongChanged(object sender, EventArgs e) => PopulateList();
+
+        private void Timer_Tick(object sender, EventArgs e)
         {
+            if (!window.Player.FileLoaded || window.Player.Paused || window.Player.Queue.RepeatMode != RepeatMode.None)
+            {
+                RemainingTimeLabel.Visibility = Visibility.Hidden;
+                return;
+            }
+
+            RemainingTimeLabel.Visibility = Visibility.Visible;
             var remainingTime = new TimeSpan();
             var queueAsQueueEntries = QueueList.Items.Cast<QueueEntry>().ToList();
 
@@ -47,8 +60,7 @@ namespace FRESHMusicPlayer.Pages
                 if (i != (queueAsQueueEntries.Count - 1)) remainingTime += TimeSpan.FromSeconds(track.Length);
             }
             remainingTime += (window.Player.TotalTime - window.Player.CurrentTime);
-            var lengthString = remainingTime.Days != 0 ? remainingTime.ToString(@"d\:hh\:mm\:ss") : remainingTime.ToString(@"hh\:mm\:ss");
-            RemainingTimeLabel.Text = Properties.Resources.QUEUEMANAGEMENT_REMAININGTIME + lengthString;
+            RemainingTimeLabel.Text = string.Format(Properties.Resources.QUEUEMANAGEMENT_ENDSAT, (DateTime.Now + remainingTime).ToString("t"));
         }
 
         public void PopulateList()
@@ -60,10 +72,10 @@ namespace FRESHMusicPlayer.Pages
                 var nextLength = 0; // length of the tracks that come after the current
                 int number = 1;
                 SetControlEnabled(false);
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     
-                    if (!list.SequenceEqual(lastQueue)) // has the contents of the queue changed, or just the positions?
+                    if (!list.ToList().SequenceEqual(lastQueue.ToList())) // has the contents of the queue changed, or just the positions?
                     {                                   // yes; refresh list
                         var difference = QueueList.Items.Count - window.Player.Queue.Queue.Count;
                         while (difference > 0)
@@ -79,11 +91,11 @@ namespace FRESHMusicPlayer.Pages
                         for (int i = 0; i < QueueList.Items.Count; i++)
                         {
                             var entry = QueueList.Items[i] as QueueEntry;
-                            var correspondingQueueEntry = window.Library.GetFallbackTrack(window.Player.Queue.Queue[i]);
+                            var correspondingQueueEntry = await window.Library.GetFallbackTrackAsync(window.Player.Queue.Queue[i]);
 
                             Dispatcher.Invoke(() =>
                             {
-                                entry.Artist = correspondingQueueEntry.Artist;
+                                entry.Artists = correspondingQueueEntry.Artists;
                                 entry.Album = correspondingQueueEntry.Album;
                                 entry.Title = correspondingQueueEntry.Title;
                                 entry.Index = i;
@@ -109,7 +121,18 @@ namespace FRESHMusicPlayer.Pages
                     lastQueue = Dispatcher.Invoke(() => QueueList.Items.Cast<QueueEntry>().Select(x => window.Player.Queue.Queue[x.Index]).ToList());
                 });
 
-                if (QueueList.Items.Count > 0) (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
+                if (QueueList.Items.Count > 0)
+                {
+                    try
+                    {
+                        if (currentIndex <= QueueList.Items.Count)
+                            (QueueList.Items[currentIndex] as QueueEntry).BringIntoView(); // Bring current track into view
+                    }
+                    catch
+                    {
+
+                    }
+                }
                 SetControlEnabled(true);
                 taskIsRunning = false;
                 if (displayqueue.Count != 0) GetResults();
@@ -132,7 +155,8 @@ namespace FRESHMusicPlayer.Pages
         {
             window.Player.Queue.QueueChanged -= Player_QueueChanged;
             window.Player.SongStopped -= Player_SongStopped;
-            window.ProgressTimer.Tick -= ProgressTimer_Tick;
+            timer.Tick -= Timer_Tick;
+            timer.Stop();
             QueueList.Items.Clear();
         }
 
@@ -142,7 +166,7 @@ namespace FRESHMusicPlayer.Pages
             dialog.Filter = "Audio Files|*.wav;*.aiff;*.mp3;*.wma;*.3g2;*.3gp;*.3gp2;*.3gpp;*.asf;*.wmv;*.aac;*.adts;*.avi;*.m4a;*.m4a;*.m4v;*.mov;*.mp4;*.sami;*.smi;*.flac|Other|*";
             if (dialog.ShowDialog() == true)
             {
-                window.Player.Queue.Add(dialog.FileName);
+                window.AddToQueueAndHandleAutoQueue(dialog.FileName);
             }
         }
 
@@ -166,7 +190,7 @@ namespace FRESHMusicPlayer.Pages
                         });
                         continue;
                     }
-                    window.Player.Queue.Add(s);
+                    window.AddToQueueAndHandleAutoQueue(s);
                 }
             }
         }
@@ -187,6 +211,43 @@ namespace FRESHMusicPlayer.Pages
         }
 
         private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Hidden;
+        }
+
+        private void QueueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                if (item is QueueEntry uc)
+                    uc.ShowButtons();
+            }
+            foreach (var item in e.RemovedItems)
+            {
+                if (item is QueueEntry uc)
+                    uc.HideButtons();
+            }
+        }
+
+        private void QueueList_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            if (QueueList.IsKeyboardFocusWithin) return;
+
+            foreach (var item in QueueList.Items)
+            {
+                if (item is QueueEntry uc)
+                    uc.HideButtons();
+            }
+            QueueList.SelectedItem = null;
+        }
+
+
+        private void UserControl_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Visible;
+        }
+
+        private void UserControl_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             AddTrackButton.Visibility = AddPlaylistButton.Visibility = ClearQueueButton.Visibility = Visibility.Collapsed;
         }

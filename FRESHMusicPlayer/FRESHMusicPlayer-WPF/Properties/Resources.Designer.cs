@@ -19,7 +19,7 @@ namespace FRESHMusicPlayer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -61,6 +61,69 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blue.
+        /// </summary>
+        public static string ACCENTCOLOR_BLUE {
+            get {
+                return ResourceManager.GetString("ACCENTCOLOR_BLUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classic Blue.
+        /// </summary>
+        public static string ACCENTCOLOR_CLASSICBLUE {
+            get {
+                return ResourceManager.GetString("ACCENTCOLOR_CLASSICBLUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        public static string ACCENTCOLOR_GREEN {
+            get {
+                return ResourceManager.GetString("ACCENTCOLOR_GREEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match cover art.
+        /// </summary>
+        public static string ACCENTCOLOR_MATCHCOVER {
+            get {
+                return ResourceManager.GetString("ACCENTCOLOR_MATCHCOVER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pink.
+        /// </summary>
+        public static string ACCENTCOLOR_PINK {
+            get {
+                return ResourceManager.GetString("ACCENTCOLOR_PINK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purple.
+        /// </summary>
+        public static string ACCENTCOLOR_PURPLE {
+            get {
+                return ResourceManager.GetString("ACCENTCOLOR_PURPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        public static string ACCENTCOLOR_RED {
+            get {
+                return ResourceManager.GetString("ACCENTCOLOR_RED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oopsies! Something went wrong. We&apos;ll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues..
         /// </summary>
         public static string APPLICATION_CRITICALERROR {
@@ -88,7 +151,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mini Player.
+        ///   Looks up a localized string similar to Mini player.
         /// </summary>
         public static string CONTROLS_MINIPLAYER {
             get {
@@ -106,7 +169,16 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Focus Mode.
+        ///   Looks up a localized string similar to Fullscreen.
+        /// </summary>
+        public static string FULLSCREEN {
+            get {
+                return ResourceManager.GetString("FULLSCREEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Focus mode.
         /// </summary>
         public static string FULLSCREEN_FOCUSMODE {
             get {
@@ -160,6 +232,42 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to log in. Check that you granted FRESHMusicPlayer access, and press OK to try again..
+        /// </summary>
+        public static string LASTFM_AUTHENTICATIONFAILED {
+            get {
+                return ResourceManager.GetString("LASTFM_AUTHENTICATIONFAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complete last.fm authentication on the browser window that just opened. Once you&apos;re done, press OK..
+        /// </summary>
+        public static string LASTFM_AUTHENTICATIONPROMPT {
+            get {
+                return ResourceManager.GetString("LASTFM_AUTHENTICATIONPROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully logged in to last.fm as {0}!.
+        /// </summary>
+        public static string LASTFM_LOGIN_SUCCESSFUL {
+            get {
+                return ResourceManager.GetString("LASTFM_LOGIN_SUCCESSFUL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured trying to scrobble {0}.
+        /// </summary>
+        public static string LASTFM_SCROBBLE_FAILED {
+            get {
+                return ResourceManager.GetString("LASTFM_SCROBBLE_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to playlist.
         /// </summary>
         public static string LIBRARY_ADD_TO_PLAYLIST {
@@ -169,7 +277,25 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enqueue All.
+        ///   Looks up a localized string similar to Disc {0}.
+        /// </summary>
+        public static string LIBRARY_DISCHEADER {
+            get {
+                return ResourceManager.GetString("LIBRARY_DISCHEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your library is empty. To get started, drag and drop some files, or set an Auto Import folder or two in the settings..
+        /// </summary>
+        public static string LIBRARY_EMPTY {
+            get {
+                return ResourceManager.GetString("LIBRARY_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enqueue all.
         /// </summary>
         public static string LIBRARY_ENQUEUEALL {
             get {
@@ -187,11 +313,29 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play All.
+        ///   Looks up a localized string similar to Play all.
         /// </summary>
         public static string LIBRARY_PLAYALL {
             get {
                 return ResourceManager.GetString("LIBRARY_PLAYALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play next.
+        /// </summary>
+        public static string LIBRARY_PLAYNEXT {
+            get {
+                return ResourceManager.GetString("LIBRARY_PLAYNEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string LOADING {
+            get {
+                return ResourceManager.GetString("LOADING", resourceCulture);
             }
         }
         
@@ -214,7 +358,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Untimed Lyrics.
+        ///   Looks up a localized string similar to Untimed lyrics.
         /// </summary>
         public static string LYRICS_UNTIMEDLYRICS {
             get {
@@ -241,6 +385,15 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string MAINWINDOW_HOME {
+            get {
+                return ResourceManager.GetString("MAINWINDOW_HOME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string MAINWINDOW_IMPORT {
@@ -250,7 +403,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown Artist.
+        ///   Looks up a localized string similar to Unknown artist.
         /// </summary>
         public static string MAINWINDOW_NOARTIST {
             get {
@@ -259,7 +412,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nothing Playing.
+        ///   Looks up a localized string similar to Nothing playing.
         /// </summary>
         public static string MAINWINDOW_NOTHINGPLAYING {
             get {
@@ -378,6 +531,45 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap next_icon {
+            get {
+                object obj = ResourceManager.GetObject("next_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing ReplayGain data for library...
+        ///
+        ///{0} tracks remaining.
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAIN {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing ReplayGain data for library....
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAIN_HEADER {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAIN_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReplayGain data couldn&apos;t be added to {0}. If the file is already open, close it and then press the rescan button in settings..
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAINERROR {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAINERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully cleared your library!.
         /// </summary>
         public static string NOTIFICATION_CLEARSUCCESS {
@@ -397,11 +589,20 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file you tried to play, &quot;{0}&quot;, doesn&apos;t seem to exist..
+        ///   Looks up a localized string similar to The file you tried to play has gone missing. Let us know where it went, or remove it from your library..
         /// </summary>
         public static string NOTIFICATION_FILEGONE {
             get {
                 return ResourceManager.GetString("NOTIFICATION_FILEGONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locate file.
+        /// </summary>
+        public static string NOTIFICATION_FILEGONE_LOCATEFILE {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_FILEGONE_LOCATEFILE", resourceCulture);
             }
         }
         
@@ -411,6 +612,27 @@ namespace FRESHMusicPlayer.Properties {
         public static string NOTIFICATION_INSTALLINGUPDATE {
             get {
                 return ResourceManager.GetString("NOTIFICATION_INSTALLINGUPDATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing library changes...
+        ///{0} tracks remaining
+        ///
+        ///Newly added tracks might not appear in the artists or albums tabs until processing is complete.
+        /// </summary>
+        public static string NOTIFICATION_PROCESSINGLIBRARY {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_PROCESSINGLIBRARY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing library changes....
+        /// </summary>
+        public static string NOTIFICATION_PROCESSINGLIBRARY_HEADER {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_PROCESSINGLIBRARY_HEADER", resourceCulture);
             }
         }
         
@@ -460,7 +682,16 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear All.
+        ///   Looks up a localized string similar to Writing ReplayGain data to library....
+        /// </summary>
+        public static string NOTIFICATION_WRITINGREPLAYGAIN {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_WRITINGREPLAYGAIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all.
         /// </summary>
         public static string NOTIFICATIONS_CLEAR_ALL {
             get {
@@ -478,7 +709,17 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Playlist Management.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap play_icon {
+            get {
+                object obj = ResourceManager.GetObject("play_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlist management.
         /// </summary>
         public static string PLAYLISTMANAGEMENT {
             get {
@@ -541,7 +782,17 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Playlist.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap previous_icon {
+            get {
+                object obj = ResourceManager.GetObject("previous_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add playlist.
         /// </summary>
         public static string QUEUEMANAGEMENT_ADDPLAYLIST {
             get {
@@ -550,7 +801,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Track.
+        ///   Looks up a localized string similar to Add track.
         /// </summary>
         public static string QUEUEMANAGEMENT_ADDTRACK {
             get {
@@ -559,11 +810,20 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear Queue.
+        ///   Looks up a localized string similar to Clear queue.
         /// </summary>
         public static string QUEUEMANAGEMENT_CLEARQUEUE {
             get {
                 return ResourceManager.GetString("QUEUEMANAGEMENT_CLEARQUEUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ends at {0}.
+        /// </summary>
+        public static string QUEUEMANAGEMENT_ENDSAT {
+            get {
+                return ResourceManager.GetString("QUEUEMANAGEMENT_ENDSAT", resourceCulture);
             }
         }
         
@@ -577,11 +837,11 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remaining Time: .
+        ///   Looks up a localized string similar to Reset.
         /// </summary>
-        public static string QUEUEMANAGEMENT_REMAININGTIME {
+        public static string RESET {
             get {
-                return ResourceManager.GetString("QUEUEMANAGEMENT_REMAININGTIME", resourceCulture);
+                return ResourceManager.GetString("RESET", resourceCulture);
             }
         }
         
@@ -591,6 +851,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string SETTINGS_ABOUT {
             get {
                 return ResourceManager.GetString("SETTINGS_ABOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accent color.
+        /// </summary>
+        public static string SETTINGS_ACCENTCOLOR {
+            get {
+                return ResourceManager.GetString("SETTINGS_ACCENTCOLOR", resourceCulture);
             }
         }
         
@@ -613,7 +882,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Folder.
+        ///   Looks up a localized string similar to Add folder.
         /// </summary>
         public static string SETTINGS_AUTOIMPORT_ADDFOLDER {
             get {
@@ -631,7 +900,25 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto Update Mode.
+        ///   Looks up a localized string similar to Auto queue.
+        /// </summary>
+        public static string SETTINGS_AUTOQUEUE {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOQUEUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them.
+        /// </summary>
+        public static string SETTINGS_AUTOQUEUE_SUBTEXT {
+            get {
+                return ResourceManager.GetString("SETTINGS_AUTOQUEUE_SUBTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto update mode.
         /// </summary>
         public static string SETTINGS_AUTOUPDATEMODE {
             get {
@@ -678,11 +965,47 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discord Rich Presence.
+        /// </summary>
+        public static string SETTINGS_INTEGRATION_DISCORD {
+            get {
+                return ResourceManager.GetString("SETTINGS_INTEGRATION_DISCORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System Transport Controls.
+        /// </summary>
+        public static string SETTINGS_INTEGRATION_SMTC {
+            get {
+                return ResourceManager.GetString("SETTINGS_INTEGRATION_SMTC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string SETTINGS_LANGUAGE {
             get {
                 return ResourceManager.GetString("SETTINGS_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause scrobbling for now.
+        /// </summary>
+        public static string SETTINGS_LASTFM_PAUSESCROBBLING {
+            get {
+                return ResourceManager.GetString("SETTINGS_LASTFM_PAUSESCROBBLING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to log out of last.fm?.
+        /// </summary>
+        public static string SETTINGS_LASTFMLOGOUT_WARNING {
+            get {
+                return ResourceManager.GetString("SETTINGS_LASTFMLOGOUT_WARNING", resourceCulture);
             }
         }
         
@@ -714,11 +1037,74 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Playtime Logging.
+        ///   Looks up a localized string similar to Playback.
+        /// </summary>
+        public static string SETTINGS_PLAYBACK {
+            get {
+                return ResourceManager.GetString("SETTINGS_PLAYBACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playtime logging.
         /// </summary>
         public static string SETTINGS_PLAYBACKTRACKING {
             get {
                 return ResourceManager.GetString("SETTINGS_PLAYBACKTRACKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add ReplayGain data to library.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_ADD {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_ADD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add ReplayGain data to library after imports.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_AUTOADD {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_AUTOADD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize by album.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_BYALBUM {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_BYALBUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize by track.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_BYTRACK {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_BYTRACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use ReplayGain loudness normalization.
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_ENABLE {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_ENABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pre-amplification for tracks with ReplayGain (values above 0 may reduce dynamics).
+        /// </summary>
+        public static string SETTINGS_REPLAYGAIN_PREAMP {
+            get {
+                return ResourceManager.GetString("SETTINGS_REPLAYGAIN_PREAMP", resourceCulture);
             }
         }
         
@@ -746,6 +1132,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string SETTINGS_RESTART_NOW {
             get {
                 return ResourceManager.GetString("SETTINGS_RESTART_NOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show track progress in taskbar.
+        /// </summary>
+        public static string SETTINGS_SHOWPROGRESSINTASKBAR {
+            get {
+                return ResourceManager.GetString("SETTINGS_SHOWPROGRESSINTASKBAR", resourceCulture);
             }
         }
         
@@ -849,7 +1244,34 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag Editor.
+        ///   Looks up a localized string similar to Equalizer.
+        /// </summary>
+        public static string SOUNDSETTINGS_EQ {
+            get {
+                return ResourceManager.GetString("SOUNDSETTINGS_EQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bass boost.
+        /// </summary>
+        public static string SOUNDSETTINGS_EQ_BASSBOOST {
+            get {
+                return ResourceManager.GetString("SOUNDSETTINGS_EQ_BASSBOOST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Treble boost.
+        /// </summary>
+        public static string SOUNDSETTINGS_EQ_TREBLEBOOST {
+            get {
+                return ResourceManager.GetString("SOUNDSETTINGS_EQ_TREBLEBOOST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag editor.
         /// </summary>
         public static string TAGEDITOR {
             get {
@@ -858,7 +1280,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album Artist.
+        ///   Looks up a localized string similar to Album artist.
         /// </summary>
         public static string TAGEDITOR_ALBUMARTIST {
             get {
@@ -885,7 +1307,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change File....
+        ///   Looks up a localized string similar to Change file....
         /// </summary>
         public static string TAGEDITOR_CHANGEFILE {
             get {
@@ -903,7 +1325,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cover Art.
+        ///   Looks up a localized string similar to Cover art.
         /// </summary>
         public static string TAGEDITOR_COVERART {
             get {
@@ -912,7 +1334,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disc Number.
+        ///   Looks up a localized string similar to Disc number.
         /// </summary>
         public static string TAGEDITOR_DISCNUM {
             get {
@@ -993,7 +1415,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track Number.
+        ///   Looks up a localized string similar to Track number.
         /// </summary>
         public static string TAGEDITOR_TRACKNUM {
             get {
@@ -1056,7 +1478,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Technical Info.
+        ///   Looks up a localized string similar to Technical info.
         /// </summary>
         public static string TRACKINFO_TECHNICALINFO {
             get {
@@ -1065,7 +1487,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Track Info.
+        ///   Looks up a localized string similar to Track info.
         /// </summary>
         public static string TRACKINFO_TRACKINFO {
             get {

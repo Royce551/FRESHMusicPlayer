@@ -5,178 +5,247 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx = "clr-namespace:FRESHMusicPlayer.Properties"
         mc:Ignorable="d" WindowStartupLocation="Manual"
-        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{StaticResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel" Activated="Window_Activated" Deactivated="Window_Deactivated">
+        Title="FRESHMusicPlayer" Height="540" Width="800" Closed="Window_Closed" KeyDown="Window_PreviewKeyDown" DragOver="Window_DragOver" AllowDrop="True" Background="{DynamicResource BackgroundColor}" SourceInitialized="Window_SourceInitialized" MouseWheel="Window_MouseWheel" Activated="Window_Activated" Deactivated="Window_Deactivated" MouseDown="Window_MouseDown">
     <Window.Resources>
         <ContextMenu x:Key="MiscContext">
-            <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
-            <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Click="TrackContentPlaylistManagement_Click"/>
-            <MenuItem Header="{x:Static resx:Resources.MENUBAR_OPEN}" Click="TrackContextOpenFile_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.TRACKINFO_TRACKINFO}" Click="TrackTitle_MouseLeftButtonDown"/>
+            <MenuItem Header="{x:Static resx:Resources.LYRICS}" Click="TrackContextLyrics_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.CONTROLS_PAUSE_AFTTER_CURRENT_TRACK}" Click="TrackContext_PauseAuto_Click"/>
+            <Separator/>
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_GOTO}">
                 <MenuItem Header="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Click="TrackContextArtist_Click"/>
                 <MenuItem Header="{x:Static resx:Resources.TRACKINFO_ALBUM}" Click="TrackContextAlbum_Click"/>
             </MenuItem>
-            <MenuItem Header="{x:Static resx:Resources.LYRICS}" Click="TrackContextLyrics_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Click="TrackContentPlaylistManagement_Click"/>
             <Separator/>
+            <MenuItem Header="{x:Static resx:Resources.FULLSCREEN}" Click="MenuItem_Click_1"/>
             <MenuItem Header="{x:Static resx:Resources.CONTROLS_MINIPLAYER}" Click="TrackContextMiniplayer_Click"/>
-            <MenuItem Header="{x:Static resx:Resources.CONTROLS_PAUSE_AFTTER_CURRENT_TRACK}" Click="TrackContext_PauseAuto_Click"/>
+            <Separator/>
+            <MenuItem Header="{x:Static resx:Resources.MENUBAR_OPEN}" Click="TrackContextOpenFile_Click"/>
+            <MenuItem Header="{x:Static resx:Resources.TAGEDITOR}" Click="TrackContextTagEditor_Click"/>
         </ContextMenu>
     </Window.Resources>
-    <DockPanel>
-        <!--Menu-->
-        <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{StaticResource NavBarColor}" >
-            <Button Content="Tracks" Margin="10,2,0,2" TextBlock.FontSize="14"/>
-            <Button Content="Artists" Margin="10,2,0,2" TextBlock.FontSize="14"/>
-            <Button Content="Albums" Margin="10,2,0,2" TextBlock.FontSize="14"/>
-            <Button Content="Playlists" Margin="10,2,0,2" TextBlock.FontSize="14"/>
-            <Button Content="Import" Margin="10,2,0,2" TextBlock.FontSize="14"/>
-            <TextBlock x:Name="TracksTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0,10,0" MouseDown="TracksTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
-            </TextBlock>
-            <TextBlock x:Name="ArtistsTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ArtistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
-            </TextBlock>
-            <TextBlock x:Name="AlbumsTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="AlbumsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
-            </TextBlock>
-            <TextBlock x:Name="PlaylistsTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="PlaylistsTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
-            </TextBlock>
-            <TextBlock x:Name="ImportTab" Visibility="Collapsed" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Left" Margin="10,0" MouseDown="ImportTab_MouseDown" Cursor="Hand" SnapsToDevicePixels="True">
-            </TextBlock>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo>
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfoCollection>
+                    <ThumbButtonInfo
+                         ImageSource="Resources/previous_icon.png" Click="ThumbButtonInfo_Click_1"/>
+                    <ThumbButtonInfo
+                        ImageSource="Resources/play_icon.png" Click="ThumbButtonInfo_Click"/>
+                    <ThumbButtonInfo
+                        ImageSource="Resources/next_icon.png" Click="ThumbButtonInfo_Click_2"/>
+                </ThumbButtonInfoCollection>
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
+    <Grid>
+        <DockPanel Panel.ZIndex="1" LastChildFill="False">
+            <DockPanel x:Name="MainBar" Height="25" DockPanel.Dock="Top" Background="{DynamicResource NavBarColor}" LastChildFill="False">
+                <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="TracksTab_MouseDown">
+                    <TextBlock x:Name="TracksTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_TRACKS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                </Button>
+                <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="ArtistsTab_MouseDown">
+                    <TextBlock x:Name="ArtistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ARTISTS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                </Button>
+                <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="AlbumsTab_MouseDown">
+                    <TextBlock x:Name="AlbumsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_ALBUMS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                </Button>
+                <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,10,0" Click="PlaylistsTab_MouseDown">
+                    <TextBlock x:Name="PlaylistsTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_PLAYLISTS}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                </Button>
+                <Button TabIndex="900" Style="{StaticResource LinkButton}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10,0,0,0" Click="ImportTab_MouseDown">
+                    <TextBlock x:Name="ImportTab" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_IMPORT}" FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" SnapsToDevicePixels="True"/>
+                </Button>
 
-            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
-                <Viewbox Margin="-1, -1, 0, 1">
-                    <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Viewbox>
-            </Button>
-            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
-                <Viewbox Margin="-2, -2, 0, 2">
-                    <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Viewbox>
-            </Button>
-            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
-                <Viewbox Margin="-2, 0, 0, 1">
-                    <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Viewbox>
-            </Button>
-            <Button DockPanel.Dock="Right" Margin="0,2,10,2" Width="30">
-                <Viewbox Margin="-2, -1, 0, 1">
-                    <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Viewbox>
-            </Button>
+                <Button TabIndex="904" Style="{StaticResource LinkButton}" x:Name="SettingsButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SETTINGS}" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="SettingsButton_Click" Cursor="Hand">
+                    <!---some manual corrections were applied to keep the icons visually correct-->
+                    <Canvas>
+                        <Path Data="{StaticResource SettingsIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
+                    </Canvas>
+                </Button>
+                <Button TabIndex="903" Style="{StaticResource LinkButton}" x:Name="QueueManagementButton" ToolTip="{x:Static resx:Resources.QUEUEMANAGEMENT_QUEUEHEADER}" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" Click="QueueManagementButton_Click" Cursor="Hand">
+                    <!---some manual corrections were applied to keep the icons visually correct-->
+                    <Canvas>
+                        <Path Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
+                    </Canvas>
+                </Button>
+                
+                <Button TabIndex="901" Style="{StaticResource LinkButton}" x:Name="SearchButton" ToolTip="{x:Static resx:Resources.MAINWINDOW_SEARCH}" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" Click="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
+                    <Canvas>
+                        <Path Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
+                    </Canvas>
+                </Button>
 
-            <Border x:Name="SettingsButton" Visibility="Collapsed" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="SettingsButton_Click" Cursor="Hand">
-                <!---some manual corrections were applied to keep the icons visually correct-->
-                <Canvas>
-                    <Path Data="{StaticResource SettingsIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Canvas>
+                <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
+                <Button TabIndex="902" Style="{StaticResource LinkButton}" x:Name="NotificationButton" ToolTip="{x:Static resx:Resources.NOTIFICATIONS_TITLE}" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" Click="NotificationButton_Click" Visibility="Collapsed" Cursor="Hand">
+                    <!---some manual corrections were applied to keep the icons visually correct-->
+                    <Canvas>
+                        <Path Data="{StaticResource NotificationIcon}" Fill="{DynamicResource PrimaryTextColor}" FlowDirection="LeftToRight"/>
+                    </Canvas>
+                </Button>
+                <TextBlock x:Name="StatusLabel" Visibility="Collapsed" DockPanel.Dock="Right" Margin="0,0,5,0" Text="Processing library changes..." Foreground="{DynamicResource PrimaryTextColor}" FontSize="12" VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <Trigger Property="TextBlock.Visibility" Value="Visible">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Name="StatusLabelAnimation">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                Storyboard.TargetProperty="Opacity"
+                                                From="1.0" To="0.6" Duration="0:0:2.5"
+                                                AutoReverse="True" RepeatBehavior="Forever"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <RemoveStoryboard BeginStoryboardName="StatusLabelAnimation"/>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </DockPanel>
+            <!--Controls Box-->
+            <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{DynamicResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5" FlowDirection="LeftToRight" MouseEnter="ControlsBoxBorder_MouseEnter" MouseLeave="ControlsBoxBorder_MouseLeave">
+                <Grid x:Name="ControlsBox" DockPanel.Dock="Bottom" Background="{DynamicResource ControlBoxColor}" Margin="0,0,0,-2" Drop="ControlsBox_Drop">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="LeftArea" Width="Auto"/>
+                        <ColumnDefinition x:Name="CenterArea"/>
+                        <ColumnDefinition x:Name="RightArea" Width="223"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="CoverArtBoxContainer" TabIndex="1005" Grid.Column="0" Style="{StaticResource LinkButton}" Margin="-70,10,0,0" Height="64" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}">
+                        <Image x:Name="CoverArtBox" RenderOptions.BitmapScalingMode="HighQuality" ToolTipOpening="CoverArtBox_ToolTipOpening" ToolTipClosing="CoverArtBox_ToolTipClosing" ToolTipService.ShowDuration="12000">
+                            <Image.ToolTip>
+                                <ToolTip>
+                                    <Image x:Name="CoverArtBoxToolTip" Width="450" Height="450" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                </ToolTip>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                    <Grid x:Name="CenterColumnContents" Grid.Column="1" Margin="10,0,0,0">
+                        <DockPanel x:Name="TitleRowContainer" Margin="0,5,0,0" VerticalAlignment="Top" Grid.Column="1" Height="30" ContextMenu="{StaticResource MiscContext}">
+                            <Button DockPanel.Dock="Left" TabIndex="1006" Style="{StaticResource LinkButton}" HorizontalAlignment="Stretch" Height="30" Click="TrackTitle_MouseLeftButtonDown"  Panel.ZIndex="0">
+                                <TextBlock x:Name="TitleLabel" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}"  FontWeight="Bold" FontSize="22" Foreground="{DynamicResource PrimaryTextColor}" TextTrimming="CharacterEllipsis"  Cursor="Hand"  />
+                            </Button>
+                            <Button x:Name="OpenContextMenuButton" Margin="10,0,10,5" Width="25" Height="20" FlowDirection="LeftToRight" HorizontalAlignment="Left" VerticalAlignment="Bottom" Opacity="0" Click="OpenContextMenuButton_Click">
+                                <Canvas HorizontalAlignment="Center" Margin="-24,-11,0,0">
+                                    <Path Data="{StaticResource MoreIcon}" Fill="{Binding Foreground, ElementName=OpenContextMenuButton}" FlowDirection="LeftToRight"/>
+                                </Canvas>
+                            </Button>
+                        </DockPanel>
+
+                        <Slider x:Name="ProgressBar" Grid.Column="1" SmallChange="1" LargeChange="30" HorizontalAlignment="Stretch" Margin="34,54,35,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="0" Thumb.DragStarted="ProgressBar_DragStarted" Thumb.DragCompleted="ProgressBar_DragCompleted" ValueChanged="ProgressBar_ValueChanged" IsMoveToPointEnabled="True" MouseLeftButtonUp="ProgressBar_MouseLeftButtonUp" Cursor="Hand"/>
+                        <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="0,56,0,0" TextWrapping="NoWrap" Text="00:00" Foreground="{DynamicResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
+                        <Button TabIndex="1007" Style="{StaticResource LinkButton}" Grid.Column="1" Margin="0,0,0,13" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="ProgressIndicator2_MouseLeftButtonDown">
+                            <TextBlock x:Name="ProgressIndicator2"  TextWrapping="NoWrap" Text="00:00" Foreground="{DynamicResource SecondaryTextColor}"/>
+                        </Button>
+                        <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="0,35,0,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{DynamicResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+
+                    <Grid x:Name="RightContentContainer" Grid.Column="2">
+                        <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
+                        <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,142.505,15" Width="20" HorizontalAlignment="Right"/>
+                        <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
+                        <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatAllIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,55,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
+                        <Path x:Name="PreviousTrackButton" Data="{StaticResource PreviousIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,47.803,182.505,15.997" Width="25.612" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown"/>
+
+
+                        <Grid x:Name="VolumeAreaContainer">
+                            <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{DynamicResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1" FlowDirection="LeftToRight"/>
+                            <Rectangle x:Name="VolumeBarHitbox" Grid.Column="2" Fill="Transparent" Margin="0,10,10,0" Width="142" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <Rectangle.Triggers>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="VolumeBar"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1.0" Duration="0:0:.25"
+                                                     />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="VolumeBar"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.0" Duration="0:0:.25"
+                                                     />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Rectangle.Triggers>
+                            </Rectangle>
+                            <Slider x:Name="VolumeBar" Grid.Column="2" Margin="0,14,43,0" Height="21" SmallChange="1" LargeChange="10" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Opacity="0" Maximum="100" ValueChanged="VolumeBar_ValueChanged" IsMoveToPointEnabled="True" Value="100" Style="{StaticResource Progress_Slider}" Panel.ZIndex="1">
+                                <Slider.Triggers>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="VolumeBar"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1.0" Duration="0:0:.25"
+                                                     />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="VolumeBar"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.0" Duration="0:0:.25"
+                                                     />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="GotKeyboardFocus">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="VolumeBar"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1.0" Duration="0:0:.25"
+                                                     />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="LostKeyboardFocus">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="VolumeBar"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.0" Duration="0:0:.25"
+                                                     />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Slider.Triggers>
+                            </Slider>
+                        </Grid>
+
+                        <!--Hitboxes for the above paths-->
+                        <Button TabIndex="1003" Style="{StaticResource LinkButton}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,55,15" Width="23" HorizontalAlignment="Right" Click="RepeatOneButton_MouseLeftButtonDown" Cursor="Hand"/>
+                        <Button TabIndex="1004" Style="{StaticResource LinkButton}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,15,15" Width="20" HorizontalAlignment="Right" Click="NextTrackButton_MouseLeftButtonDown" Cursor="Hand"/>
+                        <Button TabIndex="1001" Grid.Column="2" Style="{StaticResource LinkButton}" RenderTransformOrigin="0.5,0.5" Margin="0,45,143,13" Width="20" HorizontalAlignment="Right" Click="ShuffleButton_MouseLeftButtonDown" Cursor="Hand"/>
+                        <Button TabIndex="1002" Grid.Column="2" Style="{StaticResource LinkButton}" Margin="0,40,92,8" Width="36" HorizontalAlignment="Right" Click="PlayPauseButton_MouseLeftButtonDown" Cursor="Hand"/>
+                        <Button TabIndex="1000" Grid.Column="2" Style="{StaticResource LinkButton}" Margin="0,48,183,16" Width="22" HorizontalAlignment="Right" Click="PreviousButton_MouseLeftButtonDown" Cursor="Hand"/>
+                        <!--Sorry, this is more than a little messy LMAO-->
+
+                    </Grid>
+                </Grid>
             </Border>
-            <Border x:Name="QueueManagementButton" Visibility="Collapsed" Background="Transparent" Width="22" Height="22" DockPanel.Dock="Right" Margin="0,-0.75,15,0" MouseDown="QueueManagementButton_Click" Cursor="Hand">
-                <!---some manual corrections were applied to keep the icons visually correct-->
-                <Canvas>
-                    <Path Data="{StaticResource QueueIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Canvas>
-            </Border>
-            <TextBlock x:Name="NotificationCounterLabel" TextWrapping="NoWrap" Text="1" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextColor}" DockPanel.Dock="Right" Margin="0,0,20,0" MouseDown="NotificationButton_Click" Cursor="Hand" Visibility="Collapsed"/>
-            <Border x:Name="NotificationButton" Width="22" Height="22" DockPanel.Dock="Right" Margin="5,-0.75,5,0" MouseDown="NotificationButton_Click" Visibility="Collapsed" Cursor="Hand">
-                <!---some manual corrections were applied to keep the icons visually correct-->
-                <Canvas>
-                    <Path Data="{StaticResource NotificationIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Canvas>
-            </Border>
-            <Border x:Name="SearchButton" Visibility="Collapsed" Background="Transparent" Width="20" DockPanel.Dock="Right" Margin="0,2,15,0" HorizontalAlignment="Right" MouseDown="SearchButton_Click" Height="20" VerticalAlignment="Top" Cursor="Hand">
-                <Canvas>
-                    <Path Data="{StaticResource SearchIcon}" Fill="{StaticResource PrimaryTextColor}"/>
-                </Canvas>
-            </Border>
+        </DockPanel>
+        <DockPanel Panel.ZIndex="0" Margin="0,0,0,84">
+            <!--Menu-->
+            
+            <ContentControl x:Name="RightFrame" Margin="0,0,0,0" IsTabStop="False" DockPanel.Dock="Right" Visibility="Collapsed" Width="235" TabIndex="1" KeyboardNavigation.TabNavigation="Local"/>
+
+            <ContentControl x:Name="ContentFrame" Margin="0,0,0,-84" IsTabStop="False" TabIndex="0" KeyboardNavigation.TabNavigation="Local"/>
+
 
         </DockPanel>
-        <!--Controls Box-->
-        <Border x:Name="ControlsBoxBorder" BorderThickness="1" Height="84" BorderBrush="{StaticResource ControlBoxColor}" DockPanel.Dock="Bottom" RenderTransformOrigin="0.5,0.5">
-            <Grid x:Name="ControlsBox" DockPanel.Dock="Bottom" Background="{StaticResource ControlBoxColor}" Margin="0,0,0,-2" Drop="ControlsBox_Drop">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="CoverArtArea" Width="5"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="223"/>
-                </Grid.ColumnDefinitions>
-                <Image x:Name="CoverArtBox" Margin="-64,10,5,0" VerticalAlignment="Top" Height="64" Width="64" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}" Cursor="Hand" ToolTipOpening="CoverArtBox_ToolTipOpening" ToolTipClosing="CoverArtBox_ToolTipClosing" ToolTipService.ShowDuration="12000">
-                    <Image.ToolTip>
-                        <ToolTip>
-                            <Image x:Name="CoverArtBoxToolTip" Width="450" Height="450" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </ToolTip>
-                    </Image.ToolTip>
-                </Image>
-                <TextBlock x:Name="TitleLabel" HorizontalAlignment="Stretch" Margin="5,5,40,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" FontWeight="Bold" FontSize="22" Grid.Column="1" Height="30" Foreground="{StaticResource PrimaryTextColor}" TextTrimming="CharacterEllipsis" MouseLeftButtonDown="TrackTitle_MouseLeftButtonDown" ContextMenu="{StaticResource MiscContext}" Cursor="Hand" Grid.ColumnSpan="2" Panel.ZIndex="0"/>
-                <Slider x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Margin="37,54,45,0" VerticalAlignment="Top" Height="21" Style="{StaticResource Progress_Slider}" Value="9.8" Thumb.DragStarted="ProgressBar_DragStarted" Thumb.DragCompleted="ProgressBar_DragCompleted" ValueChanged="ProgressBar_ValueChanged" IsMoveToPointEnabled="True" MouseLeftButtonUp="ProgressBar_MouseLeftButtonUp" Cursor="Hand"/>
-                <TextBlock x:Name="ProgressIndicator1" Grid.Column="1" Margin="5,56,0,0" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="28"/>
-                <TextBlock x:Name="ProgressIndicator2" Grid.Column="1" Margin="0,0,0,13" TextWrapping="NoWrap" Text="10:00" Foreground="{StaticResource SecondaryTextColor}" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="40" MouseLeftButtonDown="ProgressIndicator2_MouseLeftButtonDown"/>
-                <TextBlock x:Name="ArtistLabel" HorizontalAlignment="Stretch" Margin="5,35,10,0" TextWrapping="NoWrap" Text="{x:Static resx:Resources.MAINWINDOW_NOTHINGPLAYING}" VerticalAlignment="Top" Grid.Column="1" Height="20" Foreground="{StaticResource SecondaryTextColor}" TextTrimming="CharacterEllipsis"/>
-
-                <Path x:Name="PlayPauseButton" Data="{StaticResource PauseIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,40.386,92.5,8.414" Width="35" HorizontalAlignment="Right"/>
-                <Path x:Name="ShuffleButton" Data="{StaticResource ShuffleIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,142.505,15" Width="20" HorizontalAlignment="Right"/>
-                <Path x:Name="NextTrackButton" Data="{StaticResource NextIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46.467,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown"/>
-                <Path x:Name="RepeatOneButton" Data="{StaticResource RepeatAllIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,45,55,13" Width="26" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown"/>
-                <Path x:Name="PreviousTrackButton" Data="{StaticResource PreviousIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,47.803,182.505,15.997" Width="25.612" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown"/>
-                <Path x:Name="VolumeIcon" Data="{StaticResource VolumeIcon}" Stretch="Uniform" Fill="{StaticResource PrimaryTextColor}" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,15,15,0" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1"/>
-
-                <!--Hitboxes for the above paths-->
-                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,55,15" Width="23" HorizontalAlignment="Right" MouseLeftButtonDown="RepeatOneButton_MouseLeftButtonDown" Cursor="Hand"/>
-                <Rectangle Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Margin="0,46,15,15" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="NextTrackButton_MouseLeftButtonDown" Cursor="Hand"/>
-                <Rectangle Grid.Column="2" Stretch="Uniform" Fill="Transparent" RenderTransformOrigin="0.5,0.5" Margin="0,45,143,13" Width="20" HorizontalAlignment="Right" MouseLeftButtonDown="ShuffleButton_MouseLeftButtonDown" Cursor="Hand"/>
-                <Rectangle Grid.Column="2" Margin="0,40,92,8" Width="36" HorizontalAlignment="Right" MouseLeftButtonDown="PlayPauseButton_MouseLeftButtonDown" Fill="Transparent" Cursor="Hand"/>
-                <Rectangle Grid.Column="2" Margin="0,48,183,16" Width="22" HorizontalAlignment="Right" MouseLeftButtonDown="PreviousButton_MouseLeftButtonDown" Fill="Transparent" Cursor="Hand"/>
-                <!--Sorry, this is more than a little messy LMAO-->
-                <Rectangle x:Name="VolumeBarHitbox" Grid.Column="2" Fill="Transparent" Margin="0,10,10,0" Width="142" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <Rectangle.Triggers>
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="VolumeBar"
-                                                     Storyboard.TargetProperty="Opacity"
-                                                     To="1.0" Duration="0:0:.25"
-                                                     />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="VolumeBar"
-                                                     Storyboard.TargetProperty="Opacity"
-                                                     To="0.0" Duration="0:0:.25"
-                                                     />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Rectangle.Triggers>
-                </Rectangle>
-                <Slider x:Name="VolumeBar" Grid.Column="2" Margin="0,14,43,0" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="104" Opacity="0" Maximum="100" ValueChanged="VolumeBar_ValueChanged" IsMoveToPointEnabled="True" Value="100" Style="{StaticResource Progress_Slider}" Panel.ZIndex="1">
-                    <Slider.Triggers>
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="VolumeBar"
-                                                     Storyboard.TargetProperty="Opacity"
-                                                     To="1.0" Duration="0:0:.25"
-                                                     />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="VolumeBar"
-                                                     Storyboard.TargetProperty="Opacity"
-                                                     To="0.0" Duration="0:0:.25"
-                                                     />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Slider.Triggers>
-                </Slider>
-            </Grid>
-        </Border>
-        <ContentControl x:Name="RightFrame" DockPanel.Dock="Right" Visibility="Collapsed" Width="235"/>
-
-        <ContentControl x:Name="ContentFrame"/>
-
-
-    </DockPanel>
+    </Grid>
+    
 </Window>

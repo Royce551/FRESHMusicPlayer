@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ACCENTCOLOR_BLUE" xml:space="preserve">
+    <value>כחול</value>
+  </data>
+  <data name="ACCENTCOLOR_CLASSICBLUE" xml:space="preserve">
+    <value>כחול קלאסי</value>
+  </data>
+  <data name="ACCENTCOLOR_GREEN" xml:space="preserve">
+    <value>ירוק</value>
+  </data>
+  <data name="ACCENTCOLOR_MATCHCOVER" xml:space="preserve">
+    <value>התאם לתמונת עטיפה</value>
+  </data>
+  <data name="ACCENTCOLOR_PINK" xml:space="preserve">
+    <value>ורוד</value>
+  </data>
+  <data name="ACCENTCOLOR_PURPLE" xml:space="preserve">
+    <value>סגול</value>
+  </data>
+  <data name="ACCENTCOLOR_RED" xml:space="preserve">
+    <value>אדום</value>
+  </data>
+  <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
+    <value>אופסי! משהו השתבש. ננסה להמשיך. אם זה ממשיך לקרות, אנא דווח על כך פה: 
+https://github.com/royce551/freshmusicplayer/issues.</value>
+  </data>
+  <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value>פתח יומן לאיתור באגים</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>עבור אל</value>
+  </data>
+  <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
+    <value>מיני נגן</value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
+    <value>השהה לאחר השיר הנוכחי</value>
+  </data>
+  <data name="FULLSCREEN" xml:space="preserve">
+    <value>מסך מלא</value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>מצב מיקוד</value>
+  </data>
+  <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
+    <value>אתר תיקיות</value>
+  </data>
+  <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
+    <value>אתר קבצי רשימת השמעה</value>
+  </data>
+  <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
+    <value>אתר שירים</value>
+  </data>
+  <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
+    <value>ניתן גם לגרור ולשחרר שירים לדף הזה.</value>
+  </data>
+  <data name="IMPORT_MANUALENTRY" xml:space="preserve">
+    <value>כתובת קובץ או אתר</value>
+  </data>
+  <data name="LASTFM_AUTHENTICATIONFAILED" xml:space="preserve">
+    <value>לא ניתן להיכנס. וודא שהענקת גישה ל-FRESHMusicPlayer ונסה שוב.</value>
+  </data>
+  <data name="LASTFM_AUTHENTICATIONPROMPT" xml:space="preserve">
+    <value>השלם אימות last.fm בחלון הדפדפן שנפתח הרגע. לאחר שתסיים, לחץ "אישור".</value>
+  </data>
+  <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
+    <value>נכנס ל-last.fm בתור {0} בהצלחה!</value>
+  </data>
+  <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
+    <value>אירעה שגיאה בניסיון לסקרבל את {0}</value>
+  </data>
+  <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
+    <value>הוסף לרשימת השמעה</value>
+  </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value>תקליטור {0}</value>
+  </data>
+  <data name="LIBRARY_EMPTY" xml:space="preserve">
+    <value>הספרייה שלך ריקה. כדי להתחיל לשמוע מוזיקה, שחרר כמה קבצים לפה או הגדר תיקיית ייבוא אוטומטי בהגדרות.</value>
+  </data>
+  <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
+    <value>הכנס כולם לתור</value>
+  </data>
+  <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
+    <value>פתח בסייר קבצים</value>
+  </data>
+  <data name="LIBRARY_PLAYALL" xml:space="preserve">
+    <value>נגן הכל</value>
+  </data>
+  <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
+    <value>נגן הבא</value>
+  </data>
+  <data name="LOADING" xml:space="preserve">
+    <value>טוען...</value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value>מילים</value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value>אין מילים זמינות</value>
+  </data>
+  <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
+    <value>מילים ללא זמן</value>
+  </data>
+  <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
+    <value>אלבומים</value>
+  </data>
+  <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
+    <value>אמנים</value>
+  </data>
+  <data name="MAINWINDOW_HOME" xml:space="preserve">
+    <value>בית</value>
+  </data>
+  <data name="MAINWINDOW_IMPORT" xml:space="preserve">
+    <value>יבא</value>
+  </data>
+  <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
+    <value>אמן לא ידוע</value>
+  </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value>שום דבר לא מנגן</value>
+  </data>
+  <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
+    <value>אירעה שגיאה:
+{0}
+נדלג לשיר הבא בשבילך</value>
+  </data>
+  <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
+    <value>רשימות השמעה</value>
+  </data>
+  <data name="MAINWINDOW_SEARCH" xml:space="preserve">
+    <value>חפש</value>
+  </data>
+  <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
+    <value>הגדרות</value>
+  </data>
+  <data name="MAINWINDOW_TRACKS" xml:space="preserve">
+    <value>שירים</value>
+  </data>
+  <data name="MENUBAR_EXIT" xml:space="preserve">
+    <value>_יציאה</value>
+  </data>
+  <data name="MENUBAR_FILE" xml:space="preserve">
+    <value>_קובץ</value>
+  </data>
+  <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
+    <value>_חלון חדש</value>
+  </data>
+  <data name="MENUBAR_OPEN" xml:space="preserve">
+    <value>_פתח</value>
+  </data>
+  <data name="MENUBAR_SAVE" xml:space="preserve">
+    <value>_שמור</value>
+  </data>
+  <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
+    <value>_מקור טאגים</value>
+  </data>
+  <data name="MINIPLAYER_BACK" xml:space="preserve">
+    <value>הקודם</value>
+  </data>
+  <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
+    <value>נקה הכל</value>
+  </data>
+  <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
+    <value>הודעות</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN" xml:space="preserve">
+    <value>מעבד נתוני ReplayGain עבור ספרייה...
+
+נותרו {0} שירים</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAINERROR" xml:space="preserve">
+    <value>לא ניתן להוסיף נתוני ReplayGain ל-{0}. יכול להיות שזה בגלל שהוא כבר פתוח. סגור אותו ולחץ על כפתור הסריקה מחדש בהגדרות.</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN_HEADER" xml:space="preserve">
+    <value>מעבד נתוני ReplayGain עבור ספרייה...</value>
+  </data>
+  <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
+    <value>ספרייתך נוקתה בהצלחה</value>
+  </data>
+  <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
+    <value>לא ניתן לייבא את קובץ הפלייליסט הזה מכיוון שלא נמצאו אחד או יותר מהשירים.
+קובץ חסר: {0}</value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
+    <value>הקובץ שניסית להפעיל נעלם. הודע ל-FMP לאן הוא נעלם, או הסר אותו מהספרייה שלך.</value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
+    <value>איתור קובץ</value>
+  </data>
+  <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
+    <value>מתקין עדכון...</value>
+  </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY" xml:space="preserve">
+    <value>מעבד שינויים בספרייה...
+נותרו {0} שירים
+
+ייתכן שרצועות חדשות שנוספו לא יופיעו בכרטיסיות האמנים או האלבומים עד להשלמת העיבוד</value>
+  </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY_HEADER" xml:space="preserve">
+    <value>מעבד שינויים בספרייה...</value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value>סורק שירים חדשים...</value>
+  </data>
+  <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
+    <value>אירעה שגיאה בעת עדכון: {0}</value>
+  </data>
+  <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
+    <value>יש עדכון! הפעל מחדש את FMP כדי להחיל את העדכון.</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
+    <value>אתה עכשיו משתמש ב-FRESHMusicPlayer גרסה {0}!</value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
+    <value>יומן רישום שינויים</value>
+  </data>
+  <data name="NOTIFICATION_WRITINGREPLAYGAIN" xml:space="preserve">
+    <value>מוסיף נתוני ReplayGain לספרייה...</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
+    <value>ניהול רשימת השמעה</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
+    <value>צור</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
+    <value>מחק</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
+    <value>יצא</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
+    <value>מה ברצונך לעשות עם "{0}"?</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
+    <value>"{0}" אינו שם רשימת השמעה חוקי.</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
+    <value>שנה שם</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
+    <value>הוסף רשימת השמעה</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
+    <value>הוסף שיר</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
+    <value>נקה תור</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
+    <value>מסתיים ב-{0}</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
+    <value>תור</value>
+  </data>
+  <data name="RESET" xml:space="preserve">
+    <value>איפוס</value>
+  </data>
+  <data name="SETTINGS_ABOUT" xml:space="preserve">
+    <value>אודות</value>
+  </data>
+  <data name="SETTINGS_ACCENTCOLOR" xml:space="preserve">
+    <value>צבע הדגשה</value>
+  </data>
+  <data name="SETTINGS_APPEARANCE" xml:space="preserve">
+    <value>מראה</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value>ייבוא אוטומטי</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
+    <value>FMP ייבא רצועות חדשות מתיקיות אלה:</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
+    <value>הוסף תיקיה</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE" xml:space="preserve">
+    <value>תור אוטומטי</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE_SUBTEXT" xml:space="preserve">
+    <value>מציב באופן אוטומטי את שאר השירים של האמן, האלבום או רשימת ההשמעה בעת הפעלת אחת מהן</value>
+  </data>
+  <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
+    <value>מצב עדכון אוטומטי</value>
+  </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value>נקה ועדכן את הספרייה</value>
+  </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value>מאת Squid Grill (ותורמים אחרים)
+תרגום לעברית מאת Martysh12
+מורשה תחת GPL v3
+תודה על השימוש ב-FRESHMusicPlayer! ♥</value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value>כללי</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION" xml:space="preserve">
+    <value>שילוב</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
+    <value>Discord Rich Presence</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
+    <value>System Transport Controls</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value>שפה</value>
+  </data>
+  <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
+    <value>האם אתה בטוח שאתה רוצה להתנתק מ-last.fm?</value>
+  </data>
+  <data name="SETTINGS_LASTFM_PAUSESCROBBLING" xml:space="preserve">
+    <value>השהה סקרבול לעת עתה</value>
+  </data>
+  <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
+    <value>תחזוקה</value>
+  </data>
+  <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
+    <value>השמד את הספרייה</value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
+    <value>אתה עומד לנקות את הספרייה שלך באופן בלתי-הפיך. האם אתה בטוח?</value>
+  </data>
+  <data name="SETTINGS_PLAYBACK" xml:space="preserve">
+    <value>השמעה</value>
+  </data>
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value>רישום זמן ניגון</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ADD" xml:space="preserve">
+    <value>הוסף נתוני ReplayGain לספרייה</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_AUTOADD" xml:space="preserve">
+    <value>הוסף נתוני ReplayGain לספרייה אחרי ייבוא</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYALBUM" xml:space="preserve">
+    <value>נרמל לפי אלבום</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYTRACK" xml:space="preserve">
+    <value>נרמל לפי שיר</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
+    <value>השתמש בנורמליזציה של עוצמת הקול של ReplayGain</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP" xml:space="preserve">
+    <value>הגברה מוקדמת לשירים עם ReplayGain (ערכים מעל 0 עשויים להפחית את הדינמיקה)</value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value>אפס את ההגדרות לברירת המחדל</value>
+  </data>
+  <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
+    <value>FMP צריך להתחיל מחדש כדי להחל את שינוייך.</value>
+  </data>
+  <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
+    <value>הפעל מחדש כעת</value>
+  </data>
+  <data name="SETTINGS_SUBHEADER" xml:space="preserve">
+    <value>ערוך את ההגדרות של FMP</value>
+  </data>
+  <data name="SETTINGS_THEME" xml:space="preserve">
+    <value>ערכת נושא</value>
+  </data>
+  <data name="SETTINGS_THEME_DARK" xml:space="preserve">
+    <value>כהה</value>
+  </data>
+  <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
+    <value>בהיר</value>
+  </data>
+  <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
+    <value>הצג זמן במקום כותרת בכותרת החלון</value>
+  </data>
+  <data name="SETTINGS_UPDATES" xml:space="preserve">
+    <value>עדכונים</value>
+  </data>
+  <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
+    <value>בדוק אם קיימים עדכונים כעת</value>
+  </data>
+  <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
+    <value>{0} נבדק לאחרונה</value>
+  </data>
+  <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
+    <value>אוטומטי</value>
+  </data>
+  <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
+    <value>ידני</value>
+  </data>
+  <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
+    <value>הצג בקשה לאישור לפני עדכון</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ" xml:space="preserve">
+    <value>אקולייזר</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_BASSBOOST" xml:space="preserve">
+    <value>הגברת בס</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_TREBLEBOOST" xml:space="preserve">
+    <value>הגברת טרבל</value>
+  </data>
+  <data name="TAGEDITOR" xml:space="preserve">
+    <value>עורך תגים</value>
+  </data>
+  <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
+    <value>אמן האלבום</value>
+  </data>
+  <data name="TAGEDITOR_ARTIST" xml:space="preserve">
+    <value>אמן</value>
+  </data>
+  <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
+    <value>שינויים אלה יוחלו כאשר ינגן שיר חדש</value>
+  </data>
+  <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
+    <value>שנה קובץ...</value>
+  </data>
+  <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
+    <value>מלחין</value>
+  </data>
+  <data name="TAGEDITOR_COVERART" xml:space="preserve">
+    <value>תמונת עטיפה</value>
+  </data>
+  <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
+    <value>מספר דיסק</value>
+  </data>
+  <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
+    <value>עריכה</value>
+  </data>
+  <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
+    <value>ישנן מספר תוצאות עבור אלבום זה. איזה מהם אתה רוצה?</value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value>אין תמונת עטיפה</value>
+  </data>
+  <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
+    <value>אינך מחובר לאינטרנט :(</value>
+  </data>
+  <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
+    <value>לא נמצאו תוצאות בשביל אלבום זה :(</value>
+  </data>
+  <data name="TAGEDITOR_SAVE" xml:space="preserve">
+    <value>שמור</value>
+  </data>
+  <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
+    <value>האם לשמור שנויים ל-{0}?</value>
+  </data>
+  <data name="TAGEDITOR_TITLE" xml:space="preserve">
+    <value>כותרת</value>
+  </data>
+  <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
+    <value>מספר שיר</value>
+  </data>
+  <data name="TRACKINFO_ALBUM" xml:space="preserve">
+    <value>אלבום</value>
+  </data>
+  <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
+    <value>פרטי אלבום</value>
+  </data>
+  <data name="TRACKINFO_BITRATE" xml:space="preserve">
+    <value>קצב סיביות</value>
+  </data>
+  <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
+    <value>דיסק</value>
+  </data>
+  <data name="TRACKINFO_GENRE" xml:space="preserve">
+    <value>סגנון</value>
+  </data>
+  <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
+    <value>לא זמין</value>
+  </data>
+  <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
+    <value>פרטים טכניים</value>
+  </data>
+  <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
+    <value>פרטי שיר</value>
+  </data>
+  <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
+    <value>שיר</value>
+  </data>
+  <data name="TRACKINFO_YEAR" xml:space="preserve">
+    <value>שנה</value>
+  </data>
+</root>

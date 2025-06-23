@@ -8,12 +8,12 @@
       mc:Ignorable="d" 
       Height="450" Width="600" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
       Title="ReleaseIntegrationPage">
-    <Grid Background="{StaticResource BackgroundColor}">
+    <Grid Background="{DynamicResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="50px"/>
         </Grid.RowDefinitions>
-        <Grid Background="{StaticResource BackgroundColor}">
+        <Grid Background="{DynamicResource BackgroundColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid Margin="0,5,0,0" Background="{StaticResource BackgroundColor}" Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid Margin="0,5,0,0" Background="{DynamicResource BackgroundColor}" Grid.Row="0" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -37,17 +37,17 @@
                     <ColumnDefinition SharedSizeGroup="centerColumn" Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right"/>
-                <TextBlock x:Name="YearLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                <TextBlock x:Name="GenreLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                <TextBlock x:Name="AlbumLabel" Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
-                <TextBlock x:Name="ArtistBox" Grid.Row="1" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
-                <TextBlock x:Name="YearBox" Grid.Row="3" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
-                <TextBlock x:Name="GenreBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
-                <TextBlock x:Name="AlbumBox" Grid.Row="5" Grid.Column="2" Background="{x:Null}" Foreground="{StaticResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+                <TextBlock x:Name="ArtistLabel" Margin="20,2,5,2" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_ARTIST}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" TextAlignment="Right"/>
+                <TextBlock x:Name="YearLabel" Margin="20,2,5,2" Grid.Row="3" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="GenreLabel" Margin="20,2,5,2" Grid.Row="4" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="AlbumLabel" Margin="20,2,5,2" Grid.Row="5" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" TextAlignment="Right" />
+                <TextBlock x:Name="ArtistBox" Grid.Row="1" Grid.Column="2" Background="{x:Null}" Foreground="{DynamicResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+                <TextBlock x:Name="YearBox" Grid.Row="3" Grid.Column="2" Background="{x:Null}" Foreground="{DynamicResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+                <TextBlock x:Name="GenreBox" Grid.Row="4" Grid.Column="2" Background="{x:Null}" Foreground="{DynamicResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
+                <TextBlock x:Name="AlbumBox" Grid.Row="5" Grid.Column="2" Background="{x:Null}" Foreground="{DynamicResource PrimaryTextColor}" Margin="2,2,10,2" VerticalAlignment="Stretch" FontSize="16" TextWrapping="Wrap"/>
             </Grid>
-            <ListBox x:Name="IntegrationItemBox" Grid.Row="2" Grid.ColumnSpan="2" Background="{StaticResource ForegroundColor}" Margin="10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}"/>
-            <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="{StaticResource BackgroundColor}" Margin="0,0,0,10">
+            <ListBox x:Name="IntegrationItemBox" Grid.Row="2" Grid.ColumnSpan="2" Background="{DynamicResource ForegroundColor}" Margin="10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}"/>
+            <Grid Grid.Row="3" Grid.ColumnSpan="2" Background="{DynamicResource BackgroundColor}" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -56,7 +56,7 @@
                 <TextBlock x:Name="Link" Grid.Column="0" Text="Test" Foreground="#3399FF" FontSize="14" VerticalAlignment="Center" Margin="10,0" MouseLeftButtonDown="Link_MouseLeftButtonDown" Cursor="Hand" TextTrimming="CharacterEllipsis"/>
             </Grid>
         </Grid>
-        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
+        <Grid Grid.Row="2" Background="{DynamicResource ForegroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>

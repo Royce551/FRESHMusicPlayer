@@ -9,13 +9,13 @@ namespace FRESHMusicPlayer.Pages
     /// </summary>
     public partial class QueueEntry : UserControl
     {
-        private string artist;
-        public string Artist
+        private string[] artists;
+        public string[] Artists
         {
-            get => artist;
+            get => artists;
             set
             {
-                artist = value;
+                artists = value;
                 UpdateMetadata();
             }
         }
@@ -45,11 +45,11 @@ namespace FRESHMusicPlayer.Pages
         public int Length;
 
         private readonly Player player;
-        public QueueEntry(string artist, string album, string title, string position, int index, int length, Player player)
+        public QueueEntry(string[] artists, string album, string title, string position, int index, int length, Player player)
         {
             this.player = player;
             InitializeComponent();
-            Artist = artist;
+            Artists = artists;
             Album = album;
             Title = title;
             
@@ -78,27 +78,39 @@ namespace FRESHMusicPlayer.Pages
 
         public void UpdateMetadata()
         {
-            ArtistAlbumLabel.Text = $"{Artist} ・ {Album}";
+            ArtistAlbumLabel.Text = $"{(Artists is null ? string.Empty : string.Join(", ", Artists))} ・ {Album}";
             TitleLabel.Text = Title;
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e) => ShowButtons();
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e) => HideButtons();
+
+        public void ShowButtons()
         {
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Visible;
+            TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColorOverAccent");
+            PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColorOverAccent");
+            PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColorOverAccent");
         }
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        public void HideButtons()
         {
             PlayButton.Visibility = DeleteButton.Visibility = PlayButtonHitbox.Visibility = DeleteButtonHitbox.Visibility = Visibility.Collapsed;
+            TitleLabel.SetResourceReference(ForegroundProperty, "PrimaryTextColor");
+            PositionLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
+            ArtistAlbumLabel.SetResourceReference(ForegroundProperty, "SecondaryTextColor");
+            PlayButton.SetResourceReference(System.Windows.Shapes.Path.FillProperty, "PrimaryTextColor");
         }
 
-        private async void PlayButtonClick(object sender, MouseButtonEventArgs e)
+        private async void PlayButtonClick(object sender, RoutedEventArgs e)
         {
             player.Queue.Position = Index;
             await player.PlayAsync();
         }
 
-        private void DeleteButtonClick(object sender, MouseButtonEventArgs e) => player.Queue.Remove(Index);
+        private void DeleteButtonClick(object sender, RoutedEventArgs e) => player.Queue.Remove(Index);
 
         private async void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -108,5 +120,6 @@ namespace FRESHMusicPlayer.Pages
                 await player.PlayAsync();
             }
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ATL.Playlist;
+using FRESHMusicPlayer.Forms;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.Notifications;
 using FRESHMusicPlayer.Utilities;
@@ -6,13 +7,14 @@ using Microsoft.Win32;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
-namespace FRESHMusicPlayer.Forms.Playlists
+namespace FRESHMusicPlayer.Pages.Playlists
 {
     /// <summary>
     /// Interaction logic for PlaylistManagement.xaml
     /// </summary>
-    public partial class PlaylistManagement : Window
+    public partial class PlaylistManagement : UserControl
     {
         private readonly string track;
 
@@ -43,9 +45,7 @@ namespace FRESHMusicPlayer.Forms.Playlists
             });
         }
 
-        private void OKButton_Click(object sender, RoutedEventArgs e) => Close();
-
-        private void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
+        private async void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new FMPTextEntryBox("Playlist Name");
             dialog.ShowDialog();
@@ -56,19 +56,34 @@ namespace FRESHMusicPlayer.Forms.Playlists
                     MessageBox.Show(string.Format(Properties.Resources.PLAYLISTMANAGEMENT_INVALIDNAME, dialog.Response));
                 else
                 {
-                    library.CreatePlaylist(dialog.Response, track);
+                    await library.CreatePlaylistAsync(dialog.Response, false, track);
                     InitFields();
                 }
             }
         }
 
-        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        private async void ImportButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "Playlist Files|*.xspf;*.asx;*.wax;*.wvx;*.b4s;*.m3u;*.m3u8;*.pls;*.smil;*.smi;*.zpl;";
             if (dialog.ShowDialog() == true)
             {
                 IPlaylistIO reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(dialog.FileName);
+
+                //bool tracksNotInTheLibraryArePresent = false;
+                //foreach (string x in reader.FilePaths)
+                //{
+                //    var track = library.Database.GetCollection<DatabaseTrack>(GUILibrary.TracksCollectionName).FindOne(y => y.Path == x);
+                //    if (track is null)
+                //        tracksNotInTheLibraryArePresent = true;
+                //}
+                //if (tracksNotInTheLibraryArePresent)
+                //{
+                //    var result = MessageBox.Show("The tracks in this playlist that are not in the library need to be imported before the playlist can be imported.", MainWindow.WindowName, MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                //    if (result != MessageBoxResult.OK)
+                //        return;
+                //}
+
                 foreach (string s in reader.FilePaths)
                 {
                     if (!File.Exists(s))
@@ -82,10 +97,24 @@ namespace FRESHMusicPlayer.Forms.Playlists
                         });
                         continue;
                     }
-                    library.AddTrackToPlaylist(Path.GetFileNameWithoutExtension(dialog.FileName), s);
+                    await library.AddTrackToPlaylistAsync(Path.GetFileNameWithoutExtension(dialog.FileName), s);
                 }
             }
             InitFields();
+        }
+
+        private void PlaylistBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                if (item is PlaylistEntry uc)
+                    uc.ShowButtons();
+            }
+            foreach (var item in e.RemovedItems)
+            {
+                if (item is PlaylistEntry uc)
+                    uc.HideButtons();
+            }
         }
     }
 }

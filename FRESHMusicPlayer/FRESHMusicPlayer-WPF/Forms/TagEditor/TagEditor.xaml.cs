@@ -1,4 +1,5 @@
 ﻿using ATL;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Forms.TagEditor.Integrations;
 using FRESHMusicPlayer.Handlers;
 using Microsoft.Win32;
@@ -25,16 +26,16 @@ namespace FRESHMusicPlayer.Forms.TagEditor
         private readonly List<string> Displayfilepaths = new List<string>();
         private readonly List<PictureInfo> CoverArts = new List<PictureInfo>();
         private bool unsavedChanges = false;
-        private readonly HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient;
 
         private readonly Player player;
         private readonly GUILibrary library;
-        public TagEditor(List<string> filePaths, Player player = null, GUILibrary library = null)
+        public TagEditor(List<string> filePaths, HttpClient httpClient, Player player = null, GUILibrary library = null)
         {
             this.player = player ?? new Player();
             this.library = library;
+            this.httpClient = httpClient;
             InitializeComponent();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("FRESHMusicPlayer/11.2.0 (https://github.com/Royce551/FRESHMusicPlayer)");
             FilePaths = filePaths;
             player.SongChanged += Player_SongChanged;
             InitFields();
@@ -86,43 +87,40 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             }
             if (iterations <= 5) EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths);
             else EditingHeader.Text = Properties.Resources.TAGEDITOR_EDITINGHEADER + string.Join(", ", Displayfilepaths.Take(5)) + " + " + (Displayfilepaths.Count - 4);
-            Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
+            Title = $"{string.Join(", ", Displayfilepaths)} - FRESHMusicPlayer Tag Editor";
             unsavedChanges = false;
         }
 
         public async Task SaveChanges(List<string> filePaths)
         {
-            await Task.Run(() =>
+            foreach (string path in filePaths)
             {
-                foreach (string path in filePaths)
+                var track = new Track(path)
                 {
-                    var track = new Track(path)
-                    {
-                        Artist = ArtistBox.Text,
-                        Title = TitleBox.Text,
-                        Album = AlbumBox.Text,
-                        Genre = GenreBox.Text,
-                        Year = Convert.ToInt32(YearBox.Text),
-                        AlbumArtist = AlbumArtistBox.Text,
-                        Composer = ComposerBox.Text,
-                        TrackNumber = Convert.ToInt32(TrackNumBox.Text),
-                        DiscNumber = Convert.ToInt32(DiscNumBox.Text),
-                        Lyrics = new LyricsInfo()
-                    };
-                    track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
-                    track.EmbeddedPictures.Clear();
-                    foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
-                    track.Save();
-                    library?.Remove(path); // update library entry, if available
-                    library?.Import(path);
-                }
-            });
+                    Artist = ArtistBox.Text,
+                    Title = TitleBox.Text,
+                    Album = AlbumBox.Text,
+                    Genre = GenreBox.Text,
+                    Year = Convert.ToInt32(YearBox.Text),
+                    AlbumArtist = AlbumArtistBox.Text,
+                    Composer = ComposerBox.Text,
+                    TrackNumber = Convert.ToInt32(TrackNumBox.Text),
+                    DiscNumber = Convert.ToInt32(DiscNumBox.Text),
+                    Lyrics = new LyricsInfo()
+                };
+                track.Lyrics.UnsynchronizedLyrics = UntimedLyricsBox.Text;
+                track.EmbeddedPictures.Clear();
+                foreach (var cover in CoverArts) track.EmbeddedPictures.Add(cover);
+                await Task.Run(() => track.Save());
+                library?.Update(path, new FileMetadataProvider(path));
+            }
+           
         }
 
         public async Task SaveButton()
         {
             unsavedChanges = false;
-            Title = $"{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
+            Title = $"{string.Join(", ", Displayfilepaths)} - FRESHMusicPlayer Tag Editor";
             foreach (string path in FilePaths)
             {
                 if (path != player.FilePath) continue; // We're good
@@ -275,14 +273,14 @@ namespace FRESHMusicPlayer.Forms.TagEditor
             if (state)
             {
                 unsavedChanges = true;
-                Title = $"*{string.Join(", ", Displayfilepaths)} | FRESHMusicPlayer Tag Editor";
+                Title = $"*{string.Join(", ", Displayfilepaths)} - FRESHMusicPlayer Tag Editor";
             }
             else unsavedChanges = false;
         }
 
         private void NewWindowItem_MouseDown(object sender, RoutedEventArgs e)
         {
-            var tagEditor = new TagEditor(FilePaths, player, library);
+            var tagEditor = new TagEditor(FilePaths, httpClient, player, library);
             tagEditor.Show();
         }
 

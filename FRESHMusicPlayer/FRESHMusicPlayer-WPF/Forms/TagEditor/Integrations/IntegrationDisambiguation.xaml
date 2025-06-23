@@ -7,16 +7,16 @@
         xmlns:local="clr-namespace:FRESHMusicPlayer.Forms.TagEditor.Integrations"
         mc:Ignorable="d"
         Title="FRESHMusicPlayer Tag Editor" Width="600" Height="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid Background="{StaticResource BackgroundColor}">
+    <Grid Background="{DynamicResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="50px"/>
         </Grid.RowDefinitions>
-        <StackPanel Background="{StaticResource BackgroundColor}">
-            <TextBlock Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_INTEGRATIONDISAMBIGUATION}" TextWrapping="Wrap" Foreground="{StaticResource PrimaryTextColor}" FontSize="16"/>
-            <ListBox x:Name="ReleaseBox" Background="{StaticResource ForegroundColor}" Margin="15,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{StaticResource PrimaryTextColor}" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="265"/>
+        <StackPanel Background="{DynamicResource BackgroundColor}">
+            <TextBlock Margin="10,10,0,0" Grid.Row="1" TextTrimming="WordEllipsis" Text="{x:Static resx:Resources.TAGEDITOR_INTEGRATIONDISAMBIGUATION}" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16"/>
+            <ListBox x:Name="ReleaseBox" Background="{DynamicResource ForegroundColor}" Margin="15,10" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" FontSize="14" Foreground="{DynamicResource PrimaryTextColor}" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="265"/>
         </StackPanel>
-        <Grid Grid.Row="2" Background="{StaticResource ForegroundColor}">
+        <Grid Grid.Row="2" Background="{DynamicResource ForegroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>

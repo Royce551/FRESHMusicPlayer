@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ACCENTCOLOR_BLUE" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="ACCENTCOLOR_CLASSICBLUE" xml:space="preserve">
+    <value>Классический Синий</value>
+  </data>
+  <data name="ACCENTCOLOR_GREEN" xml:space="preserve">
+    <value>Зелёный</value>
+  </data>
+  <data name="ACCENTCOLOR_MATCHCOVER" xml:space="preserve">
+    <value>Подобрать к обложке</value>
+  </data>
+  <data name="ACCENTCOLOR_PINK" xml:space="preserve">
+    <value>Розовый</value>
+  </data>
+  <data name="ACCENTCOLOR_PURPLE" xml:space="preserve">
+    <value>Фиолетовый</value>
+  </data>
+  <data name="ACCENTCOLOR_RED" xml:space="preserve">
+    <value>Красный</value>
+  </data>
+  <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
+    <value>Упс! Что-то пошло не так. Мы попробуем продолжить работу. Если это повторяется, сообщите об этом в https://github.com/royce551/freshmusicplayer/issues.</value>
+  </data>
+  <data name="APPLICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value>Открыть журнал отладки</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Идти к</value>
+  </data>
+  <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
+    <value>Мини-проигрыватель</value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
+    <value>Приостановить после текущего трека</value>
+  </data>
+  <data name="FULLSCREEN" xml:space="preserve">
+    <value>Полный экран</value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>Режим фокуса</value>
+  </data>
+  <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
+    <value>Обзор папок</value>
+  </data>
+  <data name="IMPORT_BROWSE_PLAYLIST" xml:space="preserve">
+    <value>Обзор файлов плейлиста</value>
+  </data>
+  <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
+    <value>Обзор трэков</value>
+  </data>
+  <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
+    <value>Вы также можете перетащить файлы на эту страницу.</value>
+  </data>
+  <data name="IMPORT_MANUALENTRY" xml:space="preserve">
+    <value>Путь к файлу или URL-адрес</value>
+  </data>
+  <data name="LASTFM_AUTHENTICATIONFAILED" xml:space="preserve">
+    <value>Не удалось войти в систему. Убедитесь, что вы предоставили FRESHMusicPlayer доступ, и нажмите OK, чтобы повторить попытку.</value>
+  </data>
+  <data name="LASTFM_AUTHENTICATIONPROMPT" xml:space="preserve">
+    <value>Завершите аутентификацию Last.fm в открывшемся браузере. Как только вы закончите, нажмите ОК.</value>
+  </data>
+  <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
+    <value>Успешный вход на last.fm под именем {0}!</value>
+  </data>
+  <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
+    <value>Произошла ошибка при попытке скроббла {0}.</value>
+  </data>
+  <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
+    <value>Добавить в плейлист</value>
+  </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value>Диск {0}</value>
+  </data>
+  <data name="LIBRARY_EMPTY" xml:space="preserve">
+    <value>Ваша библиотека пуста. Чтобы начать, перетащите несколько файлов или установите одну или две папки автоматического импорта в настройках.</value>
+  </data>
+  <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
+    <value>Добавить всё в очередь</value>
+  </data>
+  <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
+    <value>Открыть в проводнике</value>
+  </data>
+  <data name="LIBRARY_PLAYALL" xml:space="preserve">
+    <value>Воспроизвести всё</value>
+  </data>
+  <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
+    <value>Воспроизвести следующее</value>
+  </data>
+  <data name="LOADING" xml:space="preserve">
+    <value>Загрузка...</value>
+  </data>
+  <data name="LYRICS" xml:space="preserve">
+    <value>Текст песни</value>
+  </data>
+  <data name="LYRICS_NOLYRICS" xml:space="preserve">
+    <value>Нет доступных текстов</value>
+  </data>
+  <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
+    <value>Вневременный текст песни</value>
+  </data>
+  <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
+    <value>Альбомы</value>
+  </data>
+  <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
+    <value>Артисты</value>
+  </data>
+  <data name="MAINWINDOW_HOME" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="MAINWINDOW_IMPORT" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
+    <value>Неизвестный артист</value>
+  </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value>Ничего не воспроизводится</value>
+  </data>
+  <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
+    <value>Произошла ошибка при воспроизведении:
+{0}
+Мы перейдем к следующему треку</value>
+  </data>
+  <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
+    <value>Плейлисты</value>
+  </data>
+  <data name="MAINWINDOW_SEARCH" xml:space="preserve">
+    <value>Искать</value>
+  </data>
+  <data name="MAINWINDOW_SETTINGS" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="MAINWINDOW_TRACKS" xml:space="preserve">
+    <value>Трэки</value>
+  </data>
+  <data name="MENUBAR_EXIT" xml:space="preserve">
+    <value>_Выйти</value>
+  </data>
+  <data name="MENUBAR_FILE" xml:space="preserve">
+    <value>_Файл</value>
+  </data>
+  <data name="MENUBAR_NEWWINDOW" xml:space="preserve">
+    <value>_Новое окно</value>
+  </data>
+  <data name="MENUBAR_OPEN" xml:space="preserve">
+    <value>_Открыть</value>
+  </data>
+  <data name="MENUBAR_SAVE" xml:space="preserve">
+    <value>_Сохранить</value>
+  </data>
+  <data name="MENUBAR_TAGSOURCES" xml:space="preserve">
+    <value>_Источники Тегов</value>
+  </data>
+  <data name="MINIPLAYER_BACK" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
+    <value>Очистить всё</value>
+  </data>
+  <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
+    <value>Уведомления</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAINERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN_HEADER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_COULD_NOT_IMPORT_PLAYLIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
+    <value>Найти файл</value>
+  </data>
+  <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY_HEADER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPDATEERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPDATEREADY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_WRITINGREPLAYGAIN" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_DELETE" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_EXPORT" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_HEADER" xml:space="preserve">
+    <value>Что вы хотите делать с "{0}"?</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_INVALIDNAME" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
+    <value>Переименовать</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
+    <value>Добавить плейлист</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
+    <value>Добавить трэк</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
+    <value>Очистить очередь</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
+    <value>Заканчивается в {0}</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
+    <value>Очередь</value>
+  </data>
+  <data name="RESET" xml:space="preserve">
+    <value>Перезагрузить</value>
+  </data>
+  <data name="SETTINGS_ABOUT" xml:space="preserve">
+    <value>О</value>
+  </data>
+  <data name="SETTINGS_ACCENTCOLOR" xml:space="preserve">
+    <value>Акцентный цвет</value>
+  </data>
+  <data name="SETTINGS_APPEARANCE" xml:space="preserve">
+    <value>Внешний вид</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value>Автоматический импорт</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORTDESCRIPTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
+    <value>Добавить папку</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE_SUBTEXT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
+    <value>Режим автоматического обновления</value>
+  </data>
+  <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
+    <value>Очистить и обновить библиотеку</value>
+  </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value>Автор: Squid Grill (и участники открытого исходного кода)
+Лицензия GPL v3
+Благодарим вас за использование FRESHMusicPlayer! ♥</value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION" xml:space="preserve">
+    <value>Интеграция</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
+    <value>Discord Rich Presence</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
+    <value>System Transport Controls</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
+    <value>Вы уверены, что хотите выйти из last.fm?</value>
+  </data>
+  <data name="SETTINGS_LASTFM_PAUSESCROBBLING" xml:space="preserve">
+    <value>Приостановить скробблинг на данный момент</value>
+  </data>
+  <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
+    <value>Обслуживание</value>
+  </data>
+  <data name="SETTINGS_NUKELIBRARY" xml:space="preserve">
+    <value>Уничтожить библиотеку</value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
+    <value>Вы собираетесь безвозвратно очистить свою библиотеку. Вы уверены?</value>
+  </data>
+  <data name="SETTINGS_PLAYBACK" xml:space="preserve">
+    <value>Воспроизведение</value>
+  </data>
+  <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
+    <value>Отметка времени воспроизведения</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ADD" xml:space="preserve">
+    <value>Добавить данные ReplayGain в библиотеку</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_AUTOADD" xml:space="preserve">
+    <value>Добавить данные ReplayGain в библиотеку после импорта</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYALBUM" xml:space="preserve">
+    <value>Нормализовать по альбомам</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYTRACK" xml:space="preserve">
+    <value>Нормализовать по трекам</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
+    <value>Использовать нормализацию громкости ReplayGain</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP" xml:space="preserve">
+    <value>Предварительное усиление для треков с ReplayGain (значения выше 0 могут снизить динамику)</value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value>Сбросить настройки по умолчанию</value>
+  </data>
+  <data name="SETTINGS_RESTART_NEEDED_PROMPT" xml:space="preserve">
+    <value>FMP необходимо перезапустить, чтобы применить изменения.</value>
+  </data>
+  <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
+    <value>Перезагрузить сейчас</value>
+  </data>
+  <data name="SETTINGS_SUBHEADER" xml:space="preserve">
+    <value>Изменить поведение FMP</value>
+  </data>
+  <data name="SETTINGS_THEME" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="SETTINGS_THEME_DARK" xml:space="preserve">
+    <value>Тёмный</value>
+  </data>
+  <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
+    <value>Светлый</value>
+  </data>
+  <data name="SETTINGS_TIMEWINDOWTITLE" xml:space="preserve">
+    <value>Показывать время вместо заголовка в заголовке окна</value>
+  </data>
+  <data name="SETTINGS_UPDATES" xml:space="preserve">
+    <value>Обновления</value>
+  </data>
+  <data name="SETTINGS_UPDATESCHECKNOW" xml:space="preserve">
+    <value>Проверить наличие обновлений сейчас</value>
+  </data>
+  <data name="SETTINGS_UPDATESLASTCHECKED" xml:space="preserve">
+    <value>Последняя проверка в {0}</value>
+  </data>
+  <data name="SETTINGS_UPDATES_AUTO" xml:space="preserve">
+    <value>Автоматические</value>
+  </data>
+  <data name="SETTINGS_UPDATES_MANUAL" xml:space="preserve">
+    <value>Ручные</value>
+  </data>
+  <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
+    <value>Спросить перед обновлением</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ" xml:space="preserve">
+    <value>Эквалайзер</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_BASSBOOST" xml:space="preserve">
+    <value>Низкие частоты (бас)</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_TREBLEBOOST" xml:space="preserve">
+    <value>Высокие частоты</value>
+  </data>
+  <data name="TAGEDITOR" xml:space="preserve">
+    <value>Редактор тегов</value>
+  </data>
+  <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
+    <value>Художник альбома</value>
+  </data>
+  <data name="TAGEDITOR_ARTIST" xml:space="preserve">
+    <value>Артист</value>
+  </data>
+  <data name="TAGEDITOR_BACKGROUNDSAVE" xml:space="preserve">
+    <value>Изменения будут применены при воспроизведении нового трека.</value>
+  </data>
+  <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
+    <value>Сменить файл...</value>
+  </data>
+  <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
+    <value>Композитор</value>
+  </data>
+  <data name="TAGEDITOR_COVERART" xml:space="preserve">
+    <value>Обложка</value>
+  </data>
+  <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
+    <value>Номер диска</value>
+  </data>
+  <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
+    <value>Редактирование</value>
+  </data>
+  <data name="TAGEDITOR_INTEGRATIONDISAMBIGUATION" xml:space="preserve">
+    <value>Для этого альбома есть несколько результатов поиска. Какой вы хотите?</value>
+  </data>
+  <data name="TAGEDITOR_NOCOVERART" xml:space="preserve">
+    <value>Нет обложки</value>
+  </data>
+  <data name="TAGEDITOR_NOINTERNET" xml:space="preserve">
+    <value>У вас нет подключения к интернету :(</value>
+  </data>
+  <data name="TAGEDITOR_NORESULTS" xml:space="preserve">
+    <value>Для этого альбома ничего не найдено :(</value>
+  </data>
+  <data name="TAGEDITOR_SAVE" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="TAGEDITOR_SAVECHANGES" xml:space="preserve">
+    <value>Сохранить изменения в {0}?</value>
+  </data>
+  <data name="TAGEDITOR_TITLE" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
+    <value>Номер трэка</value>
+  </data>
+  <data name="TRACKINFO_ALBUM" xml:space="preserve">
+    <value>Альбом</value>
+  </data>
+  <data name="TRACKINFO_ALBUMINFO" xml:space="preserve">
+    <value>Информация о альбоме</value>
+  </data>
+  <data name="TRACKINFO_BITRATE" xml:space="preserve">
+    <value>Битрейт</value>
+  </data>
+  <data name="TRACKINFO_DISCNUMBER" xml:space="preserve">
+    <value>Диск</value>
+  </data>
+  <data name="TRACKINFO_GENRE" xml:space="preserve">
+    <value>Жанр</value>
+  </data>
+  <data name="TRACKINFO_NOTAVAILABLE" xml:space="preserve">
+    <value>Недоступно</value>
+  </data>
+  <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
+    <value>Техническая информация</value>
+  </data>
+  <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
+    <value>Информация о трэке</value>
+  </data>
+  <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
+    <value>Трэк</value>
+  </data>
+  <data name="TRACKINFO_YEAR" xml:space="preserve">
+    <value>Год</value>
+  </data>
+</root>

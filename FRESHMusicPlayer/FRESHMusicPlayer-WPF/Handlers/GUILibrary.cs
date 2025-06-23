@@ -4,6 +4,7 @@ using FRESHMusicPlayer.Utilities;
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,40 +17,43 @@ namespace FRESHMusicPlayer.Handlers
     /// </summary>
     public class GUILibrary : Library
     {
-        public event EventHandler LibraryChanged;
+        public event EventHandler OtherLibraryUpdateOcccured;
+        public event EventHandler<IEnumerable<string>> TracksAdded;
+        public event EventHandler<IEnumerable<string>> TracksRemoved;
+        public event EventHandler<IEnumerable<string>> TracksUpdated;
+        public event EventHandler<string> PlaylistAdded;
+        public event EventHandler<string> PlaylistRemoved;
 
-        public bool RaiseLibraryChanged { get; set; } = true; // remove w/ databasev3
+        public bool RaiseLibraryChangedEvents { get; set; } = true;
 
-        private readonly NotificationHandler notificationHandler;
+        private readonly MainWindow window;
         private readonly Dispatcher dispatcher;
-        public GUILibrary(LiteDatabase library, NotificationHandler notificationHandler, Dispatcher dispatcher) : base(library)
+        public GUILibrary(LiteDatabase library, MainWindow window, Dispatcher dispatcher) : base(library)
         {
-            this.notificationHandler = notificationHandler;
+            this.window = window;
             this.dispatcher = dispatcher;
         }
 
-        public override void Import(List<string> tracks)
+        public void TriggerUpdate() => OtherLibraryUpdateOcccured?.Invoke(null, EventArgs.Empty);
+
+        public override async Task ImportAsync(List<string> tracks)
         {
-            var notification = new Notification { ContentText = $"Importing {tracks.Count} tracks" };
-            dispatcher.Invoke(() => notificationHandler.Add(notification));
-            base.Import(tracks);
-            dispatcher.Invoke(() =>
-            {
-                notificationHandler.Remove(notification);
-                if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
-            });
+            if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
+
+            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
+            await base.ImportAsync(tracks);
+
+            if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
         }
 
-        public override void Import(string[] tracks)
+        public override async Task ImportAsync(string[] tracks)
         {
-            var notification = new Notification { ContentText = $"Importing {tracks.Length} tracks" };
-            dispatcher.Invoke(() => notificationHandler.Add(notification));
-            base.Import(tracks);
-            dispatcher.Invoke(() =>
-            {
-                notificationHandler.Remove(notification);
-                if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
-            });
+            if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
+
+            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
+            await base.ImportAsync(tracks);
+
+            if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
         }
 
         public override void Nuke(bool nukePlaylists = true)
@@ -57,50 +61,98 @@ namespace FRESHMusicPlayer.Handlers
             base.Nuke(nukePlaylists);
             dispatcher.Invoke(() =>
             {
-                notificationHandler.Add(new Notification
+                window.NotificationHandler.Add(new Notification
                 {
                     ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
                     Type = NotificationType.Success
                 });
-                if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+                if (RaiseLibraryChangedEvents) OtherLibraryUpdateOcccured?.Invoke(null, EventArgs.Empty);
             });
         }
 
-        public override void AddTrackToPlaylist(string playlist, string path)
+        public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
-            base.AddTrackToPlaylist(playlist, path);
-            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            var notification = new Notification 
+            { 
+                ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"), 
+                StatusBarText = Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY_HEADER,
+                Type = NotificationType.Progress 
+            };
+            dispatcher.Invoke(() => window.NotificationHandler.Add(notification));
+
+            LoggingHandler.Log("Processing library metadata...");
+
+            var startTime = DateTime.Now;
+            int? tracksToProcess = null;
+            var updatedTracks = await base.ProcessDatabaseMetadataAsync(p =>
+            {
+                if (tracksToProcess is null) tracksToProcess = p;
+
+                notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, p);
+                dispatcher.Invoke(() => window.NotificationHandler.Update(notification));
+            });
+
+            dispatcher.Invoke(() =>
+            {
+                window.NotificationHandler.Remove(notification);
+                if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, updatedTracks.Select(x => x.Path));
+            });
+
+            return updatedTracks;
         }
 
-        public override DatabasePlaylist CreatePlaylist(string playlist, string path = null)
+        public override async Task AddTrackToPlaylistAsync(string playlist, string path, bool isSystemPlaylist = false)
         {
-            var newPlaylist = base.CreatePlaylist(playlist, path);
-            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            await base.AddTrackToPlaylistAsync(playlist, path, isSystemPlaylist);
+            if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, new string[] {path});
+        }
+        public override async Task<DatabasePlaylist> CreatePlaylistAsync(string playlist, bool isSystemPlaylist, string path = null)
+        {
+            var newPlaylist = await base.CreatePlaylistAsync(playlist, isSystemPlaylist, path);
+            if (RaiseLibraryChangedEvents) PlaylistAdded?.Invoke(null, playlist);
             return newPlaylist;
         }
 
         public override void DeletePlaylist(string playlist)
         {
             base.DeletePlaylist(playlist);
-            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (RaiseLibraryChangedEvents) PlaylistRemoved?.Invoke(null, playlist);
         }
 
-        public override void Import(string path)
+        public override async Task ImportAsync(string path)
         {
-            base.Import(path);
-            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            if (App.Config.AutoLibrary) path = HandleAutoLibrary(new string[] { path })[0];
+
+            LoggingHandler.Log($"Importing {path}");
+            await base.ImportAsync(path);
         }
 
         public override void Remove(string path)
         {
             base.Remove(path);
-            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            TracksRemoved?.Invoke(null, new string[] { path });
         }
 
         public override void RemoveTrackFromPlaylist(string playlist, string path)
         {
             base.RemoveTrackFromPlaylist(playlist, path);
-            if (RaiseLibraryChanged) LibraryChanged?.Invoke(null, EventArgs.Empty);
+            TracksUpdated?.Invoke(null, new string[] { path });
+        }
+
+        private List<string> HandleAutoLibrary(string[] tracks)
+        {
+            var paths = new List<string>();
+            foreach (var track in tracks)
+            {
+                var metadata = new Track(track);
+                
+                var path = Path.Combine(App.Config.AutoLibraryPath, metadata.Artist.Split(';')[0], metadata.Album);
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                var fullPath = Path.Combine(path, Path.GetFileName(track));
+                File.Move(track, fullPath);
+                paths.Add(fullPath);
+            }
+            return paths;
         }
 
         //public List<DatabaseQueue> GetAllQueues() FMP 10.2

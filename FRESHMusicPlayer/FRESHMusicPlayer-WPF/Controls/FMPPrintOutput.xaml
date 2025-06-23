@@ -24,7 +24,7 @@
             </StackPanel>
         </Grid>
         
-        <ListBox x:Name="TracksPanel"  Background="White" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{StaticResource BackgroundColor}" ScrollViewer.PanningMode="Both">
+        <ListBox x:Name="TracksPanel"  Background="White" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" VirtualizingPanel.IsVirtualizing="True" BorderBrush="{DynamicResource BackgroundColor}" ScrollViewer.PanningMode="Both">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>

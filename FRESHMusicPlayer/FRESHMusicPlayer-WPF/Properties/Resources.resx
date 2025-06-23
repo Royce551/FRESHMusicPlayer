@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ACCENTCOLOR_BLUE" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="ACCENTCOLOR_CLASSICBLUE" xml:space="preserve">
+    <value>Classic Blue</value>
+  </data>
+  <data name="ACCENTCOLOR_GREEN" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="ACCENTCOLOR_MATCHCOVER" xml:space="preserve">
+    <value>Match cover art</value>
+  </data>
+  <data name="ACCENTCOLOR_PINK" xml:space="preserve">
+    <value>Pink</value>
+  </data>
+  <data name="ACCENTCOLOR_PURPLE" xml:space="preserve">
+    <value>Purple</value>
+  </data>
+  <data name="ACCENTCOLOR_RED" xml:space="preserve">
+    <value>Red</value>
+  </data>
   <data name="APPLICATION_CRITICALERROR" xml:space="preserve">
     <value>Oopsies! Something went wrong. We'll try to keep going. If this keeps happening, please report this at https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
@@ -127,13 +148,16 @@
     <value>Go to</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
-    <value>Mini Player</value>
+    <value>Mini player</value>
   </data>
   <data name="CONTROLS_PAUSE_AFTTER_CURRENT_TRACK" xml:space="preserve">
     <value>Pause after current track</value>
   </data>
+  <data name="FULLSCREEN" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
   <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
-    <value>Focus Mode</value>
+    <value>Focus mode</value>
   </data>
   <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
     <value>Browse for folders</value>
@@ -150,17 +174,41 @@
   <data name="IMPORT_MANUALENTRY" xml:space="preserve">
     <value>File path or URL</value>
   </data>
+  <data name="LASTFM_AUTHENTICATIONFAILED" xml:space="preserve">
+    <value>Failed to log in. Check that you granted FRESHMusicPlayer access, and press OK to try again.</value>
+  </data>
+  <data name="LASTFM_AUTHENTICATIONPROMPT" xml:space="preserve">
+    <value>Complete last.fm authentication on the browser window that just opened. Once you're done, press OK.</value>
+  </data>
+  <data name="LASTFM_LOGIN_SUCCESSFUL" xml:space="preserve">
+    <value>Successfully logged in to last.fm as {0}!</value>
+  </data>
+  <data name="LASTFM_SCROBBLE_FAILED" xml:space="preserve">
+    <value>An error occured trying to scrobble {0}</value>
+  </data>
   <data name="LIBRARY_ADD_TO_PLAYLIST" xml:space="preserve">
     <value>Add to playlist</value>
   </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value>Disc {0}</value>
+  </data>
+  <data name="LIBRARY_EMPTY" xml:space="preserve">
+    <value>Your library is empty. To get started, drag and drop some files, or set an Auto Import folder or two in the settings.</value>
+  </data>
   <data name="LIBRARY_ENQUEUEALL" xml:space="preserve">
-    <value>Enqueue All</value>
+    <value>Enqueue all</value>
   </data>
   <data name="LIBRARY_OPEN_FILEEXPLORER" xml:space="preserve">
     <value>Open in File Explorer</value>
   </data>
   <data name="LIBRARY_PLAYALL" xml:space="preserve">
-    <value>Play All</value>
+    <value>Play all</value>
+  </data>
+  <data name="LIBRARY_PLAYNEXT" xml:space="preserve">
+    <value>Play next</value>
+  </data>
+  <data name="LOADING" xml:space="preserve">
+    <value>Loading...</value>
   </data>
   <data name="LYRICS" xml:space="preserve">
     <value>Lyrics</value>
@@ -169,7 +217,7 @@
     <value>No lyrics available</value>
   </data>
   <data name="LYRICS_UNTIMEDLYRICS" xml:space="preserve">
-    <value>Untimed Lyrics</value>
+    <value>Untimed lyrics</value>
   </data>
   <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
     <value>Albums</value>
@@ -177,14 +225,17 @@
   <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
     <value>Artists</value>
   </data>
+  <data name="MAINWINDOW_HOME" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="MAINWINDOW_IMPORT" xml:space="preserve">
     <value>Import</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value>Unknown Artist</value>
+    <value>Unknown artist</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value>Nothing Playing</value>
+    <value>Nothing playing</value>
   </data>
   <data name="MAINWINDOW_PLAYBACK_ERROR_DETAILS" xml:space="preserve">
     <value>A playback error occured:
@@ -224,11 +275,26 @@ We'll skip to the next track for you</value>
   <data name="MINIPLAYER_BACK" xml:space="preserve">
     <value>Back</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="next_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\next_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value>Clear All</value>
+    <value>Clear all</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
     <value>Notifications</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN" xml:space="preserve">
+    <value>Processing ReplayGain data for library...
+
+{0} tracks remaining</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAINERROR" xml:space="preserve">
+    <value>ReplayGain data couldn't be added to {0}. If the file is already open, close it and then press the rescan button in settings.</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN_HEADER" xml:space="preserve">
+    <value>Processing ReplayGain data for library...</value>
   </data>
   <data name="NOTIFICATION_CLEARSUCCESS" xml:space="preserve">
     <value>Successfully cleared your library!</value>
@@ -238,10 +304,22 @@ We'll skip to the next track for you</value>
 Missing File: {0}</value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value>The file you tried to play, "{0}", doesn't seem to exist.</value>
+    <value>The file you tried to play has gone missing. Let us know where it went, or remove it from your library.</value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATEFILE" xml:space="preserve">
+    <value>Locate file</value>
   </data>
   <data name="NOTIFICATION_INSTALLINGUPDATE" xml:space="preserve">
     <value>Installing update...</value>
+  </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY" xml:space="preserve">
+    <value>Processing library changes...
+{0} tracks remaining
+
+Newly added tracks might not appear in the artists or albums tabs until processing is complete</value>
+  </data>
+  <data name="NOTIFICATION_PROCESSINGLIBRARY_HEADER" xml:space="preserve">
+    <value>Processing library changes...</value>
   </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
     <value>Scanning for new tracks...</value>
@@ -258,8 +336,11 @@ Missing File: {0}</value>
   <data name="NOTIFICATION_UPTODATE_CHANGELOG" xml:space="preserve">
     <value>Changelog</value>
   </data>
+  <data name="NOTIFICATION_WRITINGREPLAYGAIN" xml:space="preserve">
+    <value>Writing ReplayGain data to library...</value>
+  </data>
   <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
-    <value>Playlist Management</value>
+    <value>Playlist management</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_CREATE" xml:space="preserve">
     <value>Create</value>
@@ -279,23 +360,35 @@ Missing File: {0}</value>
   <data name="PLAYLISTMANAGEMENT_RENAME" xml:space="preserve">
     <value>Rename</value>
   </data>
+  <data name="play_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\play_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="previous_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\previous_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="QUEUEMANAGEMENT_ADDPLAYLIST" xml:space="preserve">
-    <value>Add Playlist</value>
+    <value>Add playlist</value>
   </data>
   <data name="QUEUEMANAGEMENT_ADDTRACK" xml:space="preserve">
-    <value>Add Track</value>
+    <value>Add track</value>
   </data>
   <data name="QUEUEMANAGEMENT_CLEARQUEUE" xml:space="preserve">
-    <value>Clear Queue</value>
+    <value>Clear queue</value>
+  </data>
+  <data name="QUEUEMANAGEMENT_ENDSAT" xml:space="preserve">
+    <value>Ends at {0}</value>
   </data>
   <data name="QUEUEMANAGEMENT_QUEUEHEADER" xml:space="preserve">
     <value>Queue</value>
   </data>
-  <data name="QUEUEMANAGEMENT_REMAININGTIME" xml:space="preserve">
-    <value>Remaining Time: </value>
+  <data name="RESET" xml:space="preserve">
+    <value>Reset</value>
   </data>
   <data name="SETTINGS_ABOUT" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="SETTINGS_ACCENTCOLOR" xml:space="preserve">
+    <value>Accent color</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
     <value>Appearance</value>
@@ -307,10 +400,16 @@ Missing File: {0}</value>
     <value>FMP will import new tracks from these folders:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_ADDFOLDER" xml:space="preserve">
-    <value>Add Folder</value>
+    <value>Add folder</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE" xml:space="preserve">
+    <value>Auto queue</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE_SUBTEXT" xml:space="preserve">
+    <value>Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them</value>
   </data>
   <data name="SETTINGS_AUTOUPDATEMODE" xml:space="preserve">
-    <value>Auto Update Mode</value>
+    <value>Auto update mode</value>
   </data>
   <data name="SETTINGS_CLEANLIBRARY" xml:space="preserve">
     <value>Clean and update library</value>
@@ -326,8 +425,20 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_INTEGRATION" xml:space="preserve">
     <value>Integration</value>
   </data>
+  <data name="SETTINGS_INTEGRATION_DISCORD" xml:space="preserve">
+    <value>Discord Rich Presence</value>
+  </data>
+  <data name="SETTINGS_INTEGRATION_SMTC" xml:space="preserve">
+    <value>System Transport Controls</value>
+  </data>
   <data name="SETTINGS_LANGUAGE" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="SETTINGS_LASTFMLOGOUT_WARNING" xml:space="preserve">
+    <value>Are you sure you want to log out of last.fm?</value>
+  </data>
+  <data name="SETTINGS_LASTFM_PAUSESCROBBLING" xml:space="preserve">
+    <value>Pause scrobbling for now</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
     <value>Maintenance</value>
@@ -338,8 +449,29 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
     <value>You are about to irreversibly clear your library. Are you sure?</value>
   </data>
+  <data name="SETTINGS_PLAYBACK" xml:space="preserve">
+    <value>Playback</value>
+  </data>
   <data name="SETTINGS_PLAYBACKTRACKING" xml:space="preserve">
-    <value>Playtime Logging</value>
+    <value>Playtime logging</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ADD" xml:space="preserve">
+    <value>Add ReplayGain data to library</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_AUTOADD" xml:space="preserve">
+    <value>Add ReplayGain data to library after imports</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYALBUM" xml:space="preserve">
+    <value>Normalize by album</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_BYTRACK" xml:space="preserve">
+    <value>Normalize by track</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
+    <value>Use ReplayGain loudness normalization</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP" xml:space="preserve">
+    <value>Pre-amplification for tracks with ReplayGain (values above 0 may reduce dynamics)</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
     <value>Reset settings to default</value>
@@ -349,6 +481,9 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   </data>
   <data name="SETTINGS_RESTART_NOW" xml:space="preserve">
     <value>Restart now</value>
+  </data>
+  <data name="SETTINGS_SHOWPROGRESSINTASKBAR" xml:space="preserve">
+    <value>Show track progress in taskbar</value>
   </data>
   <data name="SETTINGS_SUBHEADER" xml:space="preserve">
     <value>Change the way FMP behaves</value>
@@ -383,11 +518,20 @@ Thank you for using FRESHMusicPlayer! ♥</value>
   <data name="SETTINGS_UPDATES_PROMPT" xml:space="preserve">
     <value>Prompt before updating</value>
   </data>
+  <data name="SOUNDSETTINGS_EQ" xml:space="preserve">
+    <value>Equalizer</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_BASSBOOST" xml:space="preserve">
+    <value>Bass boost</value>
+  </data>
+  <data name="SOUNDSETTINGS_EQ_TREBLEBOOST" xml:space="preserve">
+    <value>Treble boost</value>
+  </data>
   <data name="TAGEDITOR" xml:space="preserve">
-    <value>Tag Editor</value>
+    <value>Tag editor</value>
   </data>
   <data name="TAGEDITOR_ALBUMARTIST" xml:space="preserve">
-    <value>Album Artist</value>
+    <value>Album artist</value>
   </data>
   <data name="TAGEDITOR_ARTIST" xml:space="preserve">
     <value>Artist</value>
@@ -396,16 +540,16 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>The changes will be applied when you play a new track.</value>
   </data>
   <data name="TAGEDITOR_CHANGEFILE" xml:space="preserve">
-    <value>Change File...</value>
+    <value>Change file...</value>
   </data>
   <data name="TAGEDITOR_COMPOSER" xml:space="preserve">
     <value>Composer</value>
   </data>
   <data name="TAGEDITOR_COVERART" xml:space="preserve">
-    <value>Cover Art</value>
+    <value>Cover art</value>
   </data>
   <data name="TAGEDITOR_DISCNUM" xml:space="preserve">
-    <value>Disc Number</value>
+    <value>Disc number</value>
   </data>
   <data name="TAGEDITOR_EDITINGHEADER" xml:space="preserve">
     <value>Editing </value>
@@ -432,7 +576,7 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>Title</value>
   </data>
   <data name="TAGEDITOR_TRACKNUM" xml:space="preserve">
-    <value>Track Number</value>
+    <value>Track number</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
     <value>Album</value>
@@ -453,10 +597,10 @@ Thank you for using FRESHMusicPlayer! ♥</value>
     <value>Not available</value>
   </data>
   <data name="TRACKINFO_TECHNICALINFO" xml:space="preserve">
-    <value>Technical Info</value>
+    <value>Technical info</value>
   </data>
   <data name="TRACKINFO_TRACKINFO" xml:space="preserve">
-    <value>Track Info</value>
+    <value>Track info</value>
   </data>
   <data name="TRACKINFO_TRACKNUMBER" xml:space="preserve">
     <value>Track</value>
