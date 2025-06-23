@@ -22,6 +22,7 @@ namespace FRESHMusicPlayer.Controls.BlurryImage
 
         public override void Render(DrawingContext context)
         {
+            if (Source is null) return;
             var source = Source;
             var mem = new MemoryStream();
             Source.Save(mem);

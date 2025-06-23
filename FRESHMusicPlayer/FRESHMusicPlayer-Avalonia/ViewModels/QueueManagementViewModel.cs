@@ -139,22 +139,34 @@ namespace FRESHMusicPlayer.ViewModels
 
         private async void ProgressTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            if (!Player.FileLoaded) return;
+            //await Dispatcher.UIThread.InvokeAsync(() =>
+            //{
+            //    TimeSpan x = new();
+            //    int i = 1;
+            //    int i2 = 0;
+            //    foreach (var track in Player.Queue.Queue)
+            //    {
+            //        i++;
+            //        if (i <= Player.Queue.Position) continue;
+            //        var y = Queue[i2];
+            //        x += TimeSpan.FromSeconds(y.Length);
+            //        i2++;
+            //    }
+            //    x -= Player.CurrentTime;
+            //    TimeRemaining = x;
+            //});
+            var remainingTime = new TimeSpan();
             await Dispatcher.UIThread.InvokeAsync(() =>
             {
-
-                TimeSpan x = new();
-                int i = 1;
-                int i2 = 0;
-                foreach (var track in Player.Queue.Queue)
+                for (int i = 0; i < Player.Queue.Queue.Count; i++)
                 {
-                    i++;
-                    if (i <= Player.Queue.Position) continue;
-                    var y = Queue[i2];
-                    x += TimeSpan.FromSeconds(y.Length);
-                    i2++;
+                    if ((i + 1) < Player.Queue.Position) continue;
+                    var track = Queue[i];
+                    if (i != (Player.Queue.Queue.Count - 1)) remainingTime += TimeSpan.FromSeconds(track.Length);
                 }
-                x -= Player.CurrentTime;
-                TimeRemaining = x;
+                remainingTime += (Player.TotalTime - Player.CurrentTime);
+                TimeRemaining = remainingTime;
             });
         }
 

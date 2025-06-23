@@ -348,21 +348,7 @@ namespace FRESHMusicPlayer.ViewModels
         public FontWeight PlaylistsTabWeight => SelectedTab == Tab.Playlists ? FontWeight.Bold : FontWeight.Regular;
         public FontWeight ImportTabWeight => SelectedTab == Tab.Import ? FontWeight.Bold : FontWeight.Regular;
 
-        private Tab selectedTab = Tab.Tracks;
-        public Tab SelectedTab
-        {
-            get => selectedTab;
-            set
-            {
-                selectedTab = value;
-                this.RaisePropertyChanged(nameof(MainContent));
-                this.RaisePropertyChanged(nameof(TracksTabWeight));
-                this.RaisePropertyChanged(nameof(ArtistsTabWeight));
-                this.RaisePropertyChanged(nameof(AlbumsTabWeight));
-                this.RaisePropertyChanged(nameof(PlaylistsTabWeight));
-                this.RaisePropertyChanged(nameof(ImportTabWeight));
-            }
-        }
+        public Tab SelectedTab { get; private set; } = Tab.Tracks;
         private Pane selectedPane = Pane.None;
         public Pane SelectedPane
         {
@@ -374,35 +360,54 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
+        private UserControl mainContent;
         public UserControl MainContent
         {
-            get
+            get => mainContent;
+            set => this.RaiseAndSetIfChanged(ref mainContent, value);
+        }
+
+        public void ShowTab(Tab tab, string search = null)
+        {
+            SelectedTab = tab;
+            this.RaisePropertyChanged(nameof(MainContent));
+            this.RaisePropertyChanged(nameof(TracksTabWeight));
+            this.RaisePropertyChanged(nameof(ArtistsTabWeight));
+            this.RaisePropertyChanged(nameof(AlbumsTabWeight));
+            this.RaisePropertyChanged(nameof(PlaylistsTabWeight));
+            this.RaisePropertyChanged(nameof(ImportTabWeight));
+
+            switch (SelectedTab)
             {
-                switch (SelectedTab)
-                {
-                    case Tab.Tracks:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Artists:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Albums:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Playlists:
-                        return new LibraryTab().SetStuff(this, SelectedTab, null);
-                    case Tab.Import:
-                        return new ImportTab().SetStuff(this);
-                    case Tab.Fullscreen:
-                        return new UserControl
+                case Tab.Tracks:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Artists:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Albums:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Playlists:
+                    MainContent = new LibraryTab().SetStuff(this, SelectedTab, search);
+                    break;
+                case Tab.Import:
+                    MainContent = new ImportTab().SetStuff(this);
+                    break;
+                case Tab.Fullscreen:
+                    MainContent = new UserControl
+                    {
+                        Content = new TextBlock
                         {
-                            Content = new TextBlock
-                            {
-                                Text = "Fullscreen Page"
-                            }
-                        };
-                    default:
-                        throw new Exception("???");
-                }
+                            Text = "Fullscreen Page"
+                        }
+                    };
+                    break;
+                default:
+                    throw new Exception("???");
             }
         }
+
         public UserControl AuxPaneContent
         {
             get
@@ -411,13 +416,7 @@ namespace FRESHMusicPlayer.ViewModels
                 {
                     Pane.Settings => new Views.Settings().SetThings(Program.Config, Library),
                     Pane.QueueManagement => new Views.QueueManagement().SetStuff(Player, Library, ProgressTimer),
-                    Pane.Search => new UserControl
-                    {
-                        Content = new TextBlock
-                        {
-                            Text = "Search"
-                        }
-                    },
+                    Pane.Search => new Search().SetStuff(this),
                     Pane.TrackInfo => new TrackInfo().SetStuff(Player),
                     Pane.Notifications => new UserControl
                     {
@@ -432,13 +431,6 @@ namespace FRESHMusicPlayer.ViewModels
                 };
             }
         }
-
-        //private int auxPaneWidth = 0;
-        public int AuxPaneWidth => 300;
-        //{
-        //    get => auxPaneWidth;
-        //    set => this.RaiseAndSetIfChanged(ref auxPaneWidth, value);
-        //}
 
         private Dock auxPaneDock = Dock.Right;
         public Dock AuxPaneDock
@@ -505,12 +497,13 @@ namespace FRESHMusicPlayer.ViewModels
                     Player.CurrentTime.Add(TimeSpan.FromSeconds(Program.Config.FilePosition));
                 }
             }
-            //await Dispatcher.UIThread.InvokeAsync(() => SelectedTab = Program.Config.CurrentTab, DispatcherPriority.ApplicationIdle);
+
+            SelectedTab = Program.Config.CurrentTab;
             // this delays the tab switch until avalonia is ready
-            
+
             HandleIntegrations();
 
-            //(GetMainWindow() as MainWindow).RootPanel.Opacity = 1; // this triggers the startup fade
+            await Dispatcher.UIThread.InvokeAsync(() => (GetMainWindow() as MainWindow).RootPanel.Opacity = 1, DispatcherPriority.ApplicationIdle); // this triggers the startup fade
             await PerformAutoImport();
         }
 
@@ -558,7 +551,7 @@ namespace FRESHMusicPlayer.ViewModels
             Library?.Database.Dispose();
             Integrations.Dispose();
             Program.Config.Volume = Volume;
-            //Program.Config.CurrentTab = SelectedTab;
+            Program.Config.CurrentTab = SelectedTab;
             if (Player.FileLoaded)
             {
                 Program.Config.FilePath = Player.FilePath;
@@ -571,6 +564,10 @@ namespace FRESHMusicPlayer.ViewModels
             await ConfigurationHandler.Write(Program.Config);
             LoggingHandler.Log("Goodbye!");
         }
+
+        public void GoToArtistCommand() => ShowTab(Tab.Artists, Player.Metadata.Artists[0]);
+
+        public void GoToAlbumCommand() => ShowTab(Tab.Albums, Player.Metadata.Album);
 
         public async Task PerformAutoImport()
         {
@@ -606,25 +603,18 @@ namespace FRESHMusicPlayer.ViewModels
 #endregion
 
 #region NavBar
-        public void OpenSettingsCommand()
-        {
-            ShowAuxiliaryPane(Pane.Settings, 335);
-        }
+        public void OpenSettingsCommand() => ShowAuxiliaryPane(Pane.Settings, 335);
 
-        public void OpenQueueManagementCommand()
-        {
-            ShowAuxiliaryPane(Pane.QueueManagement, 335);
-        }
+        public void OpenQueueManagementCommand() => ShowAuxiliaryPane(Pane.QueueManagement, 335);
 
         public void OpenPlaylistManagementCommand()
         {
             new PlaylistManagement().SetStuff(this, Player.FilePath ?? null).Show(Window);
         }
 
-        public void OpenLyricsCommand()
-        {
-            ShowAuxiliaryPane(Pane.Lyrics, openleft: true);
-        }
+        public void OpenLyricsCommand() => ShowAuxiliaryPane(Pane.Lyrics, openleft: true);
+
+        public void OpenSearchCommand() => ShowAuxiliaryPane(Pane.Search);
 
         public void OpenTagEditorCommand()
         {
