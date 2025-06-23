@@ -32,14 +32,10 @@ namespace FRESHMusicPlayer.Controls
                 };
 
                 // pain
-                List<(string, (int, string)[])> nativeFilters = new();
+                List<(string, (uint, string)[])> nativeFilters = new();
                 foreach (var filter in Filters)
                 {
-                    var nativeExtensions = new List<(int, string)>();
-                    foreach (var extension in filter.Extensions)
-                    {
-                        nativeExtensions.Add(new(0, $"*.{extension}"));
-                    }
+                    var nativeExtensions = filter.Extensions.Select(extension => new ValueTuple<uint, string>(0, $"*.{extension}")).ToList();
                     if (IncludeOtherOption) nativeExtensions.Add(new(0, "*"));
                     nativeFilters.Add((filter.Name, nativeExtensions.ToArray()));
                 }

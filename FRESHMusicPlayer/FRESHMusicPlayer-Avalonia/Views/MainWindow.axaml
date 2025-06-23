@@ -38,7 +38,6 @@
 			</MenuItem>
 			<MenuItem Command="{Binding OpenLyricsCommand}" Header="{x:Static resx:Resources.Lyrics}"/>
 			<Separator/>
-			<!--<MenuItem Command="{Binding MiniPlayerCommand}" Header="{x:Static resx:Resources.MiniPlayer}"/>-->
 			<MenuItem Command="{Binding PauseAfterCurrentTrackCommand}" Header="{x:Static resx:Resources.Menu_Playback_PauseAfterCurrentTrack}"/>
 		</ContextMenu>
 		<vm:PauseAfterCurrentTrackToBrushConverter x:Key="PauseAfterCurrentTrackToBrushConverter"/>
@@ -136,7 +135,7 @@
 							<ColumnDefinition Width="1*"/>
 							<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
-						<Slider x:Name="VolumeSlider" Grid.Column="0" Maximum="1" Value="{Binding Volume}">
+						<Slider x:Name="VolumeSlider" Grid.Column="0" Maximum="1" Width="104" HorizontalAlignment="Right" Value="{Binding Volume}">
 							<Slider.Transitions>
 								<Transitions>
 									<DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
@@ -197,7 +196,7 @@
 				<Button Command="{Binding OpenQueueManagementCommand}" Margin="0,2,5,2" DockPanel.Dock="Right" ToolTip.Tip="{x:Static resx:Resources.QueueManagement}">
 					<Image Source="{DynamicResource Queue}"/>
 				</Button>
-				<Button x:Name="SearchButton" DockPanel.Dock="Right" Margin="0,2,5,2" Click="OnSearchButtonClick" ToolTip.Tip="{x:Static resx:Resources.Search}">
+				<Button Command="{Binding OpenSearchCommand}" DockPanel.Dock="Right" Margin="0,2,5,2" ToolTip.Tip="{x:Static resx:Resources.Search}">
 					<Image Source="{DynamicResource Search}"/>
 				</Button>
 				<Button x:Name="NotificationButton" DockPanel.Dock="Right" Margin="10,2,5,2" Click="OnShowNotificationButtonClick" IsVisible="{Binding AreThereAnyNotifications}" ToolTip.Tip="{x:Static resx:Resources.Notifications}">

@@ -92,6 +92,8 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void Update()
         {
+            if (!Player.FileLoaded) return;
+
             var track = new Track(Player.FilePath);
 
             CoverArt = track.EmbeddedPictures.Count <= 0 ? null : new Bitmap(new MemoryStream(track.EmbeddedPictures[0].PictureData));

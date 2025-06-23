@@ -91,12 +91,6 @@ namespace FRESHMusicPlayer.Views
 
         private void ToggleShowRemainingProgress(object sender, PointerPressedEventArgs e) => ViewModel?.ShowRemainingProgressCommand();
 
-        private void OnSearchButtonClick(object sender, RoutedEventArgs e) => ShowSearch();
-        private void ShowSearch()
-        {
-            var button = this.FindControl<Button>("SearchButton");
-            button.ContextFlyout.ShowAt(button);
-        }
 
         private void OnShowNotificationButtonClick(object sender, RoutedEventArgs e)
         {
@@ -121,11 +115,11 @@ namespace FRESHMusicPlayer.Views
             }
         }
 
-        private void OnTracksPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Tracks;
-        private void OnArtistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Artists;
-        private void OnAlbumsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Albums;
-        private void OnPlaylistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Playlists;
-        private void OnImportPressed(object sender, PointerPressedEventArgs e) => ViewModel.SelectedTab = Tab.Import;
+        private void OnTracksPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Tracks);
+        private void OnArtistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Artists);
+        private void OnAlbumsPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Albums);
+        private void OnPlaylistsPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Playlists);
+        private void OnImportPressed(object sender, PointerPressedEventArgs e) => ViewModel.ShowTab(Tab.Import);
 
         private void OnPointerWheelChanged(object sender, PointerWheelEventArgs e)
         {
@@ -134,40 +128,40 @@ namespace FRESHMusicPlayer.Views
 
         private async void OnKeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.Source is not TextBox && e.Source is not ListBoxItem)
-            //    switch (e.Key)
-            //    {
-            //        case Key.Q:
-            //            ViewModel.OpenSettingsCommand();
-            //            break;
-            //        case Key.A:
-            //            ViewModel.SelectedTab = 0;
-            //            break;
-            //        case Key.S:
-            //            ViewModel.SelectedTab = 1;
-            //            break;
-            //        case Key.D:
-            //            ViewModel.SelectedTab = 2;
-            //            break;
-            //        case Key.F:
-            //            ViewModel.SelectedTab = 3;
-            //            break;
-            //        case Key.G:
-            //            ViewModel.SelectedTab = 4;
-            //            break;
-            //        case Key.E:
-            //            ShowSearch();
-            //            break;
-            //        case Key.R:
-            //            ActualOpenTrackInfo();
-            //            break;
-            //        case Key.W:
-            //            ViewModel.OpenQueueManagementCommand();
-            //            break;
-            //        case Key.Space:
-            //            ViewModel.PlayPauseCommand();
-            //            break;
-            //    }
+            if ((e.Source is not TextBox && e.Source is not ListBoxItem) || e.KeyModifiers.HasFlag(KeyModifiers.Control))
+                switch (e.Key)
+                {
+                    case Key.Q:
+                        ViewModel.OpenSettingsCommand();
+                        break;
+                    case Key.A:
+                        ViewModel.ShowTab(Tab.Tracks);
+                        break;
+                    case Key.S:
+                        ViewModel.ShowTab(Tab.Artists);
+                        break;
+                    case Key.D:
+                        ViewModel.ShowTab(Tab.Albums);
+                        break;
+                    case Key.F:
+                        ViewModel.ShowTab(Tab.Playlists);
+                        break;
+                    case Key.G:
+                        ViewModel.ShowTab(Tab.Import);
+                        break;
+                    case Key.E:
+                        ViewModel.OpenSearchCommand();
+                        break;
+                    case Key.R:
+                        ViewModel.ShowAuxiliaryPane(Pane.TrackInfo, openleft: true);
+                        break;
+                    case Key.W:
+                        ViewModel.OpenQueueManagementCommand();
+                        break;
+                    case Key.Space:
+                        ViewModel.PlayPauseCommand();
+                        break;
+                }
             switch (e.Key)
             {
                 case Key.OemTilde:
