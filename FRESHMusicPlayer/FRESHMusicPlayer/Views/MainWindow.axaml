@@ -34,7 +34,7 @@
     </Animation>
   </Window.Resources>
   <Panel>
-    <DockPanel ZIndex="1">
+    <DockPanel ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LastChildFill="False">
       <Panel DockPanel.Dock="Top" Height="40" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding IsNavbarVisible}">
         <Panel Margin="{Binding SafeAreaLeftTopRight}">
           <StackPanel Margin="10,5" Spacing="15" Orientation="Horizontal">
@@ -46,10 +46,13 @@
           </StackPanel>
         </Panel>
       </Panel>
+      <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}">
+        
+      </DockPanel>
     </DockPanel>
 
     <DockPanel ZIndex="0">
-      <ContentControl x:Name="SidePaneControl" DockPanel.Dock="Right" Width="{Binding SidePanelWidth}" Content="{Binding SidePaneView}"/>
+      <ContentControl x:Name="SidePaneControl" DockPanel.Dock="Right" Width="{Binding SidePanelWidth}" Content="{Binding SidePaneView}" Background="AliceBlue"/>
 
       <TransitioningContentControl Content="{Binding SelectedView}">
         <TransitioningContentControl.PageTransition>
