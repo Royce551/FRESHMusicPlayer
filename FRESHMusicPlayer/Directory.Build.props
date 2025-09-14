@@ -1,29 +1,6 @@
 <Project>
-
   <PropertyGroup>
-    <Authors>Squid Grill (and open source contributors)</Authors>
-    <Company>Squid Grill</Company>
-    <Copyright>Copyright © Squid Grill and open source contributors 2023</Copyright>
+    <Nullable>enable</Nullable>
+    <AvaloniaVersion>11.1.0</AvaloniaVersion>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <CopyDebugSymbolFilesFromPackages>false</CopyDebugSymbolFilesFromPackages>
-  </PropertyGroup>
-
-  <!-- Mirror Debug and Release configurations -->
-  <PropertyGroup Condition=" '$(Configuration)' == 'Blueprint' ">
-    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
-    <DefineConstants>$(DefineConstants);BLUEPRINT</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'BlueprintPackageUpdater' ">
-    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
-    <DefineConstants>$(DefineConstants);BLUEPRINT;UPDATER</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'ReleasePackageUpdater' ">
-    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
-    <DefineConstants>$(DefineConstants);UPDATER</DefineConstants>
-  </PropertyGroup>
-
 </Project>

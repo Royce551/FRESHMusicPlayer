@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FRESHMusicPlayer.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="FRESHMusicPlayer">
+
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+  <Window.Resources>
+    <Animation x:Key="RightSidePaneIn450" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, -450, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="RightSidePaneOut450" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, -450, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+  </Window.Resources>
+  <Panel>
+    <DockPanel ZIndex="1">
+      <Panel DockPanel.Dock="Top" Height="40" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding IsNavbarVisible}">
+        <Panel Margin="{Binding SafeAreaLeftTopRight}">
+          <StackPanel Margin="10,5" Spacing="15" Orientation="Horizontal">
+            <TextBlock Text="Library" FontWeight="Bold"/>
+            <TextBlock Text="Browse"/>
+          </StackPanel>
+          <StackPanel Margin="10,5" Spacing="15" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Settings" Command="{Binding OpenSettingsCommand}"/>
+          </StackPanel>
+        </Panel>
+      </Panel>
+    </DockPanel>
+
+    <DockPanel ZIndex="0">
+      <ContentControl x:Name="SidePaneControl" DockPanel.Dock="Right" Width="{Binding SidePanelWidth}" Content="{Binding SidePaneView}"/>
+
+      <TransitioningContentControl Content="{Binding SelectedView}">
+        <TransitioningContentControl.PageTransition>
+          <CompositePageTransition>
+            <CrossFade Duration="0:00:00.1"/>
+            <PageSlide Orientation="Vertical" Duration="0:00:00.3" SlideInEasing="QuadraticEaseOut" SlideOutEasing="QuadraticEaseIn"/>
+          </CompositePageTransition>
+        </TransitioningContentControl.PageTransition>
+      </TransitioningContentControl>
+    </DockPanel>
+  </Panel>
+</Window>
