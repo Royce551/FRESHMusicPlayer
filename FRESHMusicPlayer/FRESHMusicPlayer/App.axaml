@@ -7,6 +7,24 @@
 
     <Application.Styles>
         <FluentTheme />
-      <StyleInclude Source="avares://SIADL.Avalonia/SIADL.axaml"/>
+       <StyleInclude Source="avares://SIADL.Avalonia/SIADL.axaml"/>
+      <Style Selector="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+      </Style>
     </Application.Styles>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="/Styles/SeekbarSlider.axaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+    
+  </Application.Resources>
 </Application>

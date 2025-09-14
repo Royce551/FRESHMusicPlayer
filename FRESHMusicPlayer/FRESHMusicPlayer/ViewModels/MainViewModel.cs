@@ -55,7 +55,15 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    private MainWindow mainWindow;
+    private MainWindow mainWindow = default!;
+
+    /// <summary>
+    /// This is for the designer. Should not be used for any other purpose.
+    /// </summary>
+    public MainViewModel()
+    {
+
+    }
 
     public MainViewModel(MainWindow mainWindow)
     {
