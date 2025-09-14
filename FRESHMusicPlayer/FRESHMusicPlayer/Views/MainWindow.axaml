@@ -44,10 +44,16 @@
             <Button Content="Playlists" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
             <Button Content="Import" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
           </StackPanel>
-          <StackPanel Margin="10,2" Spacing="15" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
-            <Button Content="Queue" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
-            <Button Content="Settings" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
+          <StackPanel Margin="10,2" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
+              <Path Margin="0,-0.75,2,0" Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
+            </Button>
+            <Button Content="Queue" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
+              <Path Margin="0,-0.75,2,0" Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
+            </Button>
+            <Button FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
+                <Path Margin="0,-0.75,2,0" Data="{StaticResource SettingsIcon}" Fill="{DynamicResource PrimaryTextColor}"/>       
+            </Button>
           </StackPanel>
         </Panel>
       </Panel>
@@ -61,12 +67,131 @@
           </Rectangle>
         </Panel>
         <Panel DockPanel.Dock="Right">
-          
+          <Grid RowDefinitions="*,*">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0" Background="Transparent">
+              <Slider Theme="{StaticResource SeekbarSlider}" Width="105" Margin="0,8,0,0" Minimum="0" Maximum="1" Value="1" SmallChange="1" LargeChange="10">
+                <Slider.Transitions>
+                  <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:.25"/>
+                  </Transitions>
+                </Slider.Transitions>
+                <Slider.Styles>
+                  <Style Selector="StackPanel > Slider">
+                    <Setter Property="Opacity" Value="0"/>
+                  </Style>
+                  <Style Selector="StackPanel:pointerover > Slider">
+                    <Setter Property="Opacity" Value="1"/>
+                  </Style>
+                </Slider.Styles>
+              </Slider>
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" HorizontalAlignment="Right">
+                <Image Margin="">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource PrimaryTextColor}" Geometry="F1 M560 -131L560 -213Q650 -239 705 -313Q760 -387 760 -481Q760 -575 705 -649Q650 -723 560 -749L560 -831Q684 -803 762 -705.5Q840 -608 840 -481Q840 -354 762 -256.5Q684 -159 560 -131ZM120 -360L120 -600L280 -600L480 -800L480 -160L280 -360L120 -360ZM560 -320L560 -642Q607 -620 633.5 -576Q660 -532 660 -480Q660 -429 633.5 -385.5Q607 -342 560 -320Z" />
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12" Margin="0,0,10,5">
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Margin="0,0,0,0">
+                <Image Margin="-8">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Geometry="F1 M240 -240L240 -720L312 -720L312 -240L240 -240ZM720 -264L384 -480L720 -696L720 -264Z" Brush="{DynamicResource PrimaryTextColor}"/>
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30">
+                <Image Margin="-3">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource PrimaryTextColor}" Geometry="F1 M560 -160L560 -240L664 -240L537 -367L594 -424L720 -298L720 -400L800 -400L800 -160L560 -160ZM216 -160L160 -216L664 -720L560 -720L560 -800L800 -800L800 -560L720 -560L720 -664L216 -160ZM367 -537L160 -744L216 -800L423 -593L367 -537Z" />
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+              <Button Theme="{StaticResource LinkButton}" Width="40" Height="40" Margin="0,0">
+                <Image Margin="-5">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource PrimaryTextColor}" Geometry="F1 M360 -320L440 -320L440 -640L360 -640L360 -320ZM520 -320L600 -320L600 -640L520 -640L520 -320ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z" />
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30">
+                <Image Margin="-3">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource PrimaryTextColor}" Geometry="F1 M280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z" />
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30">
+                <Image Margin="-7">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource PrimaryTextColor}" Geometry="F1 M660 -240L660 -720L740 -720L740 -240L660 -240ZM220 -240L220 -720L580 -480L220 -240Z" />
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+            </StackPanel>
+          </Grid>
         </Panel>
         <Grid RowDefinitions="*,*,*" Margin="10" VerticalAlignment="Center">
           <StackPanel Grid.Row="0" Spacing="10" Orientation="Horizontal" Height="30">
             <TextBlock Text="Nothing playing" FontSize="24" FontWeight="Bold"/>
-            <Button Content="Context" FontSize="12" VerticalAlignment="Center"/>
+            <Button Content="Context" FontSize="12" VerticalAlignment="Center">
+              <Button.Styles>
+                <Style Selector="DockPanel > Grid > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="False"/>
+                </Style>
+                <Style Selector="DockPanel:pointerover > Grid > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
+              </Button.Styles>
+            </Button>
           </StackPanel>
           <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="Nothing playing" Foreground="{DynamicResource SecondaryTextColor}"/>
           <DockPanel Grid.Row="2">
