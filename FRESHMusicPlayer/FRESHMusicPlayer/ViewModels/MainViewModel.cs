@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using FRESHMusicPlayer.Views;
+using FRESHMusicPlayer.Handlers;
+using LiteDB;
 
 namespace FRESHMusicPlayer.ViewModels;
 
@@ -34,14 +36,17 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
+    public Player Player { get; private set; }
+
+    public GUILibrary Library { get; private set; }
+
     private MainWindow mainWindow = default!;
 
     /// <summary>
     /// This is for the designer. Should not be used for any other purpose.
     /// </summary>
     public MainViewModel()
-    {
-
+    {   
     }
 
     public MainViewModel(MainWindow mainWindow)
@@ -51,7 +56,22 @@ public partial class MainViewModel : ViewModelBase
         if (!Design.IsDesignMode)
         {
         }
+
+        Player = new Player();
+        LiteDatabase library;
+        try
+        {
+            library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb3"));
+
+            Library = new GUILibrary(library, this);
+        }
+        catch (IOException)
+        {
+            // TODO: single instance handling
+        }
     }
+
+    public void OpenTracksTab() => NavigateTo(new TracksViewModel());
 
     public void HandleAppClosing()
     {

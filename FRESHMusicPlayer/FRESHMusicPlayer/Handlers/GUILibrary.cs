@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FRESHMusicPlayer.ViewModels;
 
 namespace FRESHMusicPlayer.Handlers
 {
@@ -26,12 +27,10 @@ namespace FRESHMusicPlayer.Handlers
 
         public bool RaiseLibraryChangedEvents { get; set; } = true;
 
-        private readonly MainWindow window;
-        private readonly Dispatcher dispatcher;
-        public GUILibrary(LiteDatabase library, MainWindow window, Dispatcher dispatcher) : base(library)
+        private readonly MainViewModel viewModel;
+        public GUILibrary(LiteDatabase library, MainViewModel viewModel) : base(library)
         {
-            this.window = window;
-            this.dispatcher = dispatcher;
+            this.viewModel = viewModel;
         }
 
         public void TriggerUpdate() => OtherLibraryUpdateOcccured?.Invoke(null, EventArgs.Empty);
@@ -59,7 +58,7 @@ namespace FRESHMusicPlayer.Handlers
         public override void Nuke(bool nukePlaylists = true)
         {
             base.Nuke(nukePlaylists);
-            dispatcher.Invoke(() =>
+            Dispatcher.UIThread.Invoke(() =>
             {
                 //window.NotificationHandler.Add(new Notification
                 //{
@@ -92,7 +91,7 @@ namespace FRESHMusicPlayer.Handlers
                 //dispatcher.Invoke(() => window.NotificationHandler.Update(notification));
             });
 
-            dispatcher.Invoke(() =>
+            Dispatcher.UIThread.Invoke(() =>
             {
                 //window.NotificationHandler.Remove(notification);
                 if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, updatedTracks.Select(x => x.Path));

@@ -2,14 +2,25 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using SIADL.Avalonia;
 using FRESHMusicPlayer.ViewModels;
 using FRESHMusicPlayer.Views;
+using SIADL.Avalonia;
+using System;
+using System.IO;
 
 namespace FRESHMusicPlayer;
 
 public partial class App : Application
 {
+    public static string DataFolderLocation
+    {
+        get
+        {
+            if (Directory.Exists("Data")) return "Data";
+            else return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FRESHMusicPlayer");
+        }
+    }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);

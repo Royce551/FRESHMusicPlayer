@@ -38,7 +38,7 @@
       <Panel DockPanel.Dock="Top" Height="27" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding IsNavbarVisible}">
         <Panel Margin="0,1,0,0">
           <StackPanel Margin="10,2" Spacing="15" Orientation="Horizontal">
-            <Button Content="Tracks" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" FontWeight="Bold"/>
+            <Button Content="Tracks" FontSize="16" Command="{Binding OpenTracksTab}" Theme="{StaticResource LinkButton}" FontWeight="Bold"/>
             <Button Content="Artists" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
             <Button Content="Albums" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
             <Button Content="Playlists" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>

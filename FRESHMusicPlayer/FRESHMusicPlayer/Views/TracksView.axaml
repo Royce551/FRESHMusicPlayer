@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FRESHMusicPlayer.Views.TracksView" Background="{DynamicResource BackgroundColor}"
+             x:DataType="vm:TracksViewModel">
+  <Design.DataContext>
+    <vm:TracksViewModel/>
+  </Design.DataContext>
+
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+        <TextBlock Text="99 tracks" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" Margin="10,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+        <Button Content="Play all" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+      <Button Content="Enqueue all" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+    </DockPanel>
+
+    <ListBox ItemsSource="{Binding Tracks}" BorderBrush="Transparent">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="5,0" Background="Transparent">
+            <Grid.Styles>
+              <Style Selector="Grid > StackPanel > Button">
+                <Setter Property="IsVisible" Value="False"/>
+              </Style>
+              <Style Selector="Grid:pointerover > StackPanel > Button">
+                <Setter Property="IsVisible" Value="True"/>
+              </Style>
+            </Grid.Styles>
+            
+              <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="12"/>
+              <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
+            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+              <Button Content="Play" Command="{Binding Play}"/>
+              <Button Content="Enqueue" Command="{Binding Enqueue}"/>
+              <Button Content="Delete"/>
+            </StackPanel>
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>
