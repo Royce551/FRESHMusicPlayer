@@ -17,7 +17,7 @@
       <Button Content="Enqueue all" DockPanel.Dock="Right" Margin="0,10,10,10"/>
     </DockPanel>
 
-    <ListBox ItemsSource="{Binding Tracks}" BorderBrush="Transparent">
+    <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged">
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
           <VirtualizingStackPanel/>
@@ -42,6 +42,13 @@
               <Button Content="Enqueue" Command="{Binding Enqueue}"/>
               <Button Content="Delete"/>
             </StackPanel>
+
+            <Grid.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+                <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
+              </ContextMenu>
+            </Grid.ContextMenu>
           </Grid>
         </DataTemplate>
       </ListBox.ItemTemplate>

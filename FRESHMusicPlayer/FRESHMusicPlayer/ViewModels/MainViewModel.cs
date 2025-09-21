@@ -12,6 +12,8 @@ using System.Linq;
 using FRESHMusicPlayer.Views;
 using FRESHMusicPlayer.Handlers;
 using LiteDB;
+using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 
 namespace FRESHMusicPlayer.ViewModels;
 
@@ -58,6 +60,11 @@ public partial class MainViewModel : ViewModelBase
         }
 
         Player = new Player();
+        Player.SongLoading += Player_SongLoading;
+        Player.SongChanged += Player_SongChanged;
+        Player.SongStopped += Player_SongStopped;
+        Player.SongException += Player_SongException;
+
         LiteDatabase library;
         try
         {
@@ -68,6 +75,113 @@ public partial class MainViewModel : ViewModelBase
         catch (IOException)
         {
             // TODO: single instance handling
+        }
+
+        progressTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(100)
+        };
+        progressTimer.Tick += ProgressTimer_Tick;
+    }
+
+    private void ProgressTimer_Tick(object? sender, EventArgs e) => ProgressTick();
+
+    [ObservableProperty]
+    private string windowTitle = WindowName;
+    [ObservableProperty]
+    private string title = "Nothing playing";
+    [ObservableProperty]
+    private string artist = "Nothing playing";
+    [ObservableProperty]
+    private string progressIndicator1 = "00:00";
+    [ObservableProperty]
+    private string progressIndicator2 = "00:00";
+    [ObservableProperty]
+    private double currentTimeSeconds = 0;
+    [ObservableProperty]
+    private double totalTimeSeconds = 1;
+    [ObservableProperty]
+    private Bitmap? coverArt = null;
+
+    public const string WindowName = "FRESHMusicPlayer";
+
+    private DispatcherTimer progressTimer;
+
+    private void ProgressTick()
+    {
+        var time = Player.CurrentTime;
+        ProgressIndicator1 = time.ToString(@"mm\:ss");
+
+        CurrentTimeSeconds = time.TotalSeconds;
+        Player.AvoidNextQueue = false;
+        progressTimer.Start();
+    }
+
+    private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
+    {
+      
+    }
+
+    private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
+    {
+        progressTimer.Stop();
+
+        if (e.IsEndOfPlayback)
+        {
+            Title = WindowName;
+            CurrentTimeSeconds = 0;
+            ProgressIndicator1 = ProgressIndicator2 = "00:00";
+            Title = Artist = "Nothing playing";
+            CoverArt = null;
+        }
+        else
+        {
+            WindowTitle = $"Loading... - {WindowName}";
+            Title = "Loading...";
+            Artist = "Loading...";
+            CoverArt = null;
+        }
+    }
+
+    private void Player_SongChanged(object? sender, EventArgs e)
+    {
+        // TODO: handle exceptions
+        progressTimer.Start();
+
+        WindowTitle = $"{Player.Metadata.Title} • {string.Join(", ", Player.Metadata.Artists)} - {WindowName}";
+        Title = Player.Metadata.Title;
+        Artist = string.Join(", ", Player.Metadata.Artists) == "" ? "No artist" : string.Join(", ", Player.Metadata.Artists);
+
+        if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+        else ProgressIndicator2 = "∞";
+
+        TotalTimeSeconds = Player.TotalTime.TotalSeconds;
+
+        if (Player.Metadata.CoverArt is null)
+        {
+            CoverArt = null;
+        }
+        else
+        {
+            CoverArt = new Bitmap(new MemoryStream(Player.Metadata.CoverArt));
+        }
+    }
+
+    private void Player_SongLoading(object? sender, EventArgs e)
+    {
+
+    }
+
+    private double volume;
+    public double Volume
+    {
+        get => volume;
+        set
+        {
+            SetProperty(ref volume, value);
+            if (volume > 0.99) Player.Volume = 1;
+            else if (volume < 0.01) Player.Volume = 0;
+            else Player.Volume = (float)(((Math.Pow(Math.E, Math.Log(40) * volume)) / 40) * 1.066 - 0.02745);
         }
     }
 

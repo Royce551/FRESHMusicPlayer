@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SIADL.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,6 +107,16 @@ namespace FRESHMusicPlayer.ViewModels
         public void Enqueue()
         {
             viewModel.MainView.Player.Queue.Add(Path);
+        }
+
+        public void PlayNext()
+        {
+            viewModel.MainView.Player.Queue.PlayNext(Path);
+        }
+
+        public void OpenInFileExplorer()
+        {
+            SIADLUtilities.OpenURL(System.IO.Path.GetDirectoryName(Path));
         }
     }
 }

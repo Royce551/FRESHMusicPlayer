@@ -6,9 +6,9 @@
         xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
         mc:Ignorable="d" Height="540" Width="800"
         x:Class="FRESHMusicPlayer.Views.MainWindow"
-        x:DataType="vm:MainViewModel"
+        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged"
         Icon="/Assets/avalonia-logo.ico"
-        Title="FRESHMusicPlayer">
+        Title="{Binding WindowTitle}">
 
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
@@ -59,17 +59,14 @@
       </Panel>
       <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}">
         <Panel DockPanel.Dock="Left" Margin="10,0,0,0">
-          <Image Width="64" Height="64">
+          <Image Width="64" Height="64" Source="{Binding CoverArt}" RenderOptions.BitmapInterpolationMode="HighQuality">
             
           </Image>
-          <Rectangle Width="64" Height="64" Fill="CornflowerBlue">
-            
-          </Rectangle>
         </Panel>
         <Panel DockPanel.Dock="Right">
           <Grid RowDefinitions="*,*">
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0" Background="Transparent">
-              <Slider Theme="{StaticResource SeekbarSlider}" Width="105" Margin="0,8,0,0" Minimum="0" Maximum="1" Value="1" SmallChange="1" LargeChange="10">
+              <Slider x:Name="VolumeSlider" Theme="{StaticResource SeekbarSlider}" Width="105" Margin="0,8,0,0" Minimum="0" Value="{Binding Volume}" Maximum="1" SmallChange="1" LargeChange="10">
                 <Slider.Transitions>
                   <Transitions>
                     <DoubleTransition Property="Opacity" Duration="0:0:.25"/>
@@ -181,7 +178,7 @@
         </Panel>
         <Grid RowDefinitions="*,*,*" Margin="10" VerticalAlignment="Center">
           <StackPanel Grid.Row="0" Spacing="10" Orientation="Horizontal" Height="30">
-            <TextBlock Text="Nothing playing" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold"/>
             <Button Content="Context" FontSize="12" VerticalAlignment="Center">
               <Button.Styles>
                 <Style Selector="DockPanel > Grid > StackPanel > Button">
@@ -193,13 +190,13 @@
               </Button.Styles>
             </Button>
           </StackPanel>
-          <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="Nothing playing" Foreground="{DynamicResource SecondaryTextColor}"/>
+          <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Artist}" Foreground="{DynamicResource SecondaryTextColor}"/>
           <DockPanel Grid.Row="2">
-            <TextBlock DockPanel.Dock="Left" Margin="0,0,-5,0" Text="00:00" Foreground="{DynamicResource SecondaryTextColor}"/>
+            <TextBlock DockPanel.Dock="Left" Margin="0,0,-5,0" Text="{Binding ProgressIndicator1}" Foreground="{DynamicResource SecondaryTextColor}"/>
             <Button Margin="-5,0,0,0" Theme="{StaticResource LinkButton}" Padding="0" DockPanel.Dock="Right">
-              <TextBlock DockPanel.Dock="Left" Text="00:00" Foreground="{DynamicResource SecondaryTextColor}"/>
+              <TextBlock DockPanel.Dock="Left" Text="{Binding ProgressIndicator2}" Foreground="{DynamicResource SecondaryTextColor}"/>
             </Button>
-            <Slider Theme="{StaticResource SeekbarSlider}"/>
+            <Slider Theme="{StaticResource SeekbarSlider}" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Minimum="0"/>
           </DockPanel>
         </Grid>
       </DockPanel>

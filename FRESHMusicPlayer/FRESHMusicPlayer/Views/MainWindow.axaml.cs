@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Platform;
 using FRESHMusicPlayer.ViewModels;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -29,5 +30,10 @@ public partial class MainWindow : Window
     {
         var animation = (Animation)Resources["RightSidePaneOut450"];
         await animation.RunAsync(SidePaneControl);
+    }
+
+    private void Window_PointerWheelChanged(object? sender, Avalonia.Input.PointerWheelEventArgs e)
+    {
+        VolumeSlider.Value += ((e.Delta.Y / 100) * 3);
     }
 }
