@@ -92,8 +92,8 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private int length;
 
-        private readonly TracksViewModel viewModel;
-        public DatabaseTrackViewModel(TracksViewModel viewModel, DatabaseTrack track)
+        private readonly ViewModelBase viewModel;
+        public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track)
         {
             this.viewModel = viewModel;
 
