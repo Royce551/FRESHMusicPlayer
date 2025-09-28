@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FRESHMusicPlayer.Views.ImportView" Background="{DynamicResource BackgroundColor}"
+             x:DataType="vm:ImportViewModel">
+  <Design.DataContext>
+    <vm:ImportViewModel/>
+  </Design.DataContext>
+  <StackPanel Margin="20" Spacing="5">
+      <TextBlock Text="Import" FontWeight="Bold" FontSize="20"/>
+      <Button Content="Browse for tracks" Command="{Binding BrowseTracks}"/>
+      <Button Content="Browse for playlist files" Command="{Binding BrowsePlaylistFiles}"/>
+      <Button Content="Browse for folders" Command="{Binding BrowseFolders}"/>
+    <StackPanel Orientation="Horizontal" Spacing="10">
+      <TextBox Watermark="File path or URL" Text="{Binding Url}"/>
+      <Button Content="Import" Command="{Binding ImportURL}"/>
+    </StackPanel>
+
+  </StackPanel>
+</UserControl>

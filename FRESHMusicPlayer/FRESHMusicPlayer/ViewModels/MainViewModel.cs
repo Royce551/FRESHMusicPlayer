@@ -42,7 +42,7 @@ public partial class MainViewModel : ViewModelBase
 
     public GUILibrary Library { get; private set; }
 
-    private MainWindow mainWindow = default!;
+    public MainWindow MainWindow { get; private set; } = default!;
 
     /// <summary>
     /// This is for the designer. Should not be used for any other purpose.
@@ -53,7 +53,7 @@ public partial class MainViewModel : ViewModelBase
 
     public MainViewModel(MainWindow mainWindow)
     {
-        this.mainWindow = mainWindow;
+        this.MainWindow = mainWindow;
 
         if (!Design.IsDesignMode)
         {
@@ -94,7 +94,7 @@ public partial class MainViewModel : ViewModelBase
             if (value) Player.Pause();
             else Player.Resume();
             OnPropertyChanged(nameof(Player.Paused));
-            mainWindow.UpdateIconStates();
+            MainWindow.UpdateIconStates();
         }
     }
 
@@ -112,7 +112,7 @@ public partial class MainViewModel : ViewModelBase
     public void ToggleShuffle()
     {
         Player.Queue.Shuffle = !Player.Queue.Shuffle;
-        mainWindow.UpdateIconStates();
+        MainWindow.UpdateIconStates();
     }
 
     public void ToggleRepeat()
@@ -120,7 +120,7 @@ public partial class MainViewModel : ViewModelBase
         if (Player.Queue.RepeatMode == RepeatMode.None) Player.Queue.RepeatMode = RepeatMode.RepeatAll;
         else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll) Player.Queue.RepeatMode = RepeatMode.RepeatOne;
         else Player.Queue.RepeatMode = RepeatMode.None;
-        mainWindow.UpdateIconStates();
+        MainWindow.UpdateIconStates();
     }
 
     private double volumeBeforeMute;
@@ -248,8 +248,6 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    public void OpenTracksTab() => NavigateTo(new TracksViewModel());
-
     public void HandleAppClosing()
     {
         var dataFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Squidhouse Software", "Kotomi");
@@ -278,7 +276,7 @@ public partial class MainViewModel : ViewModelBase
         {
             if (path == currentSidePanePath)
             {
-                await mainWindow.AnimateSidePaneOutAsync();
+                await MainWindow.AnimateSidePaneOutAsync();
 
                 currentSidePanePath = null;
 
@@ -291,9 +289,15 @@ public partial class MainViewModel : ViewModelBase
 
             SidePaneView = new ViewModelBase();
             SidePanelWidth = width;
-            await mainWindow.AnimateSidePaneInAsync(width);
+            await MainWindow.AnimateSidePaneInAsync(width);
         }
     }
+
+    public void OpenTracksTab() => NavigateTo(new TracksViewModel());
+    public void OpenArtistsTab() => NavigateTo(new TracksViewModel());
+    public void OpenAlbumsTab() => NavigateTo(new TracksViewModel());
+    public void OpenPlaylistsTab() => NavigateTo(new TracksViewModel());
+    public void OpenImportTab() => NavigateTo(new ImportViewModel());
 
     public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Test", 450);
 }

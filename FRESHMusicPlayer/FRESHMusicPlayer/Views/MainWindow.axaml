@@ -43,10 +43,10 @@
         <Panel Margin="0,1,0,0">
           <StackPanel Margin="10,2" Spacing="15" Orientation="Horizontal">
             <Button Content="Tracks" FontSize="16" Command="{Binding OpenTracksTab}" Theme="{StaticResource LinkButton}" FontWeight="Bold"/>
-            <Button Content="Artists" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
-            <Button Content="Albums" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
-            <Button Content="Playlists" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
-            <Button Content="Import" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}"/>
+            <Button Content="Artists" FontSize="16" Command="{Binding OpenArtistsTab}" Theme="{StaticResource LinkButton}"/>
+            <Button Content="Albums" FontSize="16" Command="{Binding OpenAlbumsTab}" Theme="{StaticResource LinkButton}"/>
+            <Button Content="Playlists" FontSize="16" Command="{Binding OpenPlaylistsTab}" Theme="{StaticResource LinkButton}"/>
+            <Button Content="Import" FontSize="16" Command="{Binding OpenImportTab}" Theme="{StaticResource LinkButton}"/>
           </StackPanel>
           <StackPanel Margin="10,2" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
@@ -186,7 +186,7 @@
         <TransitioningContentControl.PageTransition>
           <CompositePageTransition>
             <CrossFade Duration="0:00:00.1"/>
-            <PageSlide Orientation="Vertical" Duration="0:00:00.3" SlideInEasing="QuadraticEaseOut" SlideOutEasing="QuadraticEaseIn"/>
+            <PageSlide Orientation="Vertical" Duration="0:00:00.25" SlideInEasing="QuadraticEaseOut" SlideOutEasing="QuadraticEaseIn"/>
           </CompositePageTransition>
         </TransitioningContentControl.PageTransition>
       </TransitioningContentControl>
