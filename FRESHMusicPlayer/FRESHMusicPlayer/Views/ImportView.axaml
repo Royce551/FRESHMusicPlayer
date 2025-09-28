@@ -12,12 +12,5 @@
   <StackPanel Margin="20" Spacing="5">
       <TextBlock Text="Import" FontWeight="Bold" FontSize="20"/>
       <Button Content="Browse for tracks" Command="{Binding BrowseTracks}"/>
-      <Button Content="Browse for playlist files" Command="{Binding BrowsePlaylistFiles}"/>
-      <Button Content="Browse for folders" Command="{Binding BrowseFolders}"/>
-    <StackPanel Orientation="Horizontal" Spacing="10">
-      <TextBox Watermark="File path or URL" Text="{Binding Url}"/>
-      <Button Content="Import" Command="{Binding ImportURL}"/>
-    </StackPanel>
-
   </StackPanel>
 </UserControl>

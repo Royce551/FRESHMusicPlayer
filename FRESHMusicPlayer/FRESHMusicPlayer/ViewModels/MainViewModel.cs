@@ -14,6 +14,7 @@ using FRESHMusicPlayer.Handlers;
 using LiteDB;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using Avalonia.Media;
 
 namespace FRESHMusicPlayer.ViewModels;
 
@@ -66,16 +67,16 @@ public partial class MainViewModel : ViewModelBase
         Player.SongException += Player_SongException;
 
         LiteDatabase library;
-        try
-        {
+        //try
+        //{
             library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb3"));
 
             Library = new GUILibrary(library, this);
-        }
-        catch (IOException)
-        {
-            // TODO: single instance handling
-        }
+        //}
+        //catch (IOException)
+        //{
+        //    // TODO: single instance handling
+        //}
 
         progressTimer = new DispatcherTimer
         {
@@ -260,6 +261,12 @@ public partial class MainViewModel : ViewModelBase
         page.MainView = this;
         SelectedView = page;
         page.AfterPageLoaded();
+
+        OnPropertyChanged(nameof(TracksTabFontWeight));
+        OnPropertyChanged(nameof(ArtistsTabFontWeight));
+        OnPropertyChanged(nameof(AlbumsTabFontWeight));
+        OnPropertyChanged(nameof(PlaylistsTabFontWeight));
+        OnPropertyChanged(nameof(ImportTabFontWeight));
     }
 
     [ObservableProperty]
@@ -293,10 +300,17 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
+    // this will need to be changed when tabs become more dynamic, but for now, this works
+    public FontWeight TracksTabFontWeight => SelectedView is TracksViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight ArtistsTabFontWeight => SelectedView is ArtistsViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight AlbumsTabFontWeight => SelectedView is AlbumsViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight PlaylistsTabFontWeight => SelectedView is PlaylistsViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight ImportTabFontWeight => SelectedView is ImportViewModel ? FontWeight.Bold : FontWeight.Normal;
+
     public void OpenTracksTab() => NavigateTo(new TracksViewModel());
-    public void OpenArtistsTab() => NavigateTo(new TracksViewModel());
-    public void OpenAlbumsTab() => NavigateTo(new TracksViewModel());
-    public void OpenPlaylistsTab() => NavigateTo(new TracksViewModel());
+    public void OpenArtistsTab() => NavigateTo(new ArtistsViewModel());
+    public void OpenAlbumsTab() => NavigateTo(new AlbumsViewModel());
+    public void OpenPlaylistsTab() => NavigateTo(new PlaylistsViewModel());
     public void OpenImportTab() => NavigateTo(new ImportViewModel());
 
     public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Test", 450);

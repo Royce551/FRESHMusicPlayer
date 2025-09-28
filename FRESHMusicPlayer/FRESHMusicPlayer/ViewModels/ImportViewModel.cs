@@ -27,22 +27,5 @@ namespace FRESHMusicPlayer.ViewModels
                 await MainView.Library.ImportAsync(files.Select(x => x.Path.LocalPath).ToList());
             }
         }
-
-        public void BrowsePlaylistFiles()
-        {
-
-        }
-
-        public void BrowseFolders()
-        {
-
-        }
-
-        [ObservableProperty]
-        private string url;
-        public void ImportURL()
-        {
-
-        }
     }
 }
