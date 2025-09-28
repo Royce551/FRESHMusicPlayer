@@ -66,6 +66,8 @@ public partial class MainViewModel : ViewModelBase
         Player.SongStopped += Player_SongStopped;
         Player.SongException += Player_SongException;
 
+        Directory.CreateDirectory(App.DataFolderLocation);
+
         LiteDatabase library;
         //try
         //{

@@ -108,7 +108,7 @@
                 </Image>
               </Button>
             </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12" Margin="0,0,10,5">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12" Margin="0,0,10,5" FlowDirection="LeftToRight">
               <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Margin="0,0,0,0" Command="{Binding Previous}">
                 <Image Margin="-8">
                   <DrawingImage>
@@ -168,7 +168,7 @@
             </Button>
           </StackPanel>
           <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Artist}" Foreground="{DynamicResource SecondaryTextColor}"/>
-          <DockPanel Grid.Row="2">
+          <DockPanel Grid.Row="2" FlowDirection="LeftToRight">
             <TextBlock DockPanel.Dock="Left" Margin="0,0,-5,0" Text="{Binding ProgressIndicator1}" Foreground="{DynamicResource SecondaryTextColor}"/>
             <Button Margin="-5,0,0,0" Theme="{StaticResource LinkButton}" Padding="0" DockPanel.Dock="Right">
               <TextBlock DockPanel.Dock="Left" Text="{Binding ProgressIndicator2}" Foreground="{DynamicResource SecondaryTextColor}"/>
