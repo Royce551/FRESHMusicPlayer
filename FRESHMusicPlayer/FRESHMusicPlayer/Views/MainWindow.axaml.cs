@@ -5,6 +5,7 @@ using Avalonia.Controls.Platform;
 using FRESHMusicPlayer.ViewModels;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Avalonia.Media;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -15,9 +16,54 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
+    private MainViewModel viewModel => DataContext as MainViewModel;
+
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
+    }
+
+    public void UpdateIconStates()
+    {
+        if (viewModel.Player.Paused)
+        {
+            if (TryGetResource("PlayIcon", null, out object? icon)) PlayPauseIcon.Data = (Geometry)icon;
+            
+        }
+        else
+        {
+            if (TryGetResource("PauseIcon", null, out object? icon)) PlayPauseIcon.Data = (Geometry)icon;
+        }
+
+        if (viewModel.Player.Queue.Shuffle)
+        {
+            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush)) 
+                ShuffleIcon.Foreground = (Brush)brush;
+        }
+        else
+        {
+            if (Application.Current.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush)) 
+                ShuffleIcon.Foreground = (Brush)brush;
+        }
+
+        if (viewModel.Player.Queue.RepeatMode == RepeatMode.None)
+        {
+            if (TryGetResource("RepeatIcon", null, out object? icon)) RepeatIcon.Data = (Geometry)icon;
+            if (Application.Current.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush))
+                RepeatIcon.Foreground = (Brush)brush;
+        }
+        else if (viewModel.Player.Queue.RepeatMode == RepeatMode.RepeatAll)
+        {
+            if (TryGetResource("RepeatIcon", null, out object? icon)) RepeatIcon.Data = (Geometry)icon;
+            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
+                RepeatIcon.Foreground = (Brush)brush;
+        }
+        else
+        {
+            if (TryGetResource("RepeatOneIcon", null, out object? icon)) RepeatIcon.Data = (Geometry)icon;
+            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
+                RepeatIcon.Foreground = (Brush)brush;
+        }
     }
 
     public async Task AnimateSidePaneInAsync(double width)

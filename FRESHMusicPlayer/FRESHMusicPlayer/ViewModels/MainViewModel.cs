@@ -86,6 +86,54 @@ public partial class MainViewModel : ViewModelBase
 
     private void ProgressTimer_Tick(object? sender, EventArgs e) => ProgressTick();
 
+    public bool Paused
+    {
+        get => Player.Paused;
+        set
+        {
+            if (value) Player.Pause();
+            else Player.Resume();
+            OnPropertyChanged(nameof(Player.Paused));
+            mainWindow.UpdateIconStates();
+        }
+    }
+
+    public void TogglePause() => Paused = !Paused;
+
+    public async void Next() => await Player.NextAsync();
+
+    public async void Previous()
+    {
+        if (!Player.FileLoaded) return;
+        if (CurrentTimeSeconds <= 5) await Player.PreviousAsync();
+        else Player.CurrentTime = TimeSpan.FromSeconds(0);
+    }
+
+    public void ToggleShuffle()
+    {
+        Player.Queue.Shuffle = !Player.Queue.Shuffle;
+        mainWindow.UpdateIconStates();
+    }
+
+    public void ToggleRepeat()
+    {
+        if (Player.Queue.RepeatMode == RepeatMode.None) Player.Queue.RepeatMode = RepeatMode.RepeatAll;
+        else if (Player.Queue.RepeatMode == RepeatMode.RepeatAll) Player.Queue.RepeatMode = RepeatMode.RepeatOne;
+        else Player.Queue.RepeatMode = RepeatMode.None;
+        mainWindow.UpdateIconStates();
+    }
+
+    private double volumeBeforeMute;
+    public void ToggleMute()
+    {
+        if (Volume != 0)
+        {
+            volumeBeforeMute = Volume;
+            Volume = 0;
+        }
+        else Volume = volumeBeforeMute; // set directly, otherwise it'll be log scaled
+    }
+
     [ObservableProperty]
     private string windowTitle = WindowName;
     [ObservableProperty]
@@ -96,8 +144,21 @@ public partial class MainViewModel : ViewModelBase
     private string progressIndicator1 = "00:00";
     [ObservableProperty]
     private string progressIndicator2 = "00:00";
-    [ObservableProperty]
-    private double currentTimeSeconds = 0;
+    
+    //private double currentTimeSeconds = 0;
+    public double CurrentTimeSeconds
+    {
+        get
+        {
+            if (Player.FileLoaded) return Player.CurrentTime.TotalSeconds;
+            else return 0;
+        }
+        set
+        {
+            Player.CurrentTime = TimeSpan.FromSeconds(value);
+        }
+    }
+
     [ObservableProperty]
     private double totalTimeSeconds = 1;
     [ObservableProperty]
@@ -112,7 +173,9 @@ public partial class MainViewModel : ViewModelBase
         var time = Player.CurrentTime;
         ProgressIndicator1 = time.ToString(@"mm\:ss");
 
-        CurrentTimeSeconds = time.TotalSeconds;
+
+        OnPropertyChanged(nameof(CurrentTimeSeconds));
+
         Player.AvoidNextQueue = false;
         progressTimer.Start();
     }
@@ -129,7 +192,7 @@ public partial class MainViewModel : ViewModelBase
         if (e.IsEndOfPlayback)
         {
             Title = WindowName;
-            CurrentTimeSeconds = 0;
+            OnPropertyChanged(nameof(CurrentTimeSeconds));
             ProgressIndicator1 = ProgressIndicator2 = "00:00";
             Title = Artist = "Nothing playing";
             CoverArt = null;

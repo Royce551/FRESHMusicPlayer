@@ -12,9 +12,9 @@
 
   <DockPanel>
     <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-        <TextBlock Text="99 tracks" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" Margin="10,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
-        <Button Content="Play all" DockPanel.Dock="Right" Margin="0,10,10,10"/>
-      <Button Content="Enqueue all" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+        <TextBlock Text="{Binding FooterText}" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" Margin="10,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+        <Button Content="Play all" Command="{Binding PlayAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+      <Button Content="Enqueue all" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
     </DockPanel>
 
     <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged">

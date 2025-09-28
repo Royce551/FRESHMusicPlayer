@@ -15,6 +15,9 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private ObservableCollection<DatabaseTrackViewModel> tracks;
 
+        [ObservableProperty]
+        private string footerText;
+
         public TracksViewModel()
         {
 
@@ -25,11 +28,22 @@ namespace FRESHMusicPlayer.ViewModels
             var libraryTracks = MainView.Library.GetAllTracks();
             var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x));
             Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
+
+            var totalLength = TimeSpan.FromSeconds(Tracks.Sum(x => x.Length));
+            FooterText = $"Tracks: {Tracks.Count} • {totalLength}";
         }
 
-        public void Test()
+        public async void PlayAll()
         {
+            var filePaths = Tracks.Select(x => x.Path);
+            MainView.Player.Queue.Add(filePaths.ToArray());
+            await MainView.Player.PlayAsync();
+        }
 
+        public void EnqueueAll()
+        {
+            var filePaths = Tracks.Select(x => x.Path);
+            MainView.Player.Queue.Add(filePaths.ToArray());
         }
     }
 
