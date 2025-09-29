@@ -57,13 +57,12 @@
                 </Style>
               </Grid.Styles>
 
-              <TextBlock Text="{Binding TrackNumber}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center"/>
+              <TextBlock Text="{Binding TrackNumber}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" IsVisible="{Binding IsTrackNumberPresent}"/>
               <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12"/>
               <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
               <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
                 <Button Content="Play" Command="{Binding Play}"/>
                 <Button Content="Enqueue" Command="{Binding Enqueue}"/>
-                <Button Content="Delete"/>
               </StackPanel>
 
               <Grid.ContextMenu>

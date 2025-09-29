@@ -62,6 +62,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void PlayAll()
         {
+            MainView.Player.Queue.Clear();
             var filePaths = Tracks.Select(x => x.Path);
             MainView.Player.Queue.Add(filePaths.ToArray());
             await MainView.Player.PlayAsync();
@@ -94,10 +95,9 @@ namespace FRESHMusicPlayer.ViewModels
             if (tracks.Count == 0) return null;
 
             var track = tracks[0];
-            var backend = await AudioBackendFactory.CreateAndLoadBackendAsync(track.Path);
-            var cover = await backend.backend.GetMetadataAsync(track.Path);
-            if (cover.CoverArt != null)
-                return Bitmap.DecodeToHeight(new MemoryStream(cover.CoverArt), 20);
+            var cover = await AudioBackendFactory.CreateAndLoadBackendAndGetMetadataAsync(track.Path);
+            if (cover.metadata.CoverArt != null)
+                return Bitmap.DecodeToHeight(new MemoryStream(cover.metadata.CoverArt), 20);
             else return null;
         }
 

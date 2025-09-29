@@ -35,6 +35,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void PlayAll()
         {
+            MainView.Player.Queue.Clear();
             var filePaths = Tracks.Select(x => x.Path);
             MainView.Player.Queue.Add(filePaths.ToArray());
             await MainView.Player.PlayAsync();
@@ -77,11 +78,14 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private int year;
 
+        [NotifyPropertyChangedFor(nameof(IsTrackNumberPresent))]
         [ObservableProperty]
         private int trackNumber;
 
         [ObservableProperty]
         private int trackTotal;
+
+        public bool IsTrackNumberPresent => trackNumber != 0;
 
         [ObservableProperty]
         private int discNumber;
@@ -114,6 +118,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async void Play()
         {
+            viewModel.MainView.Player.Queue.Clear();
             viewModel.MainView.Player.Queue.Add(Path);
             await viewModel.MainView.Player.PlayAsync();
         }
