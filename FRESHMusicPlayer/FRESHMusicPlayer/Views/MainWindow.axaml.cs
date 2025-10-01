@@ -6,6 +6,8 @@ using FRESHMusicPlayer.ViewModels;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Avalonia.Media;
+using Avalonia.Animation.Easings;
+using System;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -78,8 +80,36 @@ public partial class MainWindow : Window
         await animation.RunAsync(SidePaneControl);
     }
 
+    public async Task AnimateCoverArtShowAsync()
+    {
+        var animation = (Animation)Resources["ShowCoverArt"];
+        await animation.RunAsync(CoverArt);
+    }
+
+    public async Task AnimateCoverArtHideAsync()
+    {
+        var animation = (Animation)Resources["HideCoverArt"];
+        await animation.RunAsync(CoverArt);
+    }
+
+    public async Task AnimateProgressTo0Async()
+    {
+        var animation = (Animation)Resources["SetProgressTo0"];
+        await animation.RunAsync(ProgressSlider);
+    }
+
     private void Window_PointerWheelChanged(object? sender, Avalonia.Input.PointerWheelEventArgs e)
     {
         VolumeSlider.Value += ((e.Delta.Y / 100) * 3);
+    }
+
+    private void Window_Deactivated(object? sender, System.EventArgs e)
+    {
+        viewModel.ProgressTimer.Interval = TimeSpan.FromMilliseconds(1000);
+    }
+
+    private void Window_Activated_1(object? sender, System.EventArgs e)
+    {
+        viewModel.ProgressTimer.Interval = TimeSpan.FromMilliseconds(100);
     }
 }

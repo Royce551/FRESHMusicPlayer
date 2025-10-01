@@ -15,6 +15,7 @@ using LiteDB;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using Avalonia.Media;
+using System.Diagnostics;
 
 namespace FRESHMusicPlayer.ViewModels;
 
@@ -80,11 +81,11 @@ public partial class MainViewModel : ViewModelBase
         //    // TODO: single instance handling
         //}
 
-        progressTimer = new DispatcherTimer
+        ProgressTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(100)
         };
-        progressTimer.Tick += ProgressTimer_Tick;
+        ProgressTimer.Tick += ProgressTimer_Tick;
     }
 
     private void ProgressTimer_Tick(object? sender, EventArgs e) => ProgressTick();
@@ -109,7 +110,11 @@ public partial class MainViewModel : ViewModelBase
     {
         if (!Player.FileLoaded) return;
         if (CurrentTimeSeconds <= 5) await Player.PreviousAsync();
-        else Player.CurrentTime = TimeSpan.FromSeconds(0);
+        else
+        {
+            Player.CurrentTime = TimeSpan.FromSeconds(0);
+            await AnimateProgressTo0Async();
+        }
     }
 
     public void ToggleShuffle()
@@ -158,7 +163,7 @@ public partial class MainViewModel : ViewModelBase
         }
         set
         {
-            Player.CurrentTime = TimeSpan.FromSeconds(value);
+            if (!seekBarIsAnimating) Player.CurrentTime = TimeSpan.FromSeconds(value);
         }
     }
 
@@ -166,10 +171,12 @@ public partial class MainViewModel : ViewModelBase
     private double totalTimeSeconds = 1;
     [ObservableProperty]
     private Bitmap? coverArt = null;
+    [ObservableProperty]
+    private Bitmap? coverArtFullSize = null;
 
     public const string WindowName = "FRESHMusicPlayer";
 
-    private DispatcherTimer progressTimer;
+    public DispatcherTimer ProgressTimer { get; private set; }
 
     private void ProgressTick()
     {
@@ -180,7 +187,7 @@ public partial class MainViewModel : ViewModelBase
         OnPropertyChanged(nameof(CurrentTimeSeconds));
 
         Player.AvoidNextQueue = false;
-        progressTimer.Start();
+        ProgressTimer.Start();
     }
 
     private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
@@ -188,13 +195,30 @@ public partial class MainViewModel : ViewModelBase
       
     }
 
-    private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
+    private bool coverArtIsVisible = false;
+    private void SetCoverArtVisibility(bool show)
     {
-        progressTimer.Stop();
+        if (show && !coverArtIsVisible)
+        {
+            coverArtIsVisible = true;
+            _ = MainWindow.AnimateCoverArtShowAsync();
+        }
+        else if (!show && coverArtIsVisible)
+        {
+            coverArtIsVisible = false;
+            _ = MainWindow.AnimateCoverArtHideAsync();
+        }
+    }
+
+    private async void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
+    {
+        ProgressTimer.Stop();
 
         if (e.IsEndOfPlayback)
         {
-            Title = WindowName;
+            WindowTitle = WindowName;
+            SetCoverArtVisibility(false);
+            await AnimateProgressTo0Async();
             OnPropertyChanged(nameof(CurrentTimeSeconds));
             ProgressIndicator1 = ProgressIndicator2 = "00:00";
             Title = Artist = "Nothing playing";
@@ -205,15 +229,19 @@ public partial class MainViewModel : ViewModelBase
             WindowTitle = $"Loading... - {WindowName}";
             Title = "Loading...";
             Artist = "Loading...";
-            CoverArt = null;
+            CoverArt = null;     
         }
     }
 
-    private void Player_SongChanged(object? sender, EventArgs e)
+    private async void Player_SongChanged(object? sender, EventArgs e)
     {
-        // TODO: handle exceptions
-        progressTimer.Start();
+        if (!Player.FileLoaded)
+        {
+            Debug.WriteLine("This is weird");
+            return;
+        }
 
+        // TODO: handle exceptions
         WindowTitle = $"{Player.Metadata.Title} • {string.Join(", ", Player.Metadata.Artists)} - {WindowName}";
         Title = Player.Metadata.Title;
         Artist = string.Join(", ", Player.Metadata.Artists) == "" ? "No artist" : string.Join(", ", Player.Metadata.Artists);
@@ -221,16 +249,30 @@ public partial class MainViewModel : ViewModelBase
         if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
         else ProgressIndicator2 = "∞";
 
-        TotalTimeSeconds = Player.TotalTime.TotalSeconds;
-
         if (Player.Metadata.CoverArt is null)
         {
             CoverArt = null;
+            SetCoverArtVisibility(false);
         }
         else
         {
-            CoverArt = new Bitmap(new MemoryStream(Player.Metadata.CoverArt));
+            CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 64);
+            CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 450); // doing these separately for clearer results
+            SetCoverArtVisibility(true);
         }
+
+        await AnimateProgressTo0Async();
+        Debug.WriteLine("returned");
+        TotalTimeSeconds = Player.TotalTime.TotalSeconds;
+        ProgressTimer.Start();
+    }
+
+    private bool seekBarIsAnimating = false;
+    private async Task AnimateProgressTo0Async()
+    {
+        seekBarIsAnimating = true; // this is cursed. i'm not sure if there's a better way to deal with this.
+        await MainWindow.AnimateProgressTo0Async();
+        seekBarIsAnimating = false;
     }
 
     private void Player_SongLoading(object? sender, EventArgs e)

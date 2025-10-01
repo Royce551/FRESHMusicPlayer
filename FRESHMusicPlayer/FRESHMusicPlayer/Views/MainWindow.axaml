@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
         mc:Ignorable="d" Height="540" Width="800"
-        x:Class="FRESHMusicPlayer.Views.MainWindow"
+        x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1"
         x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged"
         Icon="/Assets/avalonia-logo.ico"
         Title="{Binding WindowTitle}">
@@ -30,6 +30,27 @@
       </KeyFrame>
       <KeyFrame Cue="0%">
         <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="ShowCoverArt" x:SetterTargetType="Image" Duration="0:0:.200" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="10, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="-64, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="HideCoverArt" x:SetterTargetType="Image" Duration="0:0:.200" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="10, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="-64, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="SetProgressTo0" x:SetterTargetType="Slider" Duration="0:0:.750" Easing="ExponentialEaseInOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Value" Value="0"/>
       </KeyFrame>
     </Animation>
     <Geometry x:Key="PauseIcon">F1 M360 -320L440 -320L440 -640L360 -640L360 -320ZM520 -320L600 -320L600 -640L520 -640L520 -320ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z</Geometry>
@@ -62,18 +83,16 @@
         </Panel>
       </Panel>
       <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}">
-        <Panel DockPanel.Dock="Left" Margin="10,0,0,0">
-          <Image Width="64" Height="64" Source="{Binding CoverArt}" RenderOptions.BitmapInterpolationMode="HighQuality">
+          <Image x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" Source="{Binding CoverArt}" RenderOptions.BitmapInterpolationMode="HighQuality">
             <Image.Styles>
               <Style Selector="Image ToolTip">
                 <Setter Property="MaxWidth" Value="500"/>
               </Style>
             </Image.Styles>
             <ToolTip.Tip>
-              <Image Width="450" Height="450" Source="{Binding CoverArt}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+              <Image Width="450" Height="450" Source="{Binding CoverArtFullSize}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
             </ToolTip.Tip>
           </Image>
-        </Panel>
         <Panel DockPanel.Dock="Right">
           <Grid RowDefinitions="*,*">
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0" Background="Transparent">
@@ -173,7 +192,7 @@
             <Button Margin="-5,0,0,0" Theme="{StaticResource LinkButton}" Padding="0" DockPanel.Dock="Right">
               <TextBlock DockPanel.Dock="Left" Text="{Binding ProgressIndicator2}" Foreground="{DynamicResource SecondaryTextColor}"/>
             </Button>
-            <Slider Theme="{StaticResource SeekbarSlider}" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Minimum="0"/>
+            <Slider x:Name="ProgressSlider" Theme="{StaticResource SeekbarSlider}" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Minimum="0"/>
           </DockPanel>
         </Grid>
       </DockPanel>

@@ -46,6 +46,12 @@ namespace FRESHMusicPlayer.ViewModels
 
         }
 
+        private string? initialAlbum = null;
+        public AlbumsViewModel(string initialAlbum)
+        {
+            this.initialAlbum = initialAlbum;
+        }
+
         public override async void AfterPageLoaded()
         {
             var libraryTracks = MainView.Library.GetAllTracks("Album");
@@ -53,11 +59,7 @@ namespace FRESHMusicPlayer.ViewModels
             var viewModelAlbums = libraryTracks.Select(x => new DatabaseAlbumViewModel(this, x.Album)).DistinctBy(x => x.Name);
             Albums = new ObservableCollection<DatabaseAlbumViewModel>(viewModelAlbums);
 
-            //var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x));
-            //Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
-
-            //var totalLength = TimeSpan.FromSeconds(Tracks.Sum(x => x.Length));
-            //FooterText = $"Tracks: {Tracks.Count} • {totalLength}";
+            if (initialAlbum != null) SelectedAlbum = Albums.First(x => x.Name == initialAlbum);
         }
 
         public async void PlayAll()
@@ -97,7 +99,7 @@ namespace FRESHMusicPlayer.ViewModels
             var track = tracks[0];
             var cover = await AudioBackendFactory.CreateAndLoadBackendAndGetMetadataAsync(track.Path);
             if (cover.metadata.CoverArt != null)
-                return Bitmap.DecodeToHeight(new MemoryStream(cover.metadata.CoverArt), 20);
+                return Bitmap.DecodeToHeight(new MemoryStream(cover.metadata.CoverArt), 24);
             else return null;
         }
 

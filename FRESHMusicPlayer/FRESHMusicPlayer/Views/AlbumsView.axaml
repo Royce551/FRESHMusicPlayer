@@ -34,7 +34,7 @@
         <Button Content="Enqueue all" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
       </DockPanel>
 
-      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" Grid.IsSharedSizeScope="True">
+      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle">
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel/>
@@ -56,7 +56,8 @@
                   <Setter Property="IsVisible" Value="True"/>
                 </Style>
               </Grid.Styles>
-
+              
+              
               <TextBlock Text="{Binding TrackNumber}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" IsVisible="{Binding IsTrackNumberPresent}"/>
               <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12"/>
               <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
@@ -68,6 +69,9 @@
               <Grid.ContextMenu>
                 <ContextMenu>
                   <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+                  <MenuItem Header="Go to">
+                      <MenuItem Header="Artist"/>
+                  </MenuItem>
                   <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
                 </ContextMenu>
               </Grid.ContextMenu>

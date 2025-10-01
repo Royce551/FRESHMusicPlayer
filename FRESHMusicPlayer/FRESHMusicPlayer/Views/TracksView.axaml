@@ -17,7 +17,7 @@
       <Button Content="Enqueue all" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
     </DockPanel>
 
-    <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged">
+    <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" IsTextSearchEnabled="True" SelectionMode="Single,Toggle">
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
           <VirtualizingStackPanel/>
@@ -45,8 +45,12 @@
 
             <Grid.ContextMenu>
               <ContextMenu>
-                <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
-                <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
+              <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+              <MenuItem Header="Go to">
+                <MenuItem Header="Artist"/>
+                <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
+              </MenuItem>
+              <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
               </ContextMenu>
             </Grid.ContextMenu>
           </Grid>

@@ -137,5 +137,9 @@ namespace FRESHMusicPlayer.ViewModels
         {
             SIADLUtilities.OpenURL(System.IO.Path.GetDirectoryName(Path));
         }
+
+        public void GoToAlbum() => viewModel.MainView.NavigateTo(new AlbumsViewModel(Album));
+
+        public override string ToString() => Title;
     }
 }
