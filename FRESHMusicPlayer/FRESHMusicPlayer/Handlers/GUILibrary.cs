@@ -1,15 +1,19 @@
 ﻿using ATL;
+using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
-using FRESHMusicPlayer.Views;
 using FRESHMusicPlayer;
+using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.ViewModels;
+using FRESHMusicPlayer.Views;
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using FRESHMusicPlayer.ViewModels;
 
 namespace FRESHMusicPlayer.Handlers
 {
@@ -42,6 +46,7 @@ namespace FRESHMusicPlayer.Handlers
             //LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
 
+            Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
             //if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
         }
 
@@ -52,6 +57,7 @@ namespace FRESHMusicPlayer.Handlers
             //LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
 
+            Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
             //if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
         }
 
@@ -69,6 +75,41 @@ namespace FRESHMusicPlayer.Handlers
             });
         }
 
+        // TODO: backport this into FMP core
+        private async Task<List<DatabaseTrack>> processDatabaseMetadataAsync(Action<int> progress = null)
+        {
+            var tracksToProcess = Database.GetCollection<DatabaseTrack>(TracksCollectionName).Query().Where(x => !x.HasBeenProcessed).ToList();
+            var remainingTracksToProcess = tracksToProcess.Count;
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var token = cancellationTokenSource.Token;
+
+            await Parallel.ForEachAsync(tracksToProcess, async (track, token) =>
+            {
+                Debug.WriteLine("Thread started");
+                try
+                {
+                    IMetadataProvider metadata = (await AudioBackendFactory.CreateAndLoadBackendAndGetMetadataAsync(track.Path)).metadata;
+
+                    if (metadata is null) metadata = new FileMetadataProvider(track.Path);
+
+                    track.UpdateFieldsFrom(metadata);
+                    track.HasBeenProcessed = true;
+                    if (!Database.GetCollection<DatabaseTrack>(TracksCollectionName).Update(track)) throw new Exception("Fueh?!?!?!");
+                }
+                catch
+                {
+                    // ignored for now
+                    Debug.WriteLine("Error occured processing metadata");
+                }
+
+                remainingTracksToProcess--;
+                progress?.Invoke(remainingTracksToProcess);
+            });
+
+            return tracksToProcess;
+        }
+
         public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
             //var notification = new Notification
@@ -83,7 +124,7 @@ namespace FRESHMusicPlayer.Handlers
 
             var startTime = DateTime.Now;
             int? tracksToProcess = null;
-            var updatedTracks = await base.ProcessDatabaseMetadataAsync(p =>
+            var updatedTracks = await processDatabaseMetadataAsync(p =>
             {
                 if (tracksToProcess is null) tracksToProcess = p;
 
@@ -124,6 +165,8 @@ namespace FRESHMusicPlayer.Handlers
 
             //LoggingHandler.Log($"Importing {path}");
             await base.ImportAsync(path);
+
+            Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, [path]); });
         }
 
         public override void Remove(string path)

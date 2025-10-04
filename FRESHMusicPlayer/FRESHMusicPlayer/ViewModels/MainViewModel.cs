@@ -163,7 +163,7 @@ public partial class MainViewModel : ViewModelBase
         }
         set
         {
-            if (!seekBarIsAnimating) Player.CurrentTime = TimeSpan.FromSeconds(value);
+            if (!seekBarIsAnimating && Player.FileLoaded) Player.CurrentTime = TimeSpan.FromSeconds(value);
         }
     }
 

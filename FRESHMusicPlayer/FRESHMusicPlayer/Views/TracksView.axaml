@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:FRESHMusicPlayer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FRESHMusicPlayer.Views.TracksView" Background="{DynamicResource BackgroundColor}"
+             x:Class="FRESHMusicPlayer.Views.TracksView" Background="{DynamicResource BackgroundColor}" DragDrop.AllowDrop="True" DragDrop.DragEnter="DragEnter" DragDrop.Drop="DragDrop"
              x:DataType="vm:TracksViewModel">
   <Design.DataContext>
     <vm:TracksViewModel/>
@@ -17,6 +17,7 @@
       <Button Content="Enqueue all" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
     </DockPanel>
 
+    <TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="Your library is empty. To get started, drag and drop some tracks, or set Auto-Import folders in settings." Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
     <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" IsTextSearchEnabled="True" SelectionMode="Single,Toggle">
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>

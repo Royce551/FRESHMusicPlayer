@@ -3,6 +3,7 @@ using SIADL.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,9 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private string footerText;
 
+        [ObservableProperty]
+        private bool isLibraryEmpty = false;
+
         public TracksViewModel()
         {
 
@@ -25,7 +29,24 @@ namespace FRESHMusicPlayer.ViewModels
 
         public override void AfterPageLoaded()
         {
+            MainView.Library.TracksUpdated += Library_TracksUpdated;
+            
+
+            UpdateTracks();
+        }
+
+        private void Library_TracksUpdated(object? sender, IEnumerable<string> e)
+        {
+            Debug.WriteLine(
+                $"tracks updated {string.Join(", ", e)}");
+            UpdateTracks();
+        }
+
+        public void UpdateTracks()
+        {
             var libraryTracks = MainView.Library.GetAllTracks();
+            IsLibraryEmpty = libraryTracks.Count <= 0;
+
             var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x));
             Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
 

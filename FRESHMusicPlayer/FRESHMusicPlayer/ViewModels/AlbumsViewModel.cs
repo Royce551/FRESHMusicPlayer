@@ -41,6 +41,9 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private string footerText;
 
+        [ObservableProperty]
+        private bool isLibraryEmpty = false;
+
         public AlbumsViewModel()
         {
 
@@ -52,16 +55,33 @@ namespace FRESHMusicPlayer.ViewModels
             this.initialAlbum = initialAlbum;
         }
 
-        public override async void AfterPageLoaded()
+        public override void AfterPageLoaded()
         {
-            var libraryTracks = MainView.Library.GetAllTracks("Album");
+            MainView.Library.TracksUpdated += Library_TracksUpdated;
 
-            var viewModelAlbums = libraryTracks.Select(x => new DatabaseAlbumViewModel(this, x.Album)).DistinctBy(x => x.Name);
-            Albums = new ObservableCollection<DatabaseAlbumViewModel>(viewModelAlbums);
-
-            if (initialAlbum != null) SelectedAlbum = Albums.First(x => x.Name == initialAlbum);
+            UpdateAlbums();
         }
 
+        public void UpdateAlbums()
+        {
+            var libraryTracks = MainView.Library.GetAllTracks("Album");
+            IsLibraryEmpty = libraryTracks.Count <= 0;
+
+            var viewModelAlbums = libraryTracks.Select(x => new DatabaseAlbumViewModel(this, x.Album)).DistinctBy(x => x.Name).Where(x => !string.IsNullOrWhiteSpace(x.Name));
+            Albums = new ObservableCollection<DatabaseAlbumViewModel>(viewModelAlbums);
+
+            if (initialAlbum != null)
+            {
+                var foundAlbum = Albums.FirstOrDefault(x => x.Name == initialAlbum);
+                if (foundAlbum != null) SelectedAlbum = foundAlbum;
+            }
+        }
+
+        private void Library_TracksUpdated(object? sender, IEnumerable<string> e)
+        {
+            if (SelectedAlbum != null) initialAlbum = SelectedAlbum.Name;
+            UpdateAlbums();
+        }
         public async void PlayAll()
         {
             MainView.Player.Queue.Clear();
@@ -77,7 +97,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
     }
 
-    public partial class DatabaseAlbumViewModel : ViewModelBase
+    public partial class DatabaseAlbumViewModel : ObservableRecipient
     {
         [ObservableProperty]
         private string name;
