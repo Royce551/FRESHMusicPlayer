@@ -22,9 +22,6 @@ namespace FRESHMusicPlayer.Handlers
     /// </summary>
     public class GUILibrary : Library
     {
-        public event EventHandler OtherLibraryUpdateOcccured;
-        public event EventHandler<IEnumerable<string>> TracksAdded;
-        public event EventHandler<IEnumerable<string>> TracksRemoved;
         public event EventHandler<IEnumerable<string>> TracksUpdated;
         public event EventHandler<string> PlaylistAdded;
         public event EventHandler<string> PlaylistRemoved;
@@ -37,7 +34,7 @@ namespace FRESHMusicPlayer.Handlers
             this.viewModel = viewModel;
         }
 
-        public void TriggerUpdate() => OtherLibraryUpdateOcccured?.Invoke(null, EventArgs.Empty);
+        public void TriggerUpdate() => TracksUpdated?.Invoke(null, []);
 
         public override async Task ImportAsync(List<string> tracks)
         {
@@ -71,7 +68,7 @@ namespace FRESHMusicPlayer.Handlers
                 //    ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
                 //    Type = NotificationType.Success
                 //});
-                if (RaiseLibraryChangedEvents) OtherLibraryUpdateOcccured?.Invoke(null, EventArgs.Empty);
+                if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, []);
             });
         }
 
@@ -172,7 +169,7 @@ namespace FRESHMusicPlayer.Handlers
         public override void Remove(string path)
         {
             base.Remove(path);
-            TracksRemoved?.Invoke(null, new string[] { path });
+            TracksUpdated?.Invoke(null, new string[] { path });
         }
 
         public override void RemoveTrackFromPlaylist(string playlist, string path)

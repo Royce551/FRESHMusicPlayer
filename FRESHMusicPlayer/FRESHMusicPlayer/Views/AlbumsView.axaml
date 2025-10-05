@@ -41,8 +41,26 @@
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.DataTemplates>
+          <DataTemplate DataType="vm:DiscGroupHeaderViewModel">
+            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent">
+              <Border.Styles>
+                <Style Selector="Border > DockPanel > Button">
+                  <Setter Property="IsVisible" Value="False"/>
+                </Style>
+                <Style Selector="Border:pointerover > DockPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
+              </Border.Styles>
+              <DockPanel>
+                  <Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2"/>
+                  <Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="Enqueue all" Margin="2"/>
+                
+                  <TextBlock Text="{Binding DiscNumString}" FontSize="12" Margin="5,15,0,2" VerticalAlignment="Bottom" Foreground="{DynamicResource SecondaryTextColor}"/>
+              </DockPanel>
+            </Border>
+          </DataTemplate>
           <DataTemplate DataType="vm:DatabaseTrackViewModel">
-            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent">
+            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True" KeyDown="Grid_KeyDown" KeyboardNavigation.TabNavigation="Continue">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
                 <ColumnDefinition Width="*"/>
@@ -55,23 +73,31 @@
                 <Style Selector="Grid:pointerover > StackPanel > Button">
                   <Setter Property="IsVisible" Value="True"/>
                 </Style>
+                <Style Selector="ListBoxItem:focus > Grid > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
               </Grid.Styles>
               
               
               <TextBlock Text="{Binding TrackNumber}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" IsVisible="{Binding IsTrackNumberPresent}"/>
               <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12"/>
               <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
-              <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-                <Button Content="Play" Command="{Binding Play}"/>
-                <Button Content="Enqueue" Command="{Binding Enqueue}"/>
+              <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">       
+                <Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True"/>
+                <Button Content="Play" Command="{Binding Play}" IsTabStop="True"/>
               </StackPanel>
 
               <Grid.ContextMenu>
                 <ContextMenu>
+                  <MenuItem Header="Play" Command="{Binding Play}"/>
+                  <MenuItem Header="Enqueue" Command="{Binding Enqueue}"/>
                   <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+                  <Separator/>
                   <MenuItem Header="Go to">
                       <MenuItem Header="Artist"/>
                   </MenuItem>
+                  <MenuItem Header="Manage playlists..."/>
+                  <MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>
                   <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
                 </ContextMenu>
               </Grid.ContextMenu>

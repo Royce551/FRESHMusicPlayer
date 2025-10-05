@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Avalonia.Media;
 using Avalonia.Animation.Easings;
 using System;
+using Avalonia.Controls.Primitives;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -17,6 +18,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    public bool ProgressSliderIsAnimating => ProgressSlider.IsAnimating(RangeBase.ValueProperty);
 
     private MainViewModel viewModel => DataContext as MainViewModel;
 
@@ -70,36 +73,36 @@ public partial class MainWindow : Window
 
     public async Task AnimateSidePaneInAsync(double width)
     {
-        var animation = (Animation)Resources["RightSidePaneIn450"];
+        var animation = (Animation)Resources["RightSidePaneIn450"]!;
         await animation.RunAsync(SidePaneControl);
     }
 
     public async Task AnimateSidePaneOutAsync()
     {
-        var animation = (Animation)Resources["RightSidePaneOut450"];
+        var animation = (Animation)Resources["RightSidePaneOut450"]!;
         await animation.RunAsync(SidePaneControl);
     }
 
     public async Task AnimateCoverArtShowAsync()
     {
-        var animation = (Animation)Resources["ShowCoverArt"];
+        var animation = (Animation)Resources["ShowCoverArt"]!;
         await animation.RunAsync(CoverArt);
     }
 
     public async Task AnimateCoverArtHideAsync()
     {
-        var animation = (Animation)Resources["HideCoverArt"];
+        var animation = (Animation)Resources["HideCoverArt"]!;
         await animation.RunAsync(CoverArt);
     }
 
     public async Task AnimateProgressTo0Async()
     {
-        var animation = (Animation)Resources["SetProgressTo0"];
+        var animation = (Animation)Resources["SetProgressTo0"]!;
         await animation.RunAsync(ProgressSlider);
     }
 
     private void Window_PointerWheelChanged(object? sender, Avalonia.Input.PointerWheelEventArgs e)
-    {
+    { 
         VolumeSlider.Value += ((e.Delta.Y / 100) * 3);
     }
 

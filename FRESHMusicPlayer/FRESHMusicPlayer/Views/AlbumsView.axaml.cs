@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.ViewModels;
+using System.Diagnostics;
 using System.Linq;
 
 namespace FRESHMusicPlayer.Views;
@@ -20,7 +21,7 @@ public partial class AlbumsView : UserControl
        
     }
 
-    private ViewModelBase? viewModel => DataContext as ViewModelBase;
+    private AlbumsViewModel? viewModel => DataContext as AlbumsViewModel;
 
     private void DragEnter(object? sender, DragEventArgs e)
     {
@@ -35,6 +36,23 @@ public partial class AlbumsView : UserControl
             {
                 await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);
             }
+        }
+    }
+
+    private void Grid_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+    {
+        if (sender is Grid grid && grid.DataContext is DatabaseTrackViewModel trackViewModel)
+        {
+            if (e.ClickCount >= 2) trackViewModel.Play();
+        }
+    }
+
+    private void Grid_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    {
+        if (sender is Grid grid && grid.DataContext is DatabaseTrackViewModel trackViewModel)
+        {
+            if (e.Key == Key.Enter) trackViewModel.Play();
+            else if (e.Key == Key.Apps) grid.ContextMenu.Open();
         }
     }
 }

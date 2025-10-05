@@ -13,21 +13,44 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public partial class AlbumsViewModel : ViewModelBase
     {
-        public ObservableCollection<DatabaseTrackViewModel>? Tracks
+        public ObservableCollection<ObservableRecipient>? Tracks
         {
             get
             {
                 if (SelectedAlbum == null) return null;
 
                 var tracksInAlbum = MainView.Library.GetTracksForAlbum(selectedAlbum.Name);
-                var viewModelTracks = tracksInAlbum.Select(x => new DatabaseTrackViewModel(this, x));
 
-                var tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
+                var discs = tracksInAlbum.Select(x => x.DiscNumber).Distinct().ToList();
+                discs.Sort();
 
-                var totalLength = TimeSpan.FromSeconds(tracks.Sum(x => x.Length));
-                FooterText = $"Tracks: {tracks.Count} • {totalLength}";
+                ObservableCollection<ObservableRecipient> items;
 
-                return tracks;
+                if (discs.Count() <= 1)
+                {
+                    var viewModelTracks = tracksInAlbum.Select(x => new DatabaseTrackViewModel(this, x));
+
+                    items = new ObservableCollection<ObservableRecipient>(viewModelTracks);  
+                }
+                else
+                {
+                    var tempItems = new List<ObservableRecipient>();
+
+                    foreach (var disc in discs)
+                    {
+                        var tracksInDisc = tracksInAlbum.Where(x => x.DiscNumber == disc);
+                        tempItems.Add(new DiscGroupHeaderViewModel(this, disc, [.. tracksInDisc.Select(x => x.Path)]));
+                        tempItems.AddRange(tracksInDisc.Select(x => new DatabaseTrackViewModel(this, x)));
+                    }
+
+                    items = new ObservableCollection<ObservableRecipient>(tempItems);
+                }
+
+                var trackItems = items.OfType<DatabaseTrackViewModel>();
+                var totalLength = TimeSpan.FromSeconds(trackItems.Sum(x => x.Length));
+                FooterText = $"Tracks: {trackItems.Count()} • {totalLength}";
+
+                return items;
             }
         }
 
@@ -85,15 +108,45 @@ namespace FRESHMusicPlayer.ViewModels
         public async void PlayAll()
         {
             MainView.Player.Queue.Clear();
-            var filePaths = Tracks.Select(x => x.Path);
+            var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
             MainView.Player.Queue.Add(filePaths.ToArray());
             await MainView.Player.PlayAsync();
         }
 
         public void EnqueueAll()
         {
-            var filePaths = Tracks.Select(x => x.Path);
+            var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
             MainView.Player.Queue.Add(filePaths.ToArray());
+        }
+    }
+
+    public partial class DiscGroupHeaderViewModel : ObservableRecipient
+    {
+        public string DiscNumString => $"Disc {discNum}";
+
+        private int discNum;
+
+        private string[] tracksInDisc;
+
+        private readonly AlbumsViewModel viewModel;
+        public DiscGroupHeaderViewModel(AlbumsViewModel viewModel, int discNum, string[] tracksInDisc)
+        {
+            this.viewModel = viewModel;
+            this.discNum = discNum;
+            this.tracksInDisc = tracksInDisc;
+        }
+
+        public async void PlayAll()
+        {
+            viewModel.MainView.Player.Queue.Clear();
+            viewModel.MainView.Player.Queue.Add(tracksInDisc);
+            await viewModel.MainView.Player.PlayAsync();
+        }
+
+        public void EnqueueAll()
+        {
+            viewModel.MainView.Player.Queue.Clear();
+            viewModel.MainView.Player.Queue.Add(tracksInDisc);
         }
     }
 
@@ -118,7 +171,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             var track = tracks[0];
             var cover = await AudioBackendFactory.CreateAndLoadBackendAndGetMetadataAsync(track.Path);
-            if (cover.metadata.CoverArt != null)
+            if (cover.metadata != null || cover.metadata?.CoverArt != null)
                 return Bitmap.DecodeToHeight(new MemoryStream(cover.metadata.CoverArt), 24);
             else return null;
         }
