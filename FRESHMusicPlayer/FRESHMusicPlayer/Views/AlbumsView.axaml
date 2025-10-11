@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:FRESHMusicPlayer.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" 
              x:Class="FRESHMusicPlayer.Views.AlbumsView" Background="{DynamicResource BackgroundColor}" DragDrop.AllowDrop="True" DragDrop.DragEnter="DragEnter" DragDrop.Drop="DragDrop"
              x:DataType="vm:AlbumsViewModel">
   <Design.DataContext>
@@ -34,7 +34,7 @@
       </DockPanel>
 
       <TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="Your library is empty. To get started, drag and drop some tracks, or set Auto-Import folders in settings." Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
-      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle">
+      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyDown="ListBox_KeyDown_1">
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel/>
@@ -60,7 +60,7 @@
             </Border>
           </DataTemplate>
           <DataTemplate DataType="vm:DatabaseTrackViewModel">
-            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True" KeyDown="Grid_KeyDown" KeyboardNavigation.TabNavigation="Continue">
+            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True" KeyboardNavigation.TabNavigation="Continue">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
                 <ColumnDefinition Width="*"/>
@@ -77,7 +77,6 @@
                   <Setter Property="IsVisible" Value="True"/>
                 </Style>
               </Grid.Styles>
-              
               
               <TextBlock Text="{Binding TrackNumber}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" IsVisible="{Binding IsTrackNumberPresent}"/>
               <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12"/>

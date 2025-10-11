@@ -18,7 +18,7 @@ public partial class AlbumsView : UserControl
 
     private void ListBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
     {
-       
+
     }
 
     private AlbumsViewModel? viewModel => DataContext as AlbumsViewModel;
@@ -47,12 +47,12 @@ public partial class AlbumsView : UserControl
         }
     }
 
-    private void Grid_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    private void ListBox_KeyDown_1(object? sender, Avalonia.Input.KeyEventArgs e)
     {
-        if (sender is Grid grid && grid.DataContext is DatabaseTrackViewModel trackViewModel)
+        if (sender is ListBox listBox && listBox.SelectedItem is DatabaseTrackViewModel track)
         {
-            if (e.Key == Key.Enter) trackViewModel.Play();
-            else if (e.Key == Key.Apps) grid.ContextMenu.Open();
+            if (e.Key == Key.Enter) track.Play();
+           
         }
     }
 }

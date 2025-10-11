@@ -82,28 +82,32 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Library.TracksUpdated += Library_TracksUpdated;
 
-            UpdateAlbums();
+            _ = UpdateAlbumsAsync();
         }
 
-        public void UpdateAlbums()
+        public async Task UpdateAlbumsAsync()
         {
-            var libraryTracks = MainView.Library.GetAllTracks("Album");
-            IsLibraryEmpty = libraryTracks.Count <= 0;
-
-            var viewModelAlbums = libraryTracks.Select(x => new DatabaseAlbumViewModel(this, x.Album)).DistinctBy(x => x.Name).Where(x => !string.IsNullOrWhiteSpace(x.Name));
-            Albums = new ObservableCollection<DatabaseAlbumViewModel>(viewModelAlbums);
-
-            if (initialAlbum != null)
+            await Task.Run(() =>
             {
-                var foundAlbum = Albums.FirstOrDefault(x => x.Name == initialAlbum);
-                if (foundAlbum != null) SelectedAlbum = foundAlbum;
-            }
+                var libraryTracks = MainView.Library.GetAllTracks("Album");
+                IsLibraryEmpty = libraryTracks.Count <= 0;
+
+                var viewModelAlbums = libraryTracks.Select(x => new DatabaseAlbumViewModel(this, x.Album)).DistinctBy(x => x.Name).Where(x => !string.IsNullOrWhiteSpace(x.Name));
+                Albums = new ObservableCollection<DatabaseAlbumViewModel>(viewModelAlbums);
+
+                if (initialAlbum != null)
+                {
+                    var foundAlbum = Albums.FirstOrDefault(x => x.Name == initialAlbum);
+                    if (foundAlbum != null) SelectedAlbum = foundAlbum;
+                }
+            });
+           
         }
 
         private void Library_TracksUpdated(object? sender, IEnumerable<string> e)
         {
             if (SelectedAlbum != null) initialAlbum = SelectedAlbum.Name;
-            UpdateAlbums();
+            _ = UpdateAlbumsAsync();
         }
         public async void PlayAll()
         {

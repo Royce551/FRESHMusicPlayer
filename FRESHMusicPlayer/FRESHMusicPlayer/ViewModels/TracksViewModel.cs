@@ -32,26 +32,29 @@ namespace FRESHMusicPlayer.ViewModels
             MainView.Library.TracksUpdated += Library_TracksUpdated;
             
 
-            UpdateTracks();
+            _ = UpdateTracksAsync();
         }
 
         private void Library_TracksUpdated(object? sender, IEnumerable<string> e)
         {
             Debug.WriteLine(
                 $"tracks updated {string.Join(", ", e)}");
-            UpdateTracks();
+            _ = UpdateTracksAsync();
         }
 
-        public void UpdateTracks()
+        public async Task UpdateTracksAsync()
         {
-            var libraryTracks = MainView.Library.GetAllTracks();
-            IsLibraryEmpty = libraryTracks.Count <= 0;
+            await Task.Run(() =>
+            {
+                var libraryTracks = MainView.Library.GetAllTracks();
+                IsLibraryEmpty = libraryTracks.Count <= 0;
 
-            var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x));
-            Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
+                var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x));
+                Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
 
-            var totalLength = TimeSpan.FromSeconds(Tracks.Sum(x => x.Length));
-            FooterText = $"Tracks: {Tracks.Count} • {totalLength}";
+                var totalLength = TimeSpan.FromSeconds(Tracks.Sum(x => x.Length));
+                FooterText = $"Tracks: {Tracks.Count} • {totalLength}";
+            });
         }
 
         public async void PlayAll()
