@@ -34,7 +34,7 @@
       </DockPanel>
 
       <TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="Your library is empty. To get started, drag and drop some tracks, or set Auto-Import folders in settings." Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
-      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyDown="ListBox_KeyDown_1">
+      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" KeyboardNavigation.TabNavigation="Continue" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyDown="ListBox_KeyDown_1">
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel/>
@@ -50,6 +50,9 @@
                 <Style Selector="Border:pointerover > DockPanel > Button">
                   <Setter Property="IsVisible" Value="True"/>
                 </Style>
+                <Style Selector="ListBoxItem:focus-within > Border > DockPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
               </Border.Styles>
               <DockPanel>
                   <Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2"/>
@@ -60,7 +63,7 @@
             </Border>
           </DataTemplate>
           <DataTemplate DataType="vm:DatabaseTrackViewModel">
-            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True" KeyboardNavigation.TabNavigation="Continue">
+            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
                 <ColumnDefinition Width="*"/>
@@ -73,7 +76,7 @@
                 <Style Selector="Grid:pointerover > StackPanel > Button">
                   <Setter Property="IsVisible" Value="True"/>
                 </Style>
-                <Style Selector="ListBoxItem:focus > Grid > StackPanel > Button">
+                <Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button">
                   <Setter Property="IsVisible" Value="True"/>
                 </Style>
               </Grid.Styles>

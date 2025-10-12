@@ -81,7 +81,6 @@ namespace FRESHMusicPlayer.ViewModels
         public override void AfterPageLoaded()
         {
             MainView.Library.TracksUpdated += Library_TracksUpdated;
-
             _ = UpdateAlbumsAsync();
         }
 

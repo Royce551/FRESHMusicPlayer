@@ -189,7 +189,7 @@
           <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Artist}" Foreground="{DynamicResource SecondaryTextColor}"/>
           <DockPanel Grid.Row="2" FlowDirection="LeftToRight">
             <TextBlock DockPanel.Dock="Left" Margin="0,0,-5,0" Text="{Binding ProgressIndicator1}" Foreground="{DynamicResource SecondaryTextColor}"/>
-            <Button Margin="-5,0,0,0" Theme="{StaticResource LinkButton}" Padding="0" DockPanel.Dock="Right">
+            <Button Margin="-5,0,0,0" Theme="{StaticResource LinkButton}" Padding="0" DockPanel.Dock="Right" Command="{Binding ToggleShowRemainingTime}">
               <TextBlock DockPanel.Dock="Left" Text="{Binding ProgressIndicator2}" Foreground="{DynamicResource SecondaryTextColor}"/>
             </Button>
             <Slider x:Name="ProgressSlider" Theme="{StaticResource SeekbarSlider}" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Minimum="0"/>

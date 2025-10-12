@@ -18,7 +18,7 @@
     </DockPanel>
 
     <TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="Your library is empty. To get started, drag and drop some tracks, or set Auto-Import folders in settings." Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-    <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" IsTextSearchEnabled="True" SelectionMode="Single,Toggle">
+    <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyboardNavigation.TabNavigation="Continue">
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
           <VirtualizingStackPanel/>
@@ -34,24 +34,30 @@
               <Style Selector="Grid:pointerover > StackPanel > Button">
                 <Setter Property="IsVisible" Value="True"/>
               </Style>
+              <Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button">
+                <Setter Property="IsVisible" Value="True"/>
+              </Style>
             </Grid.Styles>
             
               <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="12"/>
               <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
             <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-              <Button Content="Play" Command="{Binding Play}"/>
               <Button Content="Enqueue" Command="{Binding Enqueue}"/>
-              <Button Content="Delete"/>
+              <Button Content="Play" Command="{Binding Play}"/>         
             </StackPanel>
-
             <Grid.ContextMenu>
               <ContextMenu>
-              <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
-              <MenuItem Header="Go to">
-                <MenuItem Header="Artist"/>
-                <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
-              </MenuItem>
-              <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
+                <MenuItem Header="Play" Command="{Binding Play}"/>
+                <MenuItem Header="Enqueue" Command="{Binding Enqueue}"/>
+                <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+                <Separator/>
+                <MenuItem Header="Go to">
+                  <MenuItem Header="Artist"/>
+                  <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
+                </MenuItem>
+                <MenuItem Header="Manage playlists..."/>
+                <MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>
+                <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
               </ContextMenu>
             </Grid.ContextMenu>
           </Grid>

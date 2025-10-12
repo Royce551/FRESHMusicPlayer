@@ -181,13 +181,28 @@ public partial class MainViewModel : ViewModelBase
     private void ProgressTick()
     {
         var time = Player.CurrentTime;
-        ProgressIndicator1 = time.ToString(@"mm\:ss");
+        ProgressIndicator1 = time.ToString("mm\\:ss");
 
+        if (showRemainingTime) ProgressIndicator2 = $"-{time - Player.CurrentBackend.TotalTime:mm\\:ss}";
 
         OnPropertyChanged(nameof(CurrentTimeSeconds));
 
         Player.AvoidNextQueue = false;
         ProgressTimer.Start();
+    }
+
+    private bool showRemainingTime = false;
+
+    public void ToggleShowRemainingTime()
+    {
+        var newShowRemainingTime = !showRemainingTime;
+
+        showRemainingTime = newShowRemainingTime;
+        if (ProgressTimer.IsEnabled && !newShowRemainingTime)
+        {
+            if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+            else ProgressIndicator2 = "∞";
+        }
     }
 
     private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
