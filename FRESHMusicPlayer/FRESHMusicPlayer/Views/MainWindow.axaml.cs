@@ -9,6 +9,7 @@ using Avalonia.Media;
 using Avalonia.Animation.Easings;
 using System;
 using Avalonia.Controls.Primitives;
+using Avalonia.LogicalTree;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -102,7 +103,14 @@ public partial class MainWindow : Window
     }
 
     private void Window_PointerWheelChanged(object? sender, Avalonia.Input.PointerWheelEventArgs e)
-    { 
+    {
+        if (e.Source is Control control)
+        {
+            if (control.FindLogicalAncestorOfType<ListBox>(true) != null)
+                return;
+        }
+
+
         VolumeSlider.Value += ((e.Delta.Y / 100) * 3);
     }
 

@@ -353,7 +353,14 @@ public partial class MainViewModel : ViewModelBase
 
             currentSidePanePath = path;
 
-            SidePaneView = new ViewModelBase();
+            SidePaneView = path switch
+            {
+                "FRESHMusicPlayer.Queue" => new QueueViewModel(),
+                _ => new ViewModelBase()
+            };
+            SidePaneView.MainView = this;
+            SidePaneView.AfterPageLoaded();
+
             SidePanelWidth = width;
             await MainWindow.AnimateSidePaneInAsync(width);
         }
@@ -373,6 +380,8 @@ public partial class MainViewModel : ViewModelBase
     public void OpenImportTab() => NavigateTo(new ImportViewModel());
 
     public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Test", 450);
+
+    public async void OpenQueueCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Queue", 300);
 }
 
 public class CombineMarginsConverter : IMultiValueConverter

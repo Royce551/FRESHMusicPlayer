@@ -73,7 +73,7 @@
             <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
-            <Button Content="Queue" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
+            <Button Content="Queue" FontSize="16" Command="{Binding OpenQueueCommand}" Theme="{StaticResource LinkButton}">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
             <Button FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">

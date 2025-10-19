@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450" x:DataType="vm:QueueViewModel"
+             x:Class="FRESHMusicPlayer.Views.QueueView" Background="{DynamicResource SecondaryColor}">
+  <Design.DataContext>
+      <vm:QueueViewModel/>
+  </Design.DataContext>
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="10,5,10,0">
+        <TextBlock DockPanel.Dock="Left" Text="Queue" FontWeight="Bold" FontSize="18"/>
+        <TextBlock DockPanel.Dock="Right" Text="{Binding EndsAt}" VerticalAlignment="Center" FontSize="12"/>
+    </DockPanel>
+    <ListBox BorderBrush="Transparent" ItemsSource="{Binding Tracks}" Grid.IsSharedSizeScope="True" SelectionMode="Single,Toggle" KeyboardNavigation.TabNavigation="Continue">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" KeyboardNavigation.IsTabStop="True">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Styles>
+              <Style Selector="Grid > StackPanel > Button">
+                <Setter Property="IsVisible" Value="False"/>
+              </Style>
+              <Style Selector="Grid:pointerover > StackPanel > Button">
+                <Setter Property="IsVisible" Value="True"/>
+              </Style>
+              <Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button">
+                <Setter Property="IsVisible" Value="True"/>
+              </Style>
+            </Grid.Styles>
+
+            <TextBlock Text="{Binding PositionString}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" FontWeight="{Binding FontWeight}"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" FontWeight="{Binding FontWeight}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" FontWeight="{Binding FontWeight}"/>
+            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+              <Button Content="Jump to" Command="{Binding JumpTo}" IsTabStop="True"/>
+            </StackPanel>
+
+            <Grid.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="Jump to"/>
+                <MenuItem Header="Remove from queue"/>
+              </ContextMenu>
+            </Grid.ContextMenu>
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>
