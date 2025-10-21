@@ -163,7 +163,8 @@ public partial class MainViewModel : ViewModelBase
         }
         set
         {
-            if (!seekBarIsAnimating && Player.FileLoaded) Player.CurrentTime = TimeSpan.FromSeconds(value);
+            if (IsDragging && Player.FileLoaded) 
+                Player.CurrentTime = TimeSpan.FromSeconds(value);
         }
     }
 
@@ -277,17 +278,18 @@ public partial class MainViewModel : ViewModelBase
         }
 
         await AnimateProgressTo0Async();
-        Debug.WriteLine("returned");
-        TotalTimeSeconds = Player.TotalTime.TotalSeconds;
-        ProgressTimer.Start();
+        if (Player.FileLoaded)
+        {
+            TotalTimeSeconds = Player.TotalTime.TotalSeconds;
+            ProgressTimer.Start();
+        } 
     }
 
-    private bool seekBarIsAnimating = false;
+    public bool IsDragging { get; set; } = false;
+
     private async Task AnimateProgressTo0Async()
     {
-        seekBarIsAnimating = true; // this is cursed. i'm not sure if there's a better way to deal with this.
         await MainWindow.AnimateProgressTo0Async();
-        seekBarIsAnimating = false;
     }
 
     private void Player_SongLoading(object? sender, EventArgs e)

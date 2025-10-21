@@ -18,6 +18,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        ProgressSlider.AddHandler(PointerPressedEvent, ProgressSlider_PointerPressed, Avalonia.Interactivity.RoutingStrategies.Tunnel);
+        ProgressSlider.AddHandler(PointerReleasedEvent, ProgressSlider_PointerReleased, Avalonia.Interactivity.RoutingStrategies.Tunnel);
     }
 
     public bool ProgressSliderIsAnimating => ProgressSlider.IsAnimating(RangeBase.ValueProperty);
@@ -34,7 +36,7 @@ public partial class MainWindow : Window
         if (viewModel.Player.Paused)
         {
             if (TryGetResource("PlayIcon", null, out object? icon)) PlayPauseIcon.Data = (Geometry)icon;
-            
+
         }
         else
         {
@@ -43,12 +45,12 @@ public partial class MainWindow : Window
 
         if (viewModel.Player.Queue.Shuffle)
         {
-            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush)) 
+            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
                 ShuffleIcon.Foreground = (Brush)brush;
         }
         else
         {
-            if (Application.Current.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush)) 
+            if (Application.Current.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush))
                 ShuffleIcon.Foreground = (Brush)brush;
         }
 
@@ -122,5 +124,15 @@ public partial class MainWindow : Window
     private void Window_Activated_1(object? sender, System.EventArgs e)
     {
         viewModel.ProgressTimer.Interval = TimeSpan.FromMilliseconds(100);
+    }
+
+    private void ProgressSlider_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+    {
+        viewModel.IsDragging = true;
+    }
+
+    private void ProgressSlider_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+    {
+        viewModel.IsDragging = false;
     }
 }
