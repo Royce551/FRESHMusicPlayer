@@ -27,19 +27,6 @@ public partial class MainViewModel : ViewModelBase
 
     public bool IsNavbarVisible => true;
 
-    private string? windowTitleOverride;
-    public string? WindowTitleOverride
-    {
-        get => windowTitleOverride;
-        set
-        {
-            windowTitleOverride = value;
-            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime && desktopLifetime.MainWindow != null)
-                if (string.IsNullOrEmpty(windowTitleOverride)) desktopLifetime.MainWindow.Title = "Kotomi";
-                else desktopLifetime.MainWindow.Title = windowTitleOverride;
-        }
-    }
-
     public Player Player { get; private set; }
 
     public GUILibrary Library { get; private set; }
