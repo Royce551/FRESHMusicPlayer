@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:FRESHMusicPlayer.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:FRESHMusicPlayer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450" x:DataType="vm:QueueViewModel"
@@ -12,6 +13,9 @@
     <DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="10,5,10,0">
         <TextBlock DockPanel.Dock="Left" Text="Queue" FontWeight="Bold" FontSize="18"/>
         <TextBlock DockPanel.Dock="Right" Text="{Binding EndsAt}" VerticalAlignment="Center" FontSize="12"/>
+    </DockPanel>
+    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="10,0,10,10">
+		<Button DockPanel.Dock="Right" Content="Clear Queue" Command="{Binding ClearQueue}" HorizontalAlignment="Right" IsTabStop="True"/>
     </DockPanel>
     <ListBox BorderBrush="Transparent" ItemsSource="{Binding Tracks}" Grid.IsSharedSizeScope="True" SelectionMode="Single,Toggle" KeyboardNavigation.TabNavigation="Continue">
       <ListBox.ItemsPanel>

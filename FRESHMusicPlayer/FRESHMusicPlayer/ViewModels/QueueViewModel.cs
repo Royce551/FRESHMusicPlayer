@@ -60,6 +60,8 @@ namespace FRESHMusicPlayer.ViewModels
 
         private void Queue_QueueChanged(object? sender, EventArgs e) => _ = UpdateQueueAsync();
 
+        public void ClearQueue() => MainView.Player.Queue.Clear();
+
         public async Task UpdateQueueAsync()
         {
             if (!MainView.Player.FileLoaded) return;

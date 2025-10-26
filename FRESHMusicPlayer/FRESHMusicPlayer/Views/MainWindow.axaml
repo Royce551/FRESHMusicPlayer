@@ -32,6 +32,22 @@
         <Setter Property="Margin" Value="0, 0, 0, 0"/>
       </KeyFrame>
     </Animation>
+      <Animation x:Key="RightSidePaneIn300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, -300, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="RightSidePaneOut300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, -300, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
     <Animation x:Key="ShowCoverArt" x:SetterTargetType="Image" Duration="0:0:.200" Easing="ExponentialEaseOut" FillMode="Forward">
       <KeyFrame Cue="100%">
         <Setter Property="Margin" Value="10, 0, 0, 0"/>

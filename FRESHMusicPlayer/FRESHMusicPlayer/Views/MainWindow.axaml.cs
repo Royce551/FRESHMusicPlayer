@@ -74,15 +74,35 @@ public partial class MainWindow : Window
         }
     }
 
+    double previousWidth = 0;
     public async Task AnimateSidePaneInAsync(double width)
     {
-        var animation = (Animation)Resources["RightSidePaneIn450"]!;
+        // TODO: Adjust animation based on width
+
+        Animation animation;
+        if (width == 450)
+        {
+            animation = (Animation)Resources["RightSidePaneIn450"]!;
+        }
+        else
+        {
+            animation = (Animation)Resources["RightSidePaneIn300"]!;
+        }
+        previousWidth = width;
         await animation.RunAsync(SidePaneControl);
     }
 
     public async Task AnimateSidePaneOutAsync()
     {
-        var animation = (Animation)Resources["RightSidePaneOut450"]!;
+        Animation animation;
+        if (previousWidth == 450)
+        {
+            animation = (Animation)Resources["RightSidePaneOut450"]!;
+        }
+        else
+        {
+            animation = (Animation)Resources["RightSidePaneOut300"]!;
+        }
         await animation.RunAsync(SidePaneControl);
     }
 
