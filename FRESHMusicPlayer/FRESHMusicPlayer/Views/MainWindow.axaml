@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
         mc:Ignorable="d" Height="540" Width="800"
         x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1"
-        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged"
+        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed"
         Icon="/Assets/avalonia-logo.ico"
         Title="{Binding WindowTitle}">
 

@@ -10,6 +10,7 @@ using Avalonia.Animation.Easings;
 using System;
 using Avalonia.Controls.Primitives;
 using Avalonia.LogicalTree;
+using System.IO;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -154,5 +155,11 @@ public partial class MainWindow : Window
     private void ProgressSlider_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
     {
         viewModel.IsDragging = false;
+    }
+
+    private void Window_Closed(object? sender, EventArgs e)
+    {
+        viewModel.Config.Save(Path.Combine(App.DataFolderLocation, "Configuration"));
+        viewModel.Library.Database?.Dispose();
     }
 }

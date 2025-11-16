@@ -1,21 +1,21 @@
 ﻿using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Converters;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Threading.Tasks;
-using System;
-using System.Linq;
-using FRESHMusicPlayer.Views;
-using FRESHMusicPlayer.Handlers;
-using LiteDB;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
-using Avalonia.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
+using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Views;
+using LiteDB;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels;
 
@@ -25,6 +25,7 @@ public partial class MainViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(IsNavbarVisible))]
     private ViewModelBase? selectedView;
 
+
     public bool IsNavbarVisible => true;
 
     public Player Player { get; private set; }
@@ -33,11 +34,13 @@ public partial class MainViewModel : ViewModelBase
 
     public MainWindow MainWindow { get; private set; } = default!;
 
+    public ConfigurationFile Config { get; private set; } = default!;
+
     /// <summary>
     /// This is for the designer. Should not be used for any other purpose.
     /// </summary>
     public MainViewModel()
-    {   
+    {
     }
 
     public MainViewModel(MainWindow mainWindow)
@@ -59,14 +62,27 @@ public partial class MainViewModel : ViewModelBase
         LiteDatabase library;
         //try
         //{
-            library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb3"));
+        library = new LiteDatabase(Path.Combine(App.DataFolderLocation, "database.fdb3"));
 
-            Library = new GUILibrary(library, this);
+        Library = new GUILibrary(library, this);
         //}
         //catch (IOException)
         //{
         //    // TODO: single instance handling
         //}
+
+        Config = ConfigurationFile.Read(Path.Combine(App.DataFolderLocation, "Configuration"));
+        UpdateVolume();
+
+        NavigateTo(Config.Page switch
+        {
+            Page.Tracks => new TracksViewModel(),
+            Page.Artists => new ArtistsViewModel(),
+            Page.Albums => new AlbumsViewModel(),
+            Page.Playlists => new PlaylistsViewModel(),
+            Page.Import => new ImportViewModel(),
+            _ => new TracksViewModel(),
+        });
 
         ProgressTimer = new DispatcherTimer
         {
@@ -139,7 +155,7 @@ public partial class MainViewModel : ViewModelBase
     private string progressIndicator1 = "00:00";
     [ObservableProperty]
     private string progressIndicator2 = "00:00";
-    
+
     //private double currentTimeSeconds = 0;
     public double CurrentTimeSeconds
     {
@@ -150,7 +166,7 @@ public partial class MainViewModel : ViewModelBase
         }
         set
         {
-            if (IsDragging && Player.FileLoaded) 
+            if (IsDragging && Player.FileLoaded)
                 Player.CurrentTime = TimeSpan.FromSeconds(value);
         }
     }
@@ -171,7 +187,7 @@ public partial class MainViewModel : ViewModelBase
         var time = Player.CurrentTime;
         ProgressIndicator1 = time.ToString("mm\\:ss");
 
-        if (showRemainingTime) ProgressIndicator2 = $"-{time - Player.CurrentBackend.TotalTime:mm\\:ss}";
+        if (Config.ShowRemainingTime) ProgressIndicator2 = $"-{time - Player.CurrentBackend.TotalTime:mm\\:ss}";
 
         OnPropertyChanged(nameof(CurrentTimeSeconds));
 
@@ -179,13 +195,11 @@ public partial class MainViewModel : ViewModelBase
         ProgressTimer.Start();
     }
 
-    private bool showRemainingTime = false;
-
     public void ToggleShowRemainingTime()
     {
-        var newShowRemainingTime = !showRemainingTime;
+        var newShowRemainingTime = !Config.ShowRemainingTime;
 
-        showRemainingTime = newShowRemainingTime;
+        Config.ShowRemainingTime = newShowRemainingTime;
         if (ProgressTimer.IsEnabled && !newShowRemainingTime)
         {
             if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
@@ -195,7 +209,7 @@ public partial class MainViewModel : ViewModelBase
 
     private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
     {
-      
+
     }
 
     private bool coverArtIsVisible = false;
@@ -232,7 +246,7 @@ public partial class MainViewModel : ViewModelBase
             WindowTitle = $"Loading... - {WindowName}";
             Title = "Loading...";
             Artist = "Loading...";
-            CoverArt = null;     
+            CoverArt = null;
         }
     }
 
@@ -269,7 +283,7 @@ public partial class MainViewModel : ViewModelBase
         {
             TotalTimeSeconds = Player.TotalTime.TotalSeconds;
             ProgressTimer.Start();
-        } 
+        }
     }
 
     public bool IsDragging { get; set; } = false;
@@ -284,17 +298,23 @@ public partial class MainViewModel : ViewModelBase
 
     }
 
-    private double volume;
     public double Volume
     {
-        get => volume;
+        get => Config.Volume;
         set
         {
-            SetProperty(ref volume, value);
-            if (volume > 0.99) Player.Volume = 1;
-            else if (volume < 0.01) Player.Volume = 0;
-            else Player.Volume = (float)(((Math.Pow(Math.E, Math.Log(40) * volume)) / 40) * 1.066 - 0.02745);
+            OnPropertyChanged(nameof(Volume));
+            Config.Volume = value;
+
+            UpdateVolume();
         }
+    }
+
+    private void UpdateVolume()
+    {
+        if (Config.Volume > 0.99) Player.Volume = 1;
+        else if (Config.Volume < 0.01) Player.Volume = 0;
+        else Player.Volume = (float)(((Math.Pow(Math.E, Math.Log(40) * Config.Volume)) / 40) * 1.066 - 0.02745);
     }
 
     public void HandleAppClosing()
@@ -309,6 +329,16 @@ public partial class MainViewModel : ViewModelBase
         page.MainView = this;
         SelectedView = page;
         page.AfterPageLoaded();
+
+        Config.Page = page switch
+        {
+            TracksViewModel => Page.Tracks,
+            ArtistsViewModel => Page.Artists,
+            AlbumsViewModel => Page.Albums,
+            PlaylistsViewModel => Page.Playlists,
+            ImportViewModel => Page.Import,
+            _ => Page.Tracks
+        };
 
         OnPropertyChanged(nameof(TracksTabFontWeight));
         OnPropertyChanged(nameof(ArtistsTabFontWeight));
@@ -371,6 +401,15 @@ public partial class MainViewModel : ViewModelBase
     public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Test", 450);
 
     public async void OpenQueueCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Queue", 300);
+}
+
+public enum Page
+{
+    Tracks,
+    Artists,
+    Albums,
+    Playlists,
+    Import
 }
 
 public class CombineMarginsConverter : IMultiValueConverter
