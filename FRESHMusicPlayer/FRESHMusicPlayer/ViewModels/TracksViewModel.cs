@@ -167,7 +167,7 @@ namespace FRESHMusicPlayer.ViewModels
             viewModel.MainView.Library.Remove(Path);
         }
 
-        public void GoToAlbum() => viewModel.MainView.NavigateTo(new AlbumsViewModel(Album));
+        public void GoToAlbum() => viewModel.MainView.NavigateTo(new ArtistsViewModel(Album));
 
         public override string ToString() => Title;
     }

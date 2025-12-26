@@ -78,7 +78,7 @@ public partial class MainViewModel : ViewModelBase
         {
             Page.Tracks => new TracksViewModel(),
             Page.Artists => new ArtistsViewModel(),
-            Page.Albums => new AlbumsViewModel(),
+            Page.Albums => new ArtistsViewModel(),
             Page.Playlists => new PlaylistsViewModel(),
             Page.Import => new ImportViewModel(),
             _ => new TracksViewModel(),

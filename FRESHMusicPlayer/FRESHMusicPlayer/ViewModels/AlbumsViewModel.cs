@@ -19,7 +19,7 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 if (SelectedAlbum == null) return null;
 
-                var tracksInAlbum = MainView.Library.GetTracksForAlbum(selectedAlbum.Name);
+                var tracksInAlbum = MainView.Library.GetTracksForAlbum(SelectedAlbum.Name);
 
                 var discs = tracksInAlbum.Select(x => x.DiscNumber).Distinct().ToList();
                 discs.Sort();
