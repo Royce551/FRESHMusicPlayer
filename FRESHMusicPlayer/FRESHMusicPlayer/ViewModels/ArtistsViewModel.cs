@@ -29,7 +29,7 @@ namespace FRESHMusicPlayer.ViewModels
 
                 if (albums.Count() <= 1)
                 {
-                    var viewModelTracks = tracksInArtist.Select(x => new DatabaseTrackViewModel(this, x));
+                    var viewModelTracks = tracksInArtist.Select(x => new DatabaseTrackViewModel(this, x, tracksInArtist.Select(y => y.Path).ToArray()));
 
                     items = new ObservableCollection<ObservableRecipient>(viewModelTracks);
                 }
@@ -41,7 +41,7 @@ namespace FRESHMusicPlayer.ViewModels
                     {
                         var tracksInAlbum = tracksInArtist.Where(x => x.Album == album);
                         tempItems.Add(new AlbumGroupHeaderViewModel(this, album, [.. tracksInAlbum.Select(x => x.Path)]));
-                        tempItems.AddRange(tracksInAlbum.Select(x => new DatabaseTrackViewModel(this, x)));
+                        tempItems.AddRange(tracksInAlbum.Select(x => new DatabaseTrackViewModel(this, x, tracksInArtist.Select(y => y.Path).ToArray())));
                     }
 
                     items = new ObservableCollection<ObservableRecipient>(tempItems);
@@ -113,14 +113,14 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Player.Queue.Clear();
             var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
-            MainView.Player.Queue.Add(filePaths.ToArray());
+            MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
             await MainView.Player.PlayAsync();
         }
 
         public void EnqueueAll()
         {
             var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
-            MainView.Player.Queue.Add(filePaths.ToArray());
+            MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
         }
     }
 

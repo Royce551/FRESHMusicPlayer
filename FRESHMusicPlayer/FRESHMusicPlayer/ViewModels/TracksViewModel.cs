@@ -49,7 +49,7 @@ namespace FRESHMusicPlayer.ViewModels
                 var libraryTracks = MainView.Library.GetAllTracks();
                 IsLibraryEmpty = libraryTracks.Count <= 0;
 
-                var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x));
+                var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x, libraryTracks.Select(y => y.Path).ToArray()));
                 Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
 
                 var totalLength = TimeSpan.FromSeconds(Tracks.Sum(x => x.Length));
@@ -61,14 +61,14 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Player.Queue.Clear();
             var filePaths = Tracks.Select(x => x.Path);
-            MainView.Player.Queue.Add(filePaths.ToArray());
+            MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
             await MainView.Player.PlayAsync();
         }
 
         public void EnqueueAll()
         {
             var filePaths = Tracks.Select(x => x.Path);
-            MainView.Player.Queue.Add(filePaths.ToArray());
+            MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
         }
     }
 
@@ -121,9 +121,11 @@ namespace FRESHMusicPlayer.ViewModels
         private int length;
 
         private readonly ViewModelBase viewModel;
-        public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track)
+        private readonly string[] tracksInCollection;
+        public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track, string[] tracksInCollection)
         {
             this.viewModel = viewModel;
+            this.tracksInCollection = tracksInCollection;
 
             Id = track.Id;
             Path = track.Path;
@@ -144,12 +146,31 @@ namespace FRESHMusicPlayer.ViewModels
         {
             viewModel.MainView.Player.Queue.Clear();
             viewModel.MainView.Player.Queue.Add(Path);
+            if (viewModel.MainView.Config.AutoQueue)
+            {
+                var shuffle = viewModel.MainView.Player.Queue.Shuffle;
+
+                if (shuffle) viewModel.MainView.Player.Queue.Shuffle = false;
+
+                var thisTrackIndex = tracksInCollection.ToList().FindIndex(x => x == Path);
+
+                viewModel.MainView.AddToQueueAndHandleAutoQueue(tracksInCollection);
+                viewModel.MainView.Player.Queue.Position = thisTrackIndex;
+
+                viewModel.MainView.Player.Queue.Shuffle = shuffle;
+            }
+            else
+            {
+                viewModel.MainView.AddToQueueAndHandleAutoQueue(Path);
+            }
+
             await viewModel.MainView.Player.PlayAsync();
+            if (viewModel.MainView.Config.AutoQueue) viewModel.MainView.AutoQueueIsQueued = true;
         }
 
         public void Enqueue()
         {
-            viewModel.MainView.Player.Queue.Add(Path);
+            viewModel.MainView.AddToQueueAndHandleAutoQueue(Path);
         }
 
         public void PlayNext()

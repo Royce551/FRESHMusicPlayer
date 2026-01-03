@@ -15,18 +15,25 @@
         </Style>
         <Style Selector="TextBlock">
 			<Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
     </UserControl.Styles>
-    <Grid ColumnDefinitions="145,5,*">
-		<ListBox Background="{DynamicResource ForegroundColor}" Grid.Column="0" IsTextSearchEnabled="True" BorderBrush="Transparent">
-			
-        </ListBox>
+    <Grid ColumnDefinitions="125,5,*">
+		<ScrollViewer Grid.Column="0" Background="{DynamicResource ForegroundColor}">
+			<StackPanel Spacing="5" Margin="10">
+				<Button Theme="{StaticResource LinkButton}" Content="General" FontSize="14"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Playback" FontSize="14"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Appearance" FontSize="14"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Maintenance" FontSize="14"/>
+                <Button Theme="{StaticResource LinkButton}" Content="About" FontSize="14"/>
+            </StackPanel>
+        </ScrollViewer>
         <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource ForegroundColor}" Foreground="Transparent" BorderBrush="Transparent"/>
         <ScrollViewer Grid.Column="2">
-			<StackPanel Spacing="5" Margin="20,10,10,10">
-				<TextBlock Margin="-10,0,0,0" Text="Settings" FontWeight="Bold" FontSize="22"/>
+			<StackPanel Spacing="5" Margin="10">
+				<TextBlock Text="Settings" FontWeight="Bold" FontSize="22"/>
 
-                <TextBlock Margin="-10,0,0,0" Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <TextBlock Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
                 
                 <DockPanel HorizontalAlignment="Stretch">
 					<TextBlock DockPanel.Dock="Left" Text="Language" VerticalAlignment="Center"/>
@@ -40,7 +47,7 @@
                 <CheckBox Content="Auto queue" IsChecked="{Binding MainView.Config.AutoQueue}"/>
                 <TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
 
-                <TextBlock Margin="-10,0,0,0" Text="Integrations" FontWeight="Bold" FontSize="16"/>
+                <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
 
                 <CheckBox Content="Discord Rich Presence"/>
                 <CheckBox Content="last.fm"/>

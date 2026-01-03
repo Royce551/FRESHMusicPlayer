@@ -380,7 +380,7 @@ public partial class MainViewModel : ViewModelBase
             SidePaneView = path switch
             {
                 "FRESHMusicPlayer.Queue" => new QueueViewModel(),
-                "FRESHMusicPlayer.Settings" => new SettingsViewModel(),
+                "FRESHMusicPlayer.Settings" => new SettingsViewModel(this),
                 _ => new ViewModelBase()
             };
             SidePaneView.MainView = this;
@@ -407,6 +407,17 @@ public partial class MainViewModel : ViewModelBase
     public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Settings", 450);
 
     public async void OpenQueueCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Queue", 300);
+
+    public bool AutoQueueIsQueued { get; set; } = false;
+
+    public void AddToQueueAndHandleAutoQueue(string[] filePaths)
+    {
+        if (AutoQueueIsQueued) Player.Queue.Clear();
+        AutoQueueIsQueued = false;
+        Player.Queue.Add(filePaths);
+    }
+
+    public void AddToQueueAndHandleAutoQueue(string filePath) => AddToQueueAndHandleAutoQueue([filePath]);
 }
 
 public enum Page

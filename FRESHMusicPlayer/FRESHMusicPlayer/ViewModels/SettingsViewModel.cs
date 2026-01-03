@@ -10,9 +10,9 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public partial class SettingsViewModel : ViewModelBase
     {
-        public SettingsViewModel()
+        public SettingsViewModel(MainViewModel mainView)
         {
-            
+            MainView = mainView;
         }
 
         public override void AfterPageLoaded()
