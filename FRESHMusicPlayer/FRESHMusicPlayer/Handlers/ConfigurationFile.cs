@@ -22,6 +22,15 @@ namespace FRESHMusicPlayer.Handlers
         [ObservableProperty]
         private Page page = Page.Tracks;
 
+        [ObservableProperty]
+        private bool autoQueue = true;
+
+        [ObservableProperty]
+        private bool integrateDiscordRichPresence = false;
+
+        [ObservableProperty]
+        private bool integrateLastFM = false;
+
         public static ConfigurationFile Read(string filePath)
         {
             if (!File.Exists(Path.Combine(filePath, "config.json"))) new ConfigurationFile().Save(filePath);

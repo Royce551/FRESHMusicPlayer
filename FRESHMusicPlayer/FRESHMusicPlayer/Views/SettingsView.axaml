@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:FRESHMusicPlayer.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450" x:DataType="vm:SettingsViewModel"
+             x:Class="FRESHMusicPlayer.Views.SettingsView" Background="{DynamicResource SecondaryColor}"> 
+    <UserControl.Styles>
+		<Style Selector="CheckBox">
+			<Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
+        </Style>
+        <Style Selector="ComboBox">
+			<Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
+        </Style>
+        <Style Selector="TextBlock">
+			<Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </UserControl.Styles>
+    <Grid ColumnDefinitions="145,5,*">
+		<ListBox Background="{DynamicResource ForegroundColor}" Grid.Column="0" IsTextSearchEnabled="True" BorderBrush="Transparent">
+			
+        </ListBox>
+        <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource ForegroundColor}" Foreground="Transparent" BorderBrush="Transparent"/>
+        <ScrollViewer Grid.Column="2">
+			<StackPanel Spacing="5" Margin="20,10,10,10">
+				<TextBlock Margin="-10,0,0,0" Text="Settings" FontWeight="Bold" FontSize="22"/>
+
+                <TextBlock Margin="-10,0,0,0" Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                
+                <DockPanel HorizontalAlignment="Stretch">
+					<TextBlock DockPanel.Dock="Left" Text="Language" VerticalAlignment="Center"/>
+                    <ComboBox HorizontalAlignment="Right">
+						<ComboBox.Items>
+							<TextBlock Text="Automatic"/>
+                        </ComboBox.Items>
+                    </ComboBox>
+                </DockPanel>
+                <CheckBox Content="Playtime logging"/>
+                <CheckBox Content="Auto queue" IsChecked="{Binding MainView.Config.AutoQueue}"/>
+                <TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                <TextBlock Margin="-10,0,0,0" Text="Integrations" FontWeight="Bold" FontSize="16"/>
+
+                <CheckBox Content="Discord Rich Presence"/>
+                <CheckBox Content="last.fm"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

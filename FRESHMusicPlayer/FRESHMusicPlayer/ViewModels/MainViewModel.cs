@@ -359,15 +359,20 @@ public partial class MainViewModel : ViewModelBase
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime && desktopLifetime.MainWindow != null)
         {
-            if (path == currentSidePanePath)
+            if (path != null)
             {
-                await MainWindow.AnimateSidePaneOutAsync();
-
-                currentSidePanePath = null;
-
-                SidePaneView = null;
-
-                return;
+                if (path == currentSidePanePath)
+                {
+                    await MainWindow.AnimateSidePaneOutAsync();
+                    currentSidePanePath = null;
+                    SidePaneView = null;
+                    return;
+                }
+                else
+                {
+                    currentSidePanePath = null;
+                    SidePaneView = null;
+                }
             }
 
             currentSidePanePath = path;
@@ -375,6 +380,7 @@ public partial class MainViewModel : ViewModelBase
             SidePaneView = path switch
             {
                 "FRESHMusicPlayer.Queue" => new QueueViewModel(),
+                "FRESHMusicPlayer.Settings" => new SettingsViewModel(),
                 _ => new ViewModelBase()
             };
             SidePaneView.MainView = this;
@@ -398,7 +404,7 @@ public partial class MainViewModel : ViewModelBase
     public void OpenPlaylistsTab() => NavigateTo(new PlaylistsViewModel());
     public void OpenImportTab() => NavigateTo(new ImportViewModel());
 
-    public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Test", 450);
+    public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Settings", 450);
 
     public async void OpenQueueCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Queue", 300);
 }
