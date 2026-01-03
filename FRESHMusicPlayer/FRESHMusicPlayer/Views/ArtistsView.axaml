@@ -41,7 +41,7 @@
         </ListBox.ItemsPanel>
         <ListBox.DataTemplates>
           <DataTemplate DataType="vm:AlbumGroupHeaderViewModel">
-            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent">
+            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent" PointerPressed="Border_PointerPressed">
               <Border.Styles>
                 <Style Selector="Border > DockPanel > Button">
                   <Setter Property="IsVisible" Value="False"/>
@@ -57,6 +57,7 @@
                   <Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2"/>
                   <Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="Enqueue all" Margin="2"/>
                 
+                  <Image DockPanel.Dock="Left" Source="{Binding CoverArt^}" Width="20" Height="20" Margin="5,2,2,5" VerticalAlignment="Bottom" RenderOptions.BitmapInterpolationMode="HighQuality"/>
                   <TextBlock Text="{Binding Album}" FontSize="12" Margin="5,15,0,2" VerticalAlignment="Bottom" Foreground="{DynamicResource SecondaryTextColor}"/>
               </DockPanel>
             </Border>
@@ -94,7 +95,7 @@
                   <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
                   <Separator/>
                   <MenuItem Header="Go to">
-                      <MenuItem Header="Artist"/>
+                      <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
                   </MenuItem>
                   <MenuItem Header="Manage playlists..."/>
                   <MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>

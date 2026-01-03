@@ -20,7 +20,7 @@ public partial class ArtistsView : UserControl
 
     }
 
-    private AlbumsViewModel? viewModel => DataContext as AlbumsViewModel;
+    private ArtistsViewModel? viewModel => DataContext as ArtistsViewModel;
 
     private void DragEnter(object? sender, DragEventArgs e)
     {
@@ -35,6 +35,14 @@ public partial class ArtistsView : UserControl
             {
                 await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);
             }
+        }
+    }
+
+    private void Border_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+    {
+        if (sender is Border border && border.DataContext is AlbumGroupHeaderViewModel albumViewModel)
+        {
+            viewModel?.MainView.NavigateTo(new AlbumsViewModel(albumViewModel.Album));
         }
     }
 

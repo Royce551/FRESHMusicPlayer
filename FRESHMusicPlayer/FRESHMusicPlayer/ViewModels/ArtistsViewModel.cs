@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -127,6 +128,8 @@ namespace FRESHMusicPlayer.ViewModels
     {
         public string Album { get; }
 
+        public Task<Bitmap?> CoverArt => LoadAlbumGroupArt();
+
         private string[] tracksInAlbum;
 
         private readonly ArtistsViewModel viewModel;
@@ -149,6 +152,18 @@ namespace FRESHMusicPlayer.ViewModels
             viewModel.MainView.Player.Queue.Clear();
             viewModel.MainView.Player.Queue.Add(tracksInAlbum);
         }
+
+        public async Task<Bitmap?> LoadAlbumGroupArt()
+        {
+            var tracks = viewModel.MainView.Library.GetTracksForAlbum(Album);
+            if (tracks.Count == 0) return null;
+
+            var track = tracks[0];
+            var cover = await AudioBackendFactory.CreateAndLoadBackendAndGetMetadataAsync(track.Path);
+            if (cover.metadata != null || cover.metadata?.CoverArt != null)
+                return Bitmap.DecodeToHeight(new MemoryStream(cover.metadata.CoverArt), 20);
+            else return null;
+        }
     }
 
     public partial class DatabaseArtistViewModel : ObservableRecipient
@@ -167,7 +182,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task<Bitmap?> LoadArtistArt()
         {
-            return null;
+            return null; // TODO: i would like to have artist thumbnails, but it requires an online data source. maybe something for later
         }
 
         public override string ToString()

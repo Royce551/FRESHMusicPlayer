@@ -52,7 +52,7 @@
                 <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
                 <Separator/>
                 <MenuItem Header="Go to">
-                  <MenuItem Header="Artist"/>
+                  <MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
                   <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
                 </MenuItem>
                 <MenuItem Header="Manage playlists..."/>

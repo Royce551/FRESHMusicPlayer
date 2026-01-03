@@ -79,20 +79,20 @@
       <Panel DockPanel.Dock="Top" Height="27" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding IsNavbarVisible}">
         <Panel Margin="0,1,0,0">
           <StackPanel Margin="10,2" Spacing="15" Orientation="Horizontal">
-            <Button Content="Tracks" FontSize="16" Command="{Binding OpenTracksTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding TracksTabFontWeight}"/>
-            <Button Content="Artists" FontSize="16" Command="{Binding OpenArtistsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding ArtistsTabFontWeight}"/>
-            <Button Content="Albums" FontSize="16" Command="{Binding OpenAlbumsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding AlbumsTabFontWeight}"/>
-            <Button Content="Playlists" FontSize="16" Command="{Binding OpenPlaylistsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding PlaylistsTabFontWeight}"/>
-            <Button Content="Import" FontSize="16" Command="{Binding OpenImportTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding ImportTabFontWeight}"/>
+            <Button Content="Tracks" FontSize="16" Command="{Binding OpenTracksTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding TracksTabFontWeight}" HotKey="Ctrl+D1"/>
+            <Button Content="Artists" FontSize="16" Command="{Binding OpenArtistsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding ArtistsTabFontWeight}" HotKey="Ctrl+D2"/>
+            <Button Content="Albums" FontSize="16" Command="{Binding OpenAlbumsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding AlbumsTabFontWeight}" HotKey="Ctrl+D3"/>
+            <Button Content="Playlists" FontSize="16" Command="{Binding OpenPlaylistsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding PlaylistsTabFontWeight}" HotKey="Ctrl+D4"/>
+            <Button Content="Import" FontSize="16" Command="{Binding OpenImportTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding ImportTabFontWeight}" HotKey="Ctrl+D5"/>
           </StackPanel>
           <StackPanel Margin="10,2" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
+            <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+F">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
-            <Button Content="Queue" FontSize="16" Command="{Binding OpenQueueCommand}" Theme="{StaticResource LinkButton}">
+            <Button Content="Queue" FontSize="16" Command="{Binding OpenQueueCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+Q">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
-            <Button FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}">
+            <Button FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+O">
                 <Path Margin="0,-0.75,2,0" Data="{StaticResource SettingsIcon}" Fill="{DynamicResource PrimaryTextColor}"/>       
             </Button>
           </StackPanel>
@@ -163,7 +163,7 @@
                 <PathIcon x:Name="ShuffleIcon" Data="F1 M560 -160L560 -240L664 -240L537 -367L594 -424L720 -298L720 -400L800 -400L800 -160L560 -160ZM216 -160L160 -216L664 -720L560 -720L560 -800L800 -800L800 -560L720 -560L720 -664L216 -160ZM367 -537L160 -744L216 -800L423 -593L367 -537Z"/>
               </Button>
              
-              <Button Theme="{StaticResource LinkButton}" Width="40" Height="40" Margin="0,0" Command="{Binding TogglePause}">
+              <Button Theme="{StaticResource LinkButton}" Width="40" Height="40" Margin="0,0" Command="{Binding TogglePause}" HotKey="Space">
                 <PathIcon x:Name="PlayPauseIcon" Margin="5" Width="35" Height="35" Padding="5" Foreground="{DynamicResource PrimaryTextColor}" Data="{StaticResource PauseIcon}"/>
               </Button>
               
