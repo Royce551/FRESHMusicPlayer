@@ -162,4 +162,9 @@ public partial class MainWindow : Window
         viewModel.Config.Save(Path.Combine(App.DataFolderLocation, "Configuration"));
         viewModel.Library.Database?.Dispose();
     }
+
+    private void OverflowMenuButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        OverflowMenuButton.ContextMenu?.Open();
+    }
 }

@@ -73,6 +73,23 @@
     <Geometry x:Key="PlayIcon">F1 M380 -300L660 -480L380 -660L380 -300ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z</Geometry>
     <Geometry x:Key="RepeatIcon">F1 M280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
     <Geometry x:Key="RepeatOneIcon">F1 M460 -360L460 -540L400 -540L400 -600L520 -600L520 -360L460 -360ZM280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
+    <ContextMenu x:Key="OverflowMenu">
+		<MenuItem Header="Track info"/>
+        <MenuItem Header="Lyrics"/>
+        <MenuItem Header="Pause after current track"/>
+        <Separator/>
+        <MenuItem Header="Go to">
+			<MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
+            <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
+        </MenuItem>
+        <MenuItem Header="Manage playlists..."/>
+        <Separator/>
+        <MenuItem Header="Fullscreen"/>
+        <MenuItem Header="Mini player"/>
+        <Separator/>
+        <MenuItem Header="Open..."/>
+        <MenuItem Header="Tag editor"/>
+    </ContextMenu>
   </Window.Resources>
   <Panel>
     <DockPanel ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LastChildFill="False">
@@ -190,8 +207,8 @@
         </Panel>
         <Grid RowDefinitions="*,*,*" Margin="10" VerticalAlignment="Center">
           <StackPanel Grid.Row="0" Spacing="10" Orientation="Horizontal" Height="30">
-            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold"/>
-            <Button Content="Context" FontSize="12" VerticalAlignment="Center">
+            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" ContextMenu="{StaticResource OverflowMenu}"/>
+            <Button x:Name="OverflowMenuButton" Content="Menu" FontSize="12" VerticalAlignment="Center" Click="OverflowMenuButton_Click" ContextMenu="{StaticResource OverflowMenu}">
               <Button.Styles>
                 <Style Selector="DockPanel > Grid > StackPanel > Button">
                   <Setter Property="IsVisible" Value="False"/>

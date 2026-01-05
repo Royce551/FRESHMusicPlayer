@@ -80,7 +80,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         private string? initialArtist = null;
-        public ArtistsViewModel(string initialArtist)
+        public ArtistsViewModel(string? initialArtist)
         {
             this.initialArtist = initialArtist;
         }

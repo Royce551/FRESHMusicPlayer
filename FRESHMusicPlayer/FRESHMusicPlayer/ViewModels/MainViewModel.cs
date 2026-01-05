@@ -419,6 +419,16 @@ public partial class MainViewModel : ViewModelBase
     }
 
     public void AddToQueueAndHandleAutoQueue(string filePath) => AddToQueueAndHandleAutoQueue([filePath]);
+
+    public void GoToArtist()
+    {
+        NavigateTo(new ArtistsViewModel(Player.FileLoaded ? Player.Metadata.Artists[0] : null));
+    }
+
+    public void GoToAlbum()
+    {
+        NavigateTo(new AlbumsViewModel(Player.FileLoaded ? Player.Metadata.Album : null));
+    }
 }
 
 public enum Page
