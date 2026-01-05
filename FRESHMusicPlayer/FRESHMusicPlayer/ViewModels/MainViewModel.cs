@@ -273,8 +273,8 @@ public partial class MainViewModel : ViewModelBase
         }
         else
         {
-            CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 64);
-            CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 450); // doing these separately for clearer results
+            CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
+            CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results
             SetCoverArtVisibility(true);
         }
 
@@ -359,7 +359,7 @@ public partial class MainViewModel : ViewModelBase
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime && desktopLifetime.MainWindow != null)
         {
-            if (path != null)
+            if (currentSidePanePath != null)
             {
                 if (path == currentSidePanePath)
                 {
@@ -370,6 +370,7 @@ public partial class MainViewModel : ViewModelBase
                 }
                 else
                 {
+                    await MainWindow.AnimateSidePaneOutAsync();
                     currentSidePanePath = null;
                     SidePaneView = null;
                 }

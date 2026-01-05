@@ -120,13 +120,14 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private int length;
 
+        public string[]? TracksInCollection { get; set; }
+
         private readonly ViewModelBase viewModel;
-        private readonly string[] tracksInCollection;
-        public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track, string[] tracksInCollection)
+        public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track, string[]? tracksInCollection)
         {
             this.viewModel = viewModel;
-            this.tracksInCollection = tracksInCollection;
 
+            TracksInCollection = tracksInCollection;
             Id = track.Id;
             Path = track.Path;
             HasBeenProcessed = track.HasBeenProcessed;
@@ -145,16 +146,15 @@ namespace FRESHMusicPlayer.ViewModels
         public async void Play()
         {
             viewModel.MainView.Player.Queue.Clear();
-            viewModel.MainView.Player.Queue.Add(Path);
-            if (viewModel.MainView.Config.AutoQueue)
+            if (viewModel.MainView.Config.AutoQueue && TracksInCollection != null)
             {
                 var shuffle = viewModel.MainView.Player.Queue.Shuffle;
 
                 if (shuffle) viewModel.MainView.Player.Queue.Shuffle = false;
 
-                var thisTrackIndex = tracksInCollection.ToList().FindIndex(x => x == Path);
+                var thisTrackIndex = TracksInCollection.ToList().FindIndex(x => x == Path);
 
-                viewModel.MainView.AddToQueueAndHandleAutoQueue(tracksInCollection);
+                viewModel.MainView.AddToQueueAndHandleAutoQueue(TracksInCollection);
                 viewModel.MainView.Player.Queue.Position = thisTrackIndex;
 
                 viewModel.MainView.Player.Queue.Shuffle = shuffle;

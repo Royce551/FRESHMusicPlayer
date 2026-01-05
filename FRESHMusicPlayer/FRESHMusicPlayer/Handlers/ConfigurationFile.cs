@@ -23,6 +23,12 @@ namespace FRESHMusicPlayer.Handlers
         private Page page = Page.Tracks;
 
         [ObservableProperty]
+        private double windowWidth = 1000;
+
+        [ObservableProperty]
+        private double windowHeight = 800;
+
+        [ObservableProperty]
         private bool autoQueue = true;
 
         [ObservableProperty]

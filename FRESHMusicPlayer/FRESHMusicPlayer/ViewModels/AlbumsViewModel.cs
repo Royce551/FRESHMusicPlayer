@@ -40,10 +40,16 @@ namespace FRESHMusicPlayer.ViewModels
                     {
                         var tracksInDisc = tracksInAlbum.Where(x => x.DiscNumber == disc);
                         tempItems.Add(new DiscGroupHeaderViewModel(this, disc, [.. tracksInDisc.Select(x => x.Path)]));
-                        tempItems.AddRange(tracksInDisc.Select(x => new DatabaseTrackViewModel(this, x, tracksInAlbum.Select(y => y.Path).ToArray())));
+                        tempItems.AddRange(tracksInDisc.Select(x => new DatabaseTrackViewModel(this, x, null)));
                     }
 
                     items = new ObservableCollection<ObservableRecipient>(tempItems);
+
+                    var otherTracks = items.OfType<DatabaseTrackViewModel>();
+                    foreach (var item in otherTracks)
+                    {
+                        item.TracksInCollection = otherTracks.Select(x => x.Path).ToArray();
+                    }
                 }
 
                 var trackItems = items.OfType<DatabaseTrackViewModel>();

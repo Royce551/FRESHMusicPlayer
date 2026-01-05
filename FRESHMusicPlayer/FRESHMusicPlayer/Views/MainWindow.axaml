@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
-        mc:Ignorable="d" Height="540" Width="800"
+        mc:Ignorable="d" Height="{Binding Config.WindowHeight, Mode=TwoWay}" Width="{Binding Config.WindowWidth, Mode=TwoWay}" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1"
         x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed"
         Icon="/Assets/avalonia-logo.ico"
