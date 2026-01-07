@@ -7,32 +7,55 @@
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450" x:DataType="vm:TrackInfoViewModel"
              x:Class="FRESHMusicPlayer.Views.TrackInfoView" Background="{DynamicResource SecondaryColor}"> 
     <Panel>
-		<Image ZIndex="0" Margin="-10" Stretch="UniformToFill" Source="{Binding CoverArt}">
-            <Image.Effect>
-				<BlurEffect Radius="30"/>
-            </Image.Effect>
-        </Image>
+        <TransitioningContentControl ZIndex="0" Margin="-10" Content="{Binding CoverArt}">
+			<TransitioningContentControl.ContentTemplate>
+				<DataTemplate DataType="Bitmap">
+					<Image ZIndex="0" Margin="-10" Stretch="UniformToFill" Source="{Binding}">
+                        <Image.Effect>
+				            <BlurEffect Radius="30"/>
+                        </Image.Effect>
+                    </Image>
+                </DataTemplate>
+            </TransitioningContentControl.ContentTemplate>
+            <TransitioningContentControl.PageTransition>
+				<CrossFade Duration="0:00:00.5" FadeInEasing="QuadraticEaseOut" FadeOutEasing="QuadraticEaseIn"/>
+            </TransitioningContentControl.PageTransition>
+        </TransitioningContentControl>
+		
         <Rectangle ZIndex="1" Fill="{DynamicResource ForegroundColor}" Opacity="0.55"/>
         <DockPanel ZIndex="2" VerticalAlignment="Bottom" Margin="10">
-            <Image DockPanel.Dock="Bottom" Stretch="Uniform" Margin="0,10,0,0" RenderOptions.BitmapInterpolationMode="HighQuality" Source="{Binding CoverArt}">
-                 <Image.Styles>
-                  <Style Selector="Image ToolTip">
-                    <Setter Property="MaxWidth" Value="800"/>
-                  </Style>
-                </Image.Styles>
-                <ToolTip.Tip>
-                  <Image Width="750" Height="750" Source="{Binding CoverArt}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
-                </ToolTip.Tip>
-            </Image>
+            <TransitioningContentControl DockPanel.Dock="Bottom" Margin="0,5,0,0" Content="{Binding CoverArt}">
+				<TransitioningContentControl.ContentTemplate>
+                    <DataTemplate DataType="Bitmap">
+						 <Image Stretch="Uniform" RenderOptions.BitmapInterpolationMode="HighQuality" Source="{Binding}">
+                         <Image.Styles>
+                          <Style Selector="Image ToolTip">
+                            <Setter Property="MaxWidth" Value="800"/>
+                          </Style>
+                        </Image.Styles>
+                        <ToolTip.Tip>
+                          <Image Width="750" Height="750" Source="{Binding}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        </ToolTip.Tip>
+                     </Image>
+                    </DataTemplate>
+                </TransitioningContentControl.ContentTemplate>
+                 <TransitioningContentControl.PageTransition>
+                  <CompositePageTransition>
+					  <CrossFade Duration="0:00:00.1"/>
+                      <PageSlide Orientation="Vertical" Duration="0:00:00.25" SlideInEasing="QuadraticEaseOut" SlideOutEasing="QuadraticEaseIn"/>
+                  </CompositePageTransition>	  
+              </TransitioningContentControl.PageTransition>
+            </TransitioningContentControl>
+           
 			<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*,*,*,*,*">
-				<TextBlock Grid.Column="0" Grid.Row="0" Text="Audio" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Center"/>
+				<TextBlock Grid.Column="0" Grid.Row="0" Text="Audio" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsAudioVisible}" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Disc" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsDiscVisible}" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Track" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsTrackVisible}" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Year" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsYearVisible}" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="Genre" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsGenreVisible}" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="0" Grid.Row="5" Text="Album" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsAlbumVisible}" VerticalAlignment="Center"/>
 
-                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" Text="{Binding Audio}" TextWrapping="Wrap"/>
+                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" Text="{Binding Audio}" IsVisible="{Binding IsAudioVisible}" TextWrapping="Wrap"/>
                 <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding Disc}" IsVisible="{Binding IsDiscVisible}" TextWrapping="Wrap"/>
                 <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" Text="{Binding Track}" IsVisible="{Binding IsTrackVisible}" TextWrapping="Wrap"/>
                 <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Text="{Binding Year}" IsVisible="{Binding IsYearVisible}" TextWrapping="Wrap"/>

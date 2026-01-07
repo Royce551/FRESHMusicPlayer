@@ -14,8 +14,10 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class TrackInfoViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private Bitmap coverArt;
+        private Bitmap? coverArt;
 
+        [ObservableProperty]
+        private bool isAudioVisible = false;
         [ObservableProperty]
         private string audio;
 
@@ -53,18 +55,32 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.SetCoverArtVisibility(false);
             MainView.Player.SongChanged += Player_SongChanged;
-            Player_SongChanged(null, EventArgs.Empty);
+            MainView.Player.SongStopped += Player_SongStopped;
+            Update();
         }
 
-        private void Player_SongChanged(object? sender, EventArgs e)
+        public void Update()
         {
             var track = MainView.Player.Metadata;
-            if (track is null || !MainView.Player.FileLoaded) return;
+            if (track is null || !MainView.Player.FileLoaded)
+            {
+                IsAudioVisible = false;
+                IsAlbumVisible = false;
+                IsGenreVisible = false;
+                IsYearVisible = false;
+                IsTrackVisible = false;
+                IsDiscVisible = false;
+                CoverArt = null;
+                return;
+            }
 
             if (track is FileMetadataProvider file)
+            {
                 Audio = $"{file.ATLTrack.Bitrate}kbps {file.ATLTrack.SampleRate / 1000}kHz {(file.ATLTrack.CodecFamily == 0 ? "(Lossy) " : "(Lossless)")} " +
                     $"{(file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain") ? "RG" : string.Empty)}";
-            else Audio = "Unavailable";
+                IsAudioVisible = true;
+            }
+            else IsAudioVisible = false;
 
             if (!string.IsNullOrWhiteSpace(track.Album))
             {
@@ -106,9 +122,17 @@ namespace FRESHMusicPlayer.ViewModels
             else CoverArt = null;
         }
 
+        private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
+        {
+            if (e.IsEndOfPlayback) Update();
+        }
+
+        private void Player_SongChanged(object? sender, EventArgs e) => Update();
+
         public override void OnNavigatingAway()
         {
             MainView.Player.SongChanged -= Player_SongChanged;
+            MainView.Player.SongStopped -= Player_SongStopped;
             if (CoverArt != null) MainView.SetCoverArtVisibility(true);
         }
     }

@@ -7,7 +7,7 @@
         mc:Ignorable="d" Height="{Binding Config.WindowHeight, Mode=TwoWay}" Width="{Binding Config.WindowWidth, Mode=TwoWay}" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1"
         x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/avalonia-logo.ico" Name="root"
         Title="{Binding WindowTitle}">
 
   <Design.DataContext>
@@ -132,16 +132,29 @@
         </Panel>
       </Panel>
       <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}">
-          <Image x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" Source="{Binding CoverArt}" PointerReleased="CoverArt_PointerReleased" Cursor="Hand" RenderOptions.BitmapInterpolationMode="HighQuality">
-            <Image.Styles>
-              <Style Selector="Image ToolTip">
-                <Setter Property="MaxWidth" Value="500"/>
-              </Style>
-            </Image.Styles>
-            <ToolTip.Tip>
-              <Image Width="450" Height="450" Source="{Binding CoverArtFullSize}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
-            </ToolTip.Tip>
-          </Image>
+          <TransitioningContentControl Content="{Binding CoverArt}" x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" PointerReleased="CoverArt_PointerReleased" Cursor="Hand">
+			  <TransitioningContentControl.ContentTemplate>
+				  <DataTemplate DataType="Bitmap">
+					  <Image Source="{Binding}" RenderOptions.BitmapInterpolationMode="HighQuality">
+                        <Image.Styles>
+                          <Style Selector="Image ToolTip">
+                            <Setter Property="MaxWidth" Value="500"/>
+                          </Style>
+                        </Image.Styles>
+                        <ToolTip.Tip>
+                          <Image Width="450" Height="450" Source="{Binding #root.((vm:MainViewModel)DataContext).CoverArtFullSize}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        </ToolTip.Tip>
+                      </Image>
+                  </DataTemplate>
+              </TransitioningContentControl.ContentTemplate>
+              <TransitioningContentControl.PageTransition>
+                  <CompositePageTransition>
+					  <CrossFade Duration="0:00:00.1"/>
+                      <PageSlide Orientation="Vertical" Duration="0:00:00.25" SlideInEasing="QuadraticEaseOut" SlideOutEasing="QuadraticEaseIn"/>
+                  </CompositePageTransition>	  
+              </TransitioningContentControl.PageTransition>
+          </TransitioningContentControl>
+          
         <Panel DockPanel.Dock="Right">
           <Grid RowDefinitions="*,*">
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0" Background="Transparent">
