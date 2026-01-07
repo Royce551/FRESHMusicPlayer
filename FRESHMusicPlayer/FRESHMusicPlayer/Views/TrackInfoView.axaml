@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:FRESHMusicPlayer.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450" x:DataType="vm:TrackInfoViewModel"
+             x:Class="FRESHMusicPlayer.Views.TrackInfoView" Background="{DynamicResource SecondaryColor}"> 
+    <Panel>
+		<Image ZIndex="0" Margin="-10" Stretch="UniformToFill" Source="{Binding CoverArt}">
+            <Image.Effect>
+				<BlurEffect Radius="30"/>
+            </Image.Effect>
+        </Image>
+        <Rectangle ZIndex="1" Fill="{DynamicResource ForegroundColor}" Opacity="0.55"/>
+        <DockPanel ZIndex="2" VerticalAlignment="Bottom" Margin="10">
+            <Image DockPanel.Dock="Bottom" Stretch="Uniform" Margin="0,10,0,0" RenderOptions.BitmapInterpolationMode="HighQuality" Source="{Binding CoverArt}">
+                 <Image.Styles>
+                  <Style Selector="Image ToolTip">
+                    <Setter Property="MaxWidth" Value="800"/>
+                  </Style>
+                </Image.Styles>
+                <ToolTip.Tip>
+                  <Image Width="750" Height="750" Source="{Binding CoverArt}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                </ToolTip.Tip>
+            </Image>
+			<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*,*,*,*,*">
+				<TextBlock Grid.Column="0" Grid.Row="0" Text="Audio" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Disc" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsDiscVisible}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Track" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsTrackVisible}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Year" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsYearVisible}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Genre" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsGenreVisible}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="Album" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsAlbumVisible}" VerticalAlignment="Center"/>
+
+                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" Text="{Binding Audio}" TextWrapping="Wrap"/>
+                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding Disc}" IsVisible="{Binding IsDiscVisible}" TextWrapping="Wrap"/>
+                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" Text="{Binding Track}" IsVisible="{Binding IsTrackVisible}" TextWrapping="Wrap"/>
+                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Text="{Binding Year}" IsVisible="{Binding IsYearVisible}" TextWrapping="Wrap"/>
+                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="4" Text="{Binding Genre}" IsVisible="{Binding IsGenreVisible}" TextWrapping="Wrap"/>
+                <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="5" Text="{Binding Album}" IsVisible="{Binding IsAlbumVisible}" TextWrapping="Wrap"/>
+            </Grid>
+        </DockPanel>
+    </Panel>
+</UserControl>

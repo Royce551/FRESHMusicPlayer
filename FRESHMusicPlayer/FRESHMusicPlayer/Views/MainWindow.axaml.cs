@@ -75,34 +75,50 @@ public partial class MainWindow : Window
         }
     }
 
-    double previousWidth = 0;
-    public async Task AnimateSidePaneInAsync(double width)
+    string previousAnimation;
+    public async Task AnimateSidePaneInAsync(double width, bool onLeft = false)
     {
         // TODO: Adjust animation based on width
-
+        SidePaneControl.Width = width;
         Animation animation;
-        if (width == 450)
+        if (onLeft)
         {
-            animation = (Animation)Resources["RightSidePaneIn450"]!;
+            DockPanel.SetDock(SidePaneControl, Dock.Left);
+            animation = (Animation)Resources["LeftSidePaneIn250"]!;
+            previousAnimation = "LeftSidePaneIn250";
         }
         else
         {
-            animation = (Animation)Resources["RightSidePaneIn300"]!;
+            DockPanel.SetDock(SidePaneControl, Dock.Right);
+            if (width == 450)
+            {
+                animation = (Animation)Resources["RightSidePaneIn450"]!;
+                previousAnimation = "RightSidePaneIn450";
+            }
+            else
+            {
+                animation = (Animation)Resources["RightSidePaneIn300"]!;
+                previousAnimation = "RightSidePaneIn300";
+            }
         }
-        previousWidth = width;
         await animation.RunAsync(SidePaneControl);
     }
 
     public async Task AnimateSidePaneOutAsync()
     {
         Animation animation;
-        if (previousWidth == 450)
+        switch (previousAnimation)
         {
-            animation = (Animation)Resources["RightSidePaneOut450"]!;
-        }
-        else
-        {
-            animation = (Animation)Resources["RightSidePaneOut300"]!;
+            case "LeftSidePaneIn250":
+                animation = (Animation)Resources["LeftSidePaneOut250"]!;
+                break;
+            case "RightSidePaneIn450":
+                animation = (Animation)Resources["RightSidePaneOut450"]!;
+                break;
+            case "RightSidePaneIn300":
+            default:
+                animation = (Animation)Resources["RightSidePaneOut300"]!;
+                break;
         }
         await animation.RunAsync(SidePaneControl);
     }
@@ -166,5 +182,15 @@ public partial class MainWindow : Window
     private void OverflowMenuButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         OverflowMenuButton.ContextMenu?.Open();
+    }
+
+    private void TextBlock_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+    {
+        viewModel.OpenTrackInfoCommand();
+    }
+
+    private void CoverArt_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+    {
+        viewModel.OpenTrackInfoCommand();
     }
 }

@@ -213,7 +213,7 @@ public partial class MainViewModel : ViewModelBase
     }
 
     private bool coverArtIsVisible = false;
-    private void SetCoverArtVisibility(bool show)
+    public void SetCoverArtVisibility(bool show)
     {
         if (show && !coverArtIsVisible)
         {
@@ -275,7 +275,7 @@ public partial class MainViewModel : ViewModelBase
         {
             CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
             CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results
-            SetCoverArtVisibility(true);
+            if (currentSidePanePath != "FRESHMusicPlayer.TrackInfo") SetCoverArtVisibility(true);
         }
 
         await AnimateProgressTo0Async();
@@ -355,7 +355,7 @@ public partial class MainViewModel : ViewModelBase
 
     private string? currentSidePanePath = null;
 
-    public async Task OpenSidePaneAsync(string path, double width)
+    public async Task OpenSidePaneAsync(string path, double width, bool onLeft = false)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime && desktopLifetime.MainWindow != null)
         {
@@ -364,6 +364,7 @@ public partial class MainViewModel : ViewModelBase
                 if (path == currentSidePanePath)
                 {
                     await MainWindow.AnimateSidePaneOutAsync();
+                    SidePaneView.OnNavigatingAway();
                     currentSidePanePath = null;
                     SidePaneView = null;
                     return;
@@ -371,6 +372,7 @@ public partial class MainViewModel : ViewModelBase
                 else
                 {
                     await MainWindow.AnimateSidePaneOutAsync();
+                    SidePaneView.OnNavigatingAway();
                     currentSidePanePath = null;
                     SidePaneView = null;
                 }
@@ -382,13 +384,14 @@ public partial class MainViewModel : ViewModelBase
             {
                 "FRESHMusicPlayer.Queue" => new QueueViewModel(),
                 "FRESHMusicPlayer.Settings" => new SettingsViewModel(this),
+                "FRESHMusicPlayer.TrackInfo" => new TrackInfoViewModel(),
                 _ => new ViewModelBase()
             };
             SidePaneView.MainView = this;
             SidePaneView.AfterPageLoaded();
 
             SidePanelWidth = width;
-            await MainWindow.AnimateSidePaneInAsync(width);
+            await MainWindow.AnimateSidePaneInAsync(width, onLeft);
         }
     }
 
@@ -408,6 +411,8 @@ public partial class MainViewModel : ViewModelBase
     public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Settings", 450);
 
     public async void OpenQueueCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Queue", 300);
+
+    public async void OpenTrackInfoCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.TrackInfo", 250, true);
 
     public bool AutoQueueIsQueued { get; set; } = false;
 

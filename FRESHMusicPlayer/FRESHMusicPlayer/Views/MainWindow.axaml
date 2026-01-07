@@ -32,7 +32,7 @@
         <Setter Property="Margin" Value="0, 0, 0, 0"/>
       </KeyFrame>
     </Animation>
-      <Animation x:Key="RightSidePaneIn300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+    <Animation x:Key="RightSidePaneIn300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
       <KeyFrame Cue="0%">
         <Setter Property="Margin" Value="0, 0, -300, 0"/>
       </KeyFrame>
@@ -43,6 +43,22 @@
     <Animation x:Key="RightSidePaneOut300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
       <KeyFrame Cue="100%">
         <Setter Property="Margin" Value="0, 0, -300, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="LeftSidePaneIn250" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="-250, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="LeftSidePaneOut250" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="-250, 0, 0, 0"/>
       </KeyFrame>
       <KeyFrame Cue="0%">
         <Setter Property="Margin" Value="0, 0, 0, 0"/>
@@ -74,7 +90,7 @@
     <Geometry x:Key="RepeatIcon">F1 M280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
     <Geometry x:Key="RepeatOneIcon">F1 M460 -360L460 -540L400 -540L400 -600L520 -600L520 -360L460 -360ZM280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
     <ContextMenu x:Key="OverflowMenu">
-		<MenuItem Header="Track info"/>
+		<MenuItem Header="Track info" Command="{Binding OpenTrackInfoCommand}"/>
         <MenuItem Header="Lyrics"/>
         <MenuItem Header="Pause after current track"/>
         <Separator/>
@@ -116,7 +132,7 @@
         </Panel>
       </Panel>
       <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}">
-          <Image x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" Source="{Binding CoverArt}" RenderOptions.BitmapInterpolationMode="HighQuality">
+          <Image x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" Source="{Binding CoverArt}" PointerReleased="CoverArt_PointerReleased" Cursor="Hand" RenderOptions.BitmapInterpolationMode="HighQuality">
             <Image.Styles>
               <Style Selector="Image ToolTip">
                 <Setter Property="MaxWidth" Value="500"/>
@@ -207,7 +223,7 @@
         </Panel>
         <Grid RowDefinitions="*,*,*" Margin="10" VerticalAlignment="Center">
           <StackPanel Grid.Row="0" Spacing="10" Orientation="Horizontal" Height="30">
-            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" ContextMenu="{StaticResource OverflowMenu}"/>
+            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" ContextMenu="{StaticResource OverflowMenu}" PointerReleased="TextBlock_PointerReleased" Cursor="Hand"/>
             <Button x:Name="OverflowMenuButton" Content="Menu" FontSize="12" VerticalAlignment="Center" Click="OverflowMenuButton_Click" ContextMenu="{StaticResource OverflowMenu}">
               <Button.Styles>
                 <Style Selector="DockPanel > Grid > StackPanel > Button">
