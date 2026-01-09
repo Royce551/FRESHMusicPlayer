@@ -32,9 +32,11 @@ namespace FRESHMusicPlayer.Handlers
         private bool autoQueue = true;
 
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         private bool integrateDiscordRichPresence = false;
 
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         private bool integrateLastFM = false;
 
         public static ConfigurationFile Read(string filePath)

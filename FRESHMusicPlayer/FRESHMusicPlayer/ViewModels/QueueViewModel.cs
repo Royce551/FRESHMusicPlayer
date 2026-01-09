@@ -25,6 +25,14 @@ namespace FRESHMusicPlayer.ViewModels
             base.AfterPageLoaded();
         }
 
+        public override void OnNavigatingAway()
+        {
+            MainView.Player.Queue.QueueChanged -= Queue_QueueChanged;
+            MainView.Player.SongChanged -= Player_SongChanged;
+            MainView.Player.SongStopped -= Player_SongStopped;
+            MainView.ProgressTimer.Tick -= ProgressTimer_Tick;
+        }
+
         private void ProgressTimer_Tick(object? sender, EventArgs e)
         {
             if (Tracks is null) return;

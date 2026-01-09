@@ -6,7 +6,10 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.Views;
 using LiteDB;
 using System;
@@ -15,11 +18,13 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMessage<bool>>
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNavbarVisible))]
@@ -35,6 +40,8 @@ public partial class MainViewModel : ViewModelBase
     public MainWindow MainWindow { get; private set; } = default!;
 
     public ConfigurationFile Config { get; private set; } = default!;
+
+    public HttpClient HttpClient { get; private set; }
 
     /// <summary>
     /// This is for the designer. Should not be used for any other purpose.
@@ -72,7 +79,14 @@ public partial class MainViewModel : ViewModelBase
         //}
 
         Config = ConfigurationFile.Read(Path.Combine(App.DataFolderLocation, "Configuration"));
+        Config.IsActive = true;
+        IsActive = true;
         UpdateVolume();
+
+        HttpClient = new HttpClient();
+        HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"FRESHMusicPlayer/{Assembly.GetEntryAssembly().GetName().Version} ( https://github.com/Royce551/FRESHMusicPlayer )");
+
+        StartIntegrations();
 
         NavigateTo(Config.Page switch
         {
@@ -98,8 +112,16 @@ public partial class MainViewModel : ViewModelBase
         get => Player.Paused;
         set
         {
-            if (value) Player.Pause();
-            else Player.Resume();
+            if (value)
+            {
+                Player.Pause();
+                _ = UpdateIntegrationsAsync(PlaybackStatus.Paused);
+            }
+            else
+            {
+                Player.Resume();
+                _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
+            }
             OnPropertyChanged(nameof(Player.Paused));
             MainWindow.UpdateIconStates();
         }
@@ -240,6 +262,7 @@ public partial class MainViewModel : ViewModelBase
             ProgressIndicator1 = ProgressIndicator2 = "00:00";
             Title = Artist = "Nothing playing";
             CoverArt = null;
+            _ = UpdateIntegrationsAsync(PlaybackStatus.Stopped);
         }
         else
         {
@@ -247,6 +270,7 @@ public partial class MainViewModel : ViewModelBase
             Title = "Loading...";
             Artist = "Loading...";
             CoverArt = null;
+            _ = UpdateIntegrationsAsync(PlaybackStatus.Changing);
         }
     }
 
@@ -277,6 +301,8 @@ public partial class MainViewModel : ViewModelBase
             CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results
             if (currentSidePanePath != "FRESHMusicPlayer.TrackInfo") SetCoverArtVisibility(true);
         }
+
+        _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
 
         await AnimateProgressTo0Async();
         if (Player.FileLoaded)
@@ -433,6 +459,41 @@ public partial class MainViewModel : ViewModelBase
     public void GoToAlbum()
     {
         NavigateTo(new AlbumsViewModel(Player.FileLoaded ? Player.Metadata.Album : null));
+    }
+
+    public List<IPlaybackIntegration> PlaybackIntegrations { get; } = new List<IPlaybackIntegration>();
+
+    public async Task UpdateIntegrationsAsync(PlaybackStatus status)
+    {
+        await Task.WhenAll(PlaybackIntegrations.Select(x => x.UpdateAsync(Player.Metadata, status)));
+    }
+
+    private void StartIntegrations()
+    {
+        if (Config.IntegrateDiscordRichPresence) StartIntegration(new DiscordIntegration(HttpClient));
+    }
+
+    private void StartIntegration(IPlaybackIntegration integration)
+    {
+        if (!PlaybackIntegrations.Contains(integration))
+            PlaybackIntegrations.Add(integration);
+    }
+
+    public void Receive(PropertyChangedMessage<bool> message)
+    {
+        if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.IntegrateDiscordRichPresence)})
+        {
+            if (Config.IntegrateDiscordRichPresence) StartIntegration(new DiscordIntegration(HttpClient));
+            else
+            {
+                var discordIntegration = PlaybackIntegrations.OfType<DiscordIntegration>().FirstOrDefault();
+                if (discordIntegration != null)
+                {
+                    discordIntegration.Close();
+                    PlaybackIntegrations.Remove(discordIntegration);
+                }
+            }
+        }
     }
 }
 

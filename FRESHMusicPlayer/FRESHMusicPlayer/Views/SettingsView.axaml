@@ -49,8 +49,8 @@
 
                 <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
 
-                <CheckBox Content="Discord Rich Presence"/>
-                <CheckBox Content="last.fm"/>
+                <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
+                <CheckBox Content="last.fm" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
