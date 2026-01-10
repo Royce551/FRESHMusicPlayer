@@ -1,6 +1,10 @@
 ﻿using System;
 
 using Avalonia;
+using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
+using FRESHMusicPlayer.Windows.Platform;
+using Splat;
 
 namespace FRESHMusicPlayer.Desktop;
 
@@ -15,9 +19,12 @@ class Program
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace();
+    {
+        Locator.CurrentMutable.Register<IPlatformWrapper>(() => new WindowsPlatformWrapper()); 
 
+        return AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .WithInterFont()
+                .LogToTrace();
+    }
 }

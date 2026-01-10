@@ -12,6 +12,7 @@ using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.Views;
 using LiteDB;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -103,6 +104,12 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             Interval = TimeSpan.FromMilliseconds(100)
         };
         ProgressTimer.Tick += ProgressTimer_Tick;
+
+        var platformWrapper = Locator.Current.GetService<IPlatformWrapper>();
+        if (platformWrapper != null)
+        {
+            PlaybackIntegrations.Add(platformWrapper.GetPlatformPlaybackIntegration(this, MainWindow));
+        }
     }
 
     private void ProgressTimer_Tick(object? sender, EventArgs e) => ProgressTick();
