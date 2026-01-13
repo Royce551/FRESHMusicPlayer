@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels;
@@ -238,7 +239,19 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
     {
+        var message = new StringBuilder(); // TODO: temp
+        message.AppendLine("Problems");
+        foreach (var problem in e.Problems)
+        {
+            message.AppendLine($"{problem.Key}: {problem.Value}");
+        }
+        message.AppendLine("Exceptions");
+        foreach (var ex in e.Exceptions)
+        {
+            message.AppendLine($"{ex.Key}: {ex.Value}");
+        }
 
+        Console.WriteLine($"Player: Playback exception: {message}");
     }
 
     private bool coverArtIsVisible = false;
