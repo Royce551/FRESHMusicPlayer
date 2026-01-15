@@ -1,268 +1,584 @@
-﻿using ATL;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using FRESHMusicPlayer.Backends;
-using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Tmds.DBus;
-using Drawing = SixLabors.ImageSharp;
+using Tmds.DBus.Protocol;
+using Tmds.DBus.SourceGenerator;
 
 namespace FRESHMusicPlayer.Linux.Platform
 {
     public class MPRISIntegration : IPlaybackIntegration
     {
-        private MediaPlayer2 mediaPlayer2;
-        private Connection connection;
+        DBusMediaPlayer mediaPlayer;
+        MainViewModel viewModel;
+        Window window;
 
         public MPRISIntegration(MainViewModel viewModel, Window window)
         {
-            mediaPlayer2 = new(viewModel, window);
-            _ = Initialize();
+            this.viewModel = viewModel;
+            this.window = window;
+
+            _ = InitializeAsync();
         }
 
-        public async Task Initialize()
+        private async Task InitializeAsync()
         {
-            LoggingHandler.Log("Starting MPRIS Integration");
-            try
-            {
-                connection = new Connection(Address.Session);
-                await connection.ConnectAsync();
+            var connection = new Connection(Address.Session);
+            await connection.ConnectAsync();
 
-                await connection.RegisterObjectAsync(mediaPlayer2);
-
-                await connection.RegisterServiceAsync("org.mpris.MediaPlayer2.FRESHMusicPlayer");
-            }
-            catch (Exception e)
-            {
-                LoggingHandler.Log($"MPRIS: {e}");
-            }
+            mediaPlayer = new DBusMediaPlayer(connection, viewModel, window);
+            mediaPlayer.AddToDBusAsync();
         }
 
         public void Close()
         {
-            connection.Dispose();
+            
         }
 
         public Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
         {
+            mediaPlayer.UpdateMetadata(track, status);
+
             return Task.CompletedTask;
         }
     }
 
-    [DBusInterface("org.mpris.MediaPlayer2.Player")]
-    interface IPlayer : IDBusObject
+    class DBusMediaPlayer
     {
-        Task NextAsync();
-        Task PreviousAsync();
-        Task PlayPauseAsync();
-        Task StopAsync();
-        Task SeekAsync(long offset);
-        Task SetPositionAsync(ObjectPath trackID, long position);
-        Task OpenUriAsync();
+        private const string ObjectPath = "/org/mpris/MediaPlayer2";
+        private const string ServiceNamePrefix = "org.mpris.MediaPlayer2";
 
-        //Task<IDisposable> WatchSeekedAsync(Action<ObjectPath> handler, Action<Exception> onError = null);
+        private readonly Connection _connection;
+        private readonly PathHandler _pathHandler;
+        private readonly MediaPlayerHandler _mediaPlayerHandler;
+        private readonly MediaPlayerPlayerHandler _playerHandler;
+        private bool _emitSignals;
 
-        Task<IDictionary<string, object>> GetAllAsync();
-        Task<object> GetAsync(string prop);
-        Task SetAsync(string prop, object val);
-        Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
-    }
-    [DBusInterface("org.mpris.MediaPlayer2")]
-    interface IMediaPlayer2 : IDBusObject
-    {
-        Task RaiseAsync();
-        Task QuitAsync();
+        // The SourceGenerator generates properties which are abstract when writable and non-abstract when not writable.
+        // For the non-abstract properties, use the handler property as a backing field.
+        // For the abstract properties, introduce a backing field in this class.
+        // DBus types are non-nullable, so the properties implemented here are non-nullable as well.
 
-        Task<IDictionary<string, object>> GetAllAsync();
-        Task<object> GetAsync(string prop);
-        Task SetAsync(string prop, object val);
-        Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
-    }
-
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    // tmds.dbus requires that methods are async even if they don't need to
-    class MediaPlayer2 : IMediaPlayer2, IPlayer
-    {
-        public event Action<PropertyChanges> OnPropertiesChanged;
-
-        private IDictionary<string, object> properties = new Dictionary<string, object>()
+        private bool _fullscreen;
+        private bool Fullscreen
         {
-            { "CanQuit", true },
-            { "CanRaise", true },
-            { "HasTrackList", false },
-            { "Identity", "FRESHMusicPlayer" },
-            { "SupportedUriSchemes", new string[]{"file", "http"} },
-            { "SupportedMimeTypes", new string[]{ "audio/mp3", "audio/mpeg", "audio/mpeg3", "audio/wav", "audio/ogg", "audio/mp4", "video/avi", "video/msvideo", "video/mpeg", "video/quicktime", "video/x-ms-wmv" } },
-            { "PlaybackStatus", "Stopped" },
-            { "LoopStatus", "None" },
-            { "Shuffle", false },
-            { "Metadata", new Dictionary<string, object>()},
-            { "Rate", 1d },
-            { "Volume", 1d },
-            { "Position", 0L },
-            { "MinimumRate", 1d },
-            { "MaximumRate", 1d},
-            { "CanGoNext", true },
-            { "CanGoPrevious", true },
-            { "CanPlay", true },
-            { "CanPause", true },
-            { "CanSeek", true },
-            { "CanControl", true },
-        };
+            get => _fullscreen;
+            set
+            {
+                _fullscreen = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "Fullscreen", value);
+            }
+        }
 
-        private MainViewModel viewModel;
-        private Window window;
-        public MediaPlayer2(MainViewModel viewModel, Window window)
+        private string _loopStatus = "None";
+        private string LoopStatus
+        {
+            get => _loopStatus;
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                _loopStatus = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "LoopStatus", value);
+            }
+        }
+
+        private double _rate = 1.0;
+        private double Rate
+        {
+            get => _rate;
+            set
+            {
+                _rate = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "Rate", value);
+            }
+        }
+
+        private bool _shuffle;
+        private bool Shuffle
+        {
+            get => _shuffle;
+            set
+            {
+                _shuffle = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "Shuffle", value);
+            }
+        }
+
+        private double _volume = 1.0;
+        private double Volume
+        {
+            get => _volume;
+            set
+            {
+                _volume = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "Volume", value);
+            }
+        }
+
+        private string Identity
+        {
+            get => _mediaPlayerHandler.Identity ?? "";
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                _mediaPlayerHandler.Identity = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "Identity", value);
+            }
+        }
+
+        private bool CanQuit
+        {
+            get => _mediaPlayerHandler.CanQuit;
+            set
+            {
+                _mediaPlayerHandler.CanQuit = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "CanQuit", value);
+            }
+        }
+
+        private bool CanRaise
+        {
+            get => _mediaPlayerHandler.CanRaise;
+            set
+            {
+                _mediaPlayerHandler.CanRaise = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "CanRaise", value);
+            }
+        }
+
+        private bool HasTrackList
+        {
+            get => _mediaPlayerHandler.HasTrackList;
+            set
+            {
+                _mediaPlayerHandler.HasTrackList = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "HasTrackList", value);
+            }
+        }
+
+        private string[] SupportedUriSchemes
+        {
+            get => _mediaPlayerHandler.SupportedUriSchemes as string[] ?? [];
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                ThrowIfAnyElementIsNull(value);
+                _mediaPlayerHandler.SupportedUriSchemes = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "SupportedUriSchemes", VariantValue.Array(value));
+            }
+        }
+
+        private string[] SupportedMimeTypes
+        {
+            get => _mediaPlayerHandler.SupportedMimeTypes as string[] ?? [];
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                ThrowIfAnyElementIsNull(value);
+                _mediaPlayerHandler.SupportedMimeTypes = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "SupportedMimeTypes", VariantValue.Array(value));
+            }
+        }
+
+        private bool CanSetFullscreen
+        {
+            get => _mediaPlayerHandler.CanSetFullscreen;
+            set
+            {
+                _mediaPlayerHandler.CanSetFullscreen = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "CanSetFullscreen", value);
+            }
+        }
+
+        private string DesktopEntry
+        {
+            get => _mediaPlayerHandler.DesktopEntry ?? "";
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                _mediaPlayerHandler.DesktopEntry = value;
+                EmitPropertyChanged(_mediaPlayerHandler.InterfaceName, "DesktopEntry", value);
+            }
+        }
+
+        private string PlaybackStatus
+        {
+            get => _playerHandler.PlaybackStatus ?? "";
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                _playerHandler.PlaybackStatus = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "PlaybackStatus", value);
+            }
+        }
+
+        private double MinimumRate
+        {
+            get => _playerHandler.MinimumRate;
+            set
+            {
+                _playerHandler.MinimumRate = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "MinimumRate", value);
+            }
+        }
+
+        private double MaximumRate
+        {
+            get => _playerHandler.MaximumRate;
+            set
+            {
+                _playerHandler.MaximumRate = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "MaximumRate", value);
+            }
+        }
+
+        private bool CanGoNext
+        {
+            get => _playerHandler.CanGoNext;
+            set
+            {
+                _playerHandler.CanGoNext = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "CanGoNext", value);
+            }
+        }
+
+        private bool CanGoPrevious
+        {
+            get => _playerHandler.CanGoPrevious;
+            set
+            {
+                _playerHandler.CanGoPrevious = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "CanGoPrevious", value);
+            }
+        }
+
+        private bool CanPlay
+        {
+            get => _playerHandler.CanPlay;
+            set
+            {
+                _playerHandler.CanPlay = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "CanPlay", value);
+            }
+        }
+
+        private bool CanPause
+        {
+            get => _playerHandler.CanPause;
+            set
+            {
+                _playerHandler.CanPause = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "CanPause", value);
+            }
+        }
+
+        private bool CanSeek
+        {
+            get => _playerHandler.CanSeek;
+            set
+            {
+                _playerHandler.CanSeek = value;
+                EmitPropertyChanged(_playerHandler.InterfaceName, "CanSeek", value);
+            }
+        }
+
+        private bool CanControl
+        {
+            get => _playerHandler.CanControl;
+            set
+            {
+                _playerHandler.CanControl = value;
+                // note: no PropertiesChanged signal is emitted for CanControl.
+            }
+        }
+
+        private Dictionary<string, VariantValue> Metadata
+        {
+            get => _playerHandler.Metadata ?? throw new InvalidOperationException($"{nameof(Metadata)} should be initialized");
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                _playerHandler.Metadata = value;
+                var dict = new Dict<string, VariantValue>(value);
+                EmitPropertyChanged(_playerHandler.InterfaceName, "Metadata", dict);
+            }
+        }
+
+        private long Position
+        {
+            get => _playerHandler.Position;
+            set
+            {
+                _playerHandler.Position = value;
+                // note: no PropertiesChanged signal is emitted for Position.
+            }
+        }
+
+        private readonly MainViewModel viewModel;
+        private readonly Window window;
+
+        public DBusMediaPlayer(Connection connection, MainViewModel viewModel, Window window)
         {
             this.viewModel = viewModel;
             this.window = window;
-            viewModel.Player.SongChanged += Player_SongChanged;
-            viewModel.Player.SongStopped += Player_SongStopped;
-            OnPropertiesChanged += MediaPlayer2_OnPropertiesChanged;
-            viewModel.PropertyChanged += ViewModel_PropertyChanged;
-            UpdateMetadata();
-            InitializeState();
-        }
 
-        private void Player_SongStopped(object sender, EventArgs e)
-        {
-            OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("PlaybackStatus", "Stopped"));
-        }
+            viewModel.ProgressTimer.Tick += ProgressTimer_Tick;
 
-        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
+            _connection = connection;
+            _pathHandler = new PathHandler(ObjectPath);
+            _mediaPlayerHandler = new MediaPlayerHandler(this) { PathHandler = _pathHandler };
+            _playerHandler = new MediaPlayerPlayerHandler(this) { PathHandler = _pathHandler };
+            _pathHandler.Add(_mediaPlayerHandler);
+            _pathHandler.Add(_playerHandler);
+
+            Identity = "FRESHMusicPlayer";
+            CanQuit = false;
+            CanRaise = false;
+            CanSetFullscreen = false;
+            HasTrackList = false;
+            SupportedUriSchemes = ["file"];
+            SupportedMimeTypes = ["audio/mpeg", "audio/ogg"];
+            PlaybackStatus = "Stopped";
+            MinimumRate = 1.0;
+            MaximumRate = 1.0;
+            CanGoNext = true;
+            CanGoPrevious = true;
+            CanPlay = true;
+            CanPause = true;
+            CanSeek = true;
+            CanControl = true;
+            Position = 0;
+            Metadata = new Dictionary<string, VariantValue>
             {
-                case "Shuffle":
-                    OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Shuffle", viewModel.Player.Queue.Shuffle));
-                    break;
-                case "Volume":
-                    OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Volume", (double)viewModel.Player.Volume));
-                    break;
-                case "Paused":
-                    OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("PlaybackStatus", viewModel.Paused switch
-                    {
-                        true => "Paused",
-                        false => "Playing"
-                    }));
-                    break;
-            }
+                ["xesam:title"] = "Example Song Title"
+            };
         }
 
-        private void MediaPlayer2_OnPropertiesChanged(PropertyChanges obj)
+        public void UpdateMetadata(IMetadataProvider metadata, PlaybackStatus status)
         {
-            foreach (var prop in obj.Changed)
+            Metadata = new Dictionary<string, VariantValue>
             {
-                switch (prop.Key)
-                {
-                    case "LoopStatus":
-                        viewModel.Player.Queue.RepeatMode = (prop.Value as string) switch
-                        {
-                            "None" => RepeatMode.None,
-                            "Track" => RepeatMode.RepeatOne,
-                            "Playlist" or _ => RepeatMode.RepeatAll
-                        };
-                        viewModel.MainWindow.UpdateIconStates();
-                        break;
-                    case "Shuffle":
-                        var val = (bool)prop.Value;
-                        if (val != viewModel.Player.Queue.Shuffle) viewModel.ToggleShuffle();         
-                        break;
-                    case "Volume":
-                        viewModel.Volume = (float)(double)prop.Value;
-                        break;
-                }
-            }
+                ["mpris:length"] = metadata.Length,
+                ["xesam:artist"] = string.Join(", ", metadata.Artists),
+                ["xesam:album"] = metadata.Album,
+                ["xesam:title"] = metadata.Title,
+            };
         }
 
-        private void Player_SongChanged(object sender, EventArgs e)
+        private void ProgressTimer_Tick(object? sender, EventArgs e)
         {
-            UpdateMetadata();
-            ViewModel_PropertyChanged(null, new("Paused")); // jank alert!
+            if (!viewModel.Player.FileLoaded) return;
+
+            Position = (long)viewModel.CurrentTimeSeconds;
         }
 
-        public async Task SeekAsync(long offset)
+        public async Task<string> AddToDBusAsync()
         {
+            _connection.AddMethodHandler(_pathHandler);
+            _emitSignals = true;
+            string name = $"{ServiceNamePrefix}.FRESHMusicPlayer.instance{Environment.ProcessId}";
+            await _connection.RequestNameAsync($"{ServiceNamePrefix}.FRESHMusicPlayer.instance{Environment.ProcessId}");
+            return name;
+        }
+
+        public void Raise()
+        {
+            Console.WriteLine("Raise requested");
+        }
+
+        public void Quit()
+        {
+            Console.WriteLine("Quit requested");
+            Environment.Exit(0);
+        }
+
+        public void Next()
+        {
+            viewModel.Next();
+        }
+
+        public void Previous()
+        {
+            viewModel.Previous();
+        }
+
+        public string Pause()
+        {
+            viewModel.TogglePause(); // TODO: not correct
+            return "Paused";
+        }
+
+        public string PlayPause()
+        {
+            Console.WriteLine("PlayPause requested");
+            return PlaybackStatus == "Playing" ? "Paused" : "Playing";
+        }
+
+        public string Stop()
+        {
+            viewModel.Player.Queue.Clear();
+            viewModel.Player.NextAsync();
+            return "Stopped";
+        }
+
+        public string Play()
+        {
+            viewModel.TogglePause(); // TODO: not correct
+            return "Playing";
+        }
+
+        public void Seek(long offset)
+        {
+            Console.WriteLine($"Seek requested: offset={offset}");
             viewModel.CurrentTimeSeconds += offset;
         }
 
-        private void InitializeState()
+        public void SetPosition(ObjectPath trackId, long position)
         {
-            ViewModel_PropertyChanged(null, new("Paused")); // jank alert!
-            ViewModel_PropertyChanged(null, new("Volume"));
-            ViewModel_PropertyChanged(null, new("Shuffle"));
-        }
-
-        private void UpdateMetadata()
-        {
-
-            if (!viewModel.Player.FileLoaded) return;
-            var track = new Track(viewModel.Player.FilePath);
-            var x = new Dictionary<string, object>()
-            {
-                {"mpris:length", (long)Math.Round(viewModel.Player.TotalTime.TotalMilliseconds * 1000) },
-                {"xesam:artist", track.Artist.Split(Settings.DisplayValueSeparator)},
-                {"xesam:album", track.Album},
-                {"xesam:asText", track.Lyrics.UnsynchronizedLyrics},
-                {"xesam:composer", track.Composer.Split(Settings.DisplayValueSeparator)},
-                {"xesam:genre", track.Genre.Split(Settings.DisplayValueSeparator)},
-                {"xesam:title", track.Title},
-                {"xesam:trackNumber", track.TrackNumber }
-            };
-
-            if (track.EmbeddedPictures.Count >= 0)
-            {
-                var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
-                var tempPath = Path.Combine(runtimeDir, "fmp");
-                if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
-                var filePath = Path.Combine(tempPath, Path.GetRandomFileName());
-
-                var embeddedPicture = track.EmbeddedPictures[0];
-                using var z = Drawing.Image.Load(new MemoryStream(embeddedPicture.PictureData));
-                using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
-                z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
-                x.Add("mpris:artUrl", $"file://{filePath}");
-                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{filePath}");
-            }
-
-            OnPropertiesChanged?.Invoke(PropertyChanges.ForProperty("Metadata", x));
-        }
-
-        public ObjectPath ObjectPath => new("/org/mpris/MediaPlayer2");
-
-        public async Task NextAsync() => viewModel.Next();
-
-        public async Task OpenUriAsync() => /*viewModel.OpenTrackCommand(); TODO: switch to new tabs*/throw new NotImplementedException();
-
-        public async Task PlayPauseAsync() => viewModel.TogglePause();
-
-        public async Task PreviousAsync() => viewModel.Previous();
-
-        public async Task StopAsync()
-        {
-            viewModel.Player.Stop();
-        }
-
-        public async Task SetPositionAsync(ObjectPath trackID, long position)
-        {
+            Console.WriteLine($"SetPosition requested: trackId={trackId}, position={position}");
             viewModel.CurrentTimeSeconds = position;
         }
 
-        public async Task<IDictionary<string, object>> GetAllAsync() => properties;
+        public void OpenUri(string uri)
+        {
+            Console.WriteLine($"OpenUri requested: {uri}");
+        }
 
-        public async Task<object> GetAsync(string prop) => properties[prop];
+        private void EmitPropertyChanged(string interfaceName, string name, VariantValue value)
+        {
+            if (!_emitSignals)
+            {
+                return;
+            }
+            MessageWriter writer = _connection.GetMessageWriter();
+            writer.WriteSignalHeader(null, ObjectPath, "org.freedesktop.DBus.Properties", "PropertiesChanged", "sa{sv}as");
+            writer.WriteString(interfaceName);
+            writer.WriteDictionary([KeyValuePair.Create(name, value)]);
+            writer.WriteArray(Array.Empty<string>());
+            _connection.TrySendMessage(writer.CreateMessage());
+            writer.Dispose();
+        }
 
-        public async Task QuitAsync() => window.Close();
+        private static void ThrowIfAnyElementIsNull(string?[] value)
+        {
+            if (Array.IndexOf(value, null) != -1)
+            {
+                throw new ArgumentException("Array contains null elements.", nameof(value));
+            }
+        }
 
-        public async Task RaiseAsync() => window.Activate();
+        sealed class MediaPlayerHandler(DBusMediaPlayer player) : OrgMprisMediaPlayer2Handler
+        {
+            private readonly DBusMediaPlayer _player = player;
 
-        public async Task SetAsync(string prop, object val) => properties[prop] = val;
+            public override Connection Connection => _player._connection;
 
-        public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler) => SignalWatcher.AddAsync(this, nameof(OnPropertiesChanged), handler);
+            public override bool Fullscreen
+            {
+                get => _player.Fullscreen;
+                set => _player.Fullscreen = value;
+            }
+
+            protected override ValueTask OnRaiseAsync(Message request)
+            {
+                _player.Raise();
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnQuitAsync(Message request)
+            {
+                _player.Quit();
+                return ValueTask.CompletedTask;
+            }
+        }
+
+        sealed class MediaPlayerPlayerHandler(DBusMediaPlayer player) : OrgMprisMediaPlayer2PlayerHandler
+        {
+            private readonly DBusMediaPlayer _player = player;
+
+            public override Connection Connection => _player._connection;
+
+            public override string? LoopStatus
+            {
+                get => _player.LoopStatus;
+                set => _player.LoopStatus = value!;
+            }
+
+            public override double Rate
+            {
+                get => _player.Rate;
+                set => _player.Rate = value;
+            }
+
+            public override bool Shuffle
+            {
+                get => _player.Shuffle;
+                set => _player.Shuffle = value;
+            }
+
+            public override double Volume
+            {
+                get => _player.Volume;
+                set => _player.Volume = value;
+            }
+
+            protected override ValueTask OnNextAsync(Message request)
+            {
+                _player.Next();
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnPreviousAsync(Message request)
+            {
+                _player.Previous();
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnPauseAsync(Message request)
+            {
+                PlaybackStatus = _player.Pause();
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnPlayPauseAsync(Message request)
+            {
+                PlaybackStatus = _player.PlayPause();
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnStopAsync(Message request)
+            {
+                PlaybackStatus = _player.Stop();
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnPlayAsync(Message request)
+            {
+                PlaybackStatus = _player.Play();
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnSeekAsync(Message request, long offset)
+            {
+                _player.Seek(offset);
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnSetPositionAsync(Message request, ObjectPath trackId, long position)
+            {
+                _player.SetPosition(trackId, position);
+                return ValueTask.CompletedTask;
+            }
+
+            protected override ValueTask OnOpenUriAsync(Message request, string uri)
+            {
+                _player.OpenUri(uri);
+                return ValueTask.CompletedTask;
+            }
+        }
     }
 }
+
