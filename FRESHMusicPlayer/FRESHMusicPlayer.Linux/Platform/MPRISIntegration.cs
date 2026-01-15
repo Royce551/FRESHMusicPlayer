@@ -1,12 +1,17 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Media;
 using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Desktop;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Tmds.DBus.Protocol;
 using Tmds.DBus.SourceGenerator;
+using Drawing = SixLabors.ImageSharp;
 
 namespace FRESHMusicPlayer.Linux.Platform
 {
@@ -359,12 +364,26 @@ namespace FRESHMusicPlayer.Linux.Platform
 
         public void UpdateMetadata(IMetadataProvider metadata, PlaybackStatus status)
         {
+            var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
+            var tempPath = Path.Combine(runtimeDir, "fmp");
+            if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
+            var filePath = Path.Combine(tempPath, Path.GetRandomFileName());
+
+            if (metadata.CoverArt != null)
+            {
+                using var z = Drawing.Image.Load(new MemoryStream(metadata.CoverArt));
+                using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
+                z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
+                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{filePath}");
+            }
+
             Metadata = new Dictionary<string, VariantValue>
             {
                 ["mpris:length"] = metadata.Length * 1000000,
                 ["xesam:artist"] = string.Join(", ", metadata.Artists),
                 ["xesam:album"] = metadata.Album,
                 ["xesam:title"] = metadata.Title,
+                ["mpris:artUrl"] = $"file://{filePath}"
             };
             ProgressTimer_Tick(this, EventArgs.Empty); // TODO: this is cursed i just want to see if stuff works
         }
@@ -393,6 +412,8 @@ namespace FRESHMusicPlayer.Linux.Platform
                     LoopStatus = "Playlist";
                     break;
             }
+
+            Shuffle = viewModel.Player.Queue.Shuffle;
         }
 
         public async Task<string> AddToDBusAsync()
