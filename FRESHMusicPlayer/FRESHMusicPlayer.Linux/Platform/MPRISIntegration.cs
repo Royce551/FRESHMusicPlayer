@@ -361,18 +361,38 @@ namespace FRESHMusicPlayer.Linux.Platform
         {
             Metadata = new Dictionary<string, VariantValue>
             {
-                ["mpris:length"] = metadata.Length,
+                ["mpris:length"] = metadata.Length * 1000000,
                 ["xesam:artist"] = string.Join(", ", metadata.Artists),
                 ["xesam:album"] = metadata.Album,
                 ["xesam:title"] = metadata.Title,
             };
+            ProgressTimer_Tick(this, EventArgs.Empty); // TODO: this is cursed i just want to see if stuff works
         }
 
         private void ProgressTimer_Tick(object? sender, EventArgs e)
         {
-            if (!viewModel.Player.FileLoaded) return;
+            if (!viewModel.Player.FileLoaded)
+            {
+                PlaybackStatus = "Stopped";
+                return;
+            }
 
-            Position = (long)viewModel.CurrentTimeSeconds;
+            Position = (long)(viewModel.CurrentTimeSeconds * 1000000);
+            if (viewModel.Player.Paused) PlaybackStatus = "Paused";
+            else PlaybackStatus = "Playing";
+
+            switch (viewModel.Player.Queue.RepeatMode)
+            {
+                case RepeatMode.None:
+                    LoopStatus = "None";
+                    break;
+                case RepeatMode.RepeatOne:
+                    LoopStatus = "Track";
+                    break;
+                case RepeatMode.RepeatAll:
+                    LoopStatus = "Playlist";
+                    break;
+            }
         }
 
         public async Task<string> AddToDBusAsync()
