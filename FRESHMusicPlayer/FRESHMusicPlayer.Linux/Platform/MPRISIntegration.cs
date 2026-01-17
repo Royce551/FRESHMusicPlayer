@@ -7,7 +7,9 @@ using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Tmds.DBus.Protocol;
 using Tmds.DBus.SourceGenerator;
@@ -17,7 +19,7 @@ namespace FRESHMusicPlayer.Linux.Platform
 {
     public class MPRISIntegration : IPlaybackIntegration
     {
-        DBusMediaPlayer mediaPlayer = default!;
+        DBusMediaPlayer mediaPlayer;
         MainViewModel viewModel;
         Window window;
 
@@ -31,23 +33,23 @@ namespace FRESHMusicPlayer.Linux.Platform
 
         private async Task InitializeAsync()
         {
-            if (Address.Session is null) throw new PlatformNotSupportedException("Not on platform with DBus");
-
             var connection = new Connection(Address.Session);
             await connection.ConnectAsync();
 
             mediaPlayer = new DBusMediaPlayer(connection, viewModel, window);
-            await mediaPlayer.AddToDBusAsync();
+            mediaPlayer.AddToDBusAsync();
         }
 
         public void Close()
         {
-            
+
         }
 
-        public async Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
+        public Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
         {
-            await mediaPlayer.UpdateMetadataAsync(track, status);
+            mediaPlayer.UpdateMetadata(track, status);
+
+            return Task.CompletedTask;
         }
     }
 
@@ -362,7 +364,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             };
         }
 
-        public async Task UpdateMetadataAsync(IMetadataProvider metadata, PlaybackStatus status)
+        public void UpdateMetadata(IMetadataProvider metadata, PlaybackStatus status)
         {
             var metadataDict = new Dictionary<string, VariantValue>
             {
@@ -372,27 +374,40 @@ namespace FRESHMusicPlayer.Linux.Platform
                 ["xesam:title"] = metadata.Title,
             };
 
-            if (metadata.CoverArt != null)
+            var mime = FindMimeType(metadata);
+            if (metadata.CoverArt != null && mime != null)
             {
-                var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
-                var tempPath = Path.Combine(runtimeDir, "fmp");
-                if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
-                var filePath = Path.Combine(tempPath, Path.GetRandomFileName());
-
-                await Task.Run(() =>
-                {
-                    using var z = Drawing.Image.Load(new MemoryStream(metadata.CoverArt));
-                    using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
-                    z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
-                });
-               
-                metadataDict.Add("mpris:artUrl", $"file://{filePath}");
-                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{filePath}");
+                var url = $"data:{mime};base64,{Convert.ToBase64String(metadata.CoverArt)}";
+                metadataDict.Add("mpris:artUrl", url);
+                LoggingHandler.Log($"MPRIS: Providing cover art URL via direct stream");
             }
 
             Metadata = metadataDict;
 
             ProgressTimer_Tick(this, EventArgs.Empty); // TODO: this is cursed i just want to see if stuff works
+        }
+
+        private static readonly byte[] BMP = { 66, 77 };
+        private static readonly byte[] GIF = { 71, 73, 70, 56 };
+        private static readonly byte[] JPG = { 255, 216, 255 };
+        private static readonly byte[] PNG = { 137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82 };
+        private static readonly byte[] TIFF = { 73, 73, 42, 0 };
+
+        private string? FindMimeType(IMetadataProvider metadata)
+        {
+            if (metadata is FileMetadataProvider file && file.ATLTrack.EmbeddedPictures.Count != 0)
+                return file.ATLTrack.EmbeddedPictures[0].MimeType; // hardcoded to 0 to match fmpcore
+
+            // attempt to find mime type using magic numbers, may or may not work
+            var cover = metadata.CoverArt;
+
+            if (cover.Take(2).SequenceEqual(BMP)) return "image/bmp";
+            if (cover.Take(4).SequenceEqual(GIF)) return "image/gif";
+            if (cover.Take(3).SequenceEqual(JPG)) return "image/jpeg";
+            if (cover.Take(16).SequenceEqual(PNG)) return "image/png";
+            if (cover.Take(4).SequenceEqual(TIFF)) return "image/tiff";
+
+            return null;
         }
 
         private void ProgressTimer_Tick(object? sender, EventArgs e)
