@@ -379,7 +379,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             {
                 var url = $"data:{mime};base64,{Convert.ToBase64String(metadata.CoverArt)}";
                 metadataDict.Add("mpris:artUrl", url);
-                LoggingHandler.Log($"MPRIS: Providing cover art URL via direct stream");
+                LoggingHandler.Log($"MPRIS: Providing cover art URL via direct stream. Inferred mime is {mime}");
             }
 
             Metadata = metadataDict;
