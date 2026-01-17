@@ -17,7 +17,7 @@ namespace FRESHMusicPlayer.Linux.Platform
 {
     public class MPRISIntegration : IPlaybackIntegration
     {
-        DBusMediaPlayer mediaPlayer;
+        DBusMediaPlayer mediaPlayer = default!;
         MainViewModel viewModel;
         Window window;
 
@@ -31,11 +31,13 @@ namespace FRESHMusicPlayer.Linux.Platform
 
         private async Task InitializeAsync()
         {
+            if (Address.Session is null) throw new PlatformNotSupportedException("Not on platform with DBus");
+
             var connection = new Connection(Address.Session);
             await connection.ConnectAsync();
 
             mediaPlayer = new DBusMediaPlayer(connection, viewModel, window);
-            mediaPlayer.AddToDBusAsync();
+            await mediaPlayer.AddToDBusAsync();
         }
 
         public void Close()
@@ -43,11 +45,9 @@ namespace FRESHMusicPlayer.Linux.Platform
             
         }
 
-        public Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
+        public async Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
         {
-            mediaPlayer.UpdateMetadata(track, status);
-
-            return Task.CompletedTask;
+            await mediaPlayer.UpdateMetadataAsync(track, status);
         }
     }
 
@@ -362,29 +362,28 @@ namespace FRESHMusicPlayer.Linux.Platform
             };
         }
 
-        public void UpdateMetadata(IMetadataProvider metadata, PlaybackStatus status)
+        public async Task UpdateMetadataAsync(IMetadataProvider metadata, PlaybackStatus status)
         {
-            var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
-            var tempPath = Path.Combine(runtimeDir, "fmp");
-            if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
-            var filePath = Path.Combine(tempPath, Path.GetRandomFileName());
-
-            if (metadata.CoverArt != null)
-            {
-                using var z = Drawing.Image.Load(new MemoryStream(metadata.CoverArt));
-                using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
-                z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
-                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{filePath}");
-            }
-
             Metadata = new Dictionary<string, VariantValue>
             {
                 ["mpris:length"] = metadata.Length * 1000000,
                 ["xesam:artist"] = string.Join(", ", metadata.Artists),
                 ["xesam:album"] = metadata.Album,
                 ["xesam:title"] = metadata.Title,
-                ["mpris:artUrl"] = $"file://{filePath}"
             };
+
+            if (metadata.CoverArt != null)
+            {
+                using var z = Drawing.Image.Load(new MemoryStream(metadata.CoverArt));
+                using var memStream = new MemoryStream();
+
+                await z.SaveAsync(memStream, new Drawing.Formats.Png.PngEncoder());
+
+                string url = $"data:image/png;base64,{Convert.ToBase64String(memStream.ToArray())}";
+                Metadata.Add("mpris:artUrl", url);
+                LoggingHandler.Log($"MPRIS: Wrote and providing cover art using direct stream");
+            }
+
             ProgressTimer_Tick(this, EventArgs.Empty); // TODO: this is cursed i just want to see if stuff works
         }
 
