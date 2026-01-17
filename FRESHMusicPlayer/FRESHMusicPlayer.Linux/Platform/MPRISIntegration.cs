@@ -364,7 +364,7 @@ namespace FRESHMusicPlayer.Linux.Platform
 
         public async Task UpdateMetadataAsync(IMetadataProvider metadata, PlaybackStatus status)
         {
-            Metadata = new Dictionary<string, VariantValue>
+            var metadataDict = new Dictionary<string, VariantValue>
             {
                 ["mpris:length"] = metadata.Length * 1000000,
                 ["xesam:artist"] = string.Join(", ", metadata.Artists),
@@ -386,9 +386,11 @@ namespace FRESHMusicPlayer.Linux.Platform
                     z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
                 });
                
-                Metadata.Add("mpris:artUrl", $"file://{filePath}");
+                metadataDict.Add("mpris:artUrl", $"file://{filePath}");
                 LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{filePath}");
             }
+
+            Metadata = metadataDict;
 
             ProgressTimer_Tick(this, EventArgs.Empty); // TODO: this is cursed i just want to see if stuff works
         }
