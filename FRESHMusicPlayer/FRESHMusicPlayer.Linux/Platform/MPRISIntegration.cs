@@ -374,14 +374,20 @@ namespace FRESHMusicPlayer.Linux.Platform
 
             if (metadata.CoverArt != null)
             {
-                using var z = Drawing.Image.Load(new MemoryStream(metadata.CoverArt));
-                using var memStream = new MemoryStream();
+                var runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
+                var tempPath = Path.Combine(runtimeDir, "fmp");
+                if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
+                var filePath = Path.Combine(tempPath, Path.GetRandomFileName());
 
-                await z.SaveAsync(memStream, new Drawing.Formats.Png.PngEncoder());
-
-                string url = $"data:image/png;base64,{Convert.ToBase64String(memStream.ToArray())}";
-                Metadata.Add("mpris:artUrl", url);
-                LoggingHandler.Log($"MPRIS: Wrote and providing cover art using direct stream");
+                await Task.Run(() =>
+                {
+                    using var z = Drawing.Image.Load(new MemoryStream(metadata.CoverArt));
+                    using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
+                    z.Save(fileStream, new Drawing.Formats.Png.PngEncoder());
+                });
+               
+                Metadata.Add("mpris:artUrl", $"file://{filePath}");
+                LoggingHandler.Log($"MPRIS: Wrote and providing cover art file://{filePath}");
             }
 
             ProgressTimer_Tick(this, EventArgs.Empty); // TODO: this is cursed i just want to see if stuff works
