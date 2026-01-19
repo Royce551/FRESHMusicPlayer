@@ -7,7 +7,7 @@
         mc:Ignorable="d" Height="{Binding Config.WindowHeight, Mode=TwoWay}" Width="{Binding Config.WindowWidth, Mode=TwoWay}" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1"
         x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed"
-        Icon="/Assets/avalonia-logo.ico" Name="root"
+        Name="root"
         Title="{Binding WindowTitle}">
 
   <Design.DataContext>
