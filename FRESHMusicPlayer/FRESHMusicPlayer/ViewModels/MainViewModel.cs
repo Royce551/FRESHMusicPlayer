@@ -15,6 +15,8 @@ using LiteDB;
 using Splat;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -44,6 +46,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     public ConfigurationFile Config { get; private set; } = default!;
 
     public HttpClient HttpClient { get; private set; }
+
+    public ObservableCollection<Notification> Notifications { get; private set; } = new ObservableCollection<Notification>();
 
     /// <summary>
     /// This is for the designer. Should not be used for any other purpose.
@@ -110,6 +114,43 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         if (platformWrapper != null)
         {
             PlaybackIntegrations.Add(platformWrapper.GetPlatformPlaybackIntegration(this, MainWindow));
+        }
+
+        Notifications.CollectionChanged += Notifications_CollectionChanged;
+    }
+
+    public bool NotificationsNotEmpty => Notifications.Count > 0;
+    public string CurrentNotificationStatusBarText => Notifications.FirstOrDefault(x => !string.IsNullOrEmpty(x.StatusBarText))?.StatusBarText ?? null;
+
+    public ObservableCollection<Notification> ActiveToastNotifications { get; private set; } = new();
+    public bool ShowToastNotifications => SidePaneView is not NotificationsViewModel;
+
+    private async void Notifications_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(NotificationsNotEmpty));
+        OnPropertyChanged(nameof(CurrentNotificationStatusBarText));
+
+        if (e.Action == NotifyCollectionChangedAction.Add)
+        {
+            foreach (var notif in e.NewItems!.OfType<Notification>())
+            {
+                if (notif.DisplayAsToast)
+                {
+                    ActiveToastNotifications.Add(notif);
+                    if (notif.ToastDisplayTime != null)
+                    {
+                        await Task.Delay(notif.ToastDisplayTime.Value);
+                        ActiveToastNotifications.Remove(notif);
+                    }
+                }
+            }
+        }
+        else if (e.Action == NotifyCollectionChangedAction.Remove)
+        {
+            foreach (var notif in e.OldItems!.OfType<Notification>())
+            {
+                ActiveToastNotifications.Remove(notif);
+            }
         }
     }
 
@@ -394,6 +435,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowToastNotifications))]
     private ViewModelBase? sidePaneView;
 
     [ObservableProperty]
@@ -431,6 +473,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 "FRESHMusicPlayer.Queue" => new QueueViewModel(),
                 "FRESHMusicPlayer.Settings" => new SettingsViewModel(this),
                 "FRESHMusicPlayer.TrackInfo" => new TrackInfoViewModel(),
+                "FRESHMusicPlayer.Notifications" => new NotificationsViewModel(this),
                 _ => new ViewModelBase()
             };
             SidePaneView.MainView = this;
@@ -459,6 +502,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     public async void OpenQueueCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Queue", 300);
 
     public async void OpenTrackInfoCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.TrackInfo", 250, true);
+
+    public async void OpenNotificationsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Notifications", 300);
 
     public bool AutoQueueIsQueued { get; set; } = false;
 

@@ -1,12 +1,13 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+        xmlns:handlers="using:FRESHMusicPlayer.Handlers"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
         mc:Ignorable="d" Height="{Binding Config.WindowHeight, Mode=TwoWay}" Width="{Binding Config.WindowWidth, Mode=TwoWay}" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1"
-        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed"
+        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed" KeyDown="root_KeyDown"
         Name="root"
         Title="{Binding WindowTitle}">
 
@@ -89,6 +90,7 @@
     <Geometry x:Key="PlayIcon">F1 M380 -300L660 -480L380 -660L380 -300ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z</Geometry>
     <Geometry x:Key="RepeatIcon">F1 M280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
     <Geometry x:Key="RepeatOneIcon">F1 M460 -360L460 -540L400 -540L400 -600L520 -600L520 -360L460 -360ZM280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
+    <Geometry x:Key="NotificationIcon">M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21</Geometry>
     <ContextMenu x:Key="OverflowMenu">
 		<MenuItem Header="Track info" Command="{Binding OpenTrackInfoCommand}"/>
         <MenuItem Header="Lyrics"/>
@@ -119,6 +121,17 @@
             <Button Content="Import" FontSize="16" Command="{Binding OpenImportTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding ImportTabFontWeight}" HotKey="Ctrl+D5"/>
           </StackPanel>
           <StackPanel Margin="10,2" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Right">
+              
+            <Button FontSize="16" Command="{Binding OpenNotificationsCommand}" Theme="{StaticResource LinkButton}" IsVisible="{Binding NotificationsNotEmpty}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+					<TextBlock Text="{Binding CurrentNotificationStatusBarText}" FontSize="14" VerticalAlignment="Center" IsVisible="{Binding NotificationsNotEmpty}">
+                    </TextBlock>
+                    <Path Margin="0,-1,2,0" Data="{StaticResource NotificationIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
+                     <TextBlock Text="{Binding Notifications.Count}" FontSize="16" Margin="0,0,0,0"/>
+                </StackPanel>
+                
+            </Button>
+           
             <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+F">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
@@ -131,6 +144,34 @@
           </StackPanel>
         </Panel>
       </Panel>
+      
+    <ListBox DockPanel.Dock="Top" Width="250" HorizontalAlignment="Right" Margin="10" BorderBrush="Transparent" ItemsSource="{Binding ActiveToastNotifications}" IsVisible="{Binding ShowToastNotifications}" MaxHeight="500">
+		<ListBox.DataTemplates>
+			<DataTemplate DataType="handlers:Notification">
+                <Border CornerRadius="2" BorderThickness="1" BorderBrush="{Binding BorderColor}" Background="{DynamicResource ForegroundColor}" Padding="5" PointerReleased="Border_PointerReleased">
+					<StackPanel Spacing="5">
+					    <TextBlock Text="{Binding ContentText}" TextWrapping="Wrap"/>
+                        <Button Command="{Binding NotificationButton}" Content="{Binding ButtonText}" IsVisible="{Binding IsNotificationButtonVisible}"/>
+                    </StackPanel>
+                     <Border.Styles>
+					<Style Selector="Border">
+						<Style.Animations>
+							<Animation Duration="0:0:.5" Easing="ExponentialEaseOut">
+								<KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </Border.Styles>
+                </Border>
+            </DataTemplate>
+        </ListBox.DataTemplates>
+    </ListBox>
+
       <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}">
           <TransitioningContentControl Content="{Binding CoverArt}" x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" PointerReleased="CoverArt_PointerReleased" Cursor="Hand">
 			  <TransitioningContentControl.ContentTemplate>
@@ -174,7 +215,7 @@
                 </Slider.Styles>
               </Slider>
               <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Command="{Binding ToggleMute}">
-                <Image Margin="">
+                <Image>
                   <DrawingImage>
                     <DrawingGroup>
                       <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />

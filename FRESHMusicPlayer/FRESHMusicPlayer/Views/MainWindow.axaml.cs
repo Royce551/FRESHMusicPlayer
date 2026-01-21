@@ -11,6 +11,7 @@ using System;
 using Avalonia.Controls.Primitives;
 using Avalonia.LogicalTree;
 using System.IO;
+using System.Reactive;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -192,5 +193,54 @@ public partial class MainWindow : Window
     private void CoverArt_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
     {
         viewModel.OpenTrackInfoCommand();
+    }
+
+    private void root_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case Avalonia.Input.Key.F9:
+                viewModel.Notifications.Add(new Handlers.Notification(viewModel)
+                {
+                    ContentText = "Test informative toast notification with button",
+                    ButtonText = "nya",
+                    OnButtonClicked = () =>
+                    {
+                        Debug.WriteLine("button has been pressed");
+                        return false;
+                    },
+                    DisplayAsToast = true,
+                    ToastDisplayTime = TimeSpan.FromSeconds(30),
+                    Type = Handlers.NotificationType.Information
+                });
+                viewModel.Notifications.Add(new Handlers.Notification(viewModel)
+                {
+                    ContentText = "Success!",
+                    DisplayAsToast = true,
+                    ToastDisplayTime = TimeSpan.FromSeconds(30),
+                    Type = Handlers.NotificationType.Success
+                });
+                viewModel.Notifications.Add(new Handlers.Notification(viewModel)
+                {
+                    ContentText = "Fail!",
+                    DisplayAsToast = true,
+                    ToastDisplayTime = TimeSpan.FromSeconds(30),
+                    Type = Handlers.NotificationType.Failure
+                });
+                viewModel.Notifications.Add(new Handlers.Notification(viewModel)
+                {
+                    ContentText = "Progress notification with status bar text",
+                    DisplayAsToast = true,
+                    ToastDisplayTime = TimeSpan.FromSeconds(30),
+                    StatusBarText = "Status bar text! Doing stuff...",
+                    Type = Handlers.NotificationType.Progress
+                });
+                break;
+        }
+    }
+
+    private void Border_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+    {
+        viewModel.Notifications.Remove(((sender as Border).DataContext as Handlers.Notification));
     }
 }
