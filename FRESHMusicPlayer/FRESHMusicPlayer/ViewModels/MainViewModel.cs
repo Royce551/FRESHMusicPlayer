@@ -8,10 +8,12 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.Views;
 using LiteDB;
+using SIADL.Avalonia;
 using Splat;
 using System;
 using System.Collections.Generic;
@@ -58,11 +60,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     public MainViewModel(MainWindow mainWindow)
     {
-        this.MainWindow = mainWindow;
+        MainWindow = mainWindow;
 
         if (!Design.IsDesignMode)
         {
         }
+
+        Dispatcher.UIThread.UnhandledException += UIThread_UnhandledException;
 
         Player = new Player();
         Player.SongLoading += Player_SongLoading;
@@ -117,6 +121,33 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         }
 
         Notifications.CollectionChanged += Notifications_CollectionChanged;
+    }
+
+    private void UIThread_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        string logPath = Path.Combine(App.DataFolderLocation, "Logs");
+        string fileName = $"{DateTime.Now:s}.txt".Replace(':', '-');
+        if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
+        File.WriteAllText(Path.Combine(logPath, fileName),
+            $"FRESHMusicPlayer {Assembly.GetEntryAssembly()?.GetName().Version}\n" +
+            $"{System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}\n" +
+            $"{Environment.OSVersion.VersionString}\n" +
+            $"{e.Exception}");
+        Notifications.Add(new Notification(this)
+        {
+            ContentText = $"An error occurred :(\n\nPlease report this with the debug log at https://github.com/royce551/freshmusicplayer/issues.",
+            ButtonText = "Open debug lug",
+            Type = NotificationType.Failure,
+            DisplayAsToast = true,
+            OnButtonClicked = () =>
+            {
+                SIADLUtilities.OpenURL(logPath);
+                SIADLUtilities.OpenURL(Path.Combine(logPath, fileName));
+                return true;
+            }
+        });
+
+        e.Handled = true;
     }
 
     public bool NotificationsNotEmpty => Notifications.Count > 0;
@@ -281,18 +312,26 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
     {
         var message = new StringBuilder(); // TODO: temp
-        message.AppendLine("Problems");
+        message.AppendLine("A playback error occurred:");
+        message.AppendLine();
         foreach (var problem in e.Problems)
         {
-            message.AppendLine($"{problem.Key}: {problem.Value}");
+            var problemString = problem.Value switch
+            {
+                BackendLoadResult.NotSupported => "Not supported by this backend",
+                BackendLoadResult.Invalid => "Invalid for this backend",
+                BackendLoadResult.Corrupt => "File appears to be corrupt",
+                BackendLoadResult.UnknownError => "Unknown error",
+            };
+            message.AppendLine($"{problem.Key}: {problemString}");
         }
-        message.AppendLine("Exceptions");
-        foreach (var ex in e.Exceptions)
+        Notifications.Add(new Notification(this)
         {
-            message.AppendLine($"{ex.Key}: {ex.Value}");
-        }
-
-        Console.WriteLine($"Player: Playback exception: {message}");
+            ContentText = message.ToString(),
+            DisplayAsToast = true,
+            ToastDisplayTime = TimeSpan.FromMinutes(1),
+            Type = NotificationType.Failure
+        });
     }
 
     private bool coverArtIsVisible = false;

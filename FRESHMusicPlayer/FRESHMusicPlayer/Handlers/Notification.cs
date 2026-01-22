@@ -12,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Handlers
 {
-    public class Notification
+    public partial class Notification : ObservableObject
     {
-        public string ContentText { get; set; } = string.Empty;
+        [ObservableProperty]
+        private string contentText = string.Empty;
 
         public string ButtonText { get; set; } = string.Empty;
 

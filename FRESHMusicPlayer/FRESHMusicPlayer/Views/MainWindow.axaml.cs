@@ -1,17 +1,20 @@
-﻿using Avalonia.Animation;
-using Avalonia;
+﻿using Avalonia;
+using Avalonia.Animation;
+using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Controls.Platform;
-using FRESHMusicPlayer.ViewModels;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using Avalonia.Media;
-using Avalonia.Animation.Easings;
-using System;
 using Avalonia.Controls.Primitives;
 using Avalonia.LogicalTree;
+using Avalonia.Media;
+using Avalonia.Threading;
+using FRESHMusicPlayer.ViewModels;
+using SIADL.Avalonia;
+using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -199,41 +202,63 @@ public partial class MainWindow : Window
     {
         switch (e.Key)
         {
-            case Avalonia.Input.Key.F9:
+            case Avalonia.Input.Key.F1:
+                SIADLUtilities.OpenURL("https://royce551.github.io/FRESHMusicPlayer/docs/index.html");
+                break;
+            case Avalonia.Input.Key.F10:
                 viewModel.Notifications.Add(new Handlers.Notification(viewModel)
                 {
-                    ContentText = "Test informative toast notification with button",
-                    ButtonText = "nya",
+                    ContentText = "Debug Tools",
+                    DisplayAsToast = true,
+                });
+                viewModel.Notifications.Add(new Handlers.Notification(viewModel)
+                {
+                    ButtonText = "Throw exception",
                     OnButtonClicked = () =>
                     {
-                        Debug.WriteLine("button has been pressed");
+                        throw new Exception();
                         return false;
                     },
                     DisplayAsToast = true,
-                    ToastDisplayTime = TimeSpan.FromSeconds(30),
-                    Type = Handlers.NotificationType.Information
+                    ToastDisplayTime = TimeSpan.FromMinutes(1)
                 });
                 viewModel.Notifications.Add(new Handlers.Notification(viewModel)
                 {
-                    ContentText = "Success!",
+                    ButtonText = "Toggle window topmost",
+                    OnButtonClicked = () =>
+                    {
+                        Topmost = !Topmost;
+                        return false;
+                    },
                     DisplayAsToast = true,
-                    ToastDisplayTime = TimeSpan.FromSeconds(30),
-                    Type = Handlers.NotificationType.Success
+                    ToastDisplayTime = TimeSpan.FromMinutes(1)
                 });
                 viewModel.Notifications.Add(new Handlers.Notification(viewModel)
                 {
-                    ContentText = "Fail!",
+                    ButtonText = "Reimport all tracks",
+                    OnButtonClicked = () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            var tracks = viewModel.Library.GetAllTracks().Select(x => x.Path).Distinct();
+                            Dispatcher.UIThread.Invoke(() => viewModel.Library.Nuke(false));
+                            await viewModel.Library.ImportAsync(tracks.ToArray());
+                        });
+                        return false;
+                    },
                     DisplayAsToast = true,
-                    ToastDisplayTime = TimeSpan.FromSeconds(30),
-                    Type = Handlers.NotificationType.Failure
+                    ToastDisplayTime = TimeSpan.FromMinutes(1)
                 });
                 viewModel.Notifications.Add(new Handlers.Notification(viewModel)
                 {
-                    ContentText = "Progress notification with status bar text",
+                    ButtonText = "Garbage collect",
+                    OnButtonClicked = () =>
+                    {
+                        GC.Collect(2);
+                        return false;
+                    },
                     DisplayAsToast = true,
-                    ToastDisplayTime = TimeSpan.FromSeconds(30),
-                    StatusBarText = "Status bar text! Doing stuff...",
-                    Type = Handlers.NotificationType.Progress
+                    ToastDisplayTime = TimeSpan.FromMinutes(1)
                 });
                 break;
         }

@@ -40,7 +40,7 @@ namespace FRESHMusicPlayer.Handlers
         {
             //if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
 
-            //LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
+            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
 
             Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
@@ -51,7 +51,7 @@ namespace FRESHMusicPlayer.Handlers
         {
             //if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
 
-            //LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
+            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
 
             Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
@@ -68,6 +68,13 @@ namespace FRESHMusicPlayer.Handlers
                 //    ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
                 //    Type = NotificationType.Success
                 //});
+                viewModel.Notifications.Add(new Notification(viewModel)
+                {
+                    ContentText = "Successfully cleared your library!",
+                    Type = NotificationType.Success,
+                    DisplayAsToast = true,
+                    ToastDisplayTime = null
+                });
                 if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, []);
             });
         }
@@ -117,7 +124,17 @@ namespace FRESHMusicPlayer.Handlers
             //};
             //dispatcher.Invoke(() => window.NotificationHandler.Add(notification));
 
-            //LoggingHandler.Log("Processing library metadata...");
+            var notification = new Notification(viewModel)
+            {
+                ContentText = "Processing library changes...\n??? tracks remaining\n\nNewly added tracks won't show in the artists or albums tabs until processing is complete.",
+                StatusBarText = "Processing library changes...",
+                Type = NotificationType.Progress,
+                DisplayAsToast = true,
+                ToastDisplayTime = TimeSpan.FromSeconds(5)
+            };
+            Dispatcher.UIThread.Invoke(() => viewModel.Notifications.Add(notification));
+
+            LoggingHandler.Log("Processing library metadata...");
 
             var startTime = DateTime.Now;
             int? tracksToProcess = null;
@@ -125,13 +142,15 @@ namespace FRESHMusicPlayer.Handlers
             {
                 if (tracksToProcess is null) tracksToProcess = p;
 
-                //notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, p);
-                //dispatcher.Invoke(() => window.NotificationHandler.Update(notification));
-            });
+                Dispatcher.UIThread.Invoke(() =>
+                {
+                    notification.ContentText = $"Processing library changes...\n{p} tracks remaining\n\nNewly added tracks won't show in the artists or albums tabs until processing is complete.";
+                });
+            });    
 
             Dispatcher.UIThread.Invoke(() =>
             {
-                //window.NotificationHandler.Remove(notification);
+                viewModel.Notifications.Remove(notification);
                 if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, updatedTracks.Select(x => x.Path));
             });
 
