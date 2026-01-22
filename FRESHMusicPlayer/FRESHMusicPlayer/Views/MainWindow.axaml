@@ -132,7 +132,7 @@
                 
             </Button>
            
-            <Button Content="Search" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+F">
+            <Button Content="Search" FontSize="16" Command="{Binding OpenSearchCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+F">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
             <Button Content="Queue" FontSize="16" Command="{Binding OpenQueueCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+Q">
@@ -250,7 +250,7 @@
                 <PathIcon x:Name="ShuffleIcon" Data="F1 M560 -160L560 -240L664 -240L537 -367L594 -424L720 -298L720 -400L800 -400L800 -160L560 -160ZM216 -160L160 -216L664 -720L560 -720L560 -800L800 -800L800 -560L720 -560L720 -664L216 -160ZM367 -537L160 -744L216 -800L423 -593L367 -537Z"/>
               </Button>
              
-              <Button Theme="{StaticResource LinkButton}" Width="40" Height="40" Margin="0,0" Command="{Binding TogglePause}" HotKey="Space">
+              <Button Theme="{StaticResource LinkButton}" Width="40" Height="40" Margin="0,0" Command="{Binding TogglePause}">
                 <PathIcon x:Name="PlayPauseIcon" Margin="5" Width="35" Height="35" Padding="5" Foreground="{DynamicResource PrimaryTextColor}" Data="{StaticResource PauseIcon}"/>
               </Button>
               

@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:FRESHMusicPlayer.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" x:DataType="vm:SearchViewModel" Loaded="UserControl_Loaded"
+             x:Class="FRESHMusicPlayer.Views.SearchView" Background="{DynamicResource SecondaryColor}">
+    <DockPanel>
+		<TextBox x:Name="SearchBox" DockPanel.Dock="Top" Watermark="Type here to search" Text="{Binding Search}" Margin="10,5,10,0"/>
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+            <TextBlock Text="{Binding FooterText}" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" Margin="10,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+            <Button Content="Play all" Command="{Binding PlayAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+          <Button Content="Enqueue all" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+        </DockPanel>
+
+      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks^}" BorderBrush="Transparent" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyboardNavigation.TabNavigation="Continue" Margin="10,5">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate DataType="vm:DatabaseTrackViewModel">
+          <Grid RowDefinitions="*,*" ColumnDefinitions="*,Auto" Background="Transparent">
+            <Grid.Styles>
+              <Style Selector="Grid > StackPanel > Button">
+                <Setter Property="IsVisible" Value="False"/>
+              </Style>
+              <Style Selector="Grid:pointerover > StackPanel > Button">
+                <Setter Property="IsVisible" Value="True"/>
+              </Style>
+              <Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button">
+                <Setter Property="IsVisible" Value="True"/>
+              </Style>
+            </Grid.Styles>
+            
+              <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="12"/>
+              <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
+            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+              <Button Content="Enqueue" Command="{Binding Enqueue}"/>
+              <Button Content="Play" Command="{Binding Play}"/>         
+            </StackPanel>
+            <Grid.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="Play" Command="{Binding Play}"/>
+                <MenuItem Header="Enqueue" Command="{Binding Enqueue}"/>
+                <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+                <Separator/>
+                <MenuItem Header="Go to">
+                  <MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
+                  <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
+                </MenuItem>
+                <MenuItem Header="Manage playlists..."/>
+                <MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>
+                <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
+              </ContextMenu>
+            </Grid.ContextMenu>
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    </DockPanel>
+</UserControl>

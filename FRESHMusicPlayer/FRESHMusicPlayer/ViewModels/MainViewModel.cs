@@ -513,6 +513,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 "FRESHMusicPlayer.Settings" => new SettingsViewModel(this),
                 "FRESHMusicPlayer.TrackInfo" => new TrackInfoViewModel(),
                 "FRESHMusicPlayer.Notifications" => new NotificationsViewModel(this),
+                "FRESHMusicPlayer.Search" => new SearchViewModel(),
                 _ => new ViewModelBase()
             };
             SidePaneView.MainView = this;
@@ -543,6 +544,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     public async void OpenTrackInfoCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.TrackInfo", 250, true);
 
     public async void OpenNotificationsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Notifications", 300);
+
+    public async void OpenSearchCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Search", 300);
 
     public bool AutoQueueIsQueued { get; set; } = false;
 
