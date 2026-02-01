@@ -268,4 +268,13 @@ public partial class MainWindow : Window
     {
         viewModel.Notifications.Remove(((sender as Border).DataContext as Handlers.Notification));
     }
+
+    private void MenuItem_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+    {
+        var ctrl = sender as Control;
+        if (ctrl != null)
+        {
+            (Resources["OpenFileFlyout"] as Flyout).ShowAt(this, true);
+        }
+    }
 }

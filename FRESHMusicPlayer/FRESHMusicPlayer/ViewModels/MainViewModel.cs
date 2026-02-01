@@ -611,6 +611,17 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             }
         }
     }
+
+    [ObservableProperty]
+    private string openDialogPath;
+
+    public void OpenDialogOpen()
+    {
+        if (string.IsNullOrEmpty(OpenDialogPath)) return;
+
+        AddToQueueAndHandleAutoQueue(OpenDialogPath);
+        Player.PlayAsync();
+    }
 }
 
 public enum Page
