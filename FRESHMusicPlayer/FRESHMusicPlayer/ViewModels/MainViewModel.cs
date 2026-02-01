@@ -248,6 +248,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     [ObservableProperty]
+    private bool pauseAfterCurrentTrack = false;
+
+    [ObservableProperty]
     private string windowTitle = WindowName;
     [ObservableProperty]
     private string title = "Nothing playing";
@@ -402,14 +405,20 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             if (currentSidePanePath != "FRESHMusicPlayer.TrackInfo") SetCoverArtVisibility(true);
         }
 
+
+
         _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
 
-        await AnimateProgressTo0Async();
-        if (Player.FileLoaded)
+        if (PauseAfterCurrentTrack)
         {
-            TotalTimeSeconds = Player.TotalTime.TotalSeconds;
-            ProgressTimer.Start();
+            TogglePause();
+            PauseAfterCurrentTrack = false;
         }
+
+        await AnimateProgressTo0Async();
+
+        TotalTimeSeconds = Player.TotalTime.TotalSeconds;
+        ProgressTimer.Start();
     }
 
     public bool IsDragging { get; set; } = false;

@@ -94,7 +94,7 @@
     <ContextMenu x:Key="OverflowMenu">
 		<MenuItem Header="Track info" Command="{Binding OpenTrackInfoCommand}"/>
         <MenuItem Header="Lyrics"/>
-        <MenuItem Header="Pause after current track"/>
+        <MenuItem Header="Pause after current track" IsChecked="{Binding PauseAfterCurrentTrack, Mode=TwoWay}" ToggleType="CheckBox"/>
         <Separator/>
         <MenuItem Header="Go to">
 			<MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
@@ -292,6 +292,7 @@
           <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Artist}" Foreground="{DynamicResource SecondaryTextColor}"/>
           <DockPanel Grid.Row="2" FlowDirection="LeftToRight">
             <TextBlock DockPanel.Dock="Left" Margin="0,0,-5,0" Text="{Binding ProgressIndicator1}" Foreground="{DynamicResource SecondaryTextColor}"/>
+            <TextBlock DockPanel.Dock="Right" Margin="5,0,0,0" Text="Pause after current track" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding PauseAfterCurrentTrack}"/>
             <Button Margin="-5,0,0,0" Theme="{StaticResource LinkButton}" Padding="0" DockPanel.Dock="Right" Command="{Binding ToggleShowRemainingTime}">
               <TextBlock DockPanel.Dock="Left" Text="{Binding ProgressIndicator2}" Foreground="{DynamicResource SecondaryTextColor}"/>
             </Button>

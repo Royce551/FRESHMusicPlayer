@@ -104,7 +104,11 @@ namespace FRESHMusicPlayer.ViewModels
                 if (initialArtist != null)
                 {
                     var foundArtist = Artists.FirstOrDefault(x => x.Name == initialArtist);
-                    if (foundArtist != null) SelectedArtist = foundArtist;
+                    if (foundArtist != null)
+                    {
+                        SelectedArtist = foundArtist;
+                        initialArtist = null;
+                    }
                 }
             });
 
