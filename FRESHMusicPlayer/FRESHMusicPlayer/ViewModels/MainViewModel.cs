@@ -293,6 +293,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         ProgressIndicator1 = time.ToString("mm\\:ss");
 
         if (Config.ShowRemainingTime) ProgressIndicator2 = $"-{time - Player.CurrentBackend.TotalTime:mm\\:ss}";
+        if (Config.ShowTimeInWindow) WindowTitle = $"{time:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} - {WindowName}";
 
         OnPropertyChanged(nameof(CurrentTimeSeconds));
 

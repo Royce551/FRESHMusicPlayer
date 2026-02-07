@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:FRESHMusicPlayer.Views"
@@ -43,14 +43,58 @@
                         </ComboBox.Items>
                     </ComboBox>
                 </DockPanel>
-                <CheckBox Content="Playtime logging"/>
+                <!--<CheckBox Content="Playtime logging"/>-->
                 <CheckBox Content="Auto queue" IsChecked="{Binding MainView.Config.AutoQueue}"/>
                 <TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
 
                 <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
 
                 <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
-                <CheckBox Content="last.fm" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>
+                <!--<CheckBox Content="last.fm" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>-->
+
+                <TextBlock Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+
+                <CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
+                <CheckBox Content="Show remaining time instead of total time in controls box" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
+
+                <TextBlock Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+
+                <Button Content="Reset settings to default" IsEnabled="False"/>
+                <Button Content="Clean and update library" Margin="0,10,0,0" Command="{Binding CleanAndUpdateLibrary}"/>
+                <TextBlock Text="Reprocesses the metadata for all tracks in the library; use if you have made a lot of updates with an external tool. Also deletes duplicate library entries." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Button Content="Nuke library" Margin="0,10,0,0">
+                    <Button.Flyout>
+						<Flyout>
+							<StackPanel Spacing="5">
+								<TextBlock Text="You are about to irreversibly clear your library and all playlists." FontWeight="Bold"/>
+                                <Button Content="Nuke library" Command="{Binding NukeLibrary}"/>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+
+                <TextBlock Text="About" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <Border CornerRadius="5" Padding="10" Margin="-3,0,-3,0">
+                    <Border.Background>
+						<LinearGradientBrush>
+							<LinearGradientBrush.GradientStops>
+								<GradientStop Color="#13293D" Offset="0"/>
+                                <GradientStop Color="#1E4161" Offset="1"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel Spacing="5">
+						 <Image Source="/Assets/fullfmplogo.png" MaxWidth="400" HorizontalAlignment="Left" Margin="0,0,0,10" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        <TextBlock Margin="0,10,0,0" Text="Version 13.0.0.0" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="by Squid House Software (and open source contributors)" Foreground="White"/>
+                        <TextBlock Text="Licensed under GPL v3" Foreground="White"/>
+    
+                        <TextBlock Margin="0,20,0,0" Text="Thank you for using FRESHMusicPlayer ❤️" FontWeight="Bold" Foreground="White"/>
+
+                        <Button Margin="0,20,0,0" Content="Report an issue"/>
+                        <Button Content="View license and source code"/>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -13,6 +13,9 @@ namespace FRESHMusicPlayer.Handlers
     public partial class ConfigurationFile : ObservableRecipient
     {
         [ObservableProperty]
+        private bool showTimeInWindow = false;
+
+        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         private bool showRemainingTime = false;
 
