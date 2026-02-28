@@ -191,5 +191,9 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         public void RemoveFromQueue() => viewModel.MainView.Player.Queue.Remove(Position - 1);
+
+        public void GoToAlbum() => viewModel.MainView.NavigateTo(new AlbumsViewModel(Album));
+
+        public void GoToArtist() => viewModel.MainView.NavigateTo(new ArtistsViewModel(Artists[0]));
     }
 }

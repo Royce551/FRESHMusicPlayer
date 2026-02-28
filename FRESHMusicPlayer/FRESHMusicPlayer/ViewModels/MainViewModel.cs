@@ -373,10 +373,12 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             WindowTitle = $"Loading... - {WindowName}";
             Title = "Loading...";
             Artist = "Loading...";
-            CoverArt = null;
+            //CoverArt = null;
             _ = UpdateIntegrationsAsync(PlaybackStatus.Changing);
         }
     }
+
+    private IMetadataProvider? previousMetadata;
 
     private async void Player_SongChanged(object? sender, EventArgs e)
     {
@@ -401,12 +403,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         }
         else
         {
-            CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
-            CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results
-            if (currentSidePanePath != "FRESHMusicPlayer.TrackInfo") SetCoverArtVisibility(true);
+            if (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(Player.Metadata.CoverArt))
+            {
+                CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
+                CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results
+                if (currentSidePanePath != "FRESHMusicPlayer.TrackInfo") SetCoverArtVisibility(true);
+            }      
         }
-
-
 
         _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
 
@@ -420,6 +423,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
         TotalTimeSeconds = Player.TotalTime.TotalSeconds;
         ProgressTimer.Start();
+
+        previousMetadata = Player.Metadata;
     }
 
     public bool IsDragging { get; set; } = false;

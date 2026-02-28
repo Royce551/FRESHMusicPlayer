@@ -68,6 +68,11 @@
               <ContextMenu>
                 <MenuItem Header="Jump to" Command="{Binding JumpTo}"/>
                 <MenuItem Header="Remove from queue" Command="{Binding RemoveFromQueue}"/>
+                <Separator/>
+                <MenuItem Header="Go to">
+                  <MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
+                  <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
+                </MenuItem>
               </ContextMenu>
             </Grid.ContextMenu>
           </Grid>

@@ -59,6 +59,8 @@ namespace FRESHMusicPlayer.ViewModels
             Update();
         }
 
+        private IMetadataProvider previousMetadata;
+
         public void Update()
         {
             var track = MainView.Player.Metadata;
@@ -118,8 +120,14 @@ namespace FRESHMusicPlayer.ViewModels
             }
             else IsDiscVisible = false;
 
-            if (track.CoverArt != null) CoverArt = new Bitmap(new MemoryStream(track.CoverArt));
+            if (track.CoverArt != null)
+            {
+                if (previousMetadata == null || (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(track.CoverArt)))
+                    CoverArt = new Bitmap(new MemoryStream(track.CoverArt));
+            }
             else CoverArt = null;
+
+            previousMetadata = track;
         }
 
         private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
