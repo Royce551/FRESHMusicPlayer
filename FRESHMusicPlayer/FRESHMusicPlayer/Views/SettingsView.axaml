@@ -91,8 +91,8 @@
     
                         <TextBlock Margin="0,20,0,0" Text="Thank you for using FRESHMusicPlayer ❤️" FontWeight="Bold" Foreground="White"/>
 
-                        <Button Margin="0,20,0,0" Content="Report an issue"/>
-                        <Button Content="View license and source code"/>
+                        <Button Margin="0,20,0,0" Content="Report an issue" Command="{Binding OpenReportIssuePage}"/>
+                        <Button Content="View license and source code" Command="{Binding OpenSourceCodePage}"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

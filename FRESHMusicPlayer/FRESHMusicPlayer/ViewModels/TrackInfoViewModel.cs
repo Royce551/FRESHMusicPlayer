@@ -123,7 +123,7 @@ namespace FRESHMusicPlayer.ViewModels
             if (track.CoverArt != null)
             {
                 if (previousMetadata == null || (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(track.CoverArt)))
-                    CoverArt = new Bitmap(new MemoryStream(track.CoverArt));
+                    CoverArt = Bitmap.DecodeToWidth(new MemoryStream(track.CoverArt), 750);
             }
             else CoverArt = null;
 

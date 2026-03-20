@@ -15,7 +15,7 @@
         <TextBlock DockPanel.Dock="Right" Text="{Binding EndsAt}" VerticalAlignment="Center" FontSize="12"/>
     </DockPanel>
     <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="10,0,10,10">
-		<Button DockPanel.Dock="Right" Content="Clear Queue" Command="{Binding ClearQueue}" HorizontalAlignment="Right" IsTabStop="True"/>
+		<Button DockPanel.Dock="Right" Content="Clear queue" Command="{Binding ClearQueue}" HorizontalAlignment="Right" IsTabStop="True"/>
     </DockPanel>
     <ListBox BorderBrush="Transparent" ItemsSource="{Binding Tracks}" Grid.IsSharedSizeScope="True" SelectionMode="Single,Toggle" KeyboardNavigation.TabNavigation="Continue">
       <ListBox.ItemsPanel>

@@ -195,11 +195,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             if (value)
             {
                 Player.Pause();
+                WindowTitle = WindowName;
                 _ = UpdateIntegrationsAsync(PlaybackStatus.Paused);
             }
             else
             {
                 Player.Resume();
+                WindowTitle = $"{Player.Metadata.Title} • {string.Join(", ", Player.Metadata.Artists)} - {WindowName}";
                 _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
             }
             OnPropertyChanged(nameof(Player.Paused));
@@ -402,8 +404,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             SetCoverArtVisibility(false);
         }
         else
-        {
-            if (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(Player.Metadata.CoverArt))
+        {  
+            if (previousMetadata == null || !coverArtIsVisible || (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(Player.Metadata.CoverArt)))
             {
                 CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
                 CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results

@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Handlers;
+using SIADL.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,6 +54,10 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         public void NukeLibrary() => MainView.Library.Nuke();
+
+        public void OpenReportIssuePage() => SIADLUtilities.OpenURL("https://github.com/Royce551/FRESHMusicPlayer/issues?q=is%3Aissue");
+
+        public void OpenSourceCodePage() => SIADLUtilities.OpenURL("https://github.com/Royce551/FRESHMusicPlayer");
     }
 
     //public partial class SettingsItem : ObservableRecipient
