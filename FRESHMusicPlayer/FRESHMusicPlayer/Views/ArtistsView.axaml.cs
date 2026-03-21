@@ -31,6 +31,7 @@ public partial class ArtistsView : UserControl
     {
         if (e.Data.GetFiles() != null && viewModel != null)
         {
+            viewModel.MainView.ShowDragDropOverlay = false;
             foreach (var item in e.Data.GetFiles()!)
             {
                 await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);

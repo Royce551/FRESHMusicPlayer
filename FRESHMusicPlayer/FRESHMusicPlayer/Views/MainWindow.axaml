@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
         mc:Ignorable="d" Height="{Binding Config.WindowHeight, Mode=TwoWay}" Width="{Binding Config.WindowWidth, Mode=TwoWay}" d:DesignWidth="800" d:DesignHeight="600"
-        x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1"
+        x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1" DragDrop.DragEnter="root_DragEnter" DragDrop.DragLeave="root_DragLeave" DragDrop.AllowDrop="True"
         x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed" KeyDown="root_KeyDown"
         Name="root"
         Title="{Binding WindowTitle}">
@@ -182,7 +182,14 @@
         </ListBox.DataTemplates>
     </ListBox>
 
-      <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}">
+      <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}" DragDrop.Drop="DockPanel_Drop">
+          <AdornerLayer.Adorner>
+		    <Panel x:Name="DropPrompt" IsVisible="{Binding ShowDragDropOverlay}" IsHitTestVisible="False">
+			    <Rectangle Fill="{DynamicResource ForegroundColor}" Opacity="0.5"/>
+                <TextBlock Text="Drop here to play (without importing)" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Panel>
+            </AdornerLayer.Adorner>
+
           <TransitioningContentControl Content="{Binding CoverArt}" x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" PointerReleased="CoverArt_PointerReleased" Cursor="Hand">
 			  <TransitioningContentControl.ContentTemplate>
 				  <DataTemplate DataType="Bitmap">

@@ -32,7 +32,8 @@ public partial class TracksView : UserControl
     {
         if (e.Data.GetFiles() != null && viewModel != null)
         {
-                await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);
+            viewModel.MainView.ShowDragDropOverlay = false;
+            await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);
         }
     }
 }

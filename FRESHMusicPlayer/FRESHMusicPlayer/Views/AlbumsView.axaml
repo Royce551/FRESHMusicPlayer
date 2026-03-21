@@ -10,6 +10,13 @@
     <vm:TracksViewModel/>
   </Design.DataContext>
   <Grid ColumnDefinitions="222,5,*">
+     <AdornerLayer.Adorner>
+		<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
+			<Rectangle Fill="{DynamicResource BackgroundColor}" Opacity="0.5"/>
+            <TextBlock Text="Drop here to import" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Panel>
+    </AdornerLayer.Adorner>
+
     <ListBox Grid.Column="0" Width="" Background="{DynamicResource SecondaryColor}" IsTextSearchEnabled="True" BorderBrush="Transparent" ItemsSource="{Binding Albums}" SelectedItem="{Binding SelectedAlbum}">
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>

@@ -630,6 +630,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         AddToQueueAndHandleAutoQueue(OpenDialogPath);
         Player.PlayAsync();
     }
+
+    [ObservableProperty]
+    private bool showDragDropOverlay = false;
 }
 
 public enum Page

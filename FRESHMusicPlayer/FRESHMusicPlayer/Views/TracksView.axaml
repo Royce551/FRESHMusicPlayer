@@ -11,6 +11,13 @@
   </Design.DataContext>
 
   <DockPanel>
+    <AdornerLayer.Adorner>
+		<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
+			<Rectangle Fill="{DynamicResource BackgroundColor}" Opacity="0.5"/>
+            <TextBlock Text="Drop here to import" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Panel>
+    </AdornerLayer.Adorner>
+
     <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
         <TextBlock Text="{Binding FooterText}" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" Margin="10,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
         <Button Content="Play all" Command="{Binding PlayAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>

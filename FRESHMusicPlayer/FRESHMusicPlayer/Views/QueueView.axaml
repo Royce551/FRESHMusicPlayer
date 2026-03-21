@@ -4,12 +4,19 @@
              xmlns:local="using:FRESHMusicPlayer.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:FRESHMusicPlayer.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450" x:DataType="vm:QueueViewModel"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450" x:DataType="vm:QueueViewModel" DragDrop.AllowDrop="True" DragDrop.Drop="UserControl_Drop"
              x:Class="FRESHMusicPlayer.Views.QueueView" Background="{DynamicResource SecondaryColor}">
   <Design.DataContext>
       <vm:QueueViewModel/>
   </Design.DataContext>
   <DockPanel>
+    <AdornerLayer.Adorner>
+		<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
+			<Rectangle Fill="{DynamicResource SecondaryColor}" Opacity="0.5"/>
+            <TextBlock Text="Drop here to enqueue (without importing)" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Panel>
+    </AdornerLayer.Adorner>
+
     <DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="10,5,10,0">
         <TextBlock DockPanel.Dock="Left" Text="Queue" FontWeight="Bold" FontSize="18"/>
         <TextBlock DockPanel.Dock="Right" Text="{Binding EndsAt}" VerticalAlignment="Center" FontSize="12"/>

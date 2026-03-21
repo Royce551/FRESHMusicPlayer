@@ -4,9 +4,11 @@ using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Controls.Platform;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
 using Avalonia.Threading;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.ViewModels;
 using SIADL.Avalonia;
 using System;
@@ -275,6 +277,29 @@ public partial class MainWindow : Window
         if (ctrl != null)
         {
             (Resources["OpenFileFlyout"] as Flyout).ShowAt(this, true);
+        }
+    }
+
+    private void root_DragEnter(object? sender, Avalonia.Input.DragEventArgs e)
+    {
+        viewModel.ShowDragDropOverlay = true;
+    }
+
+    private void root_DragLeave(object? sender, Avalonia.Input.DragEventArgs e)
+    {
+        viewModel.ShowDragDropOverlay = false;
+    }
+
+    private async void DockPanel_Drop(object? sender, Avalonia.Input.DragEventArgs e)
+    {
+        if (e.Data.GetFiles() != null && viewModel != null)
+        {
+            viewModel.ShowDragDropOverlay = false;
+            foreach (var item in e.Data.GetFiles()!)
+            {
+                await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.Player, viewModel.Library, import: false);
+            }
+            await viewModel.Player.PlayAsync();
         }
     }
 }

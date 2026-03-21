@@ -10,6 +10,13 @@
     <vm:ImportViewModel/>
   </Design.DataContext>
   <StackPanel Margin="20" Spacing="5">
+       <AdornerLayer.Adorner>
+		<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
+			<Rectangle Fill="{DynamicResource BackgroundColor}" Opacity="0.5"/>
+            <TextBlock Text="Drop here to import" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Panel>
+    </AdornerLayer.Adorner>
+
       <TextBlock Text="Import" FontWeight="Bold" FontSize="20"/>
       <Button Content="Browse for tracks" Command="{Binding BrowseTracks}"/>
   </StackPanel>
