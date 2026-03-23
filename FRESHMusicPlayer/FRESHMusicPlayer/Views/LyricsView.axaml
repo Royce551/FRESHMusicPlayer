@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels" x:DataType="vm:LyricsViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Background="{DynamicResource SecondaryColor}"
+             x:Class="FRESHMusicPlayer.Views.LyricsView">
+     <Panel>
+        <TransitioningContentControl ZIndex="0" Margin="-10" Content="{Binding CoverArt}">
+			<TransitioningContentControl.ContentTemplate>
+				<DataTemplate DataType="Bitmap">
+					<Image ZIndex="0" Margin="-10" Stretch="UniformToFill" Source="{Binding}">
+                        <Image.Effect>
+				            <BlurEffect Radius="30"/>
+                        </Image.Effect>
+                    </Image>
+                </DataTemplate>
+            </TransitioningContentControl.ContentTemplate>
+            <TransitioningContentControl.PageTransition>
+				<CrossFade Duration="0:00:00.5" FadeInEasing="QuadraticEaseOut" FadeOutEasing="QuadraticEaseIn"/>
+            </TransitioningContentControl.PageTransition>
+        </TransitioningContentControl>
+		
+        <Rectangle ZIndex="1" Fill="{DynamicResource ForegroundColor}" Opacity="0.55"/>
+        <ScrollViewer ZIndex="2" VerticalAlignment="Bottom" Margin="0,10">
+            <ItemsControl ItemsSource="{Binding Lyrics}">
+				<ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:LyricLineViewModel">
+                        <TextBlock Text="{Binding Lyric}" FontWeight="{Binding Weight}" Margin="15,5" Opacity="{Binding Opacity}" RenderTransform="{Binding Transform}" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+                            <TextBlock.Transitions>
+								<Transitions>
+									<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="QuadraticEaseInOut"/>
+                                    <TransformOperationsTransition Property="RenderTransform" Duration="0:00:00.25" Easing="QuadraticEaseInOut"/>
+                                </Transitions>
+                            </TextBlock.Transitions>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Panel>
+</UserControl>
