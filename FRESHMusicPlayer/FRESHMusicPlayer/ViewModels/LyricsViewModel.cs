@@ -5,6 +5,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Backends;
+using FRESHMusicPlayer.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +19,8 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public partial class LyricsViewModel : ViewModelBase
     {
+        public LyricsView View { get; set; } = null!;
+
         private readonly DispatcherTimer timer;
 
         public LyricsViewModel(MainViewModel mainView)
@@ -32,22 +35,27 @@ namespace FRESHMusicPlayer.ViewModels
             Update();
         }
 
+        private List<LyricLineViewModel> CurrentLines;
+        private List<LyricLineViewModel> NextLines;
+
         private void Timer_Tick(object? sender, EventArgs e)
         {
             if (Lyrics is null || !MainView.Player.FileLoaded) return;
 
-            var currentLines = Lyrics.Where(x => x.Timestamp < MainView.Player.CurrentBackend.CurrentTime).ToList();
-            var nextLines = Lyrics.Where(x => x.Timestamp > MainView.Player.CurrentBackend.CurrentTime).Reverse().ToList();
+            CurrentLines = Lyrics.Where(x => x.Timestamp < MainView.Player.CurrentBackend.CurrentTime).ToList();
+            NextLines = Lyrics.Where(x => x.Timestamp > MainView.Player.CurrentBackend.CurrentTime).Reverse().ToList();
 
-            foreach (var line in nextLines) line.State = LyricState.Next;
+            foreach (var line in NextLines) line.State = LyricState.Next;
 
-            if (currentLines.Count != 0)
+            if (CurrentLines.Count != 0)
             {
-                foreach (var line in currentLines) line.State = LyricState.Past;
+                foreach (var line in CurrentLines) line.State = LyricState.Past;
 
-                currentLines.Last().State = LyricState.Current;
+                CurrentLines.Last().State = LyricState.Current;
             }
         }
+
+        public void OnCurrentLineChanged() => View.ScrollToCenter(CurrentLines);
 
         public override void AfterPageLoaded()
         {
@@ -88,7 +96,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             if (File.Exists(Path.Combine(Path.GetDirectoryName(MainView.Player.FilePath), Path.GetFileNameWithoutExtension(MainView.Player.FilePath) + ".lrc")))
             {
-                Lyrics = new ObservableCollection<LyricLineViewModel>(new LRCTimedLyricsProvider(MainView.Player.FilePath).Lines.Select(x => new LyricLineViewModel(MainView) { Timestamp = x.Key, Lyric = x.Value }));
+                Lyrics = new ObservableCollection<LyricLineViewModel>(new LRCTimedLyricsProvider(MainView.Player.FilePath).Lines.Select(x => new LyricLineViewModel(this) { Timestamp = x.Key, Lyric = x.Value }));
             }
             else if (MainView.Player.Metadata is FileMetadataProvider provider && !string.IsNullOrWhiteSpace(provider.ATLTrack.Lyrics.UnsynchronizedLyrics))
             {
@@ -110,11 +118,29 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private string? lyric;
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(Weight))]
-        [NotifyPropertyChangedFor(nameof(Opacity))]
-        [NotifyPropertyChangedFor(nameof(Transform))]
+        //[ObservableProperty]
+        //[NotifyPropertyChangedFor(nameof(Weight))]
+        //[NotifyPropertyChangedFor(nameof(Opacity))]
+        //[NotifyPropertyChangedFor(nameof(Transform))]]
         private LyricState state = LyricState.Next;
+        public LyricState State
+        {
+            get => state;
+            set
+            {
+                if (state == value) return;
+
+                SetProperty(ref state, value);
+                OnPropertyChanged(nameof(Weight));
+                OnPropertyChanged(nameof(Opacity));
+                OnPropertyChanged(nameof(Transform));
+
+                if (state == LyricState.Current)
+                {
+                    view.OnCurrentLineChanged();
+                }
+            }
+        }
 
         public FontWeight Weight => State == LyricState.Current ? FontWeight.Bold : FontWeight.Normal;
 
@@ -169,10 +195,10 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        private readonly MainViewModel mainView;
-        public LyricLineViewModel(MainViewModel mainView)
+        private readonly LyricsViewModel view;
+        public LyricLineViewModel(LyricsViewModel view)
         {
-            this.mainView = mainView;
+            this.view = view;
         }
     }
 
