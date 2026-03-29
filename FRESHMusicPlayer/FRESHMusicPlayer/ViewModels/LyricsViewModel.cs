@@ -35,8 +35,17 @@ namespace FRESHMusicPlayer.ViewModels
             Update();
         }
 
-        private List<LyricLineViewModel> CurrentLines;
-        private List<LyricLineViewModel> NextLines;
+        [ObservableProperty]
+        private bool autoScrollEnabled = true;
+
+        public void ResumeAutoScroll()
+        {
+            AutoScrollEnabled = true;
+            View.ScrollToCenter(CurrentLines);
+        }
+
+        private List<LyricLineViewModel>? CurrentLines;
+        private List<LyricLineViewModel>? NextLines;
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
@@ -55,7 +64,10 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        public void OnCurrentLineChanged() => View.ScrollToCenter(CurrentLines);
+        public void OnCurrentLineChanged()
+        {
+            if (CurrentLines != null && AutoScrollEnabled) View.ScrollToCenter(CurrentLines);
+        }
 
         public override void AfterPageLoaded()
         {
@@ -66,6 +78,10 @@ namespace FRESHMusicPlayer.ViewModels
         private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
         {
             timer.Stop();
+
+            if (e.IsEndOfPlayback) CoverArt = null;
+
+            Update();
         }
 
         public override void OnNavigatingAway()
@@ -86,7 +102,13 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void Update()
         {
-            if (!MainView.Player.FileLoaded) return;
+            if (!MainView.Player.FileLoaded)
+            {
+                Lyrics = null;
+                return;
+            }
+
+            AutoScrollEnabled = true;
 
             if (MainView.Player.Metadata.CoverArt != null)
             {
@@ -100,7 +122,7 @@ namespace FRESHMusicPlayer.ViewModels
             }
             else if (MainView.Player.Metadata is FileMetadataProvider provider && !string.IsNullOrWhiteSpace(provider.ATLTrack.Lyrics.UnsynchronizedLyrics))
             {
-
+                Lyrics = new ObservableCollection<LyricLineViewModel>(provider.ATLTrack.Lyrics.UnsynchronizedLyrics.Split(["\r\n", "\r", "\n"], StringSplitOptions.None).Select(x => new LyricLineViewModel(this) { Timestamp = TimeSpan.Zero, Lyric = x, State = LyricState.Untimed }));
             }
             else Lyrics = null;
 
@@ -118,10 +140,6 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private string? lyric;
 
-        //[ObservableProperty]
-        //[NotifyPropertyChangedFor(nameof(Weight))]
-        //[NotifyPropertyChangedFor(nameof(Opacity))]
-        //[NotifyPropertyChangedFor(nameof(Transform))]]
         private LyricState state = LyricState.Next;
         public LyricState State
         {
@@ -143,29 +161,6 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         public FontWeight Weight => State == LyricState.Current ? FontWeight.Bold : FontWeight.Normal;
-
-        //public Brush? Foreground
-        //{
-        //    get
-        //    {
-        //        switch (State)
-        //        {
-        //            case LyricState.Past:
-        //            case LyricState.Current:
-        //            case LyricState.Untimed:
-        //                if (Application.Current.TryFindResource("PrimaryTextColor", mainView.MainWindow.ActualThemeVariant, out object? brush))
-        //                    return (Brush)brush;
-        //                break;
-                    
-        //            case LyricState.Next:    
-        //                if (Application.Current.TryFindResource("SecondaryColor", mainView.MainWindow.ActualThemeVariant, out object? brush2))
-        //                    return (Brush)brush2;
-        //                break;
-        //        }
-
-        //        return null;
-        //    }
-        //}
 
         public double Opacity
         {

@@ -12,13 +12,12 @@ public partial class LyricsView : UserControl
     public LyricsView()
     {
         InitializeComponent();
+        LyricsScrollViewer.AddHandler(PointerWheelChangedEvent, LyricsScrollViewer_PointerWheelChanged, Avalonia.Interactivity.RoutingStrategies.Tunnel);
     }
 
     public void ScrollToCenter(List<LyricLineViewModel> currentLines)
     {
-        if (currentLines.Count == 0) return;
-
-        List<Control> lyricLineControls = currentLines.Select(LyricsItemsControl.ContainerFromItem).ToList();
+        List<Control> lyricLineControls = [.. currentLines.Select(LyricsItemsControl.ContainerFromItem)];
 
         double offset = 0;
 
@@ -33,6 +32,12 @@ public partial class LyricsView : UserControl
 
     private void UserControl_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        (DataContext as LyricsViewModel).View = this;
+        (DataContext as LyricsViewModel)!.View = this;
+    }
+
+
+    private void LyricsScrollViewer_PointerWheelChanged(object? sender, Avalonia.Input.PointerWheelEventArgs e)
+    {
+        (DataContext as LyricsViewModel)!.AutoScrollEnabled = false;
     }
 }

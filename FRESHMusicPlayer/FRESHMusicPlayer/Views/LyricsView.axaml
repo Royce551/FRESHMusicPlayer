@@ -44,5 +44,6 @@
                 </Transitions>
             </ScrollViewer.Transitions>
         </ScrollViewer>
+        <Button ZIndex="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Content="Resume autoscroll" IsVisible="{Binding !AutoScrollEnabled}" Command="{Binding ResumeAutoScroll}"/>
     </Panel>
 </UserControl>
