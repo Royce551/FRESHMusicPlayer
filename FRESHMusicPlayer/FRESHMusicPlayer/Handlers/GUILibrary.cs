@@ -63,11 +63,6 @@ namespace FRESHMusicPlayer.Handlers
             base.Nuke(nukePlaylists);
             Dispatcher.UIThread.Invoke(() =>
             {
-                //window.NotificationHandler.Add(new Notification
-                //{
-                //    ContentText = Properties.Resources.NOTIFICATION_CLEARSUCCESS,
-                //    Type = NotificationType.Success
-                //});
                 viewModel.Notifications.Add(new Notification(viewModel)
                 {
                     ContentText = "Successfully cleared your library!",
@@ -79,51 +74,9 @@ namespace FRESHMusicPlayer.Handlers
             });
         }
 
-        // TODO: backport this into FMP core
-        private async Task<List<DatabaseTrack>> processDatabaseMetadataAsync(Action<int> progress = null)
-        {
-            var tracksToProcess = Database.GetCollection<DatabaseTrack>(TracksCollectionName).Query().Where(x => !x.HasBeenProcessed).ToList();
-            var remainingTracksToProcess = tracksToProcess.Count;
-
-            var cancellationTokenSource = new CancellationTokenSource();
-            var token = cancellationTokenSource.Token;
-
-            await Parallel.ForEachAsync(tracksToProcess, async (track, token) =>
-            {
-                Debug.WriteLine("Thread started");
-                try
-                {
-                    IMetadataProvider metadata = (await AudioBackendFactory.CreateAndLoadBackendAndGetMetadataAsync(track.Path)).metadata;
-
-                    if (metadata is null) metadata = new FileMetadataProvider(track.Path);
-
-                    track.UpdateFieldsFrom(metadata);
-                    track.HasBeenProcessed = true;
-                    if (!Database.GetCollection<DatabaseTrack>(TracksCollectionName).Update(track)) throw new Exception("Fueh?!?!?!");
-                }
-                catch
-                {
-                    // ignored for now
-                    Debug.WriteLine("Error occured processing metadata");
-                }
-
-                remainingTracksToProcess--;
-                progress?.Invoke(remainingTracksToProcess);
-            });
-
-            return tracksToProcess;
-        }
 
         public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
-            //var notification = new Notification
-            //{
-            //    ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY, "???"),
-            //    StatusBarText = Properties.Resources.NOTIFICATION_PROCESSINGLIBRARY_HEADER,
-            //    Type = NotificationType.Progress
-            //};
-            //dispatcher.Invoke(() => window.NotificationHandler.Add(notification));
-
             var notification = new Notification(viewModel)
             {
                 ContentText = "Processing library changes...\n??? tracks remaining\n\nNewly added tracks won't show in the artists or albums tabs until processing is complete.",
@@ -138,7 +91,7 @@ namespace FRESHMusicPlayer.Handlers
 
             var startTime = DateTime.Now;
             int? tracksToProcess = null;
-            var updatedTracks = await processDatabaseMetadataAsync(p =>
+            var updatedTracks = await base.ProcessDatabaseMetadataAsync(p =>
             {
                 if (tracksToProcess is null) tracksToProcess = p;
 

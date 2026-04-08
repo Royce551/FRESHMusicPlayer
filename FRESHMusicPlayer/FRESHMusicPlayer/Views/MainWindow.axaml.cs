@@ -151,7 +151,7 @@ public partial class MainWindow : Window
     {
         if (e.Source is Control control)
         {
-            if (control.FindLogicalAncestorOfType<ListBox>(true) != null)
+            if (control.FindLogicalAncestorOfType<ListBox>(true) != null || control.FindLogicalAncestorOfType<ScrollViewer>(true) != null)
                 return;
         }
 
