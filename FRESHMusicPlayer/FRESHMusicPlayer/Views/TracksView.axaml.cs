@@ -30,10 +30,10 @@ public partial class TracksView : UserControl
 
     private async void DragDrop(object? sender, DragEventArgs e)
     {
-        if (e.Data.GetFiles() != null && viewModel != null)
+        if (e.DataTransfer.TryGetFiles() != null && viewModel != null)
         {
             viewModel.MainView.ShowDragDropOverlay = false;
-            await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);
+            await InterfaceUtils.DoDragDropAsync([.. e.DataTransfer.TryGetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);
         }
     }
 }

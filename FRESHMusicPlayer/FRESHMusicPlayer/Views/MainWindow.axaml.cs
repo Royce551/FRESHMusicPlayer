@@ -292,12 +292,12 @@ public partial class MainWindow : Window
 
     private async void DockPanel_Drop(object? sender, Avalonia.Input.DragEventArgs e)
     {
-        if (e.Data.GetFiles() != null && viewModel != null)
+        if (e.DataTransfer.TryGetFiles() != null && viewModel != null)
         {
             viewModel.ShowDragDropOverlay = false;
-            foreach (var item in e.Data.GetFiles()!)
+            foreach (var item in e.DataTransfer.TryGetFiles()!)
             {
-                await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.Player, viewModel.Library, import: false);
+                await InterfaceUtils.DoDragDropAsync([.. e.DataTransfer.TryGetFiles()!.Select(x => x.Path.LocalPath)], viewModel.Player, viewModel.Library, import: false);
             }
             await viewModel.Player.PlayAsync();
         }

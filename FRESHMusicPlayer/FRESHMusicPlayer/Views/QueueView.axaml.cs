@@ -19,12 +19,12 @@ public partial class QueueView : UserControl
 
     private async void UserControl_Drop(object? sender, Avalonia.Input.DragEventArgs e)
     {
-        if (e.Data.GetFiles() != null && viewModel != null)
+        if (e.DataTransfer.TryGetFiles() != null && viewModel != null)
         {
             viewModel.MainView.ShowDragDropOverlay = false;
-            foreach (var item in e.Data.GetFiles()!)
+            foreach (var item in e.DataTransfer.TryGetFiles()!)
             {
-                await InterfaceUtils.DoDragDropAsync([.. e.Data.GetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library, import: false, clearqueue: false);
+                await InterfaceUtils.DoDragDropAsync([.. e.DataTransfer.TryGetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library, import: false, clearqueue: false);
             }
         }
     }

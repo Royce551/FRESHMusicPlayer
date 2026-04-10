@@ -132,7 +132,7 @@
           </StackPanel>
           <StackPanel Margin="10,2" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Right">
               
-            <Button FontSize="16" Command="{Binding OpenNotificationsCommand}" Theme="{StaticResource LinkButton}" IsVisible="{Binding NotificationsNotEmpty}">
+            <Button ToolTip.Tip="Notifications" FontSize="16" Command="{Binding OpenNotificationsCommand}" Theme="{StaticResource LinkButton}" IsVisible="{Binding NotificationsNotEmpty}">
                 <StackPanel Orientation="Horizontal" Spacing="5">
 					<TextBlock Text="{Binding CurrentNotificationStatusBarText}" FontSize="14" VerticalAlignment="Center" IsVisible="{Binding NotificationsNotEmpty}">
                     </TextBlock>
@@ -142,13 +142,13 @@
                 
             </Button>
            
-            <Button Content="Search" FontSize="16" Command="{Binding OpenSearchCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+F">
+            <Button ToolTip.Tip="Search" FontSize="16" Command="{Binding OpenSearchCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+F">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
-            <Button Content="Queue" FontSize="16" Command="{Binding OpenQueueCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+Q">
+            <Button ToolTip.Tip="Queue" FontSize="16" Command="{Binding OpenQueueCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+Q">
               <Path Margin="0,-0.75,2,0" Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
             </Button>
-            <Button FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+O">
+            <Button ToolTip.Tip="Settings" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+O">
                 <Path Margin="0,-0.75,2,0" Data="{StaticResource SettingsIcon}" Fill="{DynamicResource PrimaryTextColor}"/>       
             </Button>
           </StackPanel>
