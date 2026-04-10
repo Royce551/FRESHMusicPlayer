@@ -405,7 +405,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         }
         else
         {  
-            if (previousMetadata == null || !coverArtIsVisible || (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(Player.Metadata.CoverArt)))
+            var coverChanged = !(previousMetadata?.CoverArt?.SequenceEqual(Player.Metadata.CoverArt) ?? false);
+            if (!coverArtIsVisible || previousMetadata == null || coverChanged)
             {
                 CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
                 CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results

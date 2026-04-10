@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls;
+using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
 using SIADL.Avalonia;
 using System;
 using System.Collections.Generic;
@@ -120,6 +122,12 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private int length;
 
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Opacity))]
+        private bool isMissing = false;
+
+        public double Opacity => IsMissing ? 0.6 : 1;
+
         public string[]? TracksInCollection { get; set; }
 
         private readonly ViewModelBase viewModel;
@@ -141,10 +149,49 @@ namespace FRESHMusicPlayer.ViewModels
             DiscNumber = track.DiscNumber;
             DiscTotal = track.DiscTotal;
             Length = track.Length;
+
+            // TODO: i want to get this information from the backend, but this logic from fmp12 is ok for now
+            if (!Path.StartsWith("http") && !File.Exists(Path)) IsMissing = true;
         }
 
         public async void Play()
         {
+            if (IsMissing)
+            {
+                viewModel.MainView.Notifications.Add(new Handlers.Notification(viewModel.MainView)
+                {
+                    ContentText = "The file you tried to play could not be found. If you moved it, you can update the library entry for it.",
+                    ButtonText = "Locate file",
+                    Type = Handlers.NotificationType.Failure,
+                    DisplayAsToast = true,
+                    OnButtonClicked = () =>
+                    {
+                        var topLevel = TopLevel.GetTopLevel(viewModel.MainView.MainWindow);
+                        var files = topLevel.StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
+                        {
+                            FileTypeFilter = [FilePickerFileTypes.All] // TODO: do this correctly
+                        }).Result;
+
+                        if (files.Count >= 1)
+                        {
+                            var track = viewModel.MainView.Library.GetAllTracks().FirstOrDefault(x => x.Id == Id);
+                            track.Path = files[0].Path.LocalPath;
+                            Path = track.Path;
+                            viewModel.MainView.Library.Database.GetCollection<DatabaseTrack>(Library.TracksCollectionName).Update(track);
+
+                            viewModel.MainView.Library.TriggerUpdate();
+                            _ = viewModel.MainView.Player.PlayAsync(Path);
+
+                            return true;
+                        }
+
+                        return false;
+                    }
+                });
+
+                return;
+            }
+
             viewModel.MainView.Player.Queue.Clear();
             if (viewModel.MainView.Config.AutoQueue && TracksInCollection != null)
             {

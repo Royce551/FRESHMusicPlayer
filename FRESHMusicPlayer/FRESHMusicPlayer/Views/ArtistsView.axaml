@@ -88,8 +88,8 @@
                 </Style>
               </Grid.Styles>
               
-              <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12"/>
-              <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}"/>
+              <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
+              <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
               <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">       
                 <Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True"/>
                 <Button Content="Play" Command="{Binding Play}" IsTabStop="True"/>
