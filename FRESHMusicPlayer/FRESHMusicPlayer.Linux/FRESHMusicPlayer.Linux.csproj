@@ -18,6 +18,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="BASS" Version="2.4.12.1" />
+    <PackageReference Include="ManagedBass" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="FmpBassBackend">
+      <HintPath>FmpBassBackend.dll</HintPath>
+    </Reference>
     <Reference Include="FRESHMusicPlayer.Core">
       <HintPath>..\FRESHMusicPlayer\FRESHMusicPlayer.Core.dll</HintPath>
     </Reference>
@@ -39,20 +44,5 @@
 
   <ItemGroup>
     <Resource Include="icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Backends\FmpBassBackend.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Backends\libbass.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Backends\libbassflac.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Backends\ManagedBass.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

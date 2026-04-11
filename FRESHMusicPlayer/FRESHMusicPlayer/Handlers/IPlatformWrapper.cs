@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.ViewModels;
 using System;
@@ -12,5 +13,7 @@ namespace FRESHMusicPlayer.Handlers
     public interface IPlatformWrapper
     {
         IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window);
+
+        IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window);
     }
 }

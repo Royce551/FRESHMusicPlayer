@@ -6,16 +6,17 @@ using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace FRESHMusicPlayer.Linux.Platform
+namespace FRESHMusicPlayer.MacOS.Platform
 {
-    public class LinuxPlatformWrapper : IPlatformWrapper
+    public class MacOSPlatformWrapper : IPlatformWrapper
     {
         public IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window) => new BassBackend();
 
-        public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window) => new MPRISIntegration(viewModel, window);
+        public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window)
+        {
+            return null;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.ViewModels;
@@ -12,6 +13,8 @@ namespace FRESHMusicPlayer.Windows.Platform
 {
     public class WindowsPlatformWrapper : IPlatformWrapper
     {
+        public IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window) => new NAudioBackend();
+
         public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window) => new SMTCIntegration(viewModel, window);
     }
 }

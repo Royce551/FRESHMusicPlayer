@@ -174,7 +174,7 @@ namespace FRESHMusicPlayer.ViewModels
             if (tracks.Count == 0) return null;
 
             var track = tracks[0];
-            var cover = await AudioBackendFactory.CreateAndLoadBackendAndGetMetadataAsync(track.Path);
+            var cover = await BackendManager.CreateAndLoadBackendAndGetMetadataAsync(track.Path);
             if (cover.metadata != null || cover.metadata?.CoverArt != null)
                 return Bitmap.DecodeToHeight(new MemoryStream(cover.metadata.CoverArt), 20);
             else return null;

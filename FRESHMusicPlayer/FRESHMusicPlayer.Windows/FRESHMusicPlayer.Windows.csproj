@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
+    <PackageReference Include="NAudio" Version="1.10.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="FmpNAudioBackend">
+      <HintPath>FmpNAudioBackend.dll</HintPath>
+    </Reference>
     <Reference Include="FRESHMusicPlayer.Core">
       <HintPath>..\FRESHMusicPlayer\FRESHMusicPlayer.Core.dll</HintPath>
     </Reference>

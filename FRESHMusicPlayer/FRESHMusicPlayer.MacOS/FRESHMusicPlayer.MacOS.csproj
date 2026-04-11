@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
+    <PackageReference Include="BASS" Version="2.4.12.1" />
+    <PackageReference Include="ManagedBass" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,20 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Backends\FmpBassBackend.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Backends\ManagedBass.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Update="Backends\libbass.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Backends\libbassflac.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Reference Include="FmpBassBackend">
+      <HintPath>FmpBassBackend.dll</HintPath>
+    </Reference>
+    <Reference Include="FRESHMusicPlayer.Core">
+      <HintPath>..\FRESHMusicPlayer\FRESHMusicPlayer.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

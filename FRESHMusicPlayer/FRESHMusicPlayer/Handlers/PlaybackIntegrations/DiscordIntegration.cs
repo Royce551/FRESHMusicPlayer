@@ -110,7 +110,8 @@ namespace FRESHMusicPlayer.Handlers.PlaybackIntegrations
                         LargeImageText = TruncateBytes(track.Album, 120),
                     },
                     Timestamps = Timestamps.FromTimeSpan(track.Length),
-                    Type = ActivityType.Listening
+                    Type = ActivityType.Listening,
+                    StatusDisplay = StatusDisplayType.Details,
                 });
             }
             else client?.ClearPresence();

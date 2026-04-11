@@ -68,6 +68,10 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
         Dispatcher.UIThread.UnhandledException += UIThread_UnhandledException;
 
+        var platformWrapper = Locator.Current.GetService<IPlatformWrapper>() ?? throw new PlatformNotSupportedException();
+        BackendManager.LoadBackend(platformWrapper.GetPlatformAudioBackend(this, mainWindow));
+        BackendManager.AddDefaultSearchDirectories();
+
         Player = new Player();
         Player.SongLoading += Player_SongLoading;
         Player.SongChanged += Player_SongChanged;
@@ -114,11 +118,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         };
         ProgressTimer.Tick += ProgressTimer_Tick;
 
-        var platformWrapper = Locator.Current.GetService<IPlatformWrapper>();
-        if (platformWrapper != null)
-        {
-            PlaybackIntegrations.Add(platformWrapper.GetPlatformPlaybackIntegration(this, MainWindow));
-        }
+        PlaybackIntegrations.Add(platformWrapper.GetPlatformPlaybackIntegration(this, MainWindow));
 
         Notifications.CollectionChanged += Notifications_CollectionChanged;
     }
