@@ -33,6 +33,7 @@ namespace FRESHMusicPlayer.ViewModels
             };
             timer.Tick += Timer_Tick;
             Update();
+            CoverArt = MainView.CoverArt;
         }
 
         [ObservableProperty]
@@ -73,6 +74,12 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Player.SongChanged += Player_SongChanged;
             MainView.Player.SongStopped += Player_SongStopped;
+            MainView.CoverArtChanged += MainView_CoverArtChanged;
+        }
+
+        private void MainView_CoverArtChanged(object? sender, EventArgs e)
+        {
+            CoverArt = MainView.CoverArt;
         }
 
         private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
@@ -88,11 +95,10 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Player.SongChanged -= Player_SongChanged;
             MainView.Player.SongStopped -= Player_SongStopped;
+            MainView.CoverArtChanged -= MainView_CoverArtChanged;
         }
 
         private void Player_SongChanged(object? sender, EventArgs e) => Update();
-
-        private IMetadataProvider? previousMetadata;
 
         [ObservableProperty]
         private Bitmap? coverArt;
@@ -110,12 +116,6 @@ namespace FRESHMusicPlayer.ViewModels
 
             AutoScrollEnabled = true;
 
-            if (MainView.Player.Metadata.CoverArt != null)
-            {
-                if (previousMetadata == null || (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(MainView.Player.Metadata.CoverArt)))
-                    CoverArt = Bitmap.DecodeToWidth(new MemoryStream(MainView.Player.Metadata.CoverArt), 750);
-            }
-
             if (File.Exists(Path.Combine(Path.GetDirectoryName(MainView.Player.FilePath), Path.GetFileNameWithoutExtension(MainView.Player.FilePath) + ".lrc")))
             {
                 Lyrics = new ObservableCollection<LyricLineViewModel>(new LRCTimedLyricsProvider(MainView.Player.FilePath).Lines.Select(x => new LyricLineViewModel(this) { Timestamp = x.Key, Lyric = x.Value }));
@@ -127,8 +127,6 @@ namespace FRESHMusicPlayer.ViewModels
             else Lyrics = null;
 
             timer.Start();
-
-            previousMetadata = MainView.Player.Metadata;
         }
     }
 

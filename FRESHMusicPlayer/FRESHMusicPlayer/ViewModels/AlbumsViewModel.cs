@@ -90,6 +90,11 @@ namespace FRESHMusicPlayer.ViewModels
             _ = UpdateAlbumsAsync();
         }
 
+        public override void OnNavigatingAway()
+        {
+            MainView.Library.TracksUpdated -= Library_TracksUpdated;
+        }
+
         public async Task UpdateAlbumsAsync()
         {
             await Task.Run(() =>

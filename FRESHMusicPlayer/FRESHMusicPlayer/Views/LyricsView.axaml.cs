@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using FRESHMusicPlayer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,8 +22,11 @@ public partial class LyricsView : UserControl
 
         double offset = 0;
 
-        foreach (var control in lyricLineControls) offset += control.Bounds.Height;
-
+        foreach (var control in lyricLineControls)
+        {
+            if (control is null) return;
+            offset += control.Bounds.Height;
+        }
         offset -= lyricLineControls.Last().Bounds.Height;
 
         offset -= LyricsScrollViewer.Viewport.Height / 2;

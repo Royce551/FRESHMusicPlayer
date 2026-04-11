@@ -33,8 +33,12 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Library.TracksUpdated += Library_TracksUpdated;
             
-
             _ = UpdateTracksAsync();
+        }
+
+        public override void OnNavigatingAway()
+        {
+            MainView.Library.TracksUpdated -= Library_TracksUpdated;
         }
 
         private void Library_TracksUpdated(object? sender, IEnumerable<string> e)

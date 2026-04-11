@@ -341,18 +341,21 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     private bool coverArtIsVisible = false;
-    public void SetCoverArtVisibility(bool show)
+    public bool SetCoverArtVisibility(bool show)
     {
         if (show && !coverArtIsVisible)
         {
             coverArtIsVisible = true;
             _ = MainWindow.AnimateCoverArtShowAsync();
+            return true;
         }
         else if (!show && coverArtIsVisible)
         {
             coverArtIsVisible = false;
             _ = MainWindow.AnimateCoverArtHideAsync();
+            return true;
         }
+        return false;
     }
 
     private async void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
@@ -401,18 +404,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         if (Player.Metadata.CoverArt is null)
         {
             CoverArt = null;
-            SetCoverArtVisibility(false);
+            if (SetCoverArtVisibility(false)) CoverArtChanged?.Invoke(null, EventArgs.Empty);
         }
-        else
-        {  
-            var coverChanged = !(previousMetadata?.CoverArt?.SequenceEqual(Player.Metadata.CoverArt) ?? false);
-            if (!coverArtIsVisible || previousMetadata == null || coverChanged)
-            {
-                CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
-                CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results
-                if (currentSidePanePath != "FRESHMusicPlayer.TrackInfo") SetCoverArtVisibility(true);
-            }      
-        }
+        else _ = LoadCoverArtAsync();  
 
         _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
 
@@ -425,7 +419,24 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         await AnimateProgressTo0Async();
 
         TotalTimeSeconds = Player.TotalTime.TotalSeconds;
-        ProgressTimer.Start();
+        ProgressTimer.Start();  
+    }
+    public event EventHandler<EventArgs> CoverArtChanged;
+
+    private async Task LoadCoverArtAsync()
+    {
+        var coverChanged = !(previousMetadata?.CoverArt?.SequenceEqual(Player.Metadata.CoverArt) ?? false);
+        if (previousMetadata == null || coverChanged)
+        {
+            await Task.Run(() =>
+            {
+                CoverArt = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 128);
+                CoverArtFullSize = Bitmap.DecodeToWidth(new MemoryStream(Player.Metadata.CoverArt), 900); // doing these separately for clearer results
+            });
+            if (!coverArtIsVisible && currentSidePanePath != "FRESHMusicPlayer.TrackInfo")
+                SetCoverArtVisibility(true);
+            CoverArtChanged?.Invoke(null, EventArgs.Empty);
+        }
 
         previousMetadata = Player.Metadata;
     }

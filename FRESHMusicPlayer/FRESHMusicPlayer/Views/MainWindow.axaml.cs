@@ -256,7 +256,7 @@ public partial class MainWindow : Window
                     ButtonText = "Garbage collect",
                     OnButtonClicked = () =>
                     {
-                        GC.Collect(2);
+                        GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive);
                         return false;
                     },
                     DisplayAsToast = true,

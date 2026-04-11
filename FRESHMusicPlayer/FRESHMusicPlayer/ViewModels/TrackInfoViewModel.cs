@@ -56,10 +56,11 @@ namespace FRESHMusicPlayer.ViewModels
             MainView.SetCoverArtVisibility(false);
             MainView.Player.SongChanged += Player_SongChanged;
             MainView.Player.SongStopped += Player_SongStopped;
+            MainView.CoverArtChanged += MainView_CoverArtChanged;
+
+            CoverArt = MainView.CoverArtFullSize;
             Update();
         }
-
-        private IMetadataProvider previousMetadata;
 
         public void Update()
         {
@@ -119,16 +120,9 @@ namespace FRESHMusicPlayer.ViewModels
                 IsDiscVisible = true;
             }
             else IsDiscVisible = false;
-
-            if (track.CoverArt != null)
-            {
-                if (previousMetadata == null || (previousMetadata != null && !previousMetadata.CoverArt.SequenceEqual(track.CoverArt)))
-                    CoverArt = Bitmap.DecodeToWidth(new MemoryStream(track.CoverArt), 750);
-            }
-            else CoverArt = null;
-
-            previousMetadata = track;
         }
+
+        private void MainView_CoverArtChanged(object? sender, EventArgs e) => CoverArt = MainView.CoverArtFullSize;
 
         private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
         {
@@ -141,6 +135,7 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Player.SongChanged -= Player_SongChanged;
             MainView.Player.SongStopped -= Player_SongStopped;
+            MainView.CoverArtChanged -= MainView_CoverArtChanged;
             if (CoverArt != null) MainView.SetCoverArtVisibility(true);
         }
     }
