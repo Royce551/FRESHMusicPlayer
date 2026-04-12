@@ -315,9 +315,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         }
     }
 
-    private void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
+    private async void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
     {
-        var message = new StringBuilder(); // TODO: temp
+        var message = new StringBuilder();
         message.AppendLine("A playback error occurred:");
         message.AppendLine();
         foreach (var problem in e.Problems)
@@ -331,6 +331,14 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             };
             message.AppendLine($"{problem.Key}: {problemString}");
         }
+        if (Player.Queue.Position < Player.Queue.Queue.Count)
+        {
+            message.AppendLine();
+            message.AppendLine("Skipped to the next track");
+            await Task.Delay(100); // it's a little silly but it works
+            Dispatcher.UIThread.Invoke(() => Next());
+        }
+        
         Notifications.Add(new Notification(this)
         {
             ContentText = message.ToString(),

@@ -21,11 +21,11 @@
     <Grid ColumnDefinitions="125,5,*">
 		<ScrollViewer Grid.Column="0" Background="{DynamicResource ForegroundColor}">
 			<StackPanel Spacing="5" Margin="10">
-				<Button Theme="{StaticResource LinkButton}" Content="General" FontSize="14"/>
+				<Button Theme="{StaticResource LinkButton}" Content="General" FontSize="14" Click="Button_Click"/>
                 <Button Theme="{StaticResource LinkButton}" Content="Playback" FontSize="14"/>
-                <Button Theme="{StaticResource LinkButton}" Content="Appearance" FontSize="14"/>
-                <Button Theme="{StaticResource LinkButton}" Content="Maintenance" FontSize="14"/>
-                <Button Theme="{StaticResource LinkButton}" Content="About" FontSize="14"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Appearance" FontSize="14" Click="Button_Click_1"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Maintenance" FontSize="14" Click="Button_Click_2"/>
+                <Button Theme="{StaticResource LinkButton}" Content="About" FontSize="14" Click="Button_Click_3"/>
             </StackPanel>
         </ScrollViewer>
         <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource ForegroundColor}" Foreground="Transparent" BorderBrush="Transparent"/>
@@ -33,7 +33,7 @@
 			<StackPanel Spacing="5" Margin="10">
 				<TextBlock Text="Settings" FontWeight="Bold" FontSize="22"/>
 
-                <TextBlock Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="GeneralSectionHeader" Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
                 
                 <DockPanel HorizontalAlignment="Stretch">
 					<TextBlock DockPanel.Dock="Left" Text="Language" VerticalAlignment="Center"/>
@@ -52,12 +52,12 @@
                 <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
                 <!--<CheckBox Content="last.fm" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>-->
 
-                <TextBlock Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="AppearanceSectionHeader" Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 
                 <CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
                 <CheckBox Content="Show remaining time instead of total time in controls box" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
 
-                <TextBlock Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="MaintenanceSectionHeader" Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 
                 <Button Content="Reset settings to default" IsEnabled="False"/>
                 <Button Content="Clean and update library" Margin="0,10,0,0" Command="{Binding CleanAndUpdateLibrary}"/>
@@ -73,7 +73,7 @@
                     </Button.Flyout>
                 </Button>
 
-                <TextBlock Text="About" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="AboutSectionHeader" Text="About" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
                 <Border CornerRadius="5" Padding="10" Margin="-3,0,-3,0">
                     <Border.Background>
 						<LinearGradientBrush>

@@ -33,7 +33,7 @@
       </ListBox.ItemsPanel>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="5,0" Background="Transparent">
+          <Grid RowDefinitions="*,*" ColumnDefinitions="*,Auto" Margin="5,0" Background="Transparent">
             <Grid.Styles>
               <Style Selector="Grid > StackPanel > Button">
                 <Setter Property="IsVisible" Value="False"/>
