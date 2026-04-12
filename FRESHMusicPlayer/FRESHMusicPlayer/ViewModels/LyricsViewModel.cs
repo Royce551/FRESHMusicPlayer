@@ -42,7 +42,7 @@ namespace FRESHMusicPlayer.ViewModels
         public void ResumeAutoScroll()
         {
             AutoScrollEnabled = true;
-            View.ScrollToCenter(CurrentLines);
+            if (CurrentLines != null) View.ScrollToCenter(CurrentLines);
         }
 
         private List<LyricLineViewModel>? CurrentLines;
@@ -116,7 +116,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             AutoScrollEnabled = true;
 
-            if (File.Exists(Path.Combine(Path.GetDirectoryName(MainView.Player.FilePath), Path.GetFileNameWithoutExtension(MainView.Player.FilePath) + ".lrc")))
+            if (File.Exists(Path.Combine(Path.GetDirectoryName(MainView.Player.FilePath)!, Path.GetFileNameWithoutExtension(MainView.Player.FilePath) + ".lrc")))
             {
                 Lyrics = new ObservableCollection<LyricLineViewModel>(new LRCTimedLyricsProvider(MainView.Player.FilePath).Lines.Select(x => new LyricLineViewModel(this) { Timestamp = x.Key, Lyric = x.Value }));
             }
@@ -214,7 +214,7 @@ namespace FRESHMusicPlayer.ViewModels
         public LRCTimedLyricsProvider(string filePath) => Parse(filePath);
         private void Parse(string path)
         {
-            var filetoRead = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + ".lrc");
+            var filetoRead = Path.Combine(Path.GetDirectoryName(path)!, Path.GetFileNameWithoutExtension(path) + ".lrc");
             var lines = File.ReadAllLines(filetoRead);
 
             var lineExpression = new Regex(@"\[(\d+):(\d+).(\d+)\]+\s*(.*)");

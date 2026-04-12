@@ -54,7 +54,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     /// <summary>
     /// This is for the designer. Should not be used for any other purpose.
     /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public MainViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     {
     }
 
@@ -98,7 +100,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         UpdateVolume();
 
         HttpClient = new HttpClient();
-        HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"FRESHMusicPlayer/{Assembly.GetEntryAssembly().GetName().Version} ( https://github.com/Royce551/FRESHMusicPlayer )");
+        HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"FRESHMusicPlayer/{Assembly.GetEntryAssembly()!.GetName().Version} ( https://github.com/Royce551/FRESHMusicPlayer )");
 
         StartIntegrations();
 
@@ -151,7 +153,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     public bool NotificationsNotEmpty => Notifications.Count > 0;
-    public string CurrentNotificationStatusBarText => Notifications.FirstOrDefault(x => !string.IsNullOrEmpty(x.StatusBarText))?.StatusBarText ?? null;
+    public string? CurrentNotificationStatusBarText => Notifications.FirstOrDefault(x => !string.IsNullOrEmpty(x.StatusBarText))?.StatusBarText ?? null;
 
     public ObservableCollection<Notification> ActiveToastNotifications { get; private set; } = new();
     public bool ShowToastNotifications => SidePaneView is not NotificationsViewModel;
@@ -328,6 +330,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 BackendLoadResult.Invalid => "Invalid for this backend",
                 BackendLoadResult.Corrupt => "File appears to be corrupt",
                 BackendLoadResult.UnknownError => "Unknown error",
+                _ => throw new InvalidOperationException()
             };
             message.AppendLine($"{problem.Key}: {problemString}");
         }
@@ -429,7 +432,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         TotalTimeSeconds = Player.TotalTime.TotalSeconds;
         ProgressTimer.Start();  
     }
-    public event EventHandler<EventArgs> CoverArtChanged;
+    public event EventHandler<EventArgs>? CoverArtChanged;
 
     private async Task LoadCoverArtAsync()
     {
@@ -528,7 +531,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 if (path == currentSidePanePath)
                 {
                     await MainWindow.AnimateSidePaneOutAsync();
-                    SidePaneView.OnNavigatingAway();
+                    SidePaneView?.OnNavigatingAway();
                     currentSidePanePath = null;
                     SidePaneView = null;
                     return;
@@ -536,7 +539,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 else
                 {
                     await MainWindow.AnimateSidePaneOutAsync();
-                    SidePaneView.OnNavigatingAway();
+                    SidePaneView?.OnNavigatingAway();
                     currentSidePanePath = null;
                     SidePaneView = null;
                 }
@@ -644,7 +647,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     [ObservableProperty]
-    private string openDialogPath;
+    private string? openDialogPath;
 
     public void OpenDialogOpen()
     {

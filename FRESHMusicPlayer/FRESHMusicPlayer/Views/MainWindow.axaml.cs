@@ -31,7 +31,7 @@ public partial class MainWindow : Window
 
     public bool ProgressSliderIsAnimating => ProgressSlider.IsAnimating(RangeBase.ValueProperty);
 
-    private MainViewModel viewModel => DataContext as MainViewModel;
+    private MainViewModel viewModel => (DataContext as MainViewModel)!;
 
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
@@ -42,46 +42,46 @@ public partial class MainWindow : Window
     {
         if (viewModel.Player.Paused)
         {
-            if (TryGetResource("PlayIcon", null, out object? icon)) PlayPauseIcon.Data = (Geometry)icon;
+            if (TryGetResource("PlayIcon", null, out object? icon)) PlayPauseIcon.Data = (Geometry?)icon;
 
         }
         else
         {
-            if (TryGetResource("PauseIcon", null, out object? icon)) PlayPauseIcon.Data = (Geometry)icon;
+            if (TryGetResource("PauseIcon", null, out object? icon)) PlayPauseIcon.Data = (Geometry?)icon;
         }
 
         if (viewModel.Player.Queue.Shuffle)
         {
-            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
-                ShuffleIcon.Foreground = (Brush)brush;
+            if (Application.Current!.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
+                ShuffleIcon.Foreground = (Brush?)brush;
         }
         else
         {
-            if (Application.Current.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush))
-                ShuffleIcon.Foreground = (Brush)brush;
+            if (Application.Current!.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush))
+                ShuffleIcon.Foreground = (Brush?)brush;
         }
 
         if (viewModel.Player.Queue.RepeatMode == RepeatMode.None)
         {
-            if (TryGetResource("RepeatIcon", null, out object? icon)) RepeatIcon.Data = (Geometry)icon;
-            if (Application.Current.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush))
-                RepeatIcon.Foreground = (Brush)brush;
+            if (TryGetResource("RepeatIcon", null, out object? icon)) RepeatIcon.Data = (Geometry?)icon;
+            if (Application.Current!.TryFindResource("PrimaryTextColor", ActualThemeVariant, out object? brush))
+                RepeatIcon.Foreground = (Brush?)brush;
         }
         else if (viewModel.Player.Queue.RepeatMode == RepeatMode.RepeatAll)
         {
-            if (TryGetResource("RepeatIcon", null, out object? icon)) RepeatIcon.Data = (Geometry)icon;
-            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
-                RepeatIcon.Foreground = (Brush)brush;
+            if (TryGetResource("RepeatIcon", null, out object? icon)) RepeatIcon.Data = (Geometry?)icon;
+            if (Application.Current!.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
+                RepeatIcon.Foreground = (Brush?)brush;
         }
         else
         {
-            if (TryGetResource("RepeatOneIcon", null, out object? icon)) RepeatIcon.Data = (Geometry)icon;
-            if (Application.Current.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
-                RepeatIcon.Foreground = (Brush)brush;
+            if (TryGetResource("RepeatOneIcon", null, out object? icon)) RepeatIcon.Data = (Geometry?)icon;
+            if (Application.Current!.TryFindResource("AccentGradientColor", ActualThemeVariant, out object? brush))
+                RepeatIcon.Foreground = (Brush?)brush;
         }
     }
 
-    string previousAnimation;
+    string? previousAnimation;
     public async Task AnimateSidePaneInAsync(double width, bool onLeft = false)
     {
         // TODO: Adjust animation based on width
@@ -90,7 +90,7 @@ public partial class MainWindow : Window
         if (onLeft)
         {
             DockPanel.SetDock(SidePaneControl, Dock.Left);
-            animation = (Animation)Resources["LeftSidePaneIn250"]!;
+            animation = (Animation?)Resources["LeftSidePaneIn250"]!;
             previousAnimation = "LeftSidePaneIn250";
         }
         else
@@ -98,12 +98,12 @@ public partial class MainWindow : Window
             DockPanel.SetDock(SidePaneControl, Dock.Right);
             if (width == 450)
             {
-                animation = (Animation)Resources["RightSidePaneIn450"]!;
+                animation = (Animation?)Resources["RightSidePaneIn450"]!;
                 previousAnimation = "RightSidePaneIn450";
             }
             else
             {
-                animation = (Animation)Resources["RightSidePaneIn300"]!;
+                animation = (Animation?)Resources["RightSidePaneIn300"]!;
                 previousAnimation = "RightSidePaneIn300";
             }
         }
@@ -116,14 +116,14 @@ public partial class MainWindow : Window
         switch (previousAnimation)
         {
             case "LeftSidePaneIn250":
-                animation = (Animation)Resources["LeftSidePaneOut250"]!;
+                animation = (Animation?)Resources["LeftSidePaneOut250"]!;
                 break;
             case "RightSidePaneIn450":
-                animation = (Animation)Resources["RightSidePaneOut450"]!;
+                animation = (Animation?)Resources["RightSidePaneOut450"]!;
                 break;
             case "RightSidePaneIn300":
             default:
-                animation = (Animation)Resources["RightSidePaneOut300"]!;
+                animation = (Animation?)Resources["RightSidePaneOut300"]!;
                 break;
         }
         await animation.RunAsync(SidePaneControl);
@@ -131,19 +131,19 @@ public partial class MainWindow : Window
 
     public async Task AnimateCoverArtShowAsync()
     {
-        var animation = (Animation)Resources["ShowCoverArt"]!;
+        var animation = (Animation?)Resources["ShowCoverArt"]!;
         await animation.RunAsync(CoverArt);
     }
 
     public async Task AnimateCoverArtHideAsync()
     {
-        var animation = (Animation)Resources["HideCoverArt"]!;
+        var animation = (Animation?)Resources["HideCoverArt"]!;
         await animation.RunAsync(CoverArt);
     }
 
     public async Task AnimateProgressTo0Async()
     {
-        var animation = (Animation)Resources["SetProgressTo0"]!;
+        var animation = (Animation?)Resources["SetProgressTo0"]!;
         await animation.RunAsync(ProgressSlider);
     }
 
@@ -219,7 +219,6 @@ public partial class MainWindow : Window
                     OnButtonClicked = () =>
                     {
                         throw new Exception();
-                        return false;
                     },
                     DisplayAsToast = true,
                     ToastDisplayTime = TimeSpan.FromMinutes(1)
@@ -268,7 +267,7 @@ public partial class MainWindow : Window
 
     private void Border_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
     {
-        viewModel.Notifications.Remove(((sender as Border).DataContext as Handlers.Notification));
+        if (sender is Border border) viewModel.Notifications.Remove((border.DataContext as Handlers.Notification)!);
     }
 
     private void MenuItem_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
@@ -276,7 +275,7 @@ public partial class MainWindow : Window
         var ctrl = sender as Control;
         if (ctrl != null)
         {
-            (Resources["OpenFileFlyout"] as Flyout).ShowAt(this, true);
+            (Resources["OpenFileFlyout"] as Flyout)?.ShowAt(this, true);
         }
     }
 
