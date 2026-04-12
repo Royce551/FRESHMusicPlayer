@@ -7,6 +7,7 @@ using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.MacOS.Platform
 {
@@ -14,9 +15,19 @@ namespace FRESHMusicPlayer.MacOS.Platform
     {
         public IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window) => new BassBackend();
 
-        public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window)
+        public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window) => new MacOSPlaybackIntegration();
+    }
+
+    public class MacOSPlaybackIntegration : IPlaybackIntegration // not implemented yet, but since it's required this is just a dummy
+    {
+        public void Close()
         {
-            return null;
+
+        }
+
+        public Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
+        {
+            return Task.CompletedTask;
         }
     }
 }
