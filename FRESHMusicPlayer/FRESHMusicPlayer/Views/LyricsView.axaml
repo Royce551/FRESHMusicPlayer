@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels" x:DataType="vm:LyricsViewModel" Loaded="UserControl_Loaded"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Background="{DynamicResource SecondaryColor}"
+             x:Class="FRESHMusicPlayer.Views.LyricsView">
+     <Panel>
+        <TransitioningContentControl ZIndex="0" Margin="-10" Content="{Binding CoverArt}">
+			<TransitioningContentControl.ContentTemplate>
+				<DataTemplate DataType="Bitmap">
+					<Image ZIndex="0" Margin="-10" Stretch="UniformToFill" Source="{Binding}">
+                        <Image.Effect>
+				            <BlurEffect Radius="30"/>
+                        </Image.Effect>
+                    </Image>
+                </DataTemplate>
+            </TransitioningContentControl.ContentTemplate>
+            <TransitioningContentControl.PageTransition>
+				<CrossFade Duration="0:00:00.5" FadeInEasing="QuadraticEaseOut" FadeOutEasing="QuadraticEaseIn"/>
+            </TransitioningContentControl.PageTransition>
+        </TransitioningContentControl>
+		
+        <Rectangle ZIndex="1" Fill="{DynamicResource ForegroundColor}" Opacity="0.55"/>
+        <ScrollViewer ZIndex="2" VerticalAlignment="Bottom" x:Name="LyricsScrollViewer">
+            <ItemsControl ItemsSource="{Binding Lyrics}" x:Name="LyricsItemsControl">
+				<ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:LyricLineViewModel">
+                        <TextBlock Text="{Binding Lyric}" FontWeight="{Binding Weight}" Margin="10,5,25,5" Opacity="{Binding Opacity}" RenderTransform="{Binding Transform}" TextWrapping="Wrap" TextAlignment="Left" RenderTransformOrigin="0%,50%">
+                            <TextBlock.Transitions>
+								<Transitions>
+									<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="CubicEaseInOut"/>
+                                    <TransformOperationsTransition Property="RenderTransform" Duration="0:00:00.25" Easing="CubicEaseInOut"/>
+                                </Transitions>
+                            </TextBlock.Transitions>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <ScrollViewer.Transitions>
+				<Transitions>
+					<VectorTransition Property="Offset" Duration="0:00:00.50" Easing="CubicEaseInOut"/>
+                </Transitions>
+            </ScrollViewer.Transitions>
+        </ScrollViewer>
+        <Button ZIndex="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Content="Resume autoscroll" IsVisible="{Binding !AutoScrollEnabled}" Command="{Binding ResumeAutoScroll}"/>
+    </Panel>
+</UserControl>

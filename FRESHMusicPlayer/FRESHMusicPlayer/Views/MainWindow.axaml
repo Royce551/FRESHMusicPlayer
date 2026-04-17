@@ -1,0 +1,335 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+        xmlns:handlers="using:FRESHMusicPlayer.Handlers"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
+        mc:Ignorable="d" Height="{Binding Config.WindowHeight, Mode=TwoWay}" Width="{Binding Config.WindowWidth, Mode=TwoWay}" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1" DragDrop.DragEnter="root_DragEnter" DragDrop.DragLeave="root_DragLeave" DragDrop.AllowDrop="True"
+        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed" KeyDown="root_KeyDown"
+        Name="root"
+        Title="{Binding WindowTitle}">
+
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+  <Window.Resources>
+    <Animation x:Key="RightSidePaneIn450" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, -450, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="RightSidePaneOut450" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, -450, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="RightSidePaneIn300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, -300, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="RightSidePaneOut300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, -300, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="LeftSidePaneIn250" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="-250, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="LeftSidePaneOut250" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="-250, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="ShowCoverArt" x:SetterTargetType="Image" Duration="0:0:.200" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="10, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="-64, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="HideCoverArt" x:SetterTargetType="Image" Duration="0:0:.200" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="10, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="-64, 0, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="SetProgressTo0" x:SetterTargetType="Slider" Duration="0:0:.750" Easing="ExponentialEaseInOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Value" Value="0"/>
+      </KeyFrame>
+    </Animation>
+    <Flyout x:Key="OpenFileFlyout" ShowMode="TransientWithDismissOnPointerMoveAway">
+	    <StackPanel Spacing="5" MaxWidth="450">
+			<TextBlock Text="Enter file path or URL to a network stream"/>
+            <DockPanel>
+				<Button DockPanel.Dock="Right" Content="Open" Margin="10,0,0,0" Command="{Binding OpenDialogOpen}" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding OpenDialogPath}" TextWrapping="Wrap"/>
+            </DockPanel>
+        </StackPanel>
+    </Flyout>
+    <Geometry x:Key="PauseIcon">F1 M360 -320L440 -320L440 -640L360 -640L360 -320ZM520 -320L600 -320L600 -640L520 -640L520 -320ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z</Geometry>
+    <Geometry x:Key="PlayIcon">F1 M380 -300L660 -480L380 -660L380 -300ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z</Geometry>
+    <Geometry x:Key="RepeatIcon">F1 M280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
+    <Geometry x:Key="RepeatOneIcon">F1 M460 -360L460 -540L400 -540L400 -600L520 -600L520 -360L460 -360ZM280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
+    <Geometry x:Key="NotificationIcon">M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21</Geometry>
+    <ContextMenu x:Key="OverflowMenu">
+		<MenuItem Header="Track info" Command="{Binding OpenTrackInfoCommand}"/>
+        <MenuItem Header="Lyrics" Command="{Binding OpenLyricsCommand}"/>
+        <MenuItem Header="Pause after current track" IsChecked="{Binding PauseAfterCurrentTrack, Mode=TwoWay}" ToggleType="CheckBox"/>
+        <Separator/>
+        <MenuItem Header="Go to">
+			<MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
+            <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
+        </MenuItem>
+        <MenuItem Header="Manage playlists..."/>
+        <Separator/>
+        <MenuItem Header="Fullscreen"/>
+        <MenuItem Header="Mini player"/>
+        <Separator/>
+        <MenuItem Header="Open..." PointerReleased="MenuItem_PointerReleased">
+        </MenuItem>
+        <MenuItem Header="Tag editor..."/>
+    </ContextMenu>
+  </Window.Resources>
+  <Panel>
+    <DockPanel ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LastChildFill="False">
+      <Panel DockPanel.Dock="Top" Height="27" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding IsNavbarVisible}">
+        <Panel Margin="0,1,0,0">
+          <StackPanel Margin="10,2" Spacing="15" Orientation="Horizontal">
+            <Button Content="Tracks" FontSize="16" Command="{Binding OpenTracksTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding TracksTabFontWeight}" HotKey="Ctrl+D1"/>
+            <Button Content="Artists" FontSize="16" Command="{Binding OpenArtistsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding ArtistsTabFontWeight}" HotKey="Ctrl+D2"/>
+            <Button Content="Albums" FontSize="16" Command="{Binding OpenAlbumsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding AlbumsTabFontWeight}" HotKey="Ctrl+D3"/>
+            <Button Content="Playlists" FontSize="16" Command="{Binding OpenPlaylistsTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding PlaylistsTabFontWeight}" HotKey="Ctrl+D4"/>
+            <Button Content="Import" FontSize="16" Command="{Binding OpenImportTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding ImportTabFontWeight}" HotKey="Ctrl+D5"/>
+          </StackPanel>
+          <StackPanel Margin="10,2" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Right">
+              
+            <Button ToolTip.Tip="Notifications" FontSize="16" Command="{Binding OpenNotificationsCommand}" Theme="{StaticResource LinkButton}" IsVisible="{Binding NotificationsNotEmpty}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+					<TextBlock Text="{Binding CurrentNotificationStatusBarText}" FontSize="14" VerticalAlignment="Center" IsVisible="{Binding NotificationsNotEmpty}">
+                    </TextBlock>
+                    <Path Margin="0,-1,2,0" Data="{StaticResource NotificationIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
+                     <TextBlock Text="{Binding Notifications.Count}" FontSize="16" Margin="0,0,0,0"/>
+                </StackPanel>
+                
+            </Button>
+           
+            <Button ToolTip.Tip="Search" FontSize="16" Command="{Binding OpenSearchCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+F">
+              <Path Margin="0,-0.75,2,0" Data="{StaticResource SearchIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
+            </Button>
+            <Button ToolTip.Tip="Queue" FontSize="16" Command="{Binding OpenQueueCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+Q">
+              <Path Margin="0,-0.75,2,0" Data="{StaticResource QueueIcon}" Fill="{DynamicResource PrimaryTextColor}"/>
+            </Button>
+            <Button ToolTip.Tip="Settings" FontSize="16" Command="{Binding OpenSettingsCommand}" Theme="{StaticResource LinkButton}" HotKey="Ctrl+O">
+                <Path Margin="0,-0.75,2,0" Data="{StaticResource SettingsIcon}" Fill="{DynamicResource PrimaryTextColor}"/>       
+            </Button>
+          </StackPanel>
+        </Panel>
+      </Panel>
+      
+    <ListBox DockPanel.Dock="Top" Width="250" HorizontalAlignment="Right" Margin="10" BorderBrush="Transparent" ItemsSource="{Binding ActiveToastNotifications}" IsVisible="{Binding ShowToastNotifications}" MaxHeight="500">
+		<ListBox.DataTemplates>
+			<DataTemplate DataType="handlers:Notification">
+                <Border CornerRadius="2" BorderThickness="1" BorderBrush="{Binding BorderColor}" Background="{DynamicResource ForegroundColor}" Padding="5" PointerReleased="Border_PointerReleased">
+					<StackPanel Spacing="5">
+					    <TextBlock Text="{Binding ContentText}" TextWrapping="Wrap"/>
+                        <Button Command="{Binding NotificationButton}" Content="{Binding ButtonText}" IsVisible="{Binding IsNotificationButtonVisible}"/>
+                    </StackPanel>
+                     <Border.Styles>
+					<Style Selector="Border">
+						<Style.Animations>
+							<Animation Duration="0:0:.5" Easing="ExponentialEaseOut">
+								<KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </Border.Styles>
+                </Border>
+            </DataTemplate>
+        </ListBox.DataTemplates>
+    </ListBox>
+
+      <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}" DragDrop.Drop="DockPanel_Drop">
+          <AdornerLayer.Adorner>
+		    <Panel x:Name="DropPrompt" IsVisible="{Binding ShowDragDropOverlay}" IsHitTestVisible="False">
+			    <Rectangle Fill="{DynamicResource ForegroundColor}" Opacity="0.5"/>
+                <TextBlock Text="Drop here to play (without importing)" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Panel>
+            </AdornerLayer.Adorner>
+
+          <TransitioningContentControl Content="{Binding CoverArt}" x:Name="CoverArt" Width="64" Height="64" Margin="-64,0,0,0" PointerReleased="CoverArt_PointerReleased" Cursor="Hand">
+			  <TransitioningContentControl.ContentTemplate>
+				  <DataTemplate DataType="Bitmap">
+					  <Image Source="{Binding}" RenderOptions.BitmapInterpolationMode="HighQuality">
+                        <Image.Styles>
+                          <Style Selector="Image ToolTip">
+                            <Setter Property="MaxWidth" Value="500"/>
+                          </Style>
+                        </Image.Styles>
+                        <ToolTip.Tip>
+                          <Image Width="450" Height="450" Source="{Binding #root.((vm:MainViewModel)DataContext).CoverArtFullSize}" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        </ToolTip.Tip>
+                      </Image>
+                  </DataTemplate>
+              </TransitioningContentControl.ContentTemplate>
+              <TransitioningContentControl.PageTransition>
+                  <CompositePageTransition>
+					  <CrossFade Duration="0:00:00.1"/>
+                      <PageSlide Orientation="Vertical" Duration="0:00:00.25" SlideInEasing="QuadraticEaseOut" SlideOutEasing="QuadraticEaseIn"/>
+                  </CompositePageTransition>	  
+              </TransitioningContentControl.PageTransition>
+          </TransitioningContentControl>
+          
+        <Panel DockPanel.Dock="Right">
+          <Grid RowDefinitions="*,*">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0" Background="Transparent">
+              <Slider x:Name="VolumeSlider" Theme="{StaticResource SeekbarSlider}" Width="105" Margin="0,8,0,0" Minimum="0" Value="{Binding Volume}" Maximum="1" SmallChange="1" LargeChange="10">
+                <Slider.Transitions>
+                  <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:.25"/>
+                  </Transitions>
+                </Slider.Transitions>
+                <Slider.Styles>
+                  <Style Selector="StackPanel > Slider">
+                    <Setter Property="Opacity" Value="0"/>
+                  </Style>
+                  <Style Selector="StackPanel:pointerover > Slider">
+                    <Setter Property="Opacity" Value="1"/>
+                  </Style>
+                </Slider.Styles>
+              </Slider>
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Command="{Binding ToggleMute}">
+                <Image>
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource PrimaryTextColor}" Geometry="F1 M560 -131L560 -213Q650 -239 705 -313Q760 -387 760 -481Q760 -575 705 -649Q650 -723 560 -749L560 -831Q684 -803 762 -705.5Q840 -608 840 -481Q840 -354 762 -256.5Q684 -159 560 -131ZM120 -360L120 -600L280 -600L480 -800L480 -160L280 -360L120 -360ZM560 -320L560 -642Q607 -620 633.5 -576Q660 -532 660 -480Q660 -429 633.5 -385.5Q607 -342 560 -320Z" />
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12" Margin="0,0,10,5" FlowDirection="LeftToRight">
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Margin="0,0,0,0" Command="{Binding Previous}">
+                <Image Margin="-8">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Geometry="F1 M240 -240L240 -720L312 -720L312 -240L240 -240ZM720 -264L384 -480L720 -696L720 -264Z" Brush="{DynamicResource PrimaryTextColor}"/>
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Command="{Binding ToggleShuffle}">
+                <PathIcon x:Name="ShuffleIcon" Data="F1 M560 -160L560 -240L664 -240L537 -367L594 -424L720 -298L720 -400L800 -400L800 -160L560 -160ZM216 -160L160 -216L664 -720L560 -720L560 -800L800 -800L800 -560L720 -560L720 -664L216 -160ZM367 -537L160 -744L216 -800L423 -593L367 -537Z"/>
+              </Button>
+             
+              <Button Theme="{StaticResource LinkButton}" Width="40" Height="40" Margin="0,0" Command="{Binding TogglePause}">
+                <PathIcon x:Name="PlayPauseIcon" Margin="5" Width="35" Height="35" Padding="5" Foreground="{DynamicResource PrimaryTextColor}" Data="{StaticResource PauseIcon}"/>
+              </Button>
+              
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Command="{Binding ToggleRepeat}">
+                <PathIcon x:Name="RepeatIcon" Width="25" Height="25" Data="{StaticResource RepeatIcon}"/>
+              </Button>
+              <Button Theme="{StaticResource LinkButton}" Width="30" Height="30" Command="{Binding Next}">
+                <Image Margin="-7">
+                  <DrawingImage>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L24,0L24,24L0,24z" />
+                      <DrawingGroup>
+                        <DrawingGroup.Transform>
+                          <MatrixTransform Matrix="0.025,0,0,0.025,0,24" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource PrimaryTextColor}" Geometry="F1 M660 -240L660 -720L740 -720L740 -240L660 -240ZM220 -240L220 -720L580 -480L220 -240Z" />
+                      </DrawingGroup>
+                    </DrawingGroup>
+                  </DrawingImage>
+                </Image>
+              </Button>
+            </StackPanel>
+          </Grid>
+        </Panel>
+        <Grid RowDefinitions="*,*,*" Margin="10" VerticalAlignment="Center">
+          <StackPanel Grid.Row="0" Spacing="10" Orientation="Horizontal" Height="30">
+            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" ContextMenu="{StaticResource OverflowMenu}" PointerReleased="TextBlock_PointerReleased" Cursor="Hand"/>
+            <Button x:Name="OverflowMenuButton" Content="Menu" FontSize="12" VerticalAlignment="Center" Click="OverflowMenuButton_Click" ContextMenu="{StaticResource OverflowMenu}">
+              <Button.Styles>
+                <Style Selector="DockPanel > Grid > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="False"/>
+                </Style>
+                <Style Selector="DockPanel:pointerover > Grid > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
+              </Button.Styles>
+            </Button>
+          </StackPanel>
+          <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Artist}" Foreground="{DynamicResource SecondaryTextColor}"/>
+          <DockPanel Grid.Row="2" FlowDirection="LeftToRight" Margin="0,3,0,-3">
+            <TextBlock DockPanel.Dock="Left" Margin="0,0,-5,0" Text="{Binding ProgressIndicator1}" Foreground="{DynamicResource SecondaryTextColor}"/>
+            <TextBlock DockPanel.Dock="Right" Margin="5,0,0,0" Text="Pause after current track" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding PauseAfterCurrentTrack}"/>
+            <Button Margin="-5,0,0,0" Theme="{StaticResource LinkButton}" Padding="0" DockPanel.Dock="Right" Command="{Binding ToggleShowRemainingTime}">
+              <TextBlock DockPanel.Dock="Left" Text="{Binding ProgressIndicator2}" Foreground="{DynamicResource SecondaryTextColor}"/>
+            </Button>
+            <Slider x:Name="ProgressSlider" Theme="{StaticResource SeekbarSlider}" Value="{Binding CurrentTimeSeconds}" Maximum="{Binding TotalTimeSeconds}" Minimum="0" Padding="0,2,0,0"/>
+          </DockPanel>
+        </Grid>
+      </DockPanel>
+    </DockPanel>
+
+    <DockPanel ZIndex="0" Margin="0,27,0,84">
+      <ContentControl x:Name="SidePaneControl" DockPanel.Dock="Right" Width="{Binding SidePanelWidth}" Content="{Binding SidePaneView}" Background="AliceBlue"/>
+
+      <TransitioningContentControl Content="{Binding SelectedView}">
+        <TransitioningContentControl.PageTransition>
+          <CompositePageTransition>
+            <CrossFade Duration="0:00:00.1"/>
+            <PageSlide Orientation="Vertical" Duration="0:00:00.25" SlideInEasing="QuadraticEaseOut" SlideOutEasing="QuadraticEaseIn"/>
+          </CompositePageTransition>
+        </TransitioningContentControl.PageTransition>
+      </TransitioningContentControl>
+    </DockPanel>
+  </Panel>
+</Window>

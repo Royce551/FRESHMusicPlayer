@@ -1,0 +1,101 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:FRESHMusicPlayer.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450" x:DataType="vm:SettingsViewModel"
+             x:Class="FRESHMusicPlayer.Views.SettingsView" Background="{DynamicResource SecondaryColor}"> 
+    <UserControl.Styles>
+		<Style Selector="CheckBox">
+			<Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
+        </Style>
+        <Style Selector="ComboBox">
+			<Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
+        </Style>
+        <Style Selector="TextBlock">
+			<Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </UserControl.Styles>
+    <Grid ColumnDefinitions="125,5,*">
+		<ScrollViewer Grid.Column="0" Background="{DynamicResource ForegroundColor}">
+			<StackPanel Spacing="5" Margin="10">
+				<Button Theme="{StaticResource LinkButton}" Content="General" FontSize="14" Click="Button_Click"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Playback" FontSize="14"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Appearance" FontSize="14" Click="Button_Click_1"/>
+                <Button Theme="{StaticResource LinkButton}" Content="Maintenance" FontSize="14" Click="Button_Click_2"/>
+                <Button Theme="{StaticResource LinkButton}" Content="About" FontSize="14" Click="Button_Click_3"/>
+            </StackPanel>
+        </ScrollViewer>
+        <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource ForegroundColor}" Foreground="Transparent" BorderBrush="Transparent"/>
+        <ScrollViewer Grid.Column="2">
+			<StackPanel Spacing="5" Margin="10">
+				<TextBlock Text="Settings" FontWeight="Bold" FontSize="22"/>
+
+                <TextBlock x:Name="GeneralSectionHeader" Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                
+                <DockPanel HorizontalAlignment="Stretch">
+					<TextBlock DockPanel.Dock="Left" Text="Language" VerticalAlignment="Center"/>
+                    <ComboBox HorizontalAlignment="Right">
+						<ComboBox.Items>
+							<TextBlock Text="Automatic"/>
+                        </ComboBox.Items>
+                    </ComboBox>
+                </DockPanel>
+                <!--<CheckBox Content="Playtime logging"/>-->
+                <CheckBox Content="Auto queue" IsChecked="{Binding MainView.Config.AutoQueue}"/>
+                <TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
+
+                <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
+                <!--<CheckBox Content="last.fm" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>-->
+
+                <TextBlock x:Name="AppearanceSectionHeader" Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+
+                <CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
+                <CheckBox Content="Show remaining time instead of total time in controls box" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
+
+                <TextBlock x:Name="MaintenanceSectionHeader" Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+
+                <Button Content="Reset settings to default" IsEnabled="False"/>
+                <Button Content="Clean and update library" Margin="0,10,0,0" Command="{Binding CleanAndUpdateLibrary}"/>
+                <TextBlock Text="Reprocesses the metadata for all tracks in the library; use if you have made a lot of updates with an external tool. Also deletes duplicate library entries." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <Button Content="Nuke library" Margin="0,10,0,0">
+                    <Button.Flyout>
+						<Flyout>
+							<StackPanel Spacing="5">
+								<TextBlock Text="You are about to irreversibly clear your library and all playlists." FontWeight="Bold"/>
+                                <Button Content="Nuke library" Command="{Binding NukeLibrary}"/>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+
+                <TextBlock x:Name="AboutSectionHeader" Text="About" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <Border CornerRadius="5" Padding="10" Margin="-3,0,-3,0">
+                    <Border.Background>
+						<LinearGradientBrush>
+							<LinearGradientBrush.GradientStops>
+								<GradientStop Color="#13293D" Offset="0"/>
+                                <GradientStop Color="#1E4161" Offset="1"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel Spacing="5">
+						 <Image Source="/Assets/fullfmplogo.png" MaxWidth="400" HorizontalAlignment="Left" Margin="0,0,0,10" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                        <TextBlock Margin="0,10,0,0" Text="Version 13.0.0.0" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="by Squid House Software (and open source contributors)" Foreground="White"/>
+                        <TextBlock Text="Licensed under GPL v3" Foreground="White"/>
+    
+                        <TextBlock Margin="0,20,0,0" Text="Thank you for using FRESHMusicPlayer ❤️" FontWeight="Bold" Foreground="White"/>
+
+                        <Button Margin="0,20,0,0" Content="Report an issue" Command="{Binding OpenReportIssuePage}"/>
+                        <Button Content="View license and source code" Command="{Binding OpenSourceCodePage}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

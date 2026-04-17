@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:handlers="using:FRESHMusicPlayer.Handlers"
+             xmlns:local="using:FRESHMusicPlayer.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450" x:DataType="vm:NotificationsViewModel"
+             x:Class="FRESHMusicPlayer.Views.NotificationsView" Background="{DynamicResource SecondaryColor}">
+    <DockPanel>
+		<DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="10,5,10,0">
+            <TextBlock DockPanel.Dock="Left" Text="Notifications" FontWeight="Bold" FontSize="18"/>
+            <Button Theme="{StaticResource LinkButton}" Command="{Binding ClearAllNotifications}" DockPanel.Dock="Right" Cursor="Hand">
+				 <TextBlock DockPanel.Dock="Right" Text="Clear all" VerticalAlignment="Center" FontSize="14"/>
+            </Button>
+        </DockPanel>
+        <ListBox BorderBrush="Transparent" ItemsSource="{Binding MainView.Notifications}" Margin="5">
+			<ListBox.DataTemplates>
+			<DataTemplate DataType="handlers:Notification">
+                <Border CornerRadius="2" BorderThickness="1" BorderBrush="{Binding BorderColor}" Background="{DynamicResource ForegroundColor}" Padding="5" PointerReleased="Border_PointerReleased">
+					<StackPanel Spacing="5">
+					    <TextBlock Text="{Binding ContentText}" TextWrapping="Wrap"/>
+                        <Button Command="{Binding NotificationButton}" Content="{Binding ButtonText}" IsVisible="{Binding IsNotificationButtonVisible}"/>
+                    </StackPanel>
+                </Border>
+				
+            </DataTemplate>
+        </ListBox.DataTemplates>
+        </ListBox>
+    </DockPanel>
+</UserControl>

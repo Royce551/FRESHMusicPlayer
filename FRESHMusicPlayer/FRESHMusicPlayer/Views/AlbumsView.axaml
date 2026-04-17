@@ -1,0 +1,120 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" 
+             x:Class="FRESHMusicPlayer.Views.AlbumsView" Background="{DynamicResource BackgroundColor}" DragDrop.AllowDrop="True" DragDrop.DragEnter="DragEnter" DragDrop.Drop="DragDrop"
+             x:DataType="vm:AlbumsViewModel">
+  <Design.DataContext>
+    <vm:TracksViewModel/>
+  </Design.DataContext>
+  <Grid ColumnDefinitions="222,5,*">
+     <AdornerLayer.Adorner>
+		<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
+			<Rectangle Fill="{DynamicResource BackgroundColor}" Opacity="0.5"/>
+            <TextBlock Text="Drop here to import" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Panel>
+    </AdornerLayer.Adorner>
+
+    <ListBox Grid.Column="0" Width="" Background="{DynamicResource SecondaryColor}" IsTextSearchEnabled="True" BorderBrush="Transparent" ItemsSource="{Binding Albums}" SelectedItem="{Binding SelectedAlbum}">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal" Margin="5,2" Spacing="10">
+            <Image Source="{Binding CoverArt^}" Width="24" Height="24" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource SecondaryColor}" Foreground="Transparent" BorderBrush="Transparent"/>
+    <DockPanel Grid.Column="2">
+      <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+        <TextBlock Text="{Binding FooterText}" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" Margin="10,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+        <Button Content="Play all" Command="{Binding PlayAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+        <Button Content="Enqueue all" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+      </DockPanel>
+
+      <TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="Your library is empty. To get started, drag and drop some tracks, or set Auto-Import folders in settings." Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
+      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" KeyboardNavigation.TabNavigation="Continue" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyDown="ListBox_KeyDown_1">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <VirtualizingStackPanel/>
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.DataTemplates>
+          <DataTemplate DataType="vm:DiscGroupHeaderViewModel">
+            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent">
+              <Border.Styles>
+                <Style Selector="Border > DockPanel > Button">
+                  <Setter Property="IsVisible" Value="False"/>
+                </Style>
+                <Style Selector="Border:pointerover > DockPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
+                <Style Selector="ListBoxItem:focus-within > Border > DockPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
+              </Border.Styles>
+              <DockPanel>
+                  <Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2"/>
+                  <Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="Enqueue all" Margin="2"/>
+                
+                  <TextBlock Text="{Binding DiscNumString}" FontSize="12" Margin="5,15,0,2" VerticalAlignment="Bottom" Foreground="{DynamicResource SecondaryTextColor}"/>
+              </DockPanel>
+            </Border>
+          </DataTemplate>
+          <DataTemplate DataType="vm:DatabaseTrackViewModel">
+            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Grid.Styles>
+                <Style Selector="Grid > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="False"/>
+                </Style>
+                <Style Selector="Grid:pointerover > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
+                <Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button">
+                  <Setter Property="IsVisible" Value="True"/>
+                </Style>
+              </Grid.Styles>
+              
+              <TextBlock Text="{Binding TrackNumber}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" IsVisible="{Binding IsTrackNumberPresent}" Opacity="{Binding Opacity}"/>
+              <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
+              <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
+              <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">       
+                <Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True"/>
+                <Button Content="Play" Command="{Binding Play}" IsTabStop="True"/>
+              </StackPanel>
+
+              <Grid.ContextMenu>
+                <ContextMenu>
+                  <MenuItem Header="Play" Command="{Binding Play}"/>
+                  <MenuItem Header="Enqueue" Command="{Binding Enqueue}"/>
+                  <MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+                  <Separator/>
+                  <MenuItem Header="Go to">
+                      <MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
+                  </MenuItem>
+                  <MenuItem Header="Manage playlists..."/>
+                  <MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>
+                  <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
+                </ContextMenu>
+              </Grid.ContextMenu>
+            </Grid>
+          </DataTemplate>
+        </ListBox.DataTemplates>
+      </ListBox>
+    </DockPanel>
+  </Grid>
+  
+</UserControl>

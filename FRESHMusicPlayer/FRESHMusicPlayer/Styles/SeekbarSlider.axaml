@@ -1,0 +1,136 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Add Resources Here -->
+
+  <Design.PreviewWith>
+    <Border Padding="0">
+      <Slider Width="300" Value="10" Maximum="100" Minimum="0" Theme="{StaticResource SeekbarSlider}"/>
+    </Border>
+  </Design.PreviewWith>
+
+  <ControlTheme x:Key="SeekbarSliderHorizontalRepeatButton" TargetType="RepeatButton">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+          <Border Name="FocusTarget" Margin="0,-10" Background="Transparent" />
+          <Border Name="TrackBackground"
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="0"
+                  Height="3"
+                  VerticalAlignment="Center"/>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="SeekbarSliderVerticalRepeatButton" TargetType="RepeatButton">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+          <Border Name="FocusTarget" Margin="0,-10" Background="Transparent" />
+          <Border Name="TrackBackground"
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="0"
+                  Width="{DynamicResource SliderTrackThemeHeight}"
+                  HorizontalAlignment="Center"/>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="SeekbarSliderThumbTheme" TargetType="Thumb">
+    <Setter Property="Transitions">
+      <Transitions>
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:.075"/>
+      </Transitions>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{DynamicResource SliderThumbCornerRadius}" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="SeekbarSlider" TargetType="Slider">
+    <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource AccentGradientColor}" />
+    
+    <Style Selector="^:horizontal">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <DataValidationErrors>
+            <Border
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}">
+                
+              <Grid x:Name="SliderContainer"
+                    Margin="10,5"
+                    Background="{DynamicResource SliderContainerBackground}">
+                <Grid.Styles>
+                  <Style Selector="TickBar">
+                    <Setter Property="ReservedSpace" Value="{Binding #PART_Track.Thumb.Bounds}" />
+                  </Style>
+                </Grid.Styles>
+                <Grid
+                    x:Name="HorizontalTemplate"
+                    MinHeight="10"
+                    ColumnDefinitions="Auto,Auto,*">
+                  <Grid.RowDefinitions>
+
+                    <RowDefinition Height="Auto" />
+  
+                  </Grid.RowDefinitions> 
+                  <Track
+                      Name="PART_Track"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="3"
+                      Minimum="{TemplateBinding Minimum}"
+                      Maximum="{TemplateBinding Maximum}"
+                      Value="{TemplateBinding Value, Mode=TwoWay}"
+                      IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
+                      Orientation="Horizontal">
+                    <Track.DecreaseButton>
+                      <RepeatButton
+                          Name="PART_DecreaseButton"
+                          Theme="{StaticResource SeekbarSliderHorizontalRepeatButton}"
+                          Background="{TemplateBinding Foreground}"
+                          Height="10"
+                          Focusable="False"/>
+                    </Track.DecreaseButton>
+                    <Track.IncreaseButton>
+                      <RepeatButton
+                          Name="PART_IncreaseButton"
+                          Theme="{StaticResource SeekbarSliderHorizontalRepeatButton}"
+                          Background="{TemplateBinding Background}"
+                          Height="10"
+                          Focusable="False"/>
+                    </Track.IncreaseButton>
+                    <Thumb
+                        Name="thumb"
+                        Width="10"
+                        Height="10"
+                        Margin="0"
+                        Padding="0"
+                        Background="{DynamicResource AccentColor}"
+                        BorderThickness="0"
+                        Theme="{StaticResource SeekbarSliderThumbTheme}"
+                        DataContext="{TemplateBinding Value}"/>
+                  </Track>
+                </Grid>
+              </Grid>
+            </Border>
+          </DataValidationErrors>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="^:pointerover /template/ Thumb#thumb">
+      <Setter Property="RenderTransform" Value="scale(2.0)"/>
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

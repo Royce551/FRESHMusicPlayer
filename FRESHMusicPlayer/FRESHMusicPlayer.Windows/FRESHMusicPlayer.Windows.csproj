@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
+    One for Windows with net8.0-windows TFM, one for MacOS with net8.0-macos and one with net8.0 TFM for Linux.-->
+    <TargetFramework>net10.0-windows10.0.26100</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>13.0.0.0</Version>
+    <InformationalVersion>FRESHMusicPlayer Ver. 13.0</InformationalVersion>
+    <!--<GeneratePackageOnBuild>True</GeneratePackageOnBuild>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
+    <PackageReference Include="NAudio" Version="1.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FRESHMusicPlayer\FRESHMusicPlayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Backends\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FmpNAudioBackend">
+      <HintPath>FmpNAudioBackend.dll</HintPath>
+    </Reference>
+    <Reference Include="FRESHMusicPlayer.Core">
+      <HintPath>..\FRESHMusicPlayer\FRESHMusicPlayer.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
+</Project>
