@@ -29,7 +29,7 @@ jobs:
         curl https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o appimagetool-x86_64.AppImage -L
         chmod +x appimagetool-x86_64.AppImage
         ./appimagetool-x86_64.AppImage FRESHMusicPlayer.AppDir
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v7
       name: "Upload Artifact"
       with:
         name: "FRESHMusicPlayer.AppImage"
