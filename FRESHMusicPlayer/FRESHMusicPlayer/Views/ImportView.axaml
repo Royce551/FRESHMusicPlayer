@@ -19,5 +19,6 @@
 
       <TextBlock Text="Import" FontWeight="Bold" FontSize="20"/>
       <Button Content="Browse for tracks" Command="{Binding BrowseTracks}"/>
+      <Button Content="Browse for folders" Command="{Binding BrowseFolders}"/>
   </StackPanel>
 </UserControl>

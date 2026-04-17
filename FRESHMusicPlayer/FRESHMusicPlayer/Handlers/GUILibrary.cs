@@ -75,6 +75,41 @@ namespace FRESHMusicPlayer.Handlers
         }
 
 
+        // TODO: backport this into FMP core
+        private async Task<List<DatabaseTrack>> processDatabaseMetadataAsync(Action<int> progress = null)
+        {
+            var tracksToProcess = Database.GetCollection<DatabaseTrack>(TracksCollectionName).Query().Where(x => !x.HasBeenProcessed).ToList();
+            var remainingTracksToProcess = tracksToProcess.Count;
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var token = cancellationTokenSource.Token;
+
+            await Parallel.ForEachAsync(tracksToProcess, async (track, token) =>
+            {
+                Debug.WriteLine("Thread started");
+                try
+                {
+                    IMetadataProvider metadata = (await BackendManager.CreateAndLoadBackendAndGetMetadataAsync(track.Path)).metadata;
+
+                    if (metadata is null) metadata = new FileMetadataProvider(track.Path);
+
+                    track.UpdateFieldsFrom(metadata);
+                    track.HasBeenProcessed = true;
+                    if (!Database.GetCollection<DatabaseTrack>(TracksCollectionName).Update(track)) throw new Exception("Fueh?!?!?!");
+                }
+                catch
+                {
+                    // ignored for now
+                    Debug.WriteLine("Error occured processing metadata");
+                }
+
+                remainingTracksToProcess--;
+                progress?.Invoke(remainingTracksToProcess);
+            });
+
+            return tracksToProcess;
+        }
+
         public override async Task<List<DatabaseTrack>> ProcessDatabaseMetadataAsync(Action<int> progress = null)
         {
             var notification = new Notification(viewModel)
@@ -91,7 +126,7 @@ namespace FRESHMusicPlayer.Handlers
 
             var startTime = DateTime.Now;
             int? tracksToProcess = null;
-            var updatedTracks = await base.ProcessDatabaseMetadataAsync(p =>
+            var updatedTracks = await processDatabaseMetadataAsync(p =>
             {
                 if (tracksToProcess is null) tracksToProcess = p;
 

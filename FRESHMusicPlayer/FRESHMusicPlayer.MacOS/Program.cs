@@ -1,6 +1,8 @@
-﻿using System;
-
-using Avalonia;
+﻿using Avalonia;
+using FRESHMusicPlayer.Handlers;
+using FRESHMusicPlayer.MacOS.Platform;
+using Splat;
+using System;
 
 namespace FRESHMusicPlayer.Desktop;
 
@@ -15,9 +17,13 @@ class Program
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace();
+    {
+        Locator.CurrentMutable.Register<IPlatformWrapper>(() => new MacOSPlatformWrapper());
+
+        return AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .WithInterFont()
+                .LogToTrace();
+    }
 
 }
