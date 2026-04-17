@@ -20,7 +20,7 @@ jobs:
       run: |
         curl https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
         chmod +x dotnet-install.sh
-        ./dotnet-install.sh --install-dir /app/opt/dotnet/ --version 5.0.202
+        ./dotnet-install.sh --install-dir /app/opt/dotnet/ --version 10.0.3
     - name: "Build AppDir"
       run: ./build-linux.sh
       working-directory: Distribution
