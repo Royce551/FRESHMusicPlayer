@@ -14,7 +14,7 @@ dotnet publish -r osx-$BUILD_ARCH --self-contained
 popd
 
 mkdir -p $APP_BUNDLE/Contents/MacOS
-cp -r "FRESHMusicPlayer/FRESHMusicPlayer.MacOS/bin/Debug/net"*"/osx-$BUILD_ARCH/publish/"* $APP_BUNDLE/Contents/MacOS
+cp -r "FRESHMusicPlayer/FRESHMusicPlayer.MacOS/bin/Release/net"*"/osx-$BUILD_ARCH/"* $APP_BUNDLE/Contents/MacOS
 mkdir -p $RESOURCES_BUNDLE
 cp Distribution/icon.icns $RESOURCES_BUNDLE
 cp Distribution/Info.plist $APP_BUNDLE/Contents/
