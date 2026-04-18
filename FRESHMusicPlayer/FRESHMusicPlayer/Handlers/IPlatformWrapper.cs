@@ -15,5 +15,7 @@ namespace FRESHMusicPlayer.Handlers
         IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window);
 
         IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window);
+
+        void SetupFMPCore();
     }
 }

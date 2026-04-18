@@ -72,7 +72,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
         var platformWrapper = Locator.Current.GetService<IPlatformWrapper>() ?? throw new PlatformNotSupportedException();
         BackendManager.LoadBackend(platformWrapper.GetPlatformAudioBackend(this, mainWindow));
-        BackendManager.AddDefaultSearchDirectories();
+        platformWrapper.SetupFMPCore();
 
         Player = new Player();
         Player.SongLoading += Player_SongLoading;

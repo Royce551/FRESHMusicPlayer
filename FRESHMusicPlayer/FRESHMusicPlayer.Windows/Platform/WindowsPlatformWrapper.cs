@@ -16,5 +16,10 @@ namespace FRESHMusicPlayer.Windows.Platform
         public IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window) => new NAudioBackend();
 
         public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window) => new SMTCIntegration(viewModel, window);
+
+        public void SetupFMPCore()
+        {
+            BackendManager.AddDefaultSearchDirectories();
+        }
     }
 }

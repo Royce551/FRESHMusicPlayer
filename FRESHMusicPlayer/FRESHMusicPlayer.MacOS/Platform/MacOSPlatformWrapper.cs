@@ -16,6 +16,11 @@ namespace FRESHMusicPlayer.MacOS.Platform
         public IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window) => new BassBackend();
 
         public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window) => new MacOSPlaybackIntegration();
+
+        public void SetupFMPCore()
+        {
+            // TODO: no search search directory inside the bundle but the one in the data folder is probably fine
+        }
     }
 
     public class MacOSPlaybackIntegration : IPlaybackIntegration // not implemented yet, but since it's required this is just a dummy

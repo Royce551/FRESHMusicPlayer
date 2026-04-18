@@ -17,5 +17,10 @@ namespace FRESHMusicPlayer.Linux.Platform
         public IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window) => new BassBackend();
 
         public IPlaybackIntegration GetPlatformPlaybackIntegration(MainViewModel viewModel, Window window) => new MPRISIntegration(viewModel, window);
+
+        public void SetupFMPCore()
+        {
+            BackendManager.AddDefaultSearchDirectories();
+        }
     }
 }
