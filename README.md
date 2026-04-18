@@ -1,42 +1,36 @@
 <img src="banner size.png" width="100%"/>    
 
-[**Support/Discussion Discord Server**](https://discord.gg/mFGFT8K) |
-[**Website**](https://royce551.github.io/FRESHMusicPlayer) (screenshots, help, other info)  
-   
----
+[**Website**](https://royce551.github.io/FRESHMusicPlayer) (**Install**, information, help)  
 
-**Features**
-- Supports most common formats
-- Create/edit playlists
-- Mini Player
-- Tag Editor
-- Integrates with SMTC and Discord  
-
-**Install**  
-|  Operating System           |                                                                                                          |
-|:----------------------------|:-------------------------------------------------------------------------------------------------------------------------|
-|Windows - Installed          |Grab the `.exe` file from [here.](https://github.com/Royce551/FRESHMusicPlayer/releases/latest)                           |
-|Windows - Standalone         |Grab the `.zip` file from [here.](https://github.com/Royce551/FRESHMusicPlayer/releases/latest)                           |
-|Windows - For weird IT people|Grab the `.msi` file from [here.](https://github.com/Royce551/FRESHMusicPlayer/releases/latest)                           |
-|macOS                        |Grab the `macos` file from [here.](https://drive.google.com/drive/folders/1VgI9xZmERlkMpzdtca9paK4eH2JDHb_x?usp=sharing)  |
-|Linux                        |Grab the `linux` file from [here.](https://drive.google.com/drive/folders/1VgI9xZmERlkMpzdtca9paK4eH2JDHb_x?usp=sharing)  |
-* The macOS and Linux versions are currently under development and won't be the most stable experience.
-* The macOS version is smashed, will figure out how to fix eventually
-* Due to a bug with Avalonia, the Linux version will crash on startup if you don't have certain Microsoft fonts. You can grab them [here.](https://aur.archlinux.org/packages/ttf-ms-fonts/)
----
-
-**Also check out these cool music players made by other people in the b&B community!**
-- [**Firetail**](https://github.com/kawuchuu/firetail) by kawuuchu
-- [**theBeat**](https://github.com/vicr123/thebeat) by Victor Tran
-- [**Erable**](https://github.com/aleeproductions/Erable) by Alee
+[**Support/Discussion Discord Server**](https://discord.gg/mFGFT8K)
 
 ---
+
+**Status**  
+
+I am currently in the process of rewriting FRESHMusicPlayer in Avalonia using much better practices! This repository contains both the new codebase and the old (12.x) codebase. The new version of FMP has not currently been released, but you can build it for yourself or use the latest Actions builds.
+
+---
+
 **Development Info**  
-FRESHMusicPlayer - WPF frontend  
-FRESHMusicPlayer-Avalonia - Avalonia frontend
 
-You'll need the .NET Framework 4.7.2 Developer Pack to work with FRESHMusicPlayer and .NET 5.0 SDK to work with FRESHMusicPlayer-Avalonia.  
+FRESHMusicPlayer - Main project  
+
+FRESHMusicPlayer.Windows, FRESHMusicPlayer.Linux, FRESHMusicPlayer.MacOS - Platform specific code for `FRESHMusicPlayer`  
+
+FRESHMusicPlayer-WPF - Old, WPF based project (12.x)  
+
+
 The core audio playing code is in a [separate repository.](https://github.com/royce551/freshmusicplayer-core)
+
+To build and run FMP on your own machine, select the project that corresponds to your operating system. There shouldn't be anything special that you have to do.
+
+---
+
+**Also check out these cool music players!**
+- [**Firetail**](https://github.com/kawuchuu/firetail) by kawuchuu
+- [**theBeat**](https://github.com/vicr123/thebeat) by Victor Tran
+- [**Hummingbird**](https://github.com/hummingbird-player/hummingbird) by William Whittaker
 
 ---
 > Licensed under the GNU General Public License, version 3.  
