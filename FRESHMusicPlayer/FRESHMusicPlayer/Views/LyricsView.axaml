@@ -29,8 +29,8 @@
                         <TextBlock Text="{Binding Lyric}" FontWeight="{Binding Weight}" Margin="10,5,25,5" Opacity="{Binding Opacity}" RenderTransform="{Binding Transform}" TextWrapping="Wrap" TextAlignment="Left" RenderTransformOrigin="0%,50%">
                             <TextBlock.Transitions>
 								<Transitions>
-									<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="CubicEaseInOut"/>
-                                    <TransformOperationsTransition Property="RenderTransform" Duration="0:00:00.25" Easing="CubicEaseInOut"/>
+									<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
+                                    <TransformOperationsTransition Property="RenderTransform" Duration="0:00:01.10" Easing="ExponentialEaseOut"/>
                                 </Transitions>
                             </TextBlock.Transitions>
                         </TextBlock>
@@ -40,7 +40,7 @@
 
             <ScrollViewer.Transitions>
 				<Transitions>
-					<VectorTransition Property="Offset" Duration="0:00:00.50" Easing="CubicEaseInOut"/>
+					<VectorTransition Property="Offset" Duration="0:00:00.50" Easing="CubicEaseOut"/>
                 </Transitions>
             </ScrollViewer.Transitions>
         </ScrollViewer>

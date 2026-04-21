@@ -9,6 +9,7 @@ using FRESHMusicPlayer.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -52,16 +53,29 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (Lyrics is null || !MainView.Player.FileLoaded) return;
 
-            CurrentLines = Lyrics.Where(x => x.Timestamp < MainView.Player.CurrentBackend.CurrentTime).ToList();
-            NextLines = Lyrics.Where(x => x.Timestamp > MainView.Player.CurrentBackend.CurrentTime).Reverse().ToList();
+            var currentTime = MainView.Player.CurrentBackend.CurrentTime;
 
-            foreach (var line in NextLines) line.State = LyricState.Next;
+            CurrentLines = Lyrics.Where(x => x.Timestamp < currentTime).ToList();
+            NextLines = Lyrics.Where(x => x.Timestamp > currentTime).Reverse().ToList();
+
+            foreach (var line in NextLines)
+            {
+                if (line.State != LyricState.Next)
+                    line.State = LyricState.Next;
+            }
 
             if (CurrentLines.Count != 0)
             {
-                foreach (var line in CurrentLines) line.State = LyricState.Past;
+                for (int i = 0; i < CurrentLines.Count - 1; i++)
+                {
+                    var line = CurrentLines[i];
+                    if (line.State != LyricState.Past)
+                        line.State = LyricState.Past;
+                }
 
-                CurrentLines.Last().State = LyricState.Current;
+                var last = CurrentLines.Last();
+                if (last.State != LyricState.Current)
+                    last.State = LyricState.Current;
             }
         }
 
@@ -144,9 +158,11 @@ namespace FRESHMusicPlayer.ViewModels
             get => state;
             set
             {
-                if (state == value) return;
+                if (!SetProperty(ref state, value))
+                {
+                    return;
+                }
 
-                SetProperty(ref state, value);
                 OnPropertyChanged(nameof(Weight));
                 OnPropertyChanged(nameof(Opacity));
                 OnPropertyChanged(nameof(Transform));
