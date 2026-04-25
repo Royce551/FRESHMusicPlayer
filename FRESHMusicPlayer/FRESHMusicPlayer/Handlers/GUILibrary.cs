@@ -1,5 +1,6 @@
 ﻿using ATL;
 using Avalonia.Controls.Primitives;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using FRESHMusicPlayer;
 using FRESHMusicPlayer.Backends;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FRESHMusicPlayer.Handlers
 {
@@ -185,6 +187,25 @@ namespace FRESHMusicPlayer.Handlers
             TracksUpdated?.Invoke(null, new string[] { path });
         }
 
+        public async Task<byte[]?> GetCoverArtThumbnail(string albumName)
+        {
+            var cachedCover = Database.GetCollection<CachedCoverArt>("CachedCoverArt").FindOne(x => x.Album == albumName);
+            if (cachedCover != null) return cachedCover.Cover;
+
+            var tracks = GetTracksForAlbum(albumName);
+            if (tracks.Count == 0) return null;
+
+            var track = tracks[0];
+            var x = (await BackendManager.CreateAndLoadBackendAndGetMetadataAsync(track.Path)).metadata.CoverArt;
+
+            var saveStream = new MemoryStream();
+            Bitmap.DecodeToWidth(new MemoryStream(x), 48).Save(saveStream);
+
+            Database.GetCollection<CachedCoverArt>("CachedCoverArt").Insert(new CachedCoverArt { Album = albumName, Cover = saveStream.ToArray() });
+            
+            return saveStream.ToArray();
+        }
+
         private List<string> HandleAutoLibrary(string[] tracks)
         {
             var paths = new List<string>();
@@ -212,6 +233,15 @@ namespace FRESHMusicPlayer.Handlers
         //    Database.GetCollection<DatabaseQueue>("queues").Insert(newQueue);
         //    return newQueue;
         //}
+    }
+
+    public class CachedCoverArt
+    {
+        public int Id { get; set; }
+
+        public string Album { get; set; } = string.Empty;
+
+        public required byte[] Cover { get; set; }
     }
 
     //public class DatabaseQueue

@@ -170,13 +170,10 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task<Bitmap?> LoadAlbumGroupArt()
         {
-            var tracks = viewModel.MainView.Library.GetTracksForAlbum(Album);
-            if (tracks.Count == 0) return null;
+            var cover = await viewModel.MainView.Library.GetCoverArtThumbnail(Album);
 
-            var track = tracks[0];
-            var cover = await BackendManager.CreateAndLoadBackendAndGetMetadataAsync(track.Path);
-            if (cover.metadata != null || cover.metadata?.CoverArt != null)
-                return Bitmap.DecodeToHeight(new MemoryStream(cover.metadata.CoverArt), 20);
+            if (cover != null)
+                return Bitmap.DecodeToHeight(new MemoryStream(cover), 40);
             else return null;
         }
     }

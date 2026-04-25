@@ -437,7 +437,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     private async Task LoadCoverArtAsync()
     {
         var coverChanged = !(previousMetadata?.CoverArt?.SequenceEqual(Player.Metadata.CoverArt) ?? false);
-        if (previousMetadata == null || coverChanged)
+        if (previousMetadata == null || coverChanged || CoverArt == null)
         {
             await Task.Run(() =>
             {
