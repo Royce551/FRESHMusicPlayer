@@ -659,6 +659,15 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     [ObservableProperty]
     private bool showDragDropOverlay = false;
+
+    public void OpenMiniPlayer()
+    {
+        var miniplayer = new MiniPlayerWindow() { DataContext = new MiniPlayerViewModel(this) };
+
+        miniplayer.Show();
+
+        MainWindow.Hide();
+    }
 }
 
 public enum Page

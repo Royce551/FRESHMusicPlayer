@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="using:System"
+        mc:Ignorable="d" Closed="Window_Closed" WindowDecorations="None"
+        x:Class="FRESHMusicPlayer.Views.MiniPlayerWindow" TransparencyLevelHint="Transparent" Topmost="True" Background="Transparent" CanResize="False" CanMinimize="True" CanMaximize="False"
+        x:DataType="vm:MiniPlayerViewModel" Height="55" Width="500" PointerPressed="Window_PointerPressed" SizeToContent="Height"
+        Title="{Binding MainViewModel.WindowTitle}">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" Height="25" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding $parent[Window].IsPointerOver}">
+			<Button DockPanel.Dock="Left" Content="Back" Click="Button_Click"/>
+         </DockPanel>
+        <Panel DockPanel.Dock="Top" Height="35" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding AreLyricsAvailable}">
+			<TransitioningContentControl Content="{Binding CurrentLyricLine}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <TransitioningContentControl.ContentTemplate>
+					<DataTemplate DataType="system:String">
+						<TextBlock Text="{Binding}" TextAlignment="Center"/>
+                    </DataTemplate>
+                </TransitioningContentControl.ContentTemplate>
+				 <TransitioningContentControl.PageTransition>
+                  <CompositePageTransition>
+					  <CrossFade Duration="0:00:00.30" FadeInEasing="ExponentialEaseOut"/>
+                      <PageSlide Orientation="Vertical" Duration="0:00:00.75" SlideInEasing="ExponentialEaseOut" SlideOutEasing="ExponentialEaseIn"/>
+                  </CompositePageTransition>	  
+              </TransitioningContentControl.PageTransition>
+            </TransitioningContentControl>
+        </Panel>
+		<DockPanel DockPanel.Dock="Bottom" Height="25" Background="{DynamicResource ForegroundColor}">
+			<TextBlock DockPanel.Dock="Left" Text="{Binding MainViewModel.Title}" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBlock DockPanel.Dock="Left" Text="{Binding MainViewModel.Artist}" Foreground="{DynamicResource SecondaryTextColor}" FontSize="9" VerticalAlignment="Center" Margin="10,0" TextTrimming="CharacterEllipsis"/>
+        </DockPanel>
+    </DockPanel>
+</Window>

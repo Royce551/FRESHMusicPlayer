@@ -112,7 +112,7 @@
         <MenuItem Header="Manage playlists..."/>
         <Separator/>
         <MenuItem Header="Fullscreen"/>
-        <MenuItem Header="Mini player"/>
+        <MenuItem Header="Mini player" Command="{Binding OpenMiniPlayer}"/>
         <Separator/>
         <MenuItem Header="Open..." PointerReleased="MenuItem_PointerReleased">
         </MenuItem>
