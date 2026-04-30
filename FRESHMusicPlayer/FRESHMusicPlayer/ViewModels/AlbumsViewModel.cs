@@ -28,7 +28,7 @@ namespace FRESHMusicPlayer.ViewModels
 
                 if (discs.Count() <= 1)
                 {
-                    var viewModelTracks = tracksInAlbum.Select(x => new DatabaseTrackViewModel(this, x, tracksInAlbum.Select(y => y.Path).ToArray()));
+                    var viewModelTracks = tracksInAlbum.Select(x => new DatabaseTrackViewModel(this, x, tracksInAlbum.Select(y => y.Path).ToArray(), ArtistAlbumLabelType.Artist));
 
                     items = new ObservableCollection<ObservableRecipient>(viewModelTracks);  
                 }
@@ -40,7 +40,7 @@ namespace FRESHMusicPlayer.ViewModels
                     {
                         var tracksInDisc = tracksInAlbum.Where(x => x.DiscNumber == disc);
                         tempItems.Add(new DiscGroupHeaderViewModel(this, disc, [.. tracksInDisc.Select(x => x.Path)]));
-                        tempItems.AddRange(tracksInDisc.Select(x => new DatabaseTrackViewModel(this, x, null)));
+                        tempItems.AddRange(tracksInDisc.Select(x => new DatabaseTrackViewModel(this, x, null, ArtistAlbumLabelType.Artist)));
                     }
 
                     items = new ObservableCollection<ObservableRecipient>(tempItems);
@@ -95,6 +95,9 @@ namespace FRESHMusicPlayer.ViewModels
             MainView.Library.TracksUpdated -= Library_TracksUpdated;
         }
 
+        [ObservableProperty]
+        public partial bool IsSelectedAlbumOnScreen { get; set; }
+
         public async Task UpdateAlbumsAsync()
         {
             await Task.Run(() =>
@@ -137,6 +140,7 @@ namespace FRESHMusicPlayer.ViewModels
             var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
             MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
         }
+
     }
 
     public partial class DiscGroupHeaderViewModel : ObservableRecipient

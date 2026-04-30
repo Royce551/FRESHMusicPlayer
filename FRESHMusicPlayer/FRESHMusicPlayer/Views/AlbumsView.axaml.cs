@@ -1,7 +1,9 @@
 using Avalonia;
+using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using Avalonia.VisualTree;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.ViewModels;
 using System.Diagnostics;
@@ -53,7 +55,18 @@ public partial class AlbumsView : UserControl
         if (sender is ListBox listBox && listBox.SelectedItem is DatabaseTrackViewModel track)
         {
             if (e.Key == Key.Enter) track.Play();
-           
+
         }
     }
+
+    //private void CategoryListBox_ScrollChanged(object? sender, ScrollChangedEventArgs e)
+    //{
+    //    if (CategoryListBox.SelectedItem is null) return;
+    //    var selectedItem = CategoryListBox.ContainerFromItem(CategoryListBox.SelectedItem);
+    //    if (selectedItem is null) return;
+
+    //    var peer = ControlAutomationPeer.CreatePeerForElement(selectedItem);
+
+    //    viewModel?.IsSelectedAlbumOnScreen = peer.IsOffscreen();
+    //}
 }

@@ -92,7 +92,12 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         private string title;
 
-        public string ArtistAlbumLabel => $"{string.Join(", ", Artists)} ・ {Album}";
+        public string ArtistAlbumLabel => labelType switch
+        {
+            ArtistAlbumLabelType.Artist => string.Join(", ", Artists),
+            ArtistAlbumLabelType.Album => Album,
+            _ => $"{string.Join(", ", Artists)} ・ {Album}"
+        };
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(ArtistAlbumLabel))]
@@ -135,9 +140,11 @@ namespace FRESHMusicPlayer.ViewModels
         public string[]? TracksInCollection { get; set; }
 
         private readonly ViewModelBase viewModel;
-        public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track, string[]? tracksInCollection)
+        private readonly ArtistAlbumLabelType labelType;
+        public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track, string[]? tracksInCollection, ArtistAlbumLabelType labelType = ArtistAlbumLabelType.ArtistAndAlbum)
         {
             this.viewModel = viewModel;
+            this.labelType = labelType;
 
             TracksInCollection = tracksInCollection;
             Id = track.Id;
@@ -244,5 +251,12 @@ namespace FRESHMusicPlayer.ViewModels
         public void GoToArtist() => viewModel.MainView.NavigateTo(new ArtistsViewModel(Artists[0]));
 
         public override string ToString() => Title;
+    }
+
+    public enum ArtistAlbumLabelType
+    {
+        Artist,
+        Album,
+        ArtistAndAlbum
     }
 }

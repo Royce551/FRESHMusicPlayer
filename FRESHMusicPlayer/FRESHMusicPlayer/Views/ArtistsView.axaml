@@ -40,7 +40,13 @@
       </DockPanel>
 
       <TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="Your library is empty. To get started, drag and drop some tracks, or set Auto-Import folders in settings." Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
-      <ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" KeyboardNavigation.TabNavigation="Continue" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyDown="ListBox_KeyDown_1">
+    <ScrollViewer>
+		<StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10,10,10,5" Spacing="10">
+						<TextBlock Text="{Binding SelectedArtist.Name}" FontWeight="Bold" VerticalAlignment="Center"/>
+					</StackPanel>
+
+			<ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" KeyboardNavigation.TabNavigation="Continue" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyDown="ListBox_KeyDown_1">
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel/>
@@ -90,7 +96,7 @@
               
               <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
               <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
-              <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">       
+              <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10" Margin="0,-2">       
                 <Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True"/>
                 <Button Content="Play" Command="{Binding Play}" IsTabStop="True"/>
               </StackPanel>
@@ -113,6 +119,9 @@
           </DataTemplate>
         </ListBox.DataTemplates>
       </ListBox>
+        </StackPanel>
+    </ScrollViewer>
+      
     </DockPanel>
   </Grid>
   
