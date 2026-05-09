@@ -43,7 +43,7 @@ public partial class ArtistsView : UserControl
     {
         if (sender is Border border && border.DataContext is AlbumGroupHeaderViewModel albumViewModel)
         {
-            viewModel?.MainView.NavigateTo(new AlbumsViewModel(albumViewModel.Album));
+            viewModel?.MainView.NavigateTo(ViewModels.Page.Albums, albumViewModel.Album);
         }
     }
 

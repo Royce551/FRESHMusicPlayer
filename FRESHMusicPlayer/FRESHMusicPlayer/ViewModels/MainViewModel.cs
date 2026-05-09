@@ -34,8 +34,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNavbarVisible))]
-    private ViewModelBase? selectedView;
+    private Control? selectedView;
 
+    private ViewModelBase selectedViewModel;
 
     public bool IsNavbarVisible => true;
 
@@ -104,15 +105,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
         StartIntegrations();
 
-        NavigateTo(Config.Page switch
-        {
-            Page.Tracks => new TracksViewModel(),
-            Page.Artists => new ArtistsViewModel(),
-            Page.Albums => new ArtistsViewModel(),
-            Page.Playlists => new PlaylistsViewModel(),
-            Page.Import => new ImportViewModel(),
-            _ => new TracksViewModel(),
-        });
+        NavigateTo(Config.Page);
 
         ProgressTimer = new DispatcherTimer
         {
@@ -490,23 +483,50 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         var dataFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Squidhouse Software", "Kotomi");
     }
 
-    public void NavigateTo(ViewModelBase page)
+    private Dictionary<Page, (ViewModelBase vm, Control pg)> viewModelCache = new();
+    public void NavigateTo(Page pageType, object? args = null, bool skipCache = false)
     {
-        SelectedView?.OnNavigatingAway();
+        ViewModelBase page;
+        Control view;
 
-        page.MainView = this;
-        SelectedView = page;
-        page.AfterPageLoaded();
-
-        Config.Page = page switch
+        var pageIsInCache = viewModelCache.TryGetValue(pageType, out var cachedViewModel);
+        if (!skipCache && pageIsInCache)
         {
-            TracksViewModel => Page.Tracks,
-            ArtistsViewModel => Page.Artists,
-            AlbumsViewModel => Page.Albums,
-            PlaylistsViewModel => Page.Playlists,
-            ImportViewModel => Page.Import,
-            _ => Page.Tracks
-        };
+            page = cachedViewModel.vm;
+            view = cachedViewModel.pg;
+        }
+        else
+        {
+            if (pageIsInCache) cachedViewModel.vm.OnNavigatingAway();
+
+            page = pageType switch
+            {
+                Page.Tracks => new TracksViewModel(),
+                Page.Artists => new ArtistsViewModel(args as string),
+                Page.Albums => new AlbumsViewModel(args as string),
+                Page.Import => new ImportViewModel(),
+                Page.Playlists => new PlaylistsViewModel(),
+                _ => throw new InvalidOperationException()
+            };
+            view = page switch
+            {
+                TracksViewModel => new TracksView(),
+                ArtistsViewModel => new ArtistsView(),
+                AlbumsViewModel => new AlbumsView(),
+                ImportViewModel => new ImportView(),
+                _ => throw new InvalidOperationException()
+            };
+            view.DataContext = page;
+
+            viewModelCache[pageType] = (page, view);
+            page.MainView = this;
+            page.AfterPageLoaded();
+        }
+
+        SelectedView = view;
+        selectedViewModel = page;
+
+        Config.Page = pageType;
 
         OnPropertyChanged(nameof(TracksTabFontWeight));
         OnPropertyChanged(nameof(ArtistsTabFontWeight));
@@ -568,18 +588,17 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     // this will need to be changed when tabs become more dynamic, but for now, this works
-    public FontWeight TracksTabFontWeight => SelectedView is TracksViewModel ? FontWeight.Bold : FontWeight.Normal;
-    public FontWeight ArtistsTabFontWeight => SelectedView is ArtistsViewModel ? FontWeight.Bold : FontWeight.Normal;
-    public FontWeight AlbumsTabFontWeight => SelectedView is AlbumsViewModel ? FontWeight.Bold : FontWeight.Normal;
-    public FontWeight PlaylistsTabFontWeight => SelectedView is PlaylistsViewModel ? FontWeight.Bold : FontWeight.Normal;
-    public FontWeight ImportTabFontWeight => SelectedView is ImportViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight TracksTabFontWeight => selectedViewModel is TracksViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight ArtistsTabFontWeight => selectedViewModel is ArtistsViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight AlbumsTabFontWeight => selectedViewModel is AlbumsViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight PlaylistsTabFontWeight => selectedViewModel is PlaylistsViewModel ? FontWeight.Bold : FontWeight.Normal;
+    public FontWeight ImportTabFontWeight => selectedViewModel is ImportViewModel ? FontWeight.Bold : FontWeight.Normal;
 
-    public void OpenTracksTab() => NavigateTo(new TracksViewModel());
-    public void OpenArtistsTab() => NavigateTo(new ArtistsViewModel());
-    public void OpenAlbumsTab() => NavigateTo(new AlbumsViewModel());
-    public void OpenPlaylistsTab() => NavigateTo(new PlaylistsViewModel());
-    public void OpenImportTab() => NavigateTo(new ImportViewModel());
-
+    public void OpenTracksTab() => NavigateTo(Page.Tracks);
+    public void OpenArtistsTab() => NavigateTo(Page.Artists);
+    public void OpenAlbumsTab() => NavigateTo(Page.Albums);
+    public void OpenPlaylistsTab() => NavigateTo(Page.Playlists);
+    public void OpenImportTab() => NavigateTo(Page.Import);
     public async void OpenSettingsCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Settings", 450);
 
     public async void OpenQueueCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Queue", 300);
@@ -605,12 +624,12 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     public void GoToArtist()
     {
-        NavigateTo(new ArtistsViewModel(Player.FileLoaded ? Player.Metadata.Artists[0] : null));
+        NavigateTo(Page.Artists, Player.FileLoaded ? Player.Metadata.Artists[0] : null, true);
     }
 
     public void GoToAlbum()
     {
-        NavigateTo(new AlbumsViewModel(Player.FileLoaded ? Player.Metadata.Album : null));
+        NavigateTo(Page.Albums, Player.FileLoaded ? Player.Metadata.Album : null, true);
     }
 
     public List<IPlaybackIntegration> PlaybackIntegrations { get; } = new List<IPlaybackIntegration>();
