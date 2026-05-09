@@ -139,11 +139,12 @@ namespace FRESHMusicPlayer.ViewModels
 
         public string[]? TracksInCollection { get; set; }
 
-        private readonly ViewModelBase viewModel;
+        public ViewModelBase ViewModel { get; }
+
         private readonly ArtistAlbumLabelType labelType;
         public DatabaseTrackViewModel(ViewModelBase viewModel, DatabaseTrack track, string[]? tracksInCollection, ArtistAlbumLabelType labelType = ArtistAlbumLabelType.ArtistAndAlbum)
         {
-            this.viewModel = viewModel;
+            this.ViewModel = viewModel;
             this.labelType = labelType;
 
             TracksInCollection = tracksInCollection;
@@ -169,7 +170,7 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (IsMissing)
             {
-                viewModel.MainView.Notifications.Add(new Handlers.Notification(viewModel.MainView)
+                ViewModel.MainView.Notifications.Add(new Handlers.Notification(ViewModel.MainView)
                 {
                     ContentText = "The file you tried to play could not be found. If you moved it, you can update the library entry for it.",
                     ButtonText = "Locate file",
@@ -177,7 +178,7 @@ namespace FRESHMusicPlayer.ViewModels
                     DisplayAsToast = true,
                     OnButtonClicked = () =>
                     {
-                        var topLevel = TopLevel.GetTopLevel(viewModel.MainView.MainWindow);
+                        var topLevel = TopLevel.GetTopLevel(ViewModel.MainView.MainWindow);
                         var files = topLevel.StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
                         {
                             FileTypeFilter = [FilePickerFileTypes.All] // TODO: do this correctly
@@ -185,13 +186,13 @@ namespace FRESHMusicPlayer.ViewModels
 
                         if (files.Count >= 1)
                         {
-                            var track = viewModel.MainView.Library.GetAllTracks().FirstOrDefault(x => x.Id == Id);
+                            var track = ViewModel.MainView.Library.GetAllTracks().FirstOrDefault(x => x.Id == Id);
                             track.Path = files[0].Path.LocalPath;
                             Path = track.Path;
-                            viewModel.MainView.Library.Database.GetCollection<DatabaseTrack>(Library.TracksCollectionName).Update(track);
+                            ViewModel.MainView.Library.Database.GetCollection<DatabaseTrack>(Library.TracksCollectionName).Update(track);
 
-                            viewModel.MainView.Library.TriggerUpdate();
-                            _ = viewModel.MainView.Player.PlayAsync(Path);
+                            ViewModel.MainView.Library.TriggerUpdate();
+                            _ = ViewModel.MainView.Player.PlayAsync(Path);
 
                             return true;
                         }
@@ -203,37 +204,37 @@ namespace FRESHMusicPlayer.ViewModels
                 return;
             }
 
-            viewModel.MainView.Player.Queue.Clear();
-            if (viewModel.MainView.Config.AutoQueue && TracksInCollection != null)
+            ViewModel.MainView.Player.Queue.Clear();
+            if (ViewModel.MainView.Config.AutoQueue && TracksInCollection != null)
             {
-                var shuffle = viewModel.MainView.Player.Queue.Shuffle;
+                var shuffle = ViewModel.MainView.Player.Queue.Shuffle;
 
-                if (shuffle) viewModel.MainView.Player.Queue.Shuffle = false;
+                if (shuffle) ViewModel.MainView.Player.Queue.Shuffle = false;
 
                 var thisTrackIndex = TracksInCollection.ToList().FindIndex(x => x == Path);
 
-                viewModel.MainView.AddToQueueAndHandleAutoQueue(TracksInCollection);
-                viewModel.MainView.Player.Queue.Position = thisTrackIndex;
+                ViewModel.MainView.AddToQueueAndHandleAutoQueue(TracksInCollection);
+                ViewModel.MainView.Player.Queue.Position = thisTrackIndex;
 
-                viewModel.MainView.Player.Queue.Shuffle = shuffle;
+                ViewModel.MainView.Player.Queue.Shuffle = shuffle;
             }
             else
             {
-                viewModel.MainView.AddToQueueAndHandleAutoQueue(Path);
+                ViewModel.MainView.AddToQueueAndHandleAutoQueue(Path);
             }
 
-            await viewModel.MainView.Player.PlayAsync();
-            if (viewModel.MainView.Config.AutoQueue) viewModel.MainView.AutoQueueIsQueued = true;
+            await ViewModel.MainView.Player.PlayAsync();
+            if (ViewModel.MainView.Config.AutoQueue) ViewModel.MainView.AutoQueueIsQueued = true;
         }
 
         public void Enqueue()
         {
-            viewModel.MainView.AddToQueueAndHandleAutoQueue(Path);
+            ViewModel.MainView.AddToQueueAndHandleAutoQueue(Path);
         }
 
         public void PlayNext()
         {
-            viewModel.MainView.Player.Queue.PlayNext(Path);
+            ViewModel.MainView.Player.Queue.PlayNext(Path);
         }
 
         public void OpenInFileExplorer()
@@ -243,12 +244,12 @@ namespace FRESHMusicPlayer.ViewModels
 
         public void RemoveFromLibrary()
         {
-            viewModel.MainView.Library.Remove(Path);
+            ViewModel.MainView.Library.Remove(Path);
         }
 
-        public void GoToAlbum() => viewModel.MainView.NavigateTo(new AlbumsViewModel(Album));
+        public void GoToAlbum() => ViewModel.MainView.NavigateTo(new AlbumsViewModel(Album));
 
-        public void GoToArtist() => viewModel.MainView.NavigateTo(new ArtistsViewModel(Artists[0]));
+        public void GoToArtist() => ViewModel.MainView.NavigateTo(new ArtistsViewModel(Artists[0]));
 
         public override string ToString() => Title;
     }

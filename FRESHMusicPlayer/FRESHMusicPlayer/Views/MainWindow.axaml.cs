@@ -27,6 +27,8 @@ public partial class MainWindow : Window
         InitializeComponent();
         ProgressSlider.AddHandler(PointerPressedEvent, ProgressSlider_PointerPressed, Avalonia.Interactivity.RoutingStrategies.Tunnel);
         ProgressSlider.AddHandler(PointerReleasedEvent, ProgressSlider_PointerReleased, Avalonia.Interactivity.RoutingStrategies.Tunnel);
+        AddHandler(KeyDownEvent, root_TunnelingKeyDown, Avalonia.Interactivity.RoutingStrategies.Tunnel);
+        AddHandler(KeyUpEvent, root_TunnelingKeyUp, Avalonia.Interactivity.RoutingStrategies.Tunnel);
     }
 
     public bool ProgressSliderIsAnimating => ProgressSlider.IsAnimating(RangeBase.ValueProperty);
@@ -265,6 +267,28 @@ public partial class MainWindow : Window
         }
     }
 
+    private void root_TunnelingKeyDown(object? sender, KeyEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case Key.LeftShift:
+            case Key.RightShift:
+                viewModel.IsShiftHeld = true;
+                break;
+        }
+    }
+
+    private void root_TunnelingKeyUp(object? sender, KeyEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case Key.LeftShift:
+            case Key.RightShift:
+                viewModel.IsShiftHeld = false;
+                break;
+        }
+    }
+
     private void Border_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
     {
         if (sender is Border border) viewModel.Notifications.Remove((border.DataContext as Handlers.Notification)!);
@@ -301,4 +325,6 @@ public partial class MainWindow : Window
             await viewModel.Player.PlayAsync();
         }
     }
+
+   
 }

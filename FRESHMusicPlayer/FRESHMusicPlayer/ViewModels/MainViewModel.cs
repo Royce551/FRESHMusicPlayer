@@ -427,6 +427,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             PauseAfterCurrentTrack = false;
         }
 
+        MainWindow.UpdateIconStates();
+
         await AnimateProgressTo0Async();
 
         TotalTimeSeconds = Player.TotalTime.TotalSeconds;
@@ -668,6 +670,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
         MainWindow.Hide();
     }
+
+    [ObservableProperty]
+    public partial bool IsShiftHeld { get; set; } = false;
 }
 
 public enum Page

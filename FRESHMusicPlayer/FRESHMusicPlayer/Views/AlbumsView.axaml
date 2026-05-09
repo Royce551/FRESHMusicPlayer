@@ -57,22 +57,29 @@
 							<DataTemplate DataType="vm:DiscGroupHeaderViewModel">
 								<Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent">
 									<Border.Styles>
-										<Style Selector="Border > DockPanel > Button">
+										<Style Selector="Border > Grid > DockPanel > Button">
 											<Setter Property="IsVisible" Value="False"/>
 										</Style>
-										<Style Selector="Border:pointerover > DockPanel > Button">
+										<Style Selector="Border:pointerover > Grid > DockPanel > Button">
 											<Setter Property="IsVisible" Value="True"/>
 										</Style>
-										<Style Selector="ListBoxItem:focus-within > Border > DockPanel > Button">
+										<Style Selector="ListBoxItem:focus-within > Border > Grid > DockPanel > Button">
 											<Setter Property="IsVisible" Value="True"/>
 										</Style>
 									</Border.Styles>
-									<DockPanel>
-										<Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2"/>
-										<Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="Enqueue all" Margin="2"/>
+									<Grid>
+										<Grid.ColumnDefinitions> <!--it's sloppy but it works :sob:-->
+											<ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
+											<ColumnDefinition Width="*"/>
+										</Grid.ColumnDefinitions>	
+										<DockPanel Grid.Column="1">
+											<Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2"/>
+											<Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="Enqueue all" Margin="2"/>
 
-										<TextBlock Text="{Binding DiscNumString}" FontSize="12" Margin="5,15,0,2" VerticalAlignment="Bottom" Foreground="{DynamicResource SecondaryTextColor}"/>
-									</DockPanel>
+											<TextBlock Text="{Binding DiscNumString}" FontSize="12" Margin="5,15,0,2" VerticalAlignment="Bottom" Foreground="{DynamicResource SecondaryTextColor}"/>
+										</DockPanel>
+									</Grid>
+									
 								</Border>
 							</DataTemplate>
 							<DataTemplate DataType="vm:DatabaseTrackViewModel">
@@ -86,11 +93,19 @@
 										<Style Selector="Grid > StackPanel > Button">
 											<Setter Property="IsVisible" Value="False"/>
 										</Style>
-										<Style Selector="Grid:pointerover > StackPanel > Button">
+										<Style Selector="Grid:pointerover > StackPanel > Button[Tag=true]">
 											<Setter Property="IsVisible" Value="True"/>
 										</Style>
-										<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button">
+
+										<Style Selector="Grid:pointerover > Grid > StackPanel > Button[Tag=false]">
+											<Setter Property="IsVisible" Value="False"/>
+										</Style>
+										<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=true]">
 											<Setter Property="IsVisible" Value="True"/>
+										</Style>
+	
+										<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=false]">
+											<Setter Property="IsVisible" Value="False"/>
 										</Style>
 									</Grid.Styles>
 
@@ -98,8 +113,12 @@
 									<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
 									<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
 									<StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10" Margin="0,-2">
-										<Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True"/>
-										<Button Content="Play" Command="{Binding Play}" IsTabStop="True"/>
+										<Button Content="Remove from library" Command="{Binding RemoveFromLibrary}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="Manage playlists..." IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="Go to artist" Command="{Binding GoToArtist}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="Play next" Command="{Binding PlayNext}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True" Tag="{x:True}"/>
+										<Button Content="Play" Command="{Binding Play}" IsTabStop="True" Tag="{x:True}"/>
 									</StackPanel>
 
 									<Grid.ContextMenu>
