@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:FRESHMusicPlayer.Views"
         mc:Ignorable="d" Height="{Binding Config.WindowHeight, Mode=TwoWay}" Width="{Binding Config.WindowWidth, Mode=TwoWay}" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="FRESHMusicPlayer.Views.MainWindow" Deactivated="Window_Deactivated" Activated="Window_Activated_1" DragDrop.DragEnter="root_DragEnter" DragDrop.DragLeave="root_DragLeave" DragDrop.AllowDrop="True"
-        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed" KeyDown="root_KeyDown"
+        x:DataType="vm:MainViewModel" PointerWheelChanged="Window_PointerWheelChanged" Closed="Window_Closed" KeyDown="root_KeyDown" PointerPressed="root_PointerPressed"
         Name="root"
         Title="{Binding WindowTitle}">
 

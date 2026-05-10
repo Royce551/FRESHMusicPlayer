@@ -523,6 +523,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             page.AfterPageLoaded();
         }
 
+        backLog.Push((pageType, args, skipCache));
+
         SelectedView = view;
         selectedViewModel = page;
 
@@ -533,6 +535,27 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         OnPropertyChanged(nameof(AlbumsTabFontWeight));
         OnPropertyChanged(nameof(PlaylistsTabFontWeight));
         OnPropertyChanged(nameof(ImportTabFontWeight));
+    }
+
+    private Stack<(Page pageType, object? args, bool skipCache)> backLog = new(16);
+    private Stack<(Page pageType, object? args, bool skipCache)> forwardLog = new(16);
+    public void NavigateBack()
+    {
+        if (backLog.Count <= 1) return;
+
+        var forwardPage = backLog.Pop();
+        var lastPage = backLog.Pop();
+        NavigateTo(lastPage.pageType, lastPage.args, lastPage.skipCache);
+        forwardLog.Push(forwardPage);
+    }
+
+    public void NavigateForward()
+    {
+        if (forwardLog.Count == 0) return;
+
+        var nextPage = forwardLog.Pop();
+        NavigateTo(nextPage.pageType, nextPage.args, nextPage.skipCache);
+        backLog.Push(nextPage);
     }
 
     [ObservableProperty]

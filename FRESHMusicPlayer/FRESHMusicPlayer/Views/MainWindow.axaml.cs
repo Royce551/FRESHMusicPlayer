@@ -326,5 +326,17 @@ public partial class MainWindow : Window
         }
     }
 
-   
+    private void root_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.Properties.IsXButton1Pressed)
+        {
+            viewModel.NavigateBack();
+            e.Handled = true;
+        }
+        else if (e.Properties.IsXButton2Pressed)
+        {
+                viewModel.NavigateForward();
+                e.Handled = true;
+        }
+    }
 }
