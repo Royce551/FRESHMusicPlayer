@@ -14,37 +14,43 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class TrackInfoViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private Bitmap? coverArt;
+        public partial Bitmap? CoverArt { get; set; }
 
         [ObservableProperty]
-        private bool isAudioVisible = false;
-        [ObservableProperty]
-        private string audio;
+        public partial bool IsAudioVisible { get; set; } = false;
 
         [ObservableProperty]
-        private bool isDiscVisible = false;
-        [ObservableProperty]
-        private string disc;
+        public partial string Audio { get; set; }
 
         [ObservableProperty]
-        private bool isTrackVisible = false;
-        [ObservableProperty]
-        private string track;
+        public partial bool IsDiscVisible { get; set; } = false;
 
         [ObservableProperty]
-        private bool isYearVisible = false;
-        [ObservableProperty]
-        private string year;
+        public partial string Disc { get; set; }
 
         [ObservableProperty]
-        private bool isGenreVisible = false;
-        [ObservableProperty]
-        private string genre;
+        public partial bool IsTrackVisible { get; set; } = false;
 
         [ObservableProperty]
-        private bool isAlbumVisible = false;
+        public partial string Track { get; set; }
+
         [ObservableProperty]
-        private string album;
+        public partial bool IsYearVisible { get; set; } = false;
+
+        [ObservableProperty]
+        public partial string Year { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsGenreVisible { get; set; } = false;
+
+        [ObservableProperty]
+        public partial string Genre { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsAlbumVisible { get; set; } = false;
+
+        [ObservableProperty]
+        public partial string Album { get; set; }
 
         public TrackInfoViewModel()
         {

@@ -15,8 +15,7 @@ namespace FRESHMusicPlayer.Handlers
     public partial class Notification : ObservableObject
     {
         [ObservableProperty]
-        private string contentText = string.Empty;
-
+        public partial string ContentText { get; set; } = string.Empty;
         public string ButtonText { get; set; } = string.Empty;
 
         public bool HasBeenRead { get; set; } = false;

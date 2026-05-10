@@ -49,7 +49,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         [ObservableProperty]
-        private string? endsAt = null;
+        public partial string? EndsAt { get; set; } = null;
 
         private void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e) => _ = UpdateQueueAsync();
 
@@ -64,7 +64,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         [ObservableProperty]
-        private ObservableCollection<QueueTrackViewModel> tracks = default!;
+        public partial ObservableCollection<QueueTrackViewModel> Tracks { get; set; } = default!;
 
         private void Queue_QueueChanged(object? sender, EventArgs e) => _ = UpdateQueueAsync();
 
@@ -136,23 +136,23 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class QueueTrackViewModel : ObservableRecipient
     {
         [ObservableProperty]
-        private string path;
+        public partial string Path { get; set; }
 
         [ObservableProperty]
-        private string title;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(ArtistAlbumLabel))]
-        private string[] artists;
+        public partial string Title { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(ArtistAlbumLabel))]
-        private string album;
+        public partial string[] Artists { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ArtistAlbumLabel))]
+        public partial string Album { get; set; }
 
         public string ArtistAlbumLabel => $"{string.Join(", ", Artists)} ・ {Album}";
 
         [ObservableProperty]
-        private int length;
+        public partial int Length { get; set; }
 
         public string PositionString => IsNowPlaying ? ">" : Position.ToString();
 
@@ -161,7 +161,7 @@ namespace FRESHMusicPlayer.ViewModels
         public bool IsNowPlaying => viewModel.MainView.Player.Queue.Position == Position;
 
         [ObservableProperty]
-        public int position;
+        public partial int Position { get; set; }
 
         private readonly QueueViewModel viewModel;
         public QueueTrackViewModel(QueueViewModel viewModel, DatabaseTrack track, int position)

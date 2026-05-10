@@ -35,10 +35,10 @@ namespace FRESHMusicPlayer.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Tracks))]
-        private string? search;
+        public partial string? Search { get; set; }
 
         [ObservableProperty]
-        private string footerText;
+        public partial string FooterText { get; set; }
 
         public async Task PlayAll()
         {

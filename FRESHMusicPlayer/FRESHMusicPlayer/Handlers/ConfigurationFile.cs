@@ -13,34 +13,34 @@ namespace FRESHMusicPlayer.Handlers
     public partial class ConfigurationFile : ObservableRecipient
     {
         [ObservableProperty]
-        private bool showTimeInWindow = false;
+        public partial bool ShowTimeInWindow { get; set; } = false;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        private bool showRemainingTime = false;
+        public partial bool ShowRemainingTime { get; set; } = false;
 
         [ObservableProperty]
-        private double volume = 1;
+        public partial double Volume { get; set; } = 1;
 
         [ObservableProperty]
-        private Page page = Page.Tracks;
+        public partial Page Page { get; set; } = Page.Tracks;
 
         [ObservableProperty]
-        private double windowWidth = 1000;
+        public partial double WindowWidth { get; set; } = 1000;
 
         [ObservableProperty]
-        private double windowHeight = 800;
+        public partial double WindowHeight { get; set; } = 800;
 
         [ObservableProperty]
-        private bool autoQueue = true;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        private bool integrateDiscordRichPresence = false;
+        public partial bool AutoQueue { get; set; } = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        private bool integrateLastFM = false;
+        public partial bool IntegrateDiscordRichPresence { get; set; } = false;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IntegrateLastFM { get; set; } = false;
 
         public static ConfigurationFile Read(string filePath)
         {

@@ -62,17 +62,17 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         [ObservableProperty]
-        private ObservableCollection<DatabaseArtistViewModel> artists;
+        public partial ObservableCollection<DatabaseArtistViewModel> Artists { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Tracks))]
-        private DatabaseArtistViewModel selectedArtist;
+        public partial DatabaseArtistViewModel SelectedArtist { get; set; }
 
         [ObservableProperty]
-        private string footerText;
+        public partial string FooterText { get; set; }
 
         [ObservableProperty]
-        private bool isLibraryEmpty = false;
+        public partial bool IsLibraryEmpty { get; set; } = false;
 
         public ArtistsViewModel()
         {
@@ -181,14 +181,14 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class DatabaseArtistViewModel : ObservableRecipient
     {
         [ObservableProperty]
-        private string name;
+        public partial string Name { get; set; }
 
         public Task<Bitmap?> CoverArt => LoadArtistArt();
 
         private readonly ArtistsViewModel viewModel;
         public DatabaseArtistViewModel(ArtistsViewModel viewModel, string name)
         {
-            this.name = name;
+            Name = name;
             this.viewModel = viewModel;
         }
 

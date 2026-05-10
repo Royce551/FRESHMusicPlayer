@@ -38,7 +38,7 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         [ObservableProperty]
-        private bool autoScrollEnabled = true;
+        public partial bool AutoScrollEnabled { get; set; } = true;
 
         public void ResumeAutoScroll()
         {
@@ -115,10 +115,10 @@ namespace FRESHMusicPlayer.ViewModels
         private void Player_SongChanged(object? sender, EventArgs e) => Update();
 
         [ObservableProperty]
-        private Bitmap? coverArt;
+        public partial Bitmap? CoverArt { get; set; }
 
         [ObservableProperty]
-        private ObservableCollection<LyricLineViewModel>? lyrics = new ObservableCollection<LyricLineViewModel>();
+        public partial ObservableCollection<LyricLineViewModel>? Lyrics { get; set; } = new ObservableCollection<LyricLineViewModel>();
 
         public void Update()
         {
@@ -147,10 +147,10 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class LyricLineViewModel : ObservableObject
     {
         [ObservableProperty]
-        private TimeSpan timestamp;
+        public partial TimeSpan Timestamp { get; set; }
 
         [ObservableProperty]
-        private string? lyric;
+        public partial string? Lyric { get; set; }
 
         private LyricState state = LyricState.Next;
         public LyricState State

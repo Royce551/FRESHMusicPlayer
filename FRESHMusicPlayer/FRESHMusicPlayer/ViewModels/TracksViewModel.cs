@@ -16,13 +16,13 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class TracksViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private ObservableCollection<DatabaseTrackViewModel> tracks;
+        public partial ObservableCollection<DatabaseTrackViewModel> Tracks { get; set; }
 
         [ObservableProperty]
-        private string footerText;
+        public partial string FooterText { get; set; }
 
         [ObservableProperty]
-        private bool isLibraryEmpty = false;
+        public partial bool IsLibraryEmpty { get; set; } = false;
 
         public TracksViewModel()
         {
@@ -81,16 +81,16 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class DatabaseTrackViewModel : ObservableRecipient
     {
         [ObservableProperty]
-        private int id;
+        public partial int Id { get; set; }
 
         [ObservableProperty]
-        private string path;
+        public partial string Path { get; set; }
 
         [ObservableProperty]
-        private bool hasBeenProcessed;
+        public partial bool HasBeenProcessed { get; set; }
 
         [ObservableProperty]
-        private string title;
+        public partial string Title { get; set; }
 
         public string ArtistAlbumLabel => labelType switch
         {
@@ -101,39 +101,39 @@ namespace FRESHMusicPlayer.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(ArtistAlbumLabel))]
-        private string[] artists;
+        public partial string[] Artists { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(ArtistAlbumLabel))]
-        private string album;
+        public partial string Album { get; set; }
 
         [ObservableProperty]
-        private string[] genres;
+        public partial string[] Genres { get; set; }
 
         [ObservableProperty]
-        private int year;
+        public partial int Year { get; set; }
 
         [NotifyPropertyChangedFor(nameof(IsTrackNumberPresent))]
         [ObservableProperty]
-        private int trackNumber;
+        public partial int TrackNumber { get; set; }
 
         [ObservableProperty]
-        private int trackTotal;
+        public partial int TrackTotal { get; set; }
 
-        public bool IsTrackNumberPresent => trackNumber != 0;
-
-        [ObservableProperty]
-        private int discNumber;
+        public bool IsTrackNumberPresent => TrackNumber != 0;
 
         [ObservableProperty]
-        private int discTotal;
+        public partial int DiscNumber { get; set; }
 
         [ObservableProperty]
-        private int length;
+        public partial int DiscTotal { get; set; }
+
+        [ObservableProperty]
+        public partial int Length { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Opacity))]
-        private bool isMissing = false;
+        public partial bool IsMissing { get; set; } = false;
 
         public double Opacity => IsMissing ? 0.6 : 1;
 

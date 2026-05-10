@@ -61,17 +61,17 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         [ObservableProperty]
-        private ObservableCollection<DatabaseAlbumViewModel> albums;
+        public partial ObservableCollection<DatabaseAlbumViewModel> Albums { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Tracks))]
-        private DatabaseAlbumViewModel selectedAlbum;
+        public partial DatabaseAlbumViewModel SelectedAlbum { get; set; }
 
         [ObservableProperty]
-        private string footerText;
+        public partial string FooterText { get; set; }
 
         [ObservableProperty]
-        private bool isLibraryEmpty = false;
+        public partial bool IsLibraryEmpty { get; set; } = false;
 
         public AlbumsViewModel()
         {
@@ -176,14 +176,14 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class DatabaseAlbumViewModel : ObservableRecipient
     {
         [ObservableProperty]
-        private string name;
+        public partial string Name { get; set; }
 
         public Task<Bitmap?> CoverArt => LoadAlbumArt();
 
         private readonly AlbumsViewModel viewModel;
         public DatabaseAlbumViewModel(AlbumsViewModel viewModel, string name)
         {
-            this.name = name;
+            Name = name;
             this.viewModel = viewModel;
         }
 

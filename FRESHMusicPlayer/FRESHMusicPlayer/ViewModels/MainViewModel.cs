@@ -34,7 +34,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNavbarVisible))]
-    private Control? selectedView;
+    public partial Control? SelectedView { get; set; }
 
     private ViewModelBase selectedViewModel;
 
@@ -245,18 +245,22 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     [ObservableProperty]
-    private bool pauseAfterCurrentTrack = false;
+    public partial bool PauseAfterCurrentTrack { get; set; } = false;
 
     [ObservableProperty]
-    private string windowTitle = WindowName;
+    public partial string WindowTitle { get; set; } = WindowName;
+
     [ObservableProperty]
-    private string title = "Nothing playing";
+    public partial string Title { get; set; } = "Nothing playing";
+
     [ObservableProperty]
-    private string artist = "Nothing playing";
+    public partial string Artist { get; set; } = "Nothing playing";
+
     [ObservableProperty]
-    private string progressIndicator1 = "00:00";
+    public partial string ProgressIndicator1 { get; set; } = "00:00";
+
     [ObservableProperty]
-    private string progressIndicator2 = "00:00";
+    public partial string ProgressIndicator2 { get; set; } = "00:00";
 
     //private double currentTimeSeconds = 0;
     public double CurrentTimeSeconds
@@ -274,11 +278,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     [ObservableProperty]
-    private double totalTimeSeconds = 1;
+    public partial double TotalTimeSeconds { get; set; } = 1;
+
     [ObservableProperty]
-    private Bitmap? coverArt = null;
+    public partial Bitmap? CoverArt { get; set; } = null;
+
     [ObservableProperty]
-    private Bitmap? coverArtFullSize = null;
+    public partial Bitmap? CoverArtFullSize { get; set; } = null;
 
     public const string WindowName = "FRESHMusicPlayer";
 
@@ -560,10 +566,10 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ShowToastNotifications))]
-    private ViewModelBase? sidePaneView;
+    public partial ViewModelBase? SidePaneView { get; set; }
 
     [ObservableProperty]
-    private double sidePanelWidth;
+    public partial double SidePanelWidth { get; set; }
 
     private string? currentSidePanePath = null;
 
@@ -691,7 +697,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     [ObservableProperty]
-    private string? openDialogPath;
+    public partial string? OpenDialogPath { get; set; }
 
     public void OpenDialogOpen()
     {
@@ -702,7 +708,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
 
     [ObservableProperty]
-    private bool showDragDropOverlay = false;
+    public partial bool ShowDragDropOverlay { get; set; } = false;
 
     public void OpenMiniPlayer()
     {
