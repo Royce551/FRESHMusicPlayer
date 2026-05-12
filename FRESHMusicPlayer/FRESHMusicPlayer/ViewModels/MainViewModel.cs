@@ -671,6 +671,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     private void StartIntegrations()
     {
         if (Config.IntegrateDiscordRichPresence) StartIntegration(new DiscordIntegration(HttpClient));
+        if (Config.IntegrateLastFM) StartIntegration(new LastFMIntegration(this));
     }
 
     private void StartIntegration(IPlaybackIntegration integration)
@@ -691,6 +692,19 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 {
                     discordIntegration.Close();
                     PlaybackIntegrations.Remove(discordIntegration);
+                }
+            }
+        }
+        else if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.IntegrateLastFM)})
+        {
+            if (Config.IntegrateLastFM) StartIntegration(new LastFMIntegration(this));
+            else
+            {
+                var lastFMIntegration = PlaybackIntegrations.OfType<LastFMIntegration>().FirstOrDefault();
+                if (lastFMIntegration != null)
+                {
+                    lastFMIntegration.Close();
+                    PlaybackIntegrations.Remove(lastFMIntegration);
                 }
             }
         }

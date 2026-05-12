@@ -50,7 +50,14 @@
                 <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
 
                 <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
-                <!--<CheckBox Content="last.fm" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>-->
+                <CheckBox Content="last.fm" Margin="0,10,0,0" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>
+                <DockPanel IsVisible="{Binding MainView.Config.IntegrateLastFM}">
+                    <Button DockPanel.Dock="Right" Content="Sign in" Command="{Binding LastFMSignIn}" IsVisible="{Binding IsLastFMSignInButtonVisible}"/>
+                    <Button DockPanel.Dock="Right" Content="Confirm" Command="{Binding LastFMConfirm}" IsVisible="{Binding IsLastFMConfirmButtonVisible}"/>
+                    <Button DockPanel.Dock="Right" Content="Sign out" Command="{Binding LastFMSignOut}" IsVisible="{Binding IsLastFMSignOutButtonVisible}"/>
+					<TextBlock Text="{Binding LastFMStatus}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
+                </DockPanel>
+                
 
                 <TextBlock x:Name="AppearanceSectionHeader" Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 

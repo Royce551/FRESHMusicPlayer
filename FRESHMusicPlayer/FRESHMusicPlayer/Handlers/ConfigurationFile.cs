@@ -42,6 +42,9 @@ namespace FRESHMusicPlayer.Handlers
         [NotifyPropertyChangedRecipients]
         public partial bool IntegrateLastFM { get; set; } = false;
 
+        [ObservableProperty]
+        public partial string? LastFMToken { get; set; } = null;
+
         public static ConfigurationFile Read(string filePath)
         {
             if (!File.Exists(Path.Combine(filePath, "config.json"))) new ConfigurationFile().Save(filePath);
