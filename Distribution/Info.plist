@@ -14,8 +14,8 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-  <key>CFBundleName</key>
-  <string>FMP</string>
+  <!--<key>CFBundleName</key>
+  <string>FMP</string>-->
   <key>CFBundleDisplayName</key>
   <string>FRESHMusicPlayer</string>
 	<key>LSMinimumSystemVersion</key>
