@@ -520,6 +520,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 ArtistsViewModel => new ArtistsView(),
                 AlbumsViewModel => new AlbumsView(),
                 ImportViewModel => new ImportView(),
+                PlaylistsViewModel => new PlaylistsView(),
                 _ => throw new InvalidOperationException()
             };
             view.DataContext = page;

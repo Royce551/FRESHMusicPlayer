@@ -192,6 +192,11 @@ namespace FRESHMusicPlayer.Handlers
             var cachedCover = Database.GetCollection<CachedCoverArt>("CachedCoverArt").FindOne(x => x.Album == albumName);
             if (cachedCover != null) return cachedCover.Cover;
 
+            return await CacheCoverArtThumbnail(albumName);
+        }
+
+        private async Task<byte[]?> CacheCoverArtThumbnail(string albumName)
+        {
             var tracks = GetTracksForAlbum(albumName);
             if (tracks.Count == 0) return null;
 
@@ -202,7 +207,7 @@ namespace FRESHMusicPlayer.Handlers
             Bitmap.DecodeToWidth(new MemoryStream(x), 48).Save(saveStream);
 
             Database.GetCollection<CachedCoverArt>("CachedCoverArt").Insert(new CachedCoverArt { Album = albumName, Cover = saveStream.ToArray() });
-            
+
             return saveStream.ToArray();
         }
 

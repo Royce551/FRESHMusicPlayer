@@ -1,12 +1,143 @@
-﻿using System;
+﻿using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels
 {
-    internal class PlaylistsViewModel : ViewModelBase
+    public partial class PlaylistsViewModel : ViewModelBase
     {
+        public ObservableCollection<DatabaseTrackViewModel>? Tracks
+        {
+            get
+            {
+                if (SelectedPlaylist == null) return null;
+
+                var tracksInPlaylist = MainView.Library.GetTracksForPlaylist(SelectedPlaylist.Name);
+
+                var albums = tracksInPlaylist.Select(x => x.Album).Distinct().ToList();
+                albums.Sort();
+
+                var viewModelTracks = tracksInPlaylist.Select(x => new DatabaseTrackViewModel(this, x, tracksInPlaylist.Select(y => y.Path).ToArray(), ArtistAlbumLabelType.ArtistAndAlbum)).ToArray();
+
+                var totalLength = TimeSpan.FromSeconds(viewModelTracks.Sum(x => x.Length));
+                FooterText = $"Tracks: {viewModelTracks.Count()} • {totalLength}";
+
+                return new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
+            }
+        }
+
+        [ObservableProperty]
+        public partial ObservableCollection<DatabasePlaylistViewModel> Playlists { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Tracks))]
+        public partial DatabasePlaylistViewModel SelectedPlaylist { get; set; }
+        [ObservableProperty]
+        public partial string FooterText { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsLibraryEmpty { get; set; } = false;
+
+        public PlaylistsViewModel()
+        {
+
+        }
+
+        private string? initialPlaylist = null;
+        public PlaylistsViewModel(string? initialPlaylist)
+        {
+            this.initialPlaylist = initialPlaylist;
+        }
+
+        public override void AfterPageLoaded()
+        {
+            MainView.Library.TracksUpdated += Library_TracksUpdated;
+            _ = UpdateAlbumsAsync();
+        }
+
+        public override void OnNavigatingAway()
+        {
+            MainView.Library.TracksUpdated -= Library_TracksUpdated;
+        }
+
+        public async Task UpdateAlbumsAsync()
+        {
+            await Task.Run(() =>
+            {
+                var libraryTracks = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().OrderBy("Name").ToList();
+                IsLibraryEmpty = libraryTracks.Count <= 0;
+
+                var viewModelPlaylists = libraryTracks.Select(x => new DatabasePlaylistViewModel(this, x.Name, x.CoverArt)).DistinctBy(x => x.Name).Where(x => !string.IsNullOrWhiteSpace(x.Name)).OrderBy(x => x.Name);
+                Playlists = new ObservableCollection<DatabasePlaylistViewModel>(viewModelPlaylists);
+
+                if (initialPlaylist != null)
+                {
+                    var foundPlaylist = Playlists.FirstOrDefault(x => x.Name == initialPlaylist);
+                    if (foundPlaylist != null)
+                    {
+                        SelectedPlaylist = foundPlaylist;
+                        initialPlaylist = null;
+                    }
+                }
+            });
+
+        }
+
+        private void Library_TracksUpdated(object? sender, IEnumerable<string> e)
+        {
+            if (SelectedPlaylist != null) initialPlaylist = SelectedPlaylist.Name;
+            _ = UpdateAlbumsAsync();
+        }
+        public async void PlayAll()
+        {
+            MainView.Player.Queue.Clear();
+            var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
+            MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
+            await MainView.Player.PlayAsync();
+        }
+
+        public void EnqueueAll()
+        {
+            var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
+            MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
+        }
+    }
+
+    public partial class DatabasePlaylistViewModel : ObservableRecipient
+    {
+        [ObservableProperty]
+        public partial string Name { get; set; }
+
+        public Task<Bitmap?> CoverArt => LoadArtistArt();
+
+        private readonly byte[]? coverArt;
+
+        private readonly PlaylistsViewModel viewModel;
+        public DatabasePlaylistViewModel(PlaylistsViewModel viewModel, string name, byte[] coverArt)
+        {
+            Name = name;
+            this.viewModel = viewModel;
+            this.coverArt = coverArt;
+        }
+
+        public async Task<Bitmap?> LoadArtistArt()
+        {
+            if (coverArt != null) return Bitmap.DecodeToHeight(new MemoryStream(coverArt), 48);
+
+            var firstTrackInPlaylist = viewModel.MainView.Library.GetTracksForPlaylist(Name).FirstOrDefault();
+            // TODO: claen this up
+            return firstTrackInPlaylist != null ? Bitmap.DecodeToHeight(new MemoryStream(await viewModel.MainView.Library.GetCoverArtThumbnail(firstTrackInPlaylist.Album)), 48) : null;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
