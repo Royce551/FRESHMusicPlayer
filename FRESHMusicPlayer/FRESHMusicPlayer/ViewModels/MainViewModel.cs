@@ -641,6 +641,19 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     public async void OpenSearchCommand() => await OpenSidePaneAsync("FRESHMusicPlayer.Search", 300);
 
+    public async Task OpenPlaylistManagement()
+    {
+        var window = new PlaylistManagementWindow();
+        var vm = new PlaylistManagementViewModel(Player.FilePath)
+        {
+            MainView = this
+        };
+        window.DataContext = vm;
+        await vm.UpdatePlaylistsAsync();
+
+        await window.ShowDialog(MainWindow);
+    }
+
     public bool AutoQueueIsQueued { get; set; } = false;
 
     public void AddToQueueAndHandleAutoQueue(string[] filePaths)

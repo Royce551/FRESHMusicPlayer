@@ -109,7 +109,7 @@
 			<MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
             <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
         </MenuItem>
-        <MenuItem Header="Manage playlists..."/>
+        <MenuItem Header="Manage playlists..." Command="{Binding OpenPlaylistManagement}"/>
         <Separator/>
         <MenuItem Header="Fullscreen"/>
         <MenuItem Header="Mini player" Command="{Binding OpenMiniPlayer}"/>

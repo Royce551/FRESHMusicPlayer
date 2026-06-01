@@ -61,7 +61,7 @@
                   <MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
                   <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
                 </MenuItem>
-                <MenuItem Header="Manage playlists..."/>
+                <MenuItem Header="Manage playlists..." Command="{Binding PlaylistManagement}"/>
                 <MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>
                 <MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
               </ContextMenu>

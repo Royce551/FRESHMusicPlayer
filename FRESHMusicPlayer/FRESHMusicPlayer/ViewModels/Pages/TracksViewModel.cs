@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FRESHMusicPlayer.Views;
 using SIADL.Avalonia;
 using System;
 using System.Collections.Generic;
@@ -245,6 +246,19 @@ namespace FRESHMusicPlayer.ViewModels
         public void RemoveFromLibrary()
         {
             ViewModel.MainView.Library.Remove(Path);
+        }
+
+        public async Task PlaylistManagement()
+        {
+            var window = new PlaylistManagementWindow();
+            var vm = new PlaylistManagementViewModel(Path, TracksInCollection)
+            {
+                MainView = ViewModel.MainView
+            };
+            window.DataContext = vm;
+            await vm.UpdatePlaylistsAsync();
+
+            await window.ShowDialog(ViewModel.MainView.MainWindow);
         }
 
         public void GoToAlbum() => ViewModel.MainView.NavigateTo(Page.Albums, Album, true);

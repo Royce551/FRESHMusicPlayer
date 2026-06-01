@@ -116,13 +116,13 @@ namespace FRESHMusicPlayer.ViewModels
 
         public Task<Bitmap?> CoverArt => LoadArtistArt();
 
-        private readonly byte[]? coverArt;
+        public ViewModelBase ViewModel { get; }
 
-        private readonly PlaylistsViewModel viewModel;
-        public DatabasePlaylistViewModel(PlaylistsViewModel viewModel, string name, byte[] coverArt)
+        private readonly byte[]? coverArt; 
+        public DatabasePlaylistViewModel(ViewModelBase viewModel, string name, byte[] coverArt)
         {
             Name = name;
-            this.viewModel = viewModel;
+            this.ViewModel = viewModel;
             this.coverArt = coverArt;
         }
 
@@ -130,9 +130,9 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (coverArt != null) return Bitmap.DecodeToHeight(new MemoryStream(coverArt), 48);
 
-            var firstTrackInPlaylist = viewModel.MainView.Library.GetTracksForPlaylist(Name).FirstOrDefault();
+            var firstTrackInPlaylist = ViewModel.MainView.Library.GetTracksForPlaylist(Name).FirstOrDefault();
             // TODO: claen this up
-            return firstTrackInPlaylist != null ? Bitmap.DecodeToHeight(new MemoryStream(await viewModel.MainView.Library.GetCoverArtThumbnail(firstTrackInPlaylist.Album)), 48) : null;
+            return firstTrackInPlaylist != null ? Bitmap.DecodeToHeight(new MemoryStream(await ViewModel.MainView.Library.GetCoverArtThumbnail(firstTrackInPlaylist.Album)), 48) : null;
         }
 
         public override string ToString()

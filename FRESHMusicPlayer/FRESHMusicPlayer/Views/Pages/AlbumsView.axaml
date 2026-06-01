@@ -114,7 +114,7 @@
 									<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
 									<StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10" Margin="0,-2">
 										<Button Content="Remove from library" Command="{Binding RemoveFromLibrary}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
-										<Button Content="Manage playlists..." IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="Manage playlists..." Command="{Binding PlaylistManagement}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
 										<Button Content="Go to artist" Command="{Binding GoToArtist}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
 										<Button Content="Play next" Command="{Binding PlayNext}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
 										<Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True" Tag="{x:True}"/>
@@ -130,7 +130,7 @@
 											<MenuItem Header="Go to">
 												<MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
 											</MenuItem>
-											<MenuItem Header="Manage playlists..."/>
+											<MenuItem Header="Manage playlists..." Command="{Binding PlaylistManagement}"/>
 											<MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>
 											<MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
 										</ContextMenu>
