@@ -22,6 +22,8 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (MainView is null) return;
 
+            MainView.IsShiftHeld = false; // covers the case that a shift shortcut was used to open this
+
             await Task.Run(() =>
             {
                 var playlists = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().OrderBy("Name").ToList();

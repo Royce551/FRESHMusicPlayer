@@ -17,7 +17,27 @@
 			</Panel>
 		</AdornerLayer.Adorner>
 
-		<ListBox Grid.Column="0" Background="{DynamicResource SecondaryColor}" IsTextSearchEnabled="True" BorderBrush="Transparent" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist}" x:Name="CategoryListBox">
+		<DockPanel Grid.Column="0" Background="{DynamicResource SecondaryColor}">
+			<StackPanel DockPanel.Dock="Bottom" Margin="10" Spacing="5">
+				<StackPanel.Transitions>
+					<Transitions>
+						<DoubleTransition Property="MaxHeight" Duration="0:0:1"/>
+					</Transitions>
+					
+				</StackPanel.Transitions>
+				<Button Content="New playlist" Command="{Binding OpenPlaylistCreation}" IsVisible="{Binding !PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+
+				<DockPanel Margin="0,0,0,10" IsVisible="{Binding PlaylistCreateMode}">
+					<Button DockPanel.Dock="Right" Content="Create" Command="{Binding CreateNewPlaylist}"  VerticalAlignment="Center" Margin="10,0,0,0"/>
+					<TextBox PlaceholderText="Playlist name" Text="{Binding PlaylistName}" HorizontalAlignment="Stretch"/>
+				</DockPanel>
+				
+
+				<Button Content="Import..." Command="{Binding ImportPlaylist}" IsVisible="{Binding PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,0,20"/>
+				<Button Content="Close" Command="{Binding ClosePlaylistCreation}" IsVisible="{Binding PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+			</StackPanel>
+
+			<ListBox IsTextSearchEnabled="True" BorderBrush="Transparent" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist}" x:Name="CategoryListBox">
 			<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
 					<VirtualizingStackPanel/>
@@ -32,6 +52,8 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		</DockPanel>
+		
 		<GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource SecondaryColor}" Foreground="Transparent" BorderBrush="Transparent"/>
 		<DockPanel Grid.Column="2">
 			<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">

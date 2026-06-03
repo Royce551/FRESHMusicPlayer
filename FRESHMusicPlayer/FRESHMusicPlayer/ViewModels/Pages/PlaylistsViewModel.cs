@@ -115,6 +115,32 @@ namespace FRESHMusicPlayer.ViewModels
             }, DispatcherPriority.ApplicationIdle);
         }
 
+        [ObservableProperty]
+        public partial bool PlaylistCreateMode { get; set; } = false;
+
+        [ObservableProperty]
+        public partial string? PlaylistName { get; set; }
+
+        public void OpenPlaylistCreation() => PlaylistCreateMode = true;
+
+        public void ClosePlaylistCreation() => PlaylistCreateMode = false;
+
+        public async Task CreateNewPlaylist()
+        {
+            if (string.IsNullOrWhiteSpace(PlaylistName)) return;
+
+            await MainView.Library.CreatePlaylistAsync(PlaylistName, false);
+            _ = UpdateAlbumsAsync();
+
+            PlaylistName = null;
+            PlaylistCreateMode = false;
+        }
+
+        public void ImportPlaylist()
+        {
+            PlaylistCreateMode = false;
+        }
+
         private void Library_TracksUpdated(object? sender, IEnumerable<string> e)
         {
             if (SelectedPlaylist != null) initialPlaylist = SelectedPlaylist.Name;
