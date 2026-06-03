@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Backends;
 using System;
@@ -106,8 +107,10 @@ namespace FRESHMusicPlayer.ViewModels
                 IsLibraryEmpty = libraryTracks.Count <= 0;
 
                 var viewModelAlbums = libraryTracks.Select(x => new DatabaseAlbumViewModel(this, x.Album)).DistinctBy(x => x.Name).Where(x => !string.IsNullOrWhiteSpace(x.Name));
-                Albums = new ObservableCollection<DatabaseAlbumViewModel>(viewModelAlbums);
-
+                Albums = new ObservableCollection<DatabaseAlbumViewModel>(viewModelAlbums);    
+            });
+            Dispatcher.UIThread.Invoke(() =>
+            {
                 if (initialAlbum != null)
                 {
                     var foundAlbum = Albums.FirstOrDefault(x => x.Name == initialAlbum);
@@ -117,8 +120,7 @@ namespace FRESHMusicPlayer.ViewModels
                         initialAlbum = null;
                     }
                 }
-            });
-           
+            }, DispatcherPriority.ApplicationIdle);
         }
 
         private void Library_TracksUpdated(object? sender, IEnumerable<string> e)

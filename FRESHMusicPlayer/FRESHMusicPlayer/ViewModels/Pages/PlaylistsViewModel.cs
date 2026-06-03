@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,9 @@ namespace FRESHMusicPlayer.ViewModels
 
                 var viewModelPlaylists = libraryTracks.Select(x => new DatabasePlaylistViewModel(this, x.Name, x.CoverArt)).DistinctBy(x => x.Name).Where(x => !string.IsNullOrWhiteSpace(x.Name)).OrderBy(x => x.Name);
                 Playlists = new ObservableCollection<DatabasePlaylistViewModel>(viewModelPlaylists);
-
+            });
+            Dispatcher.UIThread.Invoke(() =>
+            {
                 if (initialPlaylist != null)
                 {
                     var foundPlaylist = Playlists.FirstOrDefault(x => x.Name == initialPlaylist);
@@ -85,8 +88,7 @@ namespace FRESHMusicPlayer.ViewModels
                         initialPlaylist = null;
                     }
                 }
-            });
-
+            }, DispatcherPriority.ApplicationIdle);
         }
 
         private void Library_TracksUpdated(object? sender, IEnumerable<string> e)

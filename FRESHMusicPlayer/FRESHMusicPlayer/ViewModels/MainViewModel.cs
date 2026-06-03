@@ -741,10 +741,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     public void OpenMiniPlayer()
     {
         var miniplayer = new MiniPlayerWindow() { DataContext = new MiniPlayerViewModel(this) };
-
-        miniplayer.Show();
-
-        MainWindow.Hide();
+        miniplayer.Show(MainWindow);
     }
 
     [ObservableProperty]

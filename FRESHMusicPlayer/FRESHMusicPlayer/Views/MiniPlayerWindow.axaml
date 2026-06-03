@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="using:System"
-        mc:Ignorable="d" Closed="Window_Closed" WindowDecorations="None"
+        mc:Ignorable="d" Closed="Window_Closed" WindowDecorations="None" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
         x:Class="FRESHMusicPlayer.Views.MiniPlayerWindow" TransparencyLevelHint="Transparent" Topmost="True" Background="Transparent" CanResize="False" CanMinimize="True" CanMaximize="False"
         x:DataType="vm:MiniPlayerViewModel" Height="55" Width="500" PointerPressed="Window_PointerPressed" SizeToContent="Height"
         Title="{Binding MainViewModel.WindowTitle}">
