@@ -20,7 +20,7 @@ public partial class AlbumsView : UserControl
 
     private void ListBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
     {
-
+        MainListBox.SelectedItem = null;
     }
 
     private AlbumsViewModel? viewModel => DataContext as AlbumsViewModel;

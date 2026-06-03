@@ -13,32 +13,56 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public partial class PlaylistsViewModel : ViewModelBase
     {
-        public ObservableCollection<DatabaseTrackViewModel>? Tracks
+        [ObservableProperty]
+        public partial ObservableCollection<DatabaseTrackViewModel> Tracks { get; set; } = new();
+
+        private void UpdateTracks()
         {
-            get
+            if (SelectedPlaylist == null) return;
+
+            var tracksInPlaylist = MainView.Library.GetTracksForPlaylist(SelectedPlaylist.Name);
+
+            var albums = tracksInPlaylist.Select(x => x.Album).Distinct().ToList();
+            albums.Sort();
+
+            var viewModelTracks = tracksInPlaylist.Select(x => new DatabaseTrackViewModel(this, x, tracksInPlaylist.Select(y => y.Path).ToArray(), ArtistAlbumLabelType.ArtistAndAlbum)).ToArray();
+
+            var totalLength = TimeSpan.FromSeconds(viewModelTracks.Sum(x => x.Length));
+            FooterText = $"Tracks: {viewModelTracks.Count()} • {totalLength}";
+
+            Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
+            Tracks.CollectionChanged += Tracks_CollectionChanged;
+        }
+
+        private void Tracks_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                if (SelectedPlaylist == null) return null;
+                var playlist = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().ToEnumerable().FirstOrDefault(x => x.Name == SelectedPlaylist.Name);
 
-                var tracksInPlaylist = MainView.Library.GetTracksForPlaylist(SelectedPlaylist.Name);
+                if (playlist == null || Tracks is null) return;
 
-                var albums = tracksInPlaylist.Select(x => x.Album).Distinct().ToList();
-                albums.Sort();
+                playlist.Tracks = Tracks.Select(x => x.Id).ToList();
 
-                var viewModelTracks = tracksInPlaylist.Select(x => new DatabaseTrackViewModel(this, x, tracksInPlaylist.Select(y => y.Path).ToArray(), ArtistAlbumLabelType.ArtistAndAlbum)).ToArray();
-
-                var totalLength = TimeSpan.FromSeconds(viewModelTracks.Sum(x => x.Length));
-                FooterText = $"Tracks: {viewModelTracks.Count()} • {totalLength}";
-
-                return new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
+                MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Update(playlist);
             }
         }
 
         [ObservableProperty]
         public partial ObservableCollection<DatabasePlaylistViewModel> Playlists { get; set; }
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(Tracks))]
-        public partial DatabasePlaylistViewModel SelectedPlaylist { get; set; }
+        private DatabasePlaylistViewModel selectedPlaylist;
+
+        public DatabasePlaylistViewModel SelectedPlaylist
+        {
+            get => selectedPlaylist;
+            set
+            {
+                SetProperty(ref selectedPlaylist, value);
+                UpdateTracks();
+            }
+        }
+
         [ObservableProperty]
         public partial string FooterText { get; set; }
 
@@ -120,7 +144,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public ViewModelBase ViewModel { get; }
 
-        private readonly byte[]? coverArt; 
+        private readonly byte[]? coverArt;
         public DatabasePlaylistViewModel(ViewModelBase viewModel, string name, byte[] coverArt)
         {
             Name = name;

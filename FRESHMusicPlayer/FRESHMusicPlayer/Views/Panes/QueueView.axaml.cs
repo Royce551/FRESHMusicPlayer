@@ -28,4 +28,9 @@ public partial class QueueView : UserControl
             }
         }
     }
+
+    private void MainListBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        MainListBox.SelectedItem = null;
+    }
 }

@@ -53,6 +53,17 @@
 								<VirtualizingStackPanel/>
 							</ItemsPanelTemplate>
 						</ListBox.ItemsPanel>
+						<ListBox.Styles>
+							<Style Selector="ListBoxItem">
+								<Setter Property="(Interaction.Behaviors)">
+									<BehaviorCollectionTemplate>
+										<BehaviorCollection>
+											<ListReorderDragBehavior Orientation="Vertical"/>
+										</BehaviorCollection>
+									</BehaviorCollectionTemplate>
+								</Setter>
+							</Style>
+						</ListBox.Styles>
 						<ListBox.DataTemplates>
 							<DataTemplate DataType="vm:DatabaseTrackViewModel">
 								<Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">

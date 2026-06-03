@@ -17,7 +17,7 @@ public partial class ArtistsView : UserControl
 
     private void ListBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
     {
-
+        MainListBox.SelectedItem = null;
     }
 
     private ArtistsViewModel? viewModel => DataContext as ArtistsViewModel;

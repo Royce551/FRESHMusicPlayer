@@ -20,7 +20,7 @@ public partial class TracksView : UserControl
 
     private void ListBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
     {
-     
+    
     }
 
     private void DragEnter(object? sender, DragEventArgs e)

@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using Avalonia.Xaml.Interactivity;
 using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.ViewModels;
 using System.Linq;
@@ -17,7 +18,7 @@ public partial class PlaylistsView : UserControl
 
     private void ListBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
     {
-
+        MainListBox.SelectedItem = null;
     }
 
     private PlaylistsViewModel? viewModel => DataContext as PlaylistsViewModel;
