@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>FRESHMusicPlayer.MacOS</string>
+	<string>FRESHMusicPlayer</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Music Player</string>
 	<key>CFBundleIconFile</key>
