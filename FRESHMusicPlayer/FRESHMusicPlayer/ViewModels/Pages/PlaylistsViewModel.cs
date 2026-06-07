@@ -1,13 +1,18 @@
-﻿using Avalonia.Media.Imaging;
+﻿using ATL.Playlist;
+using Avalonia.Controls;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -19,6 +24,7 @@ namespace FRESHMusicPlayer.ViewModels
         private void UpdateTracks()
         {
             if (SelectedPlaylist == null) return;
+            PlaylistEditMode = false;
 
             var tracksInPlaylist = MainView.Library.GetTracksForPlaylist(SelectedPlaylist.Name);
 
@@ -59,6 +65,7 @@ namespace FRESHMusicPlayer.ViewModels
             set
             {
                 SetProperty(ref selectedPlaylist, value);
+                OnPropertyChanged(nameof(IsRemovePlaylistCoverArtAvailable));
                 UpdateTracks();
             }
         }
@@ -83,7 +90,7 @@ namespace FRESHMusicPlayer.ViewModels
         public override void AfterPageLoaded()
         {
             MainView.Library.TracksUpdated += Library_TracksUpdated;
-            _ = UpdateAlbumsAsync();
+            _ = UpdatePlaylistsAsync();
         }
 
         public override void OnNavigatingAway()
@@ -91,7 +98,7 @@ namespace FRESHMusicPlayer.ViewModels
             MainView.Library.TracksUpdated -= Library_TracksUpdated;
         }
 
-        public async Task UpdateAlbumsAsync()
+        public async Task UpdatePlaylistsAsync()
         {
             await Task.Run(() =>
             {
@@ -127,24 +134,53 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task CreateNewPlaylist()
         {
-            if (string.IsNullOrWhiteSpace(PlaylistName)) return;
+            var input = new TextInputDialog("Playlist name");
+            var name = await input.ShowDialog<string?>(MainView.MainWindow);
+            if (string.IsNullOrWhiteSpace(name)) return; // cancel case
 
-            await MainView.Library.CreatePlaylistAsync(PlaylistName, false);
-            _ = UpdateAlbumsAsync();
+            await MainView.Library.CreatePlaylistAsync(name, false);
+            _ = UpdatePlaylistsAsync();
 
-            PlaylistName = null;
             PlaylistCreateMode = false;
         }
 
-        public void ImportPlaylist()
+        public async Task ImportNewPlaylist()
         {
+            var topLevel = TopLevel.GetTopLevel(MainView.MainWindow);
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                AllowMultiple = false,
+                FileTypeFilter = [FilePickerFileTypes.All] // TODO: fix
+            });
+
+            if (files.Count >= 1)
+            {
+                var reader = PlaylistIOFactory.GetInstance().GetPlaylistIO(files[0].Path.LocalPath);
+
+                foreach (var path in reader.FilePaths)
+                {
+                    if (!File.Exists(path))
+                    {
+                        MainView.Notifications.Add(new Handlers.Notification(MainView)
+                        {
+                            ContentText = $"{path} was excluded from the playlist because it could not be found.",
+                            Type = Handlers.NotificationType.Failure,
+                            DisplayAsToast = true
+                        });
+                        continue;
+                    }
+                    await MainView.Library.AddTrackToPlaylistAsync(Path.GetFileNameWithoutExtension(files[0].Path.LocalPath), path);
+                }
+            }
+            _ = UpdatePlaylistsAsync();
+
             PlaylistCreateMode = false;
         }
 
         private void Library_TracksUpdated(object? sender, IEnumerable<string> e)
         {
             if (SelectedPlaylist != null) initialPlaylist = SelectedPlaylist.Name;
-            _ = UpdateAlbumsAsync();
+            _ = UpdatePlaylistsAsync();
         }
         public async void PlayAll()
         {
@@ -158,6 +194,100 @@ namespace FRESHMusicPlayer.ViewModels
         {
             var filePaths = Tracks.OfType<DatabaseTrackViewModel>().Select(x => x.Path);
             MainView.AddToQueueAndHandleAutoQueue(filePaths.ToArray());
+        }
+
+        [ObservableProperty]
+        public partial bool PlaylistEditMode { get; set; } = false;
+
+        public void OpenPlaylistEdit() => PlaylistEditMode = true;
+        public void ClosePlaylistEdit() => PlaylistEditMode = false;
+
+        public async Task RenamePlaylist()
+        {
+            var input = new TextInputDialog("Playlist name", SelectedPlaylist.Name);
+            var name = await input.ShowDialog<string?>(MainView.MainWindow);
+            if (string.IsNullOrWhiteSpace(name)) return; // cancel case
+
+            var playlist = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().ToEnumerable().FirstOrDefault(x => x.Name == SelectedPlaylist.Name)!;
+            playlist.Name = name;
+            MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Update(playlist);
+
+            SelectedPlaylist.Name = name;
+        }
+
+        public async Task DeletePlaylist()
+        {
+            if (!PlaylistEditMode) return;
+
+            MainView.Library.DeletePlaylist(SelectedPlaylist.Name);
+            await UpdatePlaylistsAsync();
+
+            SelectedPlaylist = Playlists.FirstOrDefault()!; // null is ok
+
+            PlaylistEditMode = false;
+        }
+
+        public async Task ChangePlaylistCoverArt()
+        {
+            var topLevel = TopLevel.GetTopLevel(MainView.MainWindow);
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                AllowMultiple = false,
+                FileTypeFilter = [FilePickerFileTypes.ImageAll]
+            });
+
+            if (files.Count >= 1)
+            {
+                var playlist = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().ToEnumerable().FirstOrDefault(x => x.Name == SelectedPlaylist.Name)!;
+                playlist.CoverArt = await File.ReadAllBytesAsync(files[0].Path.LocalPath);
+                MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Update(playlist);
+
+                initialPlaylist = SelectedPlaylist.Name;
+                _ = UpdatePlaylistsAsync();
+            }
+        }
+
+        public bool IsRemovePlaylistCoverArtAvailable
+        {
+            get
+            {
+                if (MainView is null || SelectedPlaylist is null) return false;
+
+                var playlist = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().ToEnumerable().FirstOrDefault(x => x.Name == SelectedPlaylist.Name);
+                return playlist != null && playlist.CoverArt != null;
+            }
+        }
+
+        public void RemovePlaylistCoverArt()
+        {
+            var playlist = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().ToEnumerable().FirstOrDefault(x => x.Name == SelectedPlaylist.Name)!;
+            playlist.CoverArt = null;
+            MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Update(playlist);
+            initialPlaylist = SelectedPlaylist.Name;
+            _ = UpdatePlaylistsAsync();
+        }
+
+        public async Task ExportPlaylist()
+        {
+            var topLevel = TopLevel.GetTopLevel(MainView.MainWindow);
+
+            var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                SuggestedFileName = SelectedPlaylist.Name,
+                DefaultExtension = "m3u8",
+            });
+            if (file is not null)
+            {
+                var tracks = MainView.Library.GetTracksForPlaylist(SelectedPlaylist.Name);
+
+                var playlist = PlaylistIOFactory.GetInstance().GetPlaylistIO(file.Path.LocalPath);
+                var pathsToWrite = new List<string>();
+                foreach (var track in tracks)
+                {
+                    pathsToWrite.Add(track.Path);
+                }
+                playlist.FilePaths = pathsToWrite;
+            }
         }
     }
 

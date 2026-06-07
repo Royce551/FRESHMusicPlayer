@@ -49,7 +49,7 @@ namespace FRESHMusicPlayer.Handlers.PlaybackIntegrations
                     showPresence = false;
                     break;
             }
-
+          
             var updateTimeStamp = Timestamps.Now;
 
             if (track.Album != lastAlbum)

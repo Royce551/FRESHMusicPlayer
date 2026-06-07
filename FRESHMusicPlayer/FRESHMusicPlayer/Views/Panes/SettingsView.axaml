@@ -50,6 +50,9 @@
                 <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
 
                 <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
+                <CheckBox Content="Display cover art" Margin="10,0,0,0"/>
+                <TextBlock FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" TextWrapping="Wrap" Text="Since Discord requires an online source for cover art, FMP looks for a match on the Cover Art Archive. The guess can sometimes be completely off. If your tracks are tagged with a MBID, that will be used instead."/>
+
                 <CheckBox Content="last.fm" Margin="0,10,0,0" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>
                 <DockPanel IsVisible="{Binding MainView.Config.IntegrateLastFM}">
                     <Button DockPanel.Dock="Right" Content="Sign in" Command="{Binding LastFMSignIn}" IsVisible="{Binding IsLastFMSignInButtonVisible}"/>

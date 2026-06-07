@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,21 +19,13 @@
 
 		<DockPanel Grid.Column="0" Background="{DynamicResource SecondaryColor}">
 			<StackPanel DockPanel.Dock="Bottom" Margin="10" Spacing="5">
-				<StackPanel.Transitions>
-					<Transitions>
-						<DoubleTransition Property="MaxHeight" Duration="0:0:1"/>
-					</Transitions>
-					
-				</StackPanel.Transitions>
-				<Button Content="New playlist" Command="{Binding OpenPlaylistCreation}" IsVisible="{Binding !PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+				<Button Content="Add playlist" Command="{Binding OpenPlaylistCreation}" IsVisible="{Binding !PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
 
-				<DockPanel Margin="0,0,0,10" IsVisible="{Binding PlaylistCreateMode}">
-					<Button DockPanel.Dock="Right" Content="Create" Command="{Binding CreateNewPlaylist}"  VerticalAlignment="Center" Margin="10,0,0,0"/>
-					<TextBox PlaceholderText="Playlist name" Text="{Binding PlaylistName}" HorizontalAlignment="Stretch"/>
-				</DockPanel>
-				
+				<Grid ColumnDefinitions="*,*" Margin="0,0,0,10" HorizontalAlignment="Stretch" IsVisible="{Binding PlaylistCreateMode}">
+					<Button Grid.Column="0" Content="New..." Command="{Binding CreateNewPlaylist}" TextBlock.TextWrapping="Wrap" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,5,0"/>
+					<Button Grid.Column="1" Content="Import..." Command="{Binding ImportNewPlaylist}" TextBlock.TextWrapping="Wrap" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0"/>
+				</Grid>
 
-				<Button Content="Import..." Command="{Binding ImportPlaylist}" IsVisible="{Binding PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,0,20"/>
 				<Button Content="Close" Command="{Binding ClosePlaylistCreation}" IsVisible="{Binding PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
 			</StackPanel>
 
@@ -65,10 +57,30 @@
 
 			<ScrollViewer>
 				<StackPanel>
-					<StackPanel Orientation="Horizontal" Margin="10,10,10,5" Spacing="10">
-						<Image Source="{Binding SelectedPlaylist.CoverArt^}" Width="24" Height="24" RenderOptions.BitmapInterpolationMode="HighQuality"/>
-						<TextBlock Text="{Binding SelectedPlaylist.Name}" FontWeight="Bold" VerticalAlignment="Center"/>
-					</StackPanel>
+					<DockPanel Margin="10,10,10,5" LastChildFill="False">
+						<Image DockPanel.Dock="Left" Source="{Binding SelectedPlaylist.CoverArt^}" Width="24" Height="24" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+						<TextBlock DockPanel.Dock="Left" Text="{Binding SelectedPlaylist.Name}" Margin="10,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
+
+						<Button DockPanel.Dock="Right" Content="・・・" Command="{Binding OpenPlaylistEdit}" IsVisible="{Binding !PlaylistEditMode}" Margin="0,-5"/>
+						<Button DockPanel.Dock="Right" Content="Close" Command="{Binding ClosePlaylistEdit}" IsVisible="{Binding PlaylistEditMode}" Margin="0,-5"/>
+					</DockPanel>
+					<DockPanel Margin="10,10,10,10" LastChildFill="False" IsVisible="{Binding PlaylistEditMode}">
+						<Button DockPanel.Dock="Left" Content="Set cover..." Command="{Binding ChangePlaylistCoverArt}"/>
+						<Button Margin="10,0,0,0" DockPanel.Dock="Left" Content="Remove cover" Command="{Binding RemovePlaylistCoverArt}" IsVisible="{Binding IsRemovePlaylistCoverArtAvailable}"/>
+						<Button Margin="10,0,0,0" DockPanel.Dock="Left" Content="Rename..." Command="{Binding RenamePlaylist}"/>
+
+						<Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="Export" Command="{Binding ExportPlaylist}"/>
+						<Button DockPanel.Dock="Right" Content="Delete">
+							<Button.Flyout>
+								<Flyout ShowMode="Standard">
+									<StackPanel Spacing="5">
+										<TextBlock Text="Are you sure you want to delete this playlist?" FontWeight="Bold"/>
+										<Button Content="Delete" Command="{Binding DeletePlaylist}"/>
+									</StackPanel>
+								</Flyout>
+							</Button.Flyout>
+						</Button>
+					</DockPanel>
 					<ListBox x:Name="MainListBox" ItemsSource="{Binding Tracks}" BorderBrush="Transparent" SelectionChanged="ListBox_SelectionChanged" KeyboardNavigation.TabNavigation="Continue" Grid.IsSharedSizeScope="True" IsTextSearchEnabled="True" SelectionMode="Single,Toggle" KeyDown="ListBox_KeyDown_1">
 						<ListBox.ItemsPanel>
 							<ItemsPanelTemplate>
