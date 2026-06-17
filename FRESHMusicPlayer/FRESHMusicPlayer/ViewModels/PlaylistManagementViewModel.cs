@@ -18,6 +18,9 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         public partial string? PromptText { get; set; } = $"What do you want to do with \"{Path.GetFileName(path)}\"?";
 
+        [ObservableProperty]
+        public partial bool IsTrackInLibrary { get; set; }
+
         public async Task UpdatePlaylistsAsync()
         {
             if (MainView is null) return;
@@ -26,10 +29,22 @@ namespace FRESHMusicPlayer.ViewModels
 
             await Task.Run(() =>
             {
+                IsTrackInLibrary = MainView.Library.GetAllTracks().Any(x => x.Path == path);
+
                 var playlists = MainView.Library.Database.GetCollection<DatabasePlaylist>(Library.PlaylistsCollectionName).Query().OrderBy("Name").ToList();
 
                 Playlists = new ObservableCollection<TrackManagementDatabasePlaylistViewModel>([.. playlists.Select(x => new TrackManagementDatabasePlaylistViewModel(this, x.Name, x.CoverArt, path, collectionPaths))]);
             });
+        }
+
+        public async Task NewPlaylist() // note: copy paste from playlistsviewmodel
+        {
+            var input = new TextInputDialog("Playlist name");
+            var name = await input.ShowDialog<string?>(MainView.MainWindow);
+            if (string.IsNullOrWhiteSpace(name)) return; // cancel case
+
+            await MainView.Library.CreatePlaylistAsync(name, false);
+            _ = UpdatePlaylistsAsync();
         }
     }
 

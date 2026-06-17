@@ -1,4 +1,5 @@
 ﻿using ATL.Playlist;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
@@ -19,7 +20,7 @@ namespace FRESHMusicPlayer.ViewModels
     public partial class PlaylistsViewModel : ViewModelBase
     {
         [ObservableProperty]
-        public partial ObservableCollection<DatabaseTrackViewModel> Tracks { get; set; } = new();
+        public partial AvaloniaList<DatabaseTrackViewModel> Tracks { get; set; } = new();
 
         private void UpdateTracks()
         {
@@ -36,7 +37,7 @@ namespace FRESHMusicPlayer.ViewModels
             var totalLength = TimeSpan.FromSeconds(viewModelTracks.Sum(x => x.Length));
             FooterText = $"Tracks: {viewModelTracks.Count()} • {totalLength}";
 
-            Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
+            Tracks = new AvaloniaList<DatabaseTrackViewModel>(viewModelTracks);
             Tracks.CollectionChanged += Tracks_CollectionChanged;
         }
 

@@ -33,9 +33,10 @@ public partial class PlaylistsView : UserControl
         if (e.DataTransfer.TryGetFiles() != null && viewModel != null)
         {
             viewModel.MainView.ShowDragDropOverlay = false;
+            if (viewModel.SelectedPlaylist is null) return;
             foreach (var item in e.DataTransfer.TryGetFiles()!)
             {
-                await InterfaceUtils.DoDragDropAsync([.. e.DataTransfer.TryGetFiles()!.Select(x => x.Path.LocalPath)], viewModel.MainView.Player, viewModel.MainView.Library);
+                await viewModel.MainView.Library.AddTrackToPlaylistAsync(viewModel.SelectedPlaylist.Name, item.Path.LocalPath);
             }
         }
     }

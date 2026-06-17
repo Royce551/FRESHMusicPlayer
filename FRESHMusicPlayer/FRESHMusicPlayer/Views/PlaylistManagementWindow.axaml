@@ -10,8 +10,10 @@
 		<DockPanel HorizontalAlignment="Stretch">
 		    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
 			    <Button DockPanel.Dock="Right" Content="OK" Click="Button_Click"/>
+                <Button DockPanel.Dock="Left" Content="New playlist..." Command="{Binding NewPlaylist}"/>
             </DockPanel>
             <TextBlock Text="{Binding PromptText}" DockPanel.Dock="Top" Margin="0,0,0,10" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}"/>
+            <TextBlock Text="This track is not in your library. Adding it to a playlist will also import it." DockPanel.Dock="Top" Margin="0,0,0,10" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" IsVisible="{Binding !IsTrackInLibrary}"/>
 
             <ListBox BorderBrush="Transparent" Margin="0,0,0,10" ItemsSource="{Binding Playlists}">
 			    <ListBox.ItemTemplate>
