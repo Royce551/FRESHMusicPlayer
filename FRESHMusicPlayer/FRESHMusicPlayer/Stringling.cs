@@ -4,5 +4,4 @@ using System.Text;
 
 namespace FRESHMusicPlayer
 {
-    using Stringling = String;
 }

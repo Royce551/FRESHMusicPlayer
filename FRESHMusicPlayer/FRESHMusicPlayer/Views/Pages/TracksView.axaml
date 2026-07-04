@@ -33,7 +33,7 @@
       </ListBox.ItemsPanel>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <Grid RowDefinitions="*,*" ColumnDefinitions="*,Auto" Margin="5,0" Background="Transparent">
+          <Grid RowDefinitions="*,*" ColumnDefinitions="Auto,*,Auto" Margin="5,0" Background="Transparent">
             <Grid.Styles>
               <Style Selector="Grid > StackPanel > Button">
 					<Setter Property="IsVisible" Value="False"/>
@@ -54,9 +54,10 @@
 				</Style>
             </Grid.Styles>
             
-              <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
-              <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
-            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+              <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="{Binding CoverArt^}" Width="22" Height="22" VerticalAlignment="Center" Margin="0,0,8,0" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+              <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
+              <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
+            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
                 <Button Content="Remove from library" Command="{Binding RemoveFromLibrary}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
 			    <Button Content="Manage playlists..." Command="{Binding PlaylistManagement}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
                 <Button Content="Go to artist" Command="{Binding GoToArtist}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>

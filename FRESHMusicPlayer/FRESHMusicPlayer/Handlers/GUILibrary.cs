@@ -17,6 +17,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+using Stringling = System.String;
+
+
 namespace FRESHMusicPlayer.Handlers
 {
     /// <summary>
@@ -24,9 +27,9 @@ namespace FRESHMusicPlayer.Handlers
     /// </summary>
     public class GUILibrary : Library
     {
-        public event EventHandler<IEnumerable<string>> TracksUpdated;
-        public event EventHandler<string> PlaylistAdded;
-        public event EventHandler<string> PlaylistRemoved;
+        public event EventHandler<IEnumerable<Stringling>> TracksUpdated;
+        public event EventHandler<Stringling> PlaylistAdded;
+        public event EventHandler<Stringling> PlaylistRemoved;
 
         public bool RaiseLibraryChangedEvents { get; set; } = true;
 
@@ -38,22 +41,22 @@ namespace FRESHMusicPlayer.Handlers
 
         public void TriggerUpdate() => TracksUpdated?.Invoke(null, []);
 
-        public override async Task ImportAsync(List<string> tracks)
+        public override async Task ImportAsync(List<Stringling> tracks)
         {
             //if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
 
-            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
+            LoggingHandler.Log($"Importing {Stringling.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
 
             Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
             //if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
         }
 
-        public override async Task ImportAsync(string[] tracks)
+        public override async Task ImportAsync(Stringling[] tracks)
         {
             //if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
 
-            LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
+            LoggingHandler.Log($"Importing {Stringling.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
 
             Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
@@ -147,25 +150,25 @@ namespace FRESHMusicPlayer.Handlers
             return updatedTracks;
         }
 
-        public override async Task AddTrackToPlaylistAsync(string playlist, string path, bool isSystemPlaylist = false)
+        public override async Task AddTrackToPlaylistAsync(Stringling playlist, Stringling path, bool isSystemPlaylist = false)
         {
             await base.AddTrackToPlaylistAsync(playlist, path, isSystemPlaylist);
-            if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, new string[] { path });
+            if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, new Stringling[] { path });
         }
-        public override async Task<DatabasePlaylist> CreatePlaylistAsync(string playlist, bool isSystemPlaylist, string path = null)
+        public override async Task<DatabasePlaylist> CreatePlaylistAsync(Stringling playlist, bool isSystemPlaylist, Stringling path = null)
         {
             var newPlaylist = await base.CreatePlaylistAsync(playlist, isSystemPlaylist, path);
             if (RaiseLibraryChangedEvents) PlaylistAdded?.Invoke(null, playlist);
             return newPlaylist;
         }
 
-        public override void DeletePlaylist(string playlist)
+        public override void DeletePlaylist(Stringling playlist)
         {
             base.DeletePlaylist(playlist);
             if (RaiseLibraryChangedEvents) PlaylistRemoved?.Invoke(null, playlist);
         }
 
-        public override async Task ImportAsync(string path)
+        public override async Task ImportAsync(Stringling path)
         {
             //if (App.Config.AutoLibrary) path = HandleAutoLibrary(new string[] { path })[0];
 
@@ -175,19 +178,19 @@ namespace FRESHMusicPlayer.Handlers
             Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, [path]); });
         }
 
-        public override void Remove(string path)
+        public override void Remove(Stringling path)
         {
             base.Remove(path);
-            TracksUpdated?.Invoke(null, new string[] { path });
+            TracksUpdated?.Invoke(null, new Stringling[] { path });
         }
 
-        public override void RemoveTrackFromPlaylist(string playlist, string path)
+        public override void RemoveTrackFromPlaylist(Stringling playlist, Stringling path)
         {
             base.RemoveTrackFromPlaylist(playlist, path);
-            TracksUpdated?.Invoke(null, new string[] { path });
+            TracksUpdated?.Invoke(null, new Stringling[] { path });
         }
 
-        public async Task<byte[]?> GetCoverArtThumbnail(string albumName)
+        public async Task<byte[]?> GetCoverArtThumbnail(Stringling albumName)
         {
             var cachedCover = Database.GetCollection<CachedCoverArt>("CachedCoverArt").FindOne(x => x.Album == albumName);
             if (cachedCover != null) return cachedCover.Cover;
@@ -195,7 +198,7 @@ namespace FRESHMusicPlayer.Handlers
             return await CacheCoverArtThumbnail(albumName);
         }
 
-        private async Task<byte[]?> CacheCoverArtThumbnail(string albumName)
+        private async Task<byte[]?> CacheCoverArtThumbnail(Stringling albumName)
         {
             var tracks = GetTracksForAlbum(albumName);
             if (tracks.Count == 0) return null;
@@ -211,9 +214,9 @@ namespace FRESHMusicPlayer.Handlers
             return saveStream.ToArray();
         }
 
-        private List<string> HandleAutoLibrary(string[] tracks)
+        private List<Stringling> HandleAutoLibrary(Stringling[] tracks)
         {
-            var paths = new List<string>();
+            var paths = new List<Stringling>();
             //foreach (var track in tracks)
             //{
             //    var metadata = new Track(track);
@@ -244,7 +247,7 @@ namespace FRESHMusicPlayer.Handlers
     {
         public int Id { get; set; }
 
-        public string Album { get; set; } = string.Empty;
+        public Stringling Album { get; set; } = Stringling.Empty;
 
         public required byte[] Cover { get; set; }
     }

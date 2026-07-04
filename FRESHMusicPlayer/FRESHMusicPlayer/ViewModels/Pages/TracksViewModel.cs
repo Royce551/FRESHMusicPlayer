@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Views;
@@ -140,6 +141,8 @@ namespace FRESHMusicPlayer.ViewModels
 
         public string[]? TracksInCollection { get; set; }
 
+        public Task<Bitmap?> CoverArt => LoadAlbumGroupArt();
+
         public ViewModelBase ViewModel { get; }
 
         private readonly ArtistAlbumLabelType labelType;
@@ -266,6 +269,15 @@ namespace FRESHMusicPlayer.ViewModels
         public void GoToArtist() => ViewModel.MainView.NavigateTo(Page.Artists, Artists[0], true);
 
         public override string ToString() => Title;
+
+        public async Task<Bitmap?> LoadAlbumGroupArt()
+        {
+            var cover = await ViewModel.MainView.Library.GetCoverArtThumbnail(Album);
+
+            if (cover != null)
+                return Bitmap.DecodeToHeight(new MemoryStream(cover), 40);
+            else return null;
+        }
     }
 
     public enum ArtistAlbumLabelType
