@@ -16,7 +16,7 @@
     <PackageReference Include="Avalonia.Wayland" Version="12.1.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     <PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2" />
-    <PackageReference Include="Tmds.DBus.SourceGenerator" Version="0.0.22">
+    <PackageReference Include="Tmds.DBus.Generator" Version="0.94.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="org.mpris.MediaPlayer2.xml" DBusGeneratorMode="Handler" />
-    <AdditionalFiles Include="org.mpris.MediaPlayer2.Player.xml" DBusGeneratorMode="Handler" />
-    <AdditionalFiles Include="org.mpris.MediaPlayer2.Playlists.xml" DBusGeneratorMode="Handler" />
-    <AdditionalFiles Include="org.mpris.MediaPlayer2.TrackList.xml" DBusGeneratorMode="Handler" />
+    <AdditionalFiles Include="org.mpris.MediaPlayer2.xml" Namespace="FRESHMusicPlayer.Linux.DBus" DBusGeneratorMode="Handler" />
+    <AdditionalFiles Include="org.mpris.MediaPlayer2.Player.xml" Namespace="FRESHMusicPlayer.Linux.DBus" DBusGeneratorMode="Handler" />
+    <AdditionalFiles Include="org.mpris.MediaPlayer2.Playlists.xml" Namespace="FRESHMusicPlayer.Linux.DBus" DBusGeneratorMode="Handler" />
+    <AdditionalFiles Include="org.mpris.MediaPlayer2.TrackList.xml" Namespace="FRESHMusicPlayer.Linux.DBus" DBusGeneratorMode="Handler" />
   </ItemGroup>
   
   <ItemGroup>
