@@ -33,7 +33,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             await connection.ConnectAsync();
 
             mediaPlayer = new DBusMediaPlayer(connection, viewModel, window);
-            _ = mediaPlayer.AddToDBusAsync();
+            await mediaPlayer.AddToDBusAsync();
         }
 
         public void Close()
@@ -323,12 +323,11 @@ namespace FRESHMusicPlayer.Linux.Platform
             return default;
         }
 
-        ValueTask IPlayerHandler.StopAsync()
+        async ValueTask IPlayerHandler.StopAsync()
         {
             viewModel.Player.Queue.Clear();
-            _ = viewModel.Player.NextAsync();
+            await viewModel.Player.NextAsync();
             PlaybackStatus = "Stopped";
-            return default;
         }
 
         ValueTask IPlayerHandler.PlayAsync()
