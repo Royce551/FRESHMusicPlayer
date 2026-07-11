@@ -23,6 +23,7 @@ class Program
         return AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont()
+                .UseWayland()
                 .LogToTrace();
     }
 }
