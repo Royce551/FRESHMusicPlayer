@@ -42,7 +42,7 @@ namespace FRESHMusicPlayer.Handlers.PlaybackIntegrations
                 case PlaybackStatus.Playing:
                     showPresence = true;
                     activity = "play";
-                    state = $"by {string.Join(", ", track.Artists)}";
+                    state = string.Join(", ", track.Artists);
                     break;
                 case PlaybackStatus.Paused:
                 case PlaybackStatus.Stopped:

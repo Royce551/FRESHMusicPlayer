@@ -187,18 +187,30 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         get => Player.Paused;
         set
         {
-            if (value)
+            if (Player.FileLoaded)
             {
-                Player.Pause();
-                WindowTitle = WindowName;
-                _ = UpdateIntegrationsAsync(PlaybackStatus.Paused);
+                if (value)
+                {
+                    Player.Pause();
+                    if (Player.FileLoaded)
+                    {
+                        WindowTitle = WindowName;
+                        _ = UpdateIntegrationsAsync(PlaybackStatus.Paused);
+                    }
+
+                }
+                else
+                {
+                    Player.Resume();
+                    if (Player.FileLoaded)
+                    {
+                        WindowTitle = $"{Player.Metadata.Title} • {string.Join(", ", Player.Metadata.Artists)} - {WindowName}";
+                        _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
+                    }
+
+                }
             }
-            else
-            {
-                Player.Resume();
-                WindowTitle = $"{Player.Metadata.Title} • {string.Join(", ", Player.Metadata.Artists)} - {WindowName}";
-                _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
-            }
+            
             OnPropertyChanged(nameof(Player.Paused));
             MainWindow.UpdateIconStates();
         }

@@ -72,8 +72,6 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task UpdateQueueAsync()
         {
-            if (!MainView.Player.FileLoaded) return;
-
             if (Tracks != null) Tracks.CollectionChanged -= Tracks_CollectionChanged;
             await Task.Run(async () =>
             {

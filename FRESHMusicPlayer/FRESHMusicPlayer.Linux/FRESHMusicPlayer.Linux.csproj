@@ -14,7 +14,6 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
     <PackageReference Include="Avalonia.Wayland" Version="12.1.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     <PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2" />
     <PackageReference Include="Tmds.DBus.Generator" Version="0.94.2">
       <PrivateAssets>all</PrivateAssets>
