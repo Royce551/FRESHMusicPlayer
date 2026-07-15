@@ -76,7 +76,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             set
             {
                 _fullscreen = value;
-                EmitPropertyChanged(MediaPlayer2Property.Fullscreen);
+                Connection.EmitPropertyChanged(Path, this, MediaPlayer2Property.Fullscreen);
             }
         }
 
@@ -88,7 +88,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             {
                 ArgumentNullException.ThrowIfNull(value);
                 _playbackStatus = value;
-                EmitPropertyChanged(PlayerProperty.PlaybackStatus);
+                Connection.EmitPropertyChanged(Path, this, PlayerProperty.PlaybackStatus);
             }
         }
 
@@ -100,7 +100,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             {
                 ArgumentNullException.ThrowIfNull(value);
                 _loopStatus = value;
-                EmitPropertyChanged(PlayerProperty.LoopStatus);
+                Connection.EmitPropertyChanged(Path, this, PlayerProperty.LoopStatus);
             }
         }
 
@@ -111,7 +111,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             set
             {
                 _rate = value;
-                EmitPropertyChanged(PlayerProperty.Rate);
+                Connection.EmitPropertyChanged(Path, this, PlayerProperty.Rate);
             }
         }
 
@@ -122,7 +122,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             set
             {
                 _shuffle = value;
-                EmitPropertyChanged(PlayerProperty.Shuffle);
+                Connection.EmitPropertyChanged(Path, this, PlayerProperty.Shuffle);
             }
         }
 
@@ -133,7 +133,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             set
             {
                 _volume = value;
-                EmitPropertyChanged(PlayerProperty.Volume);
+                Connection.EmitPropertyChanged(Path, this, PlayerProperty.Volume);
             }
         }
 
@@ -145,7 +145,7 @@ namespace FRESHMusicPlayer.Linux.Platform
             {
                 ArgumentNullException.ThrowIfNull(value);
                 _metadata = value;
-                EmitPropertyChanged(PlayerProperty.Metadata);
+                Connection.EmitPropertyChanged(Path, this, PlayerProperty.Metadata);
             }
         }
 
