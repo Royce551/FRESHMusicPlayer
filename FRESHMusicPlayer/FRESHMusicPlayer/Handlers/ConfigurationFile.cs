@@ -57,6 +57,10 @@ namespace FRESHMusicPlayer.Handlers
         [ObservableProperty]
         public partial double ReplayGainPreAmp { get; set; } = 0;
 
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial List<string> AutoImportPaths { get; set; } = new List<string>();
+
         public static ConfigurationFile Read(string filePath)
         {
             if (!File.Exists(Path.Combine(filePath, "config.json"))) new ConfigurationFile().Save(filePath);

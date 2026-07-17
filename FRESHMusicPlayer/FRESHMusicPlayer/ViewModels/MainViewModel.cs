@@ -116,6 +116,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         PlaybackIntegrations.Add(platformWrapper.GetPlatformPlaybackIntegration(this, MainWindow));
 
         Notifications.CollectionChanged += Notifications_CollectionChanged;
+
+        _ = PerformAutoImportAsync();
     }
 
     private void UIThread_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -791,7 +793,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             }
         }
     }
-
+ 
     [ObservableProperty]
     public partial string? OpenDialogPath { get; set; }
 
@@ -814,6 +816,106 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     [ObservableProperty]
     public partial bool IsShiftHeld { get; set; } = false;
+
+    private bool CheckIfFileEndsWithAutoImportableFileExtension(string name) => name.EndsWith(".mp3")
+        || name.EndsWith(".wav") || name.EndsWith(".m4a") || name.EndsWith(".ogg")
+        || name.EndsWith(".flac") || name.EndsWith(".aiff")
+        || name.EndsWith(".wma")
+        || name.EndsWith(".aac");
+
+    public async Task PerformAutoImportAsync()
+    {
+        if (Config.AutoImportPaths.Count > 0)
+        {
+            LoggingHandler.Log("Auto Import: Scanning for new tracks...");
+            var notification = new Notification(this)
+            {
+                ContentText = "Scanning for new tracks...",
+                StatusBarText = "Scanning for new tracks...",
+                Type = NotificationType.Progress,
+            };
+            Notifications.Add(notification);
+            var filesToImport = new List<string>();
+            var library = Library.GetAllTracks();
+            await Task.Run(async () =>
+            {
+                foreach (var folder in Config.AutoImportPaths)
+                {
+                    var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                        .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
+                    foreach (var file in files)
+                    {
+                        if (!library.Select(x => x.Path).Contains(file))
+                            filesToImport.Add(file);
+                    }
+                }
+                if (filesToImport.Count > 0) await Library.ImportAsync(filesToImport);
+            });
+            Notifications.Remove(notification);
+        }
+        
+        foreach (var folder in Config.AutoImportPaths)
+            AddAutoImportFileWatcher(folder);
+
+        var watchersToRemove = autoImportFileWatches
+            .Where(x => !Config.AutoImportPaths.Any(p => string.Equals(p, x.Path)))
+            .ToList();
+
+        foreach (var match in watchersToRemove)
+        {
+            LoggingHandler.Log($"Auto Import: Folder removed from config, removing auto import watch for {match.Path}");
+            try
+            {
+                match.EnableRaisingEvents = false;
+                match.Dispose();
+            }
+            catch
+            {
+                // ignored
+            }
+
+            autoImportFileWatches.Remove(match);
+        }
+    }
+    private List<FileSystemWatcher> autoImportFileWatches = new();
+    public void AddAutoImportFileWatcher(string folder)
+    {
+        if (autoImportFileWatches.Any(x => x.Path == folder)) return;
+
+        LoggingHandler.Log($"Auto Import: Creating file watcher for {folder}");
+        var autoImportPathWatcher = new FileSystemWatcher(folder)
+        {
+            IncludeSubdirectories = true,
+            EnableRaisingEvents = true
+        };
+        autoImportPathWatcher.Created += async (s, e) =>
+        {
+            LoggingHandler.Log($"Auto Import: {e.FullPath} was created, importing...");
+
+            var attributes = File.GetAttributes(e.FullPath);
+            if (attributes.HasFlag(FileAttributes.Directory))
+            {
+                var filesToImport = new List<string>();
+                var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                            .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
+                foreach (var file in files)
+                {
+                    if (!Library.GetAllTracks().Select(x => x.Path).Contains(file))
+                        filesToImport.Add(file);
+                }
+                await Library.ImportAsync(filesToImport);
+            }
+            else
+            {
+                if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && !Library.GetAllTracks().Select(x => x.Path).Contains(e.FullPath))
+                {
+                    await Library.ImportAsync(e.FullPath);
+                }
+            }
+        };
+
+        autoImportFileWatches.Add(autoImportPathWatcher);
+    }
 }
 
 public enum Page

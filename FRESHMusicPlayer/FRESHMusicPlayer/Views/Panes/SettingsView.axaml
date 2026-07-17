@@ -50,6 +50,20 @@
                 <CheckBox Content="Auto queue" IsChecked="{Binding MainView.Config.AutoQueue}"/>
                 <TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
 
+                <TextBlock Text="Auto Import" FontWeight="Bold" FontSize="16"/>
+                <TextBlock Text="FMP will import new tracks from these folders:" FontSize="14"/>
+                <ListBox ItemsSource="{Binding AutoImportFolders}" SelectionMode="Single" MinHeight="25">
+					<ListBox.ItemTemplate>
+						<DataTemplate x:DataType="vm:AutoImportFolderViewModel">
+							<Grid ColumnDefinitions="*,Auto" Background="Transparent">
+								<TextBlock Grid.Column="0" FontSize="14" Text="{Binding Path}"/>
+                                <Button Grid.Column="1" HorizontalAlignment="Right" FontSize="14" Content="Remove" Command="{Binding Remove}" IsTabStop="True"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Content="Add folder" Command="{Binding AddAutoImportFolderAsync}"/>
+
                 <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
 
                 <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>

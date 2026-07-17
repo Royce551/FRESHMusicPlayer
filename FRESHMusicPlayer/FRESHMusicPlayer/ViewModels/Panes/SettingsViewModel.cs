@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.Collections;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -29,11 +30,43 @@ namespace FRESHMusicPlayer.ViewModels
         public override void AfterPageLoaded()
         {
             base.AfterPageLoaded();
+            UpdateAutoImportSection();
         }
 
         public override void OnNavigatingAway()
         {
             base.OnNavigatingAway();
+        }
+
+        [ObservableProperty]
+        public partial AvaloniaList<AutoImportFolderViewModel> AutoImportFolders { get; set; } = [];
+
+        public void UpdateAutoImportSection()
+        {
+            AutoImportFolders = [.. MainView.Config.AutoImportPaths.Select(x => new AutoImportFolderViewModel(x, this))];
+        }
+        
+        public async Task AddAutoImportFolderAsync()
+        {
+            var topLevel = TopLevel.GetTopLevel(MainView.MainWindow);
+            if (topLevel is null) return;
+            var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new Avalonia.Platform.Storage.FolderPickerOpenOptions
+            {
+                AllowMultiple = false
+            });
+            if (folders.Count >= 1)
+            {
+                MainView.Config.AutoImportPaths.Add(folders[0].Path.LocalPath);
+                UpdateAutoImportSection();
+                _ = MainView.PerformAutoImportAsync();
+            }
+        }
+
+        public void RemoveAutoImportFolder(string path)
+        {
+            MainView.Config.AutoImportPaths.Remove(path);
+            UpdateAutoImportSection();
+            _ = MainView.PerformAutoImportAsync();
         }
 
         public async void CleanAndUpdateLibrary()
@@ -145,6 +178,21 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.IntegrateLastFM) }) UpdateLastFMStatus();
         }
+    }
+
+    public partial class AutoImportFolderViewModel
+    {
+        public string Path { get; set; }
+
+        private readonly SettingsViewModel viewModel;
+
+        public AutoImportFolderViewModel(string path, SettingsViewModel viewModel)
+        {
+            this.viewModel = viewModel;
+            Path = path;
+        }
+
+        public void Remove() => viewModel.RemoveAutoImportFolder(Path);
     }
 
     //public partial class SettingsItem : ObservableRecipient
