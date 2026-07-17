@@ -98,7 +98,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         Config = ConfigurationFile.Read(Path.Combine(App.DataFolderLocation, "Configuration"));
         Config.IsActive = true;
         IsActive = true;
-        UpdateVolume();
+        //UpdateVolume();
 
         HttpClient = new HttpClient();
         HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"FRESHMusicPlayer/{Assembly.GetEntryAssembly()!.GetName().Version} ( https://github.com/Royce551/FRESHMusicPlayer )");
@@ -431,6 +431,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         else _ = LoadCoverArtAsync();  
 
         _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
+        UpdateReplayGain();
 
         if (PauseAfterCurrentTrack)
         {
@@ -485,15 +486,70 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             OnPropertyChanged(nameof(Volume));
             Config.Volume = value;
 
-            UpdateVolume();
+            Player.Volume = (float)value * replayGainAdjustment;
+            //UpdateVolume();
         }
     }
 
-    private void UpdateVolume()
+    //private void UpdateVolume()
+    //{
+    //    if (Config.Volume > 0.99) Player.Volume = 1;
+    //    else if (Config.Volume < 0.01) Player.Volume = 0;
+    //    else Player.Volume = (float)(((Math.Pow(Math.E, Math.Log(40) * Config.Volume)) / 40) * 1.066 - 0.02745);
+    //}
+
+    private float replayGainAdjustment = 0;
+    public void UpdateReplayGain()
     {
-        if (Config.Volume > 0.99) Player.Volume = 1;
-        else if (Config.Volume < 0.01) Player.Volume = 0;
-        else Player.Volume = (float)(((Math.Pow(Math.E, Math.Log(40) * Config.Volume)) / 40) * 1.066 - 0.02745);
+        if (!Config.UseReplayGain)
+        {
+            replayGainAdjustment = 1;
+            return;
+        }
+
+        if (Player.Metadata is FileMetadataProvider file)
+        {
+            replayGainAdjustment = 1;
+
+            float albumGain = 0;
+            float albumPeak = 1;
+            bool albumGainIsPresent = false;
+
+            float trackGain = 0;
+            float trackPeak = 1;
+            bool trackGainIsPresent = false;
+
+            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
+            {
+                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_gain"].Replace("dB", string.Empty).Trim(), out albumGain);
+                albumGainIsPresent = true;
+            }
+            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
+            {
+                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_gain"].Replace("dB", string.Empty).Trim(), out trackGain);
+                trackGainIsPresent = true;
+            }
+            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
+                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_peak"].Trim(), out albumPeak);
+            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
+                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_peak"].Trim(), out trackPeak);
+
+            float decibelsToAdjust = 0;
+            float peak = 0;
+            if (Config.PerformReplayGainByTrack)
+            {
+                decibelsToAdjust = trackGainIsPresent ? trackGain : albumGain;
+                peak = trackPeak;
+            }
+            else if (Config.PerformReplayGainByAlbum)
+            {
+                decibelsToAdjust = albumGainIsPresent ? albumGain : trackGain;
+                peak = albumPeak;
+            }
+            replayGainAdjustment = Math.Min((float)Math.Pow(10, (decibelsToAdjust + Config.ReplayGainPreAmp) / 20), (1 / peak));
+            LoggingHandler.Log($"ReplayGain: Specified adjustment is {decibelsToAdjust}dB and peak is {peak}. Applying adjustment of {replayGainAdjustment}");
+        }
+        Player.Volume = (float)Volume * replayGainAdjustment;
     }
 
     public void HandleAppClosing()

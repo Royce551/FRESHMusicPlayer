@@ -13,6 +13,9 @@
         <Style Selector="ComboBox">
 			<Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
         </Style>
+        <Style Selector="RadioButton">
+			<Setter Property="TextBlock.FontSize" Value="14"/>
+        </Style>
         <Style Selector="TextBlock">
 			<Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="FontSize" Value="14"/>
@@ -60,6 +63,21 @@
 					<TextBlock Text="{Binding LastFMStatus}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
                 </DockPanel>
                 
+
+                <TextBlock x:Name="PlaybackSectionHeader" Text="Playback" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+
+                <TextBlock Text="ReplayGain" FontWeight="Bold" FontSize="16"/>
+                <CheckBox Content="Use ReplayGain loudness normalization" IsChecked="{Binding MainView.Config.UseReplayGain}"/>
+                <TextBlock Text="&quot;RG&quot; will show in Track Info if ReplayGain data is available" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <RadioButton Margin="0,10,0,0" GroupName="ReplayGain" Content="Normalize by track" IsChecked="{Binding MainView.Config.PerformReplayGainByTrack}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
+                <RadioButton GroupName="ReplayGain" Content="Normalize by album" IsChecked="{Binding MainView.Config.PerformReplayGainByAlbum}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
+
+                <TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks with ReplayGain (values above 0 may reduce dynamics)" FontSize="14"/>
+                <DockPanel LastChildFill="False" Margin="0,0,0,-10">
+					<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+                    <TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+                </DockPanel>   
+                <Slider x:Name="ReplayGainSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainPreAmp}" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainSlider.Value, StringFormat='{}{0:F2}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.01" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.01"/>
 
                 <TextBlock x:Name="AppearanceSectionHeader" Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 

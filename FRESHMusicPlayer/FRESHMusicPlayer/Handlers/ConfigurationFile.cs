@@ -45,6 +45,18 @@ namespace FRESHMusicPlayer.Handlers
         [ObservableProperty]
         public partial string? LastFMToken { get; set; } = null;
 
+        [ObservableProperty]
+        public partial bool UseReplayGain { get; set; } = true;
+
+        [ObservableProperty]
+        public partial bool PerformReplayGainByTrack { get; set; } = false;
+
+        [ObservableProperty]
+        public partial bool PerformReplayGainByAlbum { get; set; } = true;
+
+        [ObservableProperty]
+        public partial double ReplayGainPreAmp { get; set; } = 0;
+
         public static ConfigurationFile Read(string filePath)
         {
             if (!File.Exists(Path.Combine(filePath, "config.json"))) new ConfigurationFile().Save(filePath);
