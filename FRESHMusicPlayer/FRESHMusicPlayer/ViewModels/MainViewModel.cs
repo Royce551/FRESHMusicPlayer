@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Styling;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
@@ -98,7 +99,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         Config = ConfigurationFile.Read(Path.Combine(App.DataFolderLocation, "Configuration"));
         Config.IsActive = true;
         IsActive = true;
-        //UpdateVolume();
+        UpdateRequestedTheme();
 
         HttpClient = new HttpClient();
         HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"FRESHMusicPlayer/{Assembly.GetEntryAssembly()!.GetName().Version} ( https://github.com/Royce551/FRESHMusicPlayer )");
@@ -766,7 +767,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     public void Receive(PropertyChangedMessage<bool> message)
     {
-        if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.IntegrateDiscordRichPresence)})
+        if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.IntegrateDiscordRichPresence) })
         {
             if (Config.IntegrateDiscordRichPresence) StartIntegration(new DiscordIntegration(HttpClient));
             else
@@ -779,7 +780,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 }
             }
         }
-        else if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.IntegrateLastFM)})
+        else if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.IntegrateLastFM) })
         {
             if (Config.IntegrateLastFM) StartIntegration(new LastFMIntegration(this));
             else
@@ -792,6 +793,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 }
             }
         }
+        else if (message is { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.PreferDarkTheme) } or { Sender: ConfigurationFile, PropertyName: nameof(ConfigurationFile.PreferLightTheme) })
+            UpdateRequestedTheme();
     }
  
     [ObservableProperty]
@@ -915,6 +918,15 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         };
 
         autoImportFileWatches.Add(autoImportPathWatcher);
+    }
+
+    public void UpdateRequestedTheme()
+    {
+        if (App.Current is null) throw new InvalidOperationException();
+
+        if (Config.PreferDarkTheme) App.Current.RequestedThemeVariant = ThemeVariant.Dark;
+        else if (Config.PreferLightTheme) App.Current.RequestedThemeVariant = ThemeVariant.Light;
+        else App.Current.RequestedThemeVariant = ThemeVariant.Default;
     }
 }
 

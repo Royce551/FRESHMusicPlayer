@@ -98,6 +98,11 @@
                 <CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
                 <CheckBox Content="Show remaining time instead of total time in controls box" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
 
+                <TextBlock Text="Theme" FontWeight="Bold" FontSize="16"/>
+                <RadioButton GroupName="Theme" Content="Follow system" IsChecked="True"/>
+                <RadioButton GroupName="Theme" Content="Light" IsChecked="{Binding MainView.Config.PreferLightTheme}"/>
+                <RadioButton GroupName="Theme" Content="Dark" IsChecked="{Binding MainView.Config.PreferDarkTheme}"/>
+
                 <TextBlock x:Name="MaintenanceSectionHeader" Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 
                 <Button Content="Reset settings to default" IsEnabled="False"/>

@@ -61,6 +61,14 @@ namespace FRESHMusicPlayer.Handlers
         [NotifyPropertyChangedRecipients]
         public partial List<string> AutoImportPaths { get; set; } = new List<string>();
 
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool PreferDarkTheme { get; set; } = false; // the reason for this setup is to make binding to radio buttons easier
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool PreferLightTheme { get; set; } = false;
+
         public static ConfigurationFile Read(string filePath)
         {
             if (!File.Exists(Path.Combine(filePath, "config.json"))) new ConfigurationFile().Save(filePath);

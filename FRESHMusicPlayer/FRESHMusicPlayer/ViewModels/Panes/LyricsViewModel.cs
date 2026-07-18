@@ -209,6 +209,8 @@ namespace FRESHMusicPlayer.ViewModels
         {
             this.view = view;
         }
+
+        public void JumpTo() => view.MainView.Player.CurrentTime = Timestamp;
     }
 
     public enum LyricState

@@ -26,14 +26,22 @@
             <ItemsControl ItemsSource="{Binding Lyrics}" x:Name="LyricsItemsControl">
 				<ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="vm:LyricLineViewModel">
-                        <TextBlock Text="{Binding Lyric}" FontWeight="{Binding Weight}" Margin="10,5,25,5" Opacity="{Binding Opacity}" RenderTransform="{Binding Transform}" TextWrapping="Wrap" TextAlignment="Left" RenderTransformOrigin="0%,50%">
-                            <TextBlock.Transitions>
-								<Transitions>
-									<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
-                                    <TransformOperationsTransition Property="RenderTransform" Duration="0:00:01.10" Easing="ExponentialEaseOut"/>
+                        <Button Theme="{StaticResource LinkButton}" Command="{Binding JumpTo}" RenderTransform="{Binding Transform}" Margin="10,4,25,4" RenderTransformOrigin="0%,50%" Padding="0">
+							<TextBlock Text="{Binding Lyric}" FontWeight="{Binding Weight}"  Opacity="{Binding Opacity}"  TextWrapping="Wrap" TextAlignment="Left">
+                                <TextBlock.Transitions>
+								    <Transitions>
+									    <DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
+                                        
+                                    </Transitions>
+                                </TextBlock.Transitions>
+                            </TextBlock>
+                            <Button.Transitions>
+                                <Transitions>
+									<TransformOperationsTransition Property="RenderTransform" Duration="0:00:01.10" Easing="ExponentialEaseOut"/>
                                 </Transitions>
-                            </TextBlock.Transitions>
-                        </TextBlock>
+								
+                            </Button.Transitions>
+                        </Button> 
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
