@@ -93,6 +93,11 @@ namespace FRESHMusicPlayer.ViewModels
             await MainView.Library.ProcessDatabaseMetadataAsync();
         }
 
+        public void OpenDataFolder()
+        {
+            SIADLUtilities.OpenURL(App.DataFolderLocation);
+        }
+
         [ObservableProperty]
         public partial string LastFMStatus { get; set; }
         [ObservableProperty]

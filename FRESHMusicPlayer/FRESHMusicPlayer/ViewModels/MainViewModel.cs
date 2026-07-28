@@ -549,7 +549,16 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 decibelsToAdjust = albumGainIsPresent ? albumGain : trackGain;
                 peak = albumPeak;
             }
-            replayGainAdjustment = Math.Min((float)Math.Pow(10, (decibelsToAdjust + Config.ReplayGainPreAmp) / 20), (1 / peak));
+
+            if (!trackGainIsPresent && !albumGainIsPresent)
+            {
+                LoggingHandler.Log("ReplayGain: Using fallback adjustment");
+                decibelsToAdjust = (float)Config.ReplayGainFallbackPreAmp;
+                peak = 1;
+            }
+            else decibelsToAdjust += (float)Config.ReplayGainPreAmp;
+
+            replayGainAdjustment = Math.Min((float)Math.Pow(10, decibelsToAdjust / 20), (1 / peak));
             LoggingHandler.Log($"ReplayGain: Specified adjustment is {decibelsToAdjust}dB and peak is {peak}. Applying adjustment of {replayGainAdjustment}");
         }
         Player.Volume = (float)Volume * replayGainAdjustment;

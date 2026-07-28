@@ -58,6 +58,9 @@ namespace FRESHMusicPlayer.Handlers
         public partial double ReplayGainPreAmp { get; set; } = 0;
 
         [ObservableProperty]
+        public partial double ReplayGainFallbackPreAmp { get; set; } = -8.5;
+
+        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial List<string> AutoImportPaths { get; set; } = new List<string>();
 

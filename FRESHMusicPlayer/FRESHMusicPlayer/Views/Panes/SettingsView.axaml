@@ -86,13 +86,23 @@
                 <RadioButton Margin="0,10,0,0" GroupName="ReplayGain" Content="Normalize by track" IsChecked="{Binding MainView.Config.PerformReplayGainByTrack}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
                 <RadioButton GroupName="ReplayGain" Content="Normalize by album" IsChecked="{Binding MainView.Config.PerformReplayGainByAlbum}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
 
-                <TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks with ReplayGain (values above 0 may reduce dynamics)" FontSize="14"/>
-                <DockPanel LastChildFill="False" Margin="0,0,0,-10">
-					<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
-                    <TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks with ReplayGain" FontSize="14"/>
+               
+                <DockPanel Margin="0,0,0,-10">
+					<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+                    <TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+                    <TextBlock Text="{Binding MainView.Config.ReplayGainPreAmp, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center"/>
+                </DockPanel>        
+                <Slider x:Name="ReplayGainSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
+                 <TextBlock Text="To allow for loudness normalization, tracks with ReplayGain play at a lower target loudness. A higher pre-amp increases loudness but prevents tracks requiring a volume increase from being normalized properly." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+                <TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks without ReplayGain" FontSize="14"/>
+                <DockPanel Margin="0,0,0,-10">
+					<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+                    <TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+                    <TextBlock Text="{Binding MainView.Config.ReplayGainFallbackPreAmp, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center"/>
                 </DockPanel>   
-                <Slider x:Name="ReplayGainSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainPreAmp}" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainSlider.Value, StringFormat='{}{0:F2}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.01" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.01"/>
-
+                <Slider x:Name="ReplayGainFallbackSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainFallbackPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainFallbackSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
+               
                 <TextBlock x:Name="AppearanceSectionHeader" Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 
                 <CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
@@ -105,7 +115,8 @@
 
                 <TextBlock x:Name="MaintenanceSectionHeader" Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 
-                <Button Content="Reset settings to default" IsEnabled="False"/>
+                <Button Content="Open data folder" Command="{Binding OpenDataFolder}"/>
+                <Button Content="Reset settings to default" Margin="0,10,0,0" IsEnabled="False"/>
                 <Button Content="Clean and update library" Margin="0,10,0,0" Command="{Binding CleanAndUpdateLibrary}"/>
                 <TextBlock Text="Reprocesses the metadata for all tracks in the library; use if you have made a lot of updates with an external tool. Also deletes duplicate library entries." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
                 <Button Content="Nuke library" Margin="0,10,0,0">
