@@ -30,7 +30,7 @@ class Program
                 .WithInterFont()
                 .LogToTrace();
 
-        if (!disableWayland) appBuilder = appBuilder.UseWayland();
+        if (!disableWayland) appBuilder = appBuilder.UseWaylandWithFallback();
 
         return appBuilder;
     }
