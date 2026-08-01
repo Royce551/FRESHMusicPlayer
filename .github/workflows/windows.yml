@@ -28,5 +28,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         name: "Upload Artifact"
         with:
-          name: "freshmusicplayer-win-${{ matrix.arch }}"
-          path: "FRESHMusicPlayer/FRESHMusicPlayer.Windows/bin/Release/net10.0-windows/win-${{ matrix.arch }}/publish"
+          name: "freshmusicplayer-win-${{ matrix.arch }}"                        
+          path: "FRESHMusicPlayer/FRESHMusicPlayer.Windows/bin/Release/net10.0-windows10.0.26100/win-${{ matrix.arch }}/publish"
