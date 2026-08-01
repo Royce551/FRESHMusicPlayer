@@ -7,6 +7,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
+using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using FRESHMusicPlayer.Utilities;
@@ -336,8 +337,34 @@ public partial class MainWindow : Window
         }
         else if (e.Properties.IsXButton2Pressed)
         {
-                viewModel.NavigateForward();
-                e.Handled = true;
+            viewModel.NavigateForward();
+            e.Handled = true;
         }
+    }
+
+    private async void MenuItem_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var topLevel = GetTopLevel(this) ?? throw new Exception();
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
+        {
+            AllowMultiple = true,
+            FileTypeFilter = [FilePickerFileTypes.All] // TODO: do this correctly
+        });
+
+        if (files.Count >= 1)
+        {
+            var paths = files.Select(x => x.Path.LocalPath).ToArray();
+            viewModel.Player.Queue.Add(paths);
+            await viewModel.Player.PlayAsync();
+        }
+    }
+
+    private async void MenuItem_Click_1(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var input = new TextInputDialog("Enter file path or URL to a network stream");
+        var path = await input.ShowDialog<string?>(this);
+        if (string.IsNullOrWhiteSpace(path)) return; // cancel case
+
+        await viewModel.Player.PlayAsync(path);
     }
 }

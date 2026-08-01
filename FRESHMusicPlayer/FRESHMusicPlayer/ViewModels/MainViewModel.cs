@@ -807,17 +807,6 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     }
  
     [ObservableProperty]
-    public partial string? OpenDialogPath { get; set; }
-
-    public void OpenDialogOpen()
-    {
-        if (string.IsNullOrEmpty(OpenDialogPath)) return;
-
-        AddToQueueAndHandleAutoQueue(OpenDialogPath);
-        Player.PlayAsync();
-    }
-
-    [ObservableProperty]
     public partial bool ShowDragDropOverlay { get; set; } = false;
 
     public void OpenMiniPlayer()

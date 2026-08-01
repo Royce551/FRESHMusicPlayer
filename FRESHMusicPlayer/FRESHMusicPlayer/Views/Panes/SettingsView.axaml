@@ -1,158 +1,207 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:FRESHMusicPlayer.Views"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:FRESHMusicPlayer.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450" x:DataType="vm:SettingsViewModel"
-             x:Class="FRESHMusicPlayer.Views.SettingsView" Background="{DynamicResource SecondaryColor}"> 
-    <UserControl.Styles>
-		<Style Selector="CheckBox">
-			<Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
-        </Style>
-        <Style Selector="ComboBox">
-			<Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
-        </Style>
-        <Style Selector="RadioButton">
-			<Setter Property="TextBlock.FontSize" Value="14"/>
-        </Style>
-        <Style Selector="TextBlock">
-			<Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-    </UserControl.Styles>
-    <Grid ColumnDefinitions="125,5,*">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="using:FRESHMusicPlayer.Views"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450" x:DataType="vm:SettingsViewModel"
+			 x:Class="FRESHMusicPlayer.Views.SettingsView" Background="{DynamicResource SecondaryColor}">
+			 <UserControl.Styles>
+				 <Style Selector="CheckBox">
+					 <Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
+				 </Style>
+				 <Style Selector="ComboBox">
+					 <Setter Property="TextBlock.FontSize" Value="14"/> <!--todo: make this default in SIADL-->
+				 </Style>
+				 <Style Selector="RadioButton">
+					 <Setter Property="TextBlock.FontSize" Value="14"/>
+				 </Style>
+				 <Style Selector="TextBlock">
+					 <Setter Property="TextWrapping" Value="Wrap"/>
+					 <Setter Property="FontSize" Value="14"/>
+				 </Style>
+			 </UserControl.Styles>
+	<Grid ColumnDefinitions="125,5,*">
 		<ScrollViewer Grid.Column="0" Background="{DynamicResource ForegroundColor}">
 			<StackPanel Spacing="5" Margin="10">
 				<Button Theme="{StaticResource LinkButton}" Content="General" FontSize="14" Click="Button_Click"/>
-                <Button Theme="{StaticResource LinkButton}" Content="Playback" FontSize="14"/>
-                <Button Theme="{StaticResource LinkButton}" Content="Appearance" FontSize="14" Click="Button_Click_1"/>
-                <Button Theme="{StaticResource LinkButton}" Content="Maintenance" FontSize="14" Click="Button_Click_2"/>
-                <Button Theme="{StaticResource LinkButton}" Content="About" FontSize="14" Click="Button_Click_3"/>
-            </StackPanel>
-        </ScrollViewer>
-        <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource ForegroundColor}" Foreground="Transparent" BorderBrush="Transparent"/>
-        <ScrollViewer Grid.Column="2">
+				<Button Theme="{StaticResource LinkButton}" Content="Playback" FontSize="14" Click="Button_Click_4"/>
+				<Button Theme="{StaticResource LinkButton}" Content="Appearance" FontSize="14" Click="Button_Click_1"/>
+				<Button Theme="{StaticResource LinkButton}" Content="Maintenance" FontSize="14" Click="Button_Click_2"/>
+				<Button Theme="{StaticResource LinkButton}" Content="About" FontSize="14" Click="Button_Click_3"/>
+			</StackPanel>
+		</ScrollViewer>
+		<GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="{DynamicResource ForegroundColor}" Foreground="Transparent" BorderBrush="Transparent"/>
+		<ScrollViewer Grid.Column="2" ScrollChanged="ScrollViewer_ScrollChanged">
 			<StackPanel Spacing="5" Margin="10">
 				<TextBlock Text="Settings" FontWeight="Bold" FontSize="22"/>
 
-                <TextBlock x:Name="GeneralSectionHeader" Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
-                
-                <DockPanel HorizontalAlignment="Stretch">
-					<TextBlock DockPanel.Dock="Left" Text="Language" VerticalAlignment="Center"/>
-                    <ComboBox HorizontalAlignment="Right">
-						<ComboBox.Items>
-							<TextBlock Text="Automatic"/>
-                        </ComboBox.Items>
-                    </ComboBox>
-                </DockPanel>
-                <!--<CheckBox Content="Playtime logging"/>-->
-                <CheckBox Content="Auto queue" IsChecked="{Binding MainView.Config.AutoQueue}"/>
-                <TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+				<StackPanel Spacing="5" x:Name="GeneralSection" GotFocus="GeneralSection_GotFocus">
+					<TextBlock x:Name="GeneralSectionHeader" Text="General" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 
-                <TextBlock Text="Auto Import" FontWeight="Bold" FontSize="16"/>
-                <TextBlock Text="FMP will import new tracks from these folders:" FontSize="14"/>
-                <ListBox ItemsSource="{Binding AutoImportFolders}" SelectionMode="Single" MinHeight="25">
-					<ListBox.ItemTemplate>
-						<DataTemplate x:DataType="vm:AutoImportFolderViewModel">
-							<Grid ColumnDefinitions="*,Auto" Background="Transparent">
-								<TextBlock Grid.Column="0" FontSize="14" Text="{Binding Path}"/>
-                                <Button Grid.Column="1" HorizontalAlignment="Right" FontSize="14" Content="Remove" Command="{Binding Remove}" IsTabStop="True"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Button Content="Add folder" Command="{Binding AddAutoImportFolderAsync}"/>
+					<DockPanel HorizontalAlignment="Stretch">
+						<TextBlock DockPanel.Dock="Left" Text="Language" VerticalAlignment="Center"/>
+						<ComboBox HorizontalAlignment="Right">
+							<ComboBox.Items>
+								<TextBlock Text="Automatic"/>
+							</ComboBox.Items>
+						</ComboBox>
+					</DockPanel>
+					<!--<CheckBox Content="Playtime logging"/>-->
+					<CheckBox Content="Auto queue" IsChecked="{Binding MainView.Config.AutoQueue}"/>
+					<TextBlock Text="Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
 
-                <TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
+					<TextBlock Text="Auto Import" FontWeight="Bold" FontSize="16"/>
+					<TextBlock Text="FMP will import new tracks from these folders:" FontSize="14"/>
+					<ListBox ItemsSource="{Binding AutoImportFolders}" SelectionMode="Single" MinHeight="25">
+						<ListBox.ItemTemplate>
+							<DataTemplate x:DataType="vm:AutoImportFolderViewModel">
+								<Grid ColumnDefinitions="*,Auto" Background="Transparent">
+									<TextBlock Grid.Column="0" FontSize="14" Text="{Binding Path}"/>
+									<Button Grid.Column="1" HorizontalAlignment="Right" FontSize="14" Content="Remove" Command="{Binding Remove}" IsTabStop="True"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+					<Button Content="Add folder" Command="{Binding AddAutoImportFolderAsync}"/>
 
-                <CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
-                <CheckBox Content="Display cover art" Margin="10,0,0,0" ToolTip.Tip="Since Discord requires an online source for cover art, FMP looks for a match on the Cover Art Archive. The guess can sometimes be completely off. If your tracks are tagged with a MBID, that will be used instead."/>
+					<TextBlock Text="Integrations" FontWeight="Bold" FontSize="16"/>
 
-                <CheckBox Content="last.fm" Margin="0,10,0,0" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>
-                <DockPanel IsVisible="{Binding MainView.Config.IntegrateLastFM}">
-                    <Button DockPanel.Dock="Right" Content="Sign in" Command="{Binding LastFMSignIn}" IsVisible="{Binding IsLastFMSignInButtonVisible}"/>
-                    <Button DockPanel.Dock="Right" Content="Confirm" Command="{Binding LastFMConfirm}" IsVisible="{Binding IsLastFMConfirmButtonVisible}"/>
-                    <Button DockPanel.Dock="Right" Content="Sign out" Command="{Binding LastFMSignOut}" IsVisible="{Binding IsLastFMSignOutButtonVisible}"/>
-					<TextBlock Text="{Binding LastFMStatus}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
-                </DockPanel>
-                
+					<CheckBox Content="Discord Rich Presence" IsChecked="{Binding MainView.Config.IntegrateDiscordRichPresence}"/>
+					<CheckBox Content="Display cover art" Margin="10,0,0,0" ToolTip.Tip="Since Discord requires an online source for cover art, FMP looks for a match on the Cover Art Archive. The guess can sometimes be completely off. If your tracks are tagged with a MBID, that will be used instead."/>
 
-                <TextBlock x:Name="PlaybackSectionHeader" Text="Playback" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+					<CheckBox Content="last.fm" Margin="0,10,0,0" IsChecked="{Binding MainView.Config.IntegrateLastFM}"/>
+					<DockPanel IsVisible="{Binding MainView.Config.IntegrateLastFM}">
+						<Button DockPanel.Dock="Right" Content="Sign in" Command="{Binding LastFMSignIn}" IsVisible="{Binding IsLastFMSignInButtonVisible}"/>
+						<Button DockPanel.Dock="Right" Content="Confirm" Command="{Binding LastFMConfirm}" IsVisible="{Binding IsLastFMConfirmButtonVisible}"/>
+						<Button DockPanel.Dock="Right" Content="Sign out" Command="{Binding LastFMSignOut}" IsVisible="{Binding IsLastFMSignOutButtonVisible}"/>
+						<TextBlock Text="{Binding LastFMStatus}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
+					</DockPanel>
 
-                <TextBlock Text="ReplayGain" FontWeight="Bold" FontSize="16"/>
-                <CheckBox Content="Use ReplayGain loudness normalization" IsChecked="{Binding MainView.Config.UseReplayGain}"/>
-                <TextBlock Text="&quot;RG&quot; will show in Track Info if ReplayGain data is available" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <RadioButton Margin="0,10,0,0" GroupName="ReplayGain" Content="Normalize by track" IsChecked="{Binding MainView.Config.PerformReplayGainByTrack}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
-                <RadioButton GroupName="ReplayGain" Content="Normalize by album" IsChecked="{Binding MainView.Config.PerformReplayGainByAlbum}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
+					<StackPanel.Transitions>
+						<Transitions>
+							<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
 
-                <TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks with ReplayGain" FontSize="14"/>
-               
-                <DockPanel Margin="0,0,0,-10">
-					<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
-                    <TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
-                    <TextBlock Text="{Binding MainView.Config.ReplayGainPreAmp, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center"/>
-                </DockPanel>        
-                <Slider x:Name="ReplayGainSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
-                 <TextBlock Text="To allow for loudness normalization, tracks with ReplayGain play at a lower target loudness. A higher pre-amp increases loudness but prevents tracks requiring a volume increase from being normalized properly." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks without ReplayGain" FontSize="14"/>
-                <DockPanel Margin="0,0,0,-10">
-					<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
-                    <TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
-                    <TextBlock Text="{Binding MainView.Config.ReplayGainFallbackPreAmp, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center"/>
-                </DockPanel>   
-                <Slider x:Name="ReplayGainFallbackSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainFallbackPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainFallbackSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
-               
-                <TextBlock x:Name="AppearanceSectionHeader" Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+						</Transitions>
+					</StackPanel.Transitions>
+				</StackPanel>
 
-                <CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
-                <CheckBox Content="Show remaining time instead of total time in controls box" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
+				
 
-                <TextBlock Text="Theme" FontWeight="Bold" FontSize="16"/>
-                <RadioButton GroupName="Theme" Content="Follow system" IsChecked="True"/>
-                <RadioButton GroupName="Theme" Content="Light" IsChecked="{Binding MainView.Config.PreferLightTheme}"/>
-                <RadioButton GroupName="Theme" Content="Dark" IsChecked="{Binding MainView.Config.PreferDarkTheme}"/>
+				<StackPanel x:Name="PlaybackSection" Spacing="5" GotFocus="PlaybackSection_GotFocus">
+					<TextBlock x:Name="PlaybackSectionHeader" Text="Playback" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 
-                <TextBlock x:Name="MaintenanceSectionHeader" Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+					<TextBlock Text="ReplayGain" FontWeight="Bold" FontSize="16"/>
+					<CheckBox Content="Use ReplayGain loudness normalization" IsChecked="{Binding MainView.Config.UseReplayGain}"/>
+					<TextBlock Text="&quot;RG&quot; will show in Track Info if ReplayGain data is available" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+					<RadioButton Margin="0,10,0,0" GroupName="ReplayGain" Content="Normalize by track" IsChecked="{Binding MainView.Config.PerformReplayGainByTrack}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
+					<RadioButton GroupName="ReplayGain" Content="Normalize by album" IsChecked="{Binding MainView.Config.PerformReplayGainByAlbum}" IsEnabled="{Binding MainView.Config.UseReplayGain}"/>
 
-                <Button Content="Open data folder" Command="{Binding OpenDataFolder}"/>
-                <Button Content="Reset settings to default" Margin="0,10,0,0" IsEnabled="False"/>
-                <Button Content="Clean and update library" Margin="0,10,0,0" Command="{Binding CleanAndUpdateLibrary}"/>
-                <TextBlock Text="Reprocesses the metadata for all tracks in the library; use if you have made a lot of updates with an external tool. Also deletes duplicate library entries." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
-                <Button Content="Nuke library" Margin="0,10,0,0">
-                    <Button.Flyout>
-						<Flyout>
-							<StackPanel Spacing="5">
-								<TextBlock Text="You are about to irreversibly clear your library and all playlists." FontWeight="Bold"/>
-                                <Button Content="Nuke library" Command="{Binding NukeLibrary}"/>
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
+					<TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks with ReplayGain" FontSize="14"/>
 
-                <TextBlock x:Name="AboutSectionHeader" Text="About" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
-                <Border CornerRadius="5" Padding="10" Margin="-3,0,-3,0">
-                    <Border.Background>
-						<LinearGradientBrush>
-							<LinearGradientBrush.GradientStops>
-								<GradientStop Color="#13293D" Offset="0"/>
-                                <GradientStop Color="#1E4161" Offset="1"/>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <StackPanel Spacing="5">
-						 <Image Source="/Assets/fullfmplogo.png" MaxWidth="400" HorizontalAlignment="Left" Margin="0,0,0,10" RenderOptions.BitmapInterpolationMode="HighQuality"/>
-                        <TextBlock Margin="0,10,0,0" Text="Version 13.0.0.0" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                        <TextBlock Text="by Squid House Software (and open source contributors)" Foreground="White"/>
-                        <TextBlock Text="Licensed under GPL v3" Foreground="White"/>
-    
-                        <TextBlock Margin="0,20,0,0" Text="Thank you for using FRESHMusicPlayer ❤️" FontWeight="Bold" Foreground="White"/>
+					<DockPanel Margin="0,0,0,-10">
+						<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+						<TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+						<TextBlock Text="{Binding MainView.Config.ReplayGainPreAmp, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center"/>
+					</DockPanel>
+					<Slider x:Name="ReplayGainSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
+					<TextBlock Text="To allow for loudness normalization, tracks with ReplayGain play at a lower target loudness. A higher pre-amp increases loudness but prevents tracks requiring a volume increase from being normalized properly." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+					<TextBlock Margin="0,10,0,0" Text="Pre-amp for tracks without ReplayGain" FontSize="14"/>
+					<DockPanel Margin="0,0,0,-10">
+						<TextBlock DockPanel.Dock="Left" Text="-15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+						<TextBlock DockPanel.Dock="Right" Text="+15dB" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}" VerticalAlignment="Bottom"/>
+						<TextBlock Text="{Binding MainView.Config.ReplayGainFallbackPreAmp, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center"/>
+					</DockPanel>
+					<Slider x:Name="ReplayGainFallbackSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainFallbackPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainFallbackSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
 
-                        <Button Margin="0,20,0,0" Content="Report an issue" Command="{Binding OpenReportIssuePage}"/>
-                        <Button Content="View license and source code" Command="{Binding OpenSourceCodePage}"/>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+					<StackPanel.Transitions>
+						<Transitions>
+							<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
+
+						</Transitions>
+					</StackPanel.Transitions>
+				</StackPanel>
+
+				<StackPanel x:Name="AppearanceSection" Spacing="5" GotFocus="AppearanceSection_GotFocus">
+					<TextBlock x:Name="AppearanceSectionHeader" Text="Appearance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+
+					<CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
+					<CheckBox Content="Show remaining time instead of total time in controls box" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
+
+					<TextBlock Text="Theme" FontWeight="Bold" FontSize="16"/>
+					<RadioButton GroupName="Theme" Content="Follow system" IsChecked="True"/>
+					<RadioButton GroupName="Theme" Content="Light" IsChecked="{Binding MainView.Config.PreferLightTheme}"/>
+					<RadioButton GroupName="Theme" Content="Dark" IsChecked="{Binding MainView.Config.PreferDarkTheme}"/>
+
+					<StackPanel.Transitions>
+						<Transitions>
+							<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
+
+						</Transitions>
+					</StackPanel.Transitions>
+				</StackPanel>
+
+
+
+
+				<StackPanel x:Name="MaintenanceSection" Spacing="5" GotFocus="MaintenanceSection_GotFocus">
+					<TextBlock x:Name="MaintenanceSectionHeader" Text="Maintenance" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+
+					<Button Content="Open data folder" Command="{Binding OpenDataFolder}"/>
+					<Button Content="Reset settings to default" Margin="0,10,0,0" IsEnabled="False"/>
+					<Button Content="Clean and update library" Margin="0,10,0,0" Command="{Binding CleanAndUpdateLibrary}"/>
+					<TextBlock Text="Reprocesses the metadata for all tracks in the library; use if you have made a lot of updates with an external tool. Also deletes duplicate library entries." FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>
+					<Button Content="Nuke library" Margin="0,10,0,0">
+						<Button.Flyout>
+							<Flyout>
+								<StackPanel Spacing="5">
+									<TextBlock Text="You are about to irreversibly clear your library and all playlists." FontWeight="Bold"/>
+									<Button Content="Nuke library" Command="{Binding NukeLibrary}"/>
+								</StackPanel>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+
+					<StackPanel.Transitions>
+						<Transitions>
+							<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
+
+						</Transitions>
+					</StackPanel.Transitions>
+				</StackPanel>
+
+				<StackPanel x:Name="AboutSection" Spacing="5" GotFocus="">
+					<TextBlock x:Name="AboutSectionHeader" Text="About" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+					<Border CornerRadius="5" Padding="10" Margin="-3,0,-3,0">
+						<Border.Background>
+							<LinearGradientBrush>
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#13293D" Offset="0"/>
+									<GradientStop Color="#1E4161" Offset="1"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</Border.Background>
+						<StackPanel Spacing="5">
+							<Image Source="/Assets/fullfmplogo.png" MaxWidth="400" HorizontalAlignment="Left" Margin="0,0,0,10" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+							<TextBlock Margin="0,10,0,0" Text="Version 13.0.0.0" FontSize="20" FontWeight="Bold" Foreground="White"/>
+							<TextBlock Text="by Squid House Software (and open source contributors)" Foreground="White"/>
+							<TextBlock Text="Licensed under GPL v3" Foreground="White"/>
+
+							<TextBlock Margin="0,20,0,0" Text="Thank you for using FRESHMusicPlayer ❤️" FontWeight="Bold" Foreground="White"/>
+
+							<Button Margin="0,20,0,0" Content="Report an issue" Command="{Binding OpenReportIssuePage}"/>
+							<Button Content="View license and source code" Command="{Binding OpenSourceCodePage}"/>
+						</StackPanel>
+					</Border>
+
+					<StackPanel.Transitions>
+						<Transitions>
+							<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
+
+						</Transitions>
+					</StackPanel.Transitions>
+				</StackPanel>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
 </UserControl>
