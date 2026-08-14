@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.Views;
@@ -171,6 +172,43 @@ namespace FRESHMusicPlayer.ViewModels
             MainView.Config.LastFMToken = null;
             lastFMIntegration.Initialize();
             UpdateLastFMStatus();
+        }
+
+        public bool IsEQAvailable => BackendManager.LoadedBackends.Any(x => x is ISupportEqualization);
+
+        public bool IsEQPotentiallyUnavailable => IsEQAvailable && BackendManager.LoadedBackends.Any(x => x is not ISupportEqualization);
+
+        public void SEqualizerBassPreset()
+        {
+            MainView.Config.SEqualizerBand1 = 3.5;
+            MainView.Config.SEqualizerBand2 = 2.3;
+            MainView.Config.SEqualizerBand3 = 0.9;
+            MainView.Config.SEqualizerBand4 = 0;
+            MainView.Config.SEqualizerBand5 = 0;
+            MainView.Config.SEqualizerBand6 = 0;
+            MainView.Config.SEqualizerBand7 = 0;
+        }
+
+        public void SEqualizerTreblePreset()
+        {
+            MainView.Config.SEqualizerBand1 = 0;
+            MainView.Config.SEqualizerBand2 = 0;
+            MainView.Config.SEqualizerBand3 = 0;
+            MainView.Config.SEqualizerBand4 = 0;
+            MainView.Config.SEqualizerBand5 = 1.2;
+            MainView.Config.SEqualizerBand6 = 2.6;
+            MainView.Config.SEqualizerBand7 = 3.2;
+        }
+
+        public void SEqualizerReset()
+        {
+            MainView.Config.SEqualizerBand1 = 0;
+            MainView.Config.SEqualizerBand2 = 0;
+            MainView.Config.SEqualizerBand3 = 0;
+            MainView.Config.SEqualizerBand4 = 0;
+            MainView.Config.SEqualizerBand5 = 0;
+            MainView.Config.SEqualizerBand6 = 0;
+            MainView.Config.SEqualizerBand7 = 0;
         }
 
         public void NukeLibrary() => MainView.Library.Nuke();

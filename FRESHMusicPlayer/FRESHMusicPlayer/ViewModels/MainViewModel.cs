@@ -434,7 +434,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         else _ = LoadCoverArtAsync();  
 
         _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
+        UpdateEqualizer();
         UpdateReplayGain();
+        
 
         if (PauseAfterCurrentTrack)
         {
@@ -500,6 +502,24 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     //    else if (Config.Volume < 0.01) Player.Volume = 0;
     //    else Player.Volume = (float)(((Math.Pow(Math.E, Math.Log(40) * Config.Volume)) / 40) * 1.066 - 0.02745);
     //}
+
+    public void UpdateEqualizer()
+    {
+        if (Player.FileLoaded && Player.CurrentBackend is ISupportEqualization equalizableBackend)
+        {
+            equalizableBackend.EqualizerBands = new List<EqualizerBand>()
+            {
+                new(){ Bandwidth = 0.8f, Frequency = 60, Gain = (float)Config.SEqualizerBand1 },
+                new(){ Bandwidth = 0.8f, Frequency = 150, Gain = (float)Config.SEqualizerBand2 },
+                new(){ Bandwidth = 0.8f, Frequency = 400, Gain = (float)Config.SEqualizerBand3 },
+                new(){ Bandwidth = 0.8f, Frequency = 1000, Gain = (float)Config.SEqualizerBand4 },
+                new(){ Bandwidth = 0.8f, Frequency = 2400, Gain = (float)Config.SEqualizerBand5 },
+                new(){ Bandwidth = 0.8f, Frequency = 6000, Gain = (float)Config.SEqualizerBand6 },
+                new(){ Bandwidth = 0.8f, Frequency = 15000, Gain = (float)Config.SEqualizerBand7 },
+            };
+            equalizableBackend.UpdateEqualizer();
+        }
+    }
 
     private float replayGainAdjustment = 0;
     public void UpdateReplayGain()
@@ -861,7 +881,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         var watchersToRemove = autoImportFileWatches
             .Where(x => !Config.AutoImportPaths.Any(p => string.Equals(p, x.Path)))
             .ToList();
-
+        
         foreach (var match in watchersToRemove)
         {
             LoggingHandler.Log($"Auto Import: Folder removed from config, removing auto import watch for {match.Path}");

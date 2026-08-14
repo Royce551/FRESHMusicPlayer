@@ -114,6 +114,59 @@
 					</DockPanel>
 					<Slider x:Name="ReplayGainFallbackSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainFallbackPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainFallbackSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
 
+					<TextBlock Text="Equalizer" FontWeight="Bold" FontSize="16"/>
+						<TextBlock IsVisible="{Binding !IsEQAvailable}" Text="The equalizer is not available on your current platform. However, if you add a backend for another source type, options will show here." TextWrapping="Wrap" FontSize="14"/>
+						<TextBlock IsVisible="{Binding IsEQPotentiallyUnavailable}" Text="You have a backend installed that does not support EQ. The equalizer will not work for tracks that use these backends." TextWrapping="Wrap" FontSize="14"/>
+
+						<DockPanel LastChildFill="False" Margin="0,0,0,5" IsVisible="{Binding IsEQAvailable}">
+							<Button Content="Bass boost" FontSize="14" Command="{Binding SEqualizerBassPreset}"/>
+							<Button Margin="10,0,0,0" Content="Treble boost" FontSize="14" Command="{Binding SEqualizerTreblePreset}"/>
+							<Button DockPanel.Dock="Right" Content="Reset" FontSize="14" Command="{Binding SEqualizerReset}"/>
+						</DockPanel>
+					<ScrollViewer HorizontalScrollBarVisibility="Auto">
+					<StackPanel Orientation="Horizontal" IsVisible="{Binding IsEQAvailable}">
+						<DockPanel LastChildFill="False">
+							<TextBlock DockPanel.Dock="Top" Text="+12" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,15,0,0"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="-12" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,0,0,15"/>
+						</DockPanel>
+						<DockPanel Width="40">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding MainView.Config.SEqualizerBand1, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<Slider DockPanel.Dock="Top" Orientation="Vertical" Height="150" HorizontalAlignment="Center" Margin="9,0,0,0" Value="{Binding MainView.Config.SEqualizerBand1}" Minimum="-12" Maximum="12" IsSnapToTickEnabled="True" TickFrequency="0.1" SmallChange="0.1" LargeChange="1" ValueChanged="Slider_ValueChanged"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="60Hz" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center"/>
+						</DockPanel>
+						<DockPanel Width="40">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding MainView.Config.SEqualizerBand2, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<Slider DockPanel.Dock="Top" Orientation="Vertical" Height="150" HorizontalAlignment="Center" Margin="9,0,0,0" Value="{Binding MainView.Config.SEqualizerBand2}" Minimum="-12" Maximum="12" IsSnapToTickEnabled="True" TickFrequency="0.1" SmallChange="0.1" LargeChange="1" ValueChanged="Slider_ValueChanged"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="150Hz" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center"/>
+						</DockPanel>
+						<DockPanel Width="40">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding MainView.Config.SEqualizerBand3, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<Slider DockPanel.Dock="Top" Orientation="Vertical" Height="150" HorizontalAlignment="Center" Margin="9,0,0,0" Value="{Binding MainView.Config.SEqualizerBand3}" Minimum="-12" Maximum="12" IsSnapToTickEnabled="True" TickFrequency="0.1" SmallChange="0.1" LargeChange="1" ValueChanged="Slider_ValueChanged"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="400Hz" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center"/>
+						</DockPanel>
+						<DockPanel Width="40">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding MainView.Config.SEqualizerBand4, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<Slider DockPanel.Dock="Top" Orientation="Vertical" Height="150" HorizontalAlignment="Center" Margin="9,0,0,0" Value="{Binding MainView.Config.SEqualizerBand4}" Minimum="-12" Maximum="12" IsSnapToTickEnabled="True" TickFrequency="0.1" SmallChange="0.1" LargeChange="1" ValueChanged="Slider_ValueChanged"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="1kHz" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center"/>
+						</DockPanel>
+						<DockPanel Width="40">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding MainView.Config.SEqualizerBand5, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<Slider DockPanel.Dock="Top" Orientation="Vertical" Height="150" HorizontalAlignment="Center" Margin="9,0,0,0" Value="{Binding MainView.Config.SEqualizerBand5}" Minimum="-12" Maximum="12" IsSnapToTickEnabled="True" TickFrequency="0.1" SmallChange="0.1" LargeChange="1" ValueChanged="Slider_ValueChanged"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="2.4kHz" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center"/>
+						</DockPanel>
+						<DockPanel Width="40">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding MainView.Config.SEqualizerBand6, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<Slider DockPanel.Dock="Top" Orientation="Vertical" Height="150" HorizontalAlignment="Center" Margin="9,0,0,0" Value="{Binding MainView.Config.SEqualizerBand6}" Minimum="-12" Maximum="12" IsSnapToTickEnabled="True" TickFrequency="0.1" SmallChange="0.1" LargeChange="1" ValueChanged="Slider_ValueChanged"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="6kHz" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center"/>
+						</DockPanel>
+						<DockPanel Width="40">
+							<TextBlock DockPanel.Dock="Top" Text="{Binding MainView.Config.SEqualizerBand7, StringFormat='{}{0:F1}dB'}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"/>
+							<Slider DockPanel.Dock="Top" Orientation="Vertical" Height="150" HorizontalAlignment="Center" Margin="9,0,0,0" Value="{Binding MainView.Config.SEqualizerBand7}" Minimum="-12" Maximum="12" IsSnapToTickEnabled="True" TickFrequency="0.1" SmallChange="0.1" LargeChange="1" ValueChanged="Slider_ValueChanged"/>
+							<TextBlock DockPanel.Dock="Bottom" Text="15kHz" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" HorizontalAlignment="Center" TextAlignment="Center"/>
+						</DockPanel>
+					</StackPanel>	
+					</ScrollViewer>
+
 					<StackPanel.Transitions>
 						<Transitions>
 							<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
@@ -170,7 +223,7 @@
 					</StackPanel.Transitions>
 				</StackPanel>
 
-				<StackPanel x:Name="AboutSection" Spacing="5" GotFocus="">
+				<StackPanel x:Name="AboutSection" Spacing="5" GotFocus="AboutSection_GotFocus">
 					<TextBlock x:Name="AboutSectionHeader" Text="About" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
 					<Border CornerRadius="5" Padding="10" Margin="-3,0,-3,0">
 						<Border.Background>

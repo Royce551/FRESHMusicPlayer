@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -71,6 +72,21 @@ namespace FRESHMusicPlayer.Handlers
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool PreferLightTheme { get; set; } = false;
+
+        [ObservableProperty]
+        public partial double SEqualizerBand1 { get; set; } = 0;
+        [ObservableProperty]
+        public partial double SEqualizerBand2 { get; set; } = 0;
+        [ObservableProperty]
+        public partial double SEqualizerBand3 { get; set; } = 0;
+        [ObservableProperty]
+        public partial double SEqualizerBand4 { get; set; } = 0;
+        [ObservableProperty]
+        public partial double SEqualizerBand5 { get; set; } = 0;
+        [ObservableProperty]
+        public partial double SEqualizerBand6 { get; set; } = 0;
+        [ObservableProperty]
+        public partial double SEqualizerBand7 { get; set; } = 0;
 
         public static ConfigurationFile Read(string filePath)
         {

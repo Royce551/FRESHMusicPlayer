@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using FRESHMusicPlayer.ViewModels;
 
 namespace FRESHMusicPlayer.Views;
 
@@ -84,4 +85,6 @@ public partial class SettingsView : UserControl
     {
         if (inFocusMode && focusedControl != AboutSection) ResetFocus();
     }
+
+    private void Slider_ValueChanged(object? sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs e) => (DataContext as SettingsViewModel)?.MainView.UpdateEqualizer();
 }
