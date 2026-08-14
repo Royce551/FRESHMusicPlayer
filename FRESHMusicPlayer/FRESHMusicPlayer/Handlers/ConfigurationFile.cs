@@ -21,6 +21,9 @@ namespace FRESHMusicPlayer.Handlers
         public partial bool ShowRemainingTime { get; set; } = false;
 
         [ObservableProperty]
+        public partial bool WindowsShowProgressInTaskbar { get; set; } = false;
+
+        [ObservableProperty]
         public partial double Volume { get; set; } = 1;
 
         [ObservableProperty]
@@ -87,6 +90,8 @@ namespace FRESHMusicPlayer.Handlers
         public partial double SEqualizerBand6 { get; set; } = 0;
         [ObservableProperty]
         public partial double SEqualizerBand7 { get; set; } = 0;
+
+        
 
         public static ConfigurationFile Read(string filePath)
         {

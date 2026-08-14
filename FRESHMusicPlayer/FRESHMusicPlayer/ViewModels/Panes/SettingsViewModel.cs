@@ -22,6 +22,8 @@ namespace FRESHMusicPlayer.ViewModels
 {
     public partial class SettingsViewModel : ViewModelBase, IRecipient<PropertyChangedMessage<bool>>
     {
+        public bool IsWindows => OperatingSystem.IsWindows();
+
         public SettingsViewModel(MainViewModel mainView)
         {
             MainView = mainView;

@@ -180,6 +180,7 @@
 
 					<CheckBox Content="Show time instead of title in window title" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
 					<CheckBox Content="Show remaining time instead of total time in controls box" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
+					<CheckBox Content="Show track progress as progress in taskbar" IsChecked="{Binding MainView.Config.WindowsShowProgressInTaskbar}" IsVisible="{Binding IsWindows}"/>
 
 					<TextBlock Text="Theme" FontWeight="Bold" FontSize="16"/>
 					<RadioButton GroupName="Theme" Content="Follow system" IsChecked="True"/>

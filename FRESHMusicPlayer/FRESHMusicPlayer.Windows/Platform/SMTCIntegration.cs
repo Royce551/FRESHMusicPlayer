@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Vanara.Windows.Shell;
 using Windows.Graphics.Imaging;
 using Windows.Media;
 using Windows.Storage.Streams;
@@ -25,6 +26,7 @@ namespace FRESHMusicPlayer.Windows.Platform
         private readonly SystemMediaTransportControls smtc;
 
         private readonly MainViewModel viewModel;
+        private readonly IntPtr hWnd;
 
         public SMTCIntegration(MainViewModel viewModel, Window window)
         {
@@ -32,7 +34,7 @@ namespace FRESHMusicPlayer.Windows.Platform
 
             this.viewModel = viewModel;
 
-            IntPtr hWnd = window.TryGetPlatformHandle()?.Handle ?? throw new PlatformNotSupportedException();
+            hWnd = window.TryGetPlatformHandle()?.Handle ?? throw new PlatformNotSupportedException();
             smtc = SystemMediaTransportControlsInterop.GetForWindow(hWnd);
             smtc.IsPlayEnabled = true;
             smtc.IsPauseEnabled = true;
@@ -44,6 +46,16 @@ namespace FRESHMusicPlayer.Windows.Platform
 
         public async Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
         {
+            if (viewModel.Config.WindowsShowProgressInTaskbar && status == PlaybackStatus.Playing || status == PlaybackStatus.Changing)
+            {
+                viewModel.ProgressTimer.Tick += ProgressTimer_Tick;
+            }
+            else
+            {
+                TaskbarList.SetProgressState(hWnd, TaskbarButtonProgressState.None);
+                viewModel.ProgressTimer.Tick -= ProgressTimer_Tick;
+            }
+
             smtc.PlaybackStatus = (MediaPlaybackStatus)status;
 
             if (status == PlaybackStatus.Changing) return;
@@ -69,6 +81,12 @@ namespace FRESHMusicPlayer.Windows.Platform
 
             updater.MusicProperties.Title = track.Title;
             updater.Update();
+        }
+
+        private void ProgressTimer_Tick(object? sender, EventArgs e)
+        {
+            TaskbarList.SetProgressState(hWnd, TaskbarButtonProgressState.Normal);
+            TaskbarList.SetProgressValue(hWnd, Math.Max(1, (uint)((viewModel.Player.CurrentTime.TotalMicroseconds / viewModel.Player.TotalTime.TotalMicroseconds) * 100)), 100);
         }
 
         public void Close()

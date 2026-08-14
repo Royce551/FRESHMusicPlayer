@@ -24,6 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
     <PackageReference Include="NAudio" Version="1.10.0" />
+    <PackageReference Include="Vanara.Windows.Shell" Version="5.0.6" />
   </ItemGroup>
 
   <ItemGroup>
