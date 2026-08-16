@@ -389,6 +389,32 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         return false;
     }
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MainContentMargin))]
+    public partial bool IsContentFullscreen { get; set; } = false;
+
+    public Thickness MainContentMargin => IsContentFullscreen ? new(0) : new(0, 27, 0, 84);
+
+    private bool areControlsHidden = false;
+    public bool AreControlsHidden => areControlsHidden;
+
+    public bool SetControlsVisibility(bool show)
+    {
+        if (show && areControlsHidden)
+        {
+            areControlsHidden = false;
+            _ = MainWindow.AnimateControlsShowAsync();
+            return true;
+        }
+        else if (!show && !areControlsHidden)
+        {
+            areControlsHidden = true;
+            _ = MainWindow.AnimateControlsHideAsync();
+            return true;
+        }
+        return false;
+    }
+
     private async void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)
     {
         ProgressTimer.Stop();

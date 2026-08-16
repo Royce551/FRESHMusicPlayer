@@ -145,6 +145,22 @@ public partial class MainWindow : Window
         await animation.RunAsync(CoverArt);
     }
 
+    public async Task AnimateControlsShowAsync()
+    {
+        var animation1 = (Animation?)Resources["ShowNavBar"];
+        var animation2 = (Animation?)Resources["ShowControlBar"];
+        _ = animation1?.RunAsync(NavBar);
+        _ = animation2?.RunAsync(ControlBar);
+    }
+
+    public async Task AnimateControlsHideAsync()
+    {
+        var animation1 = (Animation?)Resources["HideNavBar"];
+        var animation2 = (Animation?)Resources["HideControlBar"];
+        _ = animation1?.RunAsync(NavBar);
+        _ = animation2?.RunAsync(ControlBar);
+    }
+
     public async Task AnimateProgressTo0Async()
     {
         var animation = (Animation?)Resources["SetProgressTo0"]!;
@@ -229,10 +245,18 @@ public partial class MainWindow : Window
                 });
                 viewModel.Notifications.Add(new Handlers.Notification(viewModel)
                 {
-                    ButtonText = "Toggle window topmost",
+                    ButtonText = "Toggle content fullscreen mode",
                     OnButtonClicked = () =>
                     {
-                        Topmost = !Topmost;
+                        viewModel.IsContentFullscreen = !viewModel.IsContentFullscreen;
+                        if (viewModel.AreControlsHidden)
+                        {
+                            viewModel.SetControlsVisibility(true);
+                        }
+                        else
+                        {
+                            viewModel.SetControlsVisibility(false);
+                        }
                         return false;
                     },
                     DisplayAsToast = true,
@@ -240,15 +264,11 @@ public partial class MainWindow : Window
                 });
                 viewModel.Notifications.Add(new Handlers.Notification(viewModel)
                 {
-                    ButtonText = "Reimport all tracks",
+                    ButtonText = "Toggle window fullscreen mode",
                     OnButtonClicked = () =>
                     {
-                        Task.Run(async () =>
-                        {
-                            var tracks = viewModel.Library.GetAllTracks().Select(x => x.Path).Distinct();
-                            Dispatcher.UIThread.Invoke(() => viewModel.Library.Nuke(false));
-                            await viewModel.Library.ImportAsync(tracks.ToArray());
-                        });
+                        if (WindowState == WindowState.FullScreen) WindowState = WindowState.Normal;
+                        else WindowState = WindowState.FullScreen;
                         return false;
                     },
                     DisplayAsToast = true,

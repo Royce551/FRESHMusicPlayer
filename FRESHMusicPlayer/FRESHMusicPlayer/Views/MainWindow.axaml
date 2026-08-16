@@ -86,6 +86,38 @@
         <Setter Property="Value" Value="0"/>
       </KeyFrame>
     </Animation>
+    <Animation x:Key="ShowNavBar" x:SetterTargetType="Panel" Duration="0:0:.600" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, -27, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="HideNavBar" x:SetterTargetType="Panel" Duration="0:0:.600" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, -27, 0, 0"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="ShowControlBar" x:SetterTargetType="Panel" Duration="0:0:.600" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, -84"/>
+      </KeyFrame>
+    </Animation>
+    <Animation x:Key="HideControlBar" x:SetterTargetType="Panel" Duration="0:0:.600" Easing="ExponentialEaseOut" FillMode="Forward">
+      <KeyFrame Cue="0%">
+        <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      </KeyFrame>
+      <KeyFrame Cue="100%">
+        <Setter Property="Margin" Value="0, 0, 0, -84"/>
+      </KeyFrame>
+    </Animation>
     <Geometry x:Key="PauseIcon">F1 M360 -320L440 -320L440 -640L360 -640L360 -320ZM520 -320L600 -320L600 -640L520 -640L520 -320ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z</Geometry>
     <Geometry x:Key="PlayIcon">F1 M380 -300L660 -480L380 -660L380 -300ZM480 -80Q397 -80 324 -111.5Q251 -143 197 -197Q143 -251 111.5 -324Q80 -397 80 -480Q80 -563 111.5 -636Q143 -709 197 -763Q251 -817 324 -848.5Q397 -880 480 -880Q563 -880 636 -848.5Q709 -817 763 -763Q817 -709 848.5 -636Q880 -563 880 -480Q880 -397 848.5 -324Q817 -251 763 -197Q709 -143 636 -111.5Q563 -80 480 -80ZM480 -160Q614 -160 707 -253Q800 -346 800 -480Q800 -614 707 -707Q614 -800 480 -800Q346 -800 253 -707Q160 -614 160 -480Q160 -346 253 -253Q346 -160 480 -160ZM480 -480Z</Geometry>
     <Geometry x:Key="RepeatIcon">F1 M280 -80L120 -240L280 -400L336 -342L274 -280L680 -280L680 -440L760 -440L760 -200L274 -200L336 -138L280 -80ZM200 -520L200 -760L686 -760L624 -822L680 -880L840 -720L680 -560L624 -618L686 -680L280 -680L280 -520L200 -520Z</Geometry>
@@ -127,7 +159,7 @@
   </Window.KeyBindings>
   <Panel>
     <DockPanel ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LastChildFill="False">
-      <Panel DockPanel.Dock="Top" Height="27" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding IsNavbarVisible}">
+      <Panel x:Name="NavBar" DockPanel.Dock="Top" Height="27" Background="{DynamicResource ForegroundColor}" IsVisible="{Binding IsNavbarVisible}">
         <Panel Margin="0,1,0,0">
           <StackPanel Margin="10,2" Spacing="15" Orientation="Horizontal">
             <Button Content="Tracks" FontSize="16" Command="{Binding OpenTracksTab}" Theme="{StaticResource LinkButton}" FontWeight="{Binding TracksTabFontWeight}"/>
@@ -188,7 +220,7 @@
         </ListBox.DataTemplates>
     </ListBox>
 
-      <DockPanel DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}" DragDrop.Drop="DockPanel_Drop">
+      <DockPanel x:Name="ControlBar" DockPanel.Dock="Bottom" Height="84" Background="{DynamicResource ForegroundColor}" DragDrop.Drop="DockPanel_Drop">
           <AdornerLayer.Adorner>
 		    <Panel x:Name="DropPrompt" IsVisible="{Binding ShowDragDropOverlay}" IsHitTestVisible="False">
 			    <Rectangle Fill="{DynamicResource ForegroundColor}" Opacity="0.5"/>
@@ -325,7 +357,7 @@
       </DockPanel>
     </DockPanel>
 
-    <DockPanel ZIndex="0" Margin="0,27,0,84">
+    <DockPanel ZIndex="0" Margin="{Binding MainContentMargin}">
       <ContentControl x:Name="SidePaneControl" DockPanel.Dock="Right" Width="{Binding SidePanelWidth}" Content="{Binding SidePaneView}" Background="AliceBlue"/>
 
       <TransitioningContentControl Content="{Binding SelectedView}">
