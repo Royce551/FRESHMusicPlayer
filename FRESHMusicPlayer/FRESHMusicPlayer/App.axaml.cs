@@ -2,11 +2,14 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
 using FRESHMusicPlayer.Views;
+using LiteDB;
 using SIADL.Avalonia;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace FRESHMusicPlayer;
 
@@ -36,8 +39,12 @@ public partial class App : Application
         //BindingPlugins.DataValidators.RemoveAt(0);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            string[] initialFiles;
+            if (desktop.Args != null && desktop.Args.Length > 0) initialFiles = [.. desktop.Args.Where(x => x.Contains('.'))];
+            else initialFiles = [];
+
             var mainWindow = new MainWindow();
-            mainWindow.DataContext = new MainViewModel(mainWindow);
+            mainWindow.DataContext = new MainViewModel(mainWindow, initialFiles);
             desktop.MainWindow = mainWindow;
         }
 

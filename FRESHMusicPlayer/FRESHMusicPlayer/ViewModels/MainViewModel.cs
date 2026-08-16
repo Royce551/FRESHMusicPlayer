@@ -62,7 +62,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     {
     }
 
-    public MainViewModel(MainWindow mainWindow)
+    public MainViewModel(MainWindow mainWindow, string[] initialFiles)
     {
         MainWindow = mainWindow;
 
@@ -81,6 +81,12 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         Player.SongChanged += Player_SongChanged;
         Player.SongStopped += Player_SongStopped;
         Player.SongException += Player_SongException;
+
+        if (initialFiles.Length > 0)
+        {
+            Player.Queue.Add(initialFiles);
+            _ = Player.PlayAsync();
+        }
 
         Directory.CreateDirectory(App.DataFolderLocation);
 
@@ -509,13 +515,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         {
             equalizableBackend.EqualizerBands = new List<EqualizerBand>()
             {
-                new(){ Bandwidth = 0.8f, Frequency = 60, Gain = (float)Config.SEqualizerBand1 },
-                new(){ Bandwidth = 0.8f, Frequency = 150, Gain = (float)Config.SEqualizerBand2 },
-                new(){ Bandwidth = 0.8f, Frequency = 400, Gain = (float)Config.SEqualizerBand3 },
-                new(){ Bandwidth = 0.8f, Frequency = 1000, Gain = (float)Config.SEqualizerBand4 },
-                new(){ Bandwidth = 0.8f, Frequency = 2400, Gain = (float)Config.SEqualizerBand5 },
-                new(){ Bandwidth = 0.8f, Frequency = 6000, Gain = (float)Config.SEqualizerBand6 },
-                new(){ Bandwidth = 0.8f, Frequency = 15000, Gain = (float)Config.SEqualizerBand7 },
+                new(){ Bandwidth = 1f, Frequency = 60, Gain = (float)Config.SEqualizerBand1 },
+                new(){ Bandwidth = 1f, Frequency = 150, Gain = (float)Config.SEqualizerBand2 },
+                new(){ Bandwidth = 1f, Frequency = 400, Gain = (float)Config.SEqualizerBand3 },
+                new(){ Bandwidth = 1f, Frequency = 1000, Gain = (float)Config.SEqualizerBand4 },
+                new(){ Bandwidth = 1f, Frequency = 2400, Gain = (float)Config.SEqualizerBand5 },
+                new(){ Bandwidth = 1f, Frequency = 6000, Gain = (float)Config.SEqualizerBand6 },
+                new(){ Bandwidth = 1f, Frequency = 15000, Gain = (float)Config.SEqualizerBand7 },
             };
             equalizableBackend.UpdateEqualizer();
         }

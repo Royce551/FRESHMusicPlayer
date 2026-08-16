@@ -86,7 +86,10 @@ namespace FRESHMusicPlayer.Windows.Platform
         private void ProgressTimer_Tick(object? sender, EventArgs e)
         {
             TaskbarList.SetProgressState(hWnd, TaskbarButtonProgressState.Normal);
+
+            // if progress is 0, the progress bar will not show
             TaskbarList.SetProgressValue(hWnd, Math.Max(1, (uint)((viewModel.Player.CurrentTime.TotalMicroseconds / viewModel.Player.TotalTime.TotalMicroseconds) * 100)), 100);
+
         }
 
         public void Close()
