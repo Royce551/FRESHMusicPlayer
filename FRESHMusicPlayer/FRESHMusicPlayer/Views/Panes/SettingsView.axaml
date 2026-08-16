@@ -115,7 +115,7 @@
 					<Slider x:Name="ReplayGainFallbackSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainFallbackPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainFallbackSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
 
 					<TextBlock Text="Equalizer" FontWeight="Bold" FontSize="16"/>
-						<TextBlock IsVisible="{Binding !IsEQAvailable}" Text="The equalizer is not available on your current platform. However, if you add a backend for another source type, options will show here." TextWrapping="Wrap" FontSize="14"/>
+						<TextBlock IsVisible="{Binding !IsEQAvailable}" Text="EQ is not available on your current platform. If you add a backend for another source type that supports EQ, options will show here." TextWrapping="Wrap" FontSize="14"/>
 						<TextBlock IsVisible="{Binding IsEQPotentiallyUnavailable}" Text="You have a backend installed that does not support EQ. The equalizer will not work for tracks that use these backends." TextWrapping="Wrap" FontSize="14"/>
 
 						<DockPanel LastChildFill="False" Margin="0,0,0,5" IsVisible="{Binding IsEQAvailable}">
