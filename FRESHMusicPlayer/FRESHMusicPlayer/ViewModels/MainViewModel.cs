@@ -112,8 +112,6 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
         StartIntegrations();
 
-        NavigateTo(Config.Page);
-
         ProgressTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(100)
@@ -123,6 +121,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         PlaybackIntegrations.Add(platformWrapper.GetPlatformPlaybackIntegration(this, MainWindow));
 
         Notifications.CollectionChanged += Notifications_CollectionChanged;
+
+        NavigateTo(Config.Page);
+
 
         _ = PerformAutoImportAsync();
     }
@@ -644,6 +645,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 Page.Albums => new AlbumsViewModel(args as string),
                 Page.Import => new ImportViewModel(),
                 Page.Playlists => new PlaylistsViewModel(),
+                Page.Fullscreen => new FullscreenViewModel(),
                 _ => throw new InvalidOperationException()
             };
             view = page switch
@@ -653,6 +655,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 AlbumsViewModel => new AlbumsView(),
                 ImportViewModel => new ImportView(),
                 PlaylistsViewModel => new PlaylistsView(),
+                FullscreenViewModel => new FullscreenView(),
                 _ => throw new InvalidOperationException()
             };
             view.DataContext = page;
@@ -786,6 +789,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         await window.ShowDialog(MainWindow);
     }
 
+    public async void OpenFullscreen() => NavigateTo(Page.Fullscreen, skipCache:true);
     public bool AutoQueueIsQueued { get; set; } = false;
 
     public void AddToQueueAndHandleAutoQueue(string[] filePaths)
@@ -986,7 +990,8 @@ public enum Page
     Artists,
     Albums,
     Playlists,
-    Import
+    Import,
+    Fullscreen
 }
 
 public class CombineMarginsConverter : IMultiValueConverter

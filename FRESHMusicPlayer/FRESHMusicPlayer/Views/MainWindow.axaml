@@ -134,7 +134,7 @@
         </MenuItem>
         <MenuItem Header="Manage playlists..." Command="{Binding OpenPlaylistManagement}"/>
         <Separator/>
-        <MenuItem Header="Fullscreen"/>
+        <MenuItem Header="Fullscreen" Command="{Binding OpenFullscreen}"/>
         <MenuItem Header="Mini player" Command="{Binding OpenMiniPlayer}"/>
         <Separator/>
         <MenuItem Header="Open">
@@ -156,6 +156,8 @@
       <KeyBinding Gesture="Ctrl+F" Command="{Binding OpenSearchCommand}"/>
       <KeyBinding Gesture="Ctrl+Q" Command="{Binding OpenQueueCommand}"/>
       <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenSettingsCommand}"/>
+
+      <KeyBinding Gesture="F11" Command="{Binding OpenFullscreen}"/>
   </Window.KeyBindings>
   <Panel>
     <DockPanel ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LastChildFill="False">

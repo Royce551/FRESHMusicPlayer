@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels
 {
-    public partial class LyricsViewModel : ViewModelBase
+    public partial class LyricsViewModel : LyricsHandlingViewModel
     {
         public LyricsView View { get; set; } = null!;
 
@@ -46,40 +46,9 @@ namespace FRESHMusicPlayer.ViewModels
             if (CurrentLines != null) View.ScrollToCenter(CurrentLines);
         }
 
-        private List<LyricLineViewModel>? CurrentLines;
-        private List<LyricLineViewModel>? NextLines;
+        private void Timer_Tick(object? sender, EventArgs e) => TickLyrics();
 
-        private void Timer_Tick(object? sender, EventArgs e)
-        {
-            if (Lyrics is null || !MainView.Player.FileLoaded) return;
-
-            var currentTime = MainView.Player.CurrentBackend.CurrentTime;
-
-            CurrentLines = Lyrics.Where(x => x.Timestamp < currentTime).ToList();
-            NextLines = Lyrics.Where(x => x.Timestamp > currentTime).Reverse().ToList();
-
-            foreach (var line in NextLines)
-            {
-                if (line.State != LyricState.Next)
-                    line.State = LyricState.Next;
-            }
-
-            if (CurrentLines.Count != 0)
-            {
-                for (int i = 0; i < CurrentLines.Count - 1; i++)
-                {
-                    var line = CurrentLines[i];
-                    if (line.State != LyricState.Past)
-                        line.State = LyricState.Past;
-                }
-
-                var last = CurrentLines.Last();
-                if (last.State != LyricState.Current)
-                    last.State = LyricState.Current;
-            }
-        }
-
-        public void OnCurrentLineChanged()
+        public override void OnCurrentLineChanged()
         {
             if (CurrentLines != null && AutoScrollEnabled) View.ScrollToCenter(CurrentLines);
         }
@@ -117,8 +86,7 @@ namespace FRESHMusicPlayer.ViewModels
         [ObservableProperty]
         public partial Bitmap? CoverArt { get; set; }
 
-        [ObservableProperty]
-        public partial ObservableCollection<LyricLineViewModel>? Lyrics { get; set; } = new ObservableCollection<LyricLineViewModel>();
+        
 
         public void Update()
         {
@@ -130,16 +98,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             AutoScrollEnabled = true;
 
-            if (File.Exists(Path.Combine(Path.GetDirectoryName(MainView.Player.FilePath)!, Path.GetFileNameWithoutExtension(MainView.Player.FilePath) + ".lrc")))
-            {
-                Lyrics = new ObservableCollection<LyricLineViewModel>(new LRCTimedLyricsProvider(MainView.Player.FilePath).Lines.Select(x => new LyricLineViewModel(this) { Timestamp = x.Key, Lyric = x.Value }));
-            }
-            else if (MainView.Player.Metadata is FileMetadataProvider provider && !string.IsNullOrWhiteSpace(provider.ATLTrack.Lyrics.UnsynchronizedLyrics))
-            {
-                Lyrics = new ObservableCollection<LyricLineViewModel>(provider.ATLTrack.Lyrics.UnsynchronizedLyrics.Split(["\r\n", "\r", "\n"], StringSplitOptions.None).Select(x => new LyricLineViewModel(this) { Timestamp = TimeSpan.Zero, Lyric = x, State = LyricState.Untimed }));
-            }
-            else Lyrics = null;
-
+            UpdateLyrics();
             timer.Start();
         }
     }
@@ -204,8 +163,8 @@ namespace FRESHMusicPlayer.ViewModels
             }
         }
 
-        private readonly LyricsViewModel view;
-        public LyricLineViewModel(LyricsViewModel view)
+        private readonly LyricsHandlingViewModel view;
+        public LyricLineViewModel(LyricsHandlingViewModel view)
         {
             this.view = view;
         }

@@ -1,0 +1,90 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:FRESHMusicPlayer.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Background="{DynamicResource BackgroundColor}"
+			 x:Class="FRESHMusicPlayer.Views.FullscreenView" Loaded="UserControl_Loaded"
+			 x:DataType="vm:FullscreenViewModel">
+	<Panel>
+		<TransitioningContentControl Content="{Binding CurrentMetadata}">
+			<TransitioningContentControl.ContentTemplate>
+				<DataTemplate DataType="vm:MetadataViewModel">
+					<Panel>
+						<Image ZIndex="0" Margin="-10" Stretch="UniformToFill" Source="{Binding CoverArt}">
+							<Image.Effect>
+								<BlurEffect Radius="30"/>
+							</Image.Effect>
+						</Image>
+						<Rectangle ZIndex="1" Fill="{DynamicResource ForegroundColor}" Opacity="0.55"/>
+						<Viewbox ZIndex="2" Stretch="Uniform">
+							<DockPanel Width="800" Height="500" Margin="75">
+								<DockPanel.Effect>
+									<DropShadowEffect OffsetX="0" OffsetY="3" BlurRadius="10" Color="Black" Opacity="0.4"/>
+								</DockPanel.Effect>
+
+								<ScrollViewer DockPanel.Dock="Right" Width="400" Grid.Column="1" ZIndex="2" Margin="10,-10,0,-10" IsVisible="{Binding LyricsAvailable}" VerticalAlignment="Bottom" x:Name="LyricsScrollViewer" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Hidden">
+									<ScrollViewer.OpacityMask>
+										<LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+											<GradientStop Color="Transparent" Offset="0.0" />
+											<GradientStop Color="Black" Offset="0.3" />
+											<GradientStop Color="Black" Offset="0.7" />
+											<GradientStop Color="Transparent" Offset="1" />
+										</LinearGradientBrush>
+									</ScrollViewer.OpacityMask>
+									<ItemsControl ItemsSource="{Binding Lyrics}" x:Name="LyricsItemsControl" Margin="0,100">
+										<ItemsControl.ItemTemplate>
+											<DataTemplate x:DataType="vm:LyricLineViewModel">
+												<Button Theme="{StaticResource LinkButton}" Command="{Binding JumpTo}" RenderTransform="{Binding Transform}" Margin="10,10,25,10" RenderTransformOrigin="0%,50%" Padding="0">
+													<TextBlock Text="{Binding Lyric}" FontWeight="{Binding Weight}"  Opacity="{Binding Opacity}"  TextWrapping="Wrap" TextAlignment="Left" FontSize="18">
+														<TextBlock.Transitions>
+															<Transitions>
+																<DoubleTransition Property="Opacity" Duration="0:00:00.25" Easing="SineEaseInOut"/>
+
+															</Transitions>
+														</TextBlock.Transitions>
+													</TextBlock>
+													<Button.Transitions>
+														<Transitions>
+															<TransformOperationsTransition Property="RenderTransform" Duration="0:00:01.10" Easing="ExponentialEaseOut"/>
+														</Transitions>
+
+													</Button.Transitions>
+												</Button>
+										</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+
+									<ScrollViewer.Transitions>
+										<Transitions>
+											<VectorTransition Property="Offset" Duration="0:00:01.00" Easing="ExponentialEaseOut"/>
+										</Transitions>
+									</ScrollViewer.Transitions>
+								</ScrollViewer>
+
+								<StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+									<Image Source="{Binding CoverArt}" Stretch="Uniform" Width="300" Height="300" HorizontalAlignment="Center" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+									<TextBlock Text="{Binding Metadata.Title}" Margin="0,10,0,0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+									<TextBlock Text="{Binding ArtistString}" Margin="0,1,0,0" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" FontWeight="Regular" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+
+									<DockPanel Margin="0,10,0,0" FlowDirection="LeftToRight" Width="300">
+										<TextBlock DockPanel.Dock="Left" Margin="0,0,-5,0" Text="{Binding MainView.ProgressIndicator1}" Foreground="{DynamicResource SecondaryTextColor}"/>
+										<TextBlock DockPanel.Dock="Right" Text="{Binding MainView.ProgressIndicator2}" Foreground="{DynamicResource SecondaryTextColor}"/>
+										<Slider x:Name="ProgressSlider" HorizontalAlignment="Stretch" Theme="{StaticResource SeekbarSlider}" Value="{Binding MainView.CurrentTimeSeconds}" IsEnabled="False" Maximum="{Binding MainView.TotalTimeSeconds}" Minimum="0" Padding="0,2,0,0"/>
+									</DockPanel>
+								</StackPanel>
+
+								
+							</DockPanel>
+						</Viewbox>
+					</Panel>
+				</DataTemplate>
+			</TransitioningContentControl.ContentTemplate>
+			<TransitioningContentControl.PageTransition>
+				<CompositePageTransition>
+					<PageSlide Orientation="Horizontal" Duration="0:00:01" SlideInEasing="ExponentialEaseOut" SlideOutEasing="ExponentialEaseOut"/>
+				</CompositePageTransition>
+			</TransitioningContentControl.PageTransition>
+		</TransitioningContentControl>
+	</Panel>
+</UserControl>
