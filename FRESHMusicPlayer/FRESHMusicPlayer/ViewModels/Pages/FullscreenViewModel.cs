@@ -1,4 +1,6 @@
-﻿using Avalonia.Media.Imaging;
+﻿using ATL.AudioData.IO;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Backends;
@@ -7,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels
 {
@@ -16,6 +19,16 @@ namespace FRESHMusicPlayer.ViewModels
 
         public FullscreenViewModel()
         {
+        }
+
+        public bool FocusMode
+        {
+            get => field;
+            set
+            {
+                SetProperty(ref field, value);
+                CurrentMetadata?.UpdateFocusModeProperties();
+            }
         }
 
         public override void AfterPageLoaded()
@@ -31,35 +44,40 @@ namespace FRESHMusicPlayer.ViewModels
         {
             MainView.Player.SongChanged -= Player_SongChanged;
             MainView.ProgressTimer.Tick -= ProgressTimer_Tick;
+            View.LeaveFullscreen();
         }
 
         [ObservableProperty]
         public partial MetadataViewModel CurrentMetadata { get; set; }
 
         private void Player_SongChanged(object? sender, EventArgs e) => Update();
-        public void Update()
+        public async void Update()
         {
             if (MainView.Player.FileLoaded)
             {
-                CurrentMetadata = new MetadataViewModel(MainView.Player.Metadata, MainView, this);
+                var coverArt = await Task.Run(() => Bitmap.DecodeToWidth(new MemoryStream(MainView.Player.Metadata.CoverArt), 1000));
+                CurrentMetadata = new MetadataViewModel(MainView.Player.Metadata, coverArt, MainView, this);
             }
         }
+
+        public void Back() => MainView.NavigateBack();
     }
 
     public class MetadataViewModel : LyricsHandlingViewModel
     {
-        public IMetadataProvider Metadata { get; set; }
+        public IMetadataProvider Metadata { get; }
 
         public string ArtistString => string.Join(", ", Metadata.Artists);
 
-        public Bitmap CoverArt => Bitmap.DecodeToWidth(new MemoryStream(Metadata.CoverArt), 900);
+        public Bitmap CoverArt { get; }
 
-        public bool LyricsAvailable => Lyrics != null;
+        public bool LyricsAvailable => Lyrics != null && !viewModel.FocusMode;
 
         private readonly FullscreenViewModel viewModel;
-        public MetadataViewModel(IMetadataProvider metadata, MainViewModel mainView, FullscreenViewModel viewModel)
+        public MetadataViewModel(IMetadataProvider metadata, Bitmap coverArt, MainViewModel mainView, FullscreenViewModel viewModel)
         {
             Metadata = metadata;
+            CoverArt = coverArt;
             MainView = mainView;
             this.viewModel = viewModel;
 
@@ -67,5 +85,19 @@ namespace FRESHMusicPlayer.ViewModels
         }
 
         public override void OnCurrentLineChanged() => viewModel.View.ScrollToCenter(CurrentLines);
+
+        public bool IsBackgroundCoverArtVisible => !viewModel.FocusMode;
+
+        public Stretch Stretch => viewModel.FocusMode ? Stretch.None : Stretch.Uniform;
+
+        public int CoverSize => viewModel.FocusMode ? 150 : 300;
+
+        public void UpdateFocusModeProperties()
+        {
+            OnPropertyChanged(nameof(IsBackgroundCoverArtVisible));
+            OnPropertyChanged(nameof(LyricsAvailable));
+            OnPropertyChanged(nameof(Stretch));
+            OnPropertyChanged(nameof(CoverSize));
+        }
     }
 }

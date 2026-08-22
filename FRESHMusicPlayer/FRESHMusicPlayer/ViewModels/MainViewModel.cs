@@ -629,6 +629,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         Control view;
 
         var pageIsInCache = viewModelCache.TryGetValue(pageType, out var cachedViewModel);
+
+        selectedViewModel?.OnNavigatingAway();
+
         if (!skipCache && pageIsInCache)
         {
             page = cachedViewModel.vm;
@@ -660,7 +663,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             };
             view.DataContext = page;
 
-            viewModelCache[pageType] = (page, view);
+            if (!skipCache) viewModelCache[pageType] = (page, view);
             page.MainView = this;
             page.AfterPageLoaded();
         }
@@ -709,13 +712,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     private string? currentSidePanePath = null;
 
-    public async Task OpenSidePaneAsync(string path, double width, bool onLeft = false)
+    public async Task OpenSidePaneAsync(string? path, double width, bool onLeft = false)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime && desktopLifetime.MainWindow != null)
         {
             if (currentSidePanePath != null)
             {
-                if (path == currentSidePanePath)
+                if (path == currentSidePanePath || path is null)
                 {
                     await MainWindow.AnimateSidePaneOutAsync();
                     SidePaneView?.OnNavigatingAway();
@@ -751,6 +754,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             await MainWindow.AnimateSidePaneInAsync(width, onLeft);
         }
     }
+
+    public async Task CloseSidePaneAsync() => await OpenSidePaneAsync(null, 0);
 
     // this will need to be changed when tabs become more dynamic, but for now, this works
     public FontWeight TracksTabFontWeight => selectedViewModel is TracksViewModel ? FontWeight.Bold : FontWeight.Normal;
