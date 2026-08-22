@@ -540,6 +540,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     {
         if (Player.FileLoaded && Player.CurrentBackend is ISupportEqualization equalizableBackend)
         {
+            LoggingHandler.Log("EQ: Applying");
             equalizableBackend.EqualizerBands = new List<EqualizerBand>()
             {
                 new(){ Bandwidth = 1f, Frequency = 60, Gain = (float)Config.SEqualizerBand1 },
@@ -552,6 +553,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             };
             equalizableBackend.UpdateEqualizer();
         }
+        else LoggingHandler.Log("EQ: Not applying");
     }
 
     private float replayGainAdjustment = 0;
@@ -952,27 +954,33 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         };
         autoImportPathWatcher.Created += async (s, e) =>
         {
-            LoggingHandler.Log($"Auto Import: {e.FullPath} was created, importing...");
-
-            var attributes = File.GetAttributes(e.FullPath);
-            if (attributes.HasFlag(FileAttributes.Directory))
+            LoggingHandler.Log($"Auto Import: {e.FullPath} was created, attempting to import...");
+            try
             {
-                var filesToImport = new List<string>();
-                var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
-                            .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
-                foreach (var file in files)
+                var attributes = File.GetAttributes(e.FullPath);
+                if (attributes.HasFlag(FileAttributes.Directory))
                 {
-                    if (!Library.GetAllTracks().Select(x => x.Path).Contains(file))
-                        filesToImport.Add(file);
+                    var filesToImport = new List<string>();
+                    var files = Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
+                                .Where(name => CheckIfFileEndsWithAutoImportableFileExtension(name)).ToArray();
+                    foreach (var file in files)
+                    {
+                        if (!Library.GetAllTracks().Select(x => x.Path).Contains(file))
+                            filesToImport.Add(file);
+                    }
+                    await Library.ImportAsync(filesToImport);
                 }
-                await Library.ImportAsync(filesToImport);
+                else
+                {
+                    if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && !Library.GetAllTracks().Select(x => x.Path).Contains(e.FullPath))
+                    {
+                        await Library.ImportAsync(e.FullPath);
+                    }
+                }
             }
-            else
+            catch (Exception x)
             {
-                if (CheckIfFileEndsWithAutoImportableFileExtension(e.FullPath) && !Library.GetAllTracks().Select(x => x.Path).Contains(e.FullPath))
-                {
-                    await Library.ImportAsync(e.FullPath);
-                }
+                LoggingHandler.Log($"Auto Import: File watch auto import not handled; probably not auto importable ({x})");
             }
         };
 
