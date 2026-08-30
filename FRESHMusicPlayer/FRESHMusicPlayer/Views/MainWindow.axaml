@@ -17,7 +17,7 @@
     <vm:MainViewModel />
   </Design.DataContext>
   <Window.Resources>
-    <Animation x:Key="RightSidePaneIn450" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+    <Animation x:Key="RightSidePaneIn450" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
       <KeyFrame Cue="0%">
         <Setter Property="Margin" Value="0, 0, -450, 0"/>
       </KeyFrame>
@@ -33,7 +33,7 @@
         <Setter Property="Margin" Value="0, 0, 0, 0"/>
       </KeyFrame>
     </Animation>
-    <Animation x:Key="RightSidePaneIn300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+    <Animation x:Key="RightSidePaneIn300" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
       <KeyFrame Cue="0%">
         <Setter Property="Margin" Value="0, 0, -300, 0"/>
       </KeyFrame>
@@ -49,7 +49,7 @@
         <Setter Property="Margin" Value="0, 0, 0, 0"/>
       </KeyFrame>
     </Animation>
-    <Animation x:Key="LeftSidePaneIn250" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseIn" FillMode="Forward">
+    <Animation x:Key="LeftSidePaneIn250" x:SetterTargetType="ContentControl" Duration="0:0:.150" Easing="ExponentialEaseOut" FillMode="Forward">
       <KeyFrame Cue="0%">
         <Setter Property="Margin" Value="-250, 0, 0, 0"/>
       </KeyFrame>

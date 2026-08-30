@@ -73,10 +73,10 @@
 											<ColumnDefinition Width="*"/>
 										</Grid.ColumnDefinitions>	
 										<DockPanel Grid.Column="1">
-											<Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2"/>
-											<Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="Enqueue all" Margin="2"/>
+											<Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="Play all" Margin="2,1"/>
+											<Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="Enqueue all" Margin="2,1"/>
 
-											<TextBlock Text="{Binding DiscNumString}" FontSize="12" Margin="5,15,0,2" VerticalAlignment="Bottom" Foreground="{DynamicResource SecondaryTextColor}"/>
+											<TextBlock Text="{Binding DiscNumString}" FontSize="12" Margin="5,6,0,2" VerticalAlignment="Bottom" Foreground="{DynamicResource SecondaryTextColor}"/>
 										</DockPanel>
 									</Grid>
 									

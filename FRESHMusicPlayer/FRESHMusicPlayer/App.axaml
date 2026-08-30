@@ -15,6 +15,9 @@
       <Style Selector="TextBlock">
         <Setter Property="FontSize" Value="14"/>
       </Style>
+      <Style Selector="Button">
+		  <Setter Property="FontSize" Value="14"/>
+      </Style>
     </Application.Styles>
   <Application.Resources>
     <ResourceDictionary>
