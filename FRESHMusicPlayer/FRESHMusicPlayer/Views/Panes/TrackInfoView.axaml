@@ -4,7 +4,7 @@
              xmlns:local="using:FRESHMusicPlayer.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:FRESHMusicPlayer.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450" x:DataType="vm:TrackInfoViewModel"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450" x:DataType="vm:TrackInfoViewModel" PointerPressed="UserControl_PointerPressed"
              x:Class="FRESHMusicPlayer.Views.TrackInfoView" Background="{DynamicResource SecondaryColor}"> 
     <Panel>
         <TransitioningContentControl ZIndex="0" Margin="-10" Content="{Binding CoverArt}">
