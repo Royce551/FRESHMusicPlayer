@@ -71,6 +71,7 @@ namespace FRESHMusicPlayer.Handlers
         public override void Nuke(bool nukePlaylists = true)
         {
             base.Nuke(nukePlaylists);
+            Database.GetCollection<CachedCoverArt>("CachedCoverArt").DeleteAll();
             Dispatcher.UIThread.Invoke(() =>
             {
                 viewModel.Notifications.Add(new Notification(viewModel)
@@ -195,18 +196,23 @@ namespace FRESHMusicPlayer.Handlers
 
         private async Task<byte[]?> CacheCoverArtThumbnail(string albumName)
         {
-            var tracks = GetTracksForAlbum(albumName);
-            if (tracks.Count == 0) return null;
+            MemoryStream? saveStream = new MemoryStream();
 
-            var track = tracks[0];
-            var x = (await BackendManager.CreateAndLoadBackendAndGetMetadataAsync(track.Path)).metadata.CoverArt;
+            await Task.Run(async () =>
+            {
+                var tracks = GetTracksForAlbum(albumName);
+                if (tracks.Count == 0) return;
 
-            var saveStream = new MemoryStream();
-            Bitmap.DecodeToWidth(new MemoryStream(x), 48).Save(saveStream);
+                var track = tracks[0];
+                var x = (await BackendManager.CreateAndLoadBackendAndGetMetadataAsync(track.Path)).metadata.CoverArt;
 
-            Database.GetCollection<CachedCoverArt>("CachedCoverArt").Insert(new CachedCoverArt { Album = albumName, Cover = saveStream.ToArray() });
 
-            return saveStream.ToArray();
+                Bitmap.DecodeToWidth(new MemoryStream(x), 48).Save(saveStream);
+
+                Database.GetCollection<CachedCoverArt>("CachedCoverArt").Insert(new CachedCoverArt { Album = albumName, Cover = saveStream.ToArray() });
+            });
+            
+            return saveStream.ToArray() ?? null;
         }
 
         private void HandleImportUndoNotification(string[] tracks)
@@ -218,7 +224,7 @@ namespace FRESHMusicPlayer.Handlers
                     ContentText = $"Imported {tracks.Length} track(s)!",
                     Type = NotificationType.Success,
                     DisplayAsToast = true,
-                    ToastDisplayTime = TimeSpan.FromSeconds(10),
+                    ToastDisplayTime = TimeSpan.FromSeconds(5),
                     ButtonText = "Undo",
                     IsTransient = true,
                     OnButtonClicked = () =>
