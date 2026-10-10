@@ -27,7 +27,6 @@ class Program
         
         var appBuilder = AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .WithInterFont()
                 .LogToTrace();
 
         if (!disableWayland) appBuilder = appBuilder.UseWaylandWithFallback();
