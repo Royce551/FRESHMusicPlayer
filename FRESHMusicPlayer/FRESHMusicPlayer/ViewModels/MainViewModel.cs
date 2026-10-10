@@ -177,6 +177,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                     {
                         await Task.Delay(notif.ToastDisplayTime.Value);
                         ActiveToastNotifications.Remove(notif);
+                        if (notif.IsTransient) Notifications.Remove(notif);
                     }
                 }
             }
@@ -462,7 +463,9 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         if (Player.Metadata.CoverArt is null)
         {
             CoverArt = null;
-            if (SetCoverArtVisibility(false)) CoverArtChanged?.Invoke(null, EventArgs.Empty);
+            CoverArtFullSize = null;
+            SetCoverArtVisibility(false);
+            CoverArtChanged?.Invoke(null, EventArgs.Empty);
         }
         else _ = LoadCoverArtAsync();  
 

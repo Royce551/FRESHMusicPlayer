@@ -28,6 +28,8 @@ namespace FRESHMusicPlayer.Handlers
 
         public bool DisplayAsToast { get; set; } = false;
 
+        public bool IsTransient { get; set; } = false;
+
         public TimeSpan? ToastDisplayTime { get; set; } = null;
 
         private readonly MainViewModel viewModel;
@@ -57,6 +59,6 @@ namespace FRESHMusicPlayer.Handlers
         Information,
         Failure,
         Progress,
-        Generic
+        Generic,
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ATL;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Shapes;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using FRESHMusicPlayer;
@@ -40,10 +41,9 @@ namespace FRESHMusicPlayer.Handlers
 
         public override async Task ImportAsync(List<string> tracks)
         {
-            //if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks.ToArray());
-
             LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
+            HandleImportUndoNotification([.. tracks]);
 
             Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
             //if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
@@ -51,13 +51,21 @@ namespace FRESHMusicPlayer.Handlers
 
         public override async Task ImportAsync(string[] tracks)
         {
-            //if (App.Config.AutoLibrary) tracks = HandleAutoLibrary(tracks).ToArray();
-
             LoggingHandler.Log($"Importing {string.Join(", ", tracks)}");
             await base.ImportAsync(tracks);
+            HandleImportUndoNotification(tracks);
 
             Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, tracks); });
             //if (App.Config.ProcessReplayGainAfterImporting) window.ScanLibraryForReplayGain();
+        }
+
+        public override async Task ImportAsync(string path)
+        {
+            //LoggingHandler.Log($"Importing {path}");
+            await base.ImportAsync(path);
+            HandleImportUndoNotification([path]);
+
+            Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, [path]); });
         }
 
         public override void Nuke(bool nukePlaylists = true)
@@ -163,17 +171,7 @@ namespace FRESHMusicPlayer.Handlers
         {
             base.DeletePlaylist(playlist);
             if (RaiseLibraryChangedEvents) PlaylistRemoved?.Invoke(null, playlist);
-        }
-
-        public override async Task ImportAsync(string path)
-        {
-            //if (App.Config.AutoLibrary) path = HandleAutoLibrary(new string[] { path })[0];
-
-            //LoggingHandler.Log($"Importing {path}");
-            await base.ImportAsync(path);
-
-            Dispatcher.UIThread.Invoke(() => { if (RaiseLibraryChangedEvents) TracksUpdated?.Invoke(null, [path]); });
-        }
+        } 
 
         public override void Remove(string path)
         {
@@ -211,33 +209,32 @@ namespace FRESHMusicPlayer.Handlers
             return saveStream.ToArray();
         }
 
-        private List<string> HandleAutoLibrary(string[] tracks)
+        private void HandleImportUndoNotification(string[] tracks)
         {
-            var paths = new List<string>();
-            //foreach (var track in tracks)
-            //{
-            //    var metadata = new Track(track);
-
-            //    var path = Path.Combine(App.Config.AutoLibraryPath, metadata.Artist.Split(';')[0], metadata.Album);
-            //    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            //    var fullPath = Path.Combine(path, Path.GetFileName(track));
-            //    File.Move(track, fullPath);
-            //    paths.Add(fullPath);
-            //}
-            return paths;
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                var notification = new Notification(viewModel)
+                {
+                    ContentText = $"Imported {tracks.Length} track(s)!",
+                    Type = NotificationType.Success,
+                    DisplayAsToast = true,
+                    ToastDisplayTime = TimeSpan.FromSeconds(10),
+                    ButtonText = "Undo",
+                    IsTransient = true,
+                    OnButtonClicked = () =>
+                    {
+                        var matchingIDs = GetAllTracks().Where(x => tracks.Contains(x.Path)).Select(x => x.Id);
+                        foreach (var id in matchingIDs)
+                        {
+                            Database.GetCollection<DatabaseTrack>(TracksCollectionName).Delete(id);
+                        }
+                        TracksUpdated?.Invoke(null, tracks);
+                        return true;
+                    }
+                };
+                viewModel.Notifications.Add(notification);
+            });
         }
-
-        //public List<DatabaseQueue> GetAllQueues() FMP 10.2
-        //{
-        //    return Database.GetCollection<DatabaseQueue>("queues").Query().ToList();
-        //}
-
-        //public DatabaseQueue CreateQueue(List<string> queue, int position)
-        //{
-        //    var newQueue = new DatabaseQueue { Queue = queue, QueuePosition = position };
-        //    Database.GetCollection<DatabaseQueue>("queues").Insert(newQueue);
-        //    return newQueue;
-        //}
     }
 
     public class CachedCoverArt
