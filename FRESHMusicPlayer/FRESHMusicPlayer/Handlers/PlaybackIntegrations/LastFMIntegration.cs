@@ -140,7 +140,7 @@ namespace FRESHMusicPlayer.Handlers.PlaybackIntegrations
                 if (!scrobbleResponse.IsSuccessStatusCode)
                     viewModel.Notifications.Add(new Notification(viewModel)
                     {
-                        ContentText = $"An error occured trying to scrobble {{string.Join(\", \", lastTrackListenedTo.Artists)}} - {{lastTrackListenedTo.Title}}\"),",
+                        ContentText = $"An error occurred trying to scrobble {string.Join(", ", lastTrackListenedTo.Artists)} - {lastTrackListenedTo.Title}\"",
                         Type = NotificationType.Failure,
                         DisplayAsToast = true
                     });
