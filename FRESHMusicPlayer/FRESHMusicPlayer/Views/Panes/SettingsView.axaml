@@ -42,12 +42,15 @@
 
 					<DockPanel HorizontalAlignment="Stretch">
 						<TextBlock DockPanel.Dock="Left" Text="{x:Static resx:Resources.SETTINGS_LANGUAGE}" VerticalAlignment="Center"/>
-						<ComboBox HorizontalAlignment="Right">
+						<ComboBox HorizontalAlignment="Right" SelectedIndex="{Binding SelectedLanguageIndex}">
 							<ComboBox.Items>
 								<TextBlock Text="{x:Static resx:Resources.SETTINGS_LANGUAGE_AUTOMATIC}"/>
+								<TextBlock Text="English"/>
 							</ComboBox.Items>
 						</ComboBox>
 					</DockPanel>
+					<TextBlock Text="{x:Static resx:Resources.SETTINGS_RESTARTFMP}" IsVisible="{Binding LanguageChanged}" Margin="0,0,0,10"/>
+
 					<!--<CheckBox Content="Playtime logging"/>-->
 					<CheckBox Content="{x:Static resx:Resources.SETTINGS_AUTOQUEUE}" IsChecked="{Binding MainView.Config.AutoQueue}"/>
 					<TextBlock Text="{x:Static resx:Resources.SETTINGS_AUTOQUEUE_DESCRIPTION}" FontSize="10" Foreground="{DynamicResource SecondaryTextColor}"/>

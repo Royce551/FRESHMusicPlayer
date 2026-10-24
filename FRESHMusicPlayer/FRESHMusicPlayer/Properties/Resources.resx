@@ -559,13 +559,18 @@
     <value>Scanning for new tracks...</value>
   </data>
   <data name="NOTIFICATION_UNHANDLED_ERROR" xml:space="preserve">
-    <value>An error occurred :(&#xA;&#xA;Please report this with the debug log at https://github.com/royce551/freshmusicplayer/issues.</value>
+    <value>An error occurred :(
+
+Please report this with the debug log at https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="NOTIFICATION_LIBRARY_CLEARED" xml:space="preserve">
     <value>Successfully cleared your library!</value>
   </data>
   <data name="NOTIFICATION_PROCESSING_LIBRARY" xml:space="preserve">
-    <value>Processing library changes...&#xA;{0} tracks remaining&#xA;&#xA;Newly added tracks won't show in the artists or albums tabs until processing is complete.</value>
+    <value>Processing library changes...
+{0} tracks remaining
+
+Newly added tracks won't show in the artists or albums tabs until processing is complete.</value>
   </data>
   <data name="NOTIFICATION_PROCESSING_LIBRARY_STATUS" xml:space="preserve">
     <value>Processing library changes...</value>
@@ -584,5 +589,8 @@
   </data>
   <data name="TRACKINFO_LOSSLESS" xml:space="preserve">
     <value>(Lossless)</value>
+  </data>
+  <data name="SETTINGS_RESTARTFMP" xml:space="preserve">
+    <value>Restart FMP to apply your changes</value>
   </data>
 </root>

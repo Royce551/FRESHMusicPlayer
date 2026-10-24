@@ -62,9 +62,10 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     {
     }
 
-    public MainViewModel(MainWindow mainWindow, string[] initialFiles)
+    public MainViewModel(MainWindow mainWindow, string[] initialFiles, ConfigurationFile config)
     {
         MainWindow = mainWindow;
+        Config = config;
 
         if (!Design.IsDesignMode)
         {
@@ -102,8 +103,6 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         //    // TODO: single instance handling
         //}
 
-        Config = ConfigurationFile.Read(Path.Combine(App.DataFolderLocation, "Configuration"));
-        Config.IsActive = true;
         IsActive = true;
         UpdateRequestedTheme();
 

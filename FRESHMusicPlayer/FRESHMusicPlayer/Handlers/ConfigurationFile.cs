@@ -14,6 +14,9 @@ namespace FRESHMusicPlayer.Handlers
     public partial class ConfigurationFile : ObservableRecipient
     {
         [ObservableProperty]
+        public partial string Language { get; set; } = "automatic";
+
+        [ObservableProperty]
         public partial bool ShowTimeInWindow { get; set; } = false;
 
         [ObservableProperty]

@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.ViewModels
@@ -24,9 +25,19 @@ namespace FRESHMusicPlayer.ViewModels
     {
         public bool IsWindows => OperatingSystem.IsWindows();
 
+        private int initialSelectedLanguageIndex;
         public SettingsViewModel(MainViewModel mainView)
         {
             MainView = mainView;
+
+            initialSelectedLanguageIndex = MainView.Config.Language switch
+            {
+                "automatic" => 0,
+                "en" => 1,
+                _ => 0
+            };
+            selectedLanguageIndex = initialSelectedLanguageIndex;
+
             UpdateLastFMStatus();
         }
 
@@ -40,6 +51,29 @@ namespace FRESHMusicPlayer.ViewModels
         {
             base.OnNavigatingAway();
         }
+
+        private int selectedLanguageIndex;
+        public int SelectedLanguageIndex
+        {
+            get => selectedLanguageIndex;
+            set
+            {
+                if (SetProperty(ref selectedLanguageIndex, value))
+                {
+                    MainView.Config.Language = value switch
+                    {
+                        0 => "automatic",
+                        1 => "en",
+                        _ => "automatic"
+                    };
+
+                    LanguageChanged = selectedLanguageIndex != initialSelectedLanguageIndex;
+                }
+            }
+        }
+
+        [ObservableProperty]
+        public partial bool LanguageChanged { get; set; } = false;
 
         [ObservableProperty]
         public partial AvaloniaList<AutoImportFolderViewModel> AutoImportFolders { get; set; } = [];

@@ -10,6 +10,7 @@ using SIADL.Avalonia;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace FRESHMusicPlayer;
 
@@ -43,8 +44,12 @@ public partial class App : Application
             if (desktop.Args != null && desktop.Args.Length > 0) initialFiles = [.. desktop.Args.Where(x => x.Contains('.'))];
             else initialFiles = [];
 
+            var config = ConfigurationFile.Read(Path.Combine(DataFolderLocation, "Configuration"));
+            config.IsActive = true;
+            if (config.Language != "automatic") Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(config.Language);
+
             var mainWindow = new MainWindow();
-            mainWindow.DataContext = new MainViewModel(mainWindow, initialFiles);
+            mainWindow.DataContext = new MainViewModel(mainWindow, initialFiles, config);
             desktop.MainWindow = mainWindow;
         }
 
