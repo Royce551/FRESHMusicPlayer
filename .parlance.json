@@ -7,9 +7,7 @@
       "path": "/FRESHMusicPlayer/FRESHMusicPlayer/Properties/Resources.{lang}.resx",
       "baseLang": "en",
       "basePath": "/FRESHMusicPlayer/FRESHMusicPlayer/Properties/Resources.resx"
-    }
-  ],
-  "subprojects": [
+    },
     {
       "name": "FRESHMusicPlayer-WPF (Legacy)",
       "type": "resx",
@@ -17,5 +15,5 @@
       "baseLang": "en",
       "basePath": "/FRESHMusicPlayer/FRESHMusicPlayer-WPF/Properties/Resources.resx"
     }
-  ]
+  ],
 }
