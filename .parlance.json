@@ -2,12 +2,20 @@
   "name": "FRESHMusicPlayer",
   "subprojects": [
     {
-      "name": "FRESHMusicPlayer for Windows",
+      "name": "FRESHMusicPlayer App",
+      "type": "resx",
+      "path": "/FRESHMusicPlayer/FRESHMusicPlayer/Properties/Resources.{lang}.resx",
+      "baseLang": "en",
+      "basePath": "/FRESHMusicPlayer/FRESHMusicPlayer/Properties/Resources.resx"
+    }
+  ],
+  "subprojects": [
+    {
+      "name": "FRESHMusicPlayer-WPF (Legacy)",
       "type": "resx",
       "path": "/FRESHMusicPlayer/FRESHMusicPlayer-WPF/Properties/Resources.{lang}.resx",
       "baseLang": "en",
       "basePath": "/FRESHMusicPlayer/FRESHMusicPlayer-WPF/Properties/Resources.resx"
     }
-  ],
-  "deadline": 1712725200000
+  ]
 }

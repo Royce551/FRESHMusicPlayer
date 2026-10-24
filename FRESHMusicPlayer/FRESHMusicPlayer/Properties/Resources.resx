@@ -408,10 +408,10 @@
   <data name="SETTINGS_EQUALIZER_PARTIALLY_UNAVAILABLE" xml:space="preserve">
     <value>You have a backend installed that does not support EQ. The equalizer will not work for tracks that use these backends.</value>
   </data>
-  <data name="SETTINGS_EQUALIZER_BASS" xml:space="preserve">
+  <data name="SETTINGS_EQUALIZER_BASS_PRESET" xml:space="preserve">
     <value>Bass boost</value>
   </data>
-  <data name="SETTINGS_EQUALIZER_TREBLE" xml:space="preserve">
+  <data name="SETTINGS_EQUALIZER_TREBLE_PRESET" xml:space="preserve">
     <value>Treble boost</value>
   </data>
   <data name="SETTINGS_EQUALIZER_RESET" xml:space="preserve">

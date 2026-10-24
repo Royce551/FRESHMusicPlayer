@@ -1031,9 +1031,9 @@ namespace FRESHMusicPlayer.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Bass boost.
         /// </summary>
-        public static string SETTINGS_EQUALIZER_BASS {
+        public static string SETTINGS_EQUALIZER_BASS_PRESET {
             get {
-                return ResourceManager.GetString("SETTINGS_EQUALIZER_BASS", resourceCulture);
+                return ResourceManager.GetString("SETTINGS_EQUALIZER_BASS_PRESET", resourceCulture);
             }
         }
         
@@ -1058,9 +1058,9 @@ namespace FRESHMusicPlayer.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Treble boost.
         /// </summary>
-        public static string SETTINGS_EQUALIZER_TREBLE {
+        public static string SETTINGS_EQUALIZER_TREBLE_PRESET {
             get {
-                return ResourceManager.GetString("SETTINGS_EQUALIZER_TREBLE", resourceCulture);
+                return ResourceManager.GetString("SETTINGS_EQUALIZER_TREBLE_PRESET", resourceCulture);
             }
         }
         
