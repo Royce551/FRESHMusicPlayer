@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -61,7 +61,7 @@ namespace FRESHMusicPlayer.ViewModels
                 Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
 
                 var totalLength = TimeSpan.FromSeconds(Tracks.Sum(x => x.Length));
-                FooterText = $"Tracks: {Tracks.Count} • {totalLength}";
+                FooterText = string.Format(Properties.Resources.LIBRARY_FOOTER, Tracks.Count, totalLength);
             });
         }
 
@@ -176,8 +176,8 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 ViewModel.MainView.Notifications.Add(new Handlers.Notification(ViewModel.MainView)
                 {
-                    ContentText = "The file you tried to play could not be found. If you moved it, you can update the library entry for it.",
-                    ButtonText = "Locate file",
+                    ContentText = Properties.Resources.NOTIFICATION_FILEGONE,
+                    ButtonText = Properties.Resources.NOTIFICATION_FILEGONE_LOCATE,
                     Type = Handlers.NotificationType.Failure,
                     DisplayAsToast = true,
                     OnButtonClicked = () =>

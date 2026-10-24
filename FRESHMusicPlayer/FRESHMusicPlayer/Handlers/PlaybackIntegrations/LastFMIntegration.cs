@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.ViewModels;
 using Newtonsoft.Json.Linq;
@@ -140,7 +140,7 @@ namespace FRESHMusicPlayer.Handlers.PlaybackIntegrations
                 if (!scrobbleResponse.IsSuccessStatusCode)
                     viewModel.Notifications.Add(new Notification(viewModel)
                     {
-                        ContentText = $"An error occurred trying to scrobble {string.Join(", ", lastTrackListenedTo.Artists)} - {lastTrackListenedTo.Title}\"",
+                        ContentText = string.Format(Properties.Resources.NOTIFICATION_SCROBBLE_ERROR, $"{string.Join(", ", lastTrackListenedTo.Artists)} - {lastTrackListenedTo.Title}"),
                         Type = NotificationType.Failure,
                         DisplayAsToast = true
                     });

@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
+    <value>Drop here to import</value>
+  </data>
+  <data name="CONTROLS_PLAYALL" xml:space="preserve">
+    <value>Play all</value>
+  </data>
+  <data name="CONTROLS_ENQUEUEALL" xml:space="preserve">
+    <value>Enqueue all</value>
+  </data>
+  <data name="LIBRARY_EMPTY" xml:space="preserve">
+    <value>Your library is empty. To get started, drag and drop some tracks, or set Auto-Import folders in settings.</value>
+  </data>
+  <data name="LIBRARY_REMOVE" xml:space="preserve">
+    <value>Remove from library</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
+    <value>Manage playlists...</value>
+  </data>
+  <data name="CONTROLS_GOTOARTIST" xml:space="preserve">
+    <value>Go to artist</value>
+  </data>
+  <data name="CONTROLS_PLAYNEXT" xml:space="preserve">
+    <value>Play next</value>
+  </data>
+  <data name="CONTROLS_ENQUEUE" xml:space="preserve">
+    <value>Enqueue</value>
+  </data>
+  <data name="CONTROLS_PLAY" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Go to</value>
+  </data>
+  <data name="CONTROLS_ARTIST" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="CONTROLS_OPEN_FILEEXPLORER" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
+  <data name="LIBRARY_FOOTER" xml:space="preserve">
+    <value>Tracks: {0} • {1}</value>
+  </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value>Disc {0}</value>
+  </data>
+  <data name="DIALOG_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="DIALOG_CANCEL" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CONTROLS_TRACKINFO" xml:space="preserve">
+    <value>Track info</value>
+  </data>
+  <data name="CONTROLS_LYRICS" xml:space="preserve">
+    <value>Lyrics</value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTER_CURRENT_TRACK" xml:space="preserve">
+    <value>Pause after current track</value>
+  </data>
+  <data name="CONTROLS_ALBUM" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="CONTROLS_FULLSCREEN" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
+    <value>Mini player</value>
+  </data>
+  <data name="CONTROLS_OPEN" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="CONTROLS_OPEN_FILE" xml:space="preserve">
+    <value>File...</value>
+  </data>
+  <data name="CONTROLS_OPEN_STREAM" xml:space="preserve">
+    <value>Path/Network stream...</value>
+  </data>
+  <data name="CONTROLS_TAGEDITOR" xml:space="preserve">
+    <value>Tag editor...</value>
+  </data>
+  <data name="MAINWINDOW_HOME" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="MAINWINDOW_TRACKS" xml:space="preserve">
+    <value>Tracks</value>
+  </data>
+  <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
+    <value>Artists</value>
+  </data>
+  <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
+    <value>Albums</value>
+  </data>
+  <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
+    <value>Playlists</value>
+  </data>
+  <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="CONTROLS_SEARCH" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="QUEUE_TITLE" xml:space="preserve">
+    <value>Queue</value>
+  </data>
+  <data name="SETTINGS_TITLE" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="CONTROLS_DROP_PLAY" xml:space="preserve">
+    <value>Drop here to play (without importing)</value>
+  </data>
+  <data name="CONTROLS_MENU" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTER_CURRENT_TRACK_STATUS" xml:space="preserve">
+    <value>Pause after current track</value>
+  </data>
+  <data name="CONTROLS_BACK" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_TITLE" xml:space="preserve">
+    <value>Playlist Management</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_NEW" xml:space="preserve">
+    <value>New playlist...</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_IMPORT_WARNING" xml:space="preserve">
+    <value>This track is not in your library. Adding it to a playlist will also import it.</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_ADD_COLLECTION" xml:space="preserve">
+    <value>+ Collection</value>
+  </data>
+  <data name="CONTROLS_GOTOALBUM" xml:space="preserve">
+    <value>Go to album</value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>Focus mode</value>
+  </data>
+  <data name="IMPORT_TITLE" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
+    <value>Browse for tracks</value>
+  </data>
+  <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
+    <value>Browse for folders</value>
+  </data>
+  <data name="PLAYLISTS_DROP_ADD" xml:space="preserve">
+    <value>Drop here to add to selected playlist</value>
+  </data>
+  <data name="PLAYLISTS_ADD" xml:space="preserve">
+    <value>Add playlist</value>
+  </data>
+  <data name="PLAYLISTS_NEW" xml:space="preserve">
+    <value>New...</value>
+  </data>
+  <data name="PLAYLISTS_IMPORT" xml:space="preserve">
+    <value>Import...</value>
+  </data>
+  <data name="PLAYLISTS_CLOSE" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="PLAYLISTS_EMPTY" xml:space="preserve">
+    <value>You don't have any playlists yet.</value>
+  </data>
+  <data name="PLAYLISTS_SET_COVER" xml:space="preserve">
+    <value>Set cover...</value>
+  </data>
+  <data name="PLAYLISTS_REMOVE_COVER" xml:space="preserve">
+    <value>Remove cover</value>
+  </data>
+  <data name="PLAYLISTS_RENAME" xml:space="preserve">
+    <value>Rename...</value>
+  </data>
+  <data name="PLAYLISTS_EXPORT" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="PLAYLISTS_DELETE" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PLAYLISTS_DELETE_CONFIRM" xml:space="preserve">
+    <value>Are you sure you want to delete this playlist?</value>
+  </data>
+  <data name="LYRICS_RESUME_AUTOSCROLL" xml:space="preserve">
+    <value>Resume autoscroll</value>
+  </data>
+  <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
+    <value>Clear all</value>
+  </data>
+  <data name="QUEUE_DROP_ENQUEUE" xml:space="preserve">
+    <value>Drop here to enqueue (without importing)</value>
+  </data>
+  <data name="QUEUE_CLEAR" xml:space="preserve">
+    <value>Clear queue</value>
+  </data>
+  <data name="QUEUE_JUMP_TO" xml:space="preserve">
+    <value>Jump to</value>
+  </data>
+  <data name="QUEUE_REMOVE" xml:space="preserve">
+    <value>Remove from queue</value>
+  </data>
+  <data name="SEARCH_PLACEHOLDER" xml:space="preserve">
+    <value>Type here to search</value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SETTINGS_PLAYBACK" xml:space="preserve">
+    <value>Playback</value>
+  </data>
+  <data name="SETTINGS_APPEARANCE" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="SETTINGS_ABOUT" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE_AUTOMATIC" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE" xml:space="preserve">
+    <value>Auto queue</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE_DESCRIPTION" xml:space="preserve">
+    <value>Automatically enqueues the rest of the tracks in an artist, album, or playlist when playing one of them</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value>Auto Import</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_DESCRIPTION" xml:space="preserve">
+    <value>FMP will import new tracks from these folders:</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_REMOVE" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADD" xml:space="preserve">
+    <value>Add folder</value>
+  </data>
+  <data name="SETTINGS_INTEGRATIONS" xml:space="preserve">
+    <value>Integrations</value>
+  </data>
+  <data name="SETTINGS_DISCORD_COVER" xml:space="preserve">
+    <value>Display cover art</value>
+  </data>
+  <data name="SETTINGS_DISCORD_COVER_DESCRIPTION" xml:space="preserve">
+    <value>Since Discord requires an online source for cover art, FMP looks for a match on the Cover Art Archive. The guess can sometimes be completely off. If your tracks are tagged with a MBID, that will be used instead.</value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNIN" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="SETTINGS_LASTFM_CONFIRM" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNOUT" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
+    <value>Use ReplayGain loudness normalization</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_DESCRIPTION" xml:space="preserve">
+    <value>"RG" will show in Track Info if ReplayGain data is available</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_TRACK" xml:space="preserve">
+    <value>Normalize by track</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ALBUM" xml:space="preserve">
+    <value>Normalize by album</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP" xml:space="preserve">
+    <value>Pre-amp for tracks with ReplayGain</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP_DESCRIPTION" xml:space="preserve">
+    <value>To allow for loudness normalization, tracks with ReplayGain play at a lower target loudness. A higher pre-amp increases loudness but prevents tracks requiring a volume increase from being normalized properly.</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_FALLBACK_PREAMP" xml:space="preserve">
+    <value>Pre-amp for tracks without ReplayGain</value>
+  </data>
+  <data name="SETTINGS_EQUALIZER" xml:space="preserve">
+    <value>Equalizer</value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_UNAVAILABLE" xml:space="preserve">
+    <value>EQ is not available on your current platform. If you add a backend for another source type that supports EQ, options will show here.</value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_PARTIALLY_UNAVAILABLE" xml:space="preserve">
+    <value>You have a backend installed that does not support EQ. The equalizer will not work for tracks that use these backends.</value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_BASS" xml:space="preserve">
+    <value>Bass boost</value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_TREBLE" xml:space="preserve">
+    <value>Treble boost</value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_RESET" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="SETTINGS_SHOW_TIME_IN_TITLE" xml:space="preserve">
+    <value>Show time instead of title in window title</value>
+  </data>
+  <data name="SETTINGS_SHOW_REMAINING_TIME" xml:space="preserve">
+    <value>Show remaining time instead of total time in controls box</value>
+  </data>
+  <data name="SETTINGS_SHOW_TASKBAR_PROGRESS" xml:space="preserve">
+    <value>Show track progress as progress in taskbar</value>
+  </data>
+  <data name="SETTINGS_THEME" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="SETTINGS_THEME_SYSTEM" xml:space="preserve">
+    <value>Follow system</value>
+  </data>
+  <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="SETTINGS_THEME_DARK" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="SETTINGS_OPEN_DATA" xml:space="preserve">
+    <value>Open data folder</value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value>Reset settings to default</value>
+  </data>
+  <data name="SETTINGS_CLEAN_LIBRARY" xml:space="preserve">
+    <value>Clean and update library</value>
+  </data>
+  <data name="SETTINGS_CLEAN_LIBRARY_DESCRIPTION" xml:space="preserve">
+    <value>Reprocesses the metadata for all tracks in the library; use if you have made a lot of updates with an external tool. Also deletes duplicate library entries.</value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY" xml:space="preserve">
+    <value>Nuke library</value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
+    <value>You are about to irreversibly clear your library and all playlists.</value>
+  </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value>by Squid House Software (and open source contributors)</value>
+  </data>
+  <data name="SETTINGS_LICENSE" xml:space="preserve">
+    <value>Licensed under GPL v3</value>
+  </data>
+  <data name="SETTINGS_THANK_YOU" xml:space="preserve">
+    <value>Thank you for using FRESHMusicPlayer ❤️</value>
+  </data>
+  <data name="SETTINGS_REPORT_ISSUE" xml:space="preserve">
+    <value>Report an issue</value>
+  </data>
+  <data name="SETTINGS_SOURCE_CODE" xml:space="preserve">
+    <value>View license and source code</value>
+  </data>
+  <data name="TRACKINFO_AUDIO" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="TRACKINFO_DISC" xml:space="preserve">
+    <value>Disc</value>
+  </data>
+  <data name="TRACKINFO_TRACK" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="TRACKINFO_YEAR" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="TRACKINFO_GENRE" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="TRACKINFO_ALBUM" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="QUEUE_ENDS_AT" xml:space="preserve">
+    <value>Ends at {0:t}</value>
+  </data>
+  <data name="PLAYLISTS_NAME_PROMPT" xml:space="preserve">
+    <value>Playlist name</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_PROMPT" xml:space="preserve">
+    <value>What do you want to do with "{0}"?</value>
+  </data>
+  <data name="PLAYLISTS_FILE_NOT_FOUND" xml:space="preserve">
+    <value>{0} was excluded from the playlist because it could not be found.</value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
+    <value>The file you tried to play could not be found. If you moved it, you can update the library entry for it.</value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATE" xml:space="preserve">
+    <value>Locate file</value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNED_IN" xml:space="preserve">
+    <value>Signed in to last.fm</value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNED_OUT" xml:space="preserve">
+    <value>Not signed in to last.fm</value>
+  </data>
+  <data name="SETTINGS_LASTFM_AUTHENTICATE" xml:space="preserve">
+    <value>Complete last.fm authentication in the browser window that just opened</value>
+  </data>
+  <data name="SETTINGS_LASTFM_ACCESS_DENIED" xml:space="preserve">
+    <value>FRESHMusicPlayer was not granted access; press sign in to try again</value>
+  </data>
+  <data name="CONTROLS_STREAM_PROMPT" xml:space="preserve">
+    <value>Enter file path or URL to a network stream</value>
+  </data>
+  <data name="NOTIFICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value>Open debug lug</value>
+  </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value>Nothing playing</value>
+  </data>
+  <data name="NOTIFICATION_PLAYBACK_ERROR" xml:space="preserve">
+    <value>A playback error occurred:</value>
+  </data>
+  <data name="PLAYBACK_NOT_SUPPORTED" xml:space="preserve">
+    <value>Not supported by this backend</value>
+  </data>
+  <data name="PLAYBACK_INVALID" xml:space="preserve">
+    <value>Invalid for this backend</value>
+  </data>
+  <data name="PLAYBACK_CORRUPT" xml:space="preserve">
+    <value>File appears to be corrupt</value>
+  </data>
+  <data name="PLAYBACK_UNKNOWN_ERROR" xml:space="preserve">
+    <value>Unknown error</value>
+  </data>
+  <data name="NOTIFICATION_SKIPPED_TRACK" xml:space="preserve">
+    <value>Skipped to the next track</value>
+  </data>
+  <data name="MAINWINDOW_LOADING_TITLE" xml:space="preserve">
+    <value>Loading... - {0}</value>
+  </data>
+  <data name="MAINWINDOW_LOADING" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
+    <value>No artist</value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value>Scanning for new tracks...</value>
+  </data>
+  <data name="NOTIFICATION_UNHANDLED_ERROR" xml:space="preserve">
+    <value>An error occurred :(&#xA;&#xA;Please report this with the debug log at https://github.com/royce551/freshmusicplayer/issues.</value>
+  </data>
+  <data name="NOTIFICATION_LIBRARY_CLEARED" xml:space="preserve">
+    <value>Successfully cleared your library!</value>
+  </data>
+  <data name="NOTIFICATION_PROCESSING_LIBRARY" xml:space="preserve">
+    <value>Processing library changes...&#xA;{0} tracks remaining&#xA;&#xA;Newly added tracks won't show in the artists or albums tabs until processing is complete.</value>
+  </data>
+  <data name="NOTIFICATION_PROCESSING_LIBRARY_STATUS" xml:space="preserve">
+    <value>Processing library changes...</value>
+  </data>
+  <data name="NOTIFICATION_IMPORTED" xml:space="preserve">
+    <value>Imported {0} track(s)!</value>
+  </data>
+  <data name="NOTIFICATION_IMPORT_UNDO" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="NOTIFICATION_SCROBBLE_ERROR" xml:space="preserve">
+    <value>An error occurred trying to scrobble {0}"</value>
+  </data>
+  <data name="TRACKINFO_LOSSY" xml:space="preserve">
+    <value>(Lossy) </value>
+  </data>
+  <data name="TRACKINFO_LOSSLESS" xml:space="preserve">
+    <value>(Lossless)</value>
+  </data>
+</root>

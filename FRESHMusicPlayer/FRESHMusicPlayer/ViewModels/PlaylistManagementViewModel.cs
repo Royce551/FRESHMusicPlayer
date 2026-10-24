@@ -1,4 +1,4 @@
-﻿using Avalonia.Media.Imaging;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace FRESHMusicPlayer.ViewModels
         public partial ObservableCollection<TrackManagementDatabasePlaylistViewModel>? Playlists { get; set; }
 
         [ObservableProperty]
-        public partial string? PromptText { get; set; } = $"What do you want to do with \"{Path.GetFileName(path)}\"?";
+        public partial string? PromptText { get; set; } = string.Format(Properties.Resources.PLAYLISTMANAGEMENT_PROMPT, Path.GetFileName(path));
 
         [ObservableProperty]
         public partial bool IsTrackInLibrary { get; set; }
@@ -39,7 +39,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task NewPlaylist() // note: copy paste from playlistsviewmodel
         {
-            var input = new TextInputDialog("Playlist name");
+            var input = new TextInputDialog(Properties.Resources.PLAYLISTS_NAME_PROMPT);
             var name = await input.ShowDialog<string?>(MainView.MainWindow);
             if (string.IsNullOrWhiteSpace(name)) return; // cancel case
 

@@ -1,19 +1,20 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:resx="using:FRESHMusicPlayer.Properties"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:FRESHMusicPlayer.ViewModels"
         mc:Ignorable="d" Width="400" WindowDecorations="None" SizeToContent="Height" ShowInTaskbar="False"
         x:Class="FRESHMusicPlayer.Views.PlaylistManagementWindow" WindowStartupLocation="CenterOwner" TransparencyLevelHint="Transparent" TransparencyBackgroundFallback="{DynamicResource ForegroundColor}"
-        x:DataType="vm:PlaylistManagementViewModel" Title="Playlist Management" Background="Transparent">
+        x:DataType="vm:PlaylistManagementViewModel" Title="{x:Static resx:Resources.PLAYLISTMANAGEMENT_TITLE}" Background="Transparent">
     <Border Padding="10" CornerRadius="2" BorderThickness="1" BorderBrush="{DynamicResource PrimaryTextColor}" Background="{DynamicResource ForegroundColor}">
 		<DockPanel HorizontalAlignment="Stretch">
 		    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-			    <Button DockPanel.Dock="Right" Content="OK" Click="Button_Click"/>
-                <Button DockPanel.Dock="Left" Content="New playlist..." Command="{Binding NewPlaylist}"/>
+			    <Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.DIALOG_OK}" Click="Button_Click"/>
+                <Button DockPanel.Dock="Left" Content="{x:Static resx:Resources.PLAYLISTMANAGEMENT_NEW}" Command="{Binding NewPlaylist}"/>
             </DockPanel>
             <TextBlock Text="{Binding PromptText}" DockPanel.Dock="Top" Margin="0,0,0,10" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}"/>
-            <TextBlock Text="This track is not in your library. Adding it to a playlist will also import it." DockPanel.Dock="Top" Margin="0,0,0,10" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" IsVisible="{Binding !IsTrackInLibrary}"/>
+            <TextBlock Text="{x:Static resx:Resources.PLAYLISTMANAGEMENT_IMPORT_WARNING}" DockPanel.Dock="Top" Margin="0,0,0,10" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextColor}" IsVisible="{Binding !IsTrackInLibrary}"/>
 
             <ListBox BorderBrush="Transparent" Margin="0,0,0,10" ItemsSource="{Binding Playlists}">
 			    <ListBox.ItemTemplate>
@@ -25,7 +26,7 @@
                              <Button DockPanel.Dock="Right" Content="-" Command="{Binding Remove}" IsEnabled="{Binding IsInPlaylist}" Margin="15,0,0,0"/>
 
                         
-                            <Button DockPanel.Dock="Right" Content="+ Collection" Command="{Binding AddCollection}" IsEnabled="{Binding !IsInPlaylist}" IsVisible="{Binding IsAddCollectionAvailable}" Margin="5,0,0,0"/>
+                            <Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.PLAYLISTMANAGEMENT_ADD_COLLECTION}" Command="{Binding AddCollection}" IsEnabled="{Binding !IsInPlaylist}" IsVisible="{Binding IsAddCollectionAvailable}" Margin="5,0,0,0"/>
                             <Button DockPanel.Dock="Right" Content="+" Command="{Binding Add}" IsEnabled="{Binding !IsInPlaylist}"/>
                        
 					    </DockPanel>

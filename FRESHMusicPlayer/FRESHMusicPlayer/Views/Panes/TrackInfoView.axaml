@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:resx="using:FRESHMusicPlayer.Properties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:FRESHMusicPlayer.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -48,12 +49,12 @@
             </TransitioningContentControl>
            
 			<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*,*,*,*,*">
-				<TextBlock Grid.Column="0" Grid.Row="0" Text="Audio" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsAudioVisible}" VerticalAlignment="Top"/>
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Disc" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsDiscVisible}" VerticalAlignment="Top"/>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Track" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsTrackVisible}" VerticalAlignment="Top"/>
-                <TextBlock Grid.Column="0" Grid.Row="3" Text="Year" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsYearVisible}" VerticalAlignment="Top"/>
-                <TextBlock Grid.Column="0" Grid.Row="4" Text="Genre" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsGenreVisible}" VerticalAlignment="Top"/>
-                <TextBlock Grid.Column="0" Grid.Row="5" Text="Album" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsAlbumVisible}" VerticalAlignment="Top"/>
+				<TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static resx:Resources.TRACKINFO_AUDIO}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsAudioVisible}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static resx:Resources.TRACKINFO_DISC}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsDiscVisible}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static resx:Resources.TRACKINFO_TRACK}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsTrackVisible}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static resx:Resources.TRACKINFO_YEAR}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsYearVisible}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static resx:Resources.TRACKINFO_GENRE}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsGenreVisible}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static resx:Resources.TRACKINFO_ALBUM}" Foreground="{DynamicResource SecondaryTextColor}" IsVisible="{Binding IsAlbumVisible}" VerticalAlignment="Top"/>
 
                 <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" Text="{Binding Audio}" IsVisible="{Binding IsAudioVisible}" TextWrapping="Wrap"/>
                 <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding Disc}" IsVisible="{Binding IsDiscVisible}" TextWrapping="Wrap"/>

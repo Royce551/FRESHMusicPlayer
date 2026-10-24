@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Handlers;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace FRESHMusicPlayer.ViewModels
                 .ToList();
 
                 var totalLength = TimeSpan.FromSeconds(tracks.Sum(x => x.Length));
-                FooterText = $"Tracks: {tracks.Count} • {totalLength}";
+                FooterText = string.Format(Properties.Resources.LIBRARY_FOOTER, tracks.Count, totalLength);
 
                 return tracks.Select(x => new DatabaseTrackViewModel(this, x, [.. tracks.Select(x => x.Path)]));
             });

@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Converters;
@@ -140,8 +140,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             $"{e.Exception}");
         Notifications.Add(new Notification(this)
         {
-            ContentText = $"An error occurred :(\n\nPlease report this with the debug log at https://github.com/royce551/freshmusicplayer/issues.",
-            ButtonText = "Open debug lug",
+            ContentText = Properties.Resources.NOTIFICATION_UNHANDLED_ERROR,
+            ButtonText = Properties.Resources.NOTIFICATION_OPEN_DEBUG_LOG,
             Type = NotificationType.Failure,
             DisplayAsToast = true,
             OnButtonClicked = () =>
@@ -274,10 +274,10 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     public partial string WindowTitle { get; set; } = WindowName;
 
     [ObservableProperty]
-    public partial string Title { get; set; } = "Nothing playing";
+    public partial string Title { get; set; } = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
 
     [ObservableProperty]
-    public partial string Artist { get; set; } = "Nothing playing";
+    public partial string Artist { get; set; } = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
 
     [ObservableProperty]
     public partial string ProgressIndicator1 { get; set; } = "00:00";
@@ -342,16 +342,16 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     private async void Player_SongException(object? sender, PlaybackExceptionEventArgs e)
     {
         var message = new StringBuilder();
-        message.AppendLine("A playback error occurred:");
+        message.AppendLine(Properties.Resources.NOTIFICATION_PLAYBACK_ERROR);
         message.AppendLine();
         foreach (var problem in e.Problems)
         {
             var problemString = problem.Value switch
             {
-                BackendLoadResult.NotSupported => "Not supported by this backend",
-                BackendLoadResult.Invalid => "Invalid for this backend",
-                BackendLoadResult.Corrupt => "File appears to be corrupt",
-                BackendLoadResult.UnknownError => "Unknown error",
+                BackendLoadResult.NotSupported => Properties.Resources.PLAYBACK_NOT_SUPPORTED,
+                BackendLoadResult.Invalid => Properties.Resources.PLAYBACK_INVALID,
+                BackendLoadResult.Corrupt => Properties.Resources.PLAYBACK_CORRUPT,
+                BackendLoadResult.UnknownError => Properties.Resources.PLAYBACK_UNKNOWN_ERROR,
                 _ => throw new InvalidOperationException()
             };
             message.AppendLine($"{problem.Key}: {problemString}");
@@ -359,7 +359,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         if (Player.Queue.Position < Player.Queue.Queue.Count)
         {
             message.AppendLine();
-            message.AppendLine("Skipped to the next track");
+            message.AppendLine(Properties.Resources.NOTIFICATION_SKIPPED_TRACK);
             await Task.Delay(100); // it's a little silly but it works
             Dispatcher.UIThread.Invoke(() => Next());
         }
@@ -428,15 +428,15 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             await AnimateProgressTo0Async();
             OnPropertyChanged(nameof(CurrentTimeSeconds));
             ProgressIndicator1 = ProgressIndicator2 = "00:00";
-            Title = Artist = "Nothing playing";
+            Title = Artist = Properties.Resources.MAINWINDOW_NOTHINGPLAYING;
             CoverArt = null;
             _ = UpdateIntegrationsAsync(PlaybackStatus.Stopped);
         }
         else
         {
-            WindowTitle = $"Loading... - {WindowName}";
-            Title = "Loading...";
-            Artist = "Loading...";
+            WindowTitle = string.Format(Properties.Resources.MAINWINDOW_LOADING_TITLE, WindowName);
+            Title = Properties.Resources.MAINWINDOW_LOADING;
+            Artist = Properties.Resources.MAINWINDOW_LOADING;
             //CoverArt = null;
             _ = UpdateIntegrationsAsync(PlaybackStatus.Changing);
         }
@@ -455,7 +455,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         // TODO: handle exceptions
         WindowTitle = $"{Player.Metadata.Title} • {string.Join(", ", Player.Metadata.Artists)} - {WindowName}";
         Title = Player.Metadata.Title;
-        Artist = string.Join(", ", Player.Metadata.Artists) == "" ? "No artist" : string.Join(", ", Player.Metadata.Artists);
+        Artist = string.Join(", ", Player.Metadata.Artists) == "" ? Properties.Resources.MAINWINDOW_NOARTIST : string.Join(", ", Player.Metadata.Artists);
 
         if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
         else ProgressIndicator2 = "∞";
@@ -897,8 +897,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             LoggingHandler.Log("Auto Import: Scanning for new tracks...");
             var notification = new Notification(this)
             {
-                ContentText = "Scanning for new tracks...",
-                StatusBarText = "Scanning for new tracks...",
+                ContentText = Properties.Resources.NOTIFICATION_SCANNING,
+                StatusBarText = Properties.Resources.NOTIFICATION_SCANNING,
                 Type = NotificationType.Progress,
             };
             Notifications.Add(notification);

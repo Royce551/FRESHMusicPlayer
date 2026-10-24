@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:resx="using:FRESHMusicPlayer.Properties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:FRESHMusicPlayer.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,16 +14,16 @@
     <AdornerLayer.Adorner>
 		<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
 			<Rectangle Fill="{DynamicResource SecondaryColor}" Opacity="0.5"/>
-            <TextBlock Text="Drop here to enqueue (without importing)" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Static resx:Resources.QUEUE_DROP_ENQUEUE}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Panel>
     </AdornerLayer.Adorner>
 
     <DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="10,5,10,0">
-        <TextBlock DockPanel.Dock="Left" Text="Queue" FontWeight="Bold" FontSize="18"/>
+        <TextBlock DockPanel.Dock="Left" Text="{x:Static resx:Resources.QUEUE_TITLE}" FontWeight="Bold" FontSize="18"/>
         <TextBlock DockPanel.Dock="Right" Text="{Binding EndsAt}" VerticalAlignment="Center" FontSize="12"/>
     </DockPanel>
     <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="10,0,10,10">
-		<Button DockPanel.Dock="Right" Content="Clear queue" Command="{Binding ClearQueue}" HorizontalAlignment="Right" IsTabStop="True"/>
+		<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.QUEUE_CLEAR}" Command="{Binding ClearQueue}" HorizontalAlignment="Right" IsTabStop="True"/>
     </DockPanel>
     <ListBox x:Name="MainListBox" BorderBrush="Transparent" ItemsSource="{Binding Tracks}" Grid.IsSharedSizeScope="True" SelectionMode="Single,Toggle" KeyboardNavigation.TabNavigation="Continue" SelectionChanged="MainListBox_SelectionChanged">
       <ListBox.ItemsPanel>
@@ -68,17 +69,17 @@
             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" FontWeight="{Binding FontWeight}"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" FontWeight="{Binding FontWeight}"/>
             <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-              <Button Content="Jump to" Command="{Binding JumpTo}" IsTabStop="True"/>
+              <Button Content="{x:Static resx:Resources.QUEUE_JUMP_TO}" Command="{Binding JumpTo}" IsTabStop="True"/>
             </StackPanel>
 
             <Grid.ContextMenu>
               <ContextMenu>
-                <MenuItem Header="Jump to" Command="{Binding JumpTo}"/>
-                <MenuItem Header="Remove from queue" Command="{Binding RemoveFromQueue}"/>
+                <MenuItem Header="{x:Static resx:Resources.QUEUE_JUMP_TO}" Command="{Binding JumpTo}"/>
+                <MenuItem Header="{x:Static resx:Resources.QUEUE_REMOVE}" Command="{Binding RemoveFromQueue}"/>
                 <Separator/>
-                <MenuItem Header="Go to">
-                  <MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
-                  <MenuItem Header="Album" Command="{Binding GoToAlbum}"/>
+                <MenuItem Header="{x:Static resx:Resources.CONTROLS_GOTO}">
+                  <MenuItem Header="{x:Static resx:Resources.CONTROLS_ARTIST}" Command="{Binding GoToArtist}"/>
+                  <MenuItem Header="{x:Static resx:Resources.CONTROLS_ALBUM}" Command="{Binding GoToAlbum}"/>
                 </MenuItem>
               </ContextMenu>
             </Grid.ContextMenu>

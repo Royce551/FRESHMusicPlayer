@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:resx="using:FRESHMusicPlayer.Properties"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:FRESHMusicPlayer.ViewModels"
@@ -12,8 +13,8 @@
 			<StackPanel.Effect>
 				<DropShadowEffect OffsetX="0" OffsetY="3" BlurRadius="5" Color="Black" Opacity="1"/>
 			</StackPanel.Effect>
-			<Button Content="Back" Command="{Binding Back}"/>
-			<CheckBox Content="Focus mode" IsChecked="{Binding FocusMode}"/>
+			<Button Content="{x:Static resx:Resources.CONTROLS_BACK}" Command="{Binding Back}"/>
+			<CheckBox Content="{x:Static resx:Resources.FULLSCREEN_FOCUSMODE}" IsChecked="{Binding FocusMode}"/>
 		</StackPanel>
 		<TransitioningContentControl ZIndex="0" Content="{Binding CurrentMetadata}">
 			<TransitioningContentControl.ContentTemplate>

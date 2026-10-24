@@ -1,4 +1,4 @@
-﻿using ATL;
+using ATL;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media.Imaging;
@@ -76,7 +76,7 @@ namespace FRESHMusicPlayer.Handlers
             {
                 viewModel.Notifications.Add(new Notification(viewModel)
                 {
-                    ContentText = "Successfully cleared your library!",
+                    ContentText = Properties.Resources.NOTIFICATION_LIBRARY_CLEARED,
                     Type = NotificationType.Success,
                     DisplayAsToast = true,
                     ToastDisplayTime = null
@@ -125,8 +125,8 @@ namespace FRESHMusicPlayer.Handlers
         {
             var notification = new Notification(viewModel)
             {
-                ContentText = "Processing library changes...\n??? tracks remaining\n\nNewly added tracks won't show in the artists or albums tabs until processing is complete.",
-                StatusBarText = "Processing library changes...",
+                ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSING_LIBRARY, "???"),
+                StatusBarText = Properties.Resources.NOTIFICATION_PROCESSING_LIBRARY_STATUS,
                 Type = NotificationType.Progress,
                 DisplayAsToast = true,
                 ToastDisplayTime = TimeSpan.FromSeconds(5)
@@ -143,7 +143,7 @@ namespace FRESHMusicPlayer.Handlers
 
                 Dispatcher.UIThread.Invoke(() =>
                 {
-                    notification.ContentText = $"Processing library changes...\n{p} tracks remaining\n\nNewly added tracks won't show in the artists or albums tabs until processing is complete.";
+                    notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_PROCESSING_LIBRARY, p);
                 });
             });    
 
@@ -221,11 +221,11 @@ namespace FRESHMusicPlayer.Handlers
             {
                 var notification = new Notification(viewModel)
                 {
-                    ContentText = $"Imported {tracks.Length} track(s)!",
+                    ContentText = string.Format(Properties.Resources.NOTIFICATION_IMPORTED, tracks.Length),
                     Type = NotificationType.Success,
                     DisplayAsToast = true,
                     ToastDisplayTime = TimeSpan.FromSeconds(5),
-                    ButtonText = "Undo",
+                    ButtonText = Properties.Resources.NOTIFICATION_IMPORT_UNDO,
                     IsTransient = true,
                     OnButtonClicked = () =>
                     {

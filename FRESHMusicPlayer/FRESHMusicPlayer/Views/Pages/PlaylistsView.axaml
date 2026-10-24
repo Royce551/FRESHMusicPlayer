@@ -1,5 +1,6 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:resx="using:FRESHMusicPlayer.Properties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:FRESHMusicPlayer.ViewModels"
@@ -13,20 +14,20 @@
 		<AdornerLayer.Adorner>
 			<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
 				<Rectangle Fill="{DynamicResource BackgroundColor}" Opacity="0.5"/>
-				<TextBlock Text="Drop here to add to selected playlist" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<TextBlock Text="{x:Static resx:Resources.PLAYLISTS_DROP_ADD}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 			</Panel>
 		</AdornerLayer.Adorner>
 
 		<DockPanel Grid.Column="0" Background="{DynamicResource SecondaryColor}">
 			<StackPanel DockPanel.Dock="Bottom" Margin="10" Spacing="5">
-				<Button Content="Add playlist" Command="{Binding OpenPlaylistCreation}" IsVisible="{Binding !PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+				<Button Content="{x:Static resx:Resources.PLAYLISTS_ADD}" Command="{Binding OpenPlaylistCreation}" IsVisible="{Binding !PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
 
 				<Grid ColumnDefinitions="*,*" Margin="0,0,0,10" HorizontalAlignment="Stretch" IsVisible="{Binding PlaylistCreateMode}">
-					<Button Grid.Column="0" Content="New..." Command="{Binding CreateNewPlaylist}" TextBlock.TextWrapping="Wrap" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,5,0"/>
-					<Button Grid.Column="1" Content="Import..." Command="{Binding ImportNewPlaylist}" TextBlock.TextWrapping="Wrap" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0"/>
+					<Button Grid.Column="0" Content="{x:Static resx:Resources.PLAYLISTS_NEW}" Command="{Binding CreateNewPlaylist}" TextBlock.TextWrapping="Wrap" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,5,0"/>
+					<Button Grid.Column="1" Content="{x:Static resx:Resources.PLAYLISTS_IMPORT}" Command="{Binding ImportNewPlaylist}" TextBlock.TextWrapping="Wrap" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,0,0,0"/>
 				</Grid>
 
-				<Button Content="Close" Command="{Binding ClosePlaylistCreation}" IsVisible="{Binding PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+				<Button Content="{x:Static resx:Resources.PLAYLISTS_CLOSE}" Command="{Binding ClosePlaylistCreation}" IsVisible="{Binding PlaylistCreateMode}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
 			</StackPanel>
 
 			<ListBox IsTextSearchEnabled="True" BorderBrush="Transparent" ItemsSource="{Binding Playlists}" SelectedItem="{Binding SelectedPlaylist}" x:Name="CategoryListBox">
@@ -50,10 +51,10 @@
 		<DockPanel Grid.Column="2">
 			<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
 				<TextBlock Text="{Binding FooterText}" FontSize="12" Foreground="{DynamicResource SecondaryTextColor}" Margin="10,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
-				<Button Content="Play all" Command="{Binding PlayAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
-				<Button Content="Enqueue all" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+				<Button Content="{x:Static resx:Resources.CONTROLS_PLAYALL}" Command="{Binding PlayAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
+				<Button Content="{x:Static resx:Resources.CONTROLS_ENQUEUEALL}" Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Margin="0,10,10,10"/>
 			</DockPanel>
-			<TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="You don't have any playlists yet." Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
+			<TextBlock DockPanel.Dock="Top" IsVisible="{Binding IsLibraryEmpty}" Text="{x:Static resx:Resources.PLAYLISTS_EMPTY}" Margin="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
 
 			<ScrollViewer>
 				<StackPanel>
@@ -62,20 +63,20 @@
 						<TextBlock DockPanel.Dock="Left" Text="{Binding SelectedPlaylist.Name}" Margin="10,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
 
 						<Button DockPanel.Dock="Right" Content="・・・" Command="{Binding OpenPlaylistEdit}" IsVisible="{Binding !PlaylistEditMode}" Margin="0,-5"/>
-						<Button DockPanel.Dock="Right" Content="Close" Command="{Binding ClosePlaylistEdit}" IsVisible="{Binding PlaylistEditMode}" Margin="0,-5"/>
+						<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.PLAYLISTS_CLOSE}" Command="{Binding ClosePlaylistEdit}" IsVisible="{Binding PlaylistEditMode}" Margin="0,-5"/>
 					</DockPanel>
 					<DockPanel Margin="10,10,10,10" LastChildFill="False" IsVisible="{Binding PlaylistEditMode}">
-						<Button DockPanel.Dock="Left" Content="Set cover..." Command="{Binding ChangePlaylistCoverArt}"/>
-						<Button Margin="10,0,0,0" DockPanel.Dock="Left" Content="Remove cover" Command="{Binding RemovePlaylistCoverArt}" IsVisible="{Binding IsRemovePlaylistCoverArtAvailable}"/>
-						<Button Margin="10,0,0,0" DockPanel.Dock="Left" Content="Rename..." Command="{Binding RenamePlaylist}"/>
+						<Button DockPanel.Dock="Left" Content="{x:Static resx:Resources.PLAYLISTS_SET_COVER}" Command="{Binding ChangePlaylistCoverArt}"/>
+						<Button Margin="10,0,0,0" DockPanel.Dock="Left" Content="{x:Static resx:Resources.PLAYLISTS_REMOVE_COVER}" Command="{Binding RemovePlaylistCoverArt}" IsVisible="{Binding IsRemovePlaylistCoverArtAvailable}"/>
+						<Button Margin="10,0,0,0" DockPanel.Dock="Left" Content="{x:Static resx:Resources.PLAYLISTS_RENAME}" Command="{Binding RenamePlaylist}"/>
 
-						<Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="Export" Command="{Binding ExportPlaylist}"/>
-						<Button DockPanel.Dock="Right" Content="Delete">
+						<Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{x:Static resx:Resources.PLAYLISTS_EXPORT}" Command="{Binding ExportPlaylist}"/>
+						<Button DockPanel.Dock="Right" Content="{x:Static resx:Resources.PLAYLISTS_DELETE}">
 							<Button.Flyout>
 								<Flyout ShowMode="Standard">
 									<StackPanel Spacing="5">
-										<TextBlock Text="Are you sure you want to delete this playlist?" FontWeight="Bold"/>
-										<Button Content="Delete" Command="{Binding DeletePlaylist}"/>
+										<TextBlock Text="{x:Static resx:Resources.PLAYLISTS_DELETE_CONFIRM}" FontWeight="Bold"/>
+										<Button Content="{x:Static resx:Resources.PLAYLISTS_DELETE}" Command="{Binding DeletePlaylist}"/>
 									</StackPanel>
 								</Flyout>
 							</Button.Flyout>
@@ -130,27 +131,27 @@
 									<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
 									<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>
 									<StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10" Margin="0,-2">
-										<Button Content="Remove from library" Command="{Binding RemoveFromLibrary}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
-										<Button Content="Manage playlists..." Command="{Binding PlaylistManagement}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
-										<Button Content="Go to artist" Command="{Binding GoToArtist}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
-										<Button Content="Go to album" Command="{Binding GoToAlbum}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
-										<Button Content="Play next" Command="{Binding PlayNext}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
-										<Button Content="Enqueue" Command="{Binding Enqueue}" IsTabStop="True" Tag="{x:True}"/>
-										<Button Content="Play" Command="{Binding Play}" IsTabStop="True" Tag="{x:True}"/> 
+										<Button Content="{x:Static resx:Resources.LIBRARY_REMOVE}" Command="{Binding RemoveFromLibrary}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Command="{Binding PlaylistManagement}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="{x:Static resx:Resources.CONTROLS_GOTOARTIST}" Command="{Binding GoToArtist}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="{x:Static resx:Resources.CONTROLS_GOTOALBUM}" Command="{Binding GoToAlbum}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="{x:Static resx:Resources.CONTROLS_PLAYNEXT}" Command="{Binding PlayNext}" IsTabStop="True" Tag="{Binding ViewModel.MainView.IsShiftHeld}"/>
+										<Button Content="{x:Static resx:Resources.CONTROLS_ENQUEUE}" Command="{Binding Enqueue}" IsTabStop="True" Tag="{x:True}"/>
+										<Button Content="{x:Static resx:Resources.CONTROLS_PLAY}" Command="{Binding Play}" IsTabStop="True" Tag="{x:True}"/> 
 									</StackPanel>
 
 									<Grid.ContextMenu>
 										<ContextMenu>
-											<MenuItem Header="Play" Command="{Binding Play}"/>
-											<MenuItem Header="Enqueue" Command="{Binding Enqueue}"/>
-											<MenuItem Header="Play next" Command="{Binding PlayNext}"/>
+											<MenuItem Header="{x:Static resx:Resources.CONTROLS_PLAY}" Command="{Binding Play}"/>
+											<MenuItem Header="{x:Static resx:Resources.CONTROLS_ENQUEUE}" Command="{Binding Enqueue}"/>
+											<MenuItem Header="{x:Static resx:Resources.CONTROLS_PLAYNEXT}" Command="{Binding PlayNext}"/>
 											<Separator/>
-											<MenuItem Header="Go to">
-												<MenuItem Header="Artist" Command="{Binding GoToArtist}"/>
+											<MenuItem Header="{x:Static resx:Resources.CONTROLS_GOTO}">
+												<MenuItem Header="{x:Static resx:Resources.CONTROLS_ARTIST}" Command="{Binding GoToArtist}"/>
 											</MenuItem>
-											<MenuItem Header="Manage playlists..." Command="{Binding PlaylistManagement}"/>
-											<MenuItem Header="Remove from library" Command="{Binding RemoveFromLibrary}"/>
-											<MenuItem Header="Open in File Explorer" Command="{Binding OpenInFileExplorer}"/>
+											<MenuItem Header="{x:Static resx:Resources.PLAYLISTMANAGEMENT}" Command="{Binding PlaylistManagement}"/>
+											<MenuItem Header="{x:Static resx:Resources.LIBRARY_REMOVE}" Command="{Binding RemoveFromLibrary}"/>
+											<MenuItem Header="{x:Static resx:Resources.CONTROLS_OPEN_FILEEXPLORER}" Command="{Binding OpenInFileExplorer}"/>
 										</ContextMenu>
 									</Grid.ContextMenu>
 								</Grid>

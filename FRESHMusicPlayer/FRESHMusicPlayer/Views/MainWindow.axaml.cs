@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
@@ -381,7 +381,7 @@ public partial class MainWindow : Window
 
     private async void MenuItem_Click_1(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        var input = new TextInputDialog("Enter file path or URL to a network stream");
+        var input = new TextInputDialog(Properties.Resources.CONTROLS_STREAM_PROMPT);
         var path = await input.ShowDialog<string?>(this);
         if (string.IsNullOrWhiteSpace(path)) return; // cancel case
 

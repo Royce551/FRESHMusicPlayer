@@ -1,4 +1,4 @@
-﻿using ATL.Playlist;
+using ATL.Playlist;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -35,7 +35,7 @@ namespace FRESHMusicPlayer.ViewModels
             var viewModelTracks = tracksInPlaylist.Select(x => new DatabaseTrackViewModel(this, x, tracksInPlaylist.Select(y => y.Path).ToArray(), ArtistAlbumLabelType.ArtistAndAlbum)).ToArray();
 
             var totalLength = TimeSpan.FromSeconds(viewModelTracks.Sum(x => x.Length));
-            FooterText = $"Tracks: {viewModelTracks.Count()} • {totalLength}";
+            FooterText = string.Format(Properties.Resources.LIBRARY_FOOTER, viewModelTracks.Count(), totalLength);
 
             Tracks = new AvaloniaList<DatabaseTrackViewModel>(viewModelTracks);
             Tracks.CollectionChanged += Tracks_CollectionChanged;
@@ -135,7 +135,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task CreateNewPlaylist()
         {
-            var input = new TextInputDialog("Playlist name");
+            var input = new TextInputDialog(Properties.Resources.PLAYLISTS_NAME_PROMPT);
             var name = await input.ShowDialog<string?>(MainView.MainWindow);
             if (string.IsNullOrWhiteSpace(name)) return; // cancel case
 
@@ -164,7 +164,7 @@ namespace FRESHMusicPlayer.ViewModels
                     {
                         MainView.Notifications.Add(new Handlers.Notification(MainView)
                         {
-                            ContentText = $"{path} was excluded from the playlist because it could not be found.",
+                            ContentText = string.Format(Properties.Resources.PLAYLISTS_FILE_NOT_FOUND, path),
                             Type = Handlers.NotificationType.Failure,
                             DisplayAsToast = true
                         });
@@ -205,7 +205,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task RenamePlaylist()
         {
-            var input = new TextInputDialog("Playlist name", SelectedPlaylist.Name);
+            var input = new TextInputDialog(Properties.Resources.PLAYLISTS_NAME_PROMPT, SelectedPlaylist.Name);
             var name = await input.ShowDialog<string?>(MainView.MainWindow);
             if (string.IsNullOrWhiteSpace(name)) return; // cancel case
 

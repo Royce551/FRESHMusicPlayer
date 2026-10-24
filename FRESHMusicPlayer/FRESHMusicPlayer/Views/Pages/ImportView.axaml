@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:resx="using:FRESHMusicPlayer.Properties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:FRESHMusicPlayer.ViewModels"
@@ -13,12 +14,12 @@
        <AdornerLayer.Adorner>
 		<Panel x:Name="DropPrompt" IsVisible="{Binding MainView.ShowDragDropOverlay}" IsHitTestVisible="False">
 			<Rectangle Fill="{DynamicResource BackgroundColor}" Opacity="0.5"/>
-            <TextBlock Text="Drop here to import" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Static resx:Resources.IMPORT_DRAGDROP_PROMPT}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Panel>
     </AdornerLayer.Adorner>
 
-      <TextBlock Text="Import" FontWeight="Bold" FontSize="20"/>
-      <Button Content="Browse for tracks" Command="{Binding BrowseTracks}"/>
-      <Button Content="Browse for folders" Command="{Binding BrowseFolders}"/>
+      <TextBlock Text="{x:Static resx:Resources.IMPORT_TITLE}" FontWeight="Bold" FontSize="20"/>
+      <Button Content="{x:Static resx:Resources.IMPORT_BROWSE_TRACKS}" Command="{Binding BrowseTracks}"/>
+      <Button Content="{x:Static resx:Resources.IMPORT_BROWSE_FOLDERS}" Command="{Binding BrowseFolders}"/>
   </StackPanel>
 </UserControl>

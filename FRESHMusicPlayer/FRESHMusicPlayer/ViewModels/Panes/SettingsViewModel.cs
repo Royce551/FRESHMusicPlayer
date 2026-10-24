@@ -1,4 +1,4 @@
-﻿using Avalonia.Collections;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
@@ -119,14 +119,14 @@ namespace FRESHMusicPlayer.ViewModels
 
             if (lastFMIntegration.IsInitialized)
             {
-                LastFMStatus = "Signed in to last.fm";
+                LastFMStatus = Properties.Resources.SETTINGS_LASTFM_SIGNED_IN;
                 IsLastFMSignInButtonVisible = false;
                 IsLastFMConfirmButtonVisible = false;
                 IsLastFMSignOutButtonVisible = true;
             }
             else
             {
-                LastFMStatus = "Not signed in to last.fm";
+                LastFMStatus = Properties.Resources.SETTINGS_LASTFM_SIGNED_OUT;
                 IsLastFMSignInButtonVisible = true;
                 IsLastFMConfirmButtonVisible = false;
                 IsLastFMSignOutButtonVisible = false;
@@ -143,7 +143,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             SIADLUtilities.OpenURL($"http://www.last.fm/api/auth?api_key={LastFMIntegration.ApiKey}&token={lastFMToken}");
 
-            LastFMStatus = "Complete last.fm authentication in the browser window that just opened";
+            LastFMStatus = Properties.Resources.SETTINGS_LASTFM_AUTHENTICATE;
             IsLastFMSignInButtonVisible = false;
             IsLastFMConfirmButtonVisible = true;
             IsLastFMSignOutButtonVisible = false;
@@ -155,7 +155,7 @@ namespace FRESHMusicPlayer.ViewModels
 
             if (!result.IsSuccessStatusCode)
             {
-                LastFMStatus = "FRESHMusicPlayer was not granted access; press sign in to try again";
+                LastFMStatus = Properties.Resources.SETTINGS_LASTFM_ACCESS_DENIED;
                 IsLastFMSignInButtonVisible = true;
                 IsLastFMConfirmButtonVisible = false;
                 IsLastFMSignOutButtonVisible = false;

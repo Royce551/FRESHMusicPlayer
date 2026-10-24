@@ -1,4 +1,4 @@
-﻿using Avalonia.Media.Imaging;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Backends;
@@ -56,7 +56,7 @@ namespace FRESHMusicPlayer.ViewModels
 
                 var trackItems = items.OfType<DatabaseTrackViewModel>();
                 var totalLength = TimeSpan.FromSeconds(trackItems.Sum(x => x.Length));
-                FooterText = $"Tracks: {trackItems.Count()} • {totalLength}";
+                FooterText = string.Format(Properties.Resources.LIBRARY_FOOTER, trackItems.Count(), totalLength);
 
                 return items;
             }

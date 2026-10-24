@@ -1,4 +1,4 @@
-﻿using Avalonia.Media;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Views;
 using System;
@@ -45,7 +45,7 @@ namespace FRESHMusicPlayer.ViewModels
                 if (i != (Tracks.Count - 1)) totalLength += TimeSpan.FromSeconds(track.Length);
             }
             totalLength += (MainView.Player.TotalTime - MainView.Player.CurrentTime);
-            EndsAt = $"Ends at {DateTime.Now + totalLength:t}";
+            EndsAt = string.Format(Properties.Resources.QUEUE_ENDS_AT, DateTime.Now + totalLength);
         }
 
         [ObservableProperty]

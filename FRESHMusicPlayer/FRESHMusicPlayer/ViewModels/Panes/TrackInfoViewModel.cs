@@ -1,4 +1,4 @@
-﻿using Avalonia.Media.Imaging;
+using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FRESHMusicPlayer.Backends;
@@ -85,8 +85,9 @@ namespace FRESHMusicPlayer.ViewModels
 
             if (track is FileMetadataProvider file)
             {
-                Audio = $"{file.ATLTrack.Bitrate}kbps {file.ATLTrack.SampleRate / 1000}kHz {(file.ATLTrack.CodecFamily == 0 ? "(Lossy) " : "(Lossless)")} " +
-                    $"{(file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain") ? "RG" : string.Empty)}";
+                Audio = string.Format("{0}kbps {1}kHz {2} {3}", file.ATLTrack.Bitrate, file.ATLTrack.SampleRate / 1000,
+                    file.ATLTrack.CodecFamily == 0 ? Properties.Resources.TRACKINFO_LOSSY : Properties.Resources.TRACKINFO_LOSSLESS,
+                    file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain") ? "RG" : string.Empty);
                 IsAudioVisible = true;
             }
             else IsAudioVisible = false;
