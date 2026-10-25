@@ -161,7 +161,7 @@
     <value>Zoek</value>
   </data>
   <data name="QUEUE_TITLE" xml:space="preserve">
-    <value>Rij</value>
+    <value>Wachtrij</value>
   </data>
   <data name="SETTINGS_TITLE" xml:space="preserve">
     <value>Instellingen</value>
@@ -224,10 +224,10 @@
     <value></value>
   </data>
   <data name="PLAYLISTS_SET_COVER" xml:space="preserve">
-    <value></value>
+    <value>Stel hoes in</value>
   </data>
   <data name="PLAYLISTS_REMOVE_COVER" xml:space="preserve">
-    <value></value>
+    <value>Verwijder hoes</value>
   </data>
   <data name="PLAYLISTS_RENAME" xml:space="preserve">
     <value>Verander naam...</value>
@@ -242,22 +242,22 @@
     <value></value>
   </data>
   <data name="LYRICS_RESUME_AUTOSCROLL" xml:space="preserve">
-    <value></value>
+    <value>Hervat autoscroll</value>
   </data>
   <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
-    <value></value>
+    <value>Maak leeg</value>
   </data>
   <data name="QUEUE_DROP_ENQUEUE" xml:space="preserve">
-    <value></value>
+    <value>Sleep hier om in de rij te zetten (zonder te importeren)</value>
   </data>
   <data name="QUEUE_CLEAR" xml:space="preserve">
-    <value></value>
+    <value>Leeg wachtrij</value>
   </data>
   <data name="QUEUE_JUMP_TO" xml:space="preserve">
-    <value></value>
+    <value>Ga hierheen</value>
   </data>
   <data name="QUEUE_REMOVE" xml:space="preserve">
-    <value></value>
+    <value>Haal uit de rij</value>
   </data>
   <data name="SEARCH_PLACEHOLDER" xml:space="preserve">
     <value>Type hier om te zoeken</value>
@@ -266,10 +266,10 @@
     <value>Algemeen</value>
   </data>
   <data name="SETTINGS_PLAYBACK" xml:space="preserve">
-    <value></value>
+    <value>Afspelen</value>
   </data>
   <data name="SETTINGS_APPEARANCE" xml:space="preserve">
-    <value></value>
+    <value>Uiterlijk</value>
   </data>
   <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
     <value>Onderhoud</value>
@@ -287,13 +287,13 @@
     <value></value>
   </data>
   <data name="SETTINGS_AUTOQUEUE_DESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>Zet automatisch de rest van de nummers van een artiest, album of playlist in de rij wanneer je een van die nummbers afspeelt</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
-    <value></value>
+    <value>Automatisch importeren</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_DESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>FMP zal nieuwe muziek importeren uit deze mappen:</value>
   </data>
   <data name="SETTINGS_AUTOIMPORT_REMOVE" xml:space="preserve">
     <value>Verwijder</value>
@@ -305,10 +305,10 @@
     <value>Integraties</value>
   </data>
   <data name="SETTINGS_DISCORD_COVER" xml:space="preserve">
-    <value>Toon cover art</value>
+    <value>Toon hoes</value>
   </data>
   <data name="SETTINGS_DISCORD_COVER_DESCRIPTION" xml:space="preserve">
-    <value>Omdat Discord een online bron nodig heeft voor coverart zoekt FMP bijbehorende coverart op het Cover Art Archive. Dit kan soms compleet verkeert zijn. Als je nummers met MBID getagged zijn, zal dat in plaats hiervan gebruikt worden.</value>
+    <value>Omdat Discord een online bron nodig heeft voor de afbeelding op de hoes zoekt FMP een bijbehorende hoes op het Cover Art Archive. Dit kan soms compleet fout zijn. Als je nummers met een MBID getagged zijn zal de MBID in plaats van titel en artiest gebruikt worden.</value>
   </data>
   <data name="SETTINGS_LASTFM_SIGNIN" xml:space="preserve">
     <value>Log in</value>
@@ -320,25 +320,25 @@
     <value>Log uit</value>
   </data>
   <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
-    <value>Gebruik ReplayGain normalisatie van luidheid</value>
+    <value>Gebruik ReplayGain om het volume bij te stellen</value>
   </data>
   <data name="SETTINGS_REPLAYGAIN_DESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>In de Nummerinfo zal "RG" verschijnen als er ReplayGain informatie beschikbaar is</value>
   </data>
   <data name="SETTINGS_REPLAYGAIN_TRACK" xml:space="preserve">
-    <value></value>
+    <value>Stel bij per track</value>
   </data>
   <data name="SETTINGS_REPLAYGAIN_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>Stel bij per album</value>
   </data>
   <data name="SETTINGS_REPLAYGAIN_PREAMP" xml:space="preserve">
-    <value></value>
+    <value>Voor-amp voor tracks met ReplayGain</value>
   </data>
   <data name="SETTINGS_REPLAYGAIN_PREAMP_DESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>Nummers met ReplayGain zullen op een lager richtvolume afspelen om volumebijstelling te laten werken. Een hogere Voor-amp verhoogt het volume maar voorkomt dat nummers die een volumeverhoging nodig hebben correct bijgesteld worden.</value>
   </data>
   <data name="SETTINGS_REPLAYGAIN_FALLBACK_PREAMP" xml:space="preserve">
-    <value></value>
+    <value>Voor-amp voor nummers zonder ReplayGain</value>
   </data>
   <data name="SETTINGS_EQUALIZER" xml:space="preserve">
     <value></value>
@@ -350,166 +350,171 @@
     <value></value>
   </data>
   <data name="SETTINGS_EQUALIZER_BASS_PRESET" xml:space="preserve">
-    <value></value>
+    <value>Bas-boost</value>
   </data>
   <data name="SETTINGS_EQUALIZER_TREBLE_PRESET" xml:space="preserve">
     <value></value>
   </data>
   <data name="SETTINGS_EQUALIZER_RESET" xml:space="preserve">
-    <value></value>
+    <value>Reset</value>
   </data>
   <data name="SETTINGS_SHOW_TIME_IN_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Toon tijd in plaats van de titel in de venstertitel</value>
   </data>
   <data name="SETTINGS_SHOW_REMAINING_TIME" xml:space="preserve">
-    <value></value>
+    <value>Laat resterende tijd in plaats van totale tijd zien in het controlehok</value>
   </data>
   <data name="SETTINGS_SHOW_TASKBAR_PROGRESS" xml:space="preserve">
-    <value></value>
+    <value>Toon afspeel-voortgang als vordering in de taakbalk</value>
   </data>
   <data name="SETTINGS_THEME" xml:space="preserve">
-    <value></value>
+    <value>Thema</value>
   </data>
   <data name="SETTINGS_THEME_SYSTEM" xml:space="preserve">
-    <value></value>
+    <value>Volg systeem</value>
   </data>
   <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
-    <value></value>
+    <value>Light</value>
   </data>
   <data name="SETTINGS_THEME_DARK" xml:space="preserve">
-    <value></value>
+    <value>Donker</value>
   </data>
   <data name="SETTINGS_OPEN_DATA" xml:space="preserve">
-    <value></value>
+    <value>Open data-map</value>
   </data>
   <data name="SETTINGS_RESET" xml:space="preserve">
-    <value></value>
+    <value>Herstel instellingen naar standaard</value>
   </data>
   <data name="SETTINGS_CLEAN_LIBRARY" xml:space="preserve">
-    <value></value>
+    <value>Maak bibliotheek schoon en ververs</value>
   </data>
   <data name="SETTINGS_CLEAN_LIBRARY_DESCRIPTION" xml:space="preserve">
-    <value></value>
+    <value>Verwerkt de metadata voor alle nummers in de bibliotheek opnieuw. Gebruik dit als je met een externe tool veel wijzigingen hebt doorgevoerd. Verwijdert ook dubbelingen uit de bibliotheek.</value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY" xml:space="preserve">
-    <value></value>
+    <value>Bombardeer bibliotheek</value>
   </data>
   <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
-    <value></value>
+    <value>Je staat op het punt om je bibliotheek leeg te halen en al je playlists te verwijderen. Dit is niet ongedaan te maken.</value>
   </data>
   <data name="SETTINGS_CREDITS" xml:space="preserve">
-    <value></value>
+    <value>door Squid House Software (en allen die bijdragen via opensource)</value>
   </data>
   <data name="SETTINGS_LICENSE" xml:space="preserve">
     <value></value>
   </data>
   <data name="SETTINGS_THANK_YOU" xml:space="preserve">
-    <value></value>
+    <value>Dank je wel dat je FRESHMusicPlayer gebruikt ❤️</value>
   </data>
   <data name="SETTINGS_REPORT_ISSUE" xml:space="preserve">
-    <value></value>
+    <value>Vermeld een probleem</value>
   </data>
   <data name="SETTINGS_SOURCE_CODE" xml:space="preserve">
-    <value></value>
+    <value>Toon licencie en broncode</value>
   </data>
   <data name="TRACKINFO_AUDIO" xml:space="preserve">
-    <value></value>
+    <value>Audio</value>
   </data>
   <data name="TRACKINFO_DISC" xml:space="preserve">
     <value></value>
   </data>
   <data name="TRACKINFO_TRACK" xml:space="preserve">
-    <value></value>
+    <value>Nummer</value>
   </data>
   <data name="TRACKINFO_YEAR" xml:space="preserve">
-    <value></value>
+    <value>Jaar</value>
   </data>
   <data name="TRACKINFO_GENRE" xml:space="preserve">
-    <value></value>
+    <value>Genre</value>
   </data>
   <data name="TRACKINFO_ALBUM" xml:space="preserve">
-    <value></value>
+    <value>Album</value>
   </data>
   <data name="QUEUE_ENDS_AT" xml:space="preserve">
-    <value></value>
+    <value>Eindigd om {0:t}</value>
   </data>
   <data name="PLAYLISTS_NAME_PROMPT" xml:space="preserve">
     <value></value>
   </data>
   <data name="PLAYLISTMANAGEMENT_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Wat wil je met "{0}" doen?</value>
   </data>
   <data name="PLAYLISTS_FILE_NOT_FOUND" xml:space="preserve">
-    <value></value>
+    <value>{0} is niet in de playlist terecht gekomen omdat het niet gevonden kon worden.</value>
   </data>
   <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
-    <value></value>
+    <value>Het bestand dat je probeerde af te spelen kon niet gevonden worden. Je kan de verwijzing in de bibliotheek hernieuwen in het geval dat je hem hebt verplaatst.</value>
   </data>
   <data name="NOTIFICATION_FILEGONE_LOCATE" xml:space="preserve">
-    <value></value>
+    <value>Vind bestand</value>
   </data>
   <data name="SETTINGS_LASTFM_SIGNED_IN" xml:space="preserve">
-    <value></value>
+    <value>Ingelogged op last.fm</value>
   </data>
   <data name="SETTINGS_LASTFM_SIGNED_OUT" xml:space="preserve">
-    <value></value>
+    <value>Niet ingelogged op last.fm</value>
   </data>
   <data name="SETTINGS_LASTFM_AUTHENTICATE" xml:space="preserve">
-    <value></value>
+    <value>Ga naar het browser-venster dat zojuist geopend is om authenticatie met last.fm af te ronden.</value>
   </data>
   <data name="SETTINGS_LASTFM_ACCESS_DENIED" xml:space="preserve">
-    <value></value>
+    <value>FRESHMusicPlayer heeft geen toegang gekregen. Druk op inloggen om het opnieuw te proberen.</value>
   </data>
   <data name="CONTROLS_STREAM_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Voer een bestandspad of een URL van een naar een netwerk-stream in</value>
   </data>
   <data name="NOTIFICATION_OPEN_DEBUG_LOG" xml:space="preserve">
-    <value></value>
+    <value>Toon debug log</value>
   </data>
   <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
-    <value></value>
+    <value>Er speelt niets af</value>
   </data>
   <data name="NOTIFICATION_PLAYBACK_ERROR" xml:space="preserve">
-    <value></value>
+    <value>Een error vond plaats tijdens het afspelen:</value>
   </data>
   <data name="PLAYBACK_NOT_SUPPORTED" xml:space="preserve">
-    <value></value>
+    <value>Niet ondersteund door deze backend</value>
   </data>
   <data name="PLAYBACK_INVALID" xml:space="preserve">
-    <value></value>
+    <value>Niet geldig voor deze backend</value>
   </data>
   <data name="PLAYBACK_CORRUPT" xml:space="preserve">
-    <value></value>
+    <value>Bestand lijkt corrupt te zijn</value>
   </data>
   <data name="PLAYBACK_UNKNOWN_ERROR" xml:space="preserve">
-    <value></value>
+    <value>Onbekende error</value>
   </data>
   <data name="NOTIFICATION_SKIPPED_TRACK" xml:space="preserve">
-    <value></value>
+    <value>Nummer overgeslagen</value>
   </data>
   <data name="MAINWINDOW_LOADING_TITLE" xml:space="preserve">
-    <value></value>
+    <value>{0} aan het laden...</value>
   </data>
   <data name="MAINWINDOW_LOADING" xml:space="preserve">
-    <value></value>
+    <value>Aan het laden...</value>
   </data>
   <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
-    <value></value>
+    <value>Geen artiest</value>
   </data>
   <data name="NOTIFICATION_SCANNING" xml:space="preserve">
-    <value></value>
+    <value>Nieuwe tracks aan het zoeken...</value>
   </data>
   <data name="NOTIFICATION_UNHANDLED_ERROR" xml:space="preserve">
-    <value></value>
+    <value>Er is een fout opgetreden :(
+
+Laat dit alsjeblieft inclusief de debug log weten op https://github.com/royce551/freshmusicplayer/issues.</value>
   </data>
   <data name="NOTIFICATION_LIBRARY_CLEARED" xml:space="preserve">
-    <value></value>
+    <value>Je library is successvol geleegd!</value>
   </data>
   <data name="NOTIFICATION_PROCESSING_LIBRARY" xml:space="preserve">
-    <value></value>
+    <value>Bibliotheekwijzigingen aan het verwerken...
+{0} nummers over
+
+Nieuw-toegevoegde nummers zullen niet verschijnen in de artiest- en albumtabbladen totdat het verwerken klaar is</value>
   </data>
   <data name="NOTIFICATION_PROCESSING_LIBRARY_STATUS" xml:space="preserve">
-    <value></value>
+    <value>Bibliotheekwijzigingen aan het verwerken...</value>
   </data>
   <data name="NOTIFICATION_IMPORTED" xml:space="preserve">
     <value></value>
