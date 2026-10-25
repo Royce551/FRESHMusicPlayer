@@ -122,7 +122,7 @@
     <value>Album</value>
   </data>
   <data name="CONTROLS_FULLSCREEN" xml:space="preserve">
-    <value></value>
+    <value>Volledig scherm</value>
   </data>
   <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
     <value>Minispeler</value>
@@ -185,10 +185,10 @@
     <value>Nieuwe playlist...</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_IMPORT_WARNING" xml:space="preserve">
-    <value></value>
+    <value>Dit nummer zit niet in je bibliotheek. Als je hem aan een playlist toevoegt zal dit hem ook importeren.</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_ADD_COLLECTION" xml:space="preserve">
-    <value></value>
+    <value>+ Collectie</value>
   </data>
   <data name="CONTROLS_GOTOALBUM" xml:space="preserve">
     <value>Ga naar album</value>
@@ -284,7 +284,7 @@
     <value>Automatisch</value>
   </data>
   <data name="SETTINGS_AUTOQUEUE" xml:space="preserve">
-    <value></value>
+    <value>Auto-wachtrij</value>
   </data>
   <data name="SETTINGS_AUTOQUEUE_DESCRIPTION" xml:space="preserve">
     <value>Zet automatisch de rest van de nummers van een artiest, album of playlist in de rij wanneer je een van die nummbers afspeelt</value>
@@ -347,7 +347,7 @@
     <value>EQ is niet beschikbaar voor dit platform. Als je een backend voor een ander brontype toevoegt die EQ ondersteunt zullen hier instellingen verschijnen.</value>
   </data>
   <data name="SETTINGS_EQUALIZER_PARTIALLY_UNAVAILABLE" xml:space="preserve">
-    <value></value>
+    <value>De huidige geïnstalleerde backend ondersteunt geen EQ. Voor nummers die deze backend gebruiken zal de equalizer niet werken.</value>
   </data>
   <data name="SETTINGS_EQUALIZER_BASS_PRESET" xml:space="preserve">
     <value>Bas-boost</value>
