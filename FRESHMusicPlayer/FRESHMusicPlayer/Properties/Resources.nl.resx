@@ -152,7 +152,7 @@
     <value>Albums</value>
   </data>
   <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
-    <value></value>
+    <value>Playlists</value>
   </data>
   <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
     <value>Meldingen</value>
@@ -179,10 +179,10 @@
     <value>Terug</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_TITLE" xml:space="preserve">
-    <value></value>
+    <value>Playlist-beheer</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_NEW" xml:space="preserve">
-    <value></value>
+    <value>Nieuwe playlist...</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_IMPORT_WARNING" xml:space="preserve">
     <value></value>
@@ -206,10 +206,10 @@
     <value>Selecteer mappen</value>
   </data>
   <data name="PLAYLISTS_DROP_ADD" xml:space="preserve">
-    <value></value>
+    <value>Sleep hierheen om aan de geselecteerde playlist toe te voegen</value>
   </data>
   <data name="PLAYLISTS_ADD" xml:space="preserve">
-    <value></value>
+    <value>Voeg playlist toe</value>
   </data>
   <data name="PLAYLISTS_NEW" xml:space="preserve">
     <value>Nieuw...</value>
@@ -221,7 +221,7 @@
     <value>Sluit</value>
   </data>
   <data name="PLAYLISTS_EMPTY" xml:space="preserve">
-    <value></value>
+    <value>Je hebt nog geen playlists.</value>
   </data>
   <data name="PLAYLISTS_SET_COVER" xml:space="preserve">
     <value>Stel hoes in</value>
@@ -239,7 +239,7 @@
     <value>Verwijder</value>
   </data>
   <data name="PLAYLISTS_DELETE_CONFIRM" xml:space="preserve">
-    <value></value>
+    <value>Weet je zeker dat je deze playlist wil verwijderen?</value>
   </data>
   <data name="LYRICS_RESUME_AUTOSCROLL" xml:space="preserve">
     <value>Hervat autoscroll</value>
@@ -341,10 +341,10 @@
     <value>Voor-amp voor nummers zonder ReplayGain</value>
   </data>
   <data name="SETTINGS_EQUALIZER" xml:space="preserve">
-    <value></value>
+    <value>Equaliser</value>
   </data>
   <data name="SETTINGS_EQUALIZER_UNAVAILABLE" xml:space="preserve">
-    <value></value>
+    <value>EQ is niet beschikbaar voor dit platform. Als je een backend voor een ander brontype toevoegt die EQ ondersteunt zullen hier instellingen verschijnen.</value>
   </data>
   <data name="SETTINGS_EQUALIZER_PARTIALLY_UNAVAILABLE" xml:space="preserve">
     <value></value>
@@ -353,7 +353,7 @@
     <value>Bas-boost</value>
   </data>
   <data name="SETTINGS_EQUALIZER_TREBLE_PRESET" xml:space="preserve">
-    <value></value>
+    <value>Treble-boost</value>
   </data>
   <data name="SETTINGS_EQUALIZER_RESET" xml:space="preserve">
     <value>Reset</value>
@@ -434,7 +434,7 @@
     <value>Eindigd om {0:t}</value>
   </data>
   <data name="PLAYLISTS_NAME_PROMPT" xml:space="preserve">
-    <value></value>
+    <value>Playlist-naam</value>
   </data>
   <data name="PLAYLISTMANAGEMENT_PROMPT" xml:space="preserve">
     <value>Wat wil je met "{0}" doen?</value>
@@ -517,13 +517,13 @@ Nieuw-toegevoegde nummers zullen niet verschijnen in de artiest- en albumtabblad
     <value>Bibliotheekwijzigingen aan het verwerken...</value>
   </data>
   <data name="NOTIFICATION_IMPORTED" xml:space="preserve">
-    <value></value>
+    <value>{0} nummer(s) geïmporteerd!</value>
   </data>
   <data name="NOTIFICATION_IMPORT_UNDO" xml:space="preserve">
-    <value></value>
+    <value>Maak ongedaan</value>
   </data>
   <data name="NOTIFICATION_SCROBBLE_ERROR" xml:space="preserve">
-    <value></value>
+    <value>Er vond een error plaats tijdens het scrobbelen van {0}"</value>
   </data>
   <data name="TRACKINFO_LOSSY" xml:space="preserve">
     <value></value>
@@ -532,6 +532,6 @@ Nieuw-toegevoegde nummers zullen niet verschijnen in de artiest- en albumtabblad
     <value></value>
   </data>
   <data name="SETTINGS_RESTARTFMP" xml:space="preserve">
-    <value></value>
+    <value>Herstart FMP om je wijzigen door te voeren</value>
   </data>
 </root>
