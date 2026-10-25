@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IMPORT_DRAGDROP_PROMPT" xml:space="preserve">
+    <value>Sleep hier om te importeren</value>
+  </data>
+  <data name="CONTROLS_PLAYALL" xml:space="preserve">
+    <value>Speel alles af</value>
+  </data>
+  <data name="CONTROLS_ENQUEUEALL" xml:space="preserve">
+    <value>Zet alles in de rij</value>
+  </data>
+  <data name="LIBRARY_EMPTY" xml:space="preserve">
+    <value>Je bibliotheek is leeg. Sleep wat nummers naar FMP of stel Auto-Importeer-mappen in in instellingen om te beginnen.</value>
+  </data>
+  <data name="LIBRARY_REMOVE" xml:space="preserve">
+    <value>Verwijder uit bibliotheek</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT" xml:space="preserve">
+    <value>Beheer playlists...</value>
+  </data>
+  <data name="CONTROLS_GOTOARTIST" xml:space="preserve">
+    <value>Ga naar artiest</value>
+  </data>
+  <data name="CONTROLS_PLAYNEXT" xml:space="preserve">
+    <value>Speel volgende af</value>
+  </data>
+  <data name="CONTROLS_ENQUEUE" xml:space="preserve">
+    <value>Zet in de rij</value>
+  </data>
+  <data name="CONTROLS_PLAY" xml:space="preserve">
+    <value>Speel af</value>
+  </data>
+  <data name="CONTROLS_GOTO" xml:space="preserve">
+    <value>Ga naar</value>
+  </data>
+  <data name="CONTROLS_ARTIST" xml:space="preserve">
+    <value>Artiest</value>
+  </data>
+  <data name="CONTROLS_OPEN_FILEEXPLORER" xml:space="preserve">
+    <value>Open in bestandsbeheer</value>
+  </data>
+  <data name="LIBRARY_FOOTER" xml:space="preserve">
+    <value>Nummers: {0} • {1}</value>
+  </data>
+  <data name="LIBRARY_DISCHEADER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DIALOG_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="DIALOG_CANCEL" xml:space="preserve">
+    <value>Annuleer</value>
+  </data>
+  <data name="CONTROLS_TRACKINFO" xml:space="preserve">
+    <value>Nummerinfo</value>
+  </data>
+  <data name="CONTROLS_LYRICS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTER_CURRENT_TRACK" xml:space="preserve">
+    <value>Pauzeer na dit nummer</value>
+  </data>
+  <data name="CONTROLS_ALBUM" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="CONTROLS_FULLSCREEN" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CONTROLS_MINIPLAYER" xml:space="preserve">
+    <value>Minispeler</value>
+  </data>
+  <data name="CONTROLS_OPEN" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="CONTROLS_OPEN_FILE" xml:space="preserve">
+    <value>Bestand...</value>
+  </data>
+  <data name="CONTROLS_OPEN_STREAM" xml:space="preserve">
+    <value>Pad/Netwerk stream...</value>
+  </data>
+  <data name="CONTROLS_TAGEDITOR" xml:space="preserve">
+    <value>Tag bewerker</value>
+  </data>
+  <data name="MAINWINDOW_HOME" xml:space="preserve">
+    <value>Thuis</value>
+  </data>
+  <data name="MAINWINDOW_TRACKS" xml:space="preserve">
+    <value>Nummers</value>
+  </data>
+  <data name="MAINWINDOW_ARTISTS" xml:space="preserve">
+    <value>Artiesten</value>
+  </data>
+  <data name="MAINWINDOW_ALBUMS" xml:space="preserve">
+    <value>Albums</value>
+  </data>
+  <data name="MAINWINDOW_PLAYLISTS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATIONS_TITLE" xml:space="preserve">
+    <value>Meldingen</value>
+  </data>
+  <data name="CONTROLS_SEARCH" xml:space="preserve">
+    <value>Zoek</value>
+  </data>
+  <data name="QUEUE_TITLE" xml:space="preserve">
+    <value>Rij</value>
+  </data>
+  <data name="SETTINGS_TITLE" xml:space="preserve">
+    <value>Instellingen</value>
+  </data>
+  <data name="CONTROLS_DROP_PLAY" xml:space="preserve">
+    <value>Sleep hier om af te spelen (zonder te importeren)</value>
+  </data>
+  <data name="CONTROLS_MENU" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="CONTROLS_PAUSE_AFTER_CURRENT_TRACK_STATUS" xml:space="preserve">
+    <value>Pauzeer na dit nummer</value>
+  </data>
+  <data name="CONTROLS_BACK" xml:space="preserve">
+    <value>Terug</value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_TITLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_NEW" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_IMPORT_WARNING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_ADD_COLLECTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CONTROLS_GOTOALBUM" xml:space="preserve">
+    <value>Ga naar album</value>
+  </data>
+  <data name="FULLSCREEN_FOCUSMODE" xml:space="preserve">
+    <value>Focus modus</value>
+  </data>
+  <data name="IMPORT_TITLE" xml:space="preserve">
+    <value>Importeer</value>
+  </data>
+  <data name="IMPORT_BROWSE_TRACKS" xml:space="preserve">
+    <value>Selecteer  nummers</value>
+  </data>
+  <data name="IMPORT_BROWSE_FOLDERS" xml:space="preserve">
+    <value>Selecteer mappen</value>
+  </data>
+  <data name="PLAYLISTS_DROP_ADD" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTS_ADD" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTS_NEW" xml:space="preserve">
+    <value>Nieuw...</value>
+  </data>
+  <data name="PLAYLISTS_IMPORT" xml:space="preserve">
+    <value>Importeer...</value>
+  </data>
+  <data name="PLAYLISTS_CLOSE" xml:space="preserve">
+    <value>Sluit</value>
+  </data>
+  <data name="PLAYLISTS_EMPTY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTS_SET_COVER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTS_REMOVE_COVER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTS_RENAME" xml:space="preserve">
+    <value>Verander naam...</value>
+  </data>
+  <data name="PLAYLISTS_EXPORT" xml:space="preserve">
+    <value>Exporteer</value>
+  </data>
+  <data name="PLAYLISTS_DELETE" xml:space="preserve">
+    <value>Verwijder</value>
+  </data>
+  <data name="PLAYLISTS_DELETE_CONFIRM" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LYRICS_RESUME_AUTOSCROLL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATIONS_CLEAR_ALL" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUE_DROP_ENQUEUE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUE_CLEAR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUE_JUMP_TO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUE_REMOVE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SEARCH_PLACEHOLDER" xml:space="preserve">
+    <value>Type hier om te zoeken</value>
+  </data>
+  <data name="SETTINGS_GENERAL" xml:space="preserve">
+    <value>Algemeen</value>
+  </data>
+  <data name="SETTINGS_PLAYBACK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_APPEARANCE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_MAINTENANCE" xml:space="preserve">
+    <value>Onderhoud</value>
+  </data>
+  <data name="SETTINGS_ABOUT" xml:space="preserve">
+    <value>Over</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE" xml:space="preserve">
+    <value>Taal</value>
+  </data>
+  <data name="SETTINGS_LANGUAGE_AUTOMATIC" xml:space="preserve">
+    <value>Automatisch</value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOQUEUE_DESCRIPTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_DESCRIPTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_REMOVE" xml:space="preserve">
+    <value>Verwijder</value>
+  </data>
+  <data name="SETTINGS_AUTOIMPORT_ADD" xml:space="preserve">
+    <value>Voeg map toe</value>
+  </data>
+  <data name="SETTINGS_INTEGRATIONS" xml:space="preserve">
+    <value>Integraties</value>
+  </data>
+  <data name="SETTINGS_DISCORD_COVER" xml:space="preserve">
+    <value>Toon cover art</value>
+  </data>
+  <data name="SETTINGS_DISCORD_COVER_DESCRIPTION" xml:space="preserve">
+    <value>Omdat Discord een online bron nodig heeft voor coverart zoekt FMP bijbehorende coverart op het Cover Art Archive. Dit kan soms compleet verkeert zijn. Als je nummers met MBID getagged zijn, zal dat in plaats hiervan gebruikt worden.</value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNIN" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="SETTINGS_LASTFM_CONFIRM" xml:space="preserve">
+    <value>Bevestig</value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNOUT" xml:space="preserve">
+    <value>Log uit</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
+    <value>Gebruik ReplayGain normalisatie van luidheid</value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_DESCRIPTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_TRACK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_ALBUM" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_PREAMP_DESCRIPTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_REPLAYGAIN_FALLBACK_PREAMP" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_EQUALIZER" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_UNAVAILABLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_PARTIALLY_UNAVAILABLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_BASS_PRESET" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_TREBLE_PRESET" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_EQUALIZER_RESET" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_SHOW_TIME_IN_TITLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_SHOW_REMAINING_TIME" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_SHOW_TASKBAR_PROGRESS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THEME" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THEME_SYSTEM" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THEME_LIGHT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THEME_DARK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_OPEN_DATA" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_RESET" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_CLEAN_LIBRARY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_CLEAN_LIBRARY_DESCRIPTION" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_NUKE_LIBRARY_WARNING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_CREDITS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_LICENSE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_THANK_YOU" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_REPORT_ISSUE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_SOURCE_CODE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_AUDIO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_DISC" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_TRACK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_YEAR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_GENRE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_ALBUM" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="QUEUE_ENDS_AT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTS_NAME_PROMPT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTMANAGEMENT_PROMPT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYLISTS_FILE_NOT_FOUND" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_FILEGONE_LOCATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNED_IN" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_LASTFM_SIGNED_OUT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_LASTFM_AUTHENTICATE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_LASTFM_ACCESS_DENIED" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CONTROLS_STREAM_PROMPT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_OPEN_DEBUG_LOG" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_NOTHINGPLAYING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_PLAYBACK_ERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYBACK_NOT_SUPPORTED" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYBACK_INVALID" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYBACK_CORRUPT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PLAYBACK_UNKNOWN_ERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_SKIPPED_TRACK" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_LOADING_TITLE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_LOADING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MAINWINDOW_NOARTIST" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_SCANNING" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_UNHANDLED_ERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_LIBRARY_CLEARED" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_PROCESSING_LIBRARY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_PROCESSING_LIBRARY_STATUS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_IMPORTED" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_IMPORT_UNDO" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="NOTIFICATION_SCROBBLE_ERROR" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_LOSSY" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TRACKINFO_LOSSLESS" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SETTINGS_RESTARTFMP" xml:space="preserve">
+    <value></value>
+  </data>
+</root>
