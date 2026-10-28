@@ -58,7 +58,7 @@
 
 			<ScrollViewer>
 				<StackPanel>
-					<DockPanel Margin="10,10,10,5" LastChildFill="False">
+					<DockPanel Margin="10,10,10,5" LastChildFill="False" IsVisible="{Binding !IsLibraryEmpty}">
 						<Image DockPanel.Dock="Left" Source="{Binding SelectedPlaylist.CoverArt^}" Width="24" Height="24" RenderOptions.BitmapInterpolationMode="HighQuality"/>
 						<TextBlock DockPanel.Dock="Left" Text="{Binding SelectedPlaylist.Name}" Margin="10,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
 

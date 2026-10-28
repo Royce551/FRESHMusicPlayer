@@ -34,6 +34,8 @@ namespace FRESHMusicPlayer.ViewModels
             {
                 "automatic" => 0,
                 "en" => 1,
+                "vi" => 2,
+                "nl" => 3,
                 _ => 0
             };
             selectedLanguageIndex = initialSelectedLanguageIndex;
@@ -64,6 +66,8 @@ namespace FRESHMusicPlayer.ViewModels
                     {
                         0 => "automatic",
                         1 => "en",
+                        2 => "vi",
+                        3 => "nl",
                         _ => "automatic"
                     };
 
