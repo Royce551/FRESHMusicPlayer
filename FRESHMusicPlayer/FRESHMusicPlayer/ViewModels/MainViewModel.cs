@@ -314,11 +314,16 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     private void ProgressTick()
     {
+        if (!Player.FileLoaded) return;
+
         var time = Player.CurrentTime;
+        var totalTime = Player.TotalTime;
+        TotalTimeSeconds = totalTime.TotalSeconds;
         ProgressIndicator1 = time.ToString("mm\\:ss");
 
-        if (Config.ShowRemainingTime) ProgressIndicator2 = $"-{time - Player.CurrentBackend.TotalTime:mm\\:ss}";
-        if (Config.ShowTimeInWindow) WindowTitle = $"{time:mm\\:ss}/{Player.CurrentBackend.TotalTime:mm\\:ss} - {WindowName}";
+        if (Config.ShowRemainingTime) ProgressIndicator2 = $"-{time - totalTime:mm\\:ss}";
+        else ProgressIndicator2 = totalTime == TimeSpan.Zero ? "∞" : totalTime.ToString(@"mm\:ss");
+        if (Config.ShowTimeInWindow) WindowTitle = $"{time:mm\\:ss}/{totalTime:mm\\:ss} - {WindowName}";
 
         OnPropertyChanged(nameof(CurrentTimeSeconds));
 
