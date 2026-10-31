@@ -557,7 +557,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 new(){ Bandwidth = 1f, Frequency = 2400, Gain = (float)Config.SEqualizerBand5 },
                 new(){ Bandwidth = 1f, Frequency = 6000, Gain = (float)Config.SEqualizerBand6 },
                 new(){ Bandwidth = 1f, Frequency = 15000, Gain = (float)Config.SEqualizerBand7 },
-            };
+            }.Where(band => band.Gain != 0).ToList();
             equalizableBackend.UpdateEqualizer();
         }
         else LoggingHandler.Log("EQ: Not applying");

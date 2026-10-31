@@ -12,6 +12,7 @@
     <Application.Styles>
         <FluentTheme />
        <StyleInclude Source="avares://SIADL.Avalonia/SIADL.axaml"/>
+       <StyleInclude Source="/Styles/RowActions.axaml"/>
       <Style Selector="TextBlock">
         <Setter Property="FontSize" Value="14"/>
       </Style>

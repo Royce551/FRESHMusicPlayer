@@ -101,31 +101,12 @@
 						</ListBox.Styles>
 						<ListBox.DataTemplates>
 							<DataTemplate DataType="vm:DatabaseTrackViewModel">
-								<Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
+								<Grid Classes="TrackRow" RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="Auto"/>
 										<ColumnDefinition Width="*"/>
 										<ColumnDefinition Width="Auto"/>
 									</Grid.ColumnDefinitions>
-									<Grid.Styles>
-										<Style Selector="Grid > StackPanel > Button">
-											<Setter Property="IsVisible" Value="False"/>
-										</Style>
-										<Style Selector="Grid:pointerover > StackPanel > Button[Tag=true]">
-											<Setter Property="IsVisible" Value="True"/>
-										</Style>
-
-										<Style Selector="Grid:pointerover > Grid > StackPanel > Button[Tag=false]">
-											<Setter Property="IsVisible" Value="False"/>
-										</Style>
-										<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=true]">
-											<Setter Property="IsVisible" Value="True"/>
-										</Style>
-	
-										<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=false]">
-											<Setter Property="IsVisible" Value="False"/>
-										</Style>
-									</Grid.Styles>
 
 									<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="{Binding CoverArt^}" Width="22" Height="22" VerticalAlignment="Center" Margin="0,0,8,0" RenderOptions.BitmapInterpolationMode="HighQuality"/>
 									<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>

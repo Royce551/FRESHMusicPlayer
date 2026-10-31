@@ -47,28 +47,17 @@
      </ListBox.Styles>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" KeyboardNavigation.IsTabStop="True">
+          <Grid Classes="ActionRow" RowDefinitions="*,*" Margin="5,0" Background="Transparent" KeyboardNavigation.IsTabStop="True">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
               <ColumnDefinition Width="*"/>
               <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Grid.Styles>
-              <Style Selector="Grid > StackPanel > Button">
-                <Setter Property="IsVisible" Value="False"/>
-              </Style>
-              <Style Selector="Grid:pointerover > StackPanel > Button">
-                <Setter Property="IsVisible" Value="True"/>
-              </Style>
-              <Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button">
-                <Setter Property="IsVisible" Value="True"/>
-              </Style>
-            </Grid.Styles>
 
             <TextBlock Text="{Binding PositionString}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" FontWeight="{Binding FontWeight}"/>
             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" FontWeight="{Binding FontWeight}"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" FontWeight="{Binding FontWeight}"/>
-            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+            <StackPanel Classes="RowActions" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
               <Button Content="{x:Static resx:Resources.QUEUE_JUMP_TO}" Command="{Binding JumpTo}" IsTabStop="True"/>
             </StackPanel>
 

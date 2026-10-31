@@ -56,24 +56,13 @@
 						</ListBox.ItemsPanel>
 						<ListBox.DataTemplates>
 							<DataTemplate DataType="vm:DiscGroupHeaderViewModel">
-								<Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent">
-									<Border.Styles>
-										<Style Selector="Border > Grid > DockPanel > Button">
-											<Setter Property="IsVisible" Value="False"/>
-										</Style>
-										<Style Selector="Border:pointerover > Grid > DockPanel > Button">
-											<Setter Property="IsVisible" Value="True"/>
-										</Style>
-										<Style Selector="ListBoxItem:focus-within > Border > Grid > DockPanel > Button">
-											<Setter Property="IsVisible" Value="True"/>
-										</Style>
-									</Border.Styles>
+								<Border Classes="HeaderRow" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent">
 									<Grid>
 										<Grid.ColumnDefinitions> <!--it's sloppy but it works :sob:-->
 											<ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
 											<ColumnDefinition Width="*"/>
 										</Grid.ColumnDefinitions>	
-										<DockPanel Grid.Column="1">
+										<DockPanel Classes="RowActions" Grid.Column="1">
 											<Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="{x:Static resx:Resources.CONTROLS_PLAYALL}" Margin="2,1"/>
 											<Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="{x:Static resx:Resources.CONTROLS_ENQUEUEALL}" Margin="2,1"/>
 
@@ -84,31 +73,12 @@
 								</Border>
 							</DataTemplate>
 							<DataTemplate DataType="vm:DatabaseTrackViewModel">
-								<Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
+								<Grid Classes="TrackRow" RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
 										<ColumnDefinition Width="*"/>
 										<ColumnDefinition Width="Auto"/>
 									</Grid.ColumnDefinitions>
-									<Grid.Styles>
-										<Style Selector="Grid > StackPanel > Button">
-											<Setter Property="IsVisible" Value="False"/>
-										</Style>
-										<Style Selector="Grid:pointerover > StackPanel > Button[Tag=true]">
-											<Setter Property="IsVisible" Value="True"/>
-										</Style>
-
-										<Style Selector="Grid:pointerover > Grid > StackPanel > Button[Tag=false]">
-											<Setter Property="IsVisible" Value="False"/>
-										</Style>
-										<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=true]">
-											<Setter Property="IsVisible" Value="True"/>
-										</Style>
-	
-										<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=false]">
-											<Setter Property="IsVisible" Value="False"/>
-										</Style>
-									</Grid.Styles>
 
 									<TextBlock Text="{Binding TrackNumber}" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,8,0" HorizontalAlignment="Center" IsVisible="{Binding IsTrackNumberPresent}" Opacity="{Binding Opacity}"/>
 									<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>

@@ -55,19 +55,8 @@
         </ListBox.ItemsPanel>
         <ListBox.DataTemplates>
           <DataTemplate DataType="vm:AlbumGroupHeaderViewModel">
-            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent" PointerPressed="Border_PointerPressed">
-              <Border.Styles>
-                <Style Selector="Border > DockPanel > Button">
-                  <Setter Property="IsVisible" Value="False"/>
-                </Style>
-                <Style Selector="Border:pointerover > DockPanel > Button">
-                  <Setter Property="IsVisible" Value="True"/>
-                </Style>
-                <Style Selector="ListBoxItem:focus-within > Border > DockPanel > Button">
-                  <Setter Property="IsVisible" Value="True"/>
-                </Style>
-              </Border.Styles>
-              <DockPanel>
+            <Border Classes="HeaderRow" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SecondaryTextColor}" Background="Transparent" PointerPressed="Border_PointerPressed">
+              <DockPanel Classes="RowActions">
                   <Button Command="{Binding PlayAll}" DockPanel.Dock="Right" Content="{x:Static resx:Resources.CONTROLS_PLAYALL}" Margin="2,1"/>
                   <Button Command="{Binding EnqueueAll}" DockPanel.Dock="Right" Content="{x:Static resx:Resources.CONTROLS_ENQUEUEALL}" Margin="2,1"/>
                 
@@ -77,31 +66,12 @@
             </Border>
           </DataTemplate>
           <DataTemplate DataType="vm:DatabaseTrackViewModel">
-            <Grid RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
+            <Grid Classes="TrackRow" RowDefinitions="*,*" Margin="5,0" Background="Transparent" PointerPressed="Grid_PointerPressed" KeyboardNavigation.IsTabStop="True">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="TrackNumber"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
               </Grid.ColumnDefinitions>
-              <Grid.Styles>
-                <Style Selector="Grid > StackPanel > Button">
-					<Setter Property="IsVisible" Value="False"/>
-				</Style>
-				<Style Selector="Grid:pointerover > StackPanel > Button[Tag=true]">
-					<Setter Property="IsVisible" Value="True"/>
-				</Style>
-
-				<Style Selector="Grid:pointerover > Grid > StackPanel > Button[Tag=false]">
-					<Setter Property="IsVisible" Value="False"/>
-				</Style>
-				<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=true]">
-					<Setter Property="IsVisible" Value="True"/>
-				</Style>
-	
-				<Style Selector="ListBoxItem:focus-within > Grid > StackPanel > Button[Tag=false]">
-					<Setter Property="IsVisible" Value="False"/>
-				</Style>
-              </Grid.Styles>
               
               <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontSize="12" Opacity="{Binding Opacity}"/>
               <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistAlbumLabel}" FontSize="9" Foreground="{DynamicResource SecondaryTextColor}" Opacity="{Binding Opacity}"/>

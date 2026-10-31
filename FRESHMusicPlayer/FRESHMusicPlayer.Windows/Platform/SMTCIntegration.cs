@@ -27,6 +27,11 @@ namespace FRESHMusicPlayer.Windows.Platform
 
         private readonly MainViewModel viewModel;
         private readonly IntPtr hWnd;
+        private PlaybackStatus playbackStatus = PlaybackStatus.Closed;
+        private TaskbarButtonProgressState taskbarProgressState = TaskbarButtonProgressState.None;
+
+        private bool ShowTaskbarProgress => viewModel.Config.WindowsShowProgressInTaskbar
+            && (playbackStatus == PlaybackStatus.Playing || playbackStatus == PlaybackStatus.Changing);
 
         public SMTCIntegration(MainViewModel viewModel, Window window)
         {
@@ -42,19 +47,14 @@ namespace FRESHMusicPlayer.Windows.Platform
             smtc.IsStopEnabled = true;
             smtc.IsPreviousEnabled = true;
             smtc.ButtonPressed += Smtc_ButtonPressed;
+            viewModel.ProgressTimer.Tick += ProgressTimer_Tick;
         }
 
         public async Task UpdateAsync(IMetadataProvider track, PlaybackStatus status)
         {
-            if (viewModel.Config.WindowsShowProgressInTaskbar && status == PlaybackStatus.Playing || status == PlaybackStatus.Changing)
-            {
-                viewModel.ProgressTimer.Tick += ProgressTimer_Tick;
-            }
-            else
-            {
-                TaskbarList.SetProgressState(hWnd, TaskbarButtonProgressState.None);
-                viewModel.ProgressTimer.Tick -= ProgressTimer_Tick;
-            }
+            playbackStatus = status;
+            if (!ShowTaskbarProgress)
+                SetTaskbarProgressState(TaskbarButtonProgressState.None);
 
             smtc.PlaybackStatus = (MediaPlaybackStatus)status;
 
@@ -85,15 +85,32 @@ namespace FRESHMusicPlayer.Windows.Platform
 
         private void ProgressTimer_Tick(object? sender, EventArgs e)
         {
-            TaskbarList.SetProgressState(hWnd, TaskbarButtonProgressState.Normal);
+            if (!ShowTaskbarProgress || !viewModel.Player.FileLoaded || viewModel.Player.TotalTime <= TimeSpan.Zero)
+            {
+                SetTaskbarProgressState(TaskbarButtonProgressState.None);
+                return;
+            }
+
+            SetTaskbarProgressState(TaskbarButtonProgressState.Normal);
 
             // if progress is 0, the progress bar will not show
             TaskbarList.SetProgressValue(hWnd, Math.Max(1, (uint)((viewModel.Player.CurrentTime.TotalMicroseconds / viewModel.Player.TotalTime.TotalMicroseconds) * 100)), 100);
 
         }
 
+        private void SetTaskbarProgressState(TaskbarButtonProgressState state)
+        {
+            if (taskbarProgressState == state) return;
+            TaskbarList.SetProgressState(hWnd, state);
+            taskbarProgressState = state;
+        }
+
         public void Close()
         {
+            playbackStatus = PlaybackStatus.Closed;
+            viewModel.ProgressTimer.Tick -= ProgressTimer_Tick;
+            smtc.ButtonPressed -= Smtc_ButtonPressed;
+            SetTaskbarProgressState(TaskbarButtonProgressState.None);
             LoggingHandler.Log("Closing SMTC integration");
         }
 
