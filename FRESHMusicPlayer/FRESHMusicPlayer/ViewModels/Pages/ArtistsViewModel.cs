@@ -30,7 +30,8 @@ namespace FRESHMusicPlayer.ViewModels
 
                 if (albums.Count() <= 1)
                 {
-                    var viewModelTracks = tracksInArtist.Select(x => new DatabaseTrackViewModel(this, x, tracksInArtist.Select(y => y.Path).ToArray(), ArtistAlbumLabelType.Album));
+                    var tracksInCollection = tracksInArtist.Select(x => x.Path).ToArray();
+                    var viewModelTracks = tracksInArtist.Select(x => new DatabaseTrackViewModel(this, x, tracksInCollection, ArtistAlbumLabelType.Album));
 
                     items = new ObservableCollection<ObservableRecipient>(viewModelTracks);
                 }
@@ -48,9 +49,10 @@ namespace FRESHMusicPlayer.ViewModels
                     items = new ObservableCollection<ObservableRecipient>(tempItems);
 
                     var otherTracks = items.OfType<DatabaseTrackViewModel>();
+                    var tracksInCollection = otherTracks.Select(x => x.Path).ToArray();
                     foreach (var item in otherTracks)
                     {
-                        item.TracksInCollection = otherTracks.Select(x => x.Path).ToArray();
+                        item.TracksInCollection = tracksInCollection;
                     }
                 }
 

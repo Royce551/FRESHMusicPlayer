@@ -65,6 +65,7 @@ public partial class FullscreenView : UserControl
 
     public void LeaveFullscreen()
     {
+        controlDismissTimer.Stop();
         controlDismissTimer.Tick -= ControlDismissTimer_Tick;
         viewModel.MainView.SetControlsVisibility(true);
         viewModel.MainView.IsContentFullscreen = false;

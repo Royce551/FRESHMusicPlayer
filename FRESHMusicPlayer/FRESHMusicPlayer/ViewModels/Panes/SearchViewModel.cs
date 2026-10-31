@@ -28,7 +28,8 @@ namespace FRESHMusicPlayer.ViewModels
                 var totalLength = TimeSpan.FromSeconds(tracks.Sum(x => x.Length));
                 FooterText = string.Format(Properties.Resources.LIBRARY_FOOTER, tracks.Count, totalLength);
 
-                return tracks.Select(x => new DatabaseTrackViewModel(this, x, [.. tracks.Select(x => x.Path)]));
+                var tracksInCollection = tracks.Select(x => x.Path).ToArray();
+                return tracks.Select(x => new DatabaseTrackViewModel(this, x, tracksInCollection));
             });
             return new ObservableCollection<DatabaseTrackViewModel>(tracks);
         }

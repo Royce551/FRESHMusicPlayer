@@ -38,7 +38,7 @@ namespace FRESHMusicPlayer.ViewModels
             MainView.ProgressTimer.Tick += ProgressTimer_Tick;
         }
 
-        private void ProgressTimer_Tick(object? sender, EventArgs e) => CurrentMetadata.TickLyrics();
+        private void ProgressTimer_Tick(object? sender, EventArgs e) => CurrentMetadata?.TickLyrics();
 
         public override void OnNavigatingAway()
         {
@@ -55,7 +55,8 @@ namespace FRESHMusicPlayer.ViewModels
         {
             if (MainView.Player.FileLoaded)
             {
-                var coverArt = await Task.Run(() => Bitmap.DecodeToWidth(new MemoryStream(MainView.Player.Metadata.CoverArt), 1000));
+                Bitmap? coverArt = null;
+                if (MainView.Player.Metadata.CoverArt != null) coverArt = await Task.Run(() => Bitmap.DecodeToWidth(new MemoryStream(MainView.Player.Metadata.CoverArt), 1000));
                 CurrentMetadata = new MetadataViewModel(MainView.Player.Metadata, coverArt, MainView, this);
             }
         }
@@ -69,12 +70,12 @@ namespace FRESHMusicPlayer.ViewModels
 
         public string ArtistString => string.Join(", ", Metadata.Artists);
 
-        public Bitmap CoverArt { get; }
+        public Bitmap? CoverArt { get; }
 
         public bool LyricsAvailable => Lyrics != null && !viewModel.FocusMode;
 
         private readonly FullscreenViewModel viewModel;
-        public MetadataViewModel(IMetadataProvider metadata, Bitmap coverArt, MainViewModel mainView, FullscreenViewModel viewModel)
+        public MetadataViewModel(IMetadataProvider metadata, Bitmap? coverArt, MainViewModel mainView, FullscreenViewModel viewModel)
         {
             Metadata = metadata;
             CoverArt = coverArt;

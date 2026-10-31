@@ -32,7 +32,8 @@ namespace FRESHMusicPlayer.ViewModels
             var albums = tracksInPlaylist.Select(x => x.Album).Distinct().ToList();
             albums.Sort();
 
-            var viewModelTracks = tracksInPlaylist.Select(x => new DatabaseTrackViewModel(this, x, tracksInPlaylist.Select(y => y.Path).ToArray(), ArtistAlbumLabelType.ArtistAndAlbum)).ToArray();
+            var tracksInCollection = tracksInPlaylist.Select(x => x.Path).ToArray();
+            var viewModelTracks = tracksInPlaylist.Select(x => new DatabaseTrackViewModel(this, x, tracksInCollection, ArtistAlbumLabelType.ArtistAndAlbum)).ToArray();
 
             var totalLength = TimeSpan.FromSeconds(viewModelTracks.Sum(x => x.Length));
             FooterText = string.Format(Properties.Resources.LIBRARY_FOOTER, viewModelTracks.Count(), totalLength);

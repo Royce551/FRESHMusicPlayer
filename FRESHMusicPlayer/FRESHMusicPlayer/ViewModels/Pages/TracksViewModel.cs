@@ -57,7 +57,8 @@ namespace FRESHMusicPlayer.ViewModels
                 var libraryTracks = MainView.Library.GetAllTracks();
                 IsLibraryEmpty = libraryTracks.Count <= 0;
 
-                var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x, libraryTracks.Select(y => y.Path).ToArray()));
+                var tracksInCollection = libraryTracks.Select(x => x.Path).ToArray();
+                var viewModelTracks = libraryTracks.Select(x => new DatabaseTrackViewModel(this, x, tracksInCollection));
                 Tracks = new ObservableCollection<DatabaseTrackViewModel>(viewModelTracks);
 
                 var totalLength = TimeSpan.FromSeconds(Tracks.Sum(x => x.Length));

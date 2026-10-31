@@ -634,12 +634,24 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     private Dictionary<Page, (ViewModelBase vm, Control pg)> viewModelCache = new();
     public void NavigateTo(Page pageType, object? args = null, bool skipCache = false)
     {
+        if (!skipCache && viewModelCache.TryGetValue(pageType, out var cachedPage) && ReferenceEquals(selectedViewModel, cachedPage.vm)) return;
+
+        ShowPage(pageType, args, skipCache);
+        backLog.Push((pageType, args, skipCache));
+        forwardLog.Clear();
+    }
+
+    private void ShowPage(Page pageType, object? args, bool skipCache)
+    {
         ViewModelBase page;
         Control view;
 
         var pageIsInCache = viewModelCache.TryGetValue(pageType, out var cachedViewModel);
 
-        selectedViewModel?.OnNavigatingAway();
+        if (selectedViewModel != null && !viewModelCache.Values.Any(x => ReferenceEquals(x.vm, selectedViewModel)))
+        {
+            selectedViewModel.OnNavigatingAway();
+        }
 
         if (!skipCache && pageIsInCache)
         {
@@ -648,8 +660,6 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         }
         else
         {
-            if (pageIsInCache) cachedViewModel.vm.OnNavigatingAway();
-
             page = pageType switch
             {
                 Page.Tracks => new TracksViewModel(),
@@ -677,8 +687,6 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             page.AfterPageLoaded();
         }
 
-        backLog.Push((pageType, args, skipCache));
-
         SelectedView = view;
         selectedViewModel = page;
 
@@ -698,8 +706,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         if (backLog.Count <= 1) return;
 
         var forwardPage = backLog.Pop();
-        var lastPage = backLog.Pop();
-        NavigateTo(lastPage.pageType, lastPage.args, lastPage.skipCache);
+        var lastPage = backLog.Peek();
+        ShowPage(lastPage.pageType, lastPage.args, lastPage.skipCache);
         forwardLog.Push(forwardPage);
     }
 
@@ -708,7 +716,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         if (forwardLog.Count == 0) return;
 
         var nextPage = forwardLog.Pop();
-        NavigateTo(nextPage.pageType, nextPage.args, nextPage.skipCache);
+        ShowPage(nextPage.pageType, nextPage.args, nextPage.skipCache);
         backLog.Push(nextPage);
     }
 

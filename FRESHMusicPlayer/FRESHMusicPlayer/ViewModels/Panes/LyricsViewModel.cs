@@ -76,6 +76,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public override void OnNavigatingAway()
         {
+            timer.Stop();
             MainView.Player.SongChanged -= Player_SongChanged;
             MainView.Player.SongStopped -= Player_SongStopped;
             MainView.CoverArtChanged -= MainView_CoverArtChanged;
