@@ -37,7 +37,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     [NotifyPropertyChangedFor(nameof(IsNavbarVisible))]
     public partial Control? SelectedView { get; set; }
 
-    private ViewModelBase selectedViewModel;
+    private ViewModelBase? selectedViewModel;
 
     public bool IsNavbarVisible => true;
 
@@ -121,8 +121,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
         Notifications.CollectionChanged += Notifications_CollectionChanged;
 
-        NavigateTo(Config.Page);
-
+        if (Config.Page != Page.Fullscreen) NavigateTo(Config.Page);
+        else NavigateTo(Page.Import);
 
         _ = PerformAutoImportAsync();
     }
@@ -319,11 +319,20 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         var time = Player.CurrentTime;
         var totalTime = Player.TotalTime;
         TotalTimeSeconds = totalTime.TotalSeconds;
-        ProgressIndicator1 = time.ToString("mm\\:ss");
 
-        if (Config.ShowRemainingTime) ProgressIndicator2 = $"-{time - totalTime:mm\\:ss}";
-        else ProgressIndicator2 = totalTime == TimeSpan.Zero ? "∞" : totalTime.ToString(@"mm\:ss");
-        if (Config.ShowTimeInWindow) WindowTitle = $"{time:mm\\:ss}/{totalTime:mm\\:ss} - {WindowName}";
+        var currentTimeString = time.ToString(time.TotalHours >= 1 ? @"h\:mm\:ss" : @"mm\:ss");
+        string totalTimeString;
+        if (Config.ShowRemainingTime)
+        {
+            var remainingTime = time - totalTime;
+            totalTimeString = $"-{remainingTime.ToString(remainingTime.TotalHours <= -1 ? @"h\:mm\:ss" : @"mm\:ss")}";
+        }
+        else totalTimeString = totalTime == TimeSpan.Zero ? "∞" : totalTime.ToString(totalTime.TotalHours >= 1 ? @"h\:mm\:ss" : @"mm\:ss");
+
+        ProgressIndicator1 = currentTimeString;
+        ProgressIndicator2 = totalTimeString;
+
+        if (Config.ShowTimeInWindow) WindowTitle = $"{currentTimeString}/{totalTimeString} - {WindowName}";
 
         OnPropertyChanged(nameof(CurrentTimeSeconds));
 
@@ -336,11 +345,12 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         var newShowRemainingTime = !Config.ShowRemainingTime;
 
         Config.ShowRemainingTime = newShowRemainingTime;
-        if (ProgressTimer.IsEnabled && !newShowRemainingTime)
-        {
-            if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
-            else ProgressIndicator2 = "∞";
-        }
+        //if (ProgressTimer.IsEnabled && !newShowRemainingTime)
+        //{
+        //    if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
+        //    else ProgressIndicator2 = "∞";
+        //}
+        ProgressTick();
     }
 
     private async void Player_SongException(object? sender, PlaybackExceptionEventArgs e)

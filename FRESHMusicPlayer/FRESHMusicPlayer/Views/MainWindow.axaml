@@ -335,7 +335,7 @@
         </Panel>
         <Grid RowDefinitions="*,*,*" Margin="10" VerticalAlignment="Center">
           <StackPanel Grid.Row="0" Spacing="10" Orientation="Horizontal" Height="30">
-            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" ContextMenu="{StaticResource OverflowMenu}" PointerReleased="TextBlock_PointerReleased" Cursor="Hand"/>
+            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" ContextMenu="{StaticResource OverflowMenu}" PointerReleased="TextBlock_PointerReleased" Margin="0,0,0,-10" Cursor="Hand"/>
             <Button x:Name="OverflowMenuButton" Content="{x:Static resx:Resources.CONTROLS_MENU}" FontSize="12" VerticalAlignment="Center" Click="OverflowMenuButton_Click" ContextMenu="{StaticResource OverflowMenu}">
               <Button.Styles>
                 <Style Selector="DockPanel > Grid > StackPanel > Button">
