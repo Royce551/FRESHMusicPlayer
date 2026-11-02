@@ -358,6 +358,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         var message = new StringBuilder();
         message.AppendLine(Properties.Resources.NOTIFICATION_PLAYBACK_ERROR);
         message.AppendLine();
+        LoggingHandler.Log("Song Exception:");
         foreach (var problem in e.Problems)
         {
             var problemString = problem.Value switch
@@ -369,6 +370,10 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
                 _ => throw new InvalidOperationException()
             };
             message.AppendLine($"{problem.Key}: {problemString}");
+        }
+        foreach (var exception in e.Exceptions)
+        {
+            LoggingHandler.Log(exception.ToString());
         }
         if (Player.Queue.Position < Player.Queue.Queue.Count)
         {
@@ -414,21 +419,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
     private bool areControlsHidden = false;
     public bool AreControlsHidden => areControlsHidden;
 
-    public bool SetControlsVisibility(bool show)
+    public bool SetControlsVisibility(bool show, bool animate = true)
     {
-        if (show && areControlsHidden)
-        {
-            areControlsHidden = false;
-            _ = MainWindow.AnimateControlsShowAsync();
-            return true;
-        }
-        else if (!show && !areControlsHidden)
-        {
-            areControlsHidden = true;
-            _ = MainWindow.AnimateControlsHideAsync();
-            return true;
-        }
-        return false;
+        if (animate && areControlsHidden == !show) return false;
+
+        areControlsHidden = !show;
+        _ = MainWindow.AnimateControlsAsync(show, animate);
+        return true;
     }
 
     private async void Player_SongStopped(object? sender, PlaybackStoppedEventArgs e)

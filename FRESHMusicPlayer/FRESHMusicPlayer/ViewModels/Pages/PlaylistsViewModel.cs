@@ -271,7 +271,7 @@ namespace FRESHMusicPlayer.ViewModels
 
         public async Task ExportPlaylist()
         {
-            var topLevel = TopLevel.GetTopLevel(MainView.MainWindow);
+            var topLevel = TopLevel.GetTopLevel(MainView.MainWindow) ?? throw new Exception();
 
             var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {

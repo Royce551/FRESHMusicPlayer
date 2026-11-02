@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reactive;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FRESHMusicPlayer.Views;
@@ -145,20 +146,40 @@ public partial class MainWindow : Window
         await animation.RunAsync(CoverArt);
     }
 
-    public async Task AnimateControlsShowAsync()
-    {
-        var animation1 = (Animation?)Resources["ShowNavBar"];
-        var animation2 = (Animation?)Resources["ShowControlBar"];
-        _ = animation1?.RunAsync(NavBar);
-        _ = animation2?.RunAsync(ControlBar);
-    }
+    private CancellationTokenSource? controlsAnimationCancellation;
 
-    public async Task AnimateControlsHideAsync()
+    public async Task AnimateControlsAsync(bool show, bool animate = true)
     {
-        var animation1 = (Animation?)Resources["HideNavBar"];
-        var animation2 = (Animation?)Resources["HideControlBar"];
-        _ = animation1?.RunAsync(NavBar);
-        _ = animation2?.RunAsync(ControlBar);
+        controlsAnimationCancellation?.Cancel();
+        var cancellation = new CancellationTokenSource();
+        controlsAnimationCancellation = cancellation;
+
+        try
+        {
+            if (animate)
+            {
+                var animation1 = (Animation)Resources[show ? "ShowNavBar" : "HideNavBar"]!;
+                var animation2 = (Animation)Resources[show ? "ShowControlBar" : "HideControlBar"]!;
+                await Task.WhenAll(
+                    animation1.RunAsync(NavBar, cancellation.Token),
+                    animation2.RunAsync(ControlBar, cancellation.Token));
+            }
+
+            if (!cancellation.IsCancellationRequested)
+            {
+                NavBar.Margin = show ? new Thickness(0) : new Thickness(0, -27, 0, 0);
+                ControlBar.Margin = show ? new Thickness(0) : new Thickness(0, 0, 0, -84);
+            }
+        }
+        catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+        {
+        }
+        finally
+        {
+            if (ReferenceEquals(controlsAnimationCancellation, cancellation))
+                controlsAnimationCancellation = null;
+            cancellation.Dispose();
+        }
     }
 
     public async Task AnimateProgressTo0Async()

@@ -5,7 +5,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:FRESHMusicPlayer.ViewModels"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Background="Black"
-			 x:Class="FRESHMusicPlayer.Views.FullscreenView" Loaded="UserControl_Loaded" PointerMoved="UserControl_PointerMoved"
+			 x:Class="FRESHMusicPlayer.Views.FullscreenView" Loaded="UserControl_Loaded"
 			 x:DataType="vm:FullscreenViewModel">
 	<ThemeVariantScope RequestedThemeVariant="Dark">
 		<Panel>

@@ -36,4 +36,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <RuntimeHostConfigurationOption
+        Include="System.GC.ConserveMemory"
+        Value="7" />
+  </ItemGroup>
 </Project>

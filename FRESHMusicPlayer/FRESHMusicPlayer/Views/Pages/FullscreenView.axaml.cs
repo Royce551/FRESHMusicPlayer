@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
@@ -21,10 +22,10 @@ public partial class FullscreenView : UserControl
         InitializeComponent();
         controlDismissTimer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromSeconds(1),
-            IsEnabled = true
+            Interval = TimeSpan.FromSeconds(1)
         };
         controlDismissTimer.Tick += ControlDismissTimer_Tick;
+        Unloaded += (_, _) => LeaveFullscreen();
     }
 
     public void ScrollToCenter(List<LyricLineViewModel> currentLines)
@@ -52,65 +53,84 @@ public partial class FullscreenView : UserControl
     }
 
     private WindowState previousWindowState;
+    private bool isFullscreenActive;
     private void UserControl_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
+        if (isFullscreenActive) return;
+
         viewModel = DataContext as FullscreenViewModel ?? throw new Exception();
         viewModel.View = this;
+        isFullscreenActive = true;
+        lastMouseMovePosition = null;
 
         viewModel.MainView.IsContentFullscreen = true;
         previousWindowState = viewModel.MainView.MainWindow.WindowState;
         viewModel.MainView.MainWindow.WindowState = WindowState.FullScreen;
         _ = viewModel.MainView.CloseSidePaneAsync();
+
+        var window = viewModel.MainView.MainWindow;
+        window.AddHandler(PointerMovedEvent, UserControl_PointerMoved, RoutingStrategies.Tunnel, handledEventsToo: true);
+        window.AddHandler(PointerPressedEvent, Window_Activity, RoutingStrategies.Tunnel, handledEventsToo: true);
+        window.AddHandler(KeyDownEvent, Window_Activity, RoutingStrategies.Tunnel, handledEventsToo: true);
+        ShowControls();
     }
 
     public void LeaveFullscreen()
     {
+        if (!isFullscreenActive) return;
+        isFullscreenActive = false;
         controlDismissTimer.Stop();
-        controlDismissTimer.Tick -= ControlDismissTimer_Tick;
-        viewModel.MainView.SetControlsVisibility(true);
+
+        var window = viewModel.MainView.MainWindow;
+        window.RemoveHandler(PointerMovedEvent, UserControl_PointerMoved);
+        window.RemoveHandler(PointerPressedEvent, Window_Activity);
+        window.RemoveHandler(KeyDownEvent, Window_Activity);
+        Cursor = null;
+        viewModel.MainView.SetControlsVisibility(true, animate: false);
         viewModel.MainView.IsContentFullscreen = false;
         viewModel.MainView.MainWindow.WindowState = previousWindowState;
     }
 
     private Point? lastMouseMovePosition = null;
-    private bool isMouseMoving = false;
     private const int minimumMouseMovementThreshold = 1;
     private void UserControl_PointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
     {
-        if (lastMouseMovePosition != null)
-        {
-            var position = e.GetPosition(null);
-            if (Math.Abs(position.X - lastMouseMovePosition.Value.X) > minimumMouseMovementThreshold ||
-                Math.Abs(position.Y - lastMouseMovePosition.Value.Y) > minimumMouseMovementThreshold)
-            {
-                if (!controlDismissTimer.IsEnabled && viewModel.MainView.AreControlsHidden)
-                {
-                    viewModel.MainView.SetControlsVisibility(true);
-                    controlDismissTimer.Interval = TimeSpan.FromSeconds(3);
-                    controlDismissTimer.Start();
-                    Cursor = new(StandardCursorType.Arrow);
-                    ControlBar.IsVisible = true;
-                }
-                isMouseMoving = true;
-            }
-            else
-            {
-                controlDismissTimer.Interval = TimeSpan.FromMilliseconds(1000);
-                isMouseMoving = false;
-            }
-        }
-        lastMouseMovePosition = e.GetPosition(null);
+        if (!isFullscreenActive) return;
+
+        var position = e.GetPosition(viewModel.MainView.MainWindow);
+        if (lastMouseMovePosition is { } previous &&
+            Math.Abs(position.X - previous.X) < minimumMouseMovementThreshold &&
+            Math.Abs(position.Y - previous.Y) < minimumMouseMovementThreshold)
+            return;
+
+        lastMouseMovePosition = position;
+        ShowControls();
+    }
+
+    private void Window_Activity(object? sender, RoutedEventArgs e) => ShowControls();
+
+    private void ShowControls()
+    {
+        if (!isFullscreenActive) return;
+
+        viewModel.MainView.SetControlsVisibility(true);
+        Cursor = null;
+        ControlBar.IsVisible = true;
+        controlDismissTimer.Stop();
+        controlDismissTimer.Start();
     }
 
     private void ControlDismissTimer_Tick(object? sender, EventArgs e)
     {
-        if ((IsPointerOver && isMouseMoving) || (!IsPointerOver && viewModel.MainView.MainWindow.IsPointerOver) || viewModel.MainView.AreControlsHidden)
+        controlDismissTimer.Stop();
+        if (!isFullscreenActive) return;
+
+        if (ControlBar.IsPointerOver || viewModel.MainView.IsDragging || (!IsPointerOver && viewModel.MainView.MainWindow.IsPointerOver))
         {
-            controlDismissTimer.Interval = TimeSpan.FromMilliseconds(100);
+            controlDismissTimer.Start();
             return;
         }
 
-        controlDismissTimer.Stop();
         viewModel.MainView.SetControlsVisibility(false);
         Cursor = new(StandardCursorType.None);
         _ = viewModel.MainView.CloseSidePaneAsync();
