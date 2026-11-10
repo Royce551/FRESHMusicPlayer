@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.ViewModels;
 using FRESHMusicPlayer.Views;
@@ -54,5 +55,16 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    public void ResetAccentColor() => ApplyAccentColor((Color)Resources["DefaultPrimaryAccentColor"]!, (Color)Resources["DefaultSecondaryAccentColor"]!);
+
+    public void ApplyAccentColor(Color primaryColor, Color secondaryColor)
+    {
+        Resources["SeekbarThumbColor"] = new SolidColorBrush(primaryColor);
+
+        var gradient = (LinearGradientBrush)Resources["AccentGradientColor"]!;
+        gradient.GradientStops[0].Color = primaryColor;
+        gradient.GradientStops[1].Color = secondaryColor;
     }
 }

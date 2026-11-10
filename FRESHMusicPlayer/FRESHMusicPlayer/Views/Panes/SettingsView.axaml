@@ -187,6 +187,7 @@
 					<CheckBox Content="{x:Static resx:Resources.SETTINGS_SHOW_TIME_IN_TITLE}" IsChecked="{Binding MainView.Config.ShowTimeInWindow}"/>
 					<CheckBox Content="{x:Static resx:Resources.SETTINGS_SHOW_REMAINING_TIME}" IsChecked="{Binding MainView.Config.ShowRemainingTime}"/>
 					<CheckBox Content="{x:Static resx:Resources.SETTINGS_SHOW_TASKBAR_PROGRESS}" IsChecked="{Binding MainView.Config.WindowsShowProgressInTaskbar}" IsVisible="{Binding IsWindows}"/>
+					<CheckBox Content="Color seekbar based on cover art" IsChecked="{Binding MainView.Config.PreferCoverArtSeekBar}"/>
 
 					<TextBlock Text="{x:Static resx:Resources.SETTINGS_THEME}" FontWeight="Bold" FontSize="16"/>
 					<RadioButton GroupName="Theme" Content="{x:Static resx:Resources.SETTINGS_THEME_SYSTEM}" IsChecked="True"/>

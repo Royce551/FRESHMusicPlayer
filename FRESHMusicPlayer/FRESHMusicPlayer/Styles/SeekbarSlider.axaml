@@ -117,7 +117,7 @@
                         Height="10"
                         Margin="0"
                         Padding="0"
-                        Background="{DynamicResource AccentColor}"
+                        Background="{DynamicResource SeekbarThumbColor}"
                         BorderThickness="0"
                         Theme="{StaticResource SeekbarSliderThumbTheme}"
                         DataContext="{TemplateBinding Value}"/>

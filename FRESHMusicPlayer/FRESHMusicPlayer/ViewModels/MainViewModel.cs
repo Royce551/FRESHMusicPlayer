@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
+using FRESHMusicPlayer.Utilities.ColorQuantization;
 using FRESHMusicPlayer.Views;
 using LiteDB;
 using SIADL.Avalonia;
@@ -125,6 +126,7 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         else NavigateTo(Page.Import);
 
         _ = PerformAutoImportAsync();
+        mainWindow.ActualThemeVariantChanged += (sender, e) => _ = ApplyCoverArtAccentColorAsync();
     }
 
     private void UIThread_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -471,19 +473,19 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         if (Player.CurrentBackend.TotalTime.TotalSeconds != 0) ProgressIndicator2 = Player.CurrentBackend.TotalTime.ToString(@"mm\:ss");
         else ProgressIndicator2 = "∞";
 
-        if (Player.Metadata.CoverArt is null)
+        if (Player.Metadata.CoverArt is not { Length: > 0 })
         {
             CoverArt = null;
             CoverArtFullSize = null;
             SetCoverArtVisibility(false);
             CoverArtChanged?.Invoke(null, EventArgs.Empty);
+            _ = ApplyCoverArtAccentColorAsync();
         }
         else _ = LoadCoverArtAsync();  
 
         _ = UpdateIntegrationsAsync(PlaybackStatus.Playing);
         UpdateEqualizer();
         UpdateReplayGain();
-        
 
         if (PauseAfterCurrentTrack)
         {
@@ -516,6 +518,30 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         }
 
         previousMetadata = Player.Metadata;
+        _ = ApplyCoverArtAccentColorAsync();
+    }
+
+    public async Task ApplyCoverArtAccentColorAsync()
+    {
+        if (!Config.PreferCoverArtSeekBar || !Player.FileLoaded) return;
+        if (CoverArt is null) return;
+
+        var palette = await Task.Run(() => CoverArtAccentColors.ExtractPalette(CoverArt));
+        if (palette.Count <= 0) return;
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            var app = (App)Application.Current!;
+            if (palette is null)
+            {
+                app.ResetAccentColor();
+                return;
+            }
+
+            var isDarkTheme = MainWindow.ActualThemeVariant == ThemeVariant.Dark;
+            var (primaryColor, secondaryColor) = CoverArtAccentColors.SelectColors(palette, isDarkTheme);
+            app.ApplyAccentColor(primaryColor, secondaryColor);
+        });
     }
 
     public bool IsDragging { get; set; } = false;

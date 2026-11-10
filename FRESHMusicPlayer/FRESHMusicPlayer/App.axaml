@@ -51,9 +51,12 @@
       <Geometry x:Key="QueueIcon">M15,6H3V8H15V6M15,10H3V12H15V10M3,16H11V14H3V16M17,6V14.18C16.69,14.07 16.35,14 16,14A3,3 0 0,0 13,17A3,3 0 0,0 16,20A3,3 0 0,0 19,17V8H22V6H17Z</Geometry>
       <Geometry x:Key="NotificationIcon">M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21</Geometry>
 
+      <Color x:Key="DefaultPrimaryAccentColor">#FF338BC1</Color>
+      <Color x:Key="DefaultSecondaryAccentColor">#FF69B578</Color>
+      <SolidColorBrush x:Key="SeekbarThumbColor" Color="{StaticResource DefaultPrimaryAccentColor}"/>
       <LinearGradientBrush x:Key="AccentGradientColor" EndPoint="0%,50%" StartPoint="100%, 50%">
-        <GradientStop Color="#FF338BC1" Offset="0.0"/>
-        <GradientStop Color="#FF69B578" Offset="1.0"/>
+        <GradientStop Color="{StaticResource DefaultPrimaryAccentColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource DefaultSecondaryAccentColor}" Offset="1.0"/>
       </LinearGradientBrush>
     </ResourceDictionary>
     

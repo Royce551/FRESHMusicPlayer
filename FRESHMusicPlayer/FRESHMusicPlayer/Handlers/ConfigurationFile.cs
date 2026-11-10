@@ -80,6 +80,10 @@ namespace FRESHMusicPlayer.Handlers
         public partial bool PreferLightTheme { get; set; } = false;
 
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool PreferCoverArtSeekBar { get; set; } = true;
+
+        [ObservableProperty]
         public partial double SEqualizerBand1 { get; set; } = 0;
         [ObservableProperty]
         public partial double SEqualizerBand2 { get; set; } = 0;
@@ -93,8 +97,6 @@ namespace FRESHMusicPlayer.Handlers
         public partial double SEqualizerBand6 { get; set; } = 0;
         [ObservableProperty]
         public partial double SEqualizerBand7 { get; set; } = 0;
-
-        
 
         public static ConfigurationFile Read(string filePath)
         {
