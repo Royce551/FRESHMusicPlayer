@@ -12,12 +12,15 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
+using FRESHMusicPlayer.Utilities;
 using FRESHMusicPlayer.Utilities.ColorQuantization;
 using FRESHMusicPlayer.Views;
 using LiteDB;
+using NReplayGain;
 using SIADL.Avalonia;
 using Splat;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -479,7 +482,6 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             CoverArtFullSize = null;
             SetCoverArtVisibility(false);
             CoverArtChanged?.Invoke(null, EventArgs.Empty);
-            _ = ApplyCoverArtAccentColorAsync();
         }
         else _ = LoadCoverArtAsync();  
 
@@ -523,21 +525,26 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     public async Task ApplyCoverArtAccentColorAsync()
     {
-        if (!Config.PreferCoverArtSeekBar || !Player.FileLoaded) return;
-        if (CoverArt is null) return;
+        var coverArt = CoverArt;
+        if (!Config.PreferCoverArtSeekBar || !Player.FileLoaded || coverArt is null)
+        {
+            return;
+        }
 
-        var palette = await Task.Run(() => CoverArtAccentColors.ExtractPalette(CoverArt));
-        if (palette.Count <= 0) return;
+        var palette = await Task.Run(() => CoverArtAccentColors.ExtractPalette(coverArt));
+        if (palette.Count == 0)
+        {
+            return;
+        }
 
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
-            var app = (App)Application.Current!;
-            if (palette is null)
+            if (CoverArt != coverArt || !Config.PreferCoverArtSeekBar)
             {
-                app.ResetAccentColor();
                 return;
             }
 
+            var app = (App)Application.Current!;
             var isDarkTheme = MainWindow.ActualThemeVariant == ThemeVariant.Dark;
             var (primaryColor, secondaryColor) = CoverArtAccentColors.SelectColors(palette, isDarkTheme);
             app.ApplyAccentColor(primaryColor, secondaryColor);
@@ -617,20 +624,33 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             float trackPeak = 1;
             bool trackGainIsPresent = false;
 
-            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_gain"))
+            var atlTrack = file.ATLTrack;
+            var fields = atlTrack.AdditionalFields;
+            var albumGainField = InterfaceUtils.GetReplayGainField(atlTrack, "replaygain_album_gain");
+            if (fields.TryGetValue(albumGainField, out var albumGainText))
             {
-                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_gain"].Replace("dB", string.Empty).Trim(), out albumGain);
+                float.TryParse(albumGainText.Replace("dB", string.Empty).Trim(), out albumGain);
                 albumGainIsPresent = true;
             }
-            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_gain"))
+
+            var trackGainField = InterfaceUtils.GetReplayGainField(atlTrack, "replaygain_track_gain");
+            if (fields.TryGetValue(trackGainField, out var trackGainText))
             {
-                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_gain"].Replace("dB", string.Empty).Trim(), out trackGain);
+                float.TryParse(trackGainText.Replace("dB", string.Empty).Trim(), out trackGain);
                 trackGainIsPresent = true;
             }
-            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_album_peak"))
-                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_album_peak"].Trim(), out albumPeak);
-            if (file.ATLTrack.AdditionalFields.ContainsKey("replaygain_track_peak"))
-                float.TryParse(file.ATLTrack.AdditionalFields["replaygain_track_peak"].Trim(), out trackPeak);
+
+            var albumPeakField = InterfaceUtils.GetReplayGainField(atlTrack, "replaygain_album_peak");
+            if (fields.TryGetValue(albumPeakField, out var albumPeakText))
+            {
+                float.TryParse(albumPeakText.Trim(), out albumPeak);
+            }
+
+            var trackPeakField = InterfaceUtils.GetReplayGainField(atlTrack, "replaygain_track_peak");
+            if (fields.TryGetValue(trackPeakField, out var trackPeakText))
+            {
+                float.TryParse(trackPeakText.Trim(), out trackPeak);
+            }
 
             float decibelsToAdjust = 0;
             float peak = 0;
@@ -657,6 +677,194 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
             LoggingHandler.Log($"ReplayGain: Specified adjustment is {decibelsToAdjust}dB and peak is {peak}. Applying adjustment of {replayGainAdjustment}");
         }
         Player.Volume = (float)Volume * replayGainAdjustment;
+    }
+
+    private bool isScanningReplayGain;
+
+    public async Task ScanLibraryForReplayGainAsync(bool forceScanAll = false)
+    {
+        if (!OperatingSystem.IsWindows() || isScanningReplayGain)
+        {
+            return;
+        }
+
+        var platformWrapper = Locator.Current.GetService<IPlatformWrapper>()
+            ?? throw new PlatformNotSupportedException();
+        var libraryTracks = Library.GetAllTracks();
+        var tracksRemaining = libraryTracks.Count;
+        var notification = new Notification(this)
+        {
+            ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksRemaining),
+            StatusBarText = Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN_HEADER,
+            Type = NotificationType.Progress
+        };
+
+        isScanningReplayGain = true;
+        try
+        {
+            Notifications.Add(notification);
+            await Task.Run(() =>
+            {
+                string[] replayGainFields =
+                [
+                    "replaygain_track_gain",
+                    "replaygain_album_gain",
+                    "replaygain_track_peak",
+                    "replaygain_album_peak"
+                ];
+                var tracksToWrite = new ConcurrentBag<ATL.Track>();
+                var albums = libraryTracks.GroupBy(track => track.Album);
+                Parallel.ForEach(albums, album =>
+                {
+                    var albumTracks = new List<ATL.Track>();
+                    var shouldScanAlbum = forceScanAll;
+                    foreach (var libraryTrack in album)
+                    {
+                        var path = libraryTrack.Path;
+                        ATL.Track track;
+                        try
+                        {
+                            if (!File.Exists(path))
+                            {
+                                throw new FileNotFoundException();
+                            }
+
+                            track = new ATL.Track(path);
+                        }
+                        catch
+                        {
+                            Dispatcher.UIThread.Invoke(() =>
+                            {
+                                Notifications.Add(new Notification(this)
+                                {
+                                    ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, path),
+                                    Type = NotificationType.Failure,
+                                    DisplayAsToast = true
+                                });
+                                tracksRemaining--;
+                                notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksRemaining);
+                            });
+                            continue;
+                        }
+
+                        albumTracks.Add(track);
+                        if (!shouldScanAlbum)
+                        {
+                            // One existing ReplayGain field is enough for a track to count as tagged.
+                            var hasReplayGain = replayGainFields.Any(field =>
+                            {
+                                var fieldKey = InterfaceUtils.GetReplayGainField(track, field);
+                                return track.AdditionalFields.ContainsKey(fieldKey);
+                            });
+                            shouldScanAlbum = !hasReplayGain;
+                        }
+                    }
+
+                    if (!shouldScanAlbum)
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            tracksRemaining -= albumTracks.Count;
+                            notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksRemaining);
+                        });
+                        return;
+                    }
+
+                    var albumGain = new AlbumGain();
+                    var trackGains = new List<(ATL.Track Track, double Gain, double Peak)>();
+                    foreach (var track in albumTracks)
+                    {
+                        try
+                        {
+                            using var trackGainData = platformWrapper.CalculateReplayGainDataForTrack(track.Path);
+                            var gain = trackGainData.GetGain();
+                            var peak = trackGainData.GetPeak();
+                            albumGain.AppendTrackData(trackGainData);
+                            trackGains.Add((track, gain, peak));
+                        }
+                        catch
+                        {
+                            Dispatcher.UIThread.Invoke(() =>
+                                Notifications.Add(new Notification(this)
+                                {
+                                    ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path),
+                                    Type = NotificationType.Failure,
+                                    DisplayAsToast = true
+                                }));
+                        }
+
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            tracksRemaining--;
+                            notification.ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAIN, tracksRemaining);
+                        });
+                    }
+
+                    if (trackGains.Count == 0)
+                    {
+                        return;
+                    }
+
+                    var albumGainText = $"{albumGain.GetGain()} dB";
+                    var albumPeakText = $"{albumGain.GetPeak()}";
+                    foreach (var (track, trackGain, trackPeak) in trackGains)
+                    {
+                        var trackGainField = InterfaceUtils.GetReplayGainField(track, "replaygain_track_gain");
+                        var albumGainField = InterfaceUtils.GetReplayGainField(track, "replaygain_album_gain");
+                        var trackPeakField = InterfaceUtils.GetReplayGainField(track, "replaygain_track_peak");
+                        var albumPeakField = InterfaceUtils.GetReplayGainField(track, "replaygain_album_peak");
+
+                        var fields = track.AdditionalFields;
+                        var addedTrackGain = fields.TryAdd(trackGainField, $"{trackGain} dB");
+                        var addedAlbumGain = fields.TryAdd(albumGainField, albumGainText);
+                        var addedTrackPeak = fields.TryAdd(trackPeakField, $"{trackPeak}");
+                        var addedAlbumPeak = fields.TryAdd(albumPeakField, albumPeakText);
+                        if (addedTrackGain || addedAlbumGain || addedTrackPeak || addedAlbumPeak)
+                        {
+                            tracksToWrite.Add(track);
+                        }
+                    }
+                });
+
+                Dispatcher.UIThread.Invoke(() =>
+                {
+                    notification.ContentText = Properties.Resources.NOTIFICATION_WRITINGREPLAYGAIN;
+                    notification.StatusBarText = notification.ContentText;
+                    OnPropertyChanged(nameof(CurrentNotificationStatusBarText));
+                });
+
+                foreach (var track in tracksToWrite)
+                {
+                    bool saved;
+                    try
+                    {
+                        saved = track.Save();
+                    }
+                    catch
+                    {
+                        saved = false;
+                    }
+
+                    if (saved)
+                    {
+                        continue;
+                    }
+
+                    Dispatcher.UIThread.Invoke(() =>
+                        Notifications.Add(new Notification(this)
+                        {
+                            ContentText = string.Format(Properties.Resources.NOTIFICATION_ADDINGREPLAYGAINERROR, track.Path),
+                            Type = NotificationType.Failure,
+                            DisplayAsToast = true
+                        }));
+                }
+            });
+        }
+        finally
+        {
+            Notifications.Remove(notification);
+            isScanningReplayGain = false;
+        }
     }
 
     public void HandleAppClosing()

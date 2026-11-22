@@ -484,6 +484,35 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Processing ReplayGain data for library...
+        ///
+        ///{0} tracks remaining.
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAIN {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing ReplayGain data for library....
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAIN_HEADER {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAIN_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReplayGain data couldn&apos;t be added to {0}. If the file is open, close it and try scanning again..
+        /// </summary>
+        public static string NOTIFICATION_ADDINGREPLAYGAINERROR {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_ADDINGREPLAYGAINERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The file you tried to play could not be found. If you moved it, you can update the library entry for it..
         /// </summary>
         public static string NOTIFICATION_FILEGONE {
@@ -577,7 +606,7 @@ namespace FRESHMusicPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred trying to scrobble {0}&quot;.
+        ///   Looks up a localized string similar to An error occurred trying to scrobble &quot;{0}&quot;.
         /// </summary>
         public static string NOTIFICATION_SCROBBLE_ERROR {
             get {
@@ -602,6 +631,15 @@ namespace FRESHMusicPlayer.Properties {
         public static string NOTIFICATION_UNHANDLED_ERROR {
             get {
                 return ResourceManager.GetString("NOTIFICATION_UNHANDLED_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing ReplayGain data to library....
+        /// </summary>
+        public static string NOTIFICATION_WRITINGREPLAYGAIN {
+            get {
+                return ResourceManager.GetString("NOTIFICATION_WRITINGREPLAYGAIN", resourceCulture);
             }
         }
         

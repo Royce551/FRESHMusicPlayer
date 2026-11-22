@@ -378,6 +378,20 @@
   <data name="SETTINGS_LASTFM_SIGNOUT" xml:space="preserve">
     <value>Sign out</value>
   </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN" xml:space="preserve">
+    <value>Processing ReplayGain data for library...
+
+{0} tracks remaining</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAINERROR" xml:space="preserve">
+    <value>ReplayGain data couldn't be added to {0}. If the file is open, close it and try scanning again.</value>
+  </data>
+  <data name="NOTIFICATION_ADDINGREPLAYGAIN_HEADER" xml:space="preserve">
+    <value>Processing ReplayGain data for library...</value>
+  </data>
+  <data name="NOTIFICATION_WRITINGREPLAYGAIN" xml:space="preserve">
+    <value>Writing ReplayGain data to library...</value>
+  </data>
   <data name="SETTINGS_REPLAYGAIN_ENABLE" xml:space="preserve">
     <value>Use ReplayGain loudness normalization</value>
   </data>
@@ -582,7 +596,7 @@ Newly added tracks won't show in the artists or albums tabs until processing is 
     <value>Undo</value>
   </data>
   <data name="NOTIFICATION_SCROBBLE_ERROR" xml:space="preserve">
-    <value>An error occurred trying to scrobble {0}"</value>
+    <value>An error occurred trying to scrobble "{0}"</value>
   </data>
   <data name="TRACKINFO_LOSSY" xml:space="preserve">
     <value>(Lossy) </value>

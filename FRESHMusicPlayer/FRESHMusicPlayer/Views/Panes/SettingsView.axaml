@@ -120,6 +120,8 @@
 					</DockPanel>
 					<Slider x:Name="ReplayGainFallbackSlider" Orientation="Horizontal" Minimum="-15" Maximum="15" Value="{Binding MainView.Config.ReplayGainFallbackPreAmp}" TickPlacement="BottomRight" IsEnabled="{Binding MainView.Config.UseReplayGain}" ToolTip.Tip="{Binding #ReplayGainFallbackSlider.Value, StringFormat='{}{0:F1}'}" ToolTip.Placement="Pointer" ToolTip.BetweenShowDelay="10" SmallChange="0.1" LargeChange="1" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
 
+					<Button Content="Add ReplayGain data to library" IsVisible="{Binding IsWindows}" Command="{Binding AddReplayGainData}" Margin="0,20,0,0"/>
+
 					<TextBlock Text="{x:Static resx:Resources.SETTINGS_EQUALIZER}" FontWeight="Bold" FontSize="16"/>
 						<TextBlock IsVisible="{Binding !IsEQAvailable}" Text="{x:Static resx:Resources.SETTINGS_EQUALIZER_UNAVAILABLE}" TextWrapping="Wrap" FontSize="14"/>
 						<TextBlock IsVisible="{Binding IsEQPotentiallyUnavailable}" Text="{x:Static resx:Resources.SETTINGS_EQUALIZER_PARTIALLY_UNAVAILABLE}" TextWrapping="Wrap" FontSize="14"/>

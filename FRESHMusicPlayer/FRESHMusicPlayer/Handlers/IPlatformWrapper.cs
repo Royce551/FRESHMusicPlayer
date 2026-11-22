@@ -2,6 +2,7 @@
 using FRESHMusicPlayer.Backends;
 using FRESHMusicPlayer.Handlers.PlaybackIntegrations;
 using FRESHMusicPlayer.ViewModels;
+using NReplayGain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace FRESHMusicPlayer.Handlers
         IAudioBackend GetPlatformAudioBackend(MainViewModel viewModel, Window window);
 
         void SetupFMPCore();
+
+        TrackGain CalculateReplayGainDataForTrack(string path) => throw new PlatformNotSupportedException();
     }
 }

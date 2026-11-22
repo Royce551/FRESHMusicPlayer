@@ -251,6 +251,8 @@ namespace FRESHMusicPlayer.ViewModels
             MainView.Config.SEqualizerBand7 = 0;
         }
 
+        public async void AddReplayGainData() => await MainView.ScanLibraryForReplayGainAsync();
+
         public void NukeLibrary() => MainView.Library.Nuke();
 
         public void OpenReportIssuePage() => SIADLUtilities.OpenURL("https://github.com/Royce551/FRESHMusicPlayer/issues?q=is%3Aissue");

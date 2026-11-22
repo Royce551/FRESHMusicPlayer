@@ -39,6 +39,9 @@
     <Reference Include="FmpNAudioBackend">
       <HintPath>FmpNAudioBackend.dll</HintPath>
     </Reference>
+    <Reference Include="NReplayGain">
+      <HintPath>..\FRESHMusicPlayer\NReplayGain.dll</HintPath>
+    </Reference>
     <Reference Include="FRESHMusicPlayer.Core">
       <HintPath>..\FRESHMusicPlayer\FRESHMusicPlayer.Core.dll</HintPath>
     </Reference>

@@ -10,6 +10,20 @@ namespace FRESHMusicPlayer.Utilities
 {
     public static class InterfaceUtils
     {
+        public static string GetReplayGainField(ATL.Track track, string field)
+        {
+            if (track.AudioFormat.ID != ATL.AudioData.AudioDataIOFactory.CID_MP4)
+            {
+                return field;
+            }
+
+            // This version of ATL requires explicit freeform keys for custom MP4 tags.
+            var mp4Field = $"----:com.apple.iTunes:{field}";
+            var existingField = track.AdditionalFields.Keys.FirstOrDefault(key =>
+                key.Equals(mp4Field, StringComparison.OrdinalIgnoreCase));
+            return existingField ?? mp4Field;
+        }
+
         /// <summary>
         /// Handles everything related to drag drop
         /// </summary>

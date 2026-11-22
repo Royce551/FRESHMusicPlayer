@@ -57,8 +57,6 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    public void ResetAccentColor() => ApplyAccentColor((Color)Resources["DefaultPrimaryAccentColor"]!, (Color)Resources["DefaultSecondaryAccentColor"]!);
-
     public void ApplyAccentColor(Color primaryColor, Color secondaryColor)
     {
         Resources["SeekbarThumbColor"] = new SolidColorBrush(primaryColor);
