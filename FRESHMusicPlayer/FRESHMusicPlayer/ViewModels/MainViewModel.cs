@@ -87,12 +87,6 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         Player.SongStopped += Player_SongStopped;
         Player.SongException += Player_SongException;
 
-        if (initialFiles.Length > 0)
-        {
-            Player.Queue.Add(initialFiles);
-            _ = Player.PlayAsync();
-        }
-
         Directory.CreateDirectory(App.DataFolderLocation);
 
         LiteDatabase library;
@@ -129,7 +123,27 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
         else NavigateTo(Page.Import);
 
         _ = PerformAutoImportAsync();
-        mainWindow.ActualThemeVariantChanged += (sender, e) => _ = ApplyCoverArtAccentColorAsync();
+   
+        if (initialFiles.Length > 0)
+        {
+            Player.Queue.Add(initialFiles);
+            _ = Player.PlayAsync();
+        }
+        else if (Config.PersistenceQueue != null)
+        {
+            Player.Queue.Clear();
+            Player.Queue.Add(Config.PersistenceQueue);
+            Player.Queue.Position = Config.PersistenceQueuePosition - 1; // because fmp's queue position is "the track that plays next"
+            _ = Dispatcher.UIThread.Invoke(async () =>    // ordering matters, however it can be fire and forget
+            {
+                await Player.PlayAsync();
+                Player.Pause();
+            });
+        }
+
+        if (Config.PersistenceRepeatMode != null) Player.Queue.RepeatMode = Config.PersistenceRepeatMode.Value;
+        if (Config.PersistenceShuffle != null) Player.Queue.Shuffle = Config.PersistenceShuffle.Value;
+
     }
 
     private void UIThread_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -869,7 +883,13 @@ public partial class MainViewModel : ViewModelBase, IRecipient<PropertyChangedMe
 
     public void HandleAppClosing()
     {
-        var dataFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Squidhouse Software", "Kotomi");
+        Config.PersistenceQueue = [.. Player.Queue.Queue];
+        Config.PersistenceQueuePosition = Player.Queue.Position;
+        Config.PersistenceRepeatMode = Player.Queue.RepeatMode;
+        Config.PersistenceShuffle = Player.Queue.Shuffle;
+
+        Config.Save(Path.Combine(App.DataFolderLocation, "Configuration"));
+        Library.Database?.Dispose();
     }
 
     private Dictionary<Page, (ViewModelBase vm, Control pg)> viewModelCache = new();

@@ -98,6 +98,14 @@ namespace FRESHMusicPlayer.Handlers
         [ObservableProperty]
         public partial double SEqualizerBand7 { get; set; } = 0;
 
+        public string[]? PersistenceQueue { get; set; } = null;
+
+        public int PersistenceQueuePosition { get; set; } = -1;
+
+        public RepeatMode? PersistenceRepeatMode { get; set; } = null;
+
+        public bool? PersistenceShuffle { get; set; } = null;
+
         public static ConfigurationFile Read(string filePath)
         {
             if (!File.Exists(Path.Combine(filePath, "config.json"))) new ConfigurationFile().Save(filePath);

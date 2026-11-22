@@ -210,6 +210,14 @@ public partial class MainWindow : Window
         viewModel.ProgressTimer.Interval = TimeSpan.FromMilliseconds(100);
     }
 
+    private void Window_ActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        if (DataContext is MainViewModel mainViewModel)
+        {
+            _ = mainViewModel.ApplyCoverArtAccentColorAsync();
+        }
+    }
+
     private void ProgressSlider_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
     {
         viewModel.IsDragging = true;
@@ -222,8 +230,7 @@ public partial class MainWindow : Window
 
     private void Window_Closed(object? sender, EventArgs e)
     {
-        viewModel.Config.Save(Path.Combine(App.DataFolderLocation, "Configuration"));
-        viewModel.Library.Database?.Dispose();
+        viewModel.HandleAppClosing();
     }
 
     private void OverflowMenuButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
